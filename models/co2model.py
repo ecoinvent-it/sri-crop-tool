@@ -11,17 +11,17 @@ class Co2Model(object):
 
     Outputs:
       m_co2_CO2: kg/ha
-      
     """
     _input_variables = ["nitrogen_from_urea",
                         "nitrogen_from_ureaAN",
-                        "part_of_urea_in_UAN",#default 0.5
+                        "part_of_urea_in_UAN",
                         "calcium_from_lime",
                         "calcium_from_carbonation_lime",
                         "calcium_from_algae_lime",
                         "magnesium_from_fertilizer",
-                        "magnesium_as_dolomite" # default 1
+                        "magnesium_as_dolomite"
                        ]
+    
     _CO2 = 12.0107 + 2*15.9994
     _UREA = 12.0107 + 4*1.00794 + 2*14.00674 + 15.9994 #CH4N2O
     _UREA_N_TO_CO2_FACTOR =  12.0107/_UREA * _UREA/(14.00674*2) * _CO2/12.0107 #1.57
@@ -35,7 +35,6 @@ class Co2Model(object):
     _MG_TO_DOLOMITE = _DOLOMITE / 24.3050;
     _DOLOMITE_TO_CO2_FACTOR = 2*_CO2 / _DOLOMITE
     _MG_TO_CO2_FACTOR = _MG_TO_DOLOMITE * _DOLOMITE_TO_CO2_FACTOR  # (_CO2)*2/24.305
-    
     
     
     def __init__(self, inputs):

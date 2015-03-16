@@ -24,17 +24,17 @@ class Test(unittest.TestCase):
              }
     
     def testP2O5(self):
-        expectedResults = (1129.5675, 109579.7675)
+        expectedResults = (1129.5675, 116893.355256)
         results = ManureModel(self.inputs).computeP2O5()
         self._assertTuplesEqual(results, expectedResults)
             
     def testN(self):
-        expectedResults = (2450.4825, 115801.9625)
+        expectedResults = (2450.4825, 126081.3940705)
         results = ManureModel(self.inputs).computeN()
         self._assertTuplesEqual(results, expectedResults)
             
     def testNH4N(self):
-        expectedResults = (733.2621375, 23784.3403875)
+        expectedResults = (733.2621375, 25763.6927648)
         results = ManureModel(self.inputs).computeNH4N()
         self._assertTuplesEqual(results, expectedResults)
         
