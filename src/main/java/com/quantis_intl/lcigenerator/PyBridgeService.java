@@ -16,55 +16,48 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.quantis_intl.lcigenerator.api;
+package com.quantis_intl.lcigenerator;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.Properties;
+import java.util.function.Consumer;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.container.AsyncResponse;
-import javax.ws.rs.container.Suspended;
-import javax.ws.rs.core.MediaType;
+import javax.inject.Named;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
+import javax.ws.rs.client.InvocationCallback;
+import javax.ws.rs.client.WebTarget;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.glassfish.jersey.jackson.JacksonFeature;
 
-import com.google.common.collect.ImmutableMap;
-import com.quantis_intl.lcigenerator.PyBridgeService;
-
-@Path("pub/")
-@Produces(MediaType.APPLICATION_JSON)
-public class Api
+public class PyBridgeService
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
+    private final WebTarget pyBridgeTarget;
 
     @Inject
-    private PyBridgeService pyBridgeService;
-
-    @GET
-    @Path("computeLci")
-    public void computeQuestionnaire(@Suspended AsyncResponse response) throws URISyntaxException, IOException
+    public PyBridgeService(@Named("configuration.properties") Properties properties)
     {
-        pyBridgeService.callComputeLci(ImmutableMap.of("test", "testValue"), result -> response.resume(result),
-                error -> onError(error, response));
+        this.pyBridgeTarget = ClientBuilder.newClient().register(JacksonFeature.class)
+                .target(properties.getProperty("pyBridge.url"));
     }
 
-    private void onError(Throwable error, AsyncResponse response)
+    public void callComputeLci(Map<String, String> request, Consumer<Map<String, String>> onResult,
+            Consumer<Throwable> onError)
     {
-        LOGGER.warn("Error using pyBridge", error);
-        response.resume(error);
-    }
+        pyBridgeTarget.request().async().post(Entity.json(request), new InvocationCallback<Map<String, String>>()
+        {
+            @Override
+            public void completed(Map<String, String> response)
+            {
+                onResult.accept(response);
+            }
 
-    @POST
-    @Path("test")
-    public Map<String, String> test(Map<String, String> req)
-    {
-        return req;
+            @Override
+            public void failed(Throwable throwable)
+            {
+                onError.accept(throwable);
+            }
+        });
     }
-
 }
