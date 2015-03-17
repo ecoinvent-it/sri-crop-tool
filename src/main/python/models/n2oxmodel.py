@@ -11,8 +11,8 @@ class N2OxModel(object):
 
       
     Outputs:
-      m_N2ox_N2o_air: kg N2o/ha
-      m_N2ox_Nox_air: kg Nox/ha
+      m_N2ox_N2o_air: kg N2O/ha
+      m_N2ox_Nox_air: kg NOx as N2O/ha
     """
     
     _input_variables = ["nitrogen_from_all_manure",
@@ -52,24 +52,24 @@ class N2OxModel(object):
         nox = self._compute_nox_as_no2(total_fert_nitrogen)
         n2o = self._compute_n2o(total_fert_nitrogen,nox)
         return {"m_N2ox_N2o_air": n2o,
-                "m_N2ox_Nox_air": nox}
+                "m_N2ox_Nox_as_n2o_air": nox}
         
     def _compute_total_fert_nitrogen(self):
         return self.nitrogen_from_all_manure + self.nitrogen_from_mineral_fert;
         
-    def _compute_nox_as_no2(self,total_fert_nitrogen):
-        return total_fert_nitrogen * 0.026 * self._NO_TO_N_FACTOR * self._N_TO_NO2_FACTOR
+    def _compute_nox_as_no2(self,total_fert_nitrogen): #0.026 is a ratio in kg NO/kg N
+        return total_fert_nitrogen * (0.026 * self._NO_TO_N_FACTOR) * self._N_TO_NO2_FACTOR
         
     def _compute_n2o(self, total_fert_nitrogen, nox):
         return  self._N_TO_N20 * (0.01 * (total_fert_nitrogen
                                             + self.nitrogen_from_crop_residues
                                             + self._NH3_TO_N_FACTOR * self._compute_total_due_ammonia() 
                                             + self._NO2_TO_N_FACTOR * nox)
-                                  + self._compute_n_from_no3()
+                                  + self._compute_n2o_as_n_due_to_nitrate()
                                   )
     
     def _compute_total_due_ammonia(self):
         return self.ammonia_due_to_mineral_fert + self.ammonia_due_to_liquid_manure + self.ammonia_due_to_solid_manure;
     
-    def _compute_n_from_no3(self):
+    def _compute_n2o_as_n_due_to_nitrate(self):
         return  0.0075 * self._NO3_TO_N_FACTOR * (self.nitrate_to_groundwater + self.nitrate_to_surfacewater)

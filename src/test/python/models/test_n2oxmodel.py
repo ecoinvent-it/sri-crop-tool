@@ -14,7 +14,7 @@ class Test(unittest.TestCase):
                   "ammonia_due_to_solid_manure": 20.0
                  }
         expectedResults = {"m_N2ox_N2o_air": 5.975708542,
-                           "m_N2ox_Nox_air": 10.57972229}
+                           "m_N2ox_Nox_as_n2o_air": 10.57972229}
         
         results = n2oxmodel.N2OxModel(inputs).compute()
         
