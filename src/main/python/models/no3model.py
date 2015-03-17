@@ -15,8 +15,8 @@ class No3Model(object):
       rooting_depth: m
       
     Outputs:
-      m_No3_NO3_groundwater: kg NO3/(ha*year)
-      m_No3_NO3_surfacewater: kg NO3/(ha*year)
+      m_No3_nitrate_to_groundwater: kg NO3/(ha*year)
+      m_No3_nitrate_to_surfacewater: kg NO3/(ha*year)
     """
     
     _input_variables = ["bulk_density_of_soil",
@@ -51,8 +51,8 @@ class No3Model(object):
         nitrogen = self._compute_nitrogen_leaching(s, norg)
         nitrate = self._convert_nitrogen_to_nitrate(nitrogen)
         no3gw, no3sw = self._split_nitrate_between_ground_and_surface_waters(nitrate)
-        return {"m_No3_NO3_groundwater": no3gw,
-                "m_No3_NO3_surfacewater": no3sw}
+        return {"m_No3_nitrate_to_groundwater": no3gw,
+                "m_No3_nitrate_to_surfacewater": no3sw}
         
     def _compute_carbon_in_soil_orga_matter(self): # kg C/kg soil * kg soil/m3 * m3/ha -> kg C/ha
         return self.organic_carbon_content * self.bulk_density_of_soil * self.considered_soil_volume

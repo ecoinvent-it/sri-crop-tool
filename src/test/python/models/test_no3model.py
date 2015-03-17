@@ -18,8 +18,8 @@ class Test(unittest.TestCase):
                   "precipitation": 850,
                   "rooting_depth": 0.5,
                  }
-        expectedResults = {"m_No3_NO3_groundwater": 286.7652489,
-                           "m_No3_NO3_surfacewater": 122.899392389}
+        expectedResults = {"m_No3_nitrate_to_groundwater": 286.7652489,
+                           "m_No3_nitrate_to_surfacewater": 122.899392389}
         
         results = no3model.No3Model(inputs).compute()
         
