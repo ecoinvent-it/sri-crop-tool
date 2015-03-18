@@ -20,11 +20,9 @@ package com.quantis_intl.lcigenerator.api;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
@@ -58,13 +56,6 @@ public class Api
     {
         LOGGER.warn("Error using pyBridge", error);
         response.resume(error);
-    }
-
-    @POST
-    @Path("test")
-    public Map<String, String> test(Map<String, String> req)
-    {
-        return req;
     }
 
 }
