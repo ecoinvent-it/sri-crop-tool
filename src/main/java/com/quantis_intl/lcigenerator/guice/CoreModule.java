@@ -21,6 +21,7 @@ package com.quantis_intl.lcigenerator.guice;
 import com.google.inject.AbstractModule;
 import com.quantis_intl.lcigenerator.LoginServiceImpl;
 import com.quantis_intl.lcigenerator.PyBridgeService;
+import com.quantis_intl.lcigenerator.ScsvFileWriter;
 import com.quantis_intl.stack.authentication.LoginService;
 
 public class CoreModule extends AbstractModule
@@ -30,5 +31,6 @@ public class CoreModule extends AbstractModule
     {
         bind(LoginService.class).to(LoginServiceImpl.class);
         bind(PyBridgeService.class);
+        bind(ScsvFileWriter.class);
     }
 }

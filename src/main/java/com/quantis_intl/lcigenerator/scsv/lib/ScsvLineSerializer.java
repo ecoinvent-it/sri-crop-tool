@@ -16,61 +16,40 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.quantis_intl.lcigenerator.api;
+package com.quantis_intl.lcigenerator.scsv.lib;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.container.AsyncResponse;
-import javax.ws.rs.container.Suspended;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.ImmutableMap;
-import com.quantis_intl.lcigenerator.PyBridgeService;
-import com.quantis_intl.lcigenerator.ScsvFileWriter;
-
-@Path("pub/")
-public class Api
+public class ScsvLineSerializer
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
+    private final String separator;
 
-    @Inject
-    private PyBridgeService pyBridgeService;
-
-    @Inject
-    private ScsvFileWriter scsvFileWriter;
-
-    @GET
-    @Path("computeLci")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    // TODO: Return a file to download
-    public void computeQuestionnaire(@Suspended AsyncResponse response) throws URISyntaxException, IOException
+    public ScsvLineSerializer(char separator)
     {
-        pyBridgeService.callComputeLci(ImmutableMap.of("test", "testValue"), result -> onResult(result, response),
-                error -> onError(error, response));
+        this.separator = String.valueOf(separator);
     }
 
-    private void onResult(Map<String, String> modelsOutput, AsyncResponse response)
+    public String serializeSingleField(String field)
     {
-        response.resume(Response.ok(
-                (StreamingOutput) outputStream ->
-                scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, outputStream)).build());
+        field = field.replace('\n', '\u007f');
+        if (field.contains(separator) || field.contains("\""))
+            return "\"" + field.replace("\"", "\"\"") + "\"";
+        return field;
     }
 
-    private void onError(Throwable error, AsyncResponse response)
+    public String serializeFields(String[] fields)
     {
-        LOGGER.warn("Error using pyBridge", error);
-        response.resume(error);
+        return Arrays.stream(fields).map(this::serializeSingleField).collect(Collectors.joining(separator));
     }
 
+    public String serializeMetadata(String metadataField)
+    {
+        return serializeSingleField("{" + metadataField + "}");
+    }
+
+    public static String booleanToString(boolean b)
+    {
+        return b ? "Yes" : "No";
+    }
 }

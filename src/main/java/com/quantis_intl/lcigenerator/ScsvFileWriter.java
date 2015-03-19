@@ -16,61 +16,45 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.quantis_intl.lcigenerator.api;
+package com.quantis_intl.lcigenerator;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UncheckedIOException;
+import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.Map;
 
-import javax.inject.Inject;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.container.AsyncResponse;
-import javax.ws.rs.container.Suspended;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.StreamingOutput;
+import com.quantis_intl.lcigenerator.scsv.GeneratedMetadata;
+import com.quantis_intl.lcigenerator.scsv.lib.ScsvLineSerializer;
+import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataWriter;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.ImmutableMap;
-import com.quantis_intl.lcigenerator.PyBridgeService;
-import com.quantis_intl.lcigenerator.ScsvFileWriter;
-
-@Path("pub/")
-public class Api
+public class ScsvFileWriter
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
+    private final ScsvLineSerializer serializer;
 
-    @Inject
-    private PyBridgeService pyBridgeService;
+    private final ScsvMetadataWriter metadataWriter;
 
-    @Inject
-    private ScsvFileWriter scsvFileWriter;
-
-    @GET
-    @Path("computeLci")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    // TODO: Return a file to download
-    public void computeQuestionnaire(@Suspended AsyncResponse response) throws URISyntaxException, IOException
+    public ScsvFileWriter()
     {
-        pyBridgeService.callComputeLci(ImmutableMap.of("test", "testValue"), result -> onResult(result, response),
-                error -> onError(error, response));
+        this.serializer = new ScsvLineSerializer(';');
+        this.metadataWriter = new ScsvMetadataWriter(serializer);
     }
 
-    private void onResult(Map<String, String> modelsOutput, AsyncResponse response)
+    public void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, OutputStream os)
     {
-        response.resume(Response.ok(
-                (StreamingOutput) outputStream ->
-                scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, outputStream)).build());
-    }
+        Writer writer = new BufferedWriter(new OutputStreamWriter(os, Charset.forName("windows-1252")));
+        metadataWriter.write(new GeneratedMetadata(), writer);
 
-    private void onError(Throwable error, AsyncResponse response)
-    {
-        LOGGER.warn("Error using pyBridge", error);
-        response.resume(error);
+        try
+        {
+            writer.flush();
+        }
+        catch (IOException e)
+        {
+            throw new UncheckedIOException(e);
+        }
     }
-
 }
