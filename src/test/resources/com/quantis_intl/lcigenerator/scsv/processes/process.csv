@@ -1,0 +1,107 @@
+Process
+
+Category type
+material
+
+Process identifier
+EIN_UNIT06567700393
+
+Type
+Unit process
+
+Process name
+cumene, at plant/kg/RER
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+6/19/2003
+
+Record
+"Data entry by: Roland HischierTelephone: 0041 71 274 78 47; E-mail: empa@ecoinvent.org; Company: EMPA; Country: CH"
+
+Generator
+"Generator/publicator: Roland HischierTelephone: 0041 71 274 78 47; E-mail: empa@ecoinvent.org; Company: EMPA; Country: CH"
+
+Literature references
+Life Cycle Inventories of Packaging and Graphical Paper/2007/Hischier R.;Data has been published entirely inCopyright: true
+
+Collection method
+Sampling procedure: Process data based on stoechiometric calculations of few literature sources. Energy demand based on approximation from large chemical plant. Process emissions based on estimations only.
+
+Verification
+"Proof reading validation: passedValidator: Mischa ClassenTelephone: 0041 44 823 4937; E-mail: empa@ecoinvent.org; Company: EMPA; Country: CH"
+
+Comment
+"Translated name: Cumene, ab WerkIncluded processes: Raw materials and chemicals used for production, transport of materials to manufacturing plant, estimated emissions to air and water from production (incomplete), estimation of energy demand and infrastructure of the plant (approximation). Solid wastes omitted.Remark: The functional unit represent 1 kg of liquid cumene. Large uncertainty of the process data due to weak data on the production process and missing data on process emissions.CAS number: 000098-82-8; Formula: C9H12; Geography: Data used has no specific geographical origin (stoechiometry). Average europenan processes for raw materials, transport requirements and electricity mix used.Technology: Production by alkylation of benzene and propene with a yield of 95%. Inventory bases on stoechiometric calculations. The emissions to air (0.2 wt.% of raw material input) and water were estimated using mass balance. Treatment of the waste water in a internal waste water treatment plant assumed (elimination efficiency of 90% for C).Time period: date of published literatureVersion: 2.2Synonyms: (1-Methylethyl)benzene, 2-PhenylpropaneEnergy values: UndefinedProduction volume: unknownLocal category: ChemikalienLocal subcategory: OrganischSource file: 00389.XML"
+
+Allocation rules
+
+
+System description
+Ecoinvent;
+
+Products
+Cumene, at plant/RER U;kg;1;80;not defined;Chemicals\Organic;Europe
+Cumene, at plant/GLO U;kg;1;20;not defined;Chemicals\Organic;Global
+
+Avoided products
+
+Resources
+Water, cooling, unspecified natural origin/m3;in water;m3;0.024;Lognormal;1.9;0;0;"(5,5,1,1,4,5); estimated with data from a large chem. plant "
+
+Materials/fuels
+Benzene, at plant/RER U;kg;0.684;Undefined;0;0;0;"(4,na,na,na,na,na); estimation based on process yield 90-99.8%"
+
+Electricity/heat
+
+Emissions to air
+
+Emissions to water
+
+Emissions to soil
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+
+Input parameters
+
+End

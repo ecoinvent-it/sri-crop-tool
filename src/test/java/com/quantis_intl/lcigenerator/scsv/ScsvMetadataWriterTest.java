@@ -29,6 +29,7 @@ import org.junit.Test;
 
 import com.google.common.base.Charsets;
 import com.quantis_intl.lcigenerator.scsv.lib.ScsvLineSerializer;
+import com.quantis_intl.lcigenerator.scsv.lib.ScsvLinesWriter;
 import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadata;
 import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataEnums.CsvFormatVersion;
 import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataEnums.CsvSeparator;
@@ -63,7 +64,7 @@ public class ScsvMetadataWriterTest
 
         ByteArrayOutputStream o = new ByteArrayOutputStream();
         OutputStreamWriter ow = new OutputStreamWriter(o, Charsets.UTF_8);
-        ScsvMetadataWriter writer = new ScsvMetadataWriter(new ScsvLineSerializer(';'));
+        ScsvMetadataWriter writer = new ScsvMetadataWriter();
         writer.write(new ScsvMetadata()
         {
             @Override
@@ -144,7 +145,7 @@ public class ScsvMetadataWriterTest
                 return Optional.of(new OpenedAsset(OpenedAssetType.project, "Unit\"test"));
             }
 
-        }, ow);
+        }, new ScsvLinesWriter(new ScsvLineSerializer(';'), ow));
         ow.flush();
 
         assertEquals(expectedString, new String(o.toByteArray(), Charsets.UTF_8));

@@ -18,9 +18,6 @@
  */
 package com.quantis_intl.lcigenerator.scsv.lib;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
-import java.io.Writer;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -39,14 +36,7 @@ import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataEnums.SimaproVersion;
 
 public class ScsvMetadataWriter
 {
-    private final ScsvLineSerializer serializer;
-
-    public ScsvMetadataWriter(ScsvLineSerializer serializer)
-    {
-        this.serializer = serializer;
-    }
-
-    public void write(ScsvMetadata metadata, Writer writer)
+    public void write(ScsvMetadata metadata, ScsvLinesWriter writer)
     {
         PerMetadataWriter metadataWriter = new PerMetadataWriter(writer);
         metadataWriter.writeIfDefined("", metadata.getSimaproVersion(),
@@ -58,7 +48,7 @@ public class ScsvMetadataWriter
         metadataWriter.writeIfDefined("CSV separator: ", metadata.getCsvSeparator(), CsvSeparator.UNREAD);
         metadataWriter.writeIfDefined("Decimal separator: ", metadata.getDecimalSeparator(), DecimalSeparator.UNREAD);
         // TODO: Write date separator
-        metadataWriter.writeLine("Short date format: ", metadata.getShortDateFormat());
+        writer.writeMetadata("Short date format: ", metadata.getShortDateFormat());
         metadataWriter.writeIfBooleanDefined("Skip empty fields: ", metadata.getSkipEmptyFields());
         metadataWriter.writeIfBooleanDefined("Convert expressions to constants: ",
                 metadata.getConvertExpressionsToConstants());
@@ -75,9 +65,9 @@ public class ScsvMetadataWriter
 
     private class PerMetadataWriter
     {
-        private final Writer writer;
+        private final ScsvLinesWriter writer;
 
-        public PerMetadataWriter(Writer writer)
+        public PerMetadataWriter(ScsvLinesWriter writer)
         {
             this.writer = writer;
         }
@@ -95,7 +85,7 @@ public class ScsvMetadataWriter
         public <T> void writeIfDefined(String prefix, Function<T, String> toStringFunction, Optional<T> optionalValue)
         {
             if (optionalValue.isPresent())
-                writeLine(prefix, toStringFunction.apply(optionalValue.get()));
+                writer.writeMetadata(prefix, toStringFunction.apply(optionalValue.get()));
         }
 
         // TODO: The generics don't work as expected, writeIfDefined("", 1,"") seems to compile...
@@ -108,7 +98,7 @@ public class ScsvMetadataWriter
         {
             Objects.requireNonNull(value);
             if (!value.equals(undefinedValue))
-                writeLine(prefix, toStringFunction.apply(value));
+                writer.writeMetadata(prefix, toStringFunction.apply(value));
         }
 
         public <T> void writeIfDefined(String prefix, T value, T undefinedValue, T secondUndefinedValue)
@@ -117,37 +107,24 @@ public class ScsvMetadataWriter
                 writeIfDefined(prefix, value, undefinedValue);
         }
 
-        public void writeLine(String prefix, String value)
-        {
-            try
-            {
-                writer.write(serializer.serializeMetadata(prefix + value));
-                writer.write("\r\n");
-            }
-            catch (IOException e)
-            {
-                throw new UncheckedIOException(e);
-            }
-        }
-
         public void writeDateAndTimeIfPresent(Optional<LocalDateTime> date, DateTimeFormatter dateFormatter)
         {
             if (date.isPresent())
             {
-                writeLine("Date: ", dateFormatter.format(date.get()));
-                writeLine("Time: ", TIME_FORMATTER.format(date.get()));
+                writer.writeMetadata("Date: ", dateFormatter.format(date.get()));
+                writer.writeMetadata("Time: ", TIME_FORMATTER.format(date.get()));
             }
         }
 
         public void writeSelectionIfDefined(Selection selection)
         {
             if (!Selection.ABSENT_SELECTION.equals(selection) && selection.type != SelectionType.UNREAD)
-                writeLine("Selection: ", selection.toString());
+                writer.writeMetadata("Selection: ", selection.toString());
         }
 
         public void writeLibraries(List<String> libraries)
         {
-            libraries.stream().forEach(s -> writeLine("Library '", s + "'"));
+            libraries.stream().forEach(s -> writer.writeMetadata("Library '", s + "'"));
         }
     }
 }

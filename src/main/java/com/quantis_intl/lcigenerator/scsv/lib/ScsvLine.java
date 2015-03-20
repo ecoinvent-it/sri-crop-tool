@@ -16,52 +16,30 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.quantis_intl.lcigenerator;
+package com.quantis_intl.lcigenerator.scsv.lib;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UncheckedIOException;
-import java.io.Writer;
-import java.util.Map;
+import java.util.Optional;
+import java.util.function.Consumer;
 
-import com.quantis_intl.lcigenerator.scsv.GeneratedMetadata;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvLineSerializer;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvLinesWriter;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataWriter;
-
-public class ScsvFileWriter
+public interface ScsvLine
 {
-    private final ScsvLineSerializer serializer;
+    String asString();
 
-    private final ScsvMetadataWriter metadataWriter;
-
-    public ScsvFileWriter()
+    default String asOneFieldArray(Consumer<ScsvLine> ifNotOneFieldArray)
     {
-        this.serializer = new ScsvLineSerializer(';');
-        this.metadataWriter = new ScsvMetadataWriter();
+        String[] t = asArray();
+        if (t.length != 1)
+            ifNotOneFieldArray.accept(this);
+        return asArray()[0];
     }
 
-    public void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, OutputStream os)
+    default String[] asArray()
     {
-        try
-        {
-            writeModelsOutputToScsvFile(modelsOutput, new BufferedWriter(new OutputStreamWriter(os)));
-        }
-        catch (IOException e)
-        {
-            throw new UncheckedIOException(e);
-        }
+        return new String[] { asString() };
     }
 
-    private void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, Writer writer) throws IOException
+    default Optional<String> uselessnessMessage()
     {
-        ScsvLinesWriter linesWriter = new ScsvLinesWriter(serializer, writer);
-        metadataWriter.write(new GeneratedMetadata(), linesWriter);
-        linesWriter.writeNewLine();
-
-        writer.flush();
+        return Optional.empty();
     }
-
 }

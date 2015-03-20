@@ -16,52 +16,88 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.quantis_intl.lcigenerator;
+package com.quantis_intl.lcigenerator.scsv.lib;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UncheckedIOException;
 import java.io.Writer;
-import java.util.Map;
+import java.util.stream.Stream;
 
-import com.quantis_intl.lcigenerator.scsv.GeneratedMetadata;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvLineSerializer;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvLinesWriter;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataWriter;
-
-public class ScsvFileWriter
+public class ScsvLinesWriter
 {
+    private static final String NEW_LINE = "\r\n";
+
     private final ScsvLineSerializer serializer;
 
-    private final ScsvMetadataWriter metadataWriter;
+    private final Writer writer;
 
-    public ScsvFileWriter()
+    public ScsvLinesWriter(ScsvLineSerializer serializer, Writer writer)
     {
-        this.serializer = new ScsvLineSerializer(';');
-        this.metadataWriter = new ScsvMetadataWriter();
+        this.serializer = serializer;
+        this.writer = writer;
     }
 
-    public void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, OutputStream os)
+    public void writeNewLine()
+    {
+        safeWrite(NEW_LINE);
+    }
+
+    public void writeKnownLine(KnownLines line)
+    {
+        safeWrite(line.asString());
+        writeNewLine();
+    }
+
+    public void writeSingleField(String field)
+    {
+        safeWrite(serializer.serializeSingleField(field));
+        writeNewLine();
+    }
+
+    public void writeMultipleFields(String[] fields)
+    {
+        safeWrite(serializer.serializeFields(fields));
+        writeNewLine();
+    }
+
+    public void writeMetadata(String prefix, String metadataField)
+    {
+        writeSingleField("{" + prefix + metadataField + "}");
+    }
+
+    public void writeFragment(KnownLines header, String oneField)
+    {
+        safeWrite(header.asString());
+        writeNewLine();
+        writeSingleField(oneField);
+        writeNewLine();
+    }
+
+    public void writeFragment(KnownLines header, String[] oneLineFields)
+    {
+        safeWrite(header.asString());
+        writeNewLine();
+        writeMultipleFields(oneLineFields);
+        writeNewLine();
+    }
+
+    public void writeFragment(KnownLines header, Stream<String[]> linesOfFields)
+    {
+        safeWrite(header.asString());
+        writeNewLine();
+        linesOfFields.forEach(this::writeMultipleFields);
+        writeNewLine();
+    }
+
+    private void safeWrite(String str)
     {
         try
         {
-            writeModelsOutputToScsvFile(modelsOutput, new BufferedWriter(new OutputStreamWriter(os)));
+            writer.write(str);
         }
         catch (IOException e)
         {
             throw new UncheckedIOException(e);
         }
     }
-
-    private void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, Writer writer) throws IOException
-    {
-        ScsvLinesWriter linesWriter = new ScsvLinesWriter(serializer, writer);
-        metadataWriter.write(new GeneratedMetadata(), linesWriter);
-        linesWriter.writeNewLine();
-
-        writer.flush();
-    }
-
 }

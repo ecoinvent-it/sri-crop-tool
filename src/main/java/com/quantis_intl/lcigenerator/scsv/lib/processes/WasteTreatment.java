@@ -16,52 +16,42 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.quantis_intl.lcigenerator;
+package com.quantis_intl.lcigenerator.scsv.lib.processes;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UncheckedIOException;
-import java.io.Writer;
-import java.util.Map;
-
-import com.quantis_intl.lcigenerator.scsv.GeneratedMetadata;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvLineSerializer;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvLinesWriter;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataWriter;
-
-public class ScsvFileWriter
+public interface WasteTreatment
 {
-    private final ScsvLineSerializer serializer;
-
-    private final ScsvMetadataWriter metadataWriter;
-
-    public ScsvFileWriter()
+    default String getName()
     {
-        this.serializer = new ScsvLineSerializer(';');
-        this.metadataWriter = new ScsvMetadataWriter();
+        return "";
     }
 
-    public void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, OutputStream os)
+    default String getUnit()
     {
-        try
-        {
-            writeModelsOutputToScsvFile(modelsOutput, new BufferedWriter(new OutputStreamWriter(os)));
-        }
-        catch (IOException e)
-        {
-            throw new UncheckedIOException(e);
-        }
+        return "";
     }
 
-    private void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, Writer writer) throws IOException
+    default String getAmount()
     {
-        ScsvLinesWriter linesWriter = new ScsvLinesWriter(serializer, writer);
-        metadataWriter.write(new GeneratedMetadata(), linesWriter);
-        linesWriter.writeNewLine();
-
-        writer.flush();
+        return "0";
     }
 
+    default String getWasteType()
+    {
+        return "not defined";
+    }
+
+    default String getCategory()
+    {
+        return "";
+    }
+
+    default String getComment()
+    {
+        return "";
+    }
+
+    default String[] asArray()
+    {
+        return new String[] { getName(), getUnit(), getAmount(), getWasteType(), getCategory(), getComment() };
+    }
 }
