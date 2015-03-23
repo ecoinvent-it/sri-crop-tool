@@ -19,6 +19,7 @@
 package com.quantis_intl.lcigenerator.api;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Map;
 
@@ -32,17 +33,27 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.ImmutableMap;
+import com.quantis_intl.lcigenerator.ErrorReporter;
+import com.quantis_intl.lcigenerator.ErrorReporterImpl;
 import com.quantis_intl.lcigenerator.PyBridgeService;
 import com.quantis_intl.lcigenerator.ScsvFileWriter;
+import com.quantis_intl.lcigenerator.imports.CellResolverService;
+import com.quantis_intl.lcigenerator.imports.FileReaderService;
 
 @Path("pub/")
 public class Api
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
+
+    @Inject
+    private FileReaderService fileReaderService;
+
+    @Inject
+    private CellResolverService cellResolverService;
 
     @Inject
     private PyBridgeService pyBridgeService;
@@ -56,8 +67,21 @@ public class Api
     // TODO: Return a file to download
     public void computeQuestionnaire(@Suspended AsyncResponse response) throws URISyntaxException, IOException
     {
-        pyBridgeService.callComputeLci(ImmutableMap.of("test", "testValue"), result -> onResult(result, response),
-                error -> onError(error, response));
+        // FIXME: Tmp
+        InputStream is = Api.class
+                .getResourceAsStream("/LCI-Database_Data-collection_Crop_2015-03-20.xlsx");
+
+        ErrorReporter errorReporter = new ErrorReporterImpl();
+        Map<String, Cell> extractedCells = fileReaderService.getInputDataFromFile(is, errorReporter);
+        // FIXME: Define what to do if errors are found
+        if (!errorReporter.hasErrors())
+        {
+            Map<String, String> validatedData = cellResolverService.getValidatedData(extractedCells, errorReporter);
+            // FIXME: Define what to do if errors are found
+            if (!errorReporter.hasErrors())
+                pyBridgeService.callComputeLci(validatedData, result -> onResult(result, response),
+                        error -> onError(error, response));
+        }
     }
 
     private void onResult(Map<String, String> modelsOutput, AsyncResponse response)
