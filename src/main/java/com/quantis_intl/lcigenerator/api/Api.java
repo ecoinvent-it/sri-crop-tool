@@ -40,7 +40,7 @@ import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.ErrorReporterImpl;
 import com.quantis_intl.lcigenerator.PyBridgeService;
 import com.quantis_intl.lcigenerator.ScsvFileWriter;
-import com.quantis_intl.lcigenerator.imports.FileReaderService;
+import com.quantis_intl.lcigenerator.imports.ExcelInputReader;
 import com.quantis_intl.lcigenerator.imports.RawInputLine;
 import com.quantis_intl.lcigenerator.imports.RawInputToPyCompatibleConvertor;
 
@@ -50,10 +50,7 @@ public class Api
     private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
 
     @Inject
-    private FileReaderService fileReaderService;
-
-    @Inject
-    private RawInputToPyCompatibleConvertor inputConvertor;
+    private ExcelInputReader inputReader;
 
     @Inject
     private PyBridgeService pyBridgeService;
@@ -72,12 +69,13 @@ public class Api
                 .getResourceAsStream("/LCI-Database_Data-collection_Crop_2015-03-20.xlsx");
 
         ErrorReporter errorReporter = new ErrorReporterImpl();
-        Map<String, RawInputLine> extractedCells = null;// FIXME fileReaderService.getInputDataFromFile(is,
-                                                        // errorReporter);
+        Map<String, RawInputLine> extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
+
         // FIXME: Define what to do if errors are found
         if (!errorReporter.hasErrors())
         {
-            Map<String, Object> validatedData = inputConvertor.getValidatedData(extractedCells, errorReporter);
+            RawInputToPyCompatibleConvertor inputConvertor = new RawInputToPyCompatibleConvertor(errorReporter);
+            Map<String, Object> validatedData = inputConvertor.getValidatedData(extractedInputs, errorReporter);
             // FIXME: Define what to do if errors are found
             if (!errorReporter.hasErrors())
                 pyBridgeService.callComputeLci(validatedData, result -> onResult(result, response),

@@ -26,6 +26,9 @@ public class LabelForBlockTags
     public static Map<String, Map<String, String>> LABELS_FOR_NUMERIC = new HashMap<>();
     public static Map<String, Map<String, String>> LABELS_FOR_RATIO = new HashMap<>();
 
+    public static final String DEFAULT_VALUE = "other";
+    public static final String END_BLOCK_TAG = "end";
+
     private static final Map<String, String> HERBICIDES = PropertiesLoader.reverseProperties("/herbicides.properties");
     private static final Map<String, String> FUNGICIDES = PropertiesLoader.reverseProperties("/fungicides.properties");
     private static final Map<String, String> INSECTICIDES = PropertiesLoader

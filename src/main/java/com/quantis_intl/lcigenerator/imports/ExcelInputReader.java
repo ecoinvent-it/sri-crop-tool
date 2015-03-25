@@ -29,19 +29,24 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.POIHelper;
+import com.quantis_intl.lcigenerator.api.Api;
 
-public class FileReaderService
+public class ExcelInputReader
 {
-    public Map<String, Cell> getInputDataFromFile(InputStream is, ErrorReporter errorReporter)
+    private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
+
+    public Map<String, RawInputLine> getInputDataFromFile(InputStream is, ErrorReporter errorReporter)
     {
         try
         {
             Workbook workbook = WorkbookFactory.create(is);
             DataFileReader dataFileReader = new DataFileReader(workbook.getSheet("Template"), errorReporter);
-            return dataFileReader.getExtractedCells();
+            return dataFileReader.getExtractedInputs();
         }
         catch (InvalidFormatException e)
         {
@@ -61,16 +66,16 @@ public class FileReaderService
 
         private final Sheet sheet;
         private final ErrorReporter errorReporter;
-        private final Map<String, Cell> extractedCells = new HashMap<>();
+        private final Map<String, RawInputLine> extractedInputs = new HashMap<>();
 
         private String fileVersion;
 
-        private Integer labelColumnIndex;
-        private Integer countryColumnIndex;
-        private Integer dataColumnIndex;
-        private Integer commentColumnIndex;
-        private Integer sourceColumnIndex;
-        private Integer dataLevelColumnIndex;
+        private int labelColumnIndex = -1;
+        private int countryColumnIndex = -1;
+        private int dataColumnIndex = -1;
+        private int commentColumnIndex = -1;
+        private int sourceColumnIndex = -1;
+        private int dataLevelColumnIndex = -1;
 
         private Row currentTaggedRow;
         private String currentTag;
@@ -85,22 +90,21 @@ public class FileReaderService
                 readOtherRows();
         }
 
-        public Map<String, Cell> getExtractedCells()
+        public Map<String, RawInputLine> getExtractedInputs()
         {
-            return extractedCells;
+            return extractedInputs;
         }
 
         private void readHiddenHeaderRow()
         {
             currentTaggedRow = sheet.getRow(METADATA_ROW_INDEX);
             if (currentTaggedRow == null)
-                errorReporter.warning("metadata row", getReportedRowLocation(),
-                        "Empty mandatory row");
+                errorReporter.error("", "", "Bad template, please use the original template");
 
-            fileVersion = POIHelper.getCellStringValue(currentTaggedRow, METADATA_COLUMN_INDEX, null);
+            this.fileVersion = POIHelper.getCellStringValue(currentTaggedRow, METADATA_COLUMN_INDEX, null);
             // TODO: validate file version
 
-            Map<String, Integer> metadataColumnIndexes = new HashMap<>();
+            int nbFilledColumns = 0;
             for (int columnIndex = METADATA_COLUMN_INDEX + 1; columnIndex < currentTaggedRow.getLastCellNum(); columnIndex++)
             {
 
@@ -108,45 +112,92 @@ public class FileReaderService
                 if (cell == null || cell.getCellType() != Cell.CELL_TYPE_STRING)
                     continue;
 
-                String cellValue = cell.getStringCellValue();
-                if (metadataColumnIndexes.containsKey(cellValue))
-                    errorReporter.warning(cellValue, getReportedLocationForCell(columnIndex),
-                            "Duplicated property (ignored)");
-                else
-                    metadataColumnIndexes.put(cellValue, columnIndex);
+                switch (cell.getStringCellValue())
+                {
+                    case "label_column":
+                    {
+                        if (this.labelColumnIndex != -1)
+                            manageDuplicateProperty();
+                        else
+                        {
+                            this.labelColumnIndex = columnIndex;
+                            nbFilledColumns++;
+                        }
+                        break;
+                    }
+                    case "country_column":
+                    {
+                        if (this.countryColumnIndex != -1)
+                            manageDuplicateProperty();
+                        else
+                        {
+                            this.countryColumnIndex = columnIndex;
+                            nbFilledColumns++;
+                        }
+                        break;
+                    }
+                    case "data_column":
+                    {
+                        if (this.dataColumnIndex != -1)
+                            manageDuplicateProperty();
+                        else
+                        {
+                            this.dataColumnIndex = columnIndex;
+                            nbFilledColumns++;
+                        }
+                        break;
+                    }
+                    case "comment_column":
+                    {
+                        if (this.commentColumnIndex != -1)
+                            manageDuplicateProperty();
+                        else
+                        {
+                            this.commentColumnIndex = columnIndex;
+                            nbFilledColumns++;
+                        }
+                        break;
+                    }
+                    case "source_column":
+                    {
+                        if (this.sourceColumnIndex != -1)
+                            manageDuplicateProperty();
+                        else
+                        {
+                            this.sourceColumnIndex = columnIndex;
+                            nbFilledColumns++;
+                        }
+                        break;
+                    }
+                    case "data_level_column":
+                    {
+                        if (this.dataLevelColumnIndex != -1)
+                            manageDuplicateProperty();
+                        else
+                        {
+                            this.dataLevelColumnIndex = columnIndex;
+                            nbFilledColumns++;
+                        }
+                        break;
+                    }
+                    default:
+                        errorReporter.warning("", "", "Original template has been modified");
+                }
+
             }
 
-            this.labelColumnIndex = getValidatedColIndexForMetadataProperty(metadataColumnIndexes, "label_column",
-                    2);
-            this.countryColumnIndex = getValidatedColIndexForMetadataProperty(metadataColumnIndexes, "country_column",
-                    labelColumnIndex + 1);
-            this.dataColumnIndex = getValidatedColIndexForMetadataProperty(metadataColumnIndexes, "data_column",
-                    labelColumnIndex + 2);
-            this.commentColumnIndex = getValidatedColIndexForMetadataProperty(metadataColumnIndexes, "comment_column",
-                    labelColumnIndex + 3);
-            this.sourceColumnIndex = getValidatedColIndexForMetadataProperty(metadataColumnIndexes, "source_column",
-                    labelColumnIndex + 4);
-            this.dataLevelColumnIndex = getValidatedColIndexForMetadataProperty(metadataColumnIndexes,
-                    "data_level_column",
-                    labelColumnIndex + 5);
-
-            for (Map.Entry<String, Integer> metadataCellValue : metadataColumnIndexes.entrySet())
+            if (nbFilledColumns < 6)
             {
-                errorReporter.warning(metadataCellValue.getKey(),
-                        getReportedLocationForCell(metadataCellValue.getValue()),
-                        "Unknown header property");
+                if (nbFilledColumns < 1)
+                    errorReporter.error("", "", "Bad template, please use the original template");
+                else
+                    errorReporter.error("", "", "Too deep modification of the original template");
             }
         }
 
-        private Integer getValidatedColIndexForMetadataProperty(Map<String, Integer> metadataColumnIndexes,
-                String nameInFile, Integer defaultValue)
+        private void manageDuplicateProperty()
         {
-            if (metadataColumnIndexes.containsKey(nameInFile))
-                return metadataColumnIndexes.remove(nameInFile);
-
-            errorReporter.error(nameInFile, getReportedRowLocation(),
-                    "Missing mandatory header property");
-            return defaultValue;
+            errorReporter.error("", "", "Too deep modification of the original template");
         }
 
         private void readOtherRows()
@@ -173,17 +224,31 @@ public class FileReaderService
 
         private void readCrop()
         {
-            extractedCells.put("crop", currentTaggedRow.getCell(labelColumnIndex));
+            addCellToExtractedInputs("crop", currentTaggedRow.getCell(labelColumnIndex));
         }
 
         private void readCountry()
         {
-            extractedCells.put("country", currentTaggedRow.getCell(countryColumnIndex));
+            addCellToExtractedInputs("country", currentTaggedRow.getCell(countryColumnIndex));
         }
 
         private void readSystemBoundary()
         {
-            extractedCells.put("system_boundary", currentTaggedRow.getCell(dataColumnIndex));
+            addCellToExtractedInputs("system_boundary", currentTaggedRow.getCell(dataColumnIndex));
+        }
+
+        private void readData()
+        {
+            addCellToExtractedInputs(currentTag, currentTaggedRow.getCell(dataColumnIndex));
+        }
+
+        private void addCellToExtractedInputs(String key, Cell cell)
+        {
+            if (cell != null)
+            {
+                String title = POIHelper.getCellStringValue(currentTaggedRow, labelColumnIndex, "");
+                extractedInputs.put(key, new ExcelRawInputLine(key, title, currentTaggedRow.getRowNum(), cell));
+            }
         }
 
         private void readBlock(Map<String, String> dropDownValues)
@@ -211,30 +276,30 @@ public class FileReaderService
 
         private void readBlockData(Row blockRow, Map<String, String> dropDownValues)
         {
-            String label = POIHelper.getCellStringValue(blockRow, labelColumnIndex, null);
-            String validatedLabel = dropDownValues.get(label);
-            if (validatedLabel == null)
-                errorReporter.warning(currentTag, POIHelper.getCellLocationForLogs(blockRow, labelColumnIndex),
-                        "Unknown value");
-            else
+            Cell cell = blockRow.getCell(dataColumnIndex);
+            if (cell != null)
             {
-                extractedCells.put(currentTag + validatedLabel, blockRow.getCell(dataColumnIndex));
+                String title = POIHelper.getCellStringValue(blockRow, labelColumnIndex, "");
+                String titleVar = dropDownValues.get(title);
+                if (titleVar == null)
+                {
+                    titleVar = LabelForBlockTags.DEFAULT_VALUE;
+                    LOGGER.warn("Unknown title for block " + currentTaggedRow + ": " + title);
+                }
+
+                String extractedInputKey = currentTag + titleVar;
+                if (extractedInputs.containsKey(extractedInputKey))
+                {
+                    ExcelRawInputBlock inputLine = (ExcelRawInputBlock) extractedInputs.get(extractedInputKey);
+                    inputLine.addCell(cell);
+                }
+                else
+                {
+                    ExcelRawInputBlock inputLine = new ExcelRawInputBlock(extractedInputKey, title,
+                            currentTaggedRow.getRowNum(), cell);
+                    extractedInputs.put(extractedInputKey, inputLine);
+                }
             }
-        }
-
-        private void readData()
-        {
-            extractedCells.put(currentTag, currentTaggedRow.getCell(dataColumnIndex));
-        }
-
-        private String getReportedLocationForCell(int colIndex)
-        {
-            return POIHelper.getCellLocationForLogs(currentTaggedRow, colIndex);
-        }
-
-        private String getReportedRowLocation()
-        {
-            return POIHelper.getLocationForLogs(currentTaggedRow);
         }
 
         private boolean loadNextTaggedRowInfo()
@@ -250,6 +315,10 @@ public class FileReaderService
                     continue;
 
                 cellValue = POIHelper.getCellStringValue(tmpRow, METADATA_COLUMN_INDEX, null);
+
+                // NOTE: don't read end row of block
+                if (LabelForBlockTags.END_BLOCK_TAG.equals(cellValue))
+                    continue;
             }
 
             if (cellValue != null)

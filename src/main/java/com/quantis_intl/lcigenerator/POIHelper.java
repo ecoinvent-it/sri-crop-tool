@@ -86,29 +86,4 @@ public class POIHelper
             return cell.getNumericCellValue();
         return defaultValue;
     }
-
-    public static String getCellLocationForLogs(Cell cell)
-    {
-        return getCellLocationForLogs(cell.getRowIndex(), cell.getColumnIndex());
-    }
-
-    public static String getCellLocationForLogs(Row row, int colIndex)
-    {
-        return getCellLocationForLogs(row.getRowNum(), colIndex);
-    }
-
-    public static String getCellLocationForLogs(int rowIndex, int colIndex)
-    {
-        return getLocationForLogs(rowIndex) + ", column: " + (colIndex + 1);
-    }
-
-    public static String getLocationForLogs(Row row)
-    {
-        return getLocationForLogs(row.getRowNum());
-    }
-
-    public static String getLocationForLogs(int rowIndex)
-    {
-        return "row: " + (rowIndex + 1);
-    }
 }
