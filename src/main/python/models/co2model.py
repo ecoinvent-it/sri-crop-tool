@@ -5,7 +5,7 @@ class Co2Model(object):
       part_of_urea_in_UAN: ratio
       calcium_from_lime: kg Ca / ha
       calcium_from_carbonation_lime: kg Ca / ha
-      calcium_from_algae_lime: kg Ca / ha
+      calcium_from_seaweed_lime: kg Ca / ha
       magnesium_from_fertilizer: kg Mg / ha
       magnesium_as_dolomite: ratio
 
@@ -17,7 +17,7 @@ class Co2Model(object):
                         "part_of_urea_in_UAN",
                         "calcium_from_lime",
                         "calcium_from_carbonation_lime",
-                        "calcium_from_algae_lime",
+                        "calcium_from_seaweed_lime",
                         "magnesium_from_fertilizer",
                         "magnesium_as_dolomite"
                        ]
@@ -55,7 +55,7 @@ class Co2Model(object):
         return self._UREA_N_TO_CO2_FACTOR * (self.nitrogen_from_urea + self.part_of_urea_in_UAN * self.nitrogen_from_ureaAN);
     
     def _compute_CO2_from_lime(self):
-        return self._CA_TO_CO2_FACTOR * (self.calcium_from_lime + self.calcium_from_carbonation_lime + self.calcium_from_algae_lime) + self._compute_CO2_from_magnesium();
+        return self._CA_TO_CO2_FACTOR * (self.calcium_from_lime + self.calcium_from_carbonation_lime + self.calcium_from_seaweed_lime) + self._compute_CO2_from_magnesium();
 
     def _compute_CO2_from_magnesium(self):
         return self._MG_TO_CO2_FACTOR * self.magnesium_from_fertilizer * self.magnesium_as_dolomite;

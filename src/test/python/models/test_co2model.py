@@ -9,7 +9,7 @@ class Test(unittest.TestCase):
                   "part_of_urea_in_UAN": 0.5,
                   "calcium_from_lime": 4.0,
                   "calcium_from_carbonation_lime": 5.0,
-                  "calcium_from_algae_lime": 5.0,
+                  "calcium_from_seaweed_lime": 5.0,
                   "magnesium_from_fertilizer": 4.0,
                   "magnesium_as_dolomite": 1.0
                     }
