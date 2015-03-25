@@ -23,7 +23,6 @@ import com.quantis_intl.lcigenerator.LoginServiceImpl;
 import com.quantis_intl.lcigenerator.PyBridgeService;
 import com.quantis_intl.lcigenerator.ScsvFileWriter;
 import com.quantis_intl.lcigenerator.imports.FileReaderService;
-import com.quantis_intl.lcigenerator.imports.RawInputToPyCompatibleConvertor;
 import com.quantis_intl.stack.authentication.LoginService;
 
 public class CoreModule extends AbstractModule
@@ -35,6 +34,5 @@ public class CoreModule extends AbstractModule
         bind(PyBridgeService.class);
         bind(ScsvFileWriter.class);
         bind(FileReaderService.class);
-        bind(RawInputToPyCompatibleConvertor.class);
     }
 }

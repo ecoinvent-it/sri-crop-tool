@@ -22,7 +22,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
 import com.quantis_intl.lcigenerator.ErrorReporter;
@@ -46,8 +45,13 @@ public class RawInputToPyCompatibleConvertor
 
     public Map<String, Object> getValidatedData(Map<String, RawInputLine> cells, ErrorReporter errorReporter)
     {
-        Map<String, Object> refinedInputs = cells.entrySet().stream().filter(e -> e.getValue().isValuePresent())
-                .collect(Collectors.toMap(Map.Entry::getKey, this::rawInputLineToObject));
+        Map<String, Object> refinedInputs = Maps.newHashMapWithExpectedSize(cells.size());
+        cells.entrySet().stream().filter(e -> e.getValue().isValuePresent())
+                .forEach(e -> {
+                    Object o = this.rawInputLineToObject(e);
+                    if (o != null)
+                        refinedInputs.put(e.getKey(), o);
+                });
 
         AllValidatorsAndNormalizers allValidators = new AllValidatorsAndNormalizers(refinedInputs);
         allValidators.validateAndNormalize();
@@ -175,7 +179,7 @@ public class RawInputToPyCompatibleConvertor
 
         private void validateSum(String totalKey, String... partKeys)
         {
-            double sum = Arrays.stream(partKeys).mapToDouble(k -> (Double) inputs.get(k)).sum();
+            double sum = Arrays.stream(partKeys).mapToDouble(k -> (Double) inputs.getOrDefault(k, 0.0)).sum();
             validateSum(totalKey, sum);
         }
 

@@ -1,5 +1,6 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
+from modelsSequence import ModelsSequence
 
 #TODO: Read from external properties
 hostName = "localhost"
@@ -12,7 +13,7 @@ class QtsRequestHandler(BaseHTTPRequestHandler):
             try:
                 mapReq = json.loads(str(self.rfile.read(int(self.headers['content-length'])), "utf-8"))
                 #TODO: Do the things
-                mapRes = mapReq
+                mapRes = ModelsSequence(mapReq).executeSequence()
                 jsonRes = json.dumps(mapRes)
             except:
                 self.send_error(500)
