@@ -42,7 +42,7 @@ public class PyBridgeService
                 .target(properties.getProperty("pyBridge.url"));
     }
 
-    public void callComputeLci(Map<String, String> request, Consumer<Map<String, String>> onResult,
+    public void callComputeLci(Map<String, Object> request, Consumer<Map<String, String>> onResult,
             Consumer<Throwable> onError)
     {
         pyBridgeTarget.request().async().post(Entity.json(request), new InvocationCallback<Map<String, String>>()

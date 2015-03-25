@@ -33,7 +33,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,8 +40,9 @@ import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.ErrorReporterImpl;
 import com.quantis_intl.lcigenerator.PyBridgeService;
 import com.quantis_intl.lcigenerator.ScsvFileWriter;
-import com.quantis_intl.lcigenerator.imports.CellResolverService;
 import com.quantis_intl.lcigenerator.imports.FileReaderService;
+import com.quantis_intl.lcigenerator.imports.RawInputLine;
+import com.quantis_intl.lcigenerator.imports.RawInputToPyCompatibleConvertor;
 
 @Path("pub/")
 public class Api
@@ -53,7 +53,7 @@ public class Api
     private FileReaderService fileReaderService;
 
     @Inject
-    private CellResolverService cellResolverService;
+    private RawInputToPyCompatibleConvertor inputConvertor;
 
     @Inject
     private PyBridgeService pyBridgeService;
@@ -72,11 +72,12 @@ public class Api
                 .getResourceAsStream("/LCI-Database_Data-collection_Crop_2015-03-20.xlsx");
 
         ErrorReporter errorReporter = new ErrorReporterImpl();
-        Map<String, Cell> extractedCells = fileReaderService.getInputDataFromFile(is, errorReporter);
+        Map<String, RawInputLine> extractedCells = null;// FIXME fileReaderService.getInputDataFromFile(is,
+                                                        // errorReporter);
         // FIXME: Define what to do if errors are found
         if (!errorReporter.hasErrors())
         {
-            Map<String, String> validatedData = cellResolverService.getValidatedData(extractedCells, errorReporter);
+            Map<String, Object> validatedData = inputConvertor.getValidatedData(extractedCells, errorReporter);
             // FIXME: Define what to do if errors are found
             if (!errorReporter.hasErrors())
                 pyBridgeService.callComputeLci(validatedData, result -> onResult(result, response),
