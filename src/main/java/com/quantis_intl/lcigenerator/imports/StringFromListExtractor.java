@@ -36,7 +36,7 @@ public class StringFromListExtractor
     private static final Map<String, String> ANTI_EROSION_PRACTICE = new HashMap<String, String>();
     private static final Map<String, String> TYPE_OF_DRYING = new HashMap<String, String>();
 
-    private static final Map<String, Map<String, String>> TAGS_TO_MAP = new HashMap<>();
+    public static final Map<String, Map<String, String>> TAGS_TO_MAP = new HashMap<>();
 
     static
     {

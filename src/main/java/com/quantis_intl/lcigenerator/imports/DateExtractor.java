@@ -21,15 +21,15 @@ package com.quantis_intl.lcigenerator.imports;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import com.quantis_intl.lcigenerator.ErrorReporter;
 
 public class DateExtractor
 {
-    public static List<String> TAGS_FOR_STRING = new ArrayList<>();
+    public static Set<String> TAGS_FOR_STRING = new HashSet<>();
 
     // NOTE: Use fixed template as the cell format is specified by user in Excel
     // NOTE: Java considers 80 years in the past and 20 years in the future for 2-letter years
@@ -50,7 +50,6 @@ public class DateExtractor
         this.errorReporter = errorReporter;
     }
 
-    // DateExtractor
     public LocalDate extract(RawInputLine line)
     {
         Optional<String> stringValue = line.getValueAsString();

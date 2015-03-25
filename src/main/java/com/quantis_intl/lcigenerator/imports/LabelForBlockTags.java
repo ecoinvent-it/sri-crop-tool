@@ -40,14 +40,14 @@ public class LabelForBlockTags
 
     static
     {
-        LABELS_FOR_NUMERIC.put("herbicides_", HERBICIDES);
-        LABELS_FOR_NUMERIC.put("fungicides_", FUNGICIDES);
-        LABELS_FOR_NUMERIC.put("insecticides_", INSECTICIDES);
+        LABELS_FOR_NUMERIC.put("part_herbicides_", HERBICIDES);
+        LABELS_FOR_NUMERIC.put("part_fungicides_", FUNGICIDES);
+        LABELS_FOR_NUMERIC.put("part_insecticides_", INSECTICIDES);
 
         PLANT_PROTECTION.put("Spraying", "spraying");
         PLANT_PROTECTION.put("Flaming", "flaming");
         PLANT_PROTECTION.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_plant_protection_", PLANT_PROTECTION);
+        LABELS_FOR_RATIO.put("ratio_plantprotection_", PLANT_PROTECTION);
 
         SOIL_CULTIVATION.put("Soil separation", "separation");
         SOIL_CULTIVATION.put("Soil tillage, chisel", "tillage_chisel");
@@ -59,14 +59,14 @@ public class LabelForBlockTags
         SOIL_CULTIVATION.put("Soil tillage, roll", "tillage_roll");
         SOIL_CULTIVATION.put("Soil tillage, rotary cultivator", "tillage_rotary_cultivator");
         SOIL_CULTIVATION.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_soil_cultivation_", SOIL_CULTIVATION);
+        LABELS_FOR_RATIO.put("ratio_soilcultivation_", SOIL_CULTIVATION);
 
         SOWING_PLANTING.put("Sowing", "sowing");
         SOWING_PLANTING.put("Planting seedlings", "planting_seedlings");
         SOWING_PLANTING.put("Planting trees", "planting_trees");
         SOWING_PLANTING.put("Planting potatoes", "planting_potatoes");
         SOWING_PLANTING.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_sowing_planting_", SOWING_PLANTING);
+        LABELS_FOR_RATIO.put("ratio_sowingplanting_", SOWING_PLANTING);
 
         FERTILISATION.put("Fertilizing, with broadcaster", "fertilizing_broadcaster");
         FERTILISATION.put("Liquid manure application, with vacuum tanker", "liquid_manure_vaccum_tanker");
@@ -95,6 +95,6 @@ public class LabelForBlockTags
         OTHER_WORK_PROCESSES.put("Mulching (number of passes)", "mulching_nb_passes");
         OTHER_WORK_PROCESSES.put("Transport, tractor and trailer (tonnes * km)", "transport_tractor_trailer_tkm");
         OTHER_WORK_PROCESSES.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_other_work_processes_", OTHER_WORK_PROCESSES);
+        LABELS_FOR_RATIO.put("ratio_otherworkprocesses_", OTHER_WORK_PROCESSES);
     }
 }

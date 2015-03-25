@@ -18,15 +18,15 @@
  */
 package com.quantis_intl.lcigenerator.imports;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import com.quantis_intl.lcigenerator.ErrorReporter;
 
 public class StringExtractor
 {
-    public static List<String> TAGS_FOR_STRING = new ArrayList<>();
+    public static Set<String> TAGS_FOR_STRING = new HashSet<>();
 
     static
     {
