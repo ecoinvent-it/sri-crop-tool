@@ -27,9 +27,11 @@ import java.io.Writer;
 import java.util.Map;
 
 import com.quantis_intl.lcigenerator.scsv.GeneratedMetadata;
+import com.quantis_intl.lcigenerator.scsv.GeneratedProcess;
 import com.quantis_intl.lcigenerator.scsv.lib.ScsvLineSerializer;
 import com.quantis_intl.lcigenerator.scsv.lib.ScsvLinesWriter;
 import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataWriter;
+import com.quantis_intl.lcigenerator.scsv.lib.processes.ScsvProcessWriter;
 
 public class ScsvFileWriter
 {
@@ -58,10 +60,12 @@ public class ScsvFileWriter
     private void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, Writer writer) throws IOException
     {
         ScsvLinesWriter linesWriter = new ScsvLinesWriter(serializer, writer);
-        metadataWriter.write(new GeneratedMetadata(), linesWriter);
+        GeneratedMetadata generatedMetadata = new GeneratedMetadata();
+        metadataWriter.write(generatedMetadata, linesWriter);
         linesWriter.writeNewLine();
+        ScsvProcessWriter processWriter = new ScsvProcessWriter(linesWriter, generatedMetadata.getDateFormatter());
+        processWriter.write(new GeneratedProcess(modelsOutput));
 
         writer.flush();
     }
-
 }

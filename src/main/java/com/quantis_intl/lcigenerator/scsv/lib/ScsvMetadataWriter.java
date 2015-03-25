@@ -47,7 +47,7 @@ public class ScsvMetadataWriter
         metadataWriter.writeIfDefined("CSV Format version: ", metadata.getCsvFormatVersion(), CsvFormatVersion.UNREAD);
         metadataWriter.writeIfDefined("CSV separator: ", metadata.getCsvSeparator(), CsvSeparator.UNREAD);
         metadataWriter.writeIfDefined("Decimal separator: ", metadata.getDecimalSeparator(), DecimalSeparator.UNREAD);
-        // TODO: Write date separator
+        // FIXME: Write date separator
         writer.writeMetadata("Short date format: ", metadata.getShortDateFormat());
         metadataWriter.writeIfBooleanDefined("Skip empty fields: ", metadata.getSkipEmptyFields());
         metadataWriter.writeIfBooleanDefined("Convert expressions to constants: ",
