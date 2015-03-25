@@ -18,44 +18,20 @@
  */
 package com.quantis_intl.lcigenerator.imports;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-import com.quantis_intl.lcigenerator.ErrorReporter;
-
-public class StringExtractor
+public interface RawInputLine
 {
-    public static List<String> TAGS_FOR_STRING = new ArrayList<>();
+    public String getLineVariable();
 
-    static
-    {
-        TAGS_FOR_STRING.add("system_boundary");
-        TAGS_FOR_STRING.add("record_entry_by");
-        TAGS_FOR_STRING.add("collection_method");
-        TAGS_FOR_STRING.add("data_treatment_extrapolations");
-        TAGS_FOR_STRING.add("data_treatment_uncertainty");
-        TAGS_FOR_STRING.add("comment");
-    }
+    public String getLineTitle();
 
-    private ErrorReporter errorReporter;
+    public int getLineNum();
 
-    public StringExtractor(ErrorReporter errorReporter)
-    {
-        this.errorReporter = errorReporter;
-    }
+    public boolean isValuePresent();
 
-    public String extract(RawInputLine line)
-    {
-        Optional<String> stringValue = line.getValueAsString();
-        if (stringValue.isPresent())
-            return stringValue.get();
-        else
-        {
-            errorReporter
-                    .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read value, use default");
-            return null;
-        }
-    }
+    public Optional<String> getValueAsString();
+
+    public Optional<Double> getValueAsDouble();
+
 }

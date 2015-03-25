@@ -19,14 +19,10 @@
 package com.quantis_intl.lcigenerator.imports;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.poi.ss.usermodel.Cell;
+import java.util.Optional;
 
 import com.quantis_intl.lcigenerator.ErrorReporter;
-import com.quantis_intl.lcigenerator.POIHelper;
 
 public class NumericExtractor
 {
@@ -136,118 +132,59 @@ public class NumericExtractor
         TAGS_FOR_RATIO.add("drying_humidity_after_drying");
     }
 
-    private Map<String, Cell> cells;
     private ErrorReporter errorReporter;
 
-    public NumericExtractor(Map<String, Cell> cells, ErrorReporter errorReporter)
+    public NumericExtractor(ErrorReporter errorReporter)
     {
-        this.cells = cells;
         this.errorReporter = errorReporter;
     }
 
-    public Map<String, String> extract()
+    private Double extractNumeric(RawInputLine line)
     {
-        Map<String, String> extracted = new HashMap<>();
-        extracted.putAll(extractNumeric());
-        extracted.putAll(extractNumericForPrefixes());
-        extracted.putAll(extractRatio());
-        extracted.putAll(extractRatioForPrefixes());
-        return extracted;
-    }
-
-    private Map<String, String> extractNumeric()
-    {
-        Map<String, String> extracted = new HashMap<>();
-        for (String tag : TAGS_FOR_NUMERIC)
+        Optional<Double> optDouble = line.getValueAsDouble();
+        if (optDouble.isPresent())
         {
-            Cell cell = cells.get(tag);
-            fillMap(extracted, tag, cell);
-        }
-        return extracted;
-    }
-
-    private Map<String, String> extractRatio()
-    {
-        Map<String, String> extracted = new HashMap<>();
-        for (String tag : TAGS_FOR_RATIO)
-        {
-            Cell cell = cells.get(tag);
-            fillMapWithRatio(extracted, tag, cell);
-        }
-        return extracted;
-    }
-
-    private Map<String, String> extractNumericForPrefixes()
-    {
-        Map<String, String> extracted = new HashMap<>();
-        for (String prefix : LabelForBlockTags.LABELS_FOR_NUMERIC.keySet())
-        {
-            new HashMap<String, Cell>(cells).entrySet()
-                    .stream()
-                    .filter(p -> p.getKey().startsWith(prefix))
-                    .forEach(p -> fillMap(extracted, p.getKey(), p.getValue()));
-        }
-        return extracted;
-    }
-
-    private Map<String, String> extractRatioForPrefixes()
-    {
-        Map<String, String> extracted = new HashMap<>();
-        for (String prefix : LabelForBlockTags.LABELS_FOR_RATIO.keySet())
-        {
-            new HashMap<String, Cell>(cells).entrySet()
-                    .stream()
-                    .filter(p -> p.getKey().startsWith(prefix))
-                    .forEach(p -> fillMapWithRatio(extracted, p.getKey(), p.getValue()));
-        }
-        return extracted;
-    }
-
-    private void fillMap(Map<String, String> extracted, String tag, Cell cell)
-    {
-        Double doubleValue = getDoubleValue(tag, cell);
-        if (doubleValue != null)
-        {
-            extracted.put(tag, Double.toString(doubleValue));
-            cells.remove(tag);
-        }
-    }
-
-    private void fillMapWithRatio(Map<String, String> extracted, String tag, Cell cell)
-    {
-        Double doubleValue = getDoubleValue(tag, cell);
-        if (doubleValue != null)
-        {
-            if (doubleValue >= 0.0 && doubleValue <= 1.0)
+            Double doubleValue = optDouble.get();
+            if (doubleValue < 0.0)
             {
-                extracted.put(tag, Double.toString(doubleValue));
-                cells.remove(tag);
-            }
-            else
-            {
-                errorReporter.warning(tag, POIHelper.getCellLocationForLogs(cell),
-                        "Wrong value for ratio");
-            }
-        }
-    }
-
-    private Double getDoubleValue(String tag, Cell cell)
-    {
-        if (cell == null)
-        {
-            errorReporter.warning(tag, "", "Missing property");
-            return null;
-        }
-        else
-        {
-            Double doubleValue = POIHelper.getCellDoubleValue(cell, null);
-            if (doubleValue == null)
-            {
-                errorReporter.warning(tag, POIHelper.getCellLocationForLogs(cell),
-                        "Empty or wrong value for property");
+                errorReporter
+                        .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                                "Can't read value, use default");
                 return null;
             }
             return doubleValue;
         }
+        else
+        {
+            errorReporter
+                    .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                            "Can't read value, use default");
+            return null;
+        }
     }
+
+    private Double extractRatio(RawInputLine line)
+    {
+        Optional<Double> optDouble = line.getValueAsDouble();
+        if (optDouble.isPresent())
+        {
+            Double doubleValue = optDouble.get();
+            if (doubleValue < 0.0 || doubleValue > 1.0)
+            {
+                errorReporter
+                        .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                                "Can't read value, use default");
+                return null;
+            }
+            return doubleValue;
+        }
+        else
+        {
+            errorReporter
+                    .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                            "Can't read value, use default");
+            return null;
+        }
+    }
+
 }

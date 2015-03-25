@@ -20,12 +20,9 @@ package com.quantis_intl.lcigenerator.imports;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.poi.ss.usermodel.Cell;
+import java.util.Optional;
 
 import com.quantis_intl.lcigenerator.ErrorReporter;
-import com.quantis_intl.lcigenerator.POIHelper;
 
 public class StringFromListExtractor
 {
@@ -87,43 +84,36 @@ public class StringFromListExtractor
         TAGS_TO_MAP.put("type_of_drying", TYPE_OF_DRYING);
     }
 
-    private Map<String, Cell> cells;
     private ErrorReporter errorReporter;
 
-    public StringFromListExtractor(Map<String, Cell> cells, ErrorReporter errorReporter)
+    public StringFromListExtractor(ErrorReporter errorReporter)
     {
-        this.cells = cells;
         this.errorReporter = errorReporter;
     }
 
-    public Map<String, String> extract()
+    public String extract(RawInputLine line)
     {
-        Map<String, String> extracted = new HashMap<>();
-        for (Entry<String, Map<String, String>> tagEntry : TAGS_TO_MAP.entrySet())
+        Optional<String> stringValue = line.getValueAsString();
+        if (stringValue.isPresent())
         {
-            String tag = tagEntry.getKey();
-            Cell cell = cells.get(tag);
-            if (cell == null)
-                errorReporter.warning(tag, "", "Missing property");
+            String mapItem = TAGS_TO_MAP.get(line.getLineVariable()).get(stringValue);
+            if (mapItem == null)
+            {
+                errorReporter.warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                        "Can't read value, use default");
+                return null;
+            }
             else
             {
-                String stringValue = POIHelper.getCellStringValue(cell, null);
-                if (stringValue == null)
-                    errorReporter.warning(tag, POIHelper.getCellLocationForLogs(cell),
-                            "Empty or wrong value for property");
-                else
-                {
-                    String mapItem = tagEntry.getValue().get(stringValue);
-                    if (mapItem == null)
-                        errorReporter.warning(tag, POIHelper.getCellLocationForLogs(cell), "Wrong value for property");
-                    else
-                    {
-                        extracted.put(tag, mapItem);
-                        cells.remove(tag);
-                    }
-                }
+                return stringValue.get();
             }
         }
-        return extracted;
+        else
+        {
+            errorReporter
+                    .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                            "Can't read value, use default");
+            return null;
+        }
     }
 }

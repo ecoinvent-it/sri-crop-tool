@@ -22,14 +22,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.poi.ss.usermodel.Cell;
+import java.util.Optional;
 
 import com.quantis_intl.lcigenerator.ErrorReporter;
-import com.quantis_intl.lcigenerator.POIHelper;
 
 public class DateExtractor
 {
@@ -47,45 +43,35 @@ public class DateExtractor
         TAGS_FOR_STRING.add("harvesting_date_main_crop");
     }
 
-    private Map<String, Cell> cells;
     private ErrorReporter errorReporter;
 
-    public DateExtractor(Map<String, Cell> cells, ErrorReporter errorReporter)
+    public DateExtractor(ErrorReporter errorReporter)
     {
-        this.cells = cells;
         this.errorReporter = errorReporter;
     }
 
-    public Map<String, String> extract()
+    // DateExtractor
+    public LocalDate extract(RawInputLine line)
     {
-        Map<String, String> extracted = new HashMap<>();
-        for (String tag : TAGS_FOR_STRING)
-        {
-            Cell cell = cells.get(tag);
-            if (cell == null)
-                errorReporter.warning(tag, "", "Missing property");
-            else
+        Optional<String> stringValue = line.getValueAsString();
+        if (stringValue.isPresent())
+
+            try
             {
-                String stringValue = POIHelper.getCellStringValue(cell, null);
-                if (stringValue == null)
-                    errorReporter.warning(tag, POIHelper.getCellLocationForLogs(cell),
-                            "Empty or wrong value for property");
-                else
-                {
-                    try
-                    {
-                        LocalDate date = LocalDate.parse(stringValue, DATE_FORMATTER);
-                        extracted.put(tag, date.format(DateTimeFormatter.ISO_DATE));
-                        cells.remove(tag);
-                    }
-                    catch (DateTimeParseException e)
-                    {
-                        errorReporter.warning(tag, POIHelper.getCellLocationForLogs(cell),
-                                "Wrong date format for property");
-                    }
-                }
+                return LocalDate.parse(stringValue.get(), DATE_FORMATTER);
             }
+            catch (DateTimeParseException e)
+            {
+                errorReporter.warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                        "Can't read value, use default");
+                return null;
+            }
+        else
+        {
+            errorReporter
+                    .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                            "Can't read value, use default");
+            return null;
         }
-        return extracted;
     }
 }
