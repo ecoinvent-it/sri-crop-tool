@@ -20,7 +20,7 @@ package com.quantis_intl.lcigenerator.scsv;
 
 import java.util.Map;
 
-import com.quantis_intl.lcigenerator.scsv.lib.processes.SubstanceUsage;
+import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
 
 public class GeneratedSubstanceUsage implements SubstanceUsage
 {

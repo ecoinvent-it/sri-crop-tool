@@ -27,13 +27,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.google.common.collect.ImmutableList;
-import com.quantis_intl.lcigenerator.scsv.lib.processes.Product;
-import com.quantis_intl.lcigenerator.scsv.lib.processes.ProductUsage;
-import com.quantis_intl.lcigenerator.scsv.lib.processes.ScsvProcess.ProductScsvProcess;
-import com.quantis_intl.lcigenerator.scsv.lib.processes.ScsvProcessEnums.CategoryType;
-import com.quantis_intl.lcigenerator.scsv.lib.processes.ScsvProcessEnums.Status;
-import com.quantis_intl.lcigenerator.scsv.lib.processes.ScsvProcessEnums.Type;
-import com.quantis_intl.lcigenerator.scsv.lib.processes.SubstanceUsage;
+import com.quantis_intl.commons.scsv.processes.Product;
+import com.quantis_intl.commons.scsv.processes.ProductUsage;
+import com.quantis_intl.commons.scsv.processes.ScsvProcess.ProductScsvProcess;
+import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.CategoryType;
+import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Status;
+import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Type;
+import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
 
 public class GeneratedProcess implements ProductScsvProcess
 {

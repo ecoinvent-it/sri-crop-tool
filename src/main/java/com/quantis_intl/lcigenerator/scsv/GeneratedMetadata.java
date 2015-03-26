@@ -24,12 +24,13 @@ import java.util.List;
 import java.util.Optional;
 
 import com.google.common.collect.ImmutableList;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadata;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataEnums.CsvFormatVersion;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataEnums.CsvSeparator;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataEnums.DecimalSeparator;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataEnums.ExportType;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataEnums.SimaproVersion;
+import com.quantis_intl.commons.scsv.ScsvBoolean;
+import com.quantis_intl.commons.scsv.ScsvMetadata;
+import com.quantis_intl.commons.scsv.ScsvMetadataEnums.CsvFormatVersion;
+import com.quantis_intl.commons.scsv.ScsvMetadataEnums.CsvSeparator;
+import com.quantis_intl.commons.scsv.ScsvMetadataEnums.DecimalSeparator;
+import com.quantis_intl.commons.scsv.ScsvMetadataEnums.ExportType;
+import com.quantis_intl.commons.scsv.ScsvMetadataEnums.SimaproVersion;
 
 public class GeneratedMetadata implements ScsvMetadata
 {
@@ -70,29 +71,29 @@ public class GeneratedMetadata implements ScsvMetadata
     }
 
     @Override
-    public Optional<Boolean> getSkipEmptyFields()
+    public Optional<ScsvBoolean> getSkipEmptyFields()
     {
-        return Optional.of(Boolean.FALSE);
+        return Optional.of(ScsvBoolean.No);
     }
 
     @Override
-    public Optional<Boolean> getConvertExpressionsToConstants()
+    public Optional<ScsvBoolean> getConvertExpressionsToConstants()
     {
-        return Optional.of(Boolean.FALSE);
+        return Optional.of(ScsvBoolean.No);
     }
 
     @Override
-    public Optional<Boolean> getRelatedObjects()
+    public Optional<ScsvBoolean> getRelatedObjects()
     {
         // TODO: The user should be able the choice with or without
-        return Optional.of(Boolean.FALSE);
+        return Optional.of(ScsvBoolean.No);
     }
 
     @Override
-    public Optional<Boolean> getIncludeSubProduct()
+    public Optional<ScsvBoolean> getIncludeSubProduct()
     {
         // TODO: The user should be able the choice with or without
-        return Optional.of(Boolean.FALSE);
+        return Optional.of(ScsvBoolean.No);
     }
 
     @Override

@@ -26,12 +26,12 @@ import java.io.UncheckedIOException;
 import java.io.Writer;
 import java.util.Map;
 
+import com.quantis_intl.commons.scsv.ScsvLineSerializer;
+import com.quantis_intl.commons.scsv.ScsvLinesWriter;
+import com.quantis_intl.commons.scsv.ScsvMetadataWriter;
+import com.quantis_intl.commons.scsv.processes.ScsvProcessWriter;
 import com.quantis_intl.lcigenerator.scsv.GeneratedMetadata;
 import com.quantis_intl.lcigenerator.scsv.GeneratedProcess;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvLineSerializer;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvLinesWriter;
-import com.quantis_intl.lcigenerator.scsv.lib.ScsvMetadataWriter;
-import com.quantis_intl.lcigenerator.scsv.lib.processes.ScsvProcessWriter;
 
 public class ScsvFileWriter
 {
