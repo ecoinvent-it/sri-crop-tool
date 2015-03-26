@@ -24,7 +24,8 @@ import java.net.URISyntaxException;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
@@ -33,6 +34,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,17 +60,17 @@ public class Api
     @Inject
     private ScsvFileWriter scsvFileWriter;
 
-    @GET
+    @POST
     @Path("computeLci")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     // TODO: Return a file to download
-    public void computeQuestionnaire(@Suspended AsyncResponse response) throws URISyntaxException, IOException
+    public void computeQuestionnaire(@FormDataParam("uploadFile") InputStream is,
+            @FormDataParam("canBeStored") boolean canBeStored, @Suspended AsyncResponse response)
+            throws URISyntaxException, IOException
     {
-        // FIXME: Tmp
-        InputStream is = Api.class
-                .getResourceAsStream("/LCI-Database_Data-collection_Crop_2015-03-20.xlsx");
-
         ErrorReporter errorReporter = new ErrorReporterImpl();
+        // TODO: Store file if it can be stored
         Map<String, RawInputLine> extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
 
         // FIXME: Define what to do if errors are found
