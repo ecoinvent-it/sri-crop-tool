@@ -18,6 +18,8 @@
  */
 package com.quantis_intl.lcigenerator;
 
+import java.util.Date;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -85,5 +87,14 @@ public class POIHelper
                 || (cellType == Cell.CELL_TYPE_FORMULA && cell.getCachedFormulaResultType() == Cell.CELL_TYPE_NUMERIC))
             return cell.getNumericCellValue();
         return defaultValue;
+    }
+
+    public static Date getCellDateValue(Cell cell, Date defaultValue)
+    {
+        if (cell == null)
+            return defaultValue;
+        if (cell.getCellType() == Cell.CELL_TYPE_STRING)
+            return defaultValue;
+        return cell.getDateCellValue();
     }
 }

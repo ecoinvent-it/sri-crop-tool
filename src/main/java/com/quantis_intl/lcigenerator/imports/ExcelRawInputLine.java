@@ -18,6 +18,7 @@
  */
 package com.quantis_intl.lcigenerator.imports;
 
+import java.util.Date;
 import java.util.Optional;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -73,5 +74,11 @@ public class ExcelRawInputLine implements RawInputLine
     public Optional<Double> getValueAsDouble()
     {
         return Optional.ofNullable(POIHelper.getCellDoubleValue(cell, null));
+    }
+
+    @Override
+    public Optional<Date> getValueAsDate()
+    {
+        return Optional.ofNullable(POIHelper.getCellDateValue(cell, null));
     }
 }

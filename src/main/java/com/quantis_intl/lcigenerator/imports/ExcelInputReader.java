@@ -45,8 +45,17 @@ public class ExcelInputReader
         try
         {
             Workbook workbook = WorkbookFactory.create(is);
-            DataFileReader dataFileReader = new DataFileReader(workbook.getSheet("Template"), errorReporter);
-            return dataFileReader.getExtractedInputs();
+            Sheet sheet = workbook.getSheet("Template");
+            if (sheet != null)
+            {
+                DataFileReader dataFileReader = new DataFileReader(sheet, errorReporter);
+                return dataFileReader.getExtractedInputs();
+            }
+            else
+            {
+                errorReporter.error("sheet", "", "invalid file: sheet not found");
+                return null;
+            }
         }
         catch (InvalidFormatException e)
         {
@@ -55,6 +64,10 @@ public class ExcelInputReader
         catch (IOException e)
         {
             errorReporter.error("file", "", "file reading failed");
+        }
+        catch (IllegalArgumentException e)
+        {
+            errorReporter.error("file", "", "invalid format for file");
         }
         return null;
     }
@@ -224,31 +237,29 @@ public class ExcelInputReader
 
         private void readCrop()
         {
-            addCellToExtractedInputs("crop", currentTaggedRow.getCell(labelColumnIndex));
+            addCellToExtractedInputs("crop", "Crop", currentTaggedRow.getCell(labelColumnIndex));
         }
 
         private void readCountry()
         {
-            addCellToExtractedInputs("country", currentTaggedRow.getCell(countryColumnIndex));
+            addCellToExtractedInputs("country", "Country", currentTaggedRow.getCell(countryColumnIndex));
         }
 
         private void readSystemBoundary()
         {
-            addCellToExtractedInputs("system_boundary", currentTaggedRow.getCell(dataColumnIndex));
+            addCellToExtractedInputs("system_boundary", "System boundary", currentTaggedRow.getCell(dataColumnIndex));
         }
 
         private void readData()
         {
-            addCellToExtractedInputs(currentTag, currentTaggedRow.getCell(dataColumnIndex));
+            String title = POIHelper.getCellStringValue(currentTaggedRow, labelColumnIndex, "");
+            addCellToExtractedInputs(currentTag, title, currentTaggedRow.getCell(dataColumnIndex));
         }
 
-        private void addCellToExtractedInputs(String key, Cell cell)
+        private void addCellToExtractedInputs(String key, String title, Cell cell)
         {
             if (cell != null)
-            {
-                String title = POIHelper.getCellStringValue(currentTaggedRow, labelColumnIndex, "");
                 extractedInputs.put(key, new ExcelRawInputLine(key, title, currentTaggedRow.getRowNum(), cell));
-            }
         }
 
         private void readBlock(Map<String, String> dropDownValues)

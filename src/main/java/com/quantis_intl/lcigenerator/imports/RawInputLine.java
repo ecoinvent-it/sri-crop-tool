@@ -18,6 +18,7 @@
  */
 package com.quantis_intl.lcigenerator.imports;
 
+import java.util.Date;
 import java.util.Optional;
 
 public interface RawInputLine
@@ -33,5 +34,7 @@ public interface RawInputLine
     public Optional<String> getValueAsString();
 
     public Optional<Double> getValueAsDouble();
+
+    public Optional<Date> getValueAsDate();
 
 }

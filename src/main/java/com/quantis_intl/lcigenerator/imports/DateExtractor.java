@@ -19,8 +19,10 @@
 package com.quantis_intl.lcigenerator.imports;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -52,24 +54,39 @@ public class DateExtractor
 
     public LocalDate extract(RawInputLine line)
     {
-        Optional<String> stringValue = line.getValueAsString();
-        if (stringValue.isPresent())
+        Optional<Date> dateValue;
+        Optional<String> stringValue;
 
-            try
-            {
-                return LocalDate.parse(stringValue.get(), DATE_FORMATTER);
-            }
-            catch (DateTimeParseException e)
-            {
-                errorReporter.warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                        "Can't read value, use default");
-                return null;
-            }
+        if ((dateValue = line.getValueAsDate()).isPresent())
+            return manageDateAsNumber(dateValue.get(), line);
+        if ((stringValue = line.getValueAsString()).isPresent())
+            return manageDateAsString(stringValue.get(), line);
         else
         {
             errorReporter
                     .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read value, use default");
+                            "Can't read date, expected format is dd.mm.yy, use default");
+            return null;
+        }
+    }
+
+    private LocalDate manageDateAsNumber(Date date, RawInputLine line)
+    {
+        // FIXME: TO TEST!!!!
+        LocalDate localDate = date.toInstant().atZone(ZoneId.of("UTC")).toLocalDate();
+        return localDate;
+    }
+
+    private LocalDate manageDateAsString(String dateString, RawInputLine line)
+    {
+        try
+        {
+            return LocalDate.parse(dateString, DATE_FORMATTER);
+        }
+        catch (DateTimeParseException e)
+        {
+            errorReporter.warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                    "Can't read date, expected format is dd.mm.yy, use default");
             return null;
         }
     }

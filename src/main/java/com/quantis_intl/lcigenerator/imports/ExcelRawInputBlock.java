@@ -19,6 +19,7 @@
 package com.quantis_intl.lcigenerator.imports;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,6 +69,12 @@ public class ExcelRawInputBlock implements RawInputLine
 
     @Override
     public Optional<String> getValueAsString()
+    {
+        throw new RuntimeException("Not Implemented");
+    }
+
+    @Override
+    public Optional<Date> getValueAsDate()
     {
         throw new RuntimeException("Not Implemented");
     }

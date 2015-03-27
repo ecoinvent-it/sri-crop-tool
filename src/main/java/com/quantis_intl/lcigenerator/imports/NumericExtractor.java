@@ -149,7 +149,7 @@ public class NumericExtractor
             {
                 errorReporter
                         .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                                "Can't read value, use default");
+                                "Can't accept negative value, use default");
                 return null;
             }
             return doubleValue;
@@ -158,7 +158,7 @@ public class NumericExtractor
         {
             errorReporter
                     .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read value, use default");
+                            "Can't read number, use default");
             return null;
         }
     }
@@ -173,7 +173,7 @@ public class NumericExtractor
             {
                 errorReporter
                         .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                                "Can't read value, use default");
+                                "Ratio must be between 0 and 1, use default");
                 return null;
             }
             return doubleValue;
@@ -182,7 +182,7 @@ public class NumericExtractor
         {
             errorReporter
                     .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read value, use default");
+                            "Can't read ratio, use default");
             return null;
         }
     }

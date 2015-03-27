@@ -96,11 +96,11 @@ public class StringFromListExtractor
         Optional<String> stringValue = line.getValueAsString();
         if (stringValue.isPresent())
         {
-            String mapItem = TAGS_TO_MAP.get(line.getLineVariable()).get(stringValue);
+            String mapItem = TAGS_TO_MAP.get(line.getLineVariable()).get(stringValue.get());
             if (mapItem == null)
             {
                 errorReporter.warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                        "Can't read value, use default");
+                        "Text is not part of choices list, use default");
                 return null;
             }
             else
@@ -112,7 +112,7 @@ public class StringFromListExtractor
         {
             errorReporter
                     .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read value, use default");
+                            "Can't read text, use default");
             return null;
         }
     }
