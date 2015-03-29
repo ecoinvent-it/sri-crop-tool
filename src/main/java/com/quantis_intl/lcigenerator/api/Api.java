@@ -22,9 +22,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -34,12 +36,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.StreamingOutput;
 
+import org.apache.shiro.SecurityUtils;
 import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.ErrorReporterImpl;
+import com.quantis_intl.lcigenerator.ImportResult;
 import com.quantis_intl.lcigenerator.PyBridgeService;
 import com.quantis_intl.lcigenerator.ScsvFileWriter;
 import com.quantis_intl.lcigenerator.imports.ExcelInputReader;
@@ -63,9 +67,9 @@ public class Api
     @POST
     @Path("computeLci")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    // TODO: Return a file to download
-    public void computeQuestionnaire(@FormDataParam("uploadFile") InputStream is,
+    @Produces(MediaType.APPLICATION_JSON)
+    public void computeQuestionnaire(@FormDataParam("idTab") final String idTab,
+            @FormDataParam("uploadFile") InputStream is,
             @FormDataParam("canBeStored") boolean canBeStored, @Suspended AsyncResponse response)
             throws URISyntaxException, IOException
     {
@@ -73,23 +77,34 @@ public class Api
         // TODO: Store file if it can be stored
         Map<String, RawInputLine> extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
 
-        // FIXME: Define what to do if errors are found
         if (!errorReporter.hasErrors())
         {
             RawInputToPyCompatibleConvertor inputConvertor = new RawInputToPyCompatibleConvertor(errorReporter);
             Map<String, Object> validatedData = inputConvertor.getValidatedData(extractedInputs, errorReporter);
-            // FIXME: Define what to do if errors are found
+
             if (!errorReporter.hasErrors())
-                pyBridgeService.callComputeLci(validatedData, result -> onResult(result, response),
+                pyBridgeService.callComputeLci(validatedData,
+                        result -> onResult(idTab, result, errorReporter, response),
                         error -> onError(error, response));
+            else
+            {
+                LOGGER.warn("Bad content in input file");
+                response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
+            }
+        }
+        else
+        {
+            LOGGER.warn("Bad template for input file");
+            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
     }
 
-    private void onResult(Map<String, String> modelsOutput, AsyncResponse response)
+    private void onResult(String idTab, Map<String, String> modelsOutput, ErrorReporter errorReporter,
+            AsyncResponse response)
     {
-        response.resume(Response.ok(
-                (StreamingOutput) outputStream ->
-                scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, outputStream)).build());
+        SecurityUtils.getSubject().getSession().setAttribute(idTab, modelsOutput);
+        String idResult = UUID.randomUUID().toString();
+        response.resume(Response.ok(new ImportResult(errorReporter, idResult)).build());
     }
 
     private void onError(Throwable error, AsyncResponse response)
@@ -98,4 +113,15 @@ public class Api
         response.resume(error);
     }
 
+    @POST
+    @Path("generateScsv")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public Response generateScsv(@FormParam("idTab") final String idTab, @FormParam("idResult") final String idResult)
+    {
+        Map<String, String> modelsOutput = (Map<String, String>) SecurityUtils.getSubject().getSession()
+                .getAttribute(idTab);
+        return Response.ok(
+                (StreamingOutput) outputStream ->
+                scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, outputStream)).build();
+    }
 }

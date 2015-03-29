@@ -60,9 +60,9 @@ public class Bootstrap
         Properties p = new Properties();
         p.setProperty("server.port", "7879");
         p.setProperty("server.baseContext", "/");
-        p.setProperty("server.webFolder", "src/main/web");
+        p.setProperty("server.webFolder", "src/main/dart/web");
         // FIXME: Should be optional
-        p.setProperty("server.appResourcesFolder", "src/main/web");
+        p.setProperty("server.appResourcesFolder", "src/main/dart/web");
         p.setProperty("server.logFolder", "");
         p.setProperty("pyBridge.url", "http://localhost:7880/computeLci");
         return p;

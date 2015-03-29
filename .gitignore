@@ -2,3 +2,8 @@
 /src/*/python/*/*.pyc
 /src/*/python/*/__pycache__
 /target/
+/src/main/dart/packages
+/src/main/dart/web/packages
+/src/main/dart/web/*/packages
+/src/main/dart/build
+/src/main/dart/.pub

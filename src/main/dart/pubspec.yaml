@@ -1,0 +1,10 @@
+name: lci_generator
+description: A sample web application
+dependencies:
+  angular: ">=1.1.0 <2.0.0"
+  browser: any
+  web_components: any
+dev_dependencies:
+  unittest: any
+transformers:
+- angular

@@ -1,0 +1,19 @@
+*
+{
+  -webkit-box-sizing:  border-box;
+  -moz-box-sizing:  border-box;
+  box-sizing: border-box;
+}
+
+form
+{
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.odd {
+  background-color: #eeeeee;
+}
+.even {
+  background-color: #ffffff;
+}

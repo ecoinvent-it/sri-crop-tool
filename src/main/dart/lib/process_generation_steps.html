@@ -1,0 +1,33 @@
+<form id="processGeneratorUploadForm" ng-submit="upload()" method="post" enctype="multipart/form-data">
+       File : <input type="file" name="uploadFile" accept=".xls,.xlsx" required="required" ng-disabled="step != 0"/>
+      <br/>
+      <input type="checkbox" checked name="canBeStored" value="true" ng-disabled="step != 0"/> I agree that Quantis stores this file for testing purposes
+      <br/>
+      <input type="hidden" name="idTab" value="{{idTab}}">
+      <input type="submit" value="Upload" ng-disabled="step != 0"/>
+</form>
+
+<div ng-if="errors != null  &amp;&amp; errors.length > 0">Some errors were found during generation:</div>
+<table ng-if="errors != null  &amp;&amp; errors.length > 0">
+  <tr ng-repeat="error in errors" ng-class-odd="'odd'" ng-class-even="'even'">
+    <td>{{error.resource}}</td>
+    <td>{{error.message}}</td>
+  </tr>
+</table>
+
+<span ng-if="step == 1">File successfully uploaded</span>
+<div ng-if="warnings != null &amp;&amp; warnings.length > 0">Some warnings for generation:</div>
+<table ng-if="warnings != null &amp;&amp; warnings.length > 0">
+  <tr ng-repeat="warning in warnings" ng-class-odd="'odd'" ng-class-even="'even'">
+    <td>{{warning.resource}}</td>
+    <td>{{warning.message}}</td>
+  </tr>
+</table>
+
+<input type="button" value="Reset" ng-if="step != 0" ng-click="reset()"/>
+
+<form action="app/api/pub/generateScsv" method="post" ng-if="step == 1" style="display: inline;">
+  <input type="hidden" name="idResult" value="{{idResult}}">
+  <input type="hidden" name="idTab" value="{{idTab}}">
+  <input type="submit" value="Export to Simapro CSV"/>
+</form>

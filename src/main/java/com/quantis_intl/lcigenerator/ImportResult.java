@@ -18,57 +18,17 @@
  */
 package com.quantis_intl.lcigenerator;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-public class ErrorReporterImpl implements ErrorReporter
+public class ImportResult
 {
-    private Collection<ErrorReporterResult> warnings = new ArrayList<>();
-    private Collection<ErrorReporterResult> errors = new ArrayList<>();
+    public final ErrorReporter message;
 
-    @Override
-    public void warning(String resource, String location, String message)
+    public final String idResult;
+
+    public ImportResult(ErrorReporter message, String idResult)
     {
-        warnings.add(new ErrorReporterResult("warning", resource, location, message));
+        this.message = message;
+        this.idResult = idResult;
     }
 
-    @Override
-    public void error(String resource, String location, String message)
-    {
-        errors.add(new ErrorReporterResult("error", resource, location, message));
-    }
-
-    public Collection<ErrorReporterResult> getWarnings()
-    {
-        return warnings;
-    }
-
-    public Collection<ErrorReporterResult> getErrors()
-    {
-        return errors;
-    }
-
-    public boolean hasErrors()
-    {
-        return !errors.isEmpty();
-    }
-
-    private static class ErrorReporterResult
-    {
-        public final String type;
-
-        public final String resource;
-
-        public final String location;
-
-        public final String message;
-
-        public ErrorReporterResult(String type, String resource, String location, String message)
-        {
-            this.type = type;
-            this.resource = resource;
-            this.location = location;
-            this.message = message;
-        }
-    }
+    // TODO: add also impacts and other info
 }
