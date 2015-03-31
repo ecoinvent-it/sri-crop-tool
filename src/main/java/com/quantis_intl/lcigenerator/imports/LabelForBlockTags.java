@@ -34,6 +34,8 @@ public class LabelForBlockTags
     private static final Map<String, String> INSECTICIDES = PropertiesLoader
             .reverseProperties("/insecticides.properties");
 
+    private static final Map<String, String> COMPOST_TYPE = new HashMap<>();
+    private static final Map<String, String> SEWAGE_SLUDGE = new HashMap<>();
     private static final Map<String, String> PLANT_PROTECTION = new HashMap<>();
     private static final Map<String, String> SOIL_CULTIVATION = new HashMap<>();
     private static final Map<String, String> SOWING_PLANTING = new HashMap<>();
@@ -47,12 +49,28 @@ public class LabelForBlockTags
         LABELS_FOR_NUMERIC.put("part_fungicides_", FUNGICIDES);
         LABELS_FOR_NUMERIC.put("part_insecticides_", INSECTICIDES);
 
+        COMPOST_TYPE.put("compost", "Compost (kg)");
+        COMPOST_TYPE.put("meat_and_bone_meal", "Meat-and-bone meal (kg)");
+        COMPOST_TYPE.put("castor_oil_shell_coarse", "Castor-oil shell coarse (kg)");
+        COMPOST_TYPE.put("vinasse", "Vinasse (kg)");
+        COMPOST_TYPE.put("dried_poultry_manure", "Dried poultry manure");
+        COMPOST_TYPE.put("stone_meal", "Stone meal (kg)");
+        COMPOST_TYPE.put("feather_meal", "Feather meal (kg)");
+        COMPOST_TYPE.put("horn_meal", "Horn meal (kg)");
+        COMPOST_TYPE.put("horn_shavings_fine", "Horn shavings fine (kg)");
+        LABELS_FOR_NUMERIC.put("composttype_", COMPOST_TYPE);
+
+        SEWAGE_SLUDGE.put("liquid", "Sewage sludge liquid (t)");
+        SEWAGE_SLUDGE.put("dehydrated", "Sewage sludge dehydrated (t)");
+        SEWAGE_SLUDGE.put("dried", "Sewage sludge dried (t)");
+        LABELS_FOR_NUMERIC.put("sewagesludge_", SEWAGE_SLUDGE);
+
         PLANT_PROTECTION.put("Spraying", "spraying");
         PLANT_PROTECTION.put("Flaming", "flaming");
         PLANT_PROTECTION.put("Other", "other");
         LABELS_FOR_RATIO.put("ratio_plantprotection_", PLANT_PROTECTION);
 
-        SOIL_CULTIVATION.put("Soil separation", "separation");
+        SOIL_CULTIVATION.put("Soil decompaction", "decompaction");
         SOIL_CULTIVATION.put("Soil tillage, chisel", "tillage_chisel");
         SOIL_CULTIVATION.put("Soil tillage, spring-tine weeder", "tillage_spring_tine_weeder");
         SOIL_CULTIVATION.put("Soil tillage, rotary harrow", "tillage_rotary_harrow");
@@ -73,8 +91,6 @@ public class LabelForBlockTags
 
         FERTILISATION.put("Fertilizing, with broadcaster", "fertilizing_broadcaster");
         FERTILISATION.put("Liquid manure application, with vacuum tanker", "liquid_manure_vaccum_tanker");
-        FERTILISATION.put("Liquid manure application, with spreader and trailed hoses",
-                "liquid_manure_spreader_trailed_hoses");
         FERTILISATION.put("Solid manure application", "solid_manure");
         FERTILISATION.put("Other", "other");
         LABELS_FOR_RATIO.put("ratio_fertilisation_", FERTILISATION);
@@ -88,12 +104,12 @@ public class LabelForBlockTags
         HARVESTING.put("Loading bales", "loading_bales");
         HARVESTING.put("Mowing, with motor mower", "mowing_motor_mower");
         HARVESTING.put("Mowing, with rotary mower", "mowing_rotary_mower");
-        HARVESTING.put("Sorting potatoes", "sorting_potatoes");
         HARVESTING.put("Removing potato haulms", "removing_potatoes_haulms");
         HARVESTING.put("Windrowing, with rotary swather", "windrowing_rotary_swather");
         HARVESTING.put("Other", "other");
         LABELS_FOR_RATIO.put("ratio_harvesting_", HARVESTING);
 
+        OTHER_WORK_PROCESSES.put("Baling", "baling");
         OTHER_WORK_PROCESSES.put("Chopping (number of passes)", "chopping_nb_passes");
         OTHER_WORK_PROCESSES.put("Mulching (number of passes)", "mulching_nb_passes");
         OTHER_WORK_PROCESSES.put("Transport, tractor and trailer (tonnes * km)", "transport_tractor_trailer_tkm");

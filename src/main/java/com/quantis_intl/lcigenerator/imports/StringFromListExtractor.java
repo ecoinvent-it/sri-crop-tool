@@ -70,6 +70,7 @@ public class StringFromListExtractor
         TILLAGE_METHOD.put("Ridge tillage", "ridge_tillage");
         TILLAGE_METHOD.put("Zone tillage", "zone_tillage");
         TILLAGE_METHOD.put("No till", "no_till");
+        TILLAGE_METHOD.put("unknown", "unknown");
         TAGS_TO_MAP.put("tillage_method", TILLAGE_METHOD);
 
         ANTI_EROSION_PRACTICE.put("Up & down slope (no practice)", "no_practice");
@@ -77,6 +78,7 @@ public class StringFromListExtractor
         ANTI_EROSION_PRACTICE.put("Contour farming", "contour_farming");
         ANTI_EROSION_PRACTICE.put("Strip cropping, cross slope", "strip_cropping_cross_slope");
         ANTI_EROSION_PRACTICE.put("Strip cropping, contour", "strip_cropping_contour");
+        ANTI_EROSION_PRACTICE.put("unknown", "unknown");
         TAGS_TO_MAP.put("anti_erosion_practice", ANTI_EROSION_PRACTICE);
 
         TYPE_OF_DRYING.put("Ambient air", "ambient_air");
