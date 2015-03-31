@@ -53,7 +53,7 @@ public class ExcelInputReader
             }
             else
             {
-                errorReporter.error("sheet", "", "invalid file: sheet not found");
+                errorReporter.error("sheet", "", "invalid file: sheet 'Template' not found");
                 return null;
             }
         }

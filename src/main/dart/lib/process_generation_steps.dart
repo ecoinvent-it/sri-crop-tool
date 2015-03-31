@@ -26,6 +26,7 @@ class ProcessGeneratorSteps
   
   void upload()
   {
+    // FIXME: Find a better way to avoid reading the file client side
     var formData = new FormData(querySelector("#processGeneratorUploadForm"));
     _api.uploadInputs(formData)
     .then((HttpRequest request) {

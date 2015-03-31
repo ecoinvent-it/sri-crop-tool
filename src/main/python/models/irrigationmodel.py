@@ -35,10 +35,11 @@ class IrrigationModel(object):
     
     def compute(self):
         irrigation_efficiency_ratio = self._compute_irrigation_efficiency_ratio()
-        water_to_air = self._compute_evapotranspiration(irrigation_efficiency_ratio)
-        water_to_water_river,water_to_water_groundwater = self._split_water_between_river_and_ground(self.water_use_total, water_to_air)
+        evapotranspiration = self._compute_evapotranspiration(irrigation_efficiency_ratio)
+        total_remaining_water = self._compute_remaining_water_after_evapotranspiration(evapotranspiration);
+        water_to_water_river,water_to_water_groundwater = self._split_water_between_river_and_ground(total_remaining_water)
         
-        return {"m_Irr_water_to_air":water_to_air,
+        return {"m_Irr_water_to_air":evapotranspiration,
                 "m_Irr_water_to_water_river":water_to_water_river,
                 "m_Irr_water_to_water_groundwater":water_to_water_groundwater
                 }
@@ -61,10 +62,12 @@ class IrrigationModel(object):
     
     def _compute_evapotranspiration(self,irrigation_efficiency_ratio):
         return self.water_use_total * irrigation_efficiency_ratio;
+    
+    def _compute_remaining_water_after_evapotranspiration(self, evapotranspiration):
+        return self.water_use_total - evapotranspiration;
 
-    def _split_water_between_river_and_ground(self, total_water_use_irr, water_to_air):
-        water_remaining_after_evapo = total_water_use_irr - water_to_air
-        river = 0.8 * water_remaining_after_evapo
-        ground = 0.2 * water_remaining_after_evapo
+    def _split_water_between_river_and_ground(self, total_remaining_water):
+        river = 0.8 * total_remaining_water
+        ground = 0.2 * total_remaining_water
         return (river,ground)
     

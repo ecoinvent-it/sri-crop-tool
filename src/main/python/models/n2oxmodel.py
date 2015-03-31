@@ -3,8 +3,8 @@ class N2OxModel(object):
       nitrogen_from_all_manure: kg N / ha
       nitrogen_from_mineral_fert: kg N / ha
       nitrogen_from_crop_residues: kg N / ha
-      nitrate_to_groundwater: kg NO3/(ha*year)
-      nitrate_to_surfacewater: kg NO3/(ha*year)
+      nitrate_to_groundwater: kg NO3 / ha
+      nitrate_to_surfacewater: kg NO3 / ha
       ammonia_due_to_mineral_fert: kg NH3/ha
       ammonia_due_to_liquid_manure: kg NH3/ha
       ammonia_due_to_solid_manure: kg NH3/ha
@@ -12,7 +12,7 @@ class N2OxModel(object):
       
     Outputs:
       m_N2ox_N2o_air: kg N2O/ha
-      m_N2ox_Nox_air: kg NOx as N2O/ha
+      m_N2ox_Nox_as_n2o_air: kg NOx as N2O/ha
     """
     
     _input_variables = ["nitrogen_from_all_manure",
