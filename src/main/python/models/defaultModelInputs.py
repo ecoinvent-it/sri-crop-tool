@@ -1,6 +1,7 @@
 from models.pmodel import LandUseCategory
 from models.manuremodel import LiquidManureType
 from models.manuremodel import SolidManureType
+from models.irrigationmodel import IrrigationType
 
 No3Model_defaults = {"bulk_density_of_soil": 1300,
                      "c_per_n_ratio": 11,
@@ -71,3 +72,15 @@ N2oxModel_defaults = {"nitrogen_from_all_manure": 0.0,
                       "ammonia_due_to_liquid_manure":0.0,
                       "ammonia_due_to_solid_manure": 0.0
                      }
+
+IrrigationModel_defaults = {"water_use_total":0.0,
+                            "irrigation_types_proportions":#Europe
+                                {   IrrigationType.surface_irrigation_no_energy:0.0,
+                                    IrrigationType.surface_irrigation_electricity:0.02,
+                                    IrrigationType.surface_irrigation_diesel:0.00,
+                                    IrrigationType.sprinkler_irrigation_electricity:0.97,
+                                    IrrigationType.sprinkler_irrigation_diesel:0.00,
+                                    IrrigationType.drip_irrigation_electricity:0.01,
+                                    IrrigationType.drip_irrigation_diesel:0.00
+                                 }
+                            }
