@@ -6,13 +6,16 @@ class NonStrictInputMapping(object):
     def __getattr__(self, name):
         return self._mappingRules.get(name, IDENTITY_INPUT_MAPPING_RULE).mapField(name, self)
     
+    def __getitem__(self, name):
+        return self.__getattr__(name)
+    
 class InputMappingRule(object):
     def mapField(self, attrName, mapping):
         raise "Please override this method"
     
 class IdentityInputMappingRule(InputMappingRule):
     def mapField(self, attrName, mapping):
-        return mapping.originalInputs.get(attrName, None)
+        return mapping.originalInputs[attrName]
     
 IDENTITY_INPUT_MAPPING_RULE = IdentityInputMappingRule()
     
@@ -21,4 +24,4 @@ class SimpleInputMappingRule(InputMappingRule):
         self._otherParam = otherParam
         
     def mapField(self, attrName, mapping):
-        return mapping.originalInputs.get(self._otherParam, None)
+        return mapping.originalInputs[self._otherParam]

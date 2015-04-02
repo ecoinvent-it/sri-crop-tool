@@ -5,8 +5,9 @@ class DefaultValuesWrapper(object):
         
     #TODO: Cache the generated values
     def __getattr__(self, name):
-        res = self.inputMapping.__getattr__(name)
-        if res is None:
+        try:
+            res = self.inputMapping[name]
+        except KeyError:
             res = self._generatorMap[name].generateDefault(name, self)
         return res;
     
