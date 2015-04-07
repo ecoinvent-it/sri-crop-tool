@@ -1,23 +1,20 @@
+from models.fertilisermodel import NFertiliserType, OtherMineralFertiliserType
+
 class Co2Model(object):
     """Inputs:
-      nitrogen_from_urea: kg N / ha
-      nitrogen_from_ureaAN: kg N / ha
+      #TODO: Should we directly receive a CO2 value from the fert module?
+      n_fertiliser_quantities: map NFertiliserType -> kg N/ha
       part_of_urea_in_UAN: ratio
-      calcium_from_lime: kg Ca / ha
-      calcium_from_carbonation_lime: kg Ca / ha
-      calcium_from_seaweed_lime: kg Ca / ha
+      other_mineral_fertiliser_quantities: map OtherMinFertiliserType -> kg Ca/ha
       magnesium_from_fertilizer: kg Mg / ha
       magnesium_as_dolomite: ratio
 
     Outputs:
       m_co2_CO2: kg/ha
     """
-    _input_variables = ["nitrogen_from_urea",
-                        "nitrogen_from_ureaAN",
+    _input_variables = ["n_fertiliser_quantities",
                         "part_of_urea_in_UAN",
-                        "calcium_from_lime",
-                        "calcium_from_carbonation_lime",
-                        "calcium_from_seaweed_lime",
+                        "other_mineral_fertiliser_quantities",
                         "magnesium_from_fertilizer",
                         "magnesium_as_dolomite"
                        ]
@@ -52,10 +49,14 @@ class Co2Model(object):
         return co2_from_urea + co2_from_lime;
     
     def _compute_CO2_from_urea(self):
-        return self._UREA_N_TO_CO2_FACTOR * (self.nitrogen_from_urea + self.part_of_urea_in_UAN * self.nitrogen_from_ureaAN);
+        return self._UREA_N_TO_CO2_FACTOR * (self.n_fertiliser_quantities[NFertiliserType.urea] + self.part_of_urea_in_UAN * self.n_fertiliser_quantities[NFertiliserType.ureaAN]);
     
     def _compute_CO2_from_lime(self):
-        return self._CA_TO_CO2_FACTOR * (self.calcium_from_lime + self.calcium_from_carbonation_lime + self.calcium_from_seaweed_lime) + self._compute_CO2_from_magnesium();
+        return self._CA_TO_CO2_FACTOR * \
+                  (self.other_mineral_fertiliser_quantities[OtherMineralFertiliserType.ca_limestone] + \
+                   self.other_mineral_fertiliser_quantities[OtherMineralFertiliserType.ca_carbonation_linestone] + \
+                   self.other_mineral_fertiliser_quantities[OtherMineralFertiliserType.ca_seaweed_limestone]) \
+               + self._compute_CO2_from_magnesium();
 
     def _compute_CO2_from_magnesium(self):
         return self._MG_TO_CO2_FACTOR * self.magnesium_from_fertilizer * self.magnesium_as_dolomite;

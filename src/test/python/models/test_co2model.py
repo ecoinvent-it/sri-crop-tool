@@ -1,15 +1,16 @@
 import unittest
 import models.co2model as co2model
+from models.fertilisermodel import NFertiliserType, OtherMineralFertiliserType
 
 class Test(unittest.TestCase):
     
     def testModel(self):
-        inputs = {"nitrogen_from_urea": 2.0,
-                  "nitrogen_from_ureaAN": 2.5,
+        inputs = {"n_fertiliser_quantities": {NFertiliserType.urea: 2.0, NFertiliserType.ureaAN: 2.5},
                   "part_of_urea_in_UAN": 0.5,
-                  "calcium_from_lime": 4.0,
-                  "calcium_from_carbonation_lime": 5.0,
-                  "calcium_from_seaweed_lime": 5.0,
+                  "other_mineral_fertiliser_quantities": {
+                      OtherMineralFertiliserType.ca_limestone: 4.0,
+                      OtherMineralFertiliserType.ca_carbonation_linestone: 5.0,
+                      OtherMineralFertiliserType.ca_seaweed_limestone: 5.0},
                   "magnesium_from_fertilizer": 4.0,
                   "magnesium_as_dolomite": 1.0
                     }

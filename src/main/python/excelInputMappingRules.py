@@ -45,13 +45,8 @@ EXCEL_INPUT_MAPPING_RULES = {
                     "k_fertiliser_quantities": MapMappingRule(_K_ENUM_TO_FIELD),
                     "other_mineral_fertiliser_quantities": MapMappingRule(_OTHERMIN_ENUM_TO_FIELD),
                     #CO2 model rules
-                    "nitrogen_from_urea": SimpleInputMappingRule("fertnmin_urea"), #FIXME: Replace by mapping that will fetch the n min fert map
-                    "nitrogen_from_ureaAN": SimpleInputMappingRule("fertnmin_urea_an"),
-                    "calcium_from_lime": SimpleInputMappingRule("fertotherca_limestone"),
-                    "calcium_from_carbonation_lime": SimpleInputMappingRule("fertotherca_carbonation_limestone"),
-                    "calcium_from_seaweed_lime": SimpleInputMappingRule("fertotherca_seaweed_limestone"),
                     "magnesium_from_fertilizer": SimpleInputMappingRule("fert_other_total_mg"),
-                    "magnesium_as_dolomite": SimpleInputMappingRule("TODO"),
+                    "magnesium_as_dolomite": SimpleInputMappingRule("fert_other_dolomite_in_mg"),
                     #NO3 model rules
                     "drained_part": SimpleInputMappingRule("drainage"),
                     "irrigation": "TODO",

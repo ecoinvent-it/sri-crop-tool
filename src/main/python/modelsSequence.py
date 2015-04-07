@@ -14,7 +14,7 @@ class ModelsSequence(object):
                                               self.outputMapping.output), DEFAULTS_VALUES_GENERATORS)
         
     def executeSequence(self):
+        self.outputMapping.mapFertilizers(self.allInputs)
         self.outputMapping.mapCo2Model(Co2Model(self.allInputs).compute())
         self.outputMapping.mapNo3Model(No3Model(self.allInputs).compute())
-        self.outputMapping.mapFertilizers(self.allInputs)
         return self.outputMapping.output;
