@@ -27,6 +27,7 @@ class SimpleValueDefaultGenerator(object):
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
+                   #Input defaults
                    #CO2 model defaults
                    "nitrogen_from_urea": "TODO", #FIXME Use the same generator that will create the whole nitrogen from fert map
                    "nitrogen_from_ureaAN": "TODO", #FIXME Or use the whole map in the CO2 module

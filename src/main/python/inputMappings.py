@@ -25,3 +25,21 @@ class SimpleInputMappingRule(InputMappingRule):
         
     def mapField(self, attrName, mapping):
         return mapping.originalInputs[self._otherParam]
+    
+class MapMappingRule(InputMappingRule):
+    def __init__(self, enumToFieldDict):
+        self._enumToFieldDict = enumToFieldDict
+    
+    def mapField(self, attrName, mapping):
+        hasonevalue = False
+        res = {}
+        for k,v in self._enumToFieldDict:
+            try:
+                res[k] = mapping.originalInputs[v]
+                hasonevalue = True
+            except KeyError:
+                res[k] = 0.0
+        if hasonevalue:
+            return res
+        else:
+            raise KeyError

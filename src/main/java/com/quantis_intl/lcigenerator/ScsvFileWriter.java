@@ -24,6 +24,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UncheckedIOException;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.Map;
 
 import com.quantis_intl.commons.scsv.ScsvLineSerializer;
@@ -49,7 +50,8 @@ public class ScsvFileWriter
     {
         try
         {
-            writeModelsOutputToScsvFile(modelsOutput, new BufferedWriter(new OutputStreamWriter(os)));
+            writeModelsOutputToScsvFile(modelsOutput,
+                    new BufferedWriter(new OutputStreamWriter(os, Charset.forName("windows-1252"))));
         }
         catch (IOException e)
         {

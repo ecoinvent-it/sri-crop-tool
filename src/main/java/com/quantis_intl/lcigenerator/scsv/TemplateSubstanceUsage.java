@@ -42,8 +42,8 @@ public class TemplateSubstanceUsage
             new TemplateSubstanceUsage("Tranformation, from {TODO}", "", "m2", "", ""),
             new TemplateSubstanceUsage("Tranformation, to {TODO}", "", "m2", "", ""),
             new TemplateSubstanceUsage("Gross energy {TODO}", "", "MJ", "", ""),
+            new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "", ""),
             new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "", "")
-            // FIXME: There where two in excel file
     };
 
     public static final TemplateSubstanceUsage[] toAir = {
@@ -56,8 +56,8 @@ public class TemplateSubstanceUsage
     };
 
     public static final TemplateSubstanceUsage[] toWater = {
-            new TemplateSubstanceUsage("Nitrate", "river", "kg", "", ""),
-            new TemplateSubstanceUsage("Nitrate", "groundwater", "kg", "", ""),
+            new TemplateSubstanceUsage("Nitrate", "river", "kg", "nitrate_to_surfacewater", ""),
+            new TemplateSubstanceUsage("Nitrate", "groundwater", "kg", "nitrate_to_groundwater", ""),
             new TemplateSubstanceUsage("Phosphorus", "river", "kg", "", ""),
             new TemplateSubstanceUsage("Phosphate", "river", "kg", "", ""),
             new TemplateSubstanceUsage("Phosphate", "groundwater", "kg", "", ""),

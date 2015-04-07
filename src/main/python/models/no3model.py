@@ -1,3 +1,4 @@
+#FIXME: Have it per crop cycel
 class No3Model(object):
     """Inputs:
       bulk_density_of_soil: kg/m3

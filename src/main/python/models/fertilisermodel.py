@@ -2,36 +2,36 @@ from enum import Enum
 from models.modelEnums import HeavyMetalType
 
 class NFertiliserType(Enum):
-    ammonium_nitrate=1
-    urea=2
-    ureaAN=3
-    mono_ammonium_phosphate=4
-    di_ammonium_phosphate=5
-    an_phosphate=6
-    lime_ammonium_nitrate=7
-    ammonium_sulphate=8
-    potassium_nitrate=9
-    ammonia_liquid=10
+    ammonium_nitrate="fert_n_ammonium_nitrate"
+    urea="fert_n_urea"
+    ureaAN="fert_n_ureaAN"
+    mono_ammonium_phosphate="fert_n_mono_ammonium_phosphate"
+    di_ammonium_phosphate="fert_n_di_ammonium_phosphate"
+    an_phosphate="fert_n_an_phosphate"
+    lime_ammonium_nitrate="fert_n_lime_ammonium_nitrate"
+    ammonium_sulphate="fert_n_ammonium_sulphate"
+    potassium_nitrate="fert_n_potassium_nitrate"
+    ammonia_liquid="fert_n_ammonia_liquid"
 
 class PFertiliserType(Enum):
-    triple_superphosphate=1
-    superphosphate=2
-    mono_ammonium_phosphate=3
-    di_ammonium_phosphate=4
-    an_phosphate=5
-    hypophosphate_raw_phosphate=6
-    ground_basic_slag=7
+    triple_superphosphate="fert_p_triple_superphosphate"
+    superphosphate="fert_p_superphosphate"
+    mono_ammonium_phosphate="fert_p_mono_ammonium_phosphate"
+    di_ammonium_phosphate="fert_p_di_ammonium_phosphate"
+    an_phosphate="fert_p_an_phosphate"
+    hypophosphate_raw_phosphate="fert_p_hypophosphate_raw_phosphate"
+    ground_basic_slag="fert_p_ground_basic_slag"
     
 class KFertiliserType(Enum):
-    potassium_salt=1
-    potassium_sulphate=2
-    potassium_nitrate=3
-    patent_potassium=4
+    potassium_salt="fert_k_potassium_salt"
+    potassium_sulphate="fert_k_potassium_sulphate"
+    potassium_nitrate="fert_k_potassium_nitrate"
+    patent_potassium="fert_k_patent_potassium"
     
 class OtherMineralFertiliserType(Enum):
-    ca_limestone=1
-    ca_carbonation_linestone=2
-    ca_seaweed_limestone=3
+    ca_limestone="fert_ca_limestone"
+    ca_carbonation_linestone="fert_ca_carbonation_linestone"
+    ca_seaweed_limestone="fert_ca_seaweed_limestone"
 
 
 class FertModel(object):

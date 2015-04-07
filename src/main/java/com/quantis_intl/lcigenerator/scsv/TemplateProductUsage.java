@@ -34,49 +34,71 @@ public class TemplateProductUsage
     }
 
     public static final TemplateProductUsage[] materialsFuels = {
-            new TemplateProductUsage("ammonium nitrate, as N, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("urea, as N, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("urea ammonium nitrate, as N, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("monoammonium phosphate, as N, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("diammonium phosphate, as N, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("ammonium nitrate phosphate, as N, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("calcium nitrate, as N, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("ammonium sulphate, as N, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("potassium nitrate, as N, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("Ammonia, liquid, at regional storehouse/RER U", "kg", "", ""),
+            new TemplateProductUsage("Ammonium nitrate, as N, at regional storehouse/RER U", "kg",
+                    "fert_n_ammonium_nitrate", ""),
+            new TemplateProductUsage("Urea, as N, at regional storehouse/RER U", "kg", "fert_n_urea", ""),
+            new TemplateProductUsage("Urea ammonium nitrate, as N, at regional storehouse/RER U", "kg",
+                    "fert_n_ureaAN", ""),
+            new TemplateProductUsage("Monoammonium phosphate, as N, at regional storehouse/RER U", "kg",
+                    "fert_n_mono_ammonium_phosphate", ""),
+            new TemplateProductUsage("Diammonium phosphate, as N, at regional storehouse/RER U", "kg",
+                    "fert_n_di_ammonium_phosphate", ""),
+            new TemplateProductUsage("Ammonium nitrate phosphate, as N, at regional storehouse/RER U", "kg",
+                    "fert_n_an_phosphate", ""),
+            new TemplateProductUsage("Calcium nitrate, as N, at regional storehouse/RER U", "kg",
+                    "fert_n_lime_ammonium_nitrate", ""),
+            new TemplateProductUsage("Ammonium sulphate, as N, at regional storehouse/RER U", "kg",
+                    "fert_n_ammonium_sulphate", ""),
+            new TemplateProductUsage("Potassium nitrate, as N, at regional storehouse/RER U", "kg",
+                    "fert_n_potassium_nitrate", ""),
+            new TemplateProductUsage("Ammonia, liquid, at regional storehouse/RER U", "kg",
+                    "fert_n_ammonia_liquid_as_nh3", ""),
 
-            new TemplateProductUsage("Triple superphosphate, as P2O5, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("Single superphosphate, as P2O5, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("Monoammonium phosphate, as P2O5, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("Diammonium phosphate, as P2O5, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("Ammonium nitrate phosphate, as P2O5, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("Phosphate rock, as P2O5, beneficiated, dry, at plant/MA U", "kg", "", ""),
-            new TemplateProductUsage("Thomas meal, as P2O5, at regional storehouse/RER U", "kg", "", ""),
+            new TemplateProductUsage("Triple superphosphate, as P2O5, at regional storehouse/RER U", "kg",
+                    "fert_p_triple_superphosphate", ""),
+            new TemplateProductUsage("Single superphosphate, as P2O5, at regional storehouse/RER U", "kg",
+                    "fert_p_superphosphate", ""),
+            new TemplateProductUsage("Monoammonium phosphate, as P2O5, at regional storehouse/RER U", "kg",
+                    "fert_p_mono_ammonium_phosphate", ""),
+            new TemplateProductUsage("Diammonium phosphate, as P2O5, at regional storehouse/RER U", "kg",
+                    "fert_p_di_ammonium_phosphate", ""),
+            new TemplateProductUsage("Ammonium nitrate phosphate, as P2O5, at regional storehouse/RER U", "kg",
+                    "fert_p_an_phosphate", ""),
+            new TemplateProductUsage("Phosphate rock, as P2O5, beneficiated, dry, at plant/MA U", "kg",
+                    "fert_p_hypophosphate_raw_phosphate", ""),
+            new TemplateProductUsage("Thomas meal, as P2O5, at regional storehouse/RER U", "kg",
+                    "fert_p_ground_basic_slag", ""),
 
-            new TemplateProductUsage("Potassium chloride, as K2O, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("Potassium sulphate, as K2O, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("Potassium nitrate, as K2O, at regional storehouse/RER U", "kg", "", ""),
-            new TemplateProductUsage("Potassium chloride, as K2O, at regional storehouse/RER U", "kg", "", ""),
+            new TemplateProductUsage("Potassium chloride, as K2O, at regional storehouse/RER U", "kg",
+                    "fert_k_potassium_salt", ""),
+            new TemplateProductUsage("Potassium sulphate, as K2O, at regional storehouse/RER U", "kg",
+                    "fert_k_potassium_sulphate", ""),
+            new TemplateProductUsage("Potassium nitrate, as K2O, at regional storehouse/RER U", "kg",
+                    "fert_k_potassium_nitrate", ""),
+            new TemplateProductUsage("Potassium chloride, as K2O, at regional storehouse/RER U", "kg",
+                    "fert_k_patent_potassium", ""),
 
-            new TemplateProductUsage("Limestone, milled, packed, at plant/CH U", "kg", "", ""),
-            new TemplateProductUsage("lime, from carbonation, at regional storehouse/CH U", "kg", "", ""),
-            // new TemplateProductUsage("lime, algae, at regional storehouse/CH U", "kg", "", ""), // FIXME: MISSING
-
-            new TemplateProductUsage("magnesium sulphate, at plant/RER U", "kg", "", ""),
-
-            new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg", "",
+            new TemplateProductUsage("Limestone, milled, packed, at plant/CH U", "kg", "fert_ca_limestone", ""),
+            new TemplateProductUsage("Lime, from carbonation, at regional storehouse/CH U", "kg",
+                    "fert_ca_carbonation_linestone", ""),
+            new TemplateProductUsage("Lime, algae, at regional storehouse/CH U", "kg", "fert_ca_seaweed_limestone",
                     ""),
-            new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg",
-                    "", ""),
 
-            new TemplateProductUsage("compost, at plant/CH U", "kg", "", ""),
+            new TemplateProductUsage("Magnesium sulphate, at plant/RER U", "kg", "fert_other_total_mg", ""),
+
+            new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg",
+                    "TODO", ""),
+            new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg",
+                    "TODO", ""),
+
+            new TemplateProductUsage("Compost, at plant/CH U", "kg", "", ""),
             // new TemplateProductUsage("TODO", "kg", "", ""),
             // new TemplateProductUsage("TODO", "kg", "", ""),
             // new TemplateProductUsage("TODO", "kg", "", ""),
             // new TemplateProductUsage("TODO", "kg", "", ""),
             // new TemplateProductUsage("TODO", "kg", "", ""),
-            // new TemplateProductUsage("vinasse, at fermentation plant/CH U", "kg", "", ""), // FIXME: MISSING
-            // new TemplateProductUsage("stone meal, at regional storehouse/RER U", "kg", "", ""), // FIXME: MISSING
+            new TemplateProductUsage("Vinasse, at fermentation plant/CH U", "kg", "", ""),
+            new TemplateProductUsage("Stone meal, at regional storehouse/CH U", "kg", "", ""),
             new TemplateProductUsage("chemicals inorganic, at plant/GLO U", "kg", "", ""), // FIXME: MISSING OR NOT?
             // new TemplateProductUsage("TODO", "kg", "", ""),
             // new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg", "", ""), // FIXME: MISSING
@@ -86,37 +108,13 @@ public class TemplateProductUsage
             // FIXME: Some of them should be in electricity heat
             new TemplateProductUsage("Grain drying, high temperature/CH U", "kg", "", ""),
             new TemplateProductUsage("Grain drying, low temperature/CH U", "kg", "", ""),
-            // new TemplateProductUsage("Grass drying/CH U", "kg", "", ""), // FIXME: MISSING
-            new TemplateProductUsage("Maize drying/CH U", "kg", "", ""),
 
-            // RED PART
-            new TemplateProductUsage("Diesel combustion, in tractor/kg/CH U", "kg", "", ""),
-            new TemplateProductUsage("lignite briquette, burned in stove 5-15kW/RER U", "MJ", "", ""),
-            // new TemplateProductUsage("hard coal briquette, burned in stove 5-15kW/RER U", "MJ", "", ""), // FIXME:
-            // MISSING
-            new TemplateProductUsage("light fuel oil, burned in industrial furnace 1MW, non-modulating/RER U", "MJ",
-                    "",
-                    ""),
-            new TemplateProductUsage("heavy fuel oil, burned in industrial furnace 1MW, non-modulating/RER U", "MJ",
-                    "",
-                    ""),
-            new TemplateProductUsage("natural gas, burned in industrial furnace >100kW/RER U", "MJ", "", ""),
-            // new TemplateProductUsage("pellets, mixed, burned in furnace 50kW/CH U", "MJ", "", ""), // FIXME: MISSING
-            // new TemplateProductUsage("wood chips, from industry, mixed, burned in furnace 50kW/CH U", "MJ", "", ""),
-            // // FIXME:
-            // MISSING
-            // new TemplateProductUsage("logs, mixed, burned in furnace 100kW/CH U", "MJ", "", ""), // FIXME: MISSING
-            // new TemplateProductUsage("electricity, low voltage, at grid/{TODO} U", "kWh", "", ""),
-            // new TemplateProductUsage("electricity, production mix photovoltaic, at plant/{TODO} U", "kWh", "", ""),
-            new TemplateProductUsage("electricity, at wind power plant/RER U", "kWh", "", ""),
-            new TemplateProductUsage("heat, natural gas, at industrial furnace >100kW/RER U", "MJ", "", ""),
-            // new TemplateProductUsage("heat, at flat plate collector, multiple dwelling, for hot water/CH U", "MJ",
-            // "",
-            // ""), // FIXME: MISSING
+            new TemplateProductUsage("Polypropylene, granulate, at plant/RER U", "TODO", "", ""),
+            new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "TODO", "", ""),
+            new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "TODO", "", ""),
+            new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "TODO", "", ""),
 
-            // TODO: l103, polypropylene, granulate, at plant
-            new TemplateProductUsage("polypropylene, granulate, at plant/RER U", "TODO", "", ""), // FIXME: MISSING OR
-                                                                                                  // NOT?
+            // FIXME: MISSING are probably from agrybalise
             // new TemplateProductUsage("Plastic tunnel/FR U", "m2", "", ""),// FIXME: MISSING
             new TemplateProductUsage("Greenhouse, glass walls and roof, metal tubes/FR/I U", "m2", "", ""),
             // new TemplateProductUsage("Greenhouse, glass walls and roof, plastic tubes/FR/I U", "m2", "", ""), //
@@ -125,7 +123,7 @@ public class TemplateProductUsage
             new TemplateProductUsage("Greenhouse, plastic walls and roof, metal tubes/FR/I U", "m2", "", ""),
             new TemplateProductUsage("Greenhouse, plastic walls and roof, plastic tubes/FR/I U", "m2", "", ""),
 
-            // new TemplateProductUsage("Soil separation/CH U", "ha", "", ""), // FIXME: MISSING
+            new TemplateProductUsage("Soil decompactation, with 4.5m chisel/FR U", "hr", "", ""),
             new TemplateProductUsage("Tillage, cultivating, chiselling/CH U", "ha", "", ""),
             new TemplateProductUsage("Tillage, currying, by weeder/CH U", "ha", "", ""),
             new TemplateProductUsage("Tillage, harrowing, by rotary harrow/CH U", "ha", "", ""),
@@ -139,12 +137,9 @@ public class TemplateProductUsage
             new TemplateProductUsage("Plantation of trees/p/CH U", "p", "", ""),
             new TemplateProductUsage("Potato planting/CH U", "ha", "", ""),
             new TemplateProductUsage("Fertilising, by broadcaster/CH U", "ha", "", ""),
-            // new TemplateProductUsage("Slurry application with spreader with trailed hoses, per m3/CH U", "m3", "",
-            // ""), // FIXME: MISSING
             new TemplateProductUsage("Slurry spreading, by vacuum tanker/CH U", "m3", "", ""),
             new TemplateProductUsage("Solid manure loading and spreading, by hydraulic loader and spreader/CH U", "t",
                     "", ""),
-            new TemplateProductUsage("Baling/CH U", "unit", "", ""),
             new TemplateProductUsage("Baling/CH U", "unit", "", ""),
             new TemplateProductUsage("Chopping, maize/CH U", "ha", "", ""),
             new TemplateProductUsage("Combine harvesting/CH U", "ha", "", ""),
@@ -160,19 +155,32 @@ public class TemplateProductUsage
             new TemplateProductUsage("Swath, by rotary windrower/CH U", "ha", "", ""),
             // new TemplateProductUsage("Flaming/CH U", "ha", "", ""), // FIXME: MISSING
             new TemplateProductUsage("Application of plant protection products, by field sprayer/CH U", "ha", "", ""),
-            new TemplateProductUsage("Chopping, maize/CH U", "ha", "", ""),
             new TemplateProductUsage("Mulching/CH U", "ha", "", ""),
             new TemplateProductUsage("transport, tractor and trailer/CH U", "tkm", "", ""),
+
+            new TemplateProductUsage("Diesel combustion, in tractor/kg/CH U", "kg", "", ""),
+            new TemplateProductUsage("lignite briquette, burned in stove 5-15kW/RER U", "MJ", "", ""),
+            new TemplateProductUsage("Hard coal briquette, burned in stove 5-15kW/RER U", "MJ", "", ""),
+            new TemplateProductUsage("light fuel oil, burned in industrial furnace 1MW, non-modulating/RER U", "MJ",
+                    "", ""),
+            new TemplateProductUsage("heavy fuel oil, burned in industrial furnace 1MW, non-modulating/RER U", "MJ",
+                    "", ""),
+            new TemplateProductUsage("natural gas, burned in industrial furnace >100kW/RER U", "MJ", "", ""),
+            new TemplateProductUsage("Pellets, mixed, burned in furnace 50kW/CH U", "MJ", "", ""),
+            new TemplateProductUsage("Wood chips, from industry, mixed, burned in furnace 50kW/CH U", "MJ", "", ""),
+            new TemplateProductUsage("Logs, mixed, burned in furnace 100kW/CH U", "MJ", "", ""),
+            // new TemplateProductUsage("electricity, low voltage, at grid/{TODO} U", "kWh", "", ""),
+            // new TemplateProductUsage("electricity, production mix photovoltaic, at plant/{TODO} U", "kWh", "", ""),
+            new TemplateProductUsage("electricity, at wind power plant/RER U", "kWh", "", ""),
+            new TemplateProductUsage("heat, natural gas, at industrial furnace >100kW/RER U", "MJ", "", ""),
+            // new TemplateProductUsage("heat, at flat plate collector, multiple dwelling, for hot water/CH U", "MJ",
+            // "",
+            // ""), // FIXME: MISSING
 
             // TODO: Transport
             // TODO: Pesticides, seeds
 
             new TemplateProductUsage("lubricating oil, at plant/RER U", "kg", "", ""),
-            new TemplateProductUsage("polyethylene, HDPE, granulate, at plant/RER U", "kg", "", ""),
-            new TemplateProductUsage("polyethylene, HDPE, granulate, at plant/RER U", "kg", "", ""),
-            new TemplateProductUsage("polyethylene, HDPE, granulate, at plant/RER U", "kg", "", ""),
-            new TemplateProductUsage("polyethylene, LDPE, granulate, at plant/RER U", "kg", "", ""),
-            new TemplateProductUsage("polyethylene, LDPE, granulate, at plant/RER U", "kg", "", ""),
 
     };
 
