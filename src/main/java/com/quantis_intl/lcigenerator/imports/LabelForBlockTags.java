@@ -19,9 +19,7 @@
 package com.quantis_intl.lcigenerator.imports;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class LabelForBlockTags
 {
@@ -30,8 +28,6 @@ public class LabelForBlockTags
 
     public static final String DEFAULT_VALUE = "other";
     public static final String END_BLOCK_TAG = "end";
-
-    public static final Set<String> DEFAULT_TITLES = new HashSet<>();
 
     private static final Map<String, String> HERBICIDES = PropertiesLoader.reverseProperties("/herbicides.properties");
     private static final Map<String, String> FUNGICIDES = PropertiesLoader.reverseProperties("/fungicides.properties");
@@ -49,15 +45,6 @@ public class LabelForBlockTags
 
     static
     {
-        DEFAULT_TITLES.add("<select compost type>");
-        DEFAULT_TITLES.add("<select sludge type>");
-        DEFAULT_TITLES.add("-");
-        DEFAULT_TITLES.add("Name of active ingredient if not in the dropdown list available");
-        DEFAULT_TITLES.add("Other herbicides");
-        DEFAULT_TITLES.add("Other fungicides");
-        DEFAULT_TITLES.add("Other insecticides");
-        DEFAULT_TITLES.add("<select process>");
-
         LABELS_FOR_NUMERIC.put("part_herbicides_", HERBICIDES);
         LABELS_FOR_NUMERIC.put("part_fungicides_", FUNGICIDES);
         LABELS_FOR_NUMERIC.put("part_insecticides_", INSECTICIDES);
@@ -71,11 +58,13 @@ public class LabelForBlockTags
         COMPOST_TYPE.put("Feather meal", "feather_meal");
         COMPOST_TYPE.put("Horn meal", "horn_meal");
         COMPOST_TYPE.put("Horn shavings fine", "horn_shavings_fine");
+        COMPOST_TYPE.put("Other", "other");
         LABELS_FOR_RATIO.put("ratio_composttype_", COMPOST_TYPE);
 
         SEWAGE_SLUDGE.put("Sewage sludge liquid", "liquid");
         SEWAGE_SLUDGE.put("Sewage sludge dehydrated", "dehydrated");
         SEWAGE_SLUDGE.put("Sewage sludge dried", "dried");
+        SEWAGE_SLUDGE.put("Other", "other");
         LABELS_FOR_RATIO.put("ratio_sewagesludge_", SEWAGE_SLUDGE);
 
         PLANT_PROTECTION.put("Spraying", "spraying");

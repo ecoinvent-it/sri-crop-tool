@@ -9,8 +9,14 @@
 
 <div ng-if="errors != null  &amp;&amp; errors.length > 0">Some errors were found during generation:</div>
 <table ng-if="errors != null  &amp;&amp; errors.length > 0">
+  <tr>
+    <th>Label</th>
+    <th>Line</th>
+    <th>Message</th>
+  </tr>
   <tr ng-repeat="error in errors" ng-class-odd="'odd'" ng-class-even="'even'">
     <td>{{error.resource}}</td>
+    <td>{{error.location}}</td>
     <td>{{error.message}}</td>
   </tr>
 </table>
@@ -18,8 +24,14 @@
 <span ng-if="step == 1">File successfully uploaded</span>
 <div ng-if="warnings != null &amp;&amp; warnings.length > 0">Some warnings for generation:</div>
 <table ng-if="warnings != null &amp;&amp; warnings.length > 0">
+  <tr>
+    <th>Label</th>
+    <th>Line</th>
+    <th>Message</th>
+  </tr>
   <tr ng-repeat="warning in warnings" ng-class-odd="'odd'" ng-class-even="'even'">
     <td>{{warning.resource}}</td>
+    <td>{{warning.location}}</td>
     <td>{{warning.message}}</td>
   </tr>
 </table>

@@ -288,22 +288,20 @@ public class ExcelInputReader
         private void readBlockData(Row blockRow, Map<String, String> dropDownValues)
         {
             Cell cell = blockRow.getCell(dataColumnIndex);
-            if (cell != null)
+            if (cell != null && !"-".equals(POIHelper.getCellStringValue(cell, "-")))
             {
                 String title = POIHelper.getCellStringValue(blockRow, labelColumnIndex, "");
                 String titleVar = dropDownValues.get(title);
                 if (titleVar == null)
                 {
                     titleVar = LabelForBlockTags.DEFAULT_VALUE;
-                    if (!LabelForBlockTags.DEFAULT_TITLES.contains(title))
-                    {
-                        errorReporter.warning(title, Integer.toString(cell.getRowIndex()),
-                                "Title is not part of choices list, use default");
-                        LOGGER.warn("Unknown title for block " + currentTag
-                                + ": "
-                                + title
-                                + ", default will be used");
-                    }
+
+                    errorReporter.warning(title, Integer.toString(cell.getRowIndex()),
+                            "Type is not part of choices list, default type will be used");
+                    LOGGER.warn("Unknown type for block " + currentTag
+                            + ": "
+                            + title
+                            + ", default will be used");
                 }
 
                 String extractedInputKey = currentTag + titleVar;
