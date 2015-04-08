@@ -63,7 +63,8 @@ public class RawInputToPyCompatibleConvertor
     {
         String varName = lineEntry.getKey();
         RawInputLine line = lineEntry.getValue();
-        if (StringFromListExtractor.TAGS_TO_MAP.containsKey(varName))
+        if (StringFromListExtractor.TAGS_TO_MAP.containsKey(varName)
+                || StringFromListExtractor.MANDATORY_TAGS_TO_MAP.containsKey(varName))
             return stringFromListExtractor.extract(line);
         else if (StringExtractor.TAGS_FOR_STRING.contains(varName))
             return stringExtractor.extract(line);
