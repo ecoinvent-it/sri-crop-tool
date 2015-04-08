@@ -295,9 +295,15 @@ public class ExcelInputReader
                 if (titleVar == null)
                 {
                     titleVar = LabelForBlockTags.DEFAULT_VALUE;
-                    LOGGER.warn("Unknown title for block starting at line " + (currentTaggedRow.getRowNum() + 1) + ": "
-                            + title
-                            + ", default will be used");
+                    if (!LabelForBlockTags.DEFAULT_TITLES.contains(title))
+                    {
+                        errorReporter.warning(title, Integer.toString(cell.getRowIndex()),
+                                "Title is not part of choices list, use default");
+                        LOGGER.warn("Unknown title for block " + currentTag
+                                + ": "
+                                + title
+                                + ", default will be used");
+                    }
                 }
 
                 String extractedInputKey = currentTag + titleVar;

@@ -37,11 +37,12 @@ public class StringFromListExtractor
     private static final Map<String, String> TYPE_OF_DRYING = new HashMap<String, String>();
 
     public static final Map<String, Map<String, String>> TAGS_TO_MAP = new HashMap<>();
+    public static final Map<String, Map<String, String>> MANDATORY_TAGS_TO_MAP = new HashMap<>();
 
     static
     {
-        TAGS_TO_MAP.put("crop", CROPS);
-        TAGS_TO_MAP.put("country", COUNTRIES);
+        MANDATORY_TAGS_TO_MAP.put("crop", CROPS);
+        MANDATORY_TAGS_TO_MAP.put("country", COUNTRIES);
 
         FARMING_TYPES.put("non-organic", "non_organic");
         FARMING_TYPES.put("organic", "organic");
@@ -95,6 +96,41 @@ public class StringFromListExtractor
 
     public String extract(RawInputLine line)
     {
+        boolean isMandatory = MANDATORY_TAGS_TO_MAP.containsKey(line.getLineVariable());
+        if (isMandatory)
+            return extractMandatory(line);
+        else
+            return extractOptional(line);
+    }
+
+    private String extractMandatory(RawInputLine line)
+    {
+        Optional<String> stringValue = line.getValueAsString();
+        if (stringValue.isPresent())
+        {
+            String mapItem = MANDATORY_TAGS_TO_MAP.get(line.getLineVariable()).get(stringValue.get());
+            if (mapItem == null)
+            {
+                errorReporter.error(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                        "Mandatory text is not part of choices list");
+                return null;
+            }
+            else
+            {
+                return mapItem;
+            }
+        }
+        else
+        {
+            errorReporter
+                    .error(line.getLineTitle(), Integer.toString(line.getLineNum()),
+                            "Can't read mandatory text");
+            return null;
+        }
+    }
+
+    private String extractOptional(RawInputLine line)
+    {
         Optional<String> stringValue = line.getValueAsString();
         if (stringValue.isPresent())
         {
@@ -107,7 +143,7 @@ public class StringFromListExtractor
             }
             else
             {
-                return stringValue.get();
+                return mapItem;
             }
         }
         else
