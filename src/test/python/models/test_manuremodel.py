@@ -1,5 +1,6 @@
 import unittest
 from models.manuremodel import ManureModel, LiquidManureType, SolidManureType
+from models.hmmodel import HeavyMetalType
 
 class Test(unittest.TestCase):
     inputs = {"liquid_manure_part_before_dilution":0.5,
@@ -20,7 +21,7 @@ class Test(unittest.TestCase):
                    SolidManureType.other: 0.1
                   },
               "total_liquid_manure": 1234.5,
-              "total_solid_maure": 9876.5
+              "total_solid_manure": 9876.5
              }
     
     def testP2O5(self):
@@ -33,14 +34,31 @@ class Test(unittest.TestCase):
         results = ManureModel(self.inputs).computeN()
         self._assertTuplesEqual(results, expectedResults)
             
-    def testNH4N(self):
-        expectedResults = (733.2621375, 25763.6927648)
-        results = ManureModel(self.inputs).computeNH4N()
-        self._assertTuplesEqual(results, expectedResults)
+    def testNH3(self):
+        expectedResults = {"nh3_total_liquid_manure": 891.56112189,
+                           "nh3_total_solid_manure": 31325.641473536725}
+        results = ManureModel(self.inputs).computeNH3()
+        for key, value in expectedResults.items():
+            self.assertAlmostEqual(results[key], value)
         
     def _assertTuplesEqual(self, resultTuple, expectedTuple):
         for result, expected in zip(resultTuple, expectedTuple):
             self.assertAlmostEqual(result, expected)
+            
+    def testHeavyMetal(self):
+        expectedResults = {'hm_total_manure':{
+                            HeavyMetalType.cd: 643.7351365,
+                            HeavyMetalType.cu: 193483.06650425,
+                            HeavyMetalType.zn: 1466829.67538725,
+                            HeavyMetalType.pb: 6712.52877915,
+                            HeavyMetalType.ni: 24156.51939425,
+                            HeavyMetalType.cr: 17067.08426725,
+                            HeavyMetalType.hg: 1413.7372515}
+                        }
+        results = ManureModel(self.inputs).computeHeavyMetal();
+        for key, value in expectedResults.items():
+            for k,v in value.items():
+                self.assertAlmostEqual(results[key][k], v)
 
     
 if __name__ == "__main__":

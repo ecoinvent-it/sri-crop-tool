@@ -1,4 +1,5 @@
 from enum import Enum
+from models.modelEnums import HeavyMetalType
 
 class LiquidManureType(Enum):
     cattle=1
@@ -15,6 +16,17 @@ class SolidManureType(Enum):
     pigs=5
     sheep_goats=6
     other=7
+    
+class ManureTypeForHM(Enum):
+    cattle_liquid=1,
+    cattle_low_excrement=2,#liquid
+    cattle_stackable=3,#solid
+    cattle_loose_housing=4,#solid
+    pig_liquid=5,
+    pig_solid=6,
+    broiler=7,#solid
+    laying_hen_manure=8,#liquid
+    laying_hen_litter=9#solid
     
 #FIXME: Should this be elsewhere?
 _WORLD_PROPORTIONS_OF_LIQUID_MANURE = {LiquidManureType.cattle: 0.6608,
@@ -37,7 +49,7 @@ class ManureModel(object):
       liquid_manure_proportions: map LiquidManureType -> ratio. Sum should be 1
       solid_manure_proportions: map SolidManureType -> ratio. Sum should be 1
       total_liquid_manure: m3/ha
-      total_solid_maure: t/ha
+      total_solid_manure: t/ha
       
     #FIXME: Should the outputs be also in input, in case of known value?
     Outputs:
@@ -47,17 +59,25 @@ class ManureModel(object):
       computeN: tuple of:
         N total liquid manure: kg N/ha
         N total solid manure: kg N/ha
-      computeNH4N: tuple of:
-        NH4-N total liquid manure: kg NH4-N/ha
-        NH4-N total solid manure: kg NH4-N/ha
+      computeNH3:
+        nh3_total_liquid_manure: kg NH3/ha
+        nh3_total_solid_manure: kg NH3/ha
+      computeHeavyMetal:
+        hm_total_manure : map HeavyMetalType -> mg i/ha (i:hm type)
     """
     
     _input_variables = ["liquid_manure_part_before_dilution",
                         "liquid_manure_proportions",
                         "solid_manure_proportions",
                         "total_liquid_manure",
-                        "total_solid_maure"
+                        "total_solid_manure"
                        ]
+    
+    _N = 14.00674
+    _H = 1.00794
+
+    _NH3 = _N + 3*_H #17
+    _N_TO_NH3_FACTOR = _NH3 / _N # 17/14
 
     _P205_CONCENTRATION_IN_LIQUID_MANURE = {LiquidManureType.cattle: 1.5,
                                             LiquidManureType.fattening_pigs: 3.8,
@@ -90,15 +110,14 @@ class ManureModel(object):
                                         SolidManureType.sheep_goats: 8.0,
                                         SolidManureType.other: 10.40797 #Sumprod of concentration with world proportions
                                        }
-    
-    _NH4N_CONCENTRATION_IN_LIQUID_MANURE = {LiquidManureType.cattle: 2.75*0.55,
+    _NH3N_CONCENTRATION_IN_LIQUID_MANURE = {LiquidManureType.cattle: 2.75*0.55,
                                             LiquidManureType.fattening_pigs: 4.2*0.4,
                                             LiquidManureType.laying_hens: 6.3*0.69,
                                             LiquidManureType.sows_and_piglets: 3.3*0.29,
                                             LiquidManureType.other: 1.7765461 #Sumprod of concentration with world proportions
                                            }
     
-    _NH4N_CONCENTRATION_IN_SOLID_MANURE = {SolidManureType.broiler_litter: 10.0*0.66,
+    _NH3N_CONCENTRATION_IN_SOLID_MANURE = {SolidManureType.broiler_litter: 10.0*0.66,
                                            SolidManureType.cattle: 1.05*0.79,
                                            SolidManureType.horses: 0.7*0.9,
                                            SolidManureType.laying_hen_litter: 7*0.69,
@@ -106,6 +125,79 @@ class ManureModel(object):
                                            SolidManureType.sheep_goats: 2.3*0.9,
                                            SolidManureType.other: 2.00410305 #Sumprod of concentration with world proportions
                                           }
+    
+    _LIQUID_MANURE_TO_HM_MANURE = { LiquidManureType.cattle: {
+                                        ManureTypeForHM.cattle_liquid: 0.5,
+                                        ManureTypeForHM.cattle_low_excrement: 0.5
+                                        },
+                                    LiquidManureType.fattening_pigs:{
+                                        ManureTypeForHM.pig_liquid: 1.0
+                                        },
+                                    LiquidManureType.laying_hens:{
+                                        ManureTypeForHM.laying_hen_manure: 1.0
+                                        },
+                                    LiquidManureType.sows_and_piglets:{
+                                        ManureTypeForHM.pig_liquid: 1.0
+                                        },
+                                    LiquidManureType.other:{
+                                        ManureTypeForHM.cattle_liquid: 0.33,
+                                        ManureTypeForHM.cattle_low_excrement: 0.33,
+                                        ManureTypeForHM.pig_liquid: 0.25,
+                                        ManureTypeForHM.laying_hen_manure: 0.09
+                                        }
+                                   }
+    
+    _SOLID_MANURE_TO_HM_MANURE = {  SolidManureType.broiler_litter: {
+                                        ManureTypeForHM.broiler: 1.0
+                                    },
+                                    SolidManureType.cattle:{
+                                        ManureTypeForHM.cattle_stackable: 0.5,
+                                        ManureTypeForHM.cattle_loose_housing: 0.5,
+                                    },
+                                    SolidManureType.horses:{
+                                        ManureTypeForHM.cattle_loose_housing: 1.0
+                                    },
+                                    SolidManureType.laying_hen_litter:{
+                                        ManureTypeForHM.laying_hen_litter: 1.0
+                                    },
+                                    SolidManureType.pigs:{
+                                        ManureTypeForHM.pig_solid: 1.0
+                                    },
+                                    SolidManureType.sheep_goats:{
+                                        ManureTypeForHM.cattle_loose_housing: 1.0
+                                    },
+                                    SolidManureType.other:{
+                                        ManureTypeForHM.cattle_stackable: 0.31,
+                                        ManureTypeForHM.cattle_loose_housing: 0.31,
+                                        ManureTypeForHM.pig_solid: 0.21,
+                                        ManureTypeForHM.broiler: 0.10,
+                                        ManureTypeForHM.laying_hen_litter: 0.07
+                                    }
+                                }
+    
+    _HM_MANURE_DM = {   ManureTypeForHM.cattle_liquid: 0.090,
+                        ManureTypeForHM.cattle_low_excrement: 0.075,
+                        ManureTypeForHM.cattle_stackable: 0.190,
+                        ManureTypeForHM.cattle_loose_housing: 0.210,
+                        ManureTypeForHM.pig_liquid: 0.050,
+                        ManureTypeForHM.pig_solid: 0.270,
+                        ManureTypeForHM.broiler: 0.650,
+                        ManureTypeForHM.laying_hen_manure: 0.300,
+                        ManureTypeForHM.laying_hen_litter: 0.450
+                    }
+    
+    #mg/kg DM
+    _HM_MANURE_VALUES = {
+                             ManureTypeForHM.cattle_liquid: [0.18, 37.1, 162.2, 3.77, 4.3, 3.9, 0.4],
+                             ManureTypeForHM.cattle_low_excrement: [0.16, 19.1, 123.3, 2.92, 3.1, 2.1, 0.6],
+                             ManureTypeForHM.cattle_stackable: [ 0.17, 23.9, 117.7, 3.77, 4.3, 3.9, 0.4],
+                             ManureTypeForHM.cattle_loose_housing: [ 0.15, 22.0, 91.1, 2.81, 4.3, 3.9, 0.4],
+                             ManureTypeForHM.pig_liquid: [0.21, 115.3, 746.5, 1.76, 8.6, 6.7, 0.8],
+                             ManureTypeForHM.pig_solid: [0.21, 115.3, 746.5, 1.76, 8.6, 6.7, 0.8],
+                             ManureTypeForHM.broiler: [0.29, 43.8, 349.2, 2.92, 40.0, 10.0, 0.2],
+                             ManureTypeForHM.laying_hen_manure: [0.25, 39.6, 468.4, 2.24, 7.9, 5.5, 0.2],
+                             ManureTypeForHM.laying_hen_litter: [0.25, 39.6, 468.4, 2.24, 7.9, 5.5, 0.2]
+                             }
     
     def __init__(self, inputs):
         #TODO: Should we log usage of default value?
@@ -115,18 +207,51 @@ class ManureModel(object):
     def computeP2O5(self):
         return (self._sum_prod(self._P205_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_proportions) * self.total_liquid_manure
                     * self.liquid_manure_part_before_dilution,
-                self._sum_prod(self._P205_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_proportions) * self.total_solid_maure)
+                self._sum_prod(self._P205_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_proportions) * self.total_solid_manure)
         
     def computeN(self):
         return (self._sum_prod(self._N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_proportions) * self.total_liquid_manure
                     * self.liquid_manure_part_before_dilution,
-                self._sum_prod(self._N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_proportions) * self.total_solid_maure)
+                self._sum_prod(self._N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_proportions) * self.total_solid_manure)
         
-    def computeNH4N(self):
-        return (self._sum_prod(self._NH4N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_proportions) * self.total_liquid_manure
-                    * self.liquid_manure_part_before_dilution,
-                self._sum_prod(self._NH4N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_proportions) * self.total_solid_maure)
+    def computeNH3(self):
+        nh3_as_n_liquid = self._sum_prod(self._NH3N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_proportions) * self.total_liquid_manure * self.liquid_manure_part_before_dilution
+        nh3_as_n_solid = self._sum_prod(self._NH3N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_proportions) * self.total_solid_manure
+        return {"nh3_total_liquid_manure": nh3_as_n_liquid * self._N_TO_NH3_FACTOR,
+                "nh3_total_solid_manure": nh3_as_n_solid *self._N_TO_NH3_FACTOR}
         
     def _sum_prod(self, reference, factors):
         return sum(v*factors[k] for k,v in reference.items())
+    
+    def computeHeavyMetal(self):
+        hm_manure_total_values = dict.fromkeys(self._HM_MANURE_VALUES.keys(),0.0)
+        self._convert_manure_input_types_to_manure_for_HM(hm_manure_total_values,
+                                                          self.total_solid_manure,
+                                                          self.solid_manure_proportions,
+                                                          self._SOLID_MANURE_TO_HM_MANURE)
+        self._convert_manure_input_types_to_manure_for_HM(hm_manure_total_values,
+                                                          self.total_liquid_manure *self.liquid_manure_part_before_dilution,
+                                                          self.liquid_manure_proportions,
+                                                          self._LIQUID_MANURE_TO_HM_MANURE)
+        hm_element_values = self._compute_hm_element_values_from_hm_manure_total_values(hm_manure_total_values)
+        return {'hm_total_manure':hm_element_values}
+        
+    def _convert_manure_input_types_to_manure_for_HM(self, hm_manure_total_values, total_manure, manure_proportions, manureMapping):
+        input_types_values = self._compute_values_from_proportions(total_manure,manure_proportions)
+
+        for inputManureKey,HmManureMap in manureMapping.items():
+            for hmManure,ratio in HmManureMap.items():
+                hm_manure_total_values[hmManure] += ratio * input_types_values[inputManureKey]   
+        
+    def _compute_values_from_proportions(self,total,proportions):
+        return {k:v*total for k,v in proportions.items()}
+    
+    def _compute_hm_element_values_from_hm_manure_total_values(self,hm_manure_total_values):
+        hm_element_values = dict.fromkeys(HeavyMetalType,0.0)
+
+        for manureKey,manureValue in hm_manure_total_values.items():
+            for hm_element_index,hm_element_value in enumerate(self._HM_MANURE_VALUES[manureKey],1):
+                hm_element_values[HeavyMetalType(hm_element_index)] += hm_element_value * self._HM_MANURE_DM[manureKey] * manureValue
+
+        return hm_element_values
         
