@@ -7,13 +7,13 @@ class No3Model(object):
       considered_soil_volume: m3/ha
       drained_part: ratio
       fertilisers_gas_losses: ratio
-      irrigation: mm/year
       nitrogen_from_fertiliser: kg N/(ha*year)
       nitrogen_uptake_by_crop: kg N/(ha*year)
       norg_per_ntotal_ratio: ratio
       organic_carbon_content: kg C/kg soil,
       precipitation: mm/year
       rooting_depth: m
+      water_use_total: m3/(ha*year)
       
     Outputs:
       m_No3_nitrate_to_groundwater: kg NO3/(ha*year)
@@ -26,13 +26,13 @@ class No3Model(object):
                         "considered_soil_volume",
                         "drained_part",
                         "fertilisers_gas_losses",
-                        "irrigation",
                         "nitrogen_from_fertiliser",
                         "nitrogen_uptake_by_crop",
                         "norg_per_ntotal_ratio",
                         "organic_carbon_content",
                         "precipitation",
-                        "rooting_depth"
+                        "rooting_depth",
+                        "water_use_total"
                        ]
     
     _N = 14.00674
@@ -65,13 +65,16 @@ class No3Model(object):
         return carbon_in_soil / self.c_per_n_ratio * self.norg_per_ntotal_ratio
     
     def _compute_nitrogen_leaching(self, s, nitrogen_in_soil):
-        res = 21.37 + (self.precipitation + self.irrigation) \
+        res = 21.37 + self._compute_all_water_in_mm() \
             / (self.clay_content * 100 * self.rooting_depth) \
             * (0.0037 * s                                    \
                 + 0.0000601 * nitrogen_in_soil               \
                 - 0.00362 * self.nitrogen_uptake_by_crop)
             
         return max(0, res);
+    
+    def _compute_all_water_in_mm(self):
+        return self.precipitation + (self.water_use_total * 0.1) # m3/ha -> mm
         
     def _convert_nitrogen_to_nitrate(self, nitrogen):
         return nitrogen * self._N_TO_NO3_FACTOR

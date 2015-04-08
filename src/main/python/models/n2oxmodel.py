@@ -6,10 +6,8 @@ class N2OxModel(object):
       nitrate_to_groundwater: kg NO3 / ha
       nitrate_to_surfacewater: kg NO3 / ha
       ammonia_due_to_mineral_fert: kg NH3/ha
-      ammonia_due_to_liquid_manure: kg NH3/ha
-      ammonia_due_to_solid_manure: kg NH3/ha
+      ammonia_due_to_manure: kg NH3/ha
 
-      
     Outputs:
       m_N2ox_N2o_air: kg N2O/ha
       m_N2ox_Nox_as_n2o_air: kg NOx as N2O/ha
@@ -21,8 +19,7 @@ class N2OxModel(object):
                         "nitrate_to_groundwater",
                         "nitrate_to_surfacewater",
                         "ammonia_due_to_mineral_fert",
-                        "ammonia_due_to_liquid_manure",
-                        "ammonia_due_to_solid_manure"
+                        "ammonia_due_to_manure"
                        ]
     
     _N = 14.00674
@@ -69,7 +66,7 @@ class N2OxModel(object):
                                   )
     
     def _compute_total_due_ammonia(self):
-        return self.ammonia_due_to_mineral_fert + self.ammonia_due_to_liquid_manure + self.ammonia_due_to_solid_manure;
+        return self.ammonia_due_to_mineral_fert + self.ammonia_due_to_manure;
     
     def _compute_n2o_as_n_due_to_nitrate(self):
         return  0.0075 * self._NO3_TO_N_FACTOR * (self.nitrate_to_groundwater + self.nitrate_to_surfacewater)

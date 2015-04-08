@@ -46,10 +46,8 @@ _WORLD_PROPORTIONS_OF_SOLID_MANURE = {SolidManureType.broiler_litter: 0.1029,
 class ManureModel(object):
     """Inputs:
       liquid_manure_part_before_dilution: ratio
-      liquid_manure_proportions: map LiquidManureType -> ratio. Sum should be 1
-      solid_manure_proportions: map SolidManureType -> ratio. Sum should be 1
-      total_liquid_manure: m3/ha
-      total_solid_manure: t/ha
+      liquid_manure_quantities: map LiquidManureType -> m3/ha
+      solid_manure_quantities: map SolidManureType -> t/ha
       
     #FIXME: Should the outputs be also in input, in case of known value?
     Outputs:
@@ -67,10 +65,8 @@ class ManureModel(object):
     """
     
     _input_variables = ["liquid_manure_part_before_dilution",
-                        "liquid_manure_proportions",
-                        "solid_manure_proportions",
-                        "total_liquid_manure",
-                        "total_solid_manure"
+                        "liquid_manure_quantities",
+                        "solid_manure_quantities"
                        ]
     
     _N = 14.00674
@@ -205,20 +201,20 @@ class ManureModel(object):
             setattr(self, key, inputs[key])
             
     def computeP2O5(self):
-        return (self._sum_prod(self._P205_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_proportions) * self.total_liquid_manure
+        return (self._sum_prod(self._P205_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_quantities)
                     * self.liquid_manure_part_before_dilution,
-                self._sum_prod(self._P205_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_proportions) * self.total_solid_manure)
+                self._sum_prod(self._P205_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities))
         
     def computeN(self):
-        return (self._sum_prod(self._N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_proportions) * self.total_liquid_manure
-                    * self.liquid_manure_part_before_dilution,
-                self._sum_prod(self._N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_proportions) * self.total_solid_manure)
+        return self._sum_prod(self._N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_quantities) \
+                    * self.liquid_manure_part_before_dilution \
+                + self._sum_prod(self._N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities)
         
     def computeNH3(self):
-        nh3_as_n_liquid = self._sum_prod(self._NH3N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_proportions) * self.total_liquid_manure * self.liquid_manure_part_before_dilution
-        nh3_as_n_solid = self._sum_prod(self._NH3N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_proportions) * self.total_solid_manure
-        return {"nh3_total_liquid_manure": nh3_as_n_liquid * self._N_TO_NH3_FACTOR,
-                "nh3_total_solid_manure": nh3_as_n_solid *self._N_TO_NH3_FACTOR}
+        nh3_as_n_liquid = self._sum_prod(self._NH3N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_quantities) * self.liquid_manure_part_before_dilution
+        nh3_as_n_solid = self._sum_prod(self._NH3N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities)
+        return nh3_as_n_liquid * self._N_TO_NH3_FACTOR \
+               + nh3_as_n_solid *self._N_TO_NH3_FACTOR
         
     def _sum_prod(self, reference, factors):
         return sum(v*factors[k] for k,v in reference.items())
@@ -226,26 +222,25 @@ class ManureModel(object):
     def computeHeavyMetal(self):
         hm_manure_total_values = dict.fromkeys(self._HM_MANURE_VALUES.keys(),0.0)
         self._convert_manure_input_types_to_manure_for_HM(hm_manure_total_values,
-                                                          self.total_solid_manure,
-                                                          self.solid_manure_proportions,
+                                                          self.solid_manure_quantities,
                                                           self._SOLID_MANURE_TO_HM_MANURE)
         self._convert_manure_input_types_to_manure_for_HM(hm_manure_total_values,
-                                                          self.total_liquid_manure *self.liquid_manure_part_before_dilution,
-                                                          self.liquid_manure_proportions,
-                                                          self._LIQUID_MANURE_TO_HM_MANURE)
+                                                          self.liquid_manure_quantities,
+                                                          self._LIQUID_MANURE_TO_HM_MANURE,
+                                                          factor=self.liquid_manure_part_before_dilution)
         hm_element_values = self._compute_hm_element_values_from_hm_manure_total_values(hm_manure_total_values)
         return {'hm_total_manure':hm_element_values}
         
-    def _convert_manure_input_types_to_manure_for_HM(self, hm_manure_total_values, total_manure, manure_proportions, manureMapping):
-        input_types_values = self._compute_values_from_proportions(total_manure,manure_proportions)
-
+    def _convert_manure_input_types_to_manure_for_HM(self, hm_manure_total_values, manure_quantities, manureMapping, factor=None):
+        if (factor is not None):
+            manure_quantities_map = {k:v*factor for k,v in manure_quantities.items()}
+        else:
+            manure_quantities_map = manure_quantities
+            
         for inputManureKey,HmManureMap in manureMapping.items():
             for hmManure,ratio in HmManureMap.items():
-                hm_manure_total_values[hmManure] += ratio * input_types_values[inputManureKey]   
+                hm_manure_total_values[hmManure] += ratio * manure_quantities_map[inputManureKey]   
         
-    def _compute_values_from_proportions(self,total,proportions):
-        return {k:v*total for k,v in proportions.items()}
-    
     def _compute_hm_element_values_from_hm_manure_total_values(self,hm_manure_total_values):
         hm_element_values = dict.fromkeys(HeavyMetalType,0.0)
 

@@ -10,13 +10,13 @@ class Test(unittest.TestCase):
                   "considered_soil_volume": 5000,
                   "drained_part": 0.3,
                   "fertilisers_gas_losses": 0.1,
-                  "irrigation": 30,
                   "nitrogen_from_fertiliser": 150,
                   "nitrogen_uptake_by_crop": 107,
                   "norg_per_ntotal_ratio": 0.85,
                   "organic_carbon_content": 0.025,
                   "precipitation": 850,
                   "rooting_depth": 0.5,
+                  "water_use_total": 300
                  }
         expectedResults = {"m_No3_nitrate_to_groundwater": 286.7652489,
                            "m_No3_nitrate_to_surfacewater": 122.899392389}

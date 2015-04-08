@@ -33,7 +33,7 @@ class MapMappingRule(InputMappingRule):
     def mapField(self, attrName, mapping):
         hasonevalue = False
         res = {}
-        for k,v in self._enumToFieldDict:
+        for k,v in self._enumToFieldDict.items():
             try:
                 res[k] = mapping.originalInputs[v]
                 hasonevalue = True

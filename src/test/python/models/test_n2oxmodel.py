@@ -10,8 +10,7 @@ class Test(unittest.TestCase):
                   "nitrate_to_groundwater": 45.2,
                   "nitrate_to_surfacewater": 20.0,
                   "ammonia_due_to_mineral_fert": 24.0,
-                  "ammonia_due_to_liquid_manure":10.2,
-                  "ammonia_due_to_solid_manure": 20.0
+                  "ammonia_due_to_manure":30.2
                  }
         expectedResults = {"m_N2ox_N2o_air": 5.975708542,
                            "m_N2ox_Nox_as_n2o_air": 10.57972229}
