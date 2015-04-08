@@ -45,10 +45,10 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("yield_co_product_price");
         TAGS_FOR_NUMERIC.add("total_manureliquid");
         TAGS_FOR_NUMERIC.add("total_manuresolid");
+        TAGS_FOR_NUMERIC.add("total_composttype");
+        TAGS_FOR_NUMERIC.add("total_sewagesludge");
         TAGS_FOR_NUMERIC.add("total_fertnmin");
         TAGS_FOR_NUMERIC.add("total_fertpmin");
-        TAGS_FOR_NUMERIC.add("fert_k_total");
-        TAGS_FOR_NUMERIC.add("fert_k_total_organic");
         TAGS_FOR_NUMERIC.add("total_fertkmin");
         TAGS_FOR_NUMERIC.add("fert_other_total_mg");
         TAGS_FOR_NUMERIC.add("total_fertotherca");
@@ -143,6 +143,7 @@ public class NumericExtractor
         TAGS_FOR_RATIO.add("ratio_fertotherca_limestone");
         TAGS_FOR_RATIO.add("ratio_fertotherca_carbonation_limestone");
         TAGS_FOR_RATIO.add("ratio_fertotherca_seaweed_limestone");
+        TAGS_FOR_RATIO.add("fert_other_dolomite_in_mg");
         TAGS_FOR_RATIO.add("drying_yield_to_be_dryied");
         TAGS_FOR_RATIO.add("drying_humidity_before_drying");
         TAGS_FOR_RATIO.add("drying_humidity_after_drying");

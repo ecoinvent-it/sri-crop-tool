@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -74,6 +75,9 @@ public class Api
             throws URISyntaxException, IOException
     {
         ErrorReporter errorReporter = new ErrorReporterImpl();
+
+        Objects.requireNonNull(idTab, "idTab is null");
+
         // TODO: Store file if it can be stored
         Map<String, RawInputLine> extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
 
@@ -118,8 +122,14 @@ public class Api
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response generateScsv(@FormParam("idTab") final String idTab, @FormParam("idResult") final String idResult)
     {
+        Objects.requireNonNull(idTab, "idTab is null");
+
+        @SuppressWarnings("unchecked")
         Map<String, String> modelsOutput = (Map<String, String>) SecurityUtils.getSubject().getSession()
                 .getAttribute(idTab);
+
+        Objects.requireNonNull(modelsOutput, "results not found");
+
         return Response.ok(
                 (StreamingOutput) outputStream ->
                 scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, outputStream)).build();

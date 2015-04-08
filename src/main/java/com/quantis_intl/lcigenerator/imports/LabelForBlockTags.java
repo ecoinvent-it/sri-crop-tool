@@ -49,21 +49,21 @@ public class LabelForBlockTags
         LABELS_FOR_NUMERIC.put("part_fungicides_", FUNGICIDES);
         LABELS_FOR_NUMERIC.put("part_insecticides_", INSECTICIDES);
 
-        COMPOST_TYPE.put("compost", "Compost (kg)");
-        COMPOST_TYPE.put("meat_and_bone_meal", "Meat-and-bone meal (kg)");
-        COMPOST_TYPE.put("castor_oil_shell_coarse", "Castor-oil shell coarse (kg)");
-        COMPOST_TYPE.put("vinasse", "Vinasse (kg)");
-        COMPOST_TYPE.put("dried_poultry_manure", "Dried poultry manure");
-        COMPOST_TYPE.put("stone_meal", "Stone meal (kg)");
-        COMPOST_TYPE.put("feather_meal", "Feather meal (kg)");
-        COMPOST_TYPE.put("horn_meal", "Horn meal (kg)");
-        COMPOST_TYPE.put("horn_shavings_fine", "Horn shavings fine (kg)");
-        LABELS_FOR_NUMERIC.put("composttype_", COMPOST_TYPE);
+        COMPOST_TYPE.put("Compost", "compost");
+        COMPOST_TYPE.put("Meat-and-bone meal", "meat_and_bone_meal");
+        COMPOST_TYPE.put("Castor-oil shell coarse", "castor_oil_shell_coarse");
+        COMPOST_TYPE.put("Vinasse", "vinasse");
+        COMPOST_TYPE.put("Dried poultry manure", "dried_poultry_manure");
+        COMPOST_TYPE.put("Stone meal", "stone_meal");
+        COMPOST_TYPE.put("Feather meal", "feather_meal");
+        COMPOST_TYPE.put("Horn meal", "horn_meal");
+        COMPOST_TYPE.put("Horn shavings fine", "horn_shavings_fine");
+        LABELS_FOR_NUMERIC.put("ratio_composttype_", COMPOST_TYPE);
 
-        SEWAGE_SLUDGE.put("liquid", "Sewage sludge liquid (t)");
-        SEWAGE_SLUDGE.put("dehydrated", "Sewage sludge dehydrated (t)");
-        SEWAGE_SLUDGE.put("dried", "Sewage sludge dried (t)");
-        LABELS_FOR_NUMERIC.put("sewagesludge_", SEWAGE_SLUDGE);
+        SEWAGE_SLUDGE.put("Sewage sludge liquid", "liquid");
+        SEWAGE_SLUDGE.put("Sewage sludge dehydrated", "dehydrated");
+        SEWAGE_SLUDGE.put("Sewage sludge dried", "dried");
+        LABELS_FOR_NUMERIC.put("ratio_sewagesludge_", SEWAGE_SLUDGE);
 
         PLANT_PROTECTION.put("Spraying", "spraying");
         PLANT_PROTECTION.put("Flaming", "flaming");
@@ -110,9 +110,9 @@ public class LabelForBlockTags
         LABELS_FOR_RATIO.put("ratio_harvesting_", HARVESTING);
 
         OTHER_WORK_PROCESSES.put("Baling", "baling");
-        OTHER_WORK_PROCESSES.put("Chopping (number of passes)", "chopping_nb_passes");
-        OTHER_WORK_PROCESSES.put("Mulching (number of passes)", "mulching_nb_passes");
-        OTHER_WORK_PROCESSES.put("Transport, tractor and trailer (tonnes * km)", "transport_tractor_trailer_tkm");
+        OTHER_WORK_PROCESSES.put("Chopping", "chopping");
+        OTHER_WORK_PROCESSES.put("Mulching", "mulching");
+        OTHER_WORK_PROCESSES.put("Transport, tractor and trailer", "transport_tractor_trailer");
         OTHER_WORK_PROCESSES.put("Other", "other");
         LABELS_FOR_RATIO.put("ratio_otherworkprocesses_", OTHER_WORK_PROCESSES);
     }
