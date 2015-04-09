@@ -1,10 +1,10 @@
 from enum import Enum
 
 class HeavyMetalType(Enum):
-        cd=1
-        cu=2
-        zn=3
-        pb=4
-        ni=5
-        cr=6
-        hg=7
+        cd=0
+        cu=1
+        zn=2
+        pb=3
+        ni=4
+        cr=5
+        hg=6

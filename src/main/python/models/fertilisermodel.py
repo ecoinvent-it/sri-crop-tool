@@ -159,7 +159,7 @@ class FertModel(object):
     
     def _add_hm_values_for_fert_type(self,total_hm_values, fert_quantities,fert_hm_map):
         for fertKey,fertQuantity in fert_quantities.items():
-            for hm_element_index,hm_element_value in enumerate(fert_hm_map[fertKey],1):
+            for hm_element_index,hm_element_value in enumerate(fert_hm_map[fertKey]):
                 total_hm_values[HeavyMetalType(hm_element_index)] += hm_element_value * fertQuantity
 
     

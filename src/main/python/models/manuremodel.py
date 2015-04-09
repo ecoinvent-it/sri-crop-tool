@@ -245,7 +245,7 @@ class ManureModel(object):
         hm_element_values = dict.fromkeys(HeavyMetalType,0.0)
 
         for manureKey,manureValue in hm_manure_total_values.items():
-            for hm_element_index,hm_element_value in enumerate(self._HM_MANURE_VALUES[manureKey],1):
+            for hm_element_index,hm_element_value in enumerate(self._HM_MANURE_VALUES[manureKey]):
                 hm_element_values[HeavyMetalType(hm_element_index)] += hm_element_value * self._HM_MANURE_DM[manureKey] * manureValue
 
         return hm_element_values

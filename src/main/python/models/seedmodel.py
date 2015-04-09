@@ -128,7 +128,7 @@ class SeedModel(object):
     
     def _add_hm_values_for_seed_type(self,total_hm_values, seed_quantities,seed_hm_map):
         for seedKey,seedQuantity in seed_quantities.items():
-            for hm_element_index,hm_element_value in enumerate(seed_hm_map[seedKey],1):
+            for hm_element_index,hm_element_value in enumerate(seed_hm_map[seedKey]):
                 total_hm_values[HeavyMetalType(hm_element_index)] += hm_element_value * self._SEED_DM[seedKey] * seedQuantity
 
     

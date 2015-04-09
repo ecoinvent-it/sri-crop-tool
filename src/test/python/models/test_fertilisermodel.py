@@ -41,11 +41,6 @@ class Test(unittest.TestCase):
                     },
               "soil_with_ph_under_or_7":0.45
              }
-            
-    def testN(self):
-        expectedResults = 5.5
-        results = FertModel(self.inputs).computeN()
-        self.assertAlmostEqual(results, expectedResults)
         
     def testNH3(self):
         expectedResults = 0.48673871
