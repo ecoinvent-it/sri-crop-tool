@@ -1,4 +1,6 @@
 from models.fertilisermodel import NFertiliserType, OtherMineralFertiliserType
+from models.atomicmass import MG_TO_DOLOMITE_FACTOR, MA_CO2, MA_UREA,\
+    Ca_TO_LIMESTONE_FACTOR, LIMESTONE_TO_CO2_FACTOR, MA_C, MA_N, MA_DOLOMITE
 
 class Co2Model(object):
     """Inputs:
@@ -19,21 +21,13 @@ class Co2Model(object):
                         "magnesium_as_dolomite"
                        ]
     
-    _CO2 = 12.0107 + 2*15.9994
-    _UREA = 12.0107 + 4*1.00794 + 2*14.00674 + 15.9994 #CH4N2O
-    _UREA_N_TO_CO2_FACTOR =  12.0107/_UREA * _UREA/(14.00674*2) * _CO2/12.0107 #1.57
+    #2 N -> 1 UREA -> 1 C -> 1 CO2
+    _UREA_N_TO_CO2_FACTOR = MA_UREA/(MA_N*2) * MA_C/MA_UREA * MA_CO2/MA_C #1.57
+    _CA_TO_CO2_FACTOR = Ca_TO_LIMESTONE_FACTOR * LIMESTONE_TO_CO2_FACTOR #(_CO2)/ 40.078
     
-    _LIMESTONE = 40.078 + 12.0107 + 3*15.9994 #CaCO3
-    _CA_TO_LIMESTONE = _LIMESTONE / 40.078;
-    _LIMESTONE_TO_CO2_FACTOR = _CO2 / _LIMESTONE
-    _CA_TO_CO2_FACTOR = _CA_TO_LIMESTONE * _LIMESTONE_TO_CO2_FACTOR #(_CO2)/ 40.078
-    
-    _DOLOMITE = 40.078 + 24.3050 + 2*12.0107 + 2*3*15.9994 #CaMg(CO3)2
-    _MG_TO_DOLOMITE = _DOLOMITE / 24.3050;
-    _DOLOMITE_TO_CO2_FACTOR = 2*_CO2 / _DOLOMITE
-    _MG_TO_CO2_FACTOR = _MG_TO_DOLOMITE * _DOLOMITE_TO_CO2_FACTOR  # (_CO2)*2/24.305
-    
-    
+    _DOLOMITE_TO_CO2_FACTOR = 2*MA_CO2 / MA_DOLOMITE
+    _MG_TO_CO2_FACTOR = MG_TO_DOLOMITE_FACTOR * _DOLOMITE_TO_CO2_FACTOR  # (_CO2)*2/24.305
+
     def __init__(self, inputs):
         #TODO: Should we log usage of default value?
         for key in Co2Model._input_variables:

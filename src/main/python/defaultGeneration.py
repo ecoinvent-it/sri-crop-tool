@@ -36,10 +36,19 @@ class TableLookupDefaultGenerator(object):
         
     def generateDefault(self, field, generators):
         return self._table[generators[self._keyField]]
+    
+class CropCyclePerYearDefaultGenerator(object):
+    def generateDefault(self, field, generators):
+        return 1.0 #FIXME Implement
+    
+class AnnualizedIrrigationDefaultGenerator(object):
+    def generateDefault(self, field, generators): #m3/(ha*crop cycle) -> mm/year
+        return generators["water_use_total"] * 0.1 * generators["crop_cycle_per_year"]
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
                    "average_annual_precipitation": "TODO",
+                   "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
                    #Fertiliser defaults
                    #"n_fertiliser_quantities": MapMappingRule(_N_ENUM_TO_FIELD),
                    #"p_fertiliser_quantities": MapMappingRule(_P_ENUM_TO_FIELD),
@@ -50,6 +59,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "liquid_manure_part_before_dilution": SimpleValueDefaultGenerator(0.5),
                    #Erosion defaults
                    #"yearly_precipitation_as_snow": TODO table
+                   "annualized_irrigation": AnnualizedIrrigationDefaultGenerator(),
                    "slope": SimpleValueDefaultGenerator(0.03), #FIXME: default: 0% if rice, 3% for other
                    "slope_length": SimpleValueDefaultGenerator(50.0),
                    "soil_erodibility_factor": SimpleValueDefaultGenerator(0.5),#FIXME Default

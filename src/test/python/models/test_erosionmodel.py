@@ -7,7 +7,7 @@ class Test(unittest.TestCase):
     def testModel(self):
         inputs = {"average_annual_precipitation":1200,
                 "yearly_precipitation_as_snow":0.2,
-                "water_use_total":30000,
+                "annualized_water_use_total":30000,
                 "slope":0.03,
                 "slope_length":50.0,
                 "tillage_method":TillageMethod.spring_plow,
@@ -15,7 +15,7 @@ class Test(unittest.TestCase):
                 "soil_erodibility_factor":0.032,
                 "crop_factor":0.5
                  }
-        expectedResults = {"m_Erosion_eroded_soil": 5300.6602813}
+        expectedResults = {"m_Erosion_eroded_soil": 20814.14111845}
         
         results = erosionmodel.ErosionModel(inputs).compute()
         
