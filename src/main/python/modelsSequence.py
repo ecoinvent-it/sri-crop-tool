@@ -9,6 +9,9 @@ from models.irrigationmodel import IrrigationModel
 from models.fertilisermodel import FertModel
 from models.n2oxmodel import N2OxModel
 from models.manuremodel import ManureModel
+from models.pmodel import PModel
+from models.otherorganicfertilisermodel import OtherOrganicFertModel
+from models.erosionmodel import ErosionModel
 
 class ModelsSequence(object):
     
@@ -21,22 +24,30 @@ class ModelsSequence(object):
     def executeSequence(self):
         self._computeFertiliser()
         self._computeManure()
+        self._computeOtherOrganicFertiliser()
+        self._intermediateValues["eroded_soil"] = ErosionModel(self.allInputs).compute()["m_Erosion_eroded_soil"]
         self.outputMapping.mapIrrigationModel(IrrigationModel(self.allInputs).compute())
         self.outputMapping.mapFertilizers(self.allInputs)
         self.outputMapping.mapCo2Model(Co2Model(self.allInputs).compute())
-        #self.outputMapping.mapNo3Model(No3Model(self.allInputs).compute())
-        #self.outputMapping.mapN2oxModel(N2OxModel(self.allInputs).compute())
+        self.outputMapping.mapNo3Model(No3Model(self.allInputs).compute())
+        self.outputMapping.mapN2oxModel(N2OxModel(self.allInputs).compute())
+        self.outputMapping.mapPModel(PModel(self.allInputs).compute())
+        #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
         return self.outputMapping.output;
     
     def _computeFertiliser(self):
         fertM = FertModel(self.allInputs)
-        self._intermediateValues["nitrogen_from_mineral_fert"] = fertM.computeN()
         self._intermediateValues["ammonia_due_to_mineral_fert"] = fertM.computeNH3()
-    
+        
     def _computeManure(self):
         manureM = ManureModel(self.allInputs)
         self._intermediateValues["nitrogen_from_all_manure"] = manureM.computeN()
         pres = manureM.computeP2O5()
-        self._intermediateValues["TODO"] = pres[0]
-        self._intermediateValues["TODO"] = pres[1]
+        self._intermediateValues["p2o5_in_liquid_manure"] = pres[0]
+        self._intermediateValues["p2o5_in_solid_manure"] = pres[1]
         self.outputMapping.mapManureNH3(manureM.computeNH3())
+
+    def _computeOtherOrganicFertiliser(self):
+        otherfertM = OtherOrganicFertModel(self.allInputs)
+        self._intermediateValues["p2o5_in_liquid_sludge"] = otherfertM.computeP2O5()
+    

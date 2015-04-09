@@ -14,7 +14,7 @@ class Test(unittest.TestCase):
                   "magnesium_from_fertilizer": 4.0,
                   "magnesium_as_dolomite": 1.0
                     }
-        expectedResults = {"m_co2_CO2": 34.96487811}
+        expectedResults = {"m_co2_CO2_from_fertilisers": 34.96487811}
         
         results = co2model.Co2Model(inputs).compute()
         

@@ -43,8 +43,6 @@ class FertModel(object):
       soil_with_ph_under_or_7: ratio
 
     Outputs:
-      computeN:
-        N total fertilisers: kg N/ha
       computeNH3:
         nh3_total_mineral_fert: kg NH3/ha
       computeHeavyMetal:
@@ -140,9 +138,6 @@ class FertModel(object):
         for key in FertModel._input_variables:
             setattr(self, key, inputs[key])
         
-    def computeN(self):
-        return sum(self.n_fertiliser_quantities.values())
-    
     def computeNH3(self):
         return self._N_TO_NH3_FACTOR * sum(self._compute_nh3_as_n().values())
          

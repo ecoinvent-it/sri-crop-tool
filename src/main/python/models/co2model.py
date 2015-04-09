@@ -10,7 +10,7 @@ class Co2Model(object):
       magnesium_as_dolomite: ratio
 
     Outputs:
-      m_co2_CO2: kg/ha
+      m_co2_CO2_from_fertilisers: kg/ha
     """
     _input_variables = ["n_fertiliser_quantities",
                         "part_of_urea_in_UAN",
@@ -41,7 +41,7 @@ class Co2Model(object):
             
     def compute(self):
         co2 = self._compute_co2()
-        return {'m_co2_CO2': co2}
+        return {'m_co2_CO2_from_fertilisers': co2}
         
     def _compute_co2(self):
         co2_from_urea = self._compute_CO2_from_urea()

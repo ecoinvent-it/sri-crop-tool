@@ -26,6 +26,14 @@ class SimpleInputMappingRule(InputMappingRule):
     def mapField(self, attrName, mapping):
         return mapping.originalInputs[self._otherParam]
     
+class InputAsEnumMappingRule(InputMappingRule):
+    def __init__(self, paramName, enumClass):
+        self._paramName = paramName
+        self._enumClass = enumClass
+        
+    def mapField(self, attrName, mapping):
+        return self._enumClass(mapping.originalInputs[self._paramName])
+    
 class MapMappingRule(InputMappingRule):
     def __init__(self, enumToFieldDict):
         self._enumToFieldDict = enumToFieldDict

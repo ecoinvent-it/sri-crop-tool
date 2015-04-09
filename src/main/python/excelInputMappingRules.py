@@ -1,7 +1,10 @@
-from inputMappings import SimpleInputMappingRule, MapMappingRule
+from inputMappings import SimpleInputMappingRule, MapMappingRule,\
+    InputAsEnumMappingRule
 from models.fertilisermodel import NFertiliserType, PFertiliserType, KFertiliserType, OtherMineralFertiliserType
 from models.manuremodel import LiquidManureType, SolidManureType
 from models.irrigationmodel import IrrigationType
+from models.otherorganicfertilisermodel import OtherOrganicFertiliserType
+from models.erosionmodel import TillageMethod, AntiErosionPractice
 
 _N_ENUM_TO_FIELD = {
                 NFertiliserType.ammonium_nitrate:"fertnmin_ammonium_nitrate",
@@ -33,6 +36,12 @@ _K_ENUM_TO_FIELD = {
                 KFertiliserType.patent_potassium:"fertkmin_patent_potassium"
                  }
 
+_OTHERMIN_ENUM_TO_FIELD = {
+                OtherMineralFertiliserType.ca_limestone:"fertotherca_limestone",
+                OtherMineralFertiliserType.ca_carbonation_linestone:"fertotherca_carbonation_limestone",
+                OtherMineralFertiliserType.ca_seaweed_limestone:"fertotherca_seaweed_limestone"
+                 }
+
 _LIQUID_MANURE_ENUM_TO_FIELD = {
                 LiquidManureType.cattle:"manureliquid_cattle",
                 LiquidManureType.fattening_pigs:"manureliquid_fattening_pig",
@@ -51,10 +60,19 @@ _SOLID_MANURE_ENUM_TO_FIELD = {
                 SolidManureType.other:"manuresolid_other"
                                }
 
-_OTHERMIN_ENUM_TO_FIELD = {
-                OtherMineralFertiliserType.ca_limestone:"fertotherca_limestone",
-                OtherMineralFertiliserType.ca_carbonation_linestone:"fertotherca_carbonation_limestone",
-                OtherMineralFertiliserType.ca_seaweed_limestone:"fertotherca_seaweed_limestone"
+_OTHERORGANIC_ENUM_TO_FIELD = {
+                OtherOrganicFertiliserType.compost:"ratio_composttype_compost",
+                OtherOrganicFertiliserType.meat_and_bone_meal:"ratio_composttype_meat_and_bone_meal",
+                OtherOrganicFertiliserType.castor_oil_shell_coarse:"ratio_composttype_castor_oil_shell_coarse",
+                OtherOrganicFertiliserType.vinasse:"ratio_composttype_vinasse",
+                OtherOrganicFertiliserType.dried_poultry_manure:"ratio_composttype_dried_poultry_manure",
+                OtherOrganicFertiliserType.stone_meal:"ratio_composttype_stone_meal",
+                OtherOrganicFertiliserType.feather_meal:"ratio_composttype_feather_meal",
+                OtherOrganicFertiliserType.horn_meal:"ratio_composttype_horn_meal",
+                OtherOrganicFertiliserType.horn_shavings_fine:"ratio_composttype_horn_shavings_fine",
+                OtherOrganicFertiliserType.sewagesludge_liquid:"ratio_sewagesludge_liquid",
+                OtherOrganicFertiliserType.sewagesludge_dehydrated:"ratio_sewagesludge_dehydrated",
+                OtherOrganicFertiliserType.sewagesludge_dried:"ratio_sewagesludge_dried"
                  }
 
 _IRR_ENUM_TO_FIELD = {
@@ -66,9 +84,11 @@ _IRR_ENUM_TO_FIELD = {
                     IrrigationType.drip_irrigation_electricity:"ratio_irr_drip_electricity",
                     IrrigationType.drip_irrigation_diesel:"ratio_irr_drip_diesel"
                      }
-    
+        
 EXCEL_INPUT_MAPPING_RULES = {
                     #Cross-models rules
+                    "nitrogen_from_mineral_fert": SimpleInputMappingRule("total_fertnmin"),
+                    "water_use_total": SimpleInputMappingRule("total_wateruse"),
                     #Fertiliser rules
                     "n_fertiliser_quantities": MapMappingRule(_N_ENUM_TO_FIELD),
                     "p_fertiliser_quantities": MapMappingRule(_P_ENUM_TO_FIELD),
@@ -78,15 +98,20 @@ EXCEL_INPUT_MAPPING_RULES = {
                     "liquid_manure_part_before_dilution":  SimpleInputMappingRule("manureliquid_dilution_level"),
                     "liquid_manure_quantities": MapMappingRule(_LIQUID_MANURE_ENUM_TO_FIELD),
                     "solid_manure_quantities": MapMappingRule(_SOLID_MANURE_ENUM_TO_FIELD),
+                    #Other organic fertiliser rules
+                    "other_organic_fertiliser_quantities": MapMappingRule(_OTHERORGANIC_ENUM_TO_FIELD),
+                    #Erosion model rules
+                    "tillage_method": InputAsEnumMappingRule("tillage_method", TillageMethod),
+                    "anti_erosion_practice": InputAsEnumMappingRule("anti_erosion_practice", AntiErosionPractice),
                     #CO2 model rules
                     "magnesium_from_fertilizer": SimpleInputMappingRule("fert_other_total_mg"),
                     "magnesium_as_dolomite": SimpleInputMappingRule("fert_other_dolomite_in_mg"),
                     #Irrigation rules
-                    "water_use_total": SimpleInputMappingRule("total_wateruse"),
                     "irrigation_types_proportions": MapMappingRule(_IRR_ENUM_TO_FIELD),
                     #NO3 model rules
                     "drained_part": SimpleInputMappingRule("drainage"),
-                    "precipitation": SimpleInputMappingRule("average_annual_precipitation"),
                     #N2Ox model rules
+                    #P model rules
+                    "p2o5_in_mineral_fertiliser": SimpleInputMappingRule("total_fertpmin"),
                    }
 

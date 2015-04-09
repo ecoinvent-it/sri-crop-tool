@@ -3,27 +3,28 @@ import math
 from enum import Enum
 
 class TillageMethod(Enum):
-    fall_plaw=1
-    spring_plow=2
-    mulch_tillage=3
-    ridge_tillage=4
-    zone_tillage=5
-    no_till=6
-    unknown=7
+    fall_plaw="fall_plaw"
+    spring_plow="spring_plow"
+    mulch_tillage="mulch_tillage"
+    ridge_tillage="ridge_tillage"
+    zone_tillage="zone_tillage"
+    no_till="no_till"
+    unknown="unknown"
     
 class AntiErosionPractice(Enum):
-    no_practice=1
-    cross_slope=2
-    contour_farming=3
-    strip_cropping_cross_slope=4
-    strip_cropping_contour=5
-    Unknown=6
+    no_practice="no_practice"
+    cross_slope="cross_slope"
+    contour_farming="contour_farming"
+    strip_cropping_cross_slope="strip_cropping_cross_slope"
+    strip_cropping_contour="strip_cropping_contour"
+    unknown="unknown"
     
+#FIXME: Irrigation per crop cycle
 class ErosionModel(object):
     """Inputs:
       average_annual_precipitation: mm/year
       yearly_precipitation_as_snow: ratio
-      irrigation: mm/year
+      water_use_total: m3/(ha*year)
       slope: ratio #default: 0% if rice, 3% for other
       slope_length: m
       tillage_method: TillageMethod
@@ -37,7 +38,7 @@ class ErosionModel(object):
     
     _input_variables = ["average_annual_precipitation",
                         "yearly_precipitation_as_snow",
-                        "irrigation",
+                        "water_use_total",
                         "slope",
                         "slope_length",
                         "tillage_method",
@@ -75,7 +76,7 @@ class ErosionModel(object):
                                 TillageMethod.zone_tillage:0.25,
                                 TillageMethod.no_till:0.25};
                         
-    _ANTI_EROSION_PRACTICE_FACTOR = { AntiErosionPractice.Unknown:1,
+    _ANTI_EROSION_PRACTICE_FACTOR = { AntiErosionPractice.unknown:1,
                                         AntiErosionPractice.no_practice:1,
                                         AntiErosionPractice.cross_slope:0.75,
                                         AntiErosionPractice.contour_farming:0.5,
@@ -106,7 +107,7 @@ class ErosionModel(object):
     
     def _compute_precipitation_factor(self):#FIXME: check if we have to add or remove the second part
         return self.average_annual_precipitation * (1.0 - self.yearly_precipitation_as_snow) \
-                + 0.1 * (self.irrigation + self.yearly_precipitation_as_snow * self.average_annual_precipitation);
+                + 0.1 * ((self.water_use_total * 0.1) + self.yearly_precipitation_as_snow * self.average_annual_precipitation);
     
     def _compute_slope_factor(self):
         return (self.slope_length * 3.28083/72.6)**self._compute_pow_for_slope_factor() * (65.41*(math.sin(self.slope/100))**2 \

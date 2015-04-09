@@ -1,17 +1,17 @@
 #FIXME: Have it per crop cycel
 class No3Model(object):
     """Inputs:
+      average_annual_precipitation: mm/year
       bulk_density_of_soil: kg/m3
       c_per_n_ratio: ratio
       clay_content: ratio
       considered_soil_volume: m3/ha
       drained_part: ratio
       fertilisers_gas_losses: ratio
-      nitrogen_from_fertiliser: kg N/(ha*year)
+      nitrogen_from_mineral_fert: kg N/(ha*year) #FIXME: Should we also take organic?
       nitrogen_uptake_by_crop: kg N/(ha*year)
       norg_per_ntotal_ratio: ratio
       organic_carbon_content: kg C/kg soil,
-      precipitation: mm/year
       rooting_depth: m
       water_use_total: m3/(ha*year)
       
@@ -20,17 +20,17 @@ class No3Model(object):
       m_No3_nitrate_to_surfacewater: kg NO3/(ha*year)
     """
     
-    _input_variables = ["bulk_density_of_soil",
+    _input_variables = ["average_annual_precipitation", 
+                        "bulk_density_of_soil",
                         "c_per_n_ratio",
                         "clay_content",
                         "considered_soil_volume",
                         "drained_part",
                         "fertilisers_gas_losses",
-                        "nitrogen_from_fertiliser",
+                        "nitrogen_from_mineral_fert",
                         "nitrogen_uptake_by_crop",
                         "norg_per_ntotal_ratio",
                         "organic_carbon_content",
-                        "precipitation",
                         "rooting_depth",
                         "water_use_total"
                        ]
@@ -59,7 +59,7 @@ class No3Model(object):
         return self.organic_carbon_content * self.bulk_density_of_soil * self.considered_soil_volume
     
     def _compute_considered_nitrogen_from_fertiliser(self):
-        return self.nitrogen_from_fertiliser * (1-self.fertilisers_gas_losses)
+        return self.nitrogen_from_mineral_fert * (1-self.fertilisers_gas_losses)
                 
     def _compute_nitrogen_in_soil_orga_matter(self, carbon_in_soil):
         return carbon_in_soil / self.c_per_n_ratio * self.norg_per_ntotal_ratio
@@ -74,7 +74,7 @@ class No3Model(object):
         return max(0, res);
     
     def _compute_all_water_in_mm(self):
-        return self.precipitation + (self.water_use_total * 0.1) # m3/ha -> mm
+        return self.average_annual_precipitation + (self.water_use_total * 0.1) # m3/ha -> mm
         
     def _convert_nitrogen_to_nitrate(self, nitrogen):
         return nitrogen * self._N_TO_NO3_FACTOR

@@ -49,7 +49,7 @@ public class TemplateSubstanceUsage
     public static final TemplateSubstanceUsage[] toAir = {
             new TemplateSubstanceUsage("Carbon dioxide, land transformation", "low. pop.", "kg", "", ""),
             new TemplateSubstanceUsage("Ammonia", "low. pop.", "kg", "", ""),
-            new TemplateSubstanceUsage("Carbon dioxide, fossil", "low. pop.", "kg", "CO2", ""),
+            new TemplateSubstanceUsage("Carbon dioxide, fossil", "low. pop.", "kg", "CO2_from_fertilisers", ""),
             new TemplateSubstanceUsage("Nitrogen oxides", "low. pop.", "kg", "", ""),
             new TemplateSubstanceUsage("Dinitrogen monoxide", "low. pop.", "kg", "", ""),
             new TemplateSubstanceUsage("Water, {TODO}", "low. pop.", "kg", "", "")
