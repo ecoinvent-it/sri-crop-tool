@@ -1,8 +1,10 @@
 from defaultTables import CLAY_CONTENT_PER_COUNTRY, CARBON_CONTENT_PER_COUNTRY,\
-    ROOTING_DEPTH_PER_CROP, N_FERT_RATIO_PER_COUNTRY
-from models.hmmodel import LandUseCategoryForHM
+    ROOTING_DEPTH_PER_CROP, N_FERT_RATIO_PER_COUNTRY, P_FERT_RATIO_PER_COUNTRY, K_FERT_RATIO_PER_COUNTRY
+from models.hmmodel import LandUseCategoryForHM, PesticideType
 from models.otherorganicfertilisermodel import OtherOrganicFertiliserType
 from models.pmodel import LandUseCategory
+from models.fertilisermodel import OtherMineralFertiliserType
+from models.seedmodel import SeedType
 
 class DefaultValuesWrapper(object):
     def __init__(self, inputMapping, generatorMap):
@@ -86,13 +88,16 @@ DEFAULTS_VALUES_GENERATORS = {
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
                    #Fertiliser defaults
                    "n_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", N_FERT_RATIO_PER_COUNTRY, "nitrogen_from_mineral_fert"),
-                   #"p_fertiliser_quantities": MapMappingRule(_P_ENUM_TO_FIELD),
-                   #"k_fertiliser_quantities": MapMappingRule(_K_ENUM_TO_FIELD),
-                   "other_mineral_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),
-                   "other_organic_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),#FIXME: To test
+                   "p_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", P_FERT_RATIO_PER_COUNTRY, "p2O5_from_mineral_fert"),
+                   "k_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", K_FERT_RATIO_PER_COUNTRY, "k2O_from_mineral_fert"),
+                   "other_mineral_fertiliser_quantities": ZeroMapDefaultGenerator(OtherMineralFertiliserType),
                    "soil_with_ph_under_or_7": SimpleValueDefaultGenerator(0.5), #FIXME: Default
                    #Manure defaults
                    "liquid_manure_part_before_dilution": SimpleValueDefaultGenerator(0.5),
+                   #Other organic fertilisers defaults
+                   "other_organic_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),#FIXME: To test
+                   #Seed defaults
+                   "seed_quantities":ZeroMapDefaultGenerator(SeedType),#FIXME: Default
                    #Erosion defaults
                    #"yearly_precipitation_as_snow": TODO table
                    "annualized_irrigation": AnnualizedIrrigationDefaultGenerator(),
@@ -124,5 +129,5 @@ DEFAULTS_VALUES_GENERATORS = {
                    "land_use_category": SimpleValueDefaultGenerator(LandUseCategory.arable_land), #FIXME: Default
                    #HM defaults
                    "hm_land_use_category": LandUseCategoryForHMDefaultGenerator(),
-                   #"pesticides_quantities": TODO
+                   "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default
                    }
