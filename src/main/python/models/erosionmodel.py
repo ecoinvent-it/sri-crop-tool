@@ -38,7 +38,7 @@ class ErosionModel(object):
     
     _input_variables = ["average_annual_precipitation",
                         "yearly_precipitation_as_snow",
-                        "annualized_water_use_total",
+                        "annualized_irrigation",
                         "slope",
                         "slope_length",
                         "tillage_method",
@@ -107,7 +107,7 @@ class ErosionModel(object):
     
     def _compute_precipitation_factor(self):#FIXME: check if we have to add or remove the second part
         return self.average_annual_precipitation * (1.0 - self.yearly_precipitation_as_snow) \
-                + 0.1 * ((self.annualized_water_use_total * 0.1) + self.yearly_precipitation_as_snow * self.average_annual_precipitation);
+                + 0.1 * ((self.annualized_irrigation * 0.1) + self.yearly_precipitation_as_snow * self.average_annual_precipitation);
     
     def _compute_slope_factor(self):
         return (self.slope_length * 3.28083/72.6)**self._compute_pow_for_slope_factor() * (65.41*(math.sin(self.slope))**2 \

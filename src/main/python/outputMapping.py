@@ -3,6 +3,9 @@ class OutputMapping(object):
     def __init__(self):
         self.output = {}
         
+    def mapAsIsOutput(self, allInputs):
+        self.output["country"] = allInputs["country"]
+        
     def mapIrrigationModel(self, irrOutput):
         for key, value in irrOutput.items():
             self.output[key.replace("m_Irr_", "")] = value

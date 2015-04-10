@@ -22,6 +22,7 @@ class ModelsSequence(object):
                                               self._intermediateValues, self.outputMapping.output), DEFAULTS_VALUES_GENERATORS)
         
     def executeSequence(self):
+        self.outputMapping.mapAsIsOutput(self.allInputs)
         self._computeFertiliser()
         self._computeManure()
         self._computeOtherOrganicFertiliser()

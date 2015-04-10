@@ -52,7 +52,7 @@ public class TemplateSubstanceUsage
             new TemplateSubstanceUsage("Carbon dioxide, fossil", "low. pop.", "kg", "CO2_from_fertilisers", ""),
             new TemplateSubstanceUsage("Nitrogen oxides", "low. pop.", "kg", "Nox_as_n2o_air", ""),
             new TemplateSubstanceUsage("Dinitrogen monoxide", "low. pop.", "kg", "N2o_air", ""),
-            new TemplateSubstanceUsage("Water, {TODO}", "low. pop.", "kg", "", "")
+            new TemplateSubstanceUsage("Water, {country}", "low. pop.", "kg", "", "")
     };
 
     public static final TemplateSubstanceUsage[] toWater = {
@@ -75,8 +75,8 @@ public class TemplateSubstanceUsage
             new TemplateSubstanceUsage("Nickel, ion", "groundwater", "kg", "", ""),
             new TemplateSubstanceUsage("Zinc, ion", "river", "kg", "", ""),
             new TemplateSubstanceUsage("Zinc, ion", "groundwater", "kg", "", ""),
-            new TemplateSubstanceUsage("Water, {TODO}", "river", "kg", "", ""),
-            new TemplateSubstanceUsage("Water, {TODO}", "groundwater", "kg", "", "")
+            new TemplateSubstanceUsage("Water, {country}", "river", "kg", "", ""),
+            new TemplateSubstanceUsage("Water, {country}", "groundwater", "kg", "", "")
     };
 
     public static final TemplateSubstanceUsage[] toSoil = {
