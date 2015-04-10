@@ -1,13 +1,12 @@
 from models.co2model import Co2Model
 from outputMapping import OutputMapping
-from models.no3model import No3Model
+from models.nmodel import NModel
 from inputMappings import NonStrictInputMapping
 from excelInputMappingRules import EXCEL_INPUT_MAPPING_RULES
 from defaultGeneration import DefaultValuesWrapper, DEFAULTS_VALUES_GENERATORS
 from collections import ChainMap
 from models.irrigationmodel import IrrigationModel
 from models.fertilisermodel import FertModel
-from models.n2oxmodel import N2OxModel
 from models.manuremodel import ManureModel
 from models.pmodel import PModel
 from models.otherorganicfertilisermodel import OtherOrganicFertModel
@@ -30,8 +29,7 @@ class ModelsSequence(object):
         self.outputMapping.mapIrrigationModel(IrrigationModel(self.allInputs).compute())
         self.outputMapping.mapFertilizers(self.allInputs)
         self.outputMapping.mapCo2Model(Co2Model(self.allInputs).compute())
-        self.outputMapping.mapNo3Model(No3Model(self.allInputs).compute())
-        self.outputMapping.mapN2oxModel(N2OxModel(self.allInputs).compute())
+        self.outputMapping.mapNModel(NModel(self.allInputs).compute())
         self.outputMapping.mapPModel(PModel(self.allInputs).compute())
         self.outputMapping.mapHMModel(HmModel(self.allInputs).compute())
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
@@ -49,11 +47,11 @@ class ModelsSequence(object):
         self._intermediateValues["p2o5_in_liquid_manure"] = pres[0]
         self._intermediateValues["p2o5_in_solid_manure"] = pres[1]
         self._intermediateValues["hm_from_manure"] = manureM.computeHeavyMetal();
-        self.outputMapping.mapManureNH3(manureM.computeNH3())
+        self._intermediateValues["ammonia_due_to_manure"] = manureM.computeNH3()
 
     def _computeOtherOrganicFertiliser(self):
         otherfertM = OtherOrganicFertModel(self.allInputs)
-        self._intermediateValues["nitrogen_from_other_organic_fert"] = otherfertM.computeN()
+        self._intermediateValues["nitrogen_from_other_orga_fert"] = otherfertM.computeN()
         self._intermediateValues["p2o5_in_liquid_sludge"] = otherfertM.computeP2O5()
         self._intermediateValues["hm_from_other_organic_fert"] = otherfertM.computeHeavyMetal()
-    
+        self._intermediateValues["ammonia_due_to_other_orga_fert"] = otherfertM.computeNH3()

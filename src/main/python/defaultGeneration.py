@@ -1,5 +1,5 @@
 from defaultTables import CLAY_CONTENT_PER_COUNTRY, CARBON_CONTENT_PER_COUNTRY,\
-    ROOTING_DEPTH_PER_CROP
+    ROOTING_DEPTH_PER_CROP, N_FERT_RATIO_PER_COUNTRY
 from models.hmmodel import LandUseCategoryForHM
 from models.otherorganicfertilisermodel import OtherOrganicFertiliserType
 from models.pmodel import LandUseCategory
@@ -45,6 +45,16 @@ class ZeroMapDefaultGenerator(object):
     
     def mapField(self, attrName, mapping):
         return {k: 0.0 for k in self._enumClass}
+
+class ConvertRatioToValueDefaultGenerator(object):
+    def __init__(self, tableKeyField, ratioTable, totalField):
+        self._tableKeyField = tableKeyField
+        self._ratioTable = ratioTable
+        self._totalField = totalField
+        
+    def generateDefault(self, field, generators):
+        total = generators[self._totalField]
+        return {k:v * total for k,v in self._ratioTable[generators[self._tableKeyField]]}
     
 class CropCyclePerYearDefaultGenerator(object):
     def generateDefault(self, field, generators):
@@ -56,24 +66,29 @@ class AnnualizedIrrigationDefaultGenerator(object):
     
 class LandUseCategoryForHMDefaultGenerator(object):
     def generateDefault(self, field, generators):
-        if (generators["land_use_category"] in (LandUseCategory.arable_land)):
+        if (generators["land_use_category"] == LandUseCategory.arable_land):
             return LandUseCategoryForHM.arable_land
-        elif (generators["land_use_category"] in (LandUseCategory.grassland_intensive, \
-                                                     LandUseCategory.grassland_intensive,  \
-                                                     LandUseCategory.summer_alpine_pastures)):
+        elif (generators["land_use_category"] in [LandUseCategory.grassland_intensive,
+                                                     LandUseCategory.grassland_intensive,
+                                                     LandUseCategory.summer_alpine_pastures]):
             return LandUseCategoryForHM.permanent_grassland
         else:
             return LandUseCategoryForHM.horticultural_crops
 
+class PerCropCyclePrecipitationDefaultGenerator(object):
+    def generateDefault(self, field, generators): #mm/year -> m3/(ha*crop cycle)
+        return generators["average_annual_precipitation"] * 10.0 / generators["crop_cycle_per_year"]
+
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
                    "average_annual_precipitation": "TODO",
+                   "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
                    #Fertiliser defaults
-                   #"n_fertiliser_quantities": MapMappingRule(_N_ENUM_TO_FIELD),
+                   "n_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", N_FERT_RATIO_PER_COUNTRY, "nitrogen_from_mineral_fert"),
                    #"p_fertiliser_quantities": MapMappingRule(_P_ENUM_TO_FIELD),
                    #"k_fertiliser_quantities": MapMappingRule(_K_ENUM_TO_FIELD),
-                   #"other_mineral_fertiliser_quantities": MapMappingRule(_OTHERMIN_ENUM_TO_FIELD),
+                   "other_mineral_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),
                    "other_organic_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),#FIXME: To test
                    "soil_with_ph_under_or_7": SimpleValueDefaultGenerator(0.5), #FIXME: Default
                    #Manure defaults
@@ -90,7 +105,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "magnesium_from_fertilizer": SimpleValueDefaultGenerator(0.0),
                    "magnesium_as_dolomite": SimpleValueDefaultGenerator(1.0),
                    #Irrigation defaults
-                   #NO3 model defaults
+                   #N model defaults
                    "bulk_density_of_soil": SimpleValueDefaultGenerator(1300.0),
                    "c_per_n_ratio": SimpleValueDefaultGenerator(11.0),
                    "clay_content": TableLookupDefaultGenerator("country", CLAY_CONTENT_PER_COUNTRY),
@@ -101,7 +116,6 @@ DEFAULTS_VALUES_GENERATORS = {
                    "nitrogen_uptake_by_crop": SimpleValueDefaultGenerator(0.0), #FIXME: Default
                    "norg_per_ntotal_ratio": SimpleValueDefaultGenerator(0.85),
                    "rooting_depth": TableLookupDefaultGenerator("crop", ROOTING_DEPTH_PER_CROP), #FIXME: Missing some default
-                   #N2Ox defaults
                    "nitrogen_from_crop_residues": SimpleValueDefaultGenerator(0.0), #FIXME: Default
                    #P defaults
                    "eroded_reaching_river": SimpleValueDefaultGenerator(0.2),

@@ -61,18 +61,18 @@ _SOLID_MANURE_ENUM_TO_FIELD = {
                                }
 
 _OTHERORGANIC_ENUM_TO_FIELD = {
-                OtherOrganicFertiliserType.compost:"ratio_composttype_compost",
-                OtherOrganicFertiliserType.meat_and_bone_meal:"ratio_composttype_meat_and_bone_meal",
-                OtherOrganicFertiliserType.castor_oil_shell_coarse:"ratio_composttype_castor_oil_shell_coarse",
-                OtherOrganicFertiliserType.vinasse:"ratio_composttype_vinasse",
-                OtherOrganicFertiliserType.dried_poultry_manure:"ratio_composttype_dried_poultry_manure",
-                OtherOrganicFertiliserType.stone_meal:"ratio_composttype_stone_meal",
-                OtherOrganicFertiliserType.feather_meal:"ratio_composttype_feather_meal",
-                OtherOrganicFertiliserType.horn_meal:"ratio_composttype_horn_meal",
-                OtherOrganicFertiliserType.horn_shavings_fine:"ratio_composttype_horn_shavings_fine",
-                OtherOrganicFertiliserType.sewagesludge_liquid:"ratio_sewagesludge_liquid",
-                OtherOrganicFertiliserType.sewagesludge_dehydrated:"ratio_sewagesludge_dehydrated",
-                OtherOrganicFertiliserType.sewagesludge_dried:"ratio_sewagesludge_dried"
+                OtherOrganicFertiliserType.compost:"composttype_compost",
+                OtherOrganicFertiliserType.meat_and_bone_meal:"composttype_meat_and_bone_meal",
+                OtherOrganicFertiliserType.castor_oil_shell_coarse:"composttype_castor_oil_shell_coarse",
+                OtherOrganicFertiliserType.vinasse:"composttype_vinasse",
+                OtherOrganicFertiliserType.dried_poultry_manure:"composttype_dried_poultry_manure",
+                OtherOrganicFertiliserType.stone_meal:"composttype_stone_meal",
+                OtherOrganicFertiliserType.feather_meal:"composttype_feather_meal",
+                OtherOrganicFertiliserType.horn_meal:"composttype_horn_meal",
+                OtherOrganicFertiliserType.horn_shavings_fine:"composttype_horn_shavings_fine",
+                OtherOrganicFertiliserType.sewagesludge_liquid:"sewagesludge_liquid",
+                OtherOrganicFertiliserType.sewagesludge_dehydrated:"sewagesludge_dehydrated",
+                OtherOrganicFertiliserType.sewagesludge_dried:"sewagesludge_dried"
                  }
 
 _IRR_ENUM_TO_FIELD = {
@@ -109,11 +109,9 @@ EXCEL_INPUT_MAPPING_RULES = {
                     "magnesium_as_dolomite": SimpleInputMappingRule("fert_other_dolomite_in_mg"),
                     #Irrigation rules
                     "irrigation_types_proportions": MapMappingRule(_IRR_ENUM_TO_FIELD),
-                    #NO3 model rules
-                    #N2Ox model rules
+                    #N model rules
                     #P model rules
                     "p2o5_in_mineral_fertiliser": SimpleInputMappingRule("total_fertpmin"),
                     #HM model rules
                     #pesticides_quantities: TODO map PesticideType -> kg i /(ha*year) (i: pest type)
                    }
-

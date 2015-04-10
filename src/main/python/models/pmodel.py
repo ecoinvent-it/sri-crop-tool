@@ -10,7 +10,6 @@ class LandUseCategory(Enum):
     vegetables='Vegetables'
     viticulture='Viticulture'
 
-#FIXME: Modify to have it per crop cycle
 class PModel(object):
     """Inputs:
       crop_cycle_per_year: ratio
