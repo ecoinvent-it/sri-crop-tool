@@ -12,6 +12,7 @@ from models.pmodel import PModel
 from models.otherorganicfertilisermodel import OtherOrganicFertModel
 from models.erosionmodel import ErosionModel
 from models.hmmodel import HmModel
+from models.seedmodel import SeedModel
 
 class ModelsSequence(object):
     
@@ -26,6 +27,7 @@ class ModelsSequence(object):
         self._computeFertiliser()
         self._computeManure()
         self._computeOtherOrganicFertiliser()
+        self._computeSeed()
         self._intermediateValues["eroded_soil"] = ErosionModel(self.allInputs).compute()["m_Erosion_eroded_soil"]
         self.outputMapping.mapIrrigationModel(IrrigationModel(self.allInputs).compute())
         self.outputMapping.mapFertilizers(self.allInputs)
@@ -56,3 +58,7 @@ class ModelsSequence(object):
         self._intermediateValues["p2o5_in_liquid_sludge"] = otherfertM.computeP2O5()
         self._intermediateValues["hm_from_other_organic_fert"] = otherfertM.computeHeavyMetal()
         self._intermediateValues["ammonia_due_to_other_orga_fert"] = otherfertM.computeNH3()
+        
+    def _computeSeed(self):
+        seedM = SeedModel(self.allInputs)
+        self._intermediateValues["hm_from_seed"] = seedM.computeHeavyMetal()

@@ -45,7 +45,7 @@ class ZeroMapDefaultGenerator(object):
     def __init__(self, enumClass):
         self._enumClass = enumClass
     
-    def mapField(self, attrName, mapping):
+    def generateDefault(self, attrName, mapping):
         return {k: 0.0 for k in self._enumClass}
 
 class ConvertRatioToValueDefaultGenerator(object):

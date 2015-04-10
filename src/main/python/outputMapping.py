@@ -36,8 +36,8 @@ class OutputMapping(object):
        
     def mapHMModel(self,hmOutput):
         for key, hmMap in hmOutput.items():
-            for k, v in hmMap:
-                self.output[key.replace("m_hm_", "") + "_" + k] = v
+            for k, v in hmMap.items():
+                self.output[key.replace("m_hm_", "") + "_" + k.name] = v
             
     def _mapEnumMap(self, enumdict):
         for k,v in enumdict.items():
