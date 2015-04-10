@@ -46,7 +46,7 @@ class FertModel(object):
       computeNH3:
         nh3_total_mineral_fert: kg NH3/ha
       computeHeavyMetal:
-        hm_total_mineralfert : map HeavyMetalType -> mg i/ha (i:hm type)
+        hm_total_mineral_fert : map HeavyMetalType -> mg i/ha (i:hm type)
     """
     
     _input_variables = ["n_fertiliser_quantities",
@@ -155,7 +155,7 @@ class FertModel(object):
         self._add_hm_values_for_fert_type(total_hm_values, self.p_fertiliser_quantities, self._HM_P_FERT_VALUES);
         self._add_hm_values_for_fert_type(total_hm_values, self.k_fertiliser_quantities, self._HM_K_FERT_VALUES);
         self._add_hm_values_for_fert_type(total_hm_values, self.other_mineral_fertiliser_quantities, self._HM_OTHER_MINERAL_FERT_VALUES);
-        return {'hm_total_mineralfert':total_hm_values}
+        return total_hm_values
     
     def _add_hm_values_for_fert_type(self,total_hm_values, fert_quantities,fert_hm_map):
         for fertKey,fertQuantity in fert_quantities.items():

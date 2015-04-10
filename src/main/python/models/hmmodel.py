@@ -17,19 +17,19 @@ class LandUseCategoryForHM(Enum):
 class HmModel(object):
     
     """Inputs:
-      hm_values_for_manure : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
-      hm_values_for_mineral_fertilisers : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
-      hm_values_for_other_fertilisers : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
-      hm_values_for_seeds: map HeavyMetalType -> mg i/(ha*year) (i:hm type)
+      hm_from_manure : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
+      hm_from_mineral_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
+      hm_from_other_organic_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
+      hm_from_seed: map HeavyMetalType -> mg i/(ha*year) (i:hm type)
       pesticides_quantities: map PesticideType -> kg i /(ha*year) (i: pest type)
-      drainage: ratio
+      drained_part: ratio
       eroded_soil: kg/(ha*year)
-      land_use_category: LandUseCategoryForHM
+      hm_land_use_category: LandUseCategoryForHM
       
     Outputs:
-        m_hm_to_soil: map HeavyMetalType -> kg i/(ha*year) (i:hm type)
-        m_hm_to_ground_water: map HeavyMetalType -> kg i/(ha*year) (i:hm type)
-        m_hm_to_surface_water: map HeavyMetalType -> kg i/(ha*year) (i:hm type)
+        m_hm_heavymetal_to_soil: map HeavyMetalType -> kg i/(ha*year) (i:hm type)
+        m_hm_heavymetal_to_ground_water: map HeavyMetalType -> kg i/(ha*year) (i:hm type)
+        m_hm_heavymetal_to_surface_water: map HeavyMetalType -> kg i/(ha*year) (i:hm type)
         
     elements:    
         Cd: Cadmium
@@ -42,14 +42,14 @@ class HmModel(object):
 
     """
     
-    _input_variables = ['hm_values_for_manure',
-                        'hm_values_for_mineral_fertilisers',
-                        'hm_values_for_other_fertilisers',
-                        'hm_values_for_seeds',
+    _input_variables = ['hm_from_manure',
+                        'hm_from_mineral_fert',
+                        'hm_from_other_organic_fert',
+                        'hm_from_seed',
                         'pesticides_quantities',
-                        'drainage',
+                        'drained_part',
                         'eroded_soil',
-                        'land_use_category'
+                        'hm_land_use_category'
                        ]
     
     #mg/ha/y
@@ -122,16 +122,16 @@ class HmModel(object):
             hm_to_sw[hmElement], hm_to_gw[hmElement] = self._split_leaching_between_surface_and_ground_water(leaching);
             hm_to_gw[hmElement] += erosion_gw;
             
-        return {'m_hm_to_soil':hm_to_soil,
-                'm_hm_to_ground_water':hm_to_gw,
-                'm_hm_to_surface_water':hm_to_sw}
+        return {'m_hm_heavymetal_to_soil':hm_to_soil,
+                'm_hm_heavymetal_to_ground_water':hm_to_gw,
+                'm_hm_heavymetal_to_surface_water':hm_to_sw}
         
     def _compute_agro_input(self, sumPest, hmElement):
-        return self.hm_values_for_manure[hmElement] \
-                + self.hm_values_for_mineral_fertilisers[hmElement]\
-                + self.hm_values_for_other_fertilisers[hmElement]\
-                + sumPest[hmElement] \
-                + self.hm_values_for_seeds[hmElement];
+        return    self.hm_from_manure[hmElement] \
+                + self.hm_from_mineral_fert[hmElement]\
+                + self.hm_from_other_organic_fert[hmElement]\
+                + self.hm_from_seed[hmElement] \
+                + sumPest[hmElement]
     
     def _compute_allocation_factor_for_hm_element(self, agro_input, hmElement):
         return agro_input / (agro_input + self._HM_DEPOSITIONS[hmElement])
@@ -152,12 +152,12 @@ class HmModel(object):
         return self._LEACHING_TO_GW[hmElement] * allocation_factor / 1000000.0;
   
     def _split_leaching_between_surface_and_ground_water(self, total_leaching):
-        surface = total_leaching * self.drainage
-        ground = total_leaching  * (1.0 - self.drainage)
+        surface = total_leaching * self.drained_part
+        ground = total_leaching  * (1.0 - self.drained_part)
         return (surface,ground)
     
     def _compute_erosion_gw(self, allocation_factor, hmElement, hmIndex): #mg/ha -> kg/ha
-        return self._SOIL_HM_CONTENT[self.land_use_category][hmIndex] / 1000000.0 \
+        return self._SOIL_HM_CONTENT[self.hm_land_use_category][hmIndex] / 1000000.0 \
                 * self.eroded_soil * self._ACCUMULATION_FACTOR \
                 * self._EROSION_FACTOR * allocation_factor
 

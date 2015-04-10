@@ -48,7 +48,7 @@ class Test(unittest.TestCase):
         self.assertAlmostEqual(results, expectedResults)
         
     def testHeavyMetal(self):
-        expectedResults = {'hm_total_mineralfert':{
+        expectedResults = {
                             HeavyMetalType.cd: 115.843,
                             HeavyMetalType.cu: 610.731,
                             HeavyMetalType.zn: 2769.902,
@@ -56,11 +56,10 @@ class Test(unittest.TestCase):
                             HeavyMetalType.ni: 383.838,
                             HeavyMetalType.cr: 10076.781,
                             HeavyMetalType.hg: 0.0}
-                        }
+
         results = FertModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():
-            for k,v in value.items():
-                self.assertAlmostEqual(results[key][k], v)
+                self.assertAlmostEqual(results[key], value)
 
     
 if __name__ == "__main__":

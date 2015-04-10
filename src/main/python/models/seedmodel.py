@@ -124,7 +124,7 @@ class SeedModel(object):
     def computeHeavyMetal(self):
         total_hm_values = dict.fromkeys(HeavyMetalType,0.0)
         self._add_hm_values_for_seed_type(total_hm_values, self.seed_quantities, self._HM_SEED_VALUES);
-        return {'hm_total_seed':total_hm_values}
+        return total_hm_values
     
     def _add_hm_values_for_seed_type(self,total_hm_values, seed_quantities,seed_hm_map):
         for seedKey,seedQuantity in seed_quantities.items():

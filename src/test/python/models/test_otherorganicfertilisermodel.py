@@ -20,17 +20,22 @@ class Test(unittest.TestCase):
              }
     
     def testP2O5(self):
-        expectedResults = 0.0
+        expectedResults = 189.7
         results = OtherOrganicFertModel(self.inputs).computeP2O5()
         self.assertAlmostEqual(results, expectedResults)
         
     def testN(self):
+        expectedResults = 34230.815
+        results = OtherOrganicFertModel(self.inputs).computeN()
+        self.assertAlmostEqual(results, expectedResults)
+        
+    def testNH3(self):
         expectedResults = 0.0
         results = OtherOrganicFertModel(self.inputs).computeN()
         self.assertAlmostEqual(results, expectedResults)
             
     def testHeavyMetal(self):
-        expectedResults = {'hm_total_otherfert':{
+        expectedResults = {
                             HeavyMetalType.cd: 235307.08,
                             HeavyMetalType.cu: 44818680.9,
                             HeavyMetalType.zn: 133614262.1,
@@ -38,11 +43,10 @@ class Test(unittest.TestCase):
                             HeavyMetalType.ni: 6496816.8,
                             HeavyMetalType.cr: 22064443.6,
                             HeavyMetalType.hg: 197829.58}
-                        }
+                        
         results = OtherOrganicFertModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():
-            for k,v in value.items():
-                self.assertAlmostEqual(results[key][k], v)
+                self.assertAlmostEqual(results[key], value)
             
     
 if __name__ == "__main__":

@@ -37,6 +37,11 @@ class OutputMapping(object):
         self._mapEnumMap(allInputs["other_mineral_fertiliser_quantities"])
         #TODO: Is this the best place for that?
         self.output["fert_n_ammonia_liquid_as_nh3"] = allInputs["fertnmin_ammonia_liquid"] * 17.0/14.0 #FIXME: Exact value
+       
+    def mapHMModel(self,hmOutput):
+        for key, hmMap in hmOutput.items():
+            for k, v in hmMap:
+                self.output[key.replace("m_hm_", "") + "_" + k] = v
             
     def _mapEnumMap(self, enumdict):
         for k,v in enumdict.items():

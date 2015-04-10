@@ -228,8 +228,8 @@ class ManureModel(object):
                                                           self.liquid_manure_quantities,
                                                           self._LIQUID_MANURE_TO_HM_MANURE,
                                                           factor=self.liquid_manure_part_before_dilution)
-        hm_element_values = self._compute_hm_element_values_from_hm_manure_total_values(hm_manure_total_values)
-        return {'hm_total_manure':hm_element_values}
+        hm_total_manure = self._compute_hm_element_values_from_hm_manure_total_values(hm_manure_total_values)
+        return hm_total_manure
         
     def _convert_manure_input_types_to_manure_for_HM(self, hm_manure_total_values, manure_quantities, manureMapping, factor=None):
         if (factor is not None):

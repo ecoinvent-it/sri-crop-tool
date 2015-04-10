@@ -1,6 +1,7 @@
 class N2OxModel(object):
     """Inputs:
       nitrogen_from_all_manure: kg N / ha
+      nitrogen_from_other_organic_fert: kg N / ha
       nitrogen_from_mineral_fert: kg N / ha
       nitrogen_from_crop_residues: kg N / ha
       nitrate_to_groundwater: kg NO3 / ha
@@ -14,6 +15,7 @@ class N2OxModel(object):
     """
     
     _input_variables = ["nitrogen_from_all_manure",
+                        "nitrogen_from_other_organic_fert",
                         "nitrogen_from_mineral_fert",
                         "nitrogen_from_crop_residues",
                         "nitrate_to_groundwater",
@@ -52,7 +54,7 @@ class N2OxModel(object):
                 "m_N2ox_Nox_as_n2o_air": nox}
         
     def _compute_total_fert_nitrogen(self):
-        return self.nitrogen_from_all_manure + self.nitrogen_from_mineral_fert;
+        return self.nitrogen_from_all_manure + self.nitrogen_from_other_organic_fert + self.nitrogen_from_mineral_fert;
         
     def _compute_nox_as_no2(self,total_fert_nitrogen): #0.026 is a ratio in kg NO/kg N
         return total_fert_nitrogen * (0.026 * self._NO_TO_N_FACTOR) * self._N_TO_NO2_FACTOR

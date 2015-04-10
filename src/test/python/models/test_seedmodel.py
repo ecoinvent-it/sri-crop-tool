@@ -39,7 +39,7 @@ class Test(unittest.TestCase):
              }
             
     def testHeavyMetal(self):
-        expectedResults = {'hm_total_seed':{
+        expectedResults = {
                             HeavyMetalType.cd: 119.662601,
                             HeavyMetalType.cu: 6490.90505,
                             HeavyMetalType.zn: 33038.76163,
@@ -47,11 +47,10 @@ class Test(unittest.TestCase):
                             HeavyMetalType.ni: 1125.987457,
                             HeavyMetalType.cr: 517.883863,
                             HeavyMetalType.hg: 38.175756}
-                        }
+                        
         results = SeedModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():
-            for k,v in value.items():
-                self.assertAlmostEqual(results[key][k], v)
+                self.assertAlmostEqual(results[key], value)
 
     
 if __name__ == "__main__":

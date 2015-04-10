@@ -25,6 +25,8 @@ class OtherOrganicFertModel(object):
         P2O5_total_otherfert: kg P2O5/ha
       computeN:
         N_total_otherfert: kg N/ha
+      computeNH3:
+        nh3_total_otherfert: kg NH3/ha
       computeHeavyMetal:
         hm_total_otherfert : map HeavyMetalType -> mg i/ha (i:hm type)
     """
@@ -45,6 +47,26 @@ class OtherOrganicFertModel(object):
                     OtherOrganicFertiliserType.sewagesludge_dehydrated: 0.26,
                     OtherOrganicFertiliserType.sewagesludge_dried: 0.93
                     }
+    
+    #src: Freiermuth 2006, table 13 * TS if not specified
+    #kg/t FM
+    _N_CONCENTRATION_ORG_FERT = {OtherOrganicFertiliserType.compost: 7.0,#Walther Ryser 2001, Tab. 48
+                                OtherOrganicFertiliserType.meat_and_bone_meal: 0.0 * 0.95,#Tiermehl
+                                OtherOrganicFertiliserType.castor_oil_shell_coarse: 0.0 * 0.0,#FIXME: complete when we will have more info
+                                OtherOrganicFertiliserType.vinasse: 0.0 * 0.0,#FIXME: complete when we will have more info
+                                OtherOrganicFertiliserType.dried_poultry_manure: 0.0 * 1.0,#FIXME: complete when we will have more info
+                                OtherOrganicFertiliserType.stone_meal: 0.0 * 0.0,#FIXME: complete when we will have more info
+                                OtherOrganicFertiliserType.feather_meal: 137.0 * 0.95,#Hornmehl
+                                OtherOrganicFertiliserType.horn_meal: 137.0 * 0.95,#Hornmehl
+                                OtherOrganicFertiliserType.horn_shavings_fine: 137.0 * 0.95,#Hornmehl
+                                OtherOrganicFertiliserType.sewagesludge_liquid: 2.5, #Walther Ryser 2001, Tab. 48
+                                OtherOrganicFertiliserType.sewagesludge_dehydrated: 9.7, #Walther Ryser 2001, Tab. 48
+                                OtherOrganicFertiliserType.sewagesludge_dried: 8.4 #Walther Ryser 2001, Tab. 48
+                                }
+    
+    #src: Walther Ryser 2001, Tab. 48
+    #kg/t FM
+    _P205_CONCENTRATION_IN_LIQUID_SEWAGE_SLUDGE = 3.5
                                                                 
     #src: Freiermuth 2006, table 13 if not specified
     # g/t TS
@@ -67,18 +89,22 @@ class OtherOrganicFertModel(object):
         for key in OtherOrganicFertModel._input_variables:
             setattr(self, key, inputs[key])
             
-    #FIXME: To Complete
+    #FIXME: To validate
     def computeP2O5(self):
-        return 0.0
+        return self.other_organic_fertiliser_quantities[OtherOrganicFertiliserType.sewagesludge_liquid] \
+                * self._P205_CONCENTRATION_IN_LIQUID_SEWAGE_SLUDGE
+
+    def computeN(self):
+        return sum(v * self._N_CONCENTRATION_ORG_FERT[k] for k,v in self.other_organic_fertiliser_quantities.items())
     
     #FIXME: To Complete
-    def computeN(self):
+    def computeNH3(self):
         return 0.0
     
     def computeHeavyMetal(self):
         total_hm_values = dict.fromkeys(HeavyMetalType,0.0)
         self._add_hm_values_for_fert_type(total_hm_values, self.other_organic_fertiliser_quantities, self._HM_FERT_VALUES);
-        return {'hm_total_otherfert':total_hm_values}
+        return total_hm_values
     
     def _add_hm_values_for_fert_type(self,total_hm_values, fert_quantities,fert_hm_map):
         for fertKey,fertQuantity in fert_quantities.items():

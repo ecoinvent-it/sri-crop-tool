@@ -89,6 +89,7 @@ EXCEL_INPUT_MAPPING_RULES = {
                     #Cross-models rules
                     "nitrogen_from_mineral_fert": SimpleInputMappingRule("total_fertnmin"),
                     "water_use_total": SimpleInputMappingRule("total_wateruse"),
+                    "drained_part": SimpleInputMappingRule("drainage"),
                     #Fertiliser rules
                     "n_fertiliser_quantities": MapMappingRule(_N_ENUM_TO_FIELD),
                     "p_fertiliser_quantities": MapMappingRule(_P_ENUM_TO_FIELD),
@@ -109,9 +110,10 @@ EXCEL_INPUT_MAPPING_RULES = {
                     #Irrigation rules
                     "irrigation_types_proportions": MapMappingRule(_IRR_ENUM_TO_FIELD),
                     #NO3 model rules
-                    "drained_part": SimpleInputMappingRule("drainage"),
                     #N2Ox model rules
                     #P model rules
                     "p2o5_in_mineral_fertiliser": SimpleInputMappingRule("total_fertpmin"),
+                    #HM model rules
+                    #pesticides_quantities: TODO map PesticideType -> kg i /(ha*year) (i: pest type)
                    }
 

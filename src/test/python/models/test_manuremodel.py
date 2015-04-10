@@ -42,7 +42,7 @@ class Test(unittest.TestCase):
             self.assertAlmostEqual(result, expected)
             
     def testHeavyMetal(self):
-        expectedResults = {'hm_total_manure':{
+        expectedResults = {
                             HeavyMetalType.cd: 643.7351365,
                             HeavyMetalType.cu: 193483.06650425,
                             HeavyMetalType.zn: 1466829.67538725,
@@ -50,11 +50,10 @@ class Test(unittest.TestCase):
                             HeavyMetalType.ni: 24156.51939425,
                             HeavyMetalType.cr: 17067.08426725,
                             HeavyMetalType.hg: 1413.7372515}
-                        }
+                        
         results = ManureModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():
-            for k,v in value.items():
-                self.assertAlmostEqual(results[key][k], v)
+                self.assertAlmostEqual(results[key], value)
 
     
 if __name__ == "__main__":

@@ -12,6 +12,7 @@ from models.manuremodel import ManureModel
 from models.pmodel import PModel
 from models.otherorganicfertilisermodel import OtherOrganicFertModel
 from models.erosionmodel import ErosionModel
+from models.hmmodel import HmModel
 
 class ModelsSequence(object):
     
@@ -32,12 +33,14 @@ class ModelsSequence(object):
         self.outputMapping.mapNo3Model(No3Model(self.allInputs).compute())
         self.outputMapping.mapN2oxModel(N2OxModel(self.allInputs).compute())
         self.outputMapping.mapPModel(PModel(self.allInputs).compute())
+        self.outputMapping.mapHMModel(HmModel(self.allInputs).compute())
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
         return self.outputMapping.output;
     
     def _computeFertiliser(self):
         fertM = FertModel(self.allInputs)
         self._intermediateValues["ammonia_due_to_mineral_fert"] = fertM.computeNH3()
+        self._intermediateValues["hm_from_mineral_fert"] = fertM.computeHeavyMetal()
         
     def _computeManure(self):
         manureM = ManureModel(self.allInputs)
@@ -45,9 +48,12 @@ class ModelsSequence(object):
         pres = manureM.computeP2O5()
         self._intermediateValues["p2o5_in_liquid_manure"] = pres[0]
         self._intermediateValues["p2o5_in_solid_manure"] = pres[1]
+        self._intermediateValues["hm_from_manure"] = manureM.computeHeavyMetal();
         self.outputMapping.mapManureNH3(manureM.computeNH3())
 
     def _computeOtherOrganicFertiliser(self):
         otherfertM = OtherOrganicFertModel(self.allInputs)
+        self._intermediateValues["nitrogen_from_other_organic_fert"] = otherfertM.computeN()
         self._intermediateValues["p2o5_in_liquid_sludge"] = otherfertM.computeP2O5()
+        self._intermediateValues["hm_from_other_organic_fert"] = otherfertM.computeHeavyMetal()
     
