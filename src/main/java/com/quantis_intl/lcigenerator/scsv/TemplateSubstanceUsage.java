@@ -52,14 +52,14 @@ public class TemplateSubstanceUsage
             new TemplateSubstanceUsage("Carbon dioxide, fossil", "low. pop.", "kg", "CO2_from_fertilisers", ""),
             new TemplateSubstanceUsage("Nitrogen oxides", "low. pop.", "kg", "Nox_as_n2o_air", ""),
             new TemplateSubstanceUsage("Dinitrogen monoxide", "low. pop.", "kg", "N2o_air", ""),
-            new TemplateSubstanceUsage("Water, {country}", "low. pop.", "kg", "", "") // m3/ha in output
+            new TemplateSubstanceUsage("Water, {country}", "low. pop.", "kg", "water_to_air", "")
     };
 
     public static final TemplateSubstanceUsage[] toWater = {
             new TemplateSubstanceUsage("Nitrate", "river", "kg", "nitrate_to_surfacewater", ""),
             new TemplateSubstanceUsage("Nitrate", "groundwater", "kg", "nitrate_to_groundwater", ""),
             new TemplateSubstanceUsage("Phosphorus", "river", "kg", "P_surfacewater_erosion", ""),
-            new TemplateSubstanceUsage("Phosphate", "river", "kg", "", ""),// sum of 2 outputs?
+            new TemplateSubstanceUsage("Phosphate", "river", "kg", "PO4_surfacewater", ""),
             new TemplateSubstanceUsage("Phosphate", "groundwater", "kg", "PO4_groundwater", ""),
             new TemplateSubstanceUsage("Cadmium, ion", "river", "kg", "heavymetal_to_surface_water_cd", ""),
             new TemplateSubstanceUsage("Cadmium, ion", "groundwater", "kg", "heavymetal_to_ground_water_cd", ""),
@@ -75,8 +75,8 @@ public class TemplateSubstanceUsage
             new TemplateSubstanceUsage("Nickel, ion", "groundwater", "kg", "heavymetal_to_ground_water_ni", ""),
             new TemplateSubstanceUsage("Zinc, ion", "river", "kg", "heavymetal_to_surface_water_zn", ""),
             new TemplateSubstanceUsage("Zinc, ion", "groundwater", "kg", "heavymetal_to_ground_water_zn", ""),
-            new TemplateSubstanceUsage("Water, {country}", "river", "kg", "", ""), // m3/ha in output
-            new TemplateSubstanceUsage("Water, {country}", "groundwater", "kg", "", "") // m3/ha in output
+            new TemplateSubstanceUsage("Water, {country}", "river", "kg", "water_to_water_river", ""),
+            new TemplateSubstanceUsage("Water, {country}", "groundwater", "kg", "water_to_water_groundwater", "")
     };
 
     public static final TemplateSubstanceUsage[] toSoil = {

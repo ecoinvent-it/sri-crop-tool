@@ -88,7 +88,7 @@ class HmModel(object):
                         HeavyMetalType.cu: 3600.0,
                         HeavyMetalType.zn: 33000.0,
                         HeavyMetalType.pb: 600.0,
-                        HeavyMetalType.ni: 0.0, #NA
+                        HeavyMetalType.ni: 0.0, #NA TODO: check
                         HeavyMetalType.cr: 21200.0,
                         HeavyMetalType.hg: 1.3
                         }
