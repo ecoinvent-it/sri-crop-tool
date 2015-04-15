@@ -61,7 +61,10 @@ public class ExcelRawInputLine implements RawInputLine
     @Override
     public boolean isValuePresent()
     {
-        return cell != null && !"-".equals(POIHelper.getCellStringValue(cell, "-"));
+        String cellStringValue = POIHelper.getCellStringValue(cell, "-");
+        return cell != null
+                && !"-".equals(cellStringValue)
+                && !(cellStringValue.startsWith("<select") && cellStringValue.endsWith(">"));
     }
 
     @Override

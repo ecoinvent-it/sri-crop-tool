@@ -288,7 +288,10 @@ public class ExcelInputReader
         private void readBlockData(Row blockRow, Map<String, String> dropDownValues)
         {
             Cell cell = blockRow.getCell(dataColumnIndex);
-            if (cell != null && !"-".equals(POIHelper.getCellStringValue(cell, "-")))
+            String cellStringValue = POIHelper.getCellStringValue(cell, "-");
+            if (cell != null
+                    && !"-".equals(cellStringValue)
+                    && !(cellStringValue.startsWith("<select") && cellStringValue.endsWith(">")))
             {
                 String title = POIHelper.getCellStringValue(blockRow, labelColumnIndex, "");
                 String titleVar = dropDownValues.get(title);

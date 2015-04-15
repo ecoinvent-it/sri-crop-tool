@@ -88,11 +88,11 @@ _IRR_ENUM_TO_FIELD = {
 EXCEL_INPUT_MAPPING_RULES = {
                     #Cross-models rules
                     "nitrogen_from_mineral_fert": SimpleInputMappingRule("total_fertnmin"),
+                    "p2O5_from_mineral_fert": SimpleInputMappingRule("total_fertpmin"),
                     "water_use_total": SimpleInputMappingRule("total_wateruse"),
                     "drained_part": SimpleInputMappingRule("drainage"),
                     #Fertiliser rules
                     "n_fertiliser_quantities": MapMappingRule(_N_ENUM_TO_FIELD),
-                    "p2O5_from_mineral_fert": SimpleInputMappingRule("total_fertpmin"),
                     "p_fertiliser_quantities": MapMappingRule(_P_ENUM_TO_FIELD),
                     "k2O_from_mineral_fert": SimpleInputMappingRule("total_fertkmin"),
                     "k_fertiliser_quantities": MapMappingRule(_K_ENUM_TO_FIELD),

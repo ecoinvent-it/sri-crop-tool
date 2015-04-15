@@ -9,6 +9,9 @@ class NonStrictInputMapping(object):
     def __getitem__(self, name):
         return self.__getattr__(name)
     
+    def __contains__(self, name):
+        return name in self._mappingRules or name in self.originalInputs
+    
 class InputMappingRule(object):
     def mapField(self, attrName, mapping):
         raise "Please override this method"

@@ -21,6 +21,9 @@ class DefaultValuesWrapper(object):
     
     def __getitem__(self, name):
         return self.__getattr__(name)
+    
+    def __contains__(self, name):
+        return name in self.inputMapping or name in self._generatorMap
 
 class NotFoundGenerator(object):
     def generateDefault(self, field, generators):
@@ -80,6 +83,16 @@ class LandUseCategoryForHMDefaultGenerator(object):
 class PerCropCyclePrecipitationDefaultGenerator(object):
     def generateDefault(self, field, generators): #mm/year -> m3/(ha*crop cycle)
         return generators["average_annual_precipitation"] * 10.0 / generators["crop_cycle_per_year"]
+   
+class DryingDefaultGenerator(object):    
+    def generateDefault(self, field, generators):
+        if ("drying_yield_to_be_dryied" in generators
+            and "drying_humidity_before_drying" in generators
+            and "drying_humidity_after_drying" in generators):
+            return generators["yield_main_product_per_crop_cycle"] \
+                * generators["drying_yield_to_be_dryied"] \
+                * (generators["drying_humidity_before_drying"] - generators["drying_humidity_after_drying"])
+        else: return 0.0
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
@@ -130,4 +143,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    #HM defaults
                    "hm_land_use_category": LandUseCategoryForHMDefaultGenerator(),
                    "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default
+                   #Direct outputs
+                   "computed_drying":DryingDefaultGenerator(),
+                   "type_of_drying":SimpleValueDefaultGenerator("ambient_air")
                    }

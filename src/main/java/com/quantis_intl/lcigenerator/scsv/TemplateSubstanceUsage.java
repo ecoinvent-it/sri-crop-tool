@@ -75,8 +75,8 @@ public class TemplateSubstanceUsage
             new TemplateSubstanceUsage("Nickel, ion", "groundwater", "kg", "heavymetal_to_ground_water_ni", ""),
             new TemplateSubstanceUsage("Zinc, ion", "river", "kg", "heavymetal_to_surface_water_zn", ""),
             new TemplateSubstanceUsage("Zinc, ion", "groundwater", "kg", "heavymetal_to_ground_water_zn", ""),
-            new TemplateSubstanceUsage("Water, {country}", "river", "kg", "water_to_water_river", ""),
-            new TemplateSubstanceUsage("Water, {country}", "groundwater", "kg", "water_to_water_groundwater", "")
+            new TemplateSubstanceUsage("Water, {country}", "river", "m3", "water_to_water_river", ""),
+            new TemplateSubstanceUsage("Water, {country}", "groundwater", "m3", "water_to_water_groundwater", "")
     };
 
     public static final TemplateSubstanceUsage[] toSoil = {

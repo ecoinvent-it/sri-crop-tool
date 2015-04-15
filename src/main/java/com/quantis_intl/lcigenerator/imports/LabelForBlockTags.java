@@ -100,8 +100,8 @@ public class LabelForBlockTags
         HARVESTING.put("Chopping maize", "chopping_maize");
         HARVESTING.put("Threshing, with combine harvester", "threshing_combine_harvester");
         HARVESTING.put("Picking-up the forage, with self-propelled loader", "picking_up_forage_self_propelled_loader");
-        HARVESTING.put("Harvesting beets, with complete harvester", "harvesting_beets_complete_havester");
-        HARVESTING.put("Harvesting potatoes, with complete harvester", "harvesting_potatoes_complete_havester");
+        HARVESTING.put("Harvesting beets, with complete harvester", "beets_complete_havester");
+        HARVESTING.put("Harvesting potatoes, with complete harvester", "potatoes_complete_havester");
         HARVESTING.put("Making hay, with rotary tedder", "making_hay_rotary_tedder");
         HARVESTING.put("Loading bales", "loading_bales");
         HARVESTING.put("Mowing, with motor mower", "mowing_motor_mower");

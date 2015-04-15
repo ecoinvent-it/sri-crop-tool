@@ -2,18 +2,18 @@ from enum import Enum
 from models.modelEnums import HeavyMetalType
 
 class OtherOrganicFertiliserType(Enum):
-    compost=1
-    meat_and_bone_meal=2
-    castor_oil_shell_coarse=3
-    vinasse=4
-    dried_poultry_manure=5
-    stone_meal=6
-    feather_meal=7
-    horn_meal=8
-    horn_shavings_fine=9
-    sewagesludge_liquid=10
-    sewagesludge_dehydrated=11
-    sewagesludge_dried=12
+    compost="composttype_compost"
+    meat_and_bone_meal="composttype_meat_and_bone_meal"
+    castor_oil_shell_coarse="composttype_castor_oil_shell_coarse"
+    vinasse="composttype_vinasse"
+    dried_poultry_manure="composttype_dried_poultry_manure"
+    stone_meal="composttype_stone_meal"
+    feather_meal="composttype_feather_meal"
+    horn_meal="composttype_horn_meal"
+    horn_shavings_fine="composttype_horn_shavings_fine"
+    sewagesludge_liquid="sewagesludge_liquid"
+    sewagesludge_dehydrated="sewagesludge_dehydrated"
+    sewagesludge_dried="sewagesludge_dried"
 
 
 class OtherOrganicFertModel(object):

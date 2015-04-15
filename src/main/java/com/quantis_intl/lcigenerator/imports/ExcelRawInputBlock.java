@@ -108,6 +108,6 @@ public class ExcelRawInputBlock implements RawInputLine
 
     private boolean isCellValuePresent(Cell cell)
     {
-        return cell != null && !"-".equals(POIHelper.getCellStringValue(cell, "-"));
+        return true;
     }
 }

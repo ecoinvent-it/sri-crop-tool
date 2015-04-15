@@ -29,9 +29,6 @@ public class StringFromListExtractor
     private static final Map<String, String> CROPS = PropertiesLoader.reverseProperties("/crops.properties");
     private static final Map<String, String> COUNTRIES = PropertiesLoader.reverseProperties("/countries.properties");
     private static final Map<String, String> FARMING_TYPES = new HashMap<String, String>();
-    private static final Map<String, String> PRODUCTS_MAINLY_USED_FOR = new HashMap<String, String>();
-    private static final Map<String, String> AVERAGE_FIELD_SIZE = new HashMap<String, String>();
-    private static final Map<String, String> HEMISPHERE = new HashMap<String, String>();
     private static final Map<String, String> TILLAGE_METHOD = new HashMap<String, String>();
     private static final Map<String, String> ANTI_EROSION_PRACTICE = new HashMap<String, String>();
     private static final Map<String, String> TYPE_OF_DRYING = new HashMap<String, String>();
@@ -47,23 +44,6 @@ public class StringFromListExtractor
         FARMING_TYPES.put("non-organic", "non_organic");
         FARMING_TYPES.put("organic", "organic");
         TAGS_TO_MAP.put("farming_type", FARMING_TYPES);
-
-        PRODUCTS_MAINLY_USED_FOR.put("international market", "international_market");
-        PRODUCTS_MAINLY_USED_FOR.put("demestic market", "demestic_market");
-        PRODUCTS_MAINLY_USED_FOR.put("feed on the farm", "feed_on_the_farm");
-        PRODUCTS_MAINLY_USED_FOR.put("subsistence farming", "subsistence_farming");
-        TAGS_TO_MAP.put("products_mainly_used_for", PRODUCTS_MAINLY_USED_FOR);
-
-        AVERAGE_FIELD_SIZE.put("< 0.1 ha", "ha_under_0_1");
-        AVERAGE_FIELD_SIZE.put(">= 0.1 < 0.5 ha", "ha_0_1_to_0_5");
-        AVERAGE_FIELD_SIZE.put(">= 0.5 < 1.0 ha", "ha_0_5_to_1");
-        AVERAGE_FIELD_SIZE.put(">= 1.0  < 5.0 ha", "ha_1_to_5");
-        AVERAGE_FIELD_SIZE.put("> 5.0 ha", "ha_over_5");
-        TAGS_TO_MAP.put("average_field_size", AVERAGE_FIELD_SIZE);
-
-        HEMISPHERE.put("North", "north");
-        HEMISPHERE.put("South", "south");
-        TAGS_TO_MAP.put("hemisphere", HEMISPHERE);
 
         TILLAGE_METHOD.put("Fall plow", "fall_plaw");
         TILLAGE_METHOD.put("Spring plow", "spring_plow");

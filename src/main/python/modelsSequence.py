@@ -31,6 +31,7 @@ class ModelsSequence(object):
         self._intermediateValues["eroded_soil"] = ErosionModel(self.allInputs).compute()["m_Erosion_eroded_soil"]
         self.outputMapping.mapIrrigationModel(IrrigationModel(self.allInputs).compute())
         self.outputMapping.mapFertilizers(self.allInputs)
+        self.outputMapping.mapOtherOrganicFertilizers(self.allInputs)
         self.outputMapping.mapCo2Model(Co2Model(self.allInputs).compute())
         self.outputMapping.mapNModel(NModel(self.allInputs).compute())
         self.outputMapping.mapPModel(PModel(self.allInputs).compute())
