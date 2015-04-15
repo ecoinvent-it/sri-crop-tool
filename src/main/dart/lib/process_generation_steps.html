@@ -1,13 +1,17 @@
 <form id="processGeneratorUploadForm" ng-submit="upload()" method="post" enctype="multipart/form-data">
-       File : <input type="file" name="uploadFile" accept=".xls,.xlsx" required="required" ng-disabled="step != 0"/>
-      <br/>
-      <input type="checkbox" checked name="canBeStored" value="true" ng-disabled="step != 0"/> I agree that Quantis stores this file for testing purposes
-      <br/>
+       <input type="file" name="uploadFile" 
+                      accept=".xls,.xlsx" required="required" 
+                      ng-disabled="step != 0" id="fileUploadBtn" class="stepBtn"
+                      ng-change="submitUploadForm()"/>
+
+      <input type="checkbox" checked name="canBeStored" value="true" id="canBeStoredCheckbox" ng-disabled="step != 0"/> 
+      <!-- I agree that Quantis stores this file for testing purposes -->
+
       <input type="hidden" name="idTab" value="{{idTab}}">
-      <input type="submit" value="Upload" ng-disabled="step != 0"/>
+<!--        <input type="submit" value="Upload" ng-disabled="step != 0"/> -->
 </form>
 
-<div ng-if="errors != null  &amp;&amp; errors.length > 0">Some errors were found during generation:</div>
+<!--<div ng-if="errors != null  &amp;&amp; errors.length > 0">Some errors were found during generation:</div>
 <table ng-if="errors != null  &amp;&amp; errors.length > 0">
   <tr>
     <th>Label</th>
@@ -34,12 +38,12 @@
     <td>{{warning.location}}</td>
     <td>{{warning.message}}</td>
   </tr>
-</table>
+</table>-->
 
-<input type="button" value="Reset" ng-if="step != 0" ng-click="reset()"/>
+<input type="button" value="Reset" id="resetUploadBtn" ng-if="step != 0" ng-click="reset()"/>
 
 <form action="app/api/pub/generateScsv" method="post" ng-if="step == 1" style="display: inline;">
   <input type="hidden" name="idResult" value="{{idResult}}">
   <input type="hidden" name="idTab" value="{{idTab}}">
-  <input type="submit" value="Export to Simapro CSV"/>
+  <input type="submit" value="Export to Simapro CSV" id="scsvDownloadBtn" class="stepBtn"/>
 </form>

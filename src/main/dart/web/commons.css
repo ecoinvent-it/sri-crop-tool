@@ -11,6 +11,32 @@ form
 	margin-bottom: 20px;
 }
 
+#fileUploadBtn
+{
+  left: 455px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+#resetUploadBtn
+{
+	display: none;
+}
+
+#scsvDownloadBtn
+{
+  left: 629px;
+  cursor: pointer;
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+#canBeStoredCheckbox
+{
+  display: none;
+}
+
 .odd {
   background-color: #eeeeee;
 }

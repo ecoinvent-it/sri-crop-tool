@@ -64,7 +64,7 @@ public class ExcelRawInputLine implements RawInputLine
         String cellStringValue = POIHelper.getCellStringValue(cell, "-");
         return cell != null
                 && !"-".equals(cellStringValue)
-                && !(cellStringValue.startsWith("<select") && cellStringValue.endsWith(">"));
+                && !(cellStringValue.startsWith("<") && cellStringValue.endsWith(">"));
     }
 
     @Override

@@ -24,7 +24,7 @@ class OutputMapping(object):
     def mapIrrigationModel(self, irrOutput):
         for key, value in irrOutput.items():
             self.output[key.replace("m_Irr_", "")] = value
-        self.output["water_to_air"] = value * 1000.0 #m3/ha -> kg
+        self.output["water_to_air"] = self.output["water_to_air"] * 1000.0 #m3/ha -> kg
             
     def mapCo2Model(self, co2Output):
         for key, value in co2Output.items():

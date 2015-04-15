@@ -24,9 +24,16 @@ class ProcessGeneratorSteps
   
   ProcessGeneratorSteps(Api this._api, @IdTab() String this.idTab);
   
+  void submitUploadForm()
+  {
+    // FIXME: Find a better way
+    upload();
+  }
+  
   void upload()
   {
     // FIXME: Find a better way to avoid reading the file client side
+    // FIXME: Find a better way to avoid the querySelector
     var formData = new FormData(querySelector("#processGeneratorUploadForm"));
     _api.uploadInputs(formData)
     .then((HttpRequest request) {

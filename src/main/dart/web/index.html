@@ -4,15 +4,17 @@
 <meta charset="UTF-8">
 <title>LCI generator</title>
 <link rel="stylesheet" href="commons.css" />
+<link rel="stylesheet" href="index.css" />
 <script src="packages/web_components/webcomponents.js"></script>
 <script src="packages/web_components/dart_support.js"></script>
 </head>
 <body>
-	<div>
-	Click <a href="LCI-Database_Data-collection_Crop_v1.xlsx" target="_blank">here</a> to download template
-	</div>
-	<process-generation-steps></process-generation-steps>
 
+	<div id="tmpForDemo">
+	     <a href="LCI-Database_Data-collection_Crop_v1.xlsx" target="_blank"><div id="templateDownloadBtn" class="stepBtn"></div></a>
+			 <process-generation-steps></process-generation-steps>
+  </div>
+  
 	<script type="application/dart" src="index.dart"></script>
 	<script type="text/javascript" src="packages/browser/dart.js"></script>
 </body>

@@ -291,7 +291,7 @@ public class ExcelInputReader
             String cellStringValue = POIHelper.getCellStringValue(cell, "-");
             if (cell != null
                     && !"-".equals(cellStringValue)
-                    && !(cellStringValue.startsWith("<select") && cellStringValue.endsWith(">")))
+                    && !(cellStringValue.startsWith("<") && cellStringValue.endsWith(">")))
             {
                 String title = POIHelper.getCellStringValue(blockRow, labelColumnIndex, "");
                 String titleVar = dropDownValues.get(title);
