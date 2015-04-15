@@ -27,6 +27,9 @@ import java.util.Properties;
 
 public class PropertiesLoader
 {
+    // FIXME: It is the right place?
+    public static final Properties CROPS = loadProperties("/crops.properties");
+
     public static Map<String, String> reverseProperties(String filename)
     {
         return reverse(loadProperties(filename));
@@ -52,7 +55,7 @@ public class PropertiesLoader
         return prop;
     }
 
-    private static Map<String, String> reverse(Properties prop)
+    public static Map<String, String> reverse(Properties prop)
     {
         HashMap<String, String> map = new HashMap<String, String>();
         for (Entry<Object, Object> entry : prop.entrySet())

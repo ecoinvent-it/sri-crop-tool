@@ -34,6 +34,7 @@ import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.CategoryType;
 import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Status;
 import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Type;
 import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
+import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
 
 public class GeneratedProcess implements ProductScsvProcess
 {
@@ -59,8 +60,7 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public Optional<String> getName()
     {
-        // TODO
-        return Optional.of("TODO");
+        return Optional.of(generateProcessAndProductName());
     }
 
     @Override
@@ -82,36 +82,49 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public Optional<String> getRecord()
     {
-        // TODO
-        return Optional.of("TODO");
+        if (modelOutputs.containsKey("record_entry_by"))
+            return Optional.of("Data entry by: " + modelOutputs.get("record_entry_by"));
+        else
+            return Optional.empty();
     }
 
     @Override
     public Optional<String> getGenerator()
     {
         // TODO: Change
-        return Optional.of("Quantis LCI Generator");
+        return Optional.of("Generator/publicator: Quantis LCI Generator");
     }
 
     @Override
     public Optional<String> getCollectionMethod()
     {
-        // TODO
-        return Optional.of("TODO");
+        if (modelOutputs.containsKey("collection_method"))
+            return Optional.of("Sampling procedure: " + modelOutputs.get("collection_method"));
+        else
+            return Optional.empty();
     }
 
     @Override
     public Optional<String> getDataTreatment()
     {
-        // TODO
-        return Optional.of("TODO");
+        StringBuilder sb = new StringBuilder();
+        if (modelOutputs.containsKey("data_treatment_extrapolations"))
+            sb.append("Extrapolations: ").append(modelOutputs.get("data_treatment_extrapolations"));
+        if (modelOutputs.containsKey("data_treatment_uncertainty"))
+        {
+            if (sb.length() > 0)
+                sb.append(" ,");
+            sb.append("Uncertainty adjustments: ").append(modelOutputs.get("data_treatment_uncertainty"));
+        }
+
+        return Optional.of(sb.toString());
     }
 
     @Override
     public Optional<String> getComment()
     {
         // TODO
-        return Optional.of("TODO");
+        return Optional.ofNullable(modelOutputs.get("comment"));
     }
 
     @Override
@@ -123,7 +136,7 @@ public class GeneratedProcess implements ProductScsvProcess
             @Override
             public String getName()
             {
-                return "TODO";
+                return generateProcessAndProductName() + " U";
             }
 
             @Override
@@ -150,6 +163,16 @@ public class GeneratedProcess implements ProductScsvProcess
                 return "TODO";
             }
         });
+    }
+
+    private String generateProcessAndProductName()
+    {
+        StringBuilder sb = new StringBuilder(PropertiesLoader.CROPS.getProperty(modelOutputs.get("crop")));
+        if (modelOutputs.containsKey("system_boundary"))
+            sb.append(", ").append(modelOutputs.get("system_boundary"));
+        sb.append("/kg");
+        sb.append("/").append(modelOutputs.get("country"));
+        return sb.toString();
     }
 
     @Override

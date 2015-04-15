@@ -26,7 +26,7 @@ import com.quantis_intl.lcigenerator.ErrorReporter;
 
 public class StringFromListExtractor
 {
-    private static final Map<String, String> CROPS = PropertiesLoader.reverseProperties("/crops.properties");
+    private static final Map<String, String> CROPS = PropertiesLoader.reverse(PropertiesLoader.CROPS);
     private static final Map<String, String> COUNTRIES = PropertiesLoader.reverseProperties("/countries.properties");
     private static final Map<String, String> FARMING_TYPES = new HashMap<String, String>();
     private static final Map<String, String> TILLAGE_METHOD = new HashMap<String, String>();

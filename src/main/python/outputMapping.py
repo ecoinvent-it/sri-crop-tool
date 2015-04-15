@@ -9,6 +9,7 @@ class OutputMapping(object):
         
     def mapAsIsOutput(self, allInputs):
         self.output["country"] = allInputs["country"]
+        self.output["crop"] = allInputs["crop"]
         for k,f in self._DIRECT_OUTPUT_MAPPING.items():
             if (k in allInputs):
                 self.output[k] = f(allInputs[k])
@@ -66,6 +67,13 @@ class OutputMapping(object):
             self.output[k.value] = v
             
     _DIRECT_OUTPUT_MAPPING = {
+        "system_boundary":identity,      
+        "record_entry_by":identity,
+        "collection_method":identity,
+        "data_treatment_extrapolations":identity,
+        "data_treatment_uncertainty":identity,
+        "comment":identity,
+        
         "pest_horticultural_oil": identity,
          #kg diesel -> hr,
         "soilcultivation_decompaction": lambda x: x / 15.921,
