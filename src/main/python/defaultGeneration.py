@@ -96,7 +96,7 @@ class DryingDefaultGenerator(object):
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
-                   "average_annual_precipitation": "TODO",
+                   "average_annual_precipitation": SimpleValueDefaultGenerator(0.03), #FIXME: Default
                    "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
                    #Fertiliser defaults

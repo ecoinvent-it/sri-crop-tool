@@ -37,12 +37,12 @@ public class TemplateSubstanceUsage
     }
 
     public static final TemplateSubstanceUsage[] resources = {
-            new TemplateSubstanceUsage("Occupation, arable", "", "m2a", "", ""),
-            new TemplateSubstanceUsage("Occupation, permanent crop", "", "m2a", "", ""),
-            new TemplateSubstanceUsage("Tranformation, from {TODO}", "", "m2", "", ""),
-            new TemplateSubstanceUsage("Tranformation, to {TODO}", "", "m2", "", ""),
-            new TemplateSubstanceUsage("Gross energy {TODO}", "", "MJ", "", ""),
-            new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "", ""),
+            // LUC: new TemplateSubstanceUsage("Occupation, arable", "", "m2a", "", ""),
+            // LUC: new TemplateSubstanceUsage("Occupation, permanent crop", "", "m2a", "", ""),
+            // LUC: new TemplateSubstanceUsage("Tranformation, from {TODO}", "", "m2", "", ""),
+            // LUC: new TemplateSubstanceUsage("Tranformation, to {TODO}", "", "m2", "", ""),
+            // LUC: new TemplateSubstanceUsage("Gross energy {TODO}", "", "MJ", "", ""),
+            // LUC: new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "", ""),
             new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "", "")
     };
 
