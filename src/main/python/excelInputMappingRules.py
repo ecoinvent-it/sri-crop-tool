@@ -113,7 +113,6 @@ EXCEL_INPUT_MAPPING_RULES = {
                     "irrigation_types_proportions": MapMappingRule(_IRR_ENUM_TO_FIELD),
                     #N model rules
                     #P model rules
-                    "p2o5_in_mineral_fertiliser": SimpleInputMappingRule("total_fertpmin"),
                     #HM model rules
                     #pesticides_quantities: TODO map PesticideType -> kg i /(ha*year) (i: pest type)
                    }

@@ -12,7 +12,7 @@ class Test(unittest.TestCase):
                   "land_use_category": pmodel.LandUseCategory.grassland_extensive,
                   "p2o5_in_liquid_manure": 13.0,
                   "p2o5_in_liquid_sludge": 15.0,
-                  "p2o5_in_mineral_fertiliser": 17.0,
+                  "p2O5_from_mineral_fert": 17.0,
                   "p2o5_in_solid_manure": 19.0,
                   "p_content_in_soil": 0.00095
                   }

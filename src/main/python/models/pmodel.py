@@ -20,7 +20,7 @@ class PModel(object):
       land_use_category: LandUseCategory
       p2o5_in_liquid_manure: kg P2O5/(ha*crop cycle)
       p2o5_in_liquid_sludge: kg P2O5/(ha*crop cycle)
-      p2o5_in_mineral_fertiliser: kg P2O5/(ha*crop cycle)
+      p2O5_from_mineral_fert: kg P2O5/(ha*crop cycle)
       p2o5_in_solid_manure: kg P2O5/(ha*crop cycle)
       p_content_in_soil: kg P/kg soil
       
@@ -39,7 +39,7 @@ class PModel(object):
                         "land_use_category",
                         "p2o5_in_liquid_manure",
                         "p2o5_in_liquid_sludge",
-                        "p2o5_in_mineral_fertiliser",
+                        "p2O5_from_mineral_fert",
                         "p2o5_in_solid_manure",
                         "p_content_in_soil"
                        ]
@@ -96,7 +96,7 @@ class PModel(object):
         return (ground, surface)
     
     def _compute_phosphate_runoff_to_rivers(self, p2o5_liquid_sources):
-        correction_factor = 1 + 0.2 / 80.0 * self.p2o5_in_mineral_fertiliser \
+        correction_factor = 1 + 0.2 / 80.0 * self.p2O5_from_mineral_fert \
                               + 0.7 / 80.0 * p2o5_liquid_sources           \
                               + 0.4 / 80.0 * self.p2o5_in_solid_manure
         average_p_loss = self._AVERAGE_RUNOFF_P_LOSS_PER_LAND[self.land_use_category] / self.crop_cycle_per_year

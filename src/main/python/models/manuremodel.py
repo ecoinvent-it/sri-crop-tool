@@ -1,5 +1,6 @@
 from enum import Enum
 from models.modelEnums import HeavyMetalType
+from models.atomicmass import N_TO_NH3_FACTOR
 
 class LiquidManureType(Enum):
     cattle=1
@@ -69,12 +70,6 @@ class ManureModel(object):
                         "solid_manure_quantities"
                        ]
     
-    _N = 14.00674
-    _H = 1.00794
-
-    _NH3 = _N + 3*_H #17
-    _N_TO_NH3_FACTOR = _NH3 / _N # 17/14
-
     _P205_CONCENTRATION_IN_LIQUID_MANURE = {LiquidManureType.cattle: 1.5,
                                             LiquidManureType.fattening_pigs: 3.8,
                                             LiquidManureType.laying_hens: 17.0,
@@ -213,8 +208,8 @@ class ManureModel(object):
     def computeNH3(self):
         nh3_as_n_liquid = self._sum_prod(self._NH3N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_quantities) * self.liquid_manure_part_before_dilution
         nh3_as_n_solid = self._sum_prod(self._NH3N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities)
-        return nh3_as_n_liquid * self._N_TO_NH3_FACTOR \
-               + nh3_as_n_solid *self._N_TO_NH3_FACTOR
+        return nh3_as_n_liquid * N_TO_NH3_FACTOR \
+               + nh3_as_n_solid * N_TO_NH3_FACTOR
         
     def _sum_prod(self, reference, factors):
         return sum(v*factors[k] for k,v in reference.items())

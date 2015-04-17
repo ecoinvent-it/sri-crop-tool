@@ -140,7 +140,6 @@ DEFAULTS_VALUES_GENERATORS = {
                    "clay_content": TableLookupDefaultGenerator("country", CLAY_CONTENT_PER_COUNTRY),
                    "considered_soil_volume": SimpleValueDefaultGenerator(5000.0),
                    "drained_part": SimpleValueDefaultGenerator(0.0),
-                   "fertilisers_gas_losses": SimpleValueDefaultGenerator(0.1),
                    "organic_carbon_content": TableLookupDefaultGenerator("country", CARBON_CONTENT_PER_COUNTRY),
                    "nitrogen_uptake_by_crop": SimpleValueDefaultGenerator(0.0), #FIXME: Default
                    "norg_per_ntotal_ratio": SimpleValueDefaultGenerator(0.85),

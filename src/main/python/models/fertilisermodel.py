@@ -1,5 +1,6 @@
 from enum import Enum
 from models.modelEnums import HeavyMetalType
+from models.atomicmass import N_TO_NH3_FACTOR
 
 class NFertiliserType(Enum):
     ammonium_nitrate="fert_n_ammonium_nitrate"
@@ -55,11 +56,6 @@ class FertModel(object):
                         "other_mineral_fertiliser_quantities",
                         "soil_with_ph_under_or_7"
                        ]
-    
-    _N = 14.00674
-    _H = 1.00794
-    _NH3 = _N + 3*_H
-    _N_TO_NH3_FACTOR = _NH3/_N #17/14
     
     #src: (EEA 2013, 3D, Table 3-2) time factor 14/17 (Conversion from kg NH3 into kg N)
     _EF_NH3N_MIN_N_FERT_PH_UNDER_OR_SEVEN = {
@@ -139,7 +135,7 @@ class FertModel(object):
             setattr(self, key, inputs[key])
         
     def computeNH3(self):
-        return self._N_TO_NH3_FACTOR * sum(self._compute_nh3_as_n().values())
+        return N_TO_NH3_FACTOR * sum(self._compute_nh3_as_n().values())
          
     def _compute_nh3_as_n(self):
         return {fertKey:fertValue * self._compute_nh3_as_n_for_fert(fertKey) for fertKey,fertValue in  self.n_fertiliser_quantities.items()}
