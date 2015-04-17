@@ -116,6 +116,126 @@ ROOTING_DEPTH_PER_CROP = {
                         "wheatwinter": 1.2
 }
 
+#From GD_crop
+WATER_CONTENT_FM_RATIO_PER_CROP = {
+        "almond": 0.0565,
+        "apple": 0.849,
+        "apricot": 0.853,
+        "asparagus": 0.92,
+        "banana": 0.781,
+        "carrot": 0.882,
+        "cocoa": 0.056,
+        "coconut": 0.446,
+        "coffee": 0.102,
+        "lemonlime": 0.842,#lemon
+        "linseed": 0.1,
+        "maizegrain": 0.14,
+        "mandarin": 0.842,
+        "mint": 0.681,
+        "oat": 0.15,
+        "olive": 0.748,
+        "onion": 0.886,
+        "orange": 0.842,
+        "palmtree": 0.87,#palmfruitbunch
+        "peach": 0.873,
+        "peanut": 0.05968,
+        "pear": 0.829,
+        "pineapple": 0.0,#FIXME: Default
+        "potato": 0.78,
+        "rapeseed": 0.12,
+        "rice": 0.131,
+        "soybean": 0.11,
+        "strawberry": 0.895,
+        "sugarbeet": 0.77,
+        "sugarcane": 0.774,
+        "sunflower": 0.06,
+        "sweetcorn": 0.72,
+        "tea": 0.0764,
+        "tomato": 0.942,
+        "wheatwinter": 0.15
+        }
+
+#Generated from GD_crop
+ANNUAL_PRECIPITATION_PER_COUNTRY = {
+   "AR":559.045870807,
+   "AU":473.091499829,
+   "BE":874.297532025,
+   "BR":1762.97099306,
+   "CA":457.469053257,
+   "CL":631.170165709,
+   "CN":574.773938266,
+   "CO":2618.58518334,
+   "CR":3268.2661656,
+   "CI":1356.08177591,
+   "EC":1945.27384594,
+   "FI":524.701103909,
+   "FR":838.929003034,
+   "DE":713.499730401,
+   "GH":1184.94458325,
+   "HU":571.754958413,
+   "IN":1072.21725144,
+   "ID":2801.53519982,
+   "IL":248.689445496,
+   "IT":930.193617321,
+   "KE":678.112942292,
+   "MX":738.139128273,
+   "NL":766.068878174,
+   "NZ":1790.94567393,
+   "PE":1513.24211891,
+   "PH":2317.59269526,
+   "PL":600.659095624,
+   "RU":434.795213565,
+   "ZA":474.776152751,
+   "ES":622.987063842,
+   "LK":1699.40728205,
+   "CH":1646.41245524,
+   "TH":1532.47654527,
+   "TR":573.283130847,
+   "UA":561.788800317,
+   "US":654.536672556,
+   "VN":1835.16079337
+}
+
+YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY = {
+   "AR":0,
+   "AU":0,
+   "BE":0,
+   "BR":0,
+   "CA":0.535441893912093,
+   "CL":0,
+   "CN":0.0932626571867323,
+   "CO":0,
+   "CR":0,
+   "CI":0,
+   "EC":0,
+   "FI":0.31411007733821,
+   "FR":0,
+   "DE":0.0717855087687475,
+   "GH":0,
+   "HU":0.0603055148410166,
+   "IN":0,
+   "ID":0,
+   "IL":0,
+   "IT":0,
+   "KE":0,
+   "MX":0,
+   "NL":0,
+   "NZ":0,
+   "PE":0,
+   "PH":0,
+   "PL":0.168512374426543,
+   "RU":0.399109339441838,
+   "ZA":0,
+   "ES":0,
+   "LK":0,
+   "CH":0.215816922864692,
+   "TH":0,
+   "TR":0.125603689935222,
+   "UA":0.217717386416183,
+   "US":0.20931054440831,
+   "VN":0
+}
+
 #Generated in GD_crop using =""""&C3&""":{""fertnmin_ammonium_nitrate"":"&C5&", ""fertnmin_urea"":"&C6&", ""fertnmin_urea_an"":"&C7&", ""fertnmin_mono_ammonium_phosphate"":"&C8&", ""fertnmin_di_ammonium_phosphate"":"&C9&", ""fertnmin_an_phosphate"":"&C10&", ""fertnmin_lime_ammonium_nitrate"":"&C11&", ""fertnmin_ammonium_sulphate"":"&C12&", ""fertnmin_potassium_nitrate"":"&C13&", ""fertnmin_ammonia_liquid"":"&C14&"},"
 N_FERT_RATIO_PER_COUNTRY = {
     "AR":{
@@ -755,15 +875,6 @@ P_FERT_RATIO_PER_COUNTRY = {
       "fertpmin_hypophosphate_raw_phosphate":0,
       "fertpmin_ground_basic_slag":0
    },
-   "MG":{#Using GLO
-      "fertpmin_triple_superphosphate":0.09,
-      "fertpmin_superphosphate":0.24,
-      "fertpmin_mono_ammonium_phosphate":0.24,
-      "fertpmin_di_ammonium_phosphate":0.42,
-      "fertpmin_an_phosphate":0,
-      "fertpmin_hypophosphate_raw_phosphate":0.01,
-      "fertpmin_ground_basic_slag":0
-   },
    "MX":{
       "fertpmin_triple_superphosphate":0.0199776112976836,
       "fertpmin_superphosphate":0.0309997416688194,
@@ -1038,12 +1149,6 @@ K_FERT_RATIO_PER_COUNTRY={
       "fertkmin_potassium_nitrate":1,
       "fertkmin_patent_potassium":0
    },
-   "MG":{#Using GLO
-      "fertkmin_potassium_salt_kcl":0.96,
-      "fertkmin_potassium_sulphate_k2so4":0.04,
-      "fertkmin_potassium_nitrate":0,
-      "fertkmin_patent_potassium":0
-   },
    "MX":{
       "fertkmin_potassium_salt_kcl":0.555328089645512,
       "fertkmin_potassium_sulphate_k2so4":0.13252882232518,
@@ -1139,5 +1244,607 @@ K_FERT_RATIO_PER_COUNTRY={
       "fertkmin_potassium_sulphate_k2so4":0.04,
       "fertkmin_potassium_nitrate":0,
       "fertkmin_patent_potassium":0
+   }
+}
+
+#Generated in GD_crop using "AR":{"manureliquid_cattle":0.966236579156714,  "manureliquid_fattening_pig":0,  "manureliquid_sows_piglet":0.00694397589098068,  "manureliquid_laying_hen":0.0268194449523053,  "manureliquid_other":0},
+LIQUID_MANURE_RATIO_PER_COUNTRY={
+   "AR":{
+      "manureliquid_cattle":0.966236579156714,
+      "manureliquid_fattening_pig":0,
+      "manureliquid_sows_piglet":0.00694397589098068,
+      "manureliquid_laying_hen":0.0268194449523053,
+      "manureliquid_other":0
+   },
+   "AU":{
+      "manureliquid_cattle":0.932419087357062,
+      "manureliquid_fattening_pig":0.0361186743439928,
+      "manureliquid_sows_piglet":0.0177864294747437,
+      "manureliquid_laying_hen":0.013675808824202,
+      "manureliquid_other":0
+   },
+   "BE":{
+      "manureliquid_cattle":0.651980577390597,
+      "manureliquid_fattening_pig":0.230792712080711,
+      "manureliquid_sows_piglet":0.106761818722809,
+      "manureliquid_laying_hen":0.0104648918058829,
+      "manureliquid_other":0
+   },
+   "BR":{
+      "manureliquid_cattle":0.773192504917913,
+      "manureliquid_fattening_pig":0.199364421762063,
+      "manureliquid_sows_piglet":0.00990829408243577,
+      "manureliquid_laying_hen":0.0175347792375884,
+      "manureliquid_other":0
+   },
+   "CA":{
+      "manureliquid_cattle":0.692978661588794,
+      "manureliquid_fattening_pig":0.21305503530842,
+      "manureliquid_sows_piglet":0.0743325366490546,
+      "manureliquid_laying_hen":0.0196337664537316,
+      "manureliquid_other":0
+   },
+   "CL":{
+      "manureliquid_cattle":0.671554978323718,
+      "manureliquid_fattening_pig":0.299091543393772,
+      "manureliquid_sows_piglet":0.0148646731839603,
+      "manureliquid_laying_hen":0.0144888050985496,
+      "manureliquid_other":0
+   },
+   "CN":{
+      "manureliquid_cattle":0.537242763171236,
+      "manureliquid_fattening_pig":0.377139990238825,
+      "manureliquid_sows_piglet":0.0305685909004101,
+      "manureliquid_laying_hen":0.0550486556895287,
+      "manureliquid_other":0
+   },
+   "CO":{
+      "manureliquid_cattle":0.851488143861912,
+      "manureliquid_fattening_pig":0.129514806059696,
+      "manureliquid_sows_piglet":0.00643680942134759,
+      "manureliquid_laying_hen":0.0125602406570442,
+      "manureliquid_other":0
+   },
+   "CR":{
+      "manureliquid_cattle":0.895766461352508,
+      "manureliquid_fattening_pig":0.0921973662713949,
+      "manureliquid_sows_piglet":0.00458215473161557,
+      "manureliquid_laying_hen":0.00745401764448142,
+      "manureliquid_other":0
+   },
+   "CI":{
+      "manureliquid_cattle":0.334403636655568,
+      "manureliquid_fattening_pig":0.604685709509196,
+      "manureliquid_sows_piglet":0.0300489566658733,
+      "manureliquid_laying_hen":0.0308616971693619,
+      "manureliquid_other":0
+   },
+   "EC":{
+      "manureliquid_cattle":0.827252441996018,
+      "manureliquid_fattening_pig":0.156725696233032,
+      "manureliquid_sows_piglet":0.00778917460374488,
+      "manureliquid_laying_hen":0.0082326871672052,
+      "manureliquid_other":0
+   },
+   "FI":{
+      "manureliquid_cattle":0.778299855183584,
+      "manureliquid_fattening_pig":0.144037760601221,
+      "manureliquid_sows_piglet":0.0666300644491286,
+      "manureliquid_laying_hen":0.0110323197660669,
+      "manureliquid_other":0
+   },
+   "FR":{
+      "manureliquid_cattle":0.859989060959847,
+      "manureliquid_fattening_pig":0.0882421218757529,
+      "manureliquid_sows_piglet":0.0408197006478963,
+      "manureliquid_laying_hen":0.0109491165165037,
+      "manureliquid_other":0
+   },
+   "DE":{
+      "manureliquid_cattle":0.713839694570081,
+      "manureliquid_fattening_pig":0.189846804011912,
+      "manureliquid_sows_piglet":0.0878207543552876,
+      "manureliquid_laying_hen":0.0084927470627198,
+      "manureliquid_other":0
+   },
+   "GH":{
+      "manureliquid_cattle":0.263744005199079,
+      "manureliquid_fattening_pig":0.665938316763659,
+      "manureliquid_sows_piglet":0.0330928140996493,
+      "manureliquid_laying_hen":0.0372248639376124,
+      "manureliquid_other":0
+   },
+   "HU":{
+      "manureliquid_cattle":0.524511327653383,
+      "manureliquid_fattening_pig":0.308370363066753,
+      "manureliquid_sows_piglet":0.131708236190577,
+      "manureliquid_laying_hen":0.0354100730892873,
+      "manureliquid_other":0
+   },
+   "IN":{
+      "manureliquid_cattle":0.956101289109399,
+      "manureliquid_fattening_pig":0.021569724484166,
+      "manureliquid_sows_piglet":0.00174911969888512,
+      "manureliquid_laying_hen":0.0205798667075499,
+      "manureliquid_other":0
+   },
+   "ID":{
+      "manureliquid_cattle":0.841953137050475,
+      "manureliquid_fattening_pig":0.0865326475149543,
+      "manureliquid_sows_piglet":0.00701379107219114,
+      "manureliquid_laying_hen":0.0645004243623796,
+      "manureliquid_other":0
+   },
+   "IL":{
+      "manureliquid_cattle":0.27213220939371,
+      "manureliquid_fattening_pig":0.611173703624621,
+      "manureliquid_sows_piglet":0.0303695655717747,
+      "manureliquid_laying_hen":0.0863245214098939,
+      "manureliquid_other":0
+   },
+   "IT":{
+      "manureliquid_cattle":0.750511965391496,
+      "manureliquid_fattening_pig":0.146961826785265,
+      "manureliquid_sows_piglet":0.0679827008677025,
+      "manureliquid_laying_hen":0.0345435069555363,
+      "manureliquid_other":0
+   },
+   "KE":{
+      "manureliquid_cattle":0.897991182476556,
+      "manureliquid_fattening_pig":0.0879315592863415,
+      "manureliquid_sows_piglet":0.00436962810947838,
+      "manureliquid_laying_hen":0.00970763012762398,
+      "manureliquid_other":0
+   },
+   "MX":{
+      "manureliquid_cattle":0.469470222458186,
+      "manureliquid_fattening_pig":0.445254889925465,
+      "manureliquid_sows_piglet":0.0221289052099609,
+      "manureliquid_laying_hen":0.0631459824063886,
+      "manureliquid_other":0
+   },
+   "NL":{
+      "manureliquid_cattle":0.63220650185421,
+      "manureliquid_fattening_pig":0.233845124899956,
+      "manureliquid_sows_piglet":0.108173826668685,
+      "manureliquid_laying_hen":0.0257745465771489,
+      "manureliquid_other":0
+   },
+   "NZ":{
+      "manureliquid_cattle":0.979450321664584,
+      "manureliquid_fattening_pig":0.00944728343075543,
+      "manureliquid_sows_piglet":0.00465225936018097,
+      "manureliquid_laying_hen":0.00645013554447995,
+      "manureliquid_other":0
+   },
+   "PE":{
+      "manureliquid_cattle":0.594188650414037,
+      "manureliquid_fattening_pig":0.365516418753568,
+      "manureliquid_sows_piglet":0.0181659502624421,
+      "manureliquid_laying_hen":0.0221289805699533,
+      "manureliquid_other":0
+   },
+   "PH":{
+      "manureliquid_cattle":0.436931601829857,
+      "manureliquid_fattening_pig":0.453039090897989,
+      "manureliquid_sows_piglet":0.0367204936489228,
+      "manureliquid_laying_hen":0.0733088136232304,
+      "manureliquid_other":0
+   },
+   "PL":{
+      "manureliquid_cattle":0.683498764026531,
+      "manureliquid_fattening_pig":0.206359038573867,
+      "manureliquid_sows_piglet":0.0881381230023514,
+      "manureliquid_laying_hen":0.0220040743972504,
+      "manureliquid_other":0
+   },
+   "RU":{
+      "manureliquid_cattle":0.846999341113014,
+      "manureliquid_fattening_pig":0.0903924909526649,
+      "manureliquid_sows_piglet":0.038607586760282,
+      "manureliquid_laying_hen":0.0240005811740389,
+      "manureliquid_other":0
+   },
+   "ZA":{
+      "manureliquid_cattle":0.41919169262082,
+      "manureliquid_fattening_pig":0.523821292346713,
+      "manureliquid_sows_piglet":0.0260305200647327,
+      "manureliquid_laying_hen":0.0309564949677344,
+      "manureliquid_other":0
+   },
+   "ES":{
+      "manureliquid_cattle":0.507915454115911,
+      "manureliquid_fattening_pig":0.322542116161643,
+      "manureliquid_sows_piglet":0.149203944188963,
+      "manureliquid_laying_hen":0.0203384855334841,
+      "manureliquid_other":0
+   },
+   "LK":{
+      "manureliquid_cattle":0.882715893891701,
+      "manureliquid_fattening_pig":0.0306842036733159,
+      "manureliquid_sows_piglet":0.0024882257352391,
+      "manureliquid_laying_hen":0.0841116766997438,
+      "manureliquid_other":0
+   },
+   "CH":{
+      "manureliquid_cattle":0.847633294065572,
+      "manureliquid_fattening_pig":0.100773947340613,
+      "manureliquid_sows_piglet":0.0466167661709276,
+      "manureliquid_laying_hen":0.00497599242288751,
+      "manureliquid_other":0
+   },
+   "TH":{
+      "manureliquid_cattle":0.755351921445373,
+      "manureliquid_fattening_pig":0.181480659127386,
+      "manureliquid_sows_piglet":0.0147096785555708,
+      "manureliquid_laying_hen":0.0484577408716699,
+      "manureliquid_other":0
+   },
+   "TR":{
+      "manureliquid_cattle":0.97789519996087,
+      "manureliquid_fattening_pig":0.0000194913799417323,
+      "manureliquid_sows_piglet":0.00000157985394494961,
+      "manureliquid_laying_hen":0.0220837288052437,
+      "manureliquid_other":0
+   },
+   "UA":{
+      "manureliquid_cattle":0.741443874469408,
+      "manureliquid_fattening_pig":0.144482931054176,
+      "manureliquid_sows_piglet":0.0617101845237894,
+      "manureliquid_laying_hen":0.0523630099526263,
+      "manureliquid_other":0
+   },
+   "US":{
+      "manureliquid_cattle":0.766419201590052,
+      "manureliquid_fattening_pig":0.148289201791209,
+      "manureliquid_sows_piglet":0.0517364563148683,
+      "manureliquid_laying_hen":0.0335551403038707,
+      "manureliquid_other":0
+   },
+   "VN":{
+      "manureliquid_cattle":0.474349921379399,
+      "manureliquid_fattening_pig":0.458224208589946,
+      "manureliquid_sows_piglet":0.0371407666642503,
+      "manureliquid_laying_hen":0.0302851033664051,
+      "manureliquid_other":0
+   }
+}
+
+
+#FIXME: Check if "manuresolid_horses" = "Share of solid manure from other poultry" in GD_crop, otherwise this is wrong!!!
+#Generated in GD_crop using "AR":{"manuresolid_cattle":0.891984968037592,  "manuresolid_pig":0.00428250486383302,  "manuresolid_sheep_goat":0.00785192210275657,  "manuresolid_laying_hen":0.0213496972784334,  "manuresolid_broiler":0.037377288700972,  "manuresolid_horses":0.0154080727192603,  "manuresolid_other":0},
+SOLID_MANURE_RATIO_PER_COUNTRY = {
+   "AR":{
+      "manuresolid_cattle":0.891984968037592,
+      "manuresolid_pig":0.00428250486383302,
+      "manuresolid_sheep_goat":0.00785192210275657,
+      "manuresolid_laying_hen":0.0213496972784334,
+      "manuresolid_broiler":0.037377288700972,
+      "manuresolid_horses":0.0154080727192603,
+      "manuresolid_other":0
+   },
+   "AU":{
+      "manuresolid_cattle":0.866230714363227,
+      "manuresolid_pig":0.0396558670056438,
+      "manuresolid_sheep_goat":0,
+      "manuresolid_laying_hen":0.0109557804224684,
+      "manuresolid_broiler":0.0733270306340694,
+      "manuresolid_horses":0.00983060757459108,
+      "manuresolid_other":0
+   },
+   "BE":{
+      "manuresolid_cattle":0.680918401872099,
+      "manuresolid_pig":0.280055070828466,
+      "manuresolid_sheep_goat":0.00287090731445683,
+      "manuresolid_laying_hen":0.00942460225008602,
+      "manuresolid_broiler":0.0242052132533888,
+      "manuresolid_horses":0.00182107880156133,
+      "manuresolid_other":0
+   },
+   "BR":{
+      "manuresolid_cattle":0.747215795807973,
+      "manuresolid_pig":0.170711134549261,
+      "manuresolid_sheep_goat":0.00150204832846079,
+      "manuresolid_laying_hen":0.0146125693780566,
+      "manuresolid_broiler":0.0518691431751504,
+      "manuresolid_horses":0.00957908786756611,
+      "manuresolid_other":0.00105803096597614
+   },
+   "CA":{
+      "manuresolid_cattle":0.642672694527304,
+      "manuresolid_pig":0.21456568114916,
+      "manuresolid_sheep_goat":0.00589291129178607,
+      "manuresolid_laying_hen":0.0157015122396743,
+      "manuresolid_broiler":0.0858889325733874,
+      "manuresolid_horses":0.0233093573163688,
+      "manuresolid_other":0
+   },
+   "CL":{
+      "manuresolid_cattle":0.552250451631966,
+      "manuresolid_pig":0.217928697517175,
+      "manuresolid_sheep_goat":0.00217715952451313,
+      "manuresolid_laying_hen":0.0102743641022689,
+      "manuresolid_broiler":0.0335863045430743,
+      "manuresolid_horses":0.180852077242765,
+      "manuresolid_other":0
+   },
+   "CN":{
+      "manuresolid_cattle":0.362384649367369,
+      "manuresolid_pig":0.230730522410369,
+      "manuresolid_sheep_goat":0.14772992931581,
+      "manuresolid_laying_hen":0.0320194458398477,
+      "manuresolid_broiler":0.0356692347556989,
+      "manuresolid_horses":0.0289955821559536,
+      "manuresolid_other":0.154310465771057
+   },
+   "CO":{
+      "manuresolid_cattle":0.838197032202166,
+      "manuresolid_pig":0.112964690235755,
+      "manuresolid_sheep_goat":0.00133593378235541,
+      "manuresolid_laying_hen":0.0106618691740995,
+      "manuresolid_broiler":0.0320696061132552,
+      "manuresolid_horses":0,
+      "manuresolid_other":0
+   },
+   "CR":{
+      "manuresolid_cattle":0.86703206910812,
+      "manuresolid_pig":0.0790705320551174,
+      "manuresolid_sheep_goat":0.0000342803689755446,
+      "manuresolid_laying_hen":0.00622155084472631,
+      "manuresolid_broiler":0.0448468278062416,
+      "manuresolid_horses":0,
+      "manuresolid_other":0
+   },
+   "CI":{
+      "manuresolid_cattle":0.30319915656893,
+      "manuresolid_pig":0.485781032504727,
+      "manuresolid_sheep_goat":0.0773942195973608,
+      "manuresolid_laying_hen":0.0241292974698366,
+      "manuresolid_broiler":0.109496293859146,
+      "manuresolid_horses":0,
+      "manuresolid_other":0
+   },
+   "EC":{
+      "manuresolid_cattle":0.732791342645394,
+      "manuresolid_pig":0.123009389316786,
+      "manuresolid_sheep_goat":0.000401295431772118,
+      "manuresolid_laying_hen":0.00628856797963098,
+      "manuresolid_broiler":0.130112643083882,
+      "manuresolid_horses":0.00260223066010027,
+      "manuresolid_other":0
+   },
+   "FI":{
+      "manuresolid_cattle":0.796050906155418,
+      "manuresolid_pig":0.171171394598401,
+      "manuresolid_sheep_goat":0.00813728584106536,
+      "manuresolid_laying_hen":0.00973035325899764,
+      "manuresolid_broiler":0.0056705957360577,
+      "manuresolid_horses":0.0050773244121249,
+      "manuresolid_other":0
+   },
+   "FR":{
+      "manuresolid_cattle":0.817006208590229,
+      "manuresolid_pig":0.0974023218136786,
+      "manuresolid_sheep_goat":0.028576974423064,
+      "manuresolid_laying_hen":0.00896973024206114,
+      "manuresolid_broiler":0.0139016721218404,
+      "manuresolid_horses":0.0328108856640718,
+      "manuresolid_other":0
+   },
+   "DE":{
+      "manuresolid_cattle":0.727786900832796,
+      "manuresolid_pig":0.224888769346684,
+      "manuresolid_sheep_goat":0.00877737537493331,
+      "manuresolid_laying_hen":0.00746654359647748,
+      "manuresolid_broiler":0.0143180400820094,
+      "manuresolid_horses":0.0144175727979649,
+      "manuresolid_other":0.000516497646563295
+   },
+   "GH":{
+      "manuresolid_cattle":0.229471343581357,
+      "manuresolid_pig":0.513373819312835,
+      "manuresolid_sheep_goat":0.154434937260582,
+      "manuresolid_laying_hen":0.0279284514119134,
+      "manuresolid_broiler":0.0741635040869972,
+      "manuresolid_horses":0,
+      "manuresolid_other":0
+   },
+   "HU":{
+      "manuresolid_cattle":0.43790738862665,
+      "manuresolid_pig":0.293028837016495,
+      "manuresolid_sheep_goat":0.130362255346065,
+      "manuresolid_laying_hen":0.0254930676931773,
+      "manuresolid_broiler":0.0406661992373601,
+      "manuresolid_horses":0.0661343707038014,
+      "manuresolid_other":0
+   },
+   "IN":{
+      "manuresolid_cattle":0.25834922642825,
+      "manuresolid_pig":0.0052864383650807,
+      "manuresolid_sheep_goat":0.0981507817052525,
+      "manuresolid_laying_hen":0.00479527694451115,
+      "manuresolid_broiler":0.00965129781910674,
+      "manuresolid_horses":0.0012356837639976,
+      "manuresolid_other":0.62187056561929
+   },
+   "ID":{
+      "manuresolid_cattle":0.467197539586431,
+      "manuresolid_pig":0.0435507726372292,
+      "manuresolid_sheep_goat":0.119821943999018,
+      "manuresolid_laying_hen":0.0308633507533585,
+      "manuresolid_broiler":0.189432018409211,
+      "manuresolid_horses":0.019514805386779,
+      "manuresolid_other":0.126346233077757
+   },
+   "IL":{
+      "manuresolid_cattle":0.199236580122689,
+      "manuresolid_pig":0.39646666414798,
+      "manuresolid_sheep_goat":0,
+      "manuresolid_laying_hen":0.0544993327490837,
+      "manuresolid_broiler":0.204647504694381,
+      "manuresolid_horses":0.145149918285867,
+      "manuresolid_other":0
+   },
+   "IT":{
+      "manuresolid_cattle":0.623557125987676,
+      "manuresolid_pig":0.141867888486309,
+      "manuresolid_sheep_goat":0.0623664331281349,
+      "manuresolid_laying_hen":0.024748730552871,
+      "manuresolid_broiler":0.0213561547460622,
+      "manuresolid_horses":0.0502110092774215,
+      "manuresolid_other":0.0737720357806156
+   },
+   "KE":{
+      "manuresolid_cattle":0.716502772802802,
+      "manuresolid_pig":0.0621647840759193,
+      "manuresolid_sheep_goat":0.159458408168703,
+      "manuresolid_laying_hen":0.00667923769381902,
+      "manuresolid_broiler":0.00578424256117285,
+      "manuresolid_horses":0,
+      "manuresolid_other":0.0493881369381422
+   },
+   "MX":{
+      "manuresolid_cattle":0.437879115151199,
+      "manuresolid_pig":0.367968515803388,
+      "manuresolid_sheep_goat":0.00791315611290666,
+      "manuresolid_laying_hen":0.0507878443580435,
+      "manuresolid_broiler":0.0939603230870931,
+      "manuresolid_horses":0.0139241223195238,
+      "manuresolid_other":0
+   },
+   "NL":{
+      "manuresolid_cattle":0.650340967131297,
+      "manuresolid_pig":0.279493306740428,
+      "manuresolid_sheep_goat":0.0140888719565466,
+      "manuresolid_laying_hen":0.0228634131090672,
+      "manuresolid_broiler":0.0274477631619806,
+      "manuresolid_horses":0.00440480042111328,
+      "manuresolid_other":0
+   },
+   "NZ":{
+      "manuresolid_cattle":0.963421730440515,
+      "manuresolid_pig":0.0109823225235529,
+      "manuresolid_sheep_goat":0,
+      "manuresolid_laying_hen":0.00547105071638433,
+      "manuresolid_broiler":0.0184228426712389,
+      "manuresolid_horses":0.00170205364830849,
+      "manuresolid_other":0
+   },
+   "PE":{
+      "manuresolid_cattle":0.496720484396516,
+      "manuresolid_pig":0.270738732154887,
+      "manuresolid_sheep_goat":0.00617767908700828,
+      "manuresolid_laying_hen":0.0159520683102628,
+      "manuresolid_broiler":0.122493270732421,
+      "manuresolid_horses":0,
+      "manuresolid_other":0.0754721922606031
+   },
+   "PH":{
+      "manuresolid_cattle":0.181039090379967,
+      "manuresolid_pig":0.170254196102749,
+      "manuresolid_sheep_goat":0.0236394474661915,
+      "manuresolid_laying_hen":0.0261928628054136,
+      "manuresolid_broiler":0.029492131725624,
+      "manuresolid_horses":0.0112876207841742,
+      "manuresolid_other":0.55372825869861
+   },
+   "PL":{
+      "manuresolid_cattle":0.682243198492267,
+      "manuresolid_pig":0.234441939364468,
+      "manuresolid_sheep_goat":0.0062009560207519,
+      "manuresolid_laying_hen":0.0189396723167528,
+      "manuresolid_broiler":0.0282322761692945,
+      "manuresolid_horses":0.0250107466216499,
+      "manuresolid_other":0
+   },
+   "RU":{
+      "manuresolid_cattle":0.713799208422998,
+      "manuresolid_pig":0.086703308957753,
+      "manuresolid_sheep_goat":0.125362195508399,
+      "manuresolid_laying_hen":0.0174414514252454,
+      "manuresolid_broiler":0.028538107776735,
+      "manuresolid_horses":0.0198904771946972,
+      "manuresolid_other":0.000806021904680627
+   },
+   "ZA":{
+      "manuresolid_cattle":0.356625251567831,
+      "manuresolid_pig":0.394853891860788,
+      "manuresolid_sheep_goat":0.132864576090439,
+      "manuresolid_laying_hen":0.0227101017834964,
+      "manuresolid_broiler":0.0842235633176526,
+      "manuresolid_horses":0.00236287438764808,
+      "manuresolid_other":0
+   },
+   "ES":{
+      "manuresolid_cattle":0.474296687896011,
+      "manuresolid_pig":0.349950028157995,
+      "manuresolid_sheep_goat":0.12997128300961,
+      "manuresolid_laying_hen":0.0163774073286205,
+      "manuresolid_broiler":0.0258809175900883,
+      "manuresolid_horses":0.00150157348727131,
+      "manuresolid_other":0
+   },
+   "LK":{
+      "manuresolid_cattle":0.358031210049245,
+      "manuresolid_pig":0.0112883407239895,
+      "manuresolid_sheep_goat":0.0270469208521131,
+      "manuresolid_laying_hen":0.029418742522326,
+      "manuresolid_broiler":0.0267171307871851,
+      "manuresolid_horses":0.00015138202065572,
+      "manuresolid_other":0.547036369869872
+   },
+   "CH":{
+      "manuresolid_cattle":0.847661071767102,
+      "manuresolid_pig":0.117090979573841,
+      "manuresolid_sheep_goat":0.0171437568569013,
+      "manuresolid_laying_hen":0.00429103263320877,
+      "manuresolid_broiler":0.0110806584861638,
+      "manuresolid_horses":0.000565871544344061,
+      "manuresolid_other":0
+   },
+   "TH":{
+      "manuresolid_cattle":0.483365490034822,
+      "manuresolid_pig":0.105331894540662,
+      "manuresolid_sheep_goat":0.00325053153676041,
+      "manuresolid_laying_hen":0.0267397498762904,
+      "manuresolid_broiler":0.0594253500881106,
+      "manuresolid_horses":0.0284856028547359,
+      "manuresolid_other":0.293286711741945
+   },
+   "TR":{
+      "manuresolid_cattle":0.715196837161228,
+      "manuresolid_pig":0.0000129294244842317,
+      "manuresolid_sheep_goat":0.223468643242192,
+      "manuresolid_laying_hen":0.0139275123117529,
+      "manuresolid_broiler":0.0318351921540885,
+      "manuresolid_horses":0.00372002554680684,
+      "manuresolid_other":0.00865029140642073
+   },
+   "UA":{
+      "manuresolid_cattle":0.698618141080016,
+      "manuresolid_pig":0.154948882686506,
+      "manuresolid_sheep_goat":0.0332941900836932,
+      "manuresolid_laying_hen":0.0425455414624761,
+      "manuresolid_broiler":0.0414121380138285,
+      "manuresolid_horses":0.0193823535285322,
+      "manuresolid_other":0.0000199842093849127
+   },
+   "US":{
+      "manuresolid_cattle":0.582965251842265,
+      "manuresolid_pig":0.122485390244081,
+      "manuresolid_sheep_goat":0.00534999988371993,
+      "manuresolid_laying_hen":0.0220091477664882,
+      "manuresolid_broiler":0.128299034748168,
+      "manuresolid_horses":0.105902046051912,
+      "manuresolid_other":0
+   },
+   "VN":{
+      "manuresolid_cattle":0.289461071985541,
+      "manuresolid_pig":0.253613640613564,
+      "manuresolid_sheep_goat":0.00536369937026225,
+      "manuresolid_laying_hen":0.0159363283195119,
+      "manuresolid_broiler":0.0372640411471001,
+      "manuresolid_horses":0.0554421692672654,
+      "manuresolid_other":0.341748931506976
    }
 }

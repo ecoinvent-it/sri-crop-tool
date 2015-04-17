@@ -1,5 +1,8 @@
 from defaultTables import CLAY_CONTENT_PER_COUNTRY, CARBON_CONTENT_PER_COUNTRY,\
-    ROOTING_DEPTH_PER_CROP, N_FERT_RATIO_PER_COUNTRY, P_FERT_RATIO_PER_COUNTRY, K_FERT_RATIO_PER_COUNTRY
+    ROOTING_DEPTH_PER_CROP, N_FERT_RATIO_PER_COUNTRY, P_FERT_RATIO_PER_COUNTRY, K_FERT_RATIO_PER_COUNTRY,\
+    LIQUID_MANURE_RATIO_PER_COUNTRY, SOLID_MANURE_RATIO_PER_COUNTRY,\
+    ANNUAL_PRECIPITATION_PER_COUNTRY, YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY,\
+    WATER_CONTENT_FM_RATIO_PER_CROP
 from models.hmmodel import LandUseCategoryForHM, PesticideType
 from models.otherorganicfertilisermodel import OtherOrganicFertiliserType
 from models.pmodel import LandUseCategory
@@ -93,10 +96,16 @@ class DryingDefaultGenerator(object):
                 * generators["drying_yield_to_be_dryied"] \
                 * (generators["drying_humidity_before_drying"] - generators["drying_humidity_after_drying"])
         else: return 0.0
+        
+class SlopePerCropGenerator(object):
+    def generateDefault(self, field, generators):
+        if (generators["crop"] == "rice"):
+            return 0.00
+        else: return 0.03
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
-                   "average_annual_precipitation": SimpleValueDefaultGenerator(0.03), #FIXME: Default
+                   "average_annual_precipitation": TableLookupDefaultGenerator("country", ANNUAL_PRECIPITATION_PER_COUNTRY),
                    "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
                    #Fertiliser defaults
@@ -107,14 +116,16 @@ DEFAULTS_VALUES_GENERATORS = {
                    "soil_with_ph_under_or_7": SimpleValueDefaultGenerator(0.5), #FIXME: Default
                    #Manure defaults
                    "liquid_manure_part_before_dilution": SimpleValueDefaultGenerator(0.5),
+                   "liquid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", LIQUID_MANURE_RATIO_PER_COUNTRY, "total_manureliquid"),
+                   "solid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", SOLID_MANURE_RATIO_PER_COUNTRY, "total_manuresolid"),
                    #Other organic fertilisers defaults
-                   "other_organic_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),#FIXME: To test
+                   "other_organic_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),
                    #Seed defaults
                    "seed_quantities":ZeroMapDefaultGenerator(SeedType),#FIXME: Default
                    #Erosion defaults
-                   #"yearly_precipitation_as_snow": TODO table
+                   "yearly_precipitation_as_snow": TableLookupDefaultGenerator("country", YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY),
                    "annualized_irrigation": AnnualizedIrrigationDefaultGenerator(),
-                   "slope": SimpleValueDefaultGenerator(0.03), #FIXME: default: 0% if rice, 3% for other
+                   "slope": SlopePerCropGenerator(),
                    "slope_length": SimpleValueDefaultGenerator(50.0),
                    "soil_erodibility_factor": SimpleValueDefaultGenerator(0.5),#FIXME Default
                    "crop_factor": SimpleValueDefaultGenerator(0.5),#FIXME Default
@@ -145,5 +156,6 @@ DEFAULTS_VALUES_GENERATORS = {
                    "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default
                    #Direct outputs
                    "computed_drying":DryingDefaultGenerator(),
-                   "type_of_drying":SimpleValueDefaultGenerator("ambient_air")
+                   "type_of_drying":SimpleValueDefaultGenerator("ambient_air"),
+                   "yield_main_product_water_content": TableLookupDefaultGenerator("crop", WATER_CONTENT_FM_RATIO_PER_CROP)
                    }

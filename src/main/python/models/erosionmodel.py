@@ -25,7 +25,7 @@ class ErosionModel(object):
       average_annual_precipitation: mm/year
       yearly_precipitation_as_snow: ratio
       annualized_irrigation: mm/year
-      slope: ratio #default: 0% if rice, 3% for other
+      slope: ratio
       slope_length: m
       tillage_method: TillageMethod
       anti_erosion_practice: AntiErosionPractice
