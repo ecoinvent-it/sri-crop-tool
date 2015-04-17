@@ -132,6 +132,7 @@ public class Api
 
         return Response.ok(
                 (StreamingOutput) outputStream ->
-                scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, outputStream)).build();
+                scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, outputStream))
+                .header("Content-Disposition", "attachment; filename=\"GeneratedScsv.csv\"").build();
     }
 }
