@@ -25,12 +25,12 @@ import java.util.Optional;
 
 import com.google.common.collect.ImmutableList;
 import com.quantis_intl.commons.scsv.ScsvBoolean;
-import com.quantis_intl.commons.scsv.ScsvMetadata;
-import com.quantis_intl.commons.scsv.ScsvMetadataEnums.CsvFormatVersion;
-import com.quantis_intl.commons.scsv.ScsvMetadataEnums.CsvSeparator;
-import com.quantis_intl.commons.scsv.ScsvMetadataEnums.DecimalSeparator;
-import com.quantis_intl.commons.scsv.ScsvMetadataEnums.ExportType;
-import com.quantis_intl.commons.scsv.ScsvMetadataEnums.SimaproVersion;
+import com.quantis_intl.commons.scsv.metadata.ScsvMetadata;
+import com.quantis_intl.commons.scsv.metadata.ScsvMetadataEnums.CsvFormatVersion;
+import com.quantis_intl.commons.scsv.metadata.ScsvMetadataEnums.CsvSeparator;
+import com.quantis_intl.commons.scsv.metadata.ScsvMetadataEnums.DecimalSeparator;
+import com.quantis_intl.commons.scsv.metadata.ScsvMetadataEnums.ExportType;
+import com.quantis_intl.commons.scsv.metadata.ScsvMetadataEnums.SimaproVersion;
 
 public class GeneratedMetadata implements ScsvMetadata
 {

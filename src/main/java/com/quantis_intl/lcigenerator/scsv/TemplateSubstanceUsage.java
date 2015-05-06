@@ -43,7 +43,8 @@ public class TemplateSubstanceUsage
             // LUC: new TemplateSubstanceUsage("Tranformation, to {TODO}", "", "m2", "", ""),
             // LUC: new TemplateSubstanceUsage("Gross energy {TODO}", "", "MJ", "", ""),
             // LUC: new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "", ""),
-            new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "", "")
+            new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "CO2_from_yield", ""),
+            // new TemplateSubstanceUsage("Energy, gross calorific value, in biomass", "", "MJ", "", "")
     };
 
     public static final TemplateSubstanceUsage[] toAir = {

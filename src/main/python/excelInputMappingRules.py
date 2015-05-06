@@ -91,6 +91,8 @@ EXCEL_INPUT_MAPPING_RULES = {
                     "p2O5_from_mineral_fert": SimpleInputMappingRule("total_fertpmin"),
                     "water_use_total": SimpleInputMappingRule("total_wateruse"),
                     "drained_part": SimpleInputMappingRule("drainage"),
+                    "yield_main_product_per_crop_cycle": SimpleInputMappingRule("yield_main_product_per_crop_cycle"),
+                    "yield_main_product_carbon_content": SimpleInputMappingRule("yield_main_product_carbon_content"),
                     #Fertiliser rules
                     "n_fertiliser_quantities": MapMappingRule(_N_ENUM_TO_FIELD),
                     "p_fertiliser_quantities": MapMappingRule(_P_ENUM_TO_FIELD),

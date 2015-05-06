@@ -2,12 +2,13 @@ from defaultTables import CLAY_CONTENT_PER_COUNTRY, CARBON_CONTENT_PER_COUNTRY,\
     ROOTING_DEPTH_PER_CROP, N_FERT_RATIO_PER_COUNTRY, P_FERT_RATIO_PER_COUNTRY, K_FERT_RATIO_PER_COUNTRY,\
     LIQUID_MANURE_RATIO_PER_COUNTRY, SOLID_MANURE_RATIO_PER_COUNTRY,\
     ANNUAL_PRECIPITATION_PER_COUNTRY, YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY,\
-    WATER_CONTENT_FM_RATIO_PER_CROP
+    WATER_CONTENT_FM_RATIO_PER_CROP, IRR_TECH_RATIO_PER_COUNTRY
 from models.hmmodel import LandUseCategoryForHM, PesticideType
 from models.otherorganicfertilisermodel import OtherOrganicFertiliserType
 from models.pmodel import LandUseCategory
 from models.fertilisermodel import OtherMineralFertiliserType
 from models.seedmodel import SeedType
+from models.erosionmodel import TillageMethod, AntiErosionPractice
 
 class DefaultValuesWrapper(object):
     def __init__(self, inputMapping, generatorMap):
@@ -108,7 +109,13 @@ DEFAULTS_VALUES_GENERATORS = {
                    "average_annual_precipitation": TableLookupDefaultGenerator("country", ANNUAL_PRECIPITATION_PER_COUNTRY),
                    "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
+                   "water_use_total": SimpleValueDefaultGenerator(0.0), #FIXME: to calculate
+                   "yield_main_product_per_crop_cycle": SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop + country) GD_crop Yield_2009_2012_L1
                    #Fertiliser defaults
+                   #FIXME: Should we compute total before quantities from ratio and total?
+                   "nitrogen_from_mineral_fert":SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop+country)
+                   "p2O5_from_mineral_fert":SimpleValueDefaultGenerator(0.0), #FIXME: missing Default (crop+country)
+                   "k2O_from_mineral_fert":SimpleValueDefaultGenerator(0.0), #FIXME: missing Default (crop+country)
                    "n_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", N_FERT_RATIO_PER_COUNTRY, "nitrogen_from_mineral_fert"),
                    "p_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", P_FERT_RATIO_PER_COUNTRY, "p2O5_from_mineral_fert"),
                    "k_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", K_FERT_RATIO_PER_COUNTRY, "k2O_from_mineral_fert"),
@@ -116,6 +123,8 @@ DEFAULTS_VALUES_GENERATORS = {
                    "soil_with_ph_under_or_7": SimpleValueDefaultGenerator(0.5), #FIXME: Default
                    #Manure defaults
                    "liquid_manure_part_before_dilution": SimpleValueDefaultGenerator(0.5),
+                   "total_manureliquid":SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop+country)
+                   "total_manuresolid":SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop+country)
                    "liquid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", LIQUID_MANURE_RATIO_PER_COUNTRY, "total_manureliquid"),
                    "solid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", SOLID_MANURE_RATIO_PER_COUNTRY, "total_manuresolid"),
                    #Other organic fertilisers defaults
@@ -127,6 +136,8 @@ DEFAULTS_VALUES_GENERATORS = {
                    "annualized_irrigation": AnnualizedIrrigationDefaultGenerator(),
                    "slope": SlopePerCropGenerator(),
                    "slope_length": SimpleValueDefaultGenerator(50.0),
+                   "tillage_method": SimpleValueDefaultGenerator(TillageMethod.unknown),
+                   "anti_erosion_practice": SimpleValueDefaultGenerator(AntiErosionPractice.unknown),
                    "soil_erodibility_factor": SimpleValueDefaultGenerator(0.5),#FIXME Default
                    "crop_factor": SimpleValueDefaultGenerator(0.5),#FIXME Default
                    #CO2 model defaults
@@ -134,6 +145,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "magnesium_from_fertilizer": SimpleValueDefaultGenerator(0.0),
                    "magnesium_as_dolomite": SimpleValueDefaultGenerator(1.0),
                    #Irrigation defaults
+                   "irrigation_types_proportions": TableLookupDefaultGenerator("country", IRR_TECH_RATIO_PER_COUNTRY),
                    #N model defaults
                    "bulk_density_of_soil": SimpleValueDefaultGenerator(1300.0),
                    "c_per_n_ratio": SimpleValueDefaultGenerator(11.0),
@@ -141,7 +153,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "considered_soil_volume": SimpleValueDefaultGenerator(5000.0),
                    "drained_part": SimpleValueDefaultGenerator(0.0),
                    "organic_carbon_content": TableLookupDefaultGenerator("country", CARBON_CONTENT_PER_COUNTRY),
-                   "nitrogen_uptake_by_crop": SimpleValueDefaultGenerator(0.0), #FIXME: Default
+                   "nitrogen_uptake_by_crop": SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop+country) GD_crop NUptake_L1
                    "norg_per_ntotal_ratio": SimpleValueDefaultGenerator(0.85),
                    "rooting_depth": TableLookupDefaultGenerator("crop", ROOTING_DEPTH_PER_CROP), #FIXME: Missing some default
                    "nitrogen_from_crop_residues": SimpleValueDefaultGenerator(0.0), #FIXME: Default
@@ -152,9 +164,10 @@ DEFAULTS_VALUES_GENERATORS = {
                    "land_use_category": SimpleValueDefaultGenerator(LandUseCategory.arable_land), #FIXME: Default
                    #HM defaults
                    "hm_land_use_category": LandUseCategoryForHMDefaultGenerator(),
-                   "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default
+                   "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default (crop+country) GD_crop Perticides_L1
                    #Direct outputs
                    "computed_drying":DryingDefaultGenerator(),
                    "type_of_drying":SimpleValueDefaultGenerator("ambient_air"),
-                   "yield_main_product_water_content": TableLookupDefaultGenerator("crop", WATER_CONTENT_FM_RATIO_PER_CROP)
+                   "yield_main_product_water_content": TableLookupDefaultGenerator("crop", WATER_CONTENT_FM_RATIO_PER_CROP),
+                   "yield_main_product_carbon_content": SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop + country)
                    }

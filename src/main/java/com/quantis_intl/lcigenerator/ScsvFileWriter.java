@@ -29,7 +29,7 @@ import java.util.Map;
 
 import com.quantis_intl.commons.scsv.ScsvLineSerializer;
 import com.quantis_intl.commons.scsv.ScsvLinesWriter;
-import com.quantis_intl.commons.scsv.ScsvMetadataWriter;
+import com.quantis_intl.commons.scsv.metadata.ScsvMetadataWriter;
 import com.quantis_intl.commons.scsv.processes.ScsvProcessWriter;
 import com.quantis_intl.lcigenerator.scsv.GeneratedMetadata;
 import com.quantis_intl.lcigenerator.scsv.GeneratedProcess;

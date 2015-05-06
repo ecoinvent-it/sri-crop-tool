@@ -1,4 +1,4 @@
-from models.atomicmass import MA_NH3, MA_N
+from models.atomicmass import MA_NH3, MA_N, MA_CO2, MA_C
 
 def identity(x): return x
 
@@ -15,6 +15,8 @@ class OutputMapping(object):
                 self.output[k] = f(allInputs[k])
         
         self._mapTypeOfDrying(allInputs)
+        # FIXME: Where is the right place for this?
+        self.output["CO2_from_yield"] = allInputs["yield_main_product_carbon_content"] * 1000.0 * MA_CO2/MA_C * (1 - allInputs["yield_main_product_water_content"])
         
     def _mapTypeOfDrying(self,allInputs):
         if (allInputs["type_of_drying"] == "ambient_air"):
