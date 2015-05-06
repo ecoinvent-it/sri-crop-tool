@@ -54,7 +54,7 @@ class SeedModel(object):
             SeedType.pea_ip: 0.85,
             SeedType.pea_org: 0.85,
             SeedType.vegetable_ip: 0.73, #mean
-            SeedType.vegetable_org:72.91, #mean
+            SeedType.vegetable_org:0.73, #mean
             SeedType.barley_ip:  0.85,
             SeedType.barley_org: 0.85,
             SeedType.grass: 0.73, #mean

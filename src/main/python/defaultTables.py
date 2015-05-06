@@ -1,3 +1,6 @@
+from models.pmodel import LandUseCategory
+from models.modelEnums import SoilTexture
+
 CLAY_CONTENT_PER_COUNTRY = {
                             "AR":0.292466663312031,
                             "AU":0.254921189470263,
@@ -38,14 +41,64 @@ CLAY_CONTENT_PER_COUNTRY = {
                             "VN":0.44672620566471
                             }
 
-CARBON_CONTENT_PER_COUNTRY = {
+SAND_CONTENT_PER_COUNTRY = {
+                       "AR":0.040180143913853,
+                       "AU":0.253381946701333,
+                       "BE":0.0200364298724954,
+                       "BR":0.0428501228501229,
+                       "CA":0.0100422280913798,
+                       "CL":0.0180752320468979,
+                       "CN":0.0885942240701202,
+                       "CO":0.0813253012048193,
+                       "CR":0,
+                       "CI":0.0149692595562684,
+                       "EC":0.00570469798657718,
+                       "FI":0,
+                       "FR":0.00947032265169034,
+                       "DE":0.0165961601041328,
+                       "GH":0.00520252694165738,
+                       "HU":0.0843688685415304,
+                       "IN":0.0174722863091554,
+                       "ID":0.0477489768076398,
+                       "IL":0,
+                       "IT":0,
+                       "KE":0.0551962701158069,
+                       "MX":0,
+                       "NL":0,
+                       "NZ":0.00861856685545432,
+                       "PE":0.0285601474072124,
+                       "PH":0.0111714975845411,
+                       "PL":0.0572775058908827,
+                       "RU":0.00505958625598585,
+                       "ZA":0.146219421793921,
+                       "ES":0.00948241801659423,
+                       "LK":0.0235294117647059,
+                       "CH":0,
+                       "TH":0.0037108744756373,
+                       "TR":0.00243076655959719,
+                       "UA":0.00950717889018238,
+                       "US":0.0167799421157036,
+                       "VN":0.0109721867823424
+}
+
+#src except unknown: EUROPEAN COMMISSION DIRECTORATE GENERAL JRC JOINT RESEARCH CENTRE Space Applications Institute European Soil Bureau
+SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE = {
+                        SoilTexture.unknown:0.032,#Panagos et al. 2014
+                        SoilTexture.coarse:0.0115,
+                        SoilTexture.medium:0.0311,
+                        SoilTexture.medium_fine:0.0438,
+                        SoilTexture.fine:0.0339,
+                        SoilTexture.very_fine:0.017
+                        }
+
+SOIL_CARBON_CONTENT_PER_COUNTRY = {
                             "AR":0.0148,
                             "AU":0.0063,
                             "BE":0.0132,
                             "BR":0.0121,
                             "CA":0.0428,
                             "CL":0.0223,
-                            "CN":0, #FIXME: Strange value
+                            "CN":0.0229, #mean of other values
                             "CO":0.0382,
                             "CR":0.033,
                             "CI":0.0089,
@@ -77,6 +130,20 @@ CARBON_CONTENT_PER_COUNTRY = {
                             "US":0.0152,
                             "VN":0.0126
 }
+
+#FIXME: Validate mapping
+ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
+            "linseed": 18.48,#protein peas
+            "maizegrain": 18.52,#grain maize
+            "potato": 17.59,#potatoes
+            "rapeseed": 26.48,#rape seed
+            "rice": 18.11,#Wheat grains
+            "soybean": 22.98,#soy beans
+            "sugarbeet": 16.43,#sugar beets
+            "sunflower": 30.25,#sunflower grains
+            "sweetcorn": 18.52,#grain maize
+            "wheatwinter": 18.11,#Wheat grains
+            }
 
 ROOTING_DEPTH_PER_CROP = {
                         "almond": 1.5,
@@ -153,6 +220,83 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "tea": 0.0764,
         "tomato": 0.942,
         "wheatwinter": 0.15
+        }
+
+LAND_USE_CATEGORY_PER_CROP = {
+        "almond":LandUseCategory.fruit_trees,
+        "apple":LandUseCategory.fruit_trees,
+        "apricot":LandUseCategory.fruit_trees,
+        "asparagus":LandUseCategory.vegetables,
+        "banana":LandUseCategory.fruit_trees,
+        "carrot":LandUseCategory.vegetables,
+        "cocoa":LandUseCategory.fruit_trees, #FIXME: To be verified
+        "coconut":LandUseCategory.fruit_trees,
+        "coffee":LandUseCategory.fruit_trees,#FIXME: To be verified
+        "lemonlime":LandUseCategory.fruit_trees,
+        "linseed":LandUseCategory.arable_land,
+        "maizegrain":LandUseCategory.arable_land,
+        "mandarin":LandUseCategory.fruit_trees,
+        "mint":LandUseCategory.vegetables,
+        "oat":LandUseCategory.arable_land,
+        "olive":LandUseCategory.fruit_trees,
+        "onion":LandUseCategory.vegetables,
+        "orange":LandUseCategory.fruit_trees,
+        "palmtree":LandUseCategory.fruit_trees,
+        "peach":LandUseCategory.fruit_trees,
+        "peanut":LandUseCategory.vegetables,#FIXME: To be verified
+        "pear":LandUseCategory.fruit_trees,
+        "pineapple":LandUseCategory.arable_land,
+        "potato":LandUseCategory.arable_land,
+        "rapeseed":LandUseCategory.arable_land,
+        "rice":LandUseCategory.arable_land,
+        "soybean":LandUseCategory.arable_land,
+        "strawberry":LandUseCategory.vegetables,
+        "sugarbeet":LandUseCategory.arable_land,
+        "sugarcane":LandUseCategory.arable_land,
+        "sunflower":LandUseCategory.arable_land,
+        "sweetcorn":LandUseCategory.arable_land,
+        "tea":LandUseCategory.vegetables,#FIXME: To be verified
+        "tomato":LandUseCategory.vegetables,
+        "wheatwinter":LandUseCategory.arable_land
+        }
+
+#from GD_crop Cfactor_L1
+CROP_FACTOR_PER_CROP = {
+        "almond":0.1,
+        "apple":0.1,
+        "apricot":0.1,
+        "asparagus":0.5,
+        "banana":0.33,
+        "carrot":0.5,
+        "cocoa":0.21,
+        "coconut":0.3,#No data found yet; same value as for banana and coffee
+        "coffee":0.26,
+        "lemonlime":0.1,#lemon
+        "linseed":0.18,
+        "maizegrain":0.35,
+        "mandarin":0.1,
+        "mint":0.47,
+        "oat":0.26,
+        "olive":0.1,
+        "onion":0.45,
+        "orange":0.1,
+        "palmtree":0.21,#palmfruitbunch
+        "peach":0.1,
+        "peanut":0.51,
+        "pear":0.1,
+        "pineapple":0.48,
+        "potato":0.44,
+        "rapeseed":0.33,
+        "rice":0.17,
+        "soybean":0.28,
+        "strawberry":0.47,
+        "sugarbeet":0.35,
+        "sugarcane":0.4,
+        "sunflower":0.32,
+        "sweetcorn":0.37,
+        "tea":0.3,
+        "tomato":0.47,
+        "wheatwinter":0.22
         }
 
 #Generated from GD_crop

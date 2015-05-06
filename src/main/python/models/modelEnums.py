@@ -8,3 +8,12 @@ class HeavyMetalType(Enum):
         ni=4
         cr=5
         hg=6
+        
+class SoilTexture(Enum):
+        unknown=0,
+        coarse=1,
+        medium=2,
+        medium_fine=3
+        fine=4
+        very_fine=5
+        

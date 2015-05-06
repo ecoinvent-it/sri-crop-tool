@@ -176,7 +176,7 @@ public class TemplateProductUsage
             new TemplateProductUsage("Application of plant protection products, by field sprayer/CH U", "ha",
                     "plantprotection_spraying", ""),
             // NOTE: Baling in upper
-            // Chopping FIXME: Missing
+            new TemplateProductUsage("Chopping, maize/CH U", "ha", "otherworkprocesses_chopping", ""),
             new TemplateProductUsage("Mulching/CH U", "ha", "otherworkprocesses_mulching", ""),
             new TemplateProductUsage("transport, tractor and trailer/CH U", "tkm",
                     "otherworkprocesses_transport_tractor_trailer", ""),
