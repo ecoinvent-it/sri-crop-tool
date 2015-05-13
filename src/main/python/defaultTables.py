@@ -1,6 +1,10 @@
 from models.pmodel import LandUseCategory
 from models.modelEnums import SoilTexture
 from models.seedmodel import SeedType
+from models.fertilisermodel import NFertiliserType, KFertiliserType,\
+    PFertiliserType
+from models.manuremodel import LiquidManureType, SolidManureType
+from models.irrigationmodel import IrrigationType
 
 #Generated from GD_crop GrossEnergy_C_L1 column D
 CARBON_CONTENT_PER_CROP = {
@@ -174,1351 +178,1351 @@ ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
             "wheatwinter": 18.11#Wheat grains
             }
 
-#Generated in GD_crop using "AR":{"fertkmin_potassium_salt_kcl":0.451949860724234,    "fertkmin_potassium_sulphate_k2so4":0.139275766016713,    "fertkmin_potassium_nitrate":0.302924791086351,    "fertkmin_patent_potassium":0.105849582172702},
+#Generated in GD_crop using "AR":{KFertiliserType.potassium_salt:0.451949860724234,    KFertiliserType.potassium_sulphate:0.139275766016713,    KFertiliserType.potassium_nitrate:0.302924791086351,    KFertiliserType.patent_potassium:0.105849582172702},
 FERT_K_RATIO_PER_COUNTRY={
    "AR":{
-      "fertkmin_potassium_salt_kcl":0.451949860724234,
-      "fertkmin_potassium_sulphate_k2so4":0.139275766016713,
-      "fertkmin_potassium_nitrate":0.302924791086351,
-      "fertkmin_patent_potassium":0.105849582172702
+      KFertiliserType.potassium_salt:0.451949860724234,
+      KFertiliserType.potassium_sulphate:0.139275766016713,
+      KFertiliserType.potassium_nitrate:0.302924791086351,
+      KFertiliserType.patent_potassium:0.105849582172702
    },
    "AU":{
-      "fertkmin_potassium_salt_kcl":0.296028880866426,
-      "fertkmin_potassium_sulphate_k2so4":0.108580949736184,
-      "fertkmin_potassium_nitrate":0.590391557900583,
-      "fertkmin_patent_potassium":0.00499861149680644
+      KFertiliserType.potassium_salt:0.296028880866426,
+      KFertiliserType.potassium_sulphate:0.108580949736184,
+      KFertiliserType.potassium_nitrate:0.590391557900583,
+      KFertiliserType.patent_potassium:0.00499861149680644
    },
    "BE":{
-      "fertkmin_potassium_salt_kcl":0.3710407239819,
-      "fertkmin_potassium_sulphate_k2so4":0.0180995475113122,
-      "fertkmin_potassium_nitrate":0.592760180995475,
-      "fertkmin_patent_potassium":0.0180995475113122
+      KFertiliserType.potassium_salt:0.3710407239819,
+      KFertiliserType.potassium_sulphate:0.0180995475113122,
+      KFertiliserType.potassium_nitrate:0.592760180995475,
+      KFertiliserType.patent_potassium:0.0180995475113122
    },
    "BR":{
-      "fertkmin_potassium_salt_kcl":0.973469946185887,
-      "fertkmin_potassium_sulphate_k2so4":0.00246267976042078,
-      "fertkmin_potassium_nitrate":0.0223343771852482,
-      "fertkmin_patent_potassium":0.00173299686844426
+      KFertiliserType.potassium_salt:0.973469946185887,
+      KFertiliserType.potassium_sulphate:0.00246267976042078,
+      KFertiliserType.potassium_nitrate:0.0223343771852482,
+      KFertiliserType.patent_potassium:0.00173299686844426
    },
    "CA":{
-      "fertkmin_potassium_salt_kcl":0.917746113989637,
-      "fertkmin_potassium_sulphate_k2so4":0.0145725388601036,
-      "fertkmin_potassium_nitrate":0.0158678756476684,
-      "fertkmin_patent_potassium":0.0518134715025907
+      KFertiliserType.potassium_salt:0.917746113989637,
+      KFertiliserType.potassium_sulphate:0.0145725388601036,
+      KFertiliserType.potassium_nitrate:0.0158678756476684,
+      KFertiliserType.patent_potassium:0.0518134715025907
    },
    "CL":{
-      "fertkmin_potassium_salt_kcl":0.648272167157782,
-      "fertkmin_potassium_sulphate_k2so4":0.0720600053576212,
-      "fertkmin_potassium_nitrate":0.279667827484597,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.648272167157782,
+      KFertiliserType.potassium_sulphate:0.0720600053576212,
+      KFertiliserType.potassium_nitrate:0.279667827484597,
+      KFertiliserType.patent_potassium:0
    },
    "CN":{
-      "fertkmin_potassium_salt_kcl":0.722896546735081,
-      "fertkmin_potassium_sulphate_k2so4":0.0339435840993763,
-      "fertkmin_potassium_nitrate":0.218961695267327,
-      "fertkmin_patent_potassium":0.0241981738982158
+      KFertiliserType.potassium_salt:0.722896546735081,
+      KFertiliserType.potassium_sulphate:0.0339435840993763,
+      KFertiliserType.potassium_nitrate:0.218961695267327,
+      KFertiliserType.patent_potassium:0.0241981738982158
    },
    "CO":{
-      "fertkmin_potassium_salt_kcl":0.527710843373494,
-      "fertkmin_potassium_sulphate_k2so4":0.0301204819277108,
-      "fertkmin_potassium_nitrate":0.403614457831325,
-      "fertkmin_patent_potassium":0.0385542168674699
+      KFertiliserType.potassium_salt:0.527710843373494,
+      KFertiliserType.potassium_sulphate:0.0301204819277108,
+      KFertiliserType.potassium_nitrate:0.403614457831325,
+      KFertiliserType.patent_potassium:0.0385542168674699
    },
    "CR":{
-      "fertkmin_potassium_salt_kcl":0.861878453038674,
-      "fertkmin_potassium_sulphate_k2so4":0.0386740331491713,
-      "fertkmin_potassium_nitrate":0.0552486187845304,
-      "fertkmin_patent_potassium":0.0441988950276243
+      KFertiliserType.potassium_salt:0.861878453038674,
+      KFertiliserType.potassium_sulphate:0.0386740331491713,
+      KFertiliserType.potassium_nitrate:0.0552486187845304,
+      KFertiliserType.patent_potassium:0.0441988950276243
    },
    "CI":{
-      "fertkmin_potassium_salt_kcl":0.233830845771144,
-      "fertkmin_potassium_sulphate_k2so4":0.233830845771144,
-      "fertkmin_potassium_nitrate":0.298507462686567,
-      "fertkmin_patent_potassium":0.233830845771144
+      KFertiliserType.potassium_salt:0.233830845771144,
+      KFertiliserType.potassium_sulphate:0.233830845771144,
+      KFertiliserType.potassium_nitrate:0.298507462686567,
+      KFertiliserType.patent_potassium:0.233830845771144
    },
    "EC":{
-      "fertkmin_potassium_salt_kcl":0.881638846737481,
-      "fertkmin_potassium_sulphate_k2so4":0.0121396054628225,
-      "fertkmin_potassium_nitrate":0.106221547799697,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.881638846737481,
+      KFertiliserType.potassium_sulphate:0.0121396054628225,
+      KFertiliserType.potassium_nitrate:0.106221547799697,
+      KFertiliserType.patent_potassium:0
    },
    "FI":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":1,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0,
+      KFertiliserType.potassium_sulphate:0,
+      KFertiliserType.potassium_nitrate:1,
+      KFertiliserType.patent_potassium:0
    },
    "FR":{
-      "fertkmin_potassium_salt_kcl":0.417530913442362,
-      "fertkmin_potassium_sulphate_k2so4":0.01770043877144,
-      "fertkmin_potassium_nitrate":0.505434782608696,
-      "fertkmin_patent_potassium":0.059333865177503
+      KFertiliserType.potassium_salt:0.417530913442362,
+      KFertiliserType.potassium_sulphate:0.01770043877144,
+      KFertiliserType.potassium_nitrate:0.505434782608696,
+      KFertiliserType.patent_potassium:0.059333865177503
    },
    "DE":{
-      "fertkmin_potassium_salt_kcl":0.634493078937523,
-      "fertkmin_potassium_sulphate_k2so4":0.0548696844993141,
-      "fertkmin_potassium_nitrate":0.287941139792992,
-      "fertkmin_patent_potassium":0.0226960967701708
+      KFertiliserType.potassium_salt:0.634493078937523,
+      KFertiliserType.potassium_sulphate:0.0548696844993141,
+      KFertiliserType.potassium_nitrate:0.287941139792992,
+      KFertiliserType.patent_potassium:0.0226960967701708
    },
    "GH":{#Using GLO
-      "fertkmin_potassium_salt_kcl":0.96,
-      "fertkmin_potassium_sulphate_k2so4":0.04,
-      "fertkmin_potassium_nitrate":0,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.96,
+      KFertiliserType.potassium_sulphate:0.04,
+      KFertiliserType.potassium_nitrate:0,
+      KFertiliserType.patent_potassium:0
    },
    "HU":{
-      "fertkmin_potassium_salt_kcl":0.881720430107527,
-      "fertkmin_potassium_sulphate_k2so4":0.021505376344086,
-      "fertkmin_potassium_nitrate":0.0967741935483871,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.881720430107527,
+      KFertiliserType.potassium_sulphate:0.021505376344086,
+      KFertiliserType.potassium_nitrate:0.0967741935483871,
+      KFertiliserType.patent_potassium:0
    },
    "IN":{
-      "fertkmin_potassium_salt_kcl":0.702927698574338,
-      "fertkmin_potassium_sulphate_k2so4":0.00486252545824847,
-      "fertkmin_potassium_nitrate":0.292209775967413,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.702927698574338,
+      KFertiliserType.potassium_sulphate:0.00486252545824847,
+      KFertiliserType.potassium_nitrate:0.292209775967413,
+      KFertiliserType.patent_potassium:0
    },
    "ID":{
-      "fertkmin_potassium_salt_kcl":0.748280048563335,
-      "fertkmin_potassium_sulphate_k2so4":0.00202347227842979,
-      "fertkmin_potassium_nitrate":0.249696479158236,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.748280048563335,
+      KFertiliserType.potassium_sulphate:0.00202347227842979,
+      KFertiliserType.potassium_nitrate:0.249696479158236,
+      KFertiliserType.patent_potassium:0
    },
    "IL":{
-      "fertkmin_potassium_salt_kcl":0.166666666666667,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":0.833333333333333,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.166666666666667,
+      KFertiliserType.potassium_sulphate:0,
+      KFertiliserType.potassium_nitrate:0.833333333333333,
+      KFertiliserType.patent_potassium:0
    },
    "IT":{
-      "fertkmin_potassium_salt_kcl":0.333333333333333,
-      "fertkmin_potassium_sulphate_k2so4":0.174329501915709,
-      "fertkmin_potassium_nitrate":0.440613026819923,
-      "fertkmin_patent_potassium":0.0517241379310345
+      KFertiliserType.potassium_salt:0.333333333333333,
+      KFertiliserType.potassium_sulphate:0.174329501915709,
+      KFertiliserType.potassium_nitrate:0.440613026819923,
+      KFertiliserType.patent_potassium:0.0517241379310345
    },
    "KE":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":1,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0,
+      KFertiliserType.potassium_sulphate:0,
+      KFertiliserType.potassium_nitrate:1,
+      KFertiliserType.patent_potassium:0
    },
    "MX":{
-      "fertkmin_potassium_salt_kcl":0.555328089645512,
-      "fertkmin_potassium_sulphate_k2so4":0.13252882232518,
-      "fertkmin_potassium_nitrate":0.276909815752613,
-      "fertkmin_patent_potassium":0.0352332722766943
+      KFertiliserType.potassium_salt:0.555328089645512,
+      KFertiliserType.potassium_sulphate:0.13252882232518,
+      KFertiliserType.potassium_nitrate:0.276909815752613,
+      KFertiliserType.patent_potassium:0.0352332722766943
    },
    "NL":{
-      "fertkmin_potassium_salt_kcl":0.492537313432836,
-      "fertkmin_potassium_sulphate_k2so4":0.119402985074627,
-      "fertkmin_potassium_nitrate":0.388059701492537,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.492537313432836,
+      KFertiliserType.potassium_sulphate:0.119402985074627,
+      KFertiliserType.potassium_nitrate:0.388059701492537,
+      KFertiliserType.patent_potassium:0
    },
    "NZ":{
-      "fertkmin_potassium_salt_kcl":0.869218126320733,
-      "fertkmin_potassium_sulphate_k2so4":0.065977929091336,
-      "fertkmin_potassium_nitrate":0.0648039445879314,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.869218126320733,
+      KFertiliserType.potassium_sulphate:0.065977929091336,
+      KFertiliserType.potassium_nitrate:0.0648039445879314,
+      KFertiliserType.patent_potassium:0
    },
    "PE":{
-      "fertkmin_potassium_salt_kcl":0.790960451977401,
-      "fertkmin_potassium_sulphate_k2so4":0.135593220338983,
-      "fertkmin_potassium_nitrate":0,
-      "fertkmin_patent_potassium":0.0734463276836158
+      KFertiliserType.potassium_salt:0.790960451977401,
+      KFertiliserType.potassium_sulphate:0.135593220338983,
+      KFertiliserType.potassium_nitrate:0,
+      KFertiliserType.patent_potassium:0.0734463276836158
    },
    "PH":{
-      "fertkmin_potassium_salt_kcl":0.169270833333333,
-      "fertkmin_potassium_sulphate_k2so4":0.078125,
-      "fertkmin_potassium_nitrate":0.752604166666667,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.169270833333333,
+      KFertiliserType.potassium_sulphate:0.078125,
+      KFertiliserType.potassium_nitrate:0.752604166666667,
+      KFertiliserType.patent_potassium:0
    },
    "PL":{
-      "fertkmin_potassium_salt_kcl":0.293371757925072,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":0.706628242074928,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.293371757925072,
+      KFertiliserType.potassium_sulphate:0,
+      KFertiliserType.potassium_nitrate:0.706628242074928,
+      KFertiliserType.patent_potassium:0
    },
    "RU":{
-      "fertkmin_potassium_salt_kcl":0.345803049736355,
-      "fertkmin_potassium_sulphate_k2so4":0.0391905372666382,
-      "fertkmin_potassium_nitrate":0.590779535413995,
-      "fertkmin_patent_potassium":0.0242268775830127
+      KFertiliserType.potassium_salt:0.345803049736355,
+      KFertiliserType.potassium_sulphate:0.0391905372666382,
+      KFertiliserType.potassium_nitrate:0.590779535413995,
+      KFertiliserType.patent_potassium:0.0242268775830127
    },
    "ZA":{
-      "fertkmin_potassium_salt_kcl":0.149092480553155,
-      "fertkmin_potassium_sulphate_k2so4":0.0280898876404494,
-      "fertkmin_potassium_nitrate":0.822817631806396,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.149092480553155,
+      KFertiliserType.potassium_sulphate:0.0280898876404494,
+      KFertiliserType.potassium_nitrate:0.822817631806396,
+      KFertiliserType.patent_potassium:0
    },
    "ES":{
-      "fertkmin_potassium_salt_kcl":0.290322580645161,
-      "fertkmin_potassium_sulphate_k2so4":0.0552884615384615,
-      "fertkmin_potassium_nitrate":0.654388957816377,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.290322580645161,
+      KFertiliserType.potassium_sulphate:0.0552884615384615,
+      KFertiliserType.potassium_nitrate:0.654388957816377,
+      KFertiliserType.patent_potassium:0
    },
    "LK":{
-      "fertkmin_potassium_salt_kcl":0.948529411764706,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":0.0514705882352941,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.948529411764706,
+      KFertiliserType.potassium_sulphate:0,
+      KFertiliserType.potassium_nitrate:0.0514705882352941,
+      KFertiliserType.patent_potassium:0
    },
    "CH":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0.0444444444444444,
-      "fertkmin_potassium_nitrate":0.955555555555556,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0,
+      KFertiliserType.potassium_sulphate:0.0444444444444444,
+      KFertiliserType.potassium_nitrate:0.955555555555556,
+      KFertiliserType.patent_potassium:0
    },
    "TH":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":1,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0,
+      KFertiliserType.potassium_sulphate:0,
+      KFertiliserType.potassium_nitrate:1,
+      KFertiliserType.patent_potassium:0
    },
    "TR":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0.0944972630365889,
-      "fertkmin_potassium_nitrate":0.905502736963411,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0,
+      KFertiliserType.potassium_sulphate:0.0944972630365889,
+      KFertiliserType.potassium_nitrate:0.905502736963411,
+      KFertiliserType.patent_potassium:0
    },
    "UA":{
-      "fertkmin_potassium_salt_kcl":0.0695825049701789,
-      "fertkmin_potassium_sulphate_k2so4":0.073558648111332,
-      "fertkmin_potassium_nitrate":0.78727634194831,
-      "fertkmin_patent_potassium":0.0695825049701789
+      KFertiliserType.potassium_salt:0.0695825049701789,
+      KFertiliserType.potassium_sulphate:0.073558648111332,
+      KFertiliserType.potassium_nitrate:0.78727634194831,
+      KFertiliserType.patent_potassium:0.0695825049701789
    },
    "US":{
-      "fertkmin_potassium_salt_kcl":0.712309762296307,
-      "fertkmin_potassium_sulphate_k2so4":0.0336612348632083,
-      "fertkmin_potassium_nitrate":0.236011361937509,
-      "fertkmin_patent_potassium":0.018017640902975
+      KFertiliserType.potassium_salt:0.712309762296307,
+      KFertiliserType.potassium_sulphate:0.0336612348632083,
+      KFertiliserType.potassium_nitrate:0.236011361937509,
+      KFertiliserType.patent_potassium:0.018017640902975
    },
    "VN":{#Using GLO
-      "fertkmin_potassium_salt_kcl":0.96,
-      "fertkmin_potassium_sulphate_k2so4":0.04,
-      "fertkmin_potassium_nitrate":0,
-      "fertkmin_patent_potassium":0
+      KFertiliserType.potassium_salt:0.96,
+      KFertiliserType.potassium_sulphate:0.04,
+      KFertiliserType.potassium_nitrate:0,
+      KFertiliserType.patent_potassium:0
    }
 }
 
-#Generated in GD_crop using =""""&C3&""":{""fertnmin_ammonium_nitrate"":"&C5&", ""fertnmin_urea"":"&C6&", ""fertnmin_urea_an"":"&C7&", ""fertnmin_mono_ammonium_phosphate"":"&C8&", ""fertnmin_di_ammonium_phosphate"":"&C9&", ""fertnmin_an_phosphate"":"&C10&", ""fertnmin_lime_ammonium_nitrate"":"&C11&", ""fertnmin_ammonium_sulphate"":"&C12&", ""fertnmin_potassium_nitrate"":"&C13&", ""fertnmin_ammonia_liquid"":"&C14&"},"
+#Generated in GD_crop using =""""&C3&""":{NFertiliserType.ammonium_nitrate:"&C5&", NFertiliserType.urea:"&C6&", NFertiliserType.ureaAN:"&C7&", NFertiliserType.mono_ammonium_phosphate:"&C8&", NFertiliserType.di_ammonium_phosphate:"&C9&", NFertiliserType.an_phosphate:"&C10&", NFertiliserType.lime_ammonium_nitrate:"&C11&", NFertiliserType.ammonium_sulphate:"&C12&", NFertiliserType.potassium_nitrate:"&C13&", NFertiliserType.ammonia_liquid:"&C14&"},"
 FERT_N_RATIO_PER_COUNTRY = {
     "AR":{
-      "fertnmin_ammonium_nitrate":0.0395983072479344,
-      "fertnmin_urea":0.27525693558138,
-      "fertnmin_urea_an":0.27525693558138,
-      "fertnmin_mono_ammonium_phosphate":0.0736716598374421,
-      "fertnmin_di_ammonium_phosphate":0.0736716598374421,
-      "fertnmin_an_phosphate":0.00849734667830994,
-      "fertnmin_lime_ammonium_nitrate":0.0232081682004433,
-      "fertnmin_ammonium_sulphate":0.01309867669779,
-      "fertnmin_potassium_nitrate":0.00886679653388863,
-      "fertnmin_ammonia_liquid":0.20887351380399
+      NFertiliserType.ammonium_nitrate:0.0395983072479344,
+      NFertiliserType.urea:0.27525693558138,
+      NFertiliserType.ureaAN:0.27525693558138,
+      NFertiliserType.mono_ammonium_phosphate:0.0736716598374421,
+      NFertiliserType.di_ammonium_phosphate:0.0736716598374421,
+      NFertiliserType.an_phosphate:0.00849734667830994,
+      NFertiliserType.lime_ammonium_nitrate:0.0232081682004433,
+      NFertiliserType.ammonium_sulphate:0.01309867669779,
+      NFertiliserType.potassium_nitrate:0.00886679653388863,
+      NFertiliserType.ammonia_liquid:0.20887351380399
     },
     "AU":{
-      "fertnmin_ammonium_nitrate":0,
-      "fertnmin_urea":0.278332092330603,
-      "fertnmin_urea_an":0.278332092330603,
-      "fertnmin_mono_ammonium_phosphate":0.0838876478861587,
-      "fertnmin_di_ammonium_phosphate":0.0838876478861587,
-      "fertnmin_an_phosphate":0.00894349300901795,
-      "fertnmin_lime_ammonium_nitrate":0,
-      "fertnmin_ammonium_sulphate":0.0821047406304294,
-      "fertnmin_potassium_nitrate":0.0278232812112187,
-      "fertnmin_ammonia_liquid":0.15668900471581
+      NFertiliserType.ammonium_nitrate:0,
+      NFertiliserType.urea:0.278332092330603,
+      NFertiliserType.ureaAN:0.278332092330603,
+      NFertiliserType.mono_ammonium_phosphate:0.0838876478861587,
+      NFertiliserType.di_ammonium_phosphate:0.0838876478861587,
+      NFertiliserType.an_phosphate:0.00894349300901795,
+      NFertiliserType.lime_ammonium_nitrate:0,
+      NFertiliserType.ammonium_sulphate:0.0821047406304294,
+      NFertiliserType.potassium_nitrate:0.0278232812112187,
+      NFertiliserType.ammonia_liquid:0.15668900471581
     },
     "BE":{
-      "fertnmin_ammonium_nitrate":0.00402414486921529,
-      "fertnmin_urea":0.0248155600268276,
-      "fertnmin_urea_an":0.0248155600268276,
-      "fertnmin_mono_ammonium_phosphate":0.0140845070422535,
-      "fertnmin_di_ammonium_phosphate":0.0140845070422535,
-      "fertnmin_an_phosphate":0.0147551978537894,
-      "fertnmin_lime_ammonium_nitrate":0.622401073105299,
-      "fertnmin_ammonium_sulphate":0.028169014084507,
-      "fertnmin_potassium_nitrate":0.0321931589537223,
-      "fertnmin_ammonia_liquid":0.220657276995305
+      NFertiliserType.ammonium_nitrate:0.00402414486921529,
+      NFertiliserType.urea:0.0248155600268276,
+      NFertiliserType.ureaAN:0.0248155600268276,
+      NFertiliserType.mono_ammonium_phosphate:0.0140845070422535,
+      NFertiliserType.di_ammonium_phosphate:0.0140845070422535,
+      NFertiliserType.an_phosphate:0.0147551978537894,
+      NFertiliserType.lime_ammonium_nitrate:0.622401073105299,
+      NFertiliserType.ammonium_sulphate:0.028169014084507,
+      NFertiliserType.potassium_nitrate:0.0321931589537223,
+      NFertiliserType.ammonia_liquid:0.220657276995305
     },
     "BR":{
-      "fertnmin_ammonium_nitrate":0.152585312497487,
-      "fertnmin_urea":0.258873062724692,
-      "fertnmin_urea_an":0.258873062724692,
-      "fertnmin_mono_ammonium_phosphate":0.0647353563299742,
-      "fertnmin_di_ammonium_phosphate":0.0647353563299742,
-      "fertnmin_an_phosphate":0.0171067341177606,
-      "fertnmin_lime_ammonium_nitrate":0.0156670982893266,
-      "fertnmin_ammonium_sulphate":0.129728077724249,
-      "fertnmin_potassium_nitrate":0.0376959392618448,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0.152585312497487,
+      NFertiliserType.urea:0.258873062724692,
+      NFertiliserType.ureaAN:0.258873062724692,
+      NFertiliserType.mono_ammonium_phosphate:0.0647353563299742,
+      NFertiliserType.di_ammonium_phosphate:0.0647353563299742,
+      NFertiliserType.an_phosphate:0.0171067341177606,
+      NFertiliserType.lime_ammonium_nitrate:0.0156670982893266,
+      NFertiliserType.ammonium_sulphate:0.129728077724249,
+      NFertiliserType.potassium_nitrate:0.0376959392618448,
+      NFertiliserType.ammonia_liquid:0
     },
     "CA":{
-      "fertnmin_ammonium_nitrate":0.0139419029717356,
-      "fertnmin_urea":0.243170312626129,
-      "fertnmin_urea_an":0.243170312626129,
-      "fertnmin_mono_ammonium_phosphate":0.0347317519440633,
-      "fertnmin_di_ammonium_phosphate":0.0347317519440633,
-      "fertnmin_an_phosphate":0.0014972073910921,
-      "fertnmin_lime_ammonium_nitrate":0.00889099023259568,
-      "fertnmin_ammonium_sulphate":0.0653159126814811,
-      "fertnmin_potassium_nitrate":0.00449162217327629,
-      "fertnmin_ammonia_liquid":0.350058235409435
+      NFertiliserType.ammonium_nitrate:0.0139419029717356,
+      NFertiliserType.urea:0.243170312626129,
+      NFertiliserType.ureaAN:0.243170312626129,
+      NFertiliserType.mono_ammonium_phosphate:0.0347317519440633,
+      NFertiliserType.di_ammonium_phosphate:0.0347317519440633,
+      NFertiliserType.an_phosphate:0.0014972073910921,
+      NFertiliserType.lime_ammonium_nitrate:0.00889099023259568,
+      NFertiliserType.ammonium_sulphate:0.0653159126814811,
+      NFertiliserType.potassium_nitrate:0.00449162217327629,
+      NFertiliserType.ammonia_liquid:0.350058235409435
     },
     "CL":{
-      "fertnmin_ammonium_nitrate":0.00675167027383081,
-      "fertnmin_urea":0.404606191775666,
-      "fertnmin_urea_an":0.404606191775666,
-      "fertnmin_mono_ammonium_phosphate":0.0399297387158496,
-      "fertnmin_di_ammonium_phosphate":0.0399297387158496,
-      "fertnmin_an_phosphate":0.00572441265957781,
-      "fertnmin_lime_ammonium_nitrate":0.0411216712148302,
-      "fertnmin_ammonium_sulphate":0.00564599604780277,
-      "fertnmin_potassium_nitrate":0.0501082149242496,
-      "fertnmin_ammonia_liquid":0.00157617389667827
+      NFertiliserType.ammonium_nitrate:0.00675167027383081,
+      NFertiliserType.urea:0.404606191775666,
+      NFertiliserType.ureaAN:0.404606191775666,
+      NFertiliserType.mono_ammonium_phosphate:0.0399297387158496,
+      NFertiliserType.di_ammonium_phosphate:0.0399297387158496,
+      NFertiliserType.an_phosphate:0.00572441265957781,
+      NFertiliserType.lime_ammonium_nitrate:0.0411216712148302,
+      NFertiliserType.ammonium_sulphate:0.00564599604780277,
+      NFertiliserType.potassium_nitrate:0.0501082149242496,
+      NFertiliserType.ammonia_liquid:0.00157617389667827
     },
     "CN":{
-      "fertnmin_ammonium_nitrate":0.0460331280354,
-      "fertnmin_urea":0.378479415636297,
-      "fertnmin_urea_an":0.378479415636297,
-      "fertnmin_mono_ammonium_phosphate":0.0492320852115766,
-      "fertnmin_di_ammonium_phosphate":0.0492320852115766,
-      "fertnmin_an_phosphate":0.0137500095467358,
-      "fertnmin_lime_ammonium_nitrate":0.00250407799596894,
-      "fertnmin_ammonium_sulphate":0.0101996093106173,
-      "fertnmin_potassium_nitrate":0.0260570453801313,
-      "fertnmin_ammonia_liquid":0.0460331280354
+      NFertiliserType.ammonium_nitrate:0.0460331280354,
+      NFertiliserType.urea:0.378479415636297,
+      NFertiliserType.ureaAN:0.378479415636297,
+      NFertiliserType.mono_ammonium_phosphate:0.0492320852115766,
+      NFertiliserType.di_ammonium_phosphate:0.0492320852115766,
+      NFertiliserType.an_phosphate:0.0137500095467358,
+      NFertiliserType.lime_ammonium_nitrate:0.00250407799596894,
+      NFertiliserType.ammonium_sulphate:0.0101996093106173,
+      NFertiliserType.potassium_nitrate:0.0260570453801313,
+      NFertiliserType.ammonia_liquid:0.0460331280354
     },
     "CO":{
-      "fertnmin_ammonium_nitrate":0.0200975676789886,
-      "fertnmin_urea":0.294489487426137,
-      "fertnmin_urea_an":0.294489487426137,
-      "fertnmin_mono_ammonium_phosphate":0.0816041409005543,
-      "fertnmin_di_ammonium_phosphate":0.0816041409005543,
-      "fertnmin_an_phosphate":0.0348128807658834,
-      "fertnmin_lime_ammonium_nitrate":0.0099628967981311,
-      "fertnmin_ammonium_sulphate":0.0584031881269754,
-      "fertnmin_potassium_nitrate":0.10443864229765,
-      "fertnmin_ammonia_liquid":0.0200975676789886
+      NFertiliserType.ammonium_nitrate:0.0200975676789886,
+      NFertiliserType.urea:0.294489487426137,
+      NFertiliserType.ureaAN:0.294489487426137,
+      NFertiliserType.mono_ammonium_phosphate:0.0816041409005543,
+      NFertiliserType.di_ammonium_phosphate:0.0816041409005543,
+      NFertiliserType.an_phosphate:0.0348128807658834,
+      NFertiliserType.lime_ammonium_nitrate:0.0099628967981311,
+      NFertiliserType.ammonium_sulphate:0.0584031881269754,
+      NFertiliserType.potassium_nitrate:0.10443864229765,
+      NFertiliserType.ammonia_liquid:0.0200975676789886
     },
     "CR":{
-      "fertnmin_ammonium_nitrate":0.2632639355272,
-      "fertnmin_urea":0.270987239758227,
-      "fertnmin_urea_an":0.270987239758227,
-      "fertnmin_mono_ammonium_phosphate":0.0475710767853145,
-      "fertnmin_di_ammonium_phosphate":0.0475710767853145,
-      "fertnmin_an_phosphate":0.0109693306469666,
-      "fertnmin_lime_ammonium_nitrate":0.0349227669576897,
-      "fertnmin_ammonium_sulphate":0.0208193418401612,
-      "fertnmin_potassium_nitrate":0.0329079919408999,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0.2632639355272,
+      NFertiliserType.urea:0.270987239758227,
+      NFertiliserType.ureaAN:0.270987239758227,
+      NFertiliserType.mono_ammonium_phosphate:0.0475710767853145,
+      NFertiliserType.di_ammonium_phosphate:0.0475710767853145,
+      NFertiliserType.an_phosphate:0.0109693306469666,
+      NFertiliserType.lime_ammonium_nitrate:0.0349227669576897,
+      NFertiliserType.ammonium_sulphate:0.0208193418401612,
+      NFertiliserType.potassium_nitrate:0.0329079919408999,
+      NFertiliserType.ammonia_liquid:0
     },
     "CI":{
-      "fertnmin_ammonium_nitrate":0.139004581424406,
-      "fertnmin_urea":0.0834027488546439,
-      "fertnmin_urea_an":0.0834027488546439,
-      "fertnmin_mono_ammonium_phosphate":0.0369290573372206,
-      "fertnmin_di_ammonium_phosphate":0.0369290573372206,
-      "fertnmin_an_phosphate":0.0646258503401361,
-      "fertnmin_lime_ammonium_nitrate":0.111203665139525,
-      "fertnmin_ammonium_sulphate":0.111203665139525,
-      "fertnmin_potassium_nitrate":0.0830903790087464,
-      "fertnmin_ammonia_liquid":0.250208246563932
+      NFertiliserType.ammonium_nitrate:0.139004581424406,
+      NFertiliserType.urea:0.0834027488546439,
+      NFertiliserType.ureaAN:0.0834027488546439,
+      NFertiliserType.mono_ammonium_phosphate:0.0369290573372206,
+      NFertiliserType.di_ammonium_phosphate:0.0369290573372206,
+      NFertiliserType.an_phosphate:0.0646258503401361,
+      NFertiliserType.lime_ammonium_nitrate:0.111203665139525,
+      NFertiliserType.ammonium_sulphate:0.111203665139525,
+      NFertiliserType.potassium_nitrate:0.0830903790087464,
+      NFertiliserType.ammonia_liquid:0.250208246563932
     },
     "EC":{
-      "fertnmin_ammonium_nitrate":0.0607207207207207,
-      "fertnmin_urea":0.368378378378378,
-      "fertnmin_urea_an":0.368378378378378,
-      "fertnmin_mono_ammonium_phosphate":0.0462162162162162,
-      "fertnmin_di_ammonium_phosphate":0.0462162162162162,
-      "fertnmin_an_phosphate":0.0171171171171171,
-      "fertnmin_lime_ammonium_nitrate":0.0158558558558559,
-      "fertnmin_ammonium_sulphate":0.0257657657657658,
-      "fertnmin_potassium_nitrate":0.0513513513513514,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0.0607207207207207,
+      NFertiliserType.urea:0.368378378378378,
+      NFertiliserType.ureaAN:0.368378378378378,
+      NFertiliserType.mono_ammonium_phosphate:0.0462162162162162,
+      NFertiliserType.di_ammonium_phosphate:0.0462162162162162,
+      NFertiliserType.an_phosphate:0.0171171171171171,
+      NFertiliserType.lime_ammonium_nitrate:0.0158558558558559,
+      NFertiliserType.ammonium_sulphate:0.0257657657657658,
+      NFertiliserType.potassium_nitrate:0.0513513513513514,
+      NFertiliserType.ammonia_liquid:0
     },
     "FI":{
-      "fertnmin_ammonium_nitrate":0,
-      "fertnmin_urea":0.00256849315068493,
-      "fertnmin_urea_an":0.00256849315068493,
-      "fertnmin_mono_ammonium_phosphate":0.113299086757991,
-      "fertnmin_di_ammonium_phosphate":0.113299086757991,
-      "fertnmin_an_phosphate":0.113299086757991,
-      "fertnmin_lime_ammonium_nitrate":0.315068493150685,
-      "fertnmin_ammonium_sulphate":0,
-      "fertnmin_potassium_nitrate":0.339897260273973,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0,
+      NFertiliserType.urea:0.00256849315068493,
+      NFertiliserType.ureaAN:0.00256849315068493,
+      NFertiliserType.mono_ammonium_phosphate:0.113299086757991,
+      NFertiliserType.di_ammonium_phosphate:0.113299086757991,
+      NFertiliserType.an_phosphate:0.113299086757991,
+      NFertiliserType.lime_ammonium_nitrate:0.315068493150685,
+      NFertiliserType.ammonium_sulphate:0,
+      NFertiliserType.potassium_nitrate:0.339897260273973,
+      NFertiliserType.ammonia_liquid:0
     },
     "FR":{
-      "fertnmin_ammonium_nitrate":0.296814621105105,
-      "fertnmin_urea":0.079897147927198,
-      "fertnmin_urea_an":0.079897147927198,
-      "fertnmin_mono_ammonium_phosphate":0.0210393390693892,
-      "fertnmin_di_ammonium_phosphate":0.0210393390693892,
-      "fertnmin_an_phosphate":0.0293340493674383,
-      "fertnmin_lime_ammonium_nitrate":0.140794097388421,
-      "fertnmin_ammonium_sulphate":0.00805538368142709,
-      "fertnmin_potassium_nitrate":0.0304236664837667,
-      "fertnmin_ammonia_liquid":0.292705207980667
+      NFertiliserType.ammonium_nitrate:0.296814621105105,
+      NFertiliserType.urea:0.079897147927198,
+      NFertiliserType.ureaAN:0.079897147927198,
+      NFertiliserType.mono_ammonium_phosphate:0.0210393390693892,
+      NFertiliserType.di_ammonium_phosphate:0.0210393390693892,
+      NFertiliserType.an_phosphate:0.0293340493674383,
+      NFertiliserType.lime_ammonium_nitrate:0.140794097388421,
+      NFertiliserType.ammonium_sulphate:0.00805538368142709,
+      NFertiliserType.potassium_nitrate:0.0304236664837667,
+      NFertiliserType.ammonia_liquid:0.292705207980667
     },
     "DE":{
-      "fertnmin_ammonium_nitrate":0.0366604449528856,
-      "fertnmin_urea":0.136398530872746,
-      "fertnmin_urea_an":0.136398530872746,
-      "fertnmin_mono_ammonium_phosphate":0.0143124504520778,
-      "fertnmin_di_ammonium_phosphate":0.0143124504520778,
-      "fertnmin_an_phosphate":0.0345581077962088,
-      "fertnmin_lime_ammonium_nitrate":0.414546768221092,
-      "fertnmin_ammonium_sulphate":0.0443297106903092,
-      "fertnmin_potassium_nitrate":0.0217885420116206,
-      "fertnmin_ammonia_liquid":0.146694463678237
+      NFertiliserType.ammonium_nitrate:0.0366604449528856,
+      NFertiliserType.urea:0.136398530872746,
+      NFertiliserType.ureaAN:0.136398530872746,
+      NFertiliserType.mono_ammonium_phosphate:0.0143124504520778,
+      NFertiliserType.di_ammonium_phosphate:0.0143124504520778,
+      NFertiliserType.an_phosphate:0.0345581077962088,
+      NFertiliserType.lime_ammonium_nitrate:0.414546768221092,
+      NFertiliserType.ammonium_sulphate:0.0443297106903092,
+      NFertiliserType.potassium_nitrate:0.0217885420116206,
+      NFertiliserType.ammonia_liquid:0.146694463678237
     },
     "GH":{ #Using GLO
-      "fertnmin_ammonium_nitrate":0.08,
-      "fertnmin_urea":0.66,
-      "fertnmin_urea_an":0.05,
-      "fertnmin_mono_ammonium_phosphate":0.03,
-      "fertnmin_di_ammonium_phosphate":0.05,
-      "fertnmin_an_phosphate":0.0,
-      "fertnmin_lime_ammonium_nitrate":0.04,
-      "fertnmin_ammonium_sulphate":0.04,
-      "fertnmin_potassium_nitrate":0.0,
-      "fertnmin_ammonia_liquid":0.05
+      NFertiliserType.ammonium_nitrate:0.08,
+      NFertiliserType.urea:0.66,
+      NFertiliserType.ureaAN:0.05,
+      NFertiliserType.mono_ammonium_phosphate:0.03,
+      NFertiliserType.di_ammonium_phosphate:0.05,
+      NFertiliserType.an_phosphate:0.0,
+      NFertiliserType.lime_ammonium_nitrate:0.04,
+      NFertiliserType.ammonium_sulphate:0.04,
+      NFertiliserType.potassium_nitrate:0.0,
+      NFertiliserType.ammonia_liquid:0.05
     },
     "HU":{
-      "fertnmin_ammonium_nitrate":0.351025117600071,
-      "fertnmin_urea":0.0523653146356617,
-      "fertnmin_urea_an":0.0523653146356617,
-      "fertnmin_mono_ammonium_phosphate":0.0181947279666282,
-      "fertnmin_di_ammonium_phosphate":0.0181947279666282,
-      "fertnmin_an_phosphate":0.0217449187893849,
-      "fertnmin_lime_ammonium_nitrate":0.371882488683767,
-      "fertnmin_ammonium_sulphate":0.0103843081565634,
-      "fertnmin_potassium_nitrate":0.0386083251974794,
-      "fertnmin_ammonia_liquid":0.0652347563681548
+      NFertiliserType.ammonium_nitrate:0.351025117600071,
+      NFertiliserType.urea:0.0523653146356617,
+      NFertiliserType.ureaAN:0.0523653146356617,
+      NFertiliserType.mono_ammonium_phosphate:0.0181947279666282,
+      NFertiliserType.di_ammonium_phosphate:0.0181947279666282,
+      NFertiliserType.an_phosphate:0.0217449187893849,
+      NFertiliserType.lime_ammonium_nitrate:0.371882488683767,
+      NFertiliserType.ammonium_sulphate:0.0103843081565634,
+      NFertiliserType.potassium_nitrate:0.0386083251974794,
+      NFertiliserType.ammonia_liquid:0.0652347563681548
     },
     "IN":{
-      "fertnmin_ammonium_nitrate":0.0000705535777077859,
-      "fertnmin_urea":0.397001208843117,
-      "fertnmin_urea_an":0.397001208843117,
-      "fertnmin_mono_ammonium_phosphate":0.0607236156029803,
-      "fertnmin_di_ammonium_phosphate":0.0607236156029803,
-      "fertnmin_an_phosphate":0.0615762952052241,
-      "fertnmin_lime_ammonium_nitrate":0.00157406163741649,
-      "fertnmin_ammonium_sulphate":0.00660562587437388,
-      "fertnmin_potassium_nitrate":0.0146532612353743,
-      "fertnmin_ammonia_liquid":0.0000705535777077859
+      NFertiliserType.ammonium_nitrate:0.0000705535777077859,
+      NFertiliserType.urea:0.397001208843117,
+      NFertiliserType.ureaAN:0.397001208843117,
+      NFertiliserType.mono_ammonium_phosphate:0.0607236156029803,
+      NFertiliserType.di_ammonium_phosphate:0.0607236156029803,
+      NFertiliserType.an_phosphate:0.0615762952052241,
+      NFertiliserType.lime_ammonium_nitrate:0.00157406163741649,
+      NFertiliserType.ammonium_sulphate:0.00660562587437388,
+      NFertiliserType.potassium_nitrate:0.0146532612353743,
+      NFertiliserType.ammonia_liquid:0.0000705535777077859
     },
     "ID":{
-      "fertnmin_ammonium_nitrate":0,
-      "fertnmin_urea":0.404818047013637,
-      "fertnmin_urea_an":0.404818047013637,
-      "fertnmin_mono_ammonium_phosphate":0.0211474936053782,
-      "fertnmin_di_ammonium_phosphate":0.0211474936053782,
-      "fertnmin_an_phosphate":0.018258772178601,
-      "fertnmin_lime_ammonium_nitrate":0,
-      "fertnmin_ammonium_sulphate":0.0750338300475646,
-      "fertnmin_potassium_nitrate":0.0547763165358031,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0,
+      NFertiliserType.urea:0.404818047013637,
+      NFertiliserType.ureaAN:0.404818047013637,
+      NFertiliserType.mono_ammonium_phosphate:0.0211474936053782,
+      NFertiliserType.di_ammonium_phosphate:0.0211474936053782,
+      NFertiliserType.an_phosphate:0.018258772178601,
+      NFertiliserType.lime_ammonium_nitrate:0,
+      NFertiliserType.ammonium_sulphate:0.0750338300475646,
+      NFertiliserType.potassium_nitrate:0.0547763165358031,
+      NFertiliserType.ammonia_liquid:0
     },
     "IL":{
-      "fertnmin_ammonium_nitrate":0,
-      "fertnmin_urea":0.226345609065156,
-      "fertnmin_urea_an":0.226345609065156,
-      "fertnmin_mono_ammonium_phosphate":0.0250236071765817,
-      "fertnmin_di_ammonium_phosphate":0.0250236071765817,
-      "fertnmin_an_phosphate":0.0547686496694995,
-      "fertnmin_lime_ammonium_nitrate":0,
-      "fertnmin_ammonium_sulphate":0.0288951841359773,
-      "fertnmin_potassium_nitrate":0.0623229461756374,
-      "fertnmin_ammonia_liquid":0.351274787535411
+      NFertiliserType.ammonium_nitrate:0,
+      NFertiliserType.urea:0.226345609065156,
+      NFertiliserType.ureaAN:0.226345609065156,
+      NFertiliserType.mono_ammonium_phosphate:0.0250236071765817,
+      NFertiliserType.di_ammonium_phosphate:0.0250236071765817,
+      NFertiliserType.an_phosphate:0.0547686496694995,
+      NFertiliserType.lime_ammonium_nitrate:0,
+      NFertiliserType.ammonium_sulphate:0.0288951841359773,
+      NFertiliserType.potassium_nitrate:0.0623229461756374,
+      NFertiliserType.ammonia_liquid:0.351274787535411
     },
     "IT":{
-      "fertnmin_ammonium_nitrate":0.0436934997847611,
-      "fertnmin_urea":0.295953508394318,
-      "fertnmin_urea_an":0.295953508394318,
-      "fertnmin_mono_ammonium_phosphate":0.0434065145644999,
-      "fertnmin_di_ammonium_phosphate":0.0434065145644999,
-      "fertnmin_an_phosphate":0.0315683742287272,
-      "fertnmin_lime_ammonium_nitrate":0.138613861386139,
-      "fertnmin_ammonium_sulphate":0.0563925957813173,
-      "fertnmin_potassium_nitrate":0.0434782608695652,
-      "fertnmin_ammonia_liquid":0.00753336203185536
+      NFertiliserType.ammonium_nitrate:0.0436934997847611,
+      NFertiliserType.urea:0.295953508394318,
+      NFertiliserType.ureaAN:0.295953508394318,
+      NFertiliserType.mono_ammonium_phosphate:0.0434065145644999,
+      NFertiliserType.di_ammonium_phosphate:0.0434065145644999,
+      NFertiliserType.an_phosphate:0.0315683742287272,
+      NFertiliserType.lime_ammonium_nitrate:0.138613861386139,
+      NFertiliserType.ammonium_sulphate:0.0563925957813173,
+      NFertiliserType.potassium_nitrate:0.0434782608695652,
+      NFertiliserType.ammonia_liquid:0.00753336203185536
     },
     "KE":{
-      "fertnmin_ammonium_nitrate":0.0301219815782923,
-      "fertnmin_urea":0.085511575802838,
-      "fertnmin_urea_an":0.085511575802838,
-      "fertnmin_mono_ammonium_phosphate":0.170732719276409,
-      "fertnmin_di_ammonium_phosphate":0.170732719276409,
-      "fertnmin_an_phosphate":0.0506182059580118,
-      "fertnmin_lime_ammonium_nitrate":0.24520786656709,
-      "fertnmin_ammonium_sulphate":0.00970873786407767,
-      "fertnmin_potassium_nitrate":0.151854617874035,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0.0301219815782923,
+      NFertiliserType.urea:0.085511575802838,
+      NFertiliserType.ureaAN:0.085511575802838,
+      NFertiliserType.mono_ammonium_phosphate:0.170732719276409,
+      NFertiliserType.di_ammonium_phosphate:0.170732719276409,
+      NFertiliserType.an_phosphate:0.0506182059580118,
+      NFertiliserType.lime_ammonium_nitrate:0.24520786656709,
+      NFertiliserType.ammonium_sulphate:0.00970873786407767,
+      NFertiliserType.potassium_nitrate:0.151854617874035,
+      NFertiliserType.ammonia_liquid:0
     },
     "MX":{
-      "fertnmin_ammonium_nitrate":0.00473321858864028,
-      "fertnmin_urea":0.283993115318417,
-      "fertnmin_urea_an":0.283993115318417,
-      "fertnmin_mono_ammonium_phosphate":0.035732214572576,
-      "fertnmin_di_ammonium_phosphate":0.035732214572576,
-      "fertnmin_an_phosphate":0.00932300631095812,
-      "fertnmin_lime_ammonium_nitrate":0,
-      "fertnmin_ammonium_sulphate":0.236833046471601,
-      "fertnmin_potassium_nitrate":0.0451807228915663,
-      "fertnmin_ammonia_liquid":0.0644793459552496
+      NFertiliserType.ammonium_nitrate:0.00473321858864028,
+      NFertiliserType.urea:0.283993115318417,
+      NFertiliserType.ureaAN:0.283993115318417,
+      NFertiliserType.mono_ammonium_phosphate:0.035732214572576,
+      NFertiliserType.di_ammonium_phosphate:0.035732214572576,
+      NFertiliserType.an_phosphate:0.00932300631095812,
+      NFertiliserType.lime_ammonium_nitrate:0,
+      NFertiliserType.ammonium_sulphate:0.236833046471601,
+      NFertiliserType.potassium_nitrate:0.0451807228915663,
+      NFertiliserType.ammonia_liquid:0.0644793459552496
     },
     "NL":{
-      "fertnmin_ammonium_nitrate":0.0137614678899083,
-      "fertnmin_urea":0.025802752293578,
-      "fertnmin_urea_an":0.025802752293578,
-      "fertnmin_mono_ammonium_phosphate":0.0160550458715596,
-      "fertnmin_di_ammonium_phosphate":0.0160550458715596,
-      "fertnmin_an_phosphate":0.0986238532110092,
-      "fertnmin_lime_ammonium_nitrate":0.708715596330275,
-      "fertnmin_ammonium_sulphate":0.0160550458715596,
-      "fertnmin_potassium_nitrate":0.0424311926605505,
-      "fertnmin_ammonia_liquid":0.036697247706422
+      NFertiliserType.ammonium_nitrate:0.0137614678899083,
+      NFertiliserType.urea:0.025802752293578,
+      NFertiliserType.ureaAN:0.025802752293578,
+      NFertiliserType.mono_ammonium_phosphate:0.0160550458715596,
+      NFertiliserType.di_ammonium_phosphate:0.0160550458715596,
+      NFertiliserType.an_phosphate:0.0986238532110092,
+      NFertiliserType.lime_ammonium_nitrate:0.708715596330275,
+      NFertiliserType.ammonium_sulphate:0.0160550458715596,
+      NFertiliserType.potassium_nitrate:0.0424311926605505,
+      NFertiliserType.ammonia_liquid:0.036697247706422
     },
     "NZ":{
-      "fertnmin_ammonium_nitrate":0.0136652025378233,
-      "fertnmin_urea":0.425852332148086,
-      "fertnmin_urea_an":0.425852332148086,
-      "fertnmin_mono_ammonium_phosphate":0.0394152780682795,
-      "fertnmin_di_ammonium_phosphate":0.0394152780682795,
-      "fertnmin_an_phosphate":0.00145250877315299,
-      "fertnmin_lime_ammonium_nitrate":0.0032071393711218,
-      "fertnmin_ammonium_sulphate":0.0467824025657115,
-      "fertnmin_potassium_nitrate":0.00435752631945897,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0.0136652025378233,
+      NFertiliserType.urea:0.425852332148086,
+      NFertiliserType.ureaAN:0.425852332148086,
+      NFertiliserType.mono_ammonium_phosphate:0.0394152780682795,
+      NFertiliserType.di_ammonium_phosphate:0.0394152780682795,
+      NFertiliserType.an_phosphate:0.00145250877315299,
+      NFertiliserType.lime_ammonium_nitrate:0.0032071393711218,
+      NFertiliserType.ammonium_sulphate:0.0467824025657115,
+      NFertiliserType.potassium_nitrate:0.00435752631945897,
+      NFertiliserType.ammonia_liquid:0
     },
     "PE":{
-      "fertnmin_ammonium_nitrate":0.171799027552674,
-      "fertnmin_urea":0.303619665045921,
-      "fertnmin_urea_an":0.303619665045921,
-      "fertnmin_mono_ammonium_phosphate":0.0560237709346299,
-      "fertnmin_di_ammonium_phosphate":0.0560237709346299,
-      "fertnmin_an_phosphate":0,
-      "fertnmin_lime_ammonium_nitrate":0,
-      "fertnmin_ammonium_sulphate":0.108914100486224,
-      "fertnmin_potassium_nitrate":0,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0.171799027552674,
+      NFertiliserType.urea:0.303619665045921,
+      NFertiliserType.ureaAN:0.303619665045921,
+      NFertiliserType.mono_ammonium_phosphate:0.0560237709346299,
+      NFertiliserType.di_ammonium_phosphate:0.0560237709346299,
+      NFertiliserType.an_phosphate:0,
+      NFertiliserType.lime_ammonium_nitrate:0,
+      NFertiliserType.ammonium_sulphate:0.108914100486224,
+      NFertiliserType.potassium_nitrate:0,
+      NFertiliserType.ammonia_liquid:0
     },
     "PH":{
-      "fertnmin_ammonium_nitrate":0,
-      "fertnmin_urea":0.319812362030905,
-      "fertnmin_urea_an":0.319812362030905,
-      "fertnmin_mono_ammonium_phosphate":0.02906548933039,
-      "fertnmin_di_ammonium_phosphate":0.02906548933039,
-      "fertnmin_an_phosphate":0.0872884473877851,
-      "fertnmin_lime_ammonium_nitrate":0,
-      "fertnmin_ammonium_sulphate":0.176600441501104,
-      "fertnmin_potassium_nitrate":0.038355408388521,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0,
+      NFertiliserType.urea:0.319812362030905,
+      NFertiliserType.ureaAN:0.319812362030905,
+      NFertiliserType.mono_ammonium_phosphate:0.02906548933039,
+      NFertiliserType.di_ammonium_phosphate:0.02906548933039,
+      NFertiliserType.an_phosphate:0.0872884473877851,
+      NFertiliserType.lime_ammonium_nitrate:0,
+      NFertiliserType.ammonium_sulphate:0.176600441501104,
+      NFertiliserType.potassium_nitrate:0.038355408388521,
+      NFertiliserType.ammonia_liquid:0
     },
     "PL":{
-      "fertnmin_ammonium_nitrate":0.330466274332277,
-      "fertnmin_urea":0.145427795382526,
-      "fertnmin_urea_an":0.145427795382526,
-      "fertnmin_mono_ammonium_phosphate":0.0270861626678739,
-      "fertnmin_di_ammonium_phosphate":0.0270861626678739,
-      "fertnmin_an_phosphate":0.0173532518484986,
-      "fertnmin_lime_ammonium_nitrate":0.175622453598914,
-      "fertnmin_ammonium_sulphate":0.032390221819828,
-      "fertnmin_potassium_nitrate":0.0520597555454957,
-      "fertnmin_ammonia_liquid":0.0470801267541874
+      NFertiliserType.ammonium_nitrate:0.330466274332277,
+      NFertiliserType.urea:0.145427795382526,
+      NFertiliserType.ureaAN:0.145427795382526,
+      NFertiliserType.mono_ammonium_phosphate:0.0270861626678739,
+      NFertiliserType.di_ammonium_phosphate:0.0270861626678739,
+      NFertiliserType.an_phosphate:0.0173532518484986,
+      NFertiliserType.lime_ammonium_nitrate:0.175622453598914,
+      NFertiliserType.ammonium_sulphate:0.032390221819828,
+      NFertiliserType.potassium_nitrate:0.0520597555454957,
+      NFertiliserType.ammonia_liquid:0.0470801267541874
     },
     "RU":{
-      "fertnmin_ammonium_nitrate":0.66670472152002,
-      "fertnmin_urea":0.0251162032129169,
-      "fertnmin_urea_an":0.0251162032129169,
-      "fertnmin_mono_ammonium_phosphate":0.053594824539944,
-      "fertnmin_di_ammonium_phosphate":0.053594824539944,
-      "fertnmin_an_phosphate":0.0284704667155943,
-      "fertnmin_lime_ammonium_nitrate":0.00587132023159097,
-      "fertnmin_ammonium_sulphate":0.0436924080567561,
-      "fertnmin_potassium_nitrate":0.085411400146783,
-      "fertnmin_ammonia_liquid":0.0124276278235342
+      NFertiliserType.ammonium_nitrate:0.66670472152002,
+      NFertiliserType.urea:0.0251162032129169,
+      NFertiliserType.ureaAN:0.0251162032129169,
+      NFertiliserType.mono_ammonium_phosphate:0.053594824539944,
+      NFertiliserType.di_ammonium_phosphate:0.053594824539944,
+      NFertiliserType.an_phosphate:0.0284704667155943,
+      NFertiliserType.lime_ammonium_nitrate:0.00587132023159097,
+      NFertiliserType.ammonium_sulphate:0.0436924080567561,
+      NFertiliserType.potassium_nitrate:0.085411400146783,
+      NFertiliserType.ammonia_liquid:0.0124276278235342
     },
     "ZA":{
-      "fertnmin_ammonium_nitrate":0,
-      "fertnmin_urea":0.205686630369026,
-      "fertnmin_urea_an":0.205686630369026,
-      "fertnmin_mono_ammonium_phosphate":0.0827283726557774,
-      "fertnmin_di_ammonium_phosphate":0.0827283726557774,
-      "fertnmin_an_phosphate":0.0474894131881428,
-      "fertnmin_lime_ammonium_nitrate":0.188445251058681,
-      "fertnmin_ammonium_sulphate":0.044767090139141,
-      "fertnmin_potassium_nitrate":0.142468239564428,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0,
+      NFertiliserType.urea:0.205686630369026,
+      NFertiliserType.ureaAN:0.205686630369026,
+      NFertiliserType.mono_ammonium_phosphate:0.0827283726557774,
+      NFertiliserType.di_ammonium_phosphate:0.0827283726557774,
+      NFertiliserType.an_phosphate:0.0474894131881428,
+      NFertiliserType.lime_ammonium_nitrate:0.188445251058681,
+      NFertiliserType.ammonium_sulphate:0.044767090139141,
+      NFertiliserType.potassium_nitrate:0.142468239564428,
+      NFertiliserType.ammonia_liquid:0
     },
     "ES":{
-      "fertnmin_ammonium_nitrate":0.0587409445723592,
-      "fertnmin_urea":0.171224799236255,
-      "fertnmin_urea_an":0.171224799236255,
-      "fertnmin_mono_ammonium_phosphate":0.0528490668463713,
-      "fertnmin_di_ammonium_phosphate":0.0528490668463713,
-      "fertnmin_an_phosphate":0.0314670260758878,
-      "fertnmin_lime_ammonium_nitrate":0.196804627393722,
-      "fertnmin_ammonium_sulphate":0.0617453810299321,
-      "fertnmin_potassium_nitrate":0.102880889537822,
-      "fertnmin_ammonia_liquid":0.100213399225024
+      NFertiliserType.ammonium_nitrate:0.0587409445723592,
+      NFertiliserType.urea:0.171224799236255,
+      NFertiliserType.ureaAN:0.171224799236255,
+      NFertiliserType.mono_ammonium_phosphate:0.0528490668463713,
+      NFertiliserType.di_ammonium_phosphate:0.0528490668463713,
+      NFertiliserType.an_phosphate:0.0314670260758878,
+      NFertiliserType.lime_ammonium_nitrate:0.196804627393722,
+      NFertiliserType.ammonium_sulphate:0.0617453810299321,
+      NFertiliserType.potassium_nitrate:0.102880889537822,
+      NFertiliserType.ammonia_liquid:0.100213399225024
     },
     "LK":{
-      "fertnmin_ammonium_nitrate":0.00735188121666426,
-      "fertnmin_urea":0.463889289318149,
-      "fertnmin_urea_an":0.463889289318149,
-      "fertnmin_mono_ammonium_phosphate":0.000768824179520446,
-      "fertnmin_di_ammonium_phosphate":0.000768824179520446,
-      "fertnmin_an_phosphate":0.000480515112200279,
-      "fertnmin_lime_ammonium_nitrate":0,
-      "fertnmin_ammonium_sulphate":0.0614098313391956,
-      "fertnmin_potassium_nitrate":0.00144154533660084,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0.00735188121666426,
+      NFertiliserType.urea:0.463889289318149,
+      NFertiliserType.ureaAN:0.463889289318149,
+      NFertiliserType.mono_ammonium_phosphate:0.000768824179520446,
+      NFertiliserType.di_ammonium_phosphate:0.000768824179520446,
+      NFertiliserType.an_phosphate:0.000480515112200279,
+      NFertiliserType.lime_ammonium_nitrate:0,
+      NFertiliserType.ammonium_sulphate:0.0614098313391956,
+      NFertiliserType.potassium_nitrate:0.00144154533660084,
+      NFertiliserType.ammonia_liquid:0
     },
     "CH":{
-      "fertnmin_ammonium_nitrate":0.235496840896037,
-      "fertnmin_urea":0.0660539919586445,
-      "fertnmin_urea_an":0.0660539919586445,
-      "fertnmin_mono_ammonium_phosphate":0.0411640819452422,
-      "fertnmin_di_ammonium_phosphate":0.0411640819452422,
-      "fertnmin_an_phosphate":0.0268045184759717,
-      "fertnmin_lime_ammonium_nitrate":0.371625502584721,
-      "fertnmin_ammonium_sulphate":0.0367604824813326,
-      "fertnmin_potassium_nitrate":0.0919012062033314,
-      "fertnmin_ammonia_liquid":0.0229753015508328
+      NFertiliserType.ammonium_nitrate:0.235496840896037,
+      NFertiliserType.urea:0.0660539919586445,
+      NFertiliserType.ureaAN:0.0660539919586445,
+      NFertiliserType.mono_ammonium_phosphate:0.0411640819452422,
+      NFertiliserType.di_ammonium_phosphate:0.0411640819452422,
+      NFertiliserType.an_phosphate:0.0268045184759717,
+      NFertiliserType.lime_ammonium_nitrate:0.371625502584721,
+      NFertiliserType.ammonium_sulphate:0.0367604824813326,
+      NFertiliserType.potassium_nitrate:0.0919012062033314,
+      NFertiliserType.ammonia_liquid:0.0229753015508328
     },
     "TH":{
-      "fertnmin_ammonium_nitrate":0,
-      "fertnmin_urea":0.357545267838637,
-      "fertnmin_urea_an":0.357545267838637,
-      "fertnmin_mono_ammonium_phosphate":0.0377718739597661,
-      "fertnmin_di_ammonium_phosphate":0.0377718739597661,
-      "fertnmin_an_phosphate":0.0517337754916185,
-      "fertnmin_lime_ammonium_nitrate":0,
-      "fertnmin_ammonium_sulphate":0.1092645978181,
-      "fertnmin_potassium_nitrate":0.048367343093475,
-      "fertnmin_ammonia_liquid":0
+      NFertiliserType.ammonium_nitrate:0,
+      NFertiliserType.urea:0.357545267838637,
+      NFertiliserType.ureaAN:0.357545267838637,
+      NFertiliserType.mono_ammonium_phosphate:0.0377718739597661,
+      NFertiliserType.di_ammonium_phosphate:0.0377718739597661,
+      NFertiliserType.an_phosphate:0.0517337754916185,
+      NFertiliserType.lime_ammonium_nitrate:0,
+      NFertiliserType.ammonium_sulphate:0.1092645978181,
+      NFertiliserType.potassium_nitrate:0.048367343093475,
+      NFertiliserType.ammonia_liquid:0
     },
     "TR":{
-      "fertnmin_ammonium_nitrate":0.225840798942576,
-      "fertnmin_urea":0.140384050521369,
-      "fertnmin_urea_an":0.140384050521369,
-      "fertnmin_mono_ammonium_phosphate":0.0413545797229157,
-      "fertnmin_di_ammonium_phosphate":0.0413545797229157,
-      "fertnmin_an_phosphate":0.156395334606158,
-      "fertnmin_lime_ammonium_nitrate":0.157805845204876,
-      "fertnmin_ammonium_sulphate":0.069338375679248,
-      "fertnmin_potassium_nitrate":0.0269588045234249,
-      "fertnmin_ammonia_liquid":0.000183580555147599
+      NFertiliserType.ammonium_nitrate:0.225840798942576,
+      NFertiliserType.urea:0.140384050521369,
+      NFertiliserType.ureaAN:0.140384050521369,
+      NFertiliserType.mono_ammonium_phosphate:0.0413545797229157,
+      NFertiliserType.di_ammonium_phosphate:0.0413545797229157,
+      NFertiliserType.an_phosphate:0.156395334606158,
+      NFertiliserType.lime_ammonium_nitrate:0.157805845204876,
+      NFertiliserType.ammonium_sulphate:0.069338375679248,
+      NFertiliserType.potassium_nitrate:0.0269588045234249,
+      NFertiliserType.ammonia_liquid:0.000183580555147599
     },
     "UA":{
-      "fertnmin_ammonium_nitrate":0.358220392408824,
-      "fertnmin_urea":0.0858916636675225,
-      "fertnmin_urea_an":0.0858916636675225,
-      "fertnmin_mono_ammonium_phosphate":0.0359534983708005,
-      "fertnmin_di_ammonium_phosphate":0.0359534983708005,
-      "fertnmin_an_phosphate":0.0460137147439536,
-      "fertnmin_lime_ammonium_nitrate":0.0543686459407691,
-      "fertnmin_ammonium_sulphate":0.0360621921851563,
-      "fertnmin_potassium_nitrate":0.0728248556183833,
-      "fertnmin_ammonia_liquid":0.188819875026268
+      NFertiliserType.ammonium_nitrate:0.358220392408824,
+      NFertiliserType.urea:0.0858916636675225,
+      NFertiliserType.ureaAN:0.0858916636675225,
+      NFertiliserType.mono_ammonium_phosphate:0.0359534983708005,
+      NFertiliserType.di_ammonium_phosphate:0.0359534983708005,
+      NFertiliserType.an_phosphate:0.0460137147439536,
+      NFertiliserType.lime_ammonium_nitrate:0.0543686459407691,
+      NFertiliserType.ammonium_sulphate:0.0360621921851563,
+      NFertiliserType.potassium_nitrate:0.0728248556183833,
+      NFertiliserType.ammonia_liquid:0.188819875026268
     },
     "US":{
-      "fertnmin_ammonium_nitrate":0.0296294084780968,
-      "fertnmin_urea":0.115445720646755,
-      "fertnmin_urea_an":0.115445720646755,
-      "fertnmin_mono_ammonium_phosphate":0.0407772228453957,
-      "fertnmin_di_ammonium_phosphate":0.0407772228453957,
-      "fertnmin_an_phosphate":0.0321020800723355,
-      "fertnmin_lime_ammonium_nitrate":0,
-      "fertnmin_ammonium_sulphate":0.0228948704059916,
-      "fertnmin_potassium_nitrate":0.0409990062397905,
-      "fertnmin_ammonia_liquid":0.561928747819485
+      NFertiliserType.ammonium_nitrate:0.0296294084780968,
+      NFertiliserType.urea:0.115445720646755,
+      NFertiliserType.ureaAN:0.115445720646755,
+      NFertiliserType.mono_ammonium_phosphate:0.0407772228453957,
+      NFertiliserType.di_ammonium_phosphate:0.0407772228453957,
+      NFertiliserType.an_phosphate:0.0321020800723355,
+      NFertiliserType.lime_ammonium_nitrate:0,
+      NFertiliserType.ammonium_sulphate:0.0228948704059916,
+      NFertiliserType.potassium_nitrate:0.0409990062397905,
+      NFertiliserType.ammonia_liquid:0.561928747819485
     },
     "VN":{ #Using GLO
-      "fertnmin_ammonium_nitrate":0.08,
-      "fertnmin_urea":0.66,
-      "fertnmin_urea_an":0.05,
-      "fertnmin_mono_ammonium_phosphate":0.03,
-      "fertnmin_di_ammonium_phosphate":0.05,
-      "fertnmin_an_phosphate":0.0,
-      "fertnmin_lime_ammonium_nitrate":0.04,
-      "fertnmin_ammonium_sulphate":0.04,
-      "fertnmin_potassium_nitrate":0.0,
-      "fertnmin_ammonia_liquid":0.05
+      NFertiliserType.ammonium_nitrate:0.08,
+      NFertiliserType.urea:0.66,
+      NFertiliserType.ureaAN:0.05,
+      NFertiliserType.mono_ammonium_phosphate:0.03,
+      NFertiliserType.di_ammonium_phosphate:0.05,
+      NFertiliserType.an_phosphate:0.0,
+      NFertiliserType.lime_ammonium_nitrate:0.04,
+      NFertiliserType.ammonium_sulphate:0.04,
+      NFertiliserType.potassium_nitrate:0.0,
+      NFertiliserType.ammonia_liquid:0.05
       }
 }
 
-#Generated in GD_crop using "AR":{"fertpmin_triple_superphosphate":0.0790316503391107,   "fertpmin_superphosphate":0.14764925060705,   "fertpmin_mono_ammonium_phosphate":0.376231544279773,   "fertpmin_di_ammonium_phosphate":0.376231544279773,  "fertpmin_an_phosphate":0.0144296519579112,   "fertpmin_hypophosphate_raw_phosphate":0.00321317926819057,  "fertpmin_ground_basic_slag":0.00321317926819057},                           
+#Generated in GD_crop using "AR":{PFertiliserType.triple_superphosphate:0.0790316503391107,   PFertiliserType.superphosphate:0.14764925060705,   PFertiliserType.mono_ammonium_phosphate:0.376231544279773,   PFertiliserType.di_ammonium_phosphate:0.376231544279773,  PFertiliserType.an_phosphate:0.0144296519579112,   PFertiliserType.hypophosphate_raw_phosphate:0.00321317926819057,  PFertiliserType.ground_basic_slag:0.00321317926819057},                           
 FERT_P_RATIO_PER_COUNTRY = {
    "AR":{
-      "fertpmin_triple_superphosphate":0.0790316503391107,
-      "fertpmin_superphosphate":0.14764925060705,
-      "fertpmin_mono_ammonium_phosphate":0.376231544279773,
-      "fertpmin_di_ammonium_phosphate":0.376231544279773,
-      "fertpmin_an_phosphate":0.0144296519579112,
-      "fertpmin_hypophosphate_raw_phosphate":0.00321317926819057,
-      "fertpmin_ground_basic_slag":0.00321317926819057
+      PFertiliserType.triple_superphosphate:0.0790316503391107,
+      PFertiliserType.superphosphate:0.14764925060705,
+      PFertiliserType.mono_ammonium_phosphate:0.376231544279773,
+      PFertiliserType.di_ammonium_phosphate:0.376231544279773,
+      PFertiliserType.an_phosphate:0.0144296519579112,
+      PFertiliserType.hypophosphate_raw_phosphate:0.00321317926819057,
+      PFertiliserType.ground_basic_slag:0.00321317926819057
    },
    "AU":{
-      "fertpmin_triple_superphosphate":0.0126986152766256,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.444557888243677,
-      "fertpmin_di_ammonium_phosphate":0.444557888243677,
-      "fertpmin_an_phosphate":0.0981856082360198,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.0126986152766256,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.444557888243677,
+      PFertiliserType.di_ammonium_phosphate:0.444557888243677,
+      PFertiliserType.an_phosphate:0.0981856082360198,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "BE":{
-      "fertpmin_triple_superphosphate":0.139784946236559,
-      "fertpmin_superphosphate":0.0860215053763441,
-      "fertpmin_mono_ammonium_phosphate":0.245519713261649,
-      "fertpmin_di_ammonium_phosphate":0.245519713261649,
-      "fertpmin_an_phosphate":0.175627240143369,
-      "fertpmin_hypophosphate_raw_phosphate":0.0537634408602151,
-      "fertpmin_ground_basic_slag":0.0537634408602151
+      PFertiliserType.triple_superphosphate:0.139784946236559,
+      PFertiliserType.superphosphate:0.0860215053763441,
+      PFertiliserType.mono_ammonium_phosphate:0.245519713261649,
+      PFertiliserType.di_ammonium_phosphate:0.245519713261649,
+      PFertiliserType.an_phosphate:0.175627240143369,
+      PFertiliserType.hypophosphate_raw_phosphate:0.0537634408602151,
+      PFertiliserType.ground_basic_slag:0.0537634408602151
    },
    "BR":{
-      "fertpmin_triple_superphosphate":0.226250372380921,
-      "fertpmin_superphosphate":0.27231306477773,
-      "fertpmin_mono_ammonium_phosphate":0.227412752529432,
-      "fertpmin_di_ammonium_phosphate":0.227412752529432,
-      "fertpmin_an_phosphate":0.0239736078470314,
-      "fertpmin_hypophosphate_raw_phosphate":0.0219936446989507,
-      "fertpmin_ground_basic_slag":0.00064380523650326
+      PFertiliserType.triple_superphosphate:0.226250372380921,
+      PFertiliserType.superphosphate:0.27231306477773,
+      PFertiliserType.mono_ammonium_phosphate:0.227412752529432,
+      PFertiliserType.di_ammonium_phosphate:0.227412752529432,
+      PFertiliserType.an_phosphate:0.0239736078470314,
+      PFertiliserType.hypophosphate_raw_phosphate:0.0219936446989507,
+      PFertiliserType.ground_basic_slag:0.00064380523650326
    },
    "CA":{
-      "fertpmin_triple_superphosphate":0,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.479439043468544,
-      "fertpmin_di_ammonium_phosphate":0.479439043468544,
-      "fertpmin_an_phosphate":0.0411219130629121,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.479439043468544,
+      PFertiliserType.di_ammonium_phosphate:0.479439043468544,
+      PFertiliserType.an_phosphate:0.0411219130629121,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "CL":{
-      "fertpmin_triple_superphosphate":0.455731780766914,
-      "fertpmin_superphosphate":0.00301144348524393,
-      "fertpmin_mono_ammonium_phosphate":0.269959178210533,
-      "fertpmin_di_ammonium_phosphate":0.269959178210533,
-      "fertpmin_an_phosphate":0.00133841932677508,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.455731780766914,
+      PFertiliserType.superphosphate:0.00301144348524393,
+      PFertiliserType.mono_ammonium_phosphate:0.269959178210533,
+      PFertiliserType.di_ammonium_phosphate:0.269959178210533,
+      PFertiliserType.an_phosphate:0.00133841932677508,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "CN":{
-      "fertpmin_triple_superphosphate":0.0182834418893969,
-      "fertpmin_superphosphate":0.192939750935296,
-      "fertpmin_mono_ammonium_phosphate":0.361376933139892,
-      "fertpmin_di_ammonium_phosphate":0.361376933139892,
-      "fertpmin_an_phosphate":0.0453484490835208,
-      "fertpmin_hypophosphate_raw_phosphate":0.0140226987942277,
-      "fertpmin_ground_basic_slag":0.00665179301777467
+      PFertiliserType.triple_superphosphate:0.0182834418893969,
+      PFertiliserType.superphosphate:0.192939750935296,
+      PFertiliserType.mono_ammonium_phosphate:0.361376933139892,
+      PFertiliserType.di_ammonium_phosphate:0.361376933139892,
+      PFertiliserType.an_phosphate:0.0453484490835208,
+      PFertiliserType.hypophosphate_raw_phosphate:0.0140226987942277,
+      PFertiliserType.ground_basic_slag:0.00665179301777467
    },
    "CO":{
-      "fertpmin_triple_superphosphate":0.00736485491235823,
-      "fertpmin_superphosphate":0.00736485491235823,
-      "fertpmin_mono_ammonium_phosphate":0.425492217803309,
-      "fertpmin_di_ammonium_phosphate":0.425492217803309,
-      "fertpmin_an_phosphate":0.0900967250945156,
-      "fertpmin_hypophosphate_raw_phosphate":0.0368242745617911,
-      "fertpmin_ground_basic_slag":0.00736485491235823
+      PFertiliserType.triple_superphosphate:0.00736485491235823,
+      PFertiliserType.superphosphate:0.00736485491235823,
+      PFertiliserType.mono_ammonium_phosphate:0.425492217803309,
+      PFertiliserType.di_ammonium_phosphate:0.425492217803309,
+      PFertiliserType.an_phosphate:0.0900967250945156,
+      PFertiliserType.hypophosphate_raw_phosphate:0.0368242745617911,
+      PFertiliserType.ground_basic_slag:0.00736485491235823
    },
    "CR":{
-      "fertpmin_triple_superphosphate":0,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.333333333333333,
-      "fertpmin_di_ammonium_phosphate":0.333333333333333,
-      "fertpmin_an_phosphate":0.333333333333333,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.333333333333333,
+      PFertiliserType.di_ammonium_phosphate:0.333333333333333,
+      PFertiliserType.an_phosphate:0.333333333333333,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "CI":{
-      "fertpmin_triple_superphosphate":0,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.291666666666667,
-      "fertpmin_di_ammonium_phosphate":0.291666666666667,
-      "fertpmin_an_phosphate":0.416666666666667,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.291666666666667,
+      PFertiliserType.di_ammonium_phosphate:0.291666666666667,
+      PFertiliserType.an_phosphate:0.416666666666667,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "EC":{
-      "fertpmin_triple_superphosphate":0,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.442105263157895,
-      "fertpmin_di_ammonium_phosphate":0.442105263157895,
-      "fertpmin_an_phosphate":0.115789473684211,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.442105263157895,
+      PFertiliserType.di_ammonium_phosphate:0.442105263157895,
+      PFertiliserType.an_phosphate:0.115789473684211,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "FI":{
-      "fertpmin_triple_superphosphate":0,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.333333333333333,
-      "fertpmin_di_ammonium_phosphate":0.333333333333333,
-      "fertpmin_an_phosphate":0.333333333333333,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.333333333333333,
+      PFertiliserType.di_ammonium_phosphate:0.333333333333333,
+      PFertiliserType.an_phosphate:0.333333333333333,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "FR":{
-      "fertpmin_triple_superphosphate":0.165198297965196,
-      "fertpmin_superphosphate":0.0500927390758824,
-      "fertpmin_mono_ammonium_phosphate":0.269325186841962,
-      "fertpmin_di_ammonium_phosphate":0.269325186841962,
-      "fertpmin_an_phosphate":0.231193060935028,
-      "fertpmin_hypophosphate_raw_phosphate":0.0127788991326169,
-      "fertpmin_ground_basic_slag":0.00208662920735366
+      PFertiliserType.triple_superphosphate:0.165198297965196,
+      PFertiliserType.superphosphate:0.0500927390758824,
+      PFertiliserType.mono_ammonium_phosphate:0.269325186841962,
+      PFertiliserType.di_ammonium_phosphate:0.269325186841962,
+      PFertiliserType.an_phosphate:0.231193060935028,
+      PFertiliserType.hypophosphate_raw_phosphate:0.0127788991326169,
+      PFertiliserType.ground_basic_slag:0.00208662920735366
    },
    "DE":{
-      "fertpmin_triple_superphosphate":0.0722977469341192,
-      "fertpmin_superphosphate":0.006416959787052,
-      "fertpmin_mono_ammonium_phosphate":0.236492695756884,
-      "fertpmin_di_ammonium_phosphate":0.236492695756884,
-      "fertpmin_an_phosphate":0.435465982190956,
-      "fertpmin_hypophosphate_raw_phosphate":0.006416959787052,
-      "fertpmin_ground_basic_slag":0.006416959787052
+      PFertiliserType.triple_superphosphate:0.0722977469341192,
+      PFertiliserType.superphosphate:0.006416959787052,
+      PFertiliserType.mono_ammonium_phosphate:0.236492695756884,
+      PFertiliserType.di_ammonium_phosphate:0.236492695756884,
+      PFertiliserType.an_phosphate:0.435465982190956,
+      PFertiliserType.hypophosphate_raw_phosphate:0.006416959787052,
+      PFertiliserType.ground_basic_slag:0.006416959787052
    },
    "GH":{#Using GLO
-      "fertpmin_triple_superphosphate":0.09,
-      "fertpmin_superphosphate":0.24,
-      "fertpmin_mono_ammonium_phosphate":0.24,
-      "fertpmin_di_ammonium_phosphate":0.42,
-      "fertpmin_an_phosphate":0,
-      "fertpmin_hypophosphate_raw_phosphate":0.01,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.09,
+      PFertiliserType.superphosphate:0.24,
+      PFertiliserType.mono_ammonium_phosphate:0.24,
+      PFertiliserType.di_ammonium_phosphate:0.42,
+      PFertiliserType.an_phosphate:0,
+      PFertiliserType.hypophosphate_raw_phosphate:0.01,
+      PFertiliserType.ground_basic_slag:0
    },
    "HU":{
-      "fertpmin_triple_superphosphate":0.0075223319228961,
-      "fertpmin_superphosphate":0.0493653032440056,
-      "fertpmin_mono_ammonium_phosphate":0.352452593637361,
-      "fertpmin_di_ammonium_phosphate":0.352452593637361,
-      "fertpmin_an_phosphate":0.233505720106566,
-      "fertpmin_hypophosphate_raw_phosphate":0.00235072872590503,
-      "fertpmin_ground_basic_slag":0.00235072872590503
+      PFertiliserType.triple_superphosphate:0.0075223319228961,
+      PFertiliserType.superphosphate:0.0493653032440056,
+      PFertiliserType.mono_ammonium_phosphate:0.352452593637361,
+      PFertiliserType.di_ammonium_phosphate:0.352452593637361,
+      PFertiliserType.an_phosphate:0.233505720106566,
+      PFertiliserType.hypophosphate_raw_phosphate:0.00235072872590503,
+      PFertiliserType.ground_basic_slag:0.00235072872590503
    },
    "IN":{
-      "fertpmin_triple_superphosphate":0.00444211040383734,
-      "fertpmin_superphosphate":0.0816371585211251,
-      "fertpmin_mono_ammonium_phosphate":0.366667558656708,
-      "fertpmin_di_ammonium_phosphate":0.366667558656708,
-      "fertpmin_an_phosphate":0.179679128882526,
-      "fertpmin_hypophosphate_raw_phosphate":0.000906484879096325,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.00444211040383734,
+      PFertiliserType.superphosphate:0.0816371585211251,
+      PFertiliserType.mono_ammonium_phosphate:0.366667558656708,
+      PFertiliserType.di_ammonium_phosphate:0.366667558656708,
+      PFertiliserType.an_phosphate:0.179679128882526,
+      PFertiliserType.hypophosphate_raw_phosphate:0.000906484879096325,
+      PFertiliserType.ground_basic_slag:0
    },
    "ID":{
-      "fertpmin_triple_superphosphate":0.252142206016408,
-      "fertpmin_superphosphate":0.0752051048313583,
-      "fertpmin_mono_ammonium_phosphate":0.195016712245518,
-      "fertpmin_di_ammonium_phosphate":0.195016712245518,
-      "fertpmin_an_phosphate":0.158189000303859,
-      "fertpmin_hypophosphate_raw_phosphate":0.124430264357338,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.252142206016408,
+      PFertiliserType.superphosphate:0.0752051048313583,
+      PFertiliserType.mono_ammonium_phosphate:0.195016712245518,
+      PFertiliserType.di_ammonium_phosphate:0.195016712245518,
+      PFertiliserType.an_phosphate:0.158189000303859,
+      PFertiliserType.hypophosphate_raw_phosphate:0.124430264357338,
+      PFertiliserType.ground_basic_slag:0
    },
    "IL":{
-      "fertpmin_triple_superphosphate":0,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.177777777777778,
-      "fertpmin_di_ammonium_phosphate":0.177777777777778,
-      "fertpmin_an_phosphate":0.644444444444444,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.177777777777778,
+      PFertiliserType.di_ammonium_phosphate:0.177777777777778,
+      PFertiliserType.an_phosphate:0.644444444444444,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "IT":{
-      "fertpmin_triple_superphosphate":0.0873425692695214,
-      "fertpmin_superphosphate":0.0670654911838791,
-      "fertpmin_mono_ammonium_phosphate":0.340428211586902,
-      "fertpmin_di_ammonium_phosphate":0.340428211586902,
-      "fertpmin_an_phosphate":0.154030226700252,
-      "fertpmin_hypophosphate_raw_phosphate":0.00535264483627204,
-      "fertpmin_ground_basic_slag":0.00535264483627204
+      PFertiliserType.triple_superphosphate:0.0873425692695214,
+      PFertiliserType.superphosphate:0.0670654911838791,
+      PFertiliserType.mono_ammonium_phosphate:0.340428211586902,
+      PFertiliserType.di_ammonium_phosphate:0.340428211586902,
+      PFertiliserType.an_phosphate:0.154030226700252,
+      PFertiliserType.hypophosphate_raw_phosphate:0.00535264483627204,
+      PFertiliserType.ground_basic_slag:0.00535264483627204
    },
    "KE":{
-      "fertpmin_triple_superphosphate":0.00366422385076616,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.469298245614035,
-      "fertpmin_di_ammonium_phosphate":0.469298245614035,
-      "fertpmin_an_phosphate":0.0577392849211637,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.00366422385076616,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.469298245614035,
+      PFertiliserType.di_ammonium_phosphate:0.469298245614035,
+      PFertiliserType.an_phosphate:0.0577392849211637,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "MX":{
-      "fertpmin_triple_superphosphate":0.0199776112976836,
-      "fertpmin_superphosphate":0.0309997416688194,
-      "fertpmin_mono_ammonium_phosphate":0.441215304687276,
-      "fertpmin_di_ammonium_phosphate":0.441215304687276,
-      "fertpmin_an_phosphate":0.0665920376589454,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.0199776112976836,
+      PFertiliserType.superphosphate:0.0309997416688194,
+      PFertiliserType.mono_ammonium_phosphate:0.441215304687276,
+      PFertiliserType.di_ammonium_phosphate:0.441215304687276,
+      PFertiliserType.an_phosphate:0.0665920376589454,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "NL":{
-      "fertpmin_triple_superphosphate":0.0253164556962025,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.310126582278481,
-      "fertpmin_di_ammonium_phosphate":0.310126582278481,
-      "fertpmin_an_phosphate":0.354430379746835,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.0253164556962025,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.310126582278481,
+      PFertiliserType.di_ammonium_phosphate:0.310126582278481,
+      PFertiliserType.an_phosphate:0.354430379746835,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "NZ":{
-      "fertpmin_triple_superphosphate":0.00657643190334174,
-      "fertpmin_superphosphate":0.377074252504397,
-      "fertpmin_mono_ammonium_phosphate":0.23736330962759,
-      "fertpmin_di_ammonium_phosphate":0.23736330962759,
-      "fertpmin_an_phosphate":0.134663913741684,
-      "fertpmin_hypophosphate_raw_phosphate":0.0069587825953965,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.00657643190334174,
+      PFertiliserType.superphosphate:0.377074252504397,
+      PFertiliserType.mono_ammonium_phosphate:0.23736330962759,
+      PFertiliserType.di_ammonium_phosphate:0.23736330962759,
+      PFertiliserType.an_phosphate:0.134663913741684,
+      PFertiliserType.hypophosphate_raw_phosphate:0.0069587825953965,
+      PFertiliserType.ground_basic_slag:0
    },
    "PE":{
-      "fertpmin_triple_superphosphate":0.00749063670411985,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.49625468164794,
-      "fertpmin_di_ammonium_phosphate":0.49625468164794,
-      "fertpmin_an_phosphate":0,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.00749063670411985,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.49625468164794,
+      PFertiliserType.di_ammonium_phosphate:0.49625468164794,
+      PFertiliserType.an_phosphate:0,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "PH":{
-      "fertpmin_triple_superphosphate":0.0622093023255814,
-      "fertpmin_superphosphate":0.00174418604651163,
-      "fertpmin_mono_ammonium_phosphate":0.261627906976744,
-      "fertpmin_di_ammonium_phosphate":0.261627906976744,
-      "fertpmin_an_phosphate":0.412790697674419,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.0622093023255814,
+      PFertiliserType.superphosphate:0.00174418604651163,
+      PFertiliserType.mono_ammonium_phosphate:0.261627906976744,
+      PFertiliserType.di_ammonium_phosphate:0.261627906976744,
+      PFertiliserType.an_phosphate:0.412790697674419,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "PL":{
-      "fertpmin_triple_superphosphate":0.126016260162602,
-      "fertpmin_superphosphate":0.0623306233062331,
-      "fertpmin_mono_ammonium_phosphate":0.290311653116531,
-      "fertpmin_di_ammonium_phosphate":0.290311653116531,
-      "fertpmin_an_phosphate":0.209349593495935,
-      "fertpmin_hypophosphate_raw_phosphate":0.010840108401084,
-      "fertpmin_ground_basic_slag":0.010840108401084
+      PFertiliserType.triple_superphosphate:0.126016260162602,
+      PFertiliserType.superphosphate:0.0623306233062331,
+      PFertiliserType.mono_ammonium_phosphate:0.290311653116531,
+      PFertiliserType.di_ammonium_phosphate:0.290311653116531,
+      PFertiliserType.an_phosphate:0.209349593495935,
+      PFertiliserType.hypophosphate_raw_phosphate:0.010840108401084,
+      PFertiliserType.ground_basic_slag:0.010840108401084
    },
    "RU":{
-      "fertpmin_triple_superphosphate":0,
-      "fertpmin_superphosphate":0.00284769428623921,
-      "fertpmin_mono_ammonium_phosphate":0.434732684181518,
-      "fertpmin_di_ammonium_phosphate":0.434732684181518,
-      "fertpmin_an_phosphate":0.120889215506155,
-      "fertpmin_hypophosphate_raw_phosphate":0.00679772184457101,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0,
+      PFertiliserType.superphosphate:0.00284769428623921,
+      PFertiliserType.mono_ammonium_phosphate:0.434732684181518,
+      PFertiliserType.di_ammonium_phosphate:0.434732684181518,
+      PFertiliserType.an_phosphate:0.120889215506155,
+      PFertiliserType.hypophosphate_raw_phosphate:0.00679772184457101,
+      PFertiliserType.ground_basic_slag:0
    },
    "ZA":{
-      "fertpmin_triple_superphosphate":0,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.360310928212163,
-      "fertpmin_di_ammonium_phosphate":0.360310928212163,
-      "fertpmin_an_phosphate":0.279378143575674,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.360310928212163,
+      PFertiliserType.di_ammonium_phosphate:0.360310928212163,
+      PFertiliserType.an_phosphate:0.279378143575674,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "ES":{
-      "fertpmin_triple_superphosphate":0.027861710350643,
-      "fertpmin_superphosphate":0.054985594828192,
-      "fertpmin_mono_ammonium_phosphate":0.347012390790059,
-      "fertpmin_di_ammonium_phosphate":0.347012390790059,
-      "fertpmin_an_phosphate":0.178225938678472,
-      "fertpmin_hypophosphate_raw_phosphate":0.0224509872812873,
-      "fertpmin_ground_basic_slag":0.0224509872812873
+      PFertiliserType.triple_superphosphate:0.027861710350643,
+      PFertiliserType.superphosphate:0.054985594828192,
+      PFertiliserType.mono_ammonium_phosphate:0.347012390790059,
+      PFertiliserType.di_ammonium_phosphate:0.347012390790059,
+      PFertiliserType.an_phosphate:0.178225938678472,
+      PFertiliserType.hypophosphate_raw_phosphate:0.0224509872812873,
+      PFertiliserType.ground_basic_slag:0.0224509872812873
    },
    "LK":{
-      "fertpmin_triple_superphosphate":0.675675675675676,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.042042042042042,
-      "fertpmin_di_ammonium_phosphate":0.042042042042042,
-      "fertpmin_an_phosphate":0.042042042042042,
-      "fertpmin_hypophosphate_raw_phosphate":0.198198198198198,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.675675675675676,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.042042042042042,
+      PFertiliserType.di_ammonium_phosphate:0.042042042042042,
+      PFertiliserType.an_phosphate:0.042042042042042,
+      PFertiliserType.hypophosphate_raw_phosphate:0.198198198198198,
+      PFertiliserType.ground_basic_slag:0
    },
    "CH":{
-      "fertpmin_triple_superphosphate":0.136363636363636,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.303030303030303,
-      "fertpmin_di_ammonium_phosphate":0.303030303030303,
-      "fertpmin_an_phosphate":0.257575757575758,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.136363636363636,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.303030303030303,
+      PFertiliserType.di_ammonium_phosphate:0.303030303030303,
+      PFertiliserType.an_phosphate:0.257575757575758,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "TH":{
-      "fertpmin_triple_superphosphate":0,
-      "fertpmin_superphosphate":0,
-      "fertpmin_mono_ammonium_phosphate":0.415413533834587,
-      "fertpmin_di_ammonium_phosphate":0.415413533834587,
-      "fertpmin_an_phosphate":0.169172932330827,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0,
+      PFertiliserType.superphosphate:0,
+      PFertiliserType.mono_ammonium_phosphate:0.415413533834587,
+      PFertiliserType.di_ammonium_phosphate:0.415413533834587,
+      PFertiliserType.an_phosphate:0.169172932330827,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "TR":{
-      "fertpmin_triple_superphosphate":0.0201021663040393,
-      "fertpmin_superphosphate":0.00132437801532495,
-      "fertpmin_mono_ammonium_phosphate":0.271844354050389,
-      "fertpmin_di_ammonium_phosphate":0.271844354050389,
-      "fertpmin_an_phosphate":0.434884747579857,
-      "fertpmin_hypophosphate_raw_phosphate":0,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.0201021663040393,
+      PFertiliserType.superphosphate:0.00132437801532495,
+      PFertiliserType.mono_ammonium_phosphate:0.271844354050389,
+      PFertiliserType.di_ammonium_phosphate:0.271844354050389,
+      PFertiliserType.an_phosphate:0.434884747579857,
+      PFertiliserType.hypophosphate_raw_phosphate:0,
+      PFertiliserType.ground_basic_slag:0
    },
    "UA":{
-      "fertpmin_triple_superphosphate":0.0580786146613172,
-      "fertpmin_superphosphate":0.0630420096234713,
-      "fertpmin_mono_ammonium_phosphate":0.288871884665407,
-      "fertpmin_di_ammonium_phosphate":0.288871884665407,
-      "fertpmin_an_phosphate":0.184978377061762,
-      "fertpmin_hypophosphate_raw_phosphate":0.0580786146613172,
-      "fertpmin_ground_basic_slag":0.0580786146613172
+      PFertiliserType.triple_superphosphate:0.0580786146613172,
+      PFertiliserType.superphosphate:0.0630420096234713,
+      PFertiliserType.mono_ammonium_phosphate:0.288871884665407,
+      PFertiliserType.di_ammonium_phosphate:0.288871884665407,
+      PFertiliserType.an_phosphate:0.184978377061762,
+      PFertiliserType.hypophosphate_raw_phosphate:0.0580786146613172,
+      PFertiliserType.ground_basic_slag:0.0580786146613172
    },
    "US":{
-      "fertpmin_triple_superphosphate":0.0138193133212593,
-      "fertpmin_superphosphate":0.00444266759148652,
-      "fertpmin_mono_ammonium_phosphate":0.362503692857051,
-      "fertpmin_di_ammonium_phosphate":0.362503692857051,
-      "fertpmin_an_phosphate":0.247845298190179,
-      "fertpmin_hypophosphate_raw_phosphate":0.00444266759148652,
-      "fertpmin_ground_basic_slag":0.00444266759148652
+      PFertiliserType.triple_superphosphate:0.0138193133212593,
+      PFertiliserType.superphosphate:0.00444266759148652,
+      PFertiliserType.mono_ammonium_phosphate:0.362503692857051,
+      PFertiliserType.di_ammonium_phosphate:0.362503692857051,
+      PFertiliserType.an_phosphate:0.247845298190179,
+      PFertiliserType.hypophosphate_raw_phosphate:0.00444266759148652,
+      PFertiliserType.ground_basic_slag:0.00444266759148652
    },
    "VN":{#Using GLO
-      "fertpmin_triple_superphosphate":0.09,
-      "fertpmin_superphosphate":0.24,
-      "fertpmin_mono_ammonium_phosphate":0.24,
-      "fertpmin_di_ammonium_phosphate":0.42,
-      "fertpmin_an_phosphate":0,
-      "fertpmin_hypophosphate_raw_phosphate":0.01,
-      "fertpmin_ground_basic_slag":0
+      PFertiliserType.triple_superphosphate:0.09,
+      PFertiliserType.superphosphate:0.24,
+      PFertiliserType.mono_ammonium_phosphate:0.24,
+      PFertiliserType.di_ammonium_phosphate:0.42,
+      PFertiliserType.an_phosphate:0,
+      PFertiliserType.hypophosphate_raw_phosphate:0.01,
+      PFertiliserType.ground_basic_slag:0
    }
 }
 
-#Generated in GD_crop using =""""&Z5&""":{""ratio_irr_surface_no_energy"":"&Q5&",  ""ratio_irr_surface_electricity"":"&S5&",  ""ratio_irr_surface_diesel"":"&T5&",  ""ratio_irr_sprinkler_electricity"":"&U5&",  ""ratio_irr_sprinkler_diesel"":"&V5&",  ""ratio_irr_drip_electricity"":"&W5&", ""ratio_irr_drip_diesel"":"&X5&"},"
+#Generated in GD_crop using =""""&Z5&""":{"IrrigationType.surface_irrigation_no_energy":"&Q5&",  "IrrigationType.surface_irrigation_electricity":"&S5&",  "IrrigationType.surface_irrigation_diesel":"&T5&",  "IrrigationType.sprinkler_irrigation_electricity":"&U5&",  "IrrigationType.sprinkler_irrigation_diesel":"&V5&",  "IrrigationType.drip_irrigation_electricity":"&W5&", "IrrigationType.drip_irrigation_diesel":"&X5&"},"
 IRR_TECH_RATIO_PER_COUNTRY = {
    "AR":{#South america
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.24105504587156,
-      "ratio_irr_surface_diesel":0.723165137614679,
-      "ratio_irr_sprinkler_electricity":0.0036697247706422,
-      "ratio_irr_sprinkler_diesel":0.0110091743119266,
-      "ratio_irr_drip_electricity":0.00527522935779817,
-      "ratio_irr_drip_diesel":0.0158256880733945
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.24105504587156,
+      IrrigationType.surface_irrigation_diesel:0.723165137614679,
+      IrrigationType.sprinkler_irrigation_electricity:0.0036697247706422,
+      IrrigationType.sprinkler_irrigation_diesel:0.0110091743119266,
+      IrrigationType.drip_irrigation_electricity:0.00527522935779817,
+      IrrigationType.drip_irrigation_diesel:0.0158256880733945
    },
    "AU":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.718978388998035,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.206082514734774,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0749390962671906,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.718978388998035,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.206082514734774,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.0749390962671906,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "BE":{#Europe
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.0185185185185185,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.00925925925925926,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "BR":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.192036629213483,
-      "ratio_irr_surface_diesel":0.192036629213483,
-      "ratio_irr_sprinkler_electricity":0.271124494382022,
-      "ratio_irr_sprinkler_diesel":0.271124494382022,
-      "ratio_irr_drip_electricity":0.0368388764044944,
-      "ratio_irr_drip_diesel":0.0368388764044944
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.192036629213483,
+      IrrigationType.surface_irrigation_diesel:0.192036629213483,
+      IrrigationType.sprinkler_irrigation_electricity:0.271124494382022,
+      IrrigationType.sprinkler_irrigation_diesel:0.271124494382022,
+      IrrigationType.drip_irrigation_electricity:0.0368388764044944,
+      IrrigationType.drip_irrigation_diesel:0.0368388764044944
    },
    "CA":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.207973563218391,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.785090804597701,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00693563218390805,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.207973563218391,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.785090804597701,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.00693563218390805,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "CH":{#Europe
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.0185185185185185,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.00925925925925926,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "CI":{#Africa
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.22,
-      "ratio_irr_surface_diesel":0.66,
-      "ratio_irr_sprinkler_electricity":0.02875,
-      "ratio_irr_sprinkler_diesel":0.08625,
-      "ratio_irr_drip_electricity":0.00125,
-      "ratio_irr_drip_diesel":0.00375
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.22,
+      IrrigationType.surface_irrigation_diesel:0.66,
+      IrrigationType.sprinkler_irrigation_electricity:0.02875,
+      IrrigationType.sprinkler_irrigation_diesel:0.08625,
+      IrrigationType.drip_irrigation_electricity:0.00125,
+      IrrigationType.drip_irrigation_diesel:0.00375
    },
    "CL":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.964220183486238,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.0146788990825688,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0211009174311927,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.964220183486238,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.0146788990825688,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.0211009174311927,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "CN":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.461248060708263,
-      "ratio_irr_surface_diesel":0.461248060708263,
-      "ratio_irr_sprinkler_electricity":0.024677150084317,
-      "ratio_irr_sprinkler_diesel":0.024677150084317,
-      "ratio_irr_drip_electricity":0.0140747892074199,
-      "ratio_irr_drip_diesel":0.0140747892074199
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.461248060708263,
+      IrrigationType.surface_irrigation_diesel:0.461248060708263,
+      IrrigationType.sprinkler_irrigation_electricity:0.024677150084317,
+      IrrigationType.sprinkler_irrigation_diesel:0.024677150084317,
+      IrrigationType.drip_irrigation_electricity:0.0140747892074199,
+      IrrigationType.drip_irrigation_diesel:0.0140747892074199
    },
    "CO":{#South america
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.24105504587156,
-      "ratio_irr_surface_diesel":0.723165137614679,
-      "ratio_irr_sprinkler_electricity":0.0036697247706422,
-      "ratio_irr_sprinkler_diesel":0.0110091743119266,
-      "ratio_irr_drip_electricity":0.00527522935779817,
-      "ratio_irr_drip_diesel":0.0158256880733945
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.24105504587156,
+      IrrigationType.surface_irrigation_diesel:0.723165137614679,
+      IrrigationType.sprinkler_irrigation_electricity:0.0036697247706422,
+      IrrigationType.sprinkler_irrigation_diesel:0.0110091743119266,
+      IrrigationType.drip_irrigation_electricity:0.00527522935779817,
+      IrrigationType.drip_irrigation_diesel:0.0158256880733945
    },
    "CR":{#central America,caribbean
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.225806451612903,
-      "ratio_irr_surface_diesel":0.67741935483871,
-      "ratio_irr_sprinkler_electricity":0.0161290322580645,
-      "ratio_irr_sprinkler_diesel":0.0483870967741936,
-      "ratio_irr_drip_electricity":0.00806451612903226,
-      "ratio_irr_drip_diesel":0.0241935483870968
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.225806451612903,
+      IrrigationType.surface_irrigation_diesel:0.67741935483871,
+      IrrigationType.sprinkler_irrigation_electricity:0.0161290322580645,
+      IrrigationType.sprinkler_irrigation_diesel:0.0483870967741936,
+      IrrigationType.drip_irrigation_electricity:0.00806451612903226,
+      IrrigationType.drip_irrigation_diesel:0.0241935483870968
    },
    "DE":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.0185185185185185,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.00925925925925926,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "EC":{#South america
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.24105504587156,
-      "ratio_irr_surface_diesel":0.723165137614679,
-      "ratio_irr_sprinkler_electricity":0.0036697247706422,
-      "ratio_irr_sprinkler_diesel":0.0110091743119266,
-      "ratio_irr_drip_electricity":0.00527522935779817,
-      "ratio_irr_drip_diesel":0.0158256880733945
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.24105504587156,
+      IrrigationType.surface_irrigation_diesel:0.723165137614679,
+      IrrigationType.sprinkler_irrigation_electricity:0.0036697247706422,
+      IrrigationType.sprinkler_irrigation_diesel:0.0110091743119266,
+      IrrigationType.drip_irrigation_electricity:0.00527522935779817,
+      IrrigationType.drip_irrigation_diesel:0.0158256880733945
    },
    "ES":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.296592219020173,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.225506628242075,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.477901152737752,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.296592219020173,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.225506628242075,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.477901152737752,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "FI":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.857142857142857,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.142857142857143,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.857142857142857,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.142857142857143,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "FR":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.488586206896552,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.475793103448276,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0356206896551724,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.488586206896552,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.475793103448276,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.0356206896551724,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "GH":{#central America,caribbean
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.225806451612903,
-      "ratio_irr_surface_diesel":0.67741935483871,
-      "ratio_irr_sprinkler_electricity":0.0161290322580645,
-      "ratio_irr_sprinkler_diesel":0.0483870967741936,
-      "ratio_irr_drip_electricity":0.00806451612903226,
-      "ratio_irr_drip_diesel":0.0241935483870968
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.225806451612903,
+      IrrigationType.surface_irrigation_diesel:0.67741935483871,
+      IrrigationType.sprinkler_irrigation_electricity:0.0161290322580645,
+      IrrigationType.sprinkler_irrigation_diesel:0.0483870967741936,
+      IrrigationType.drip_irrigation_electricity:0.00806451612903226,
+      IrrigationType.drip_irrigation_diesel:0.0241935483870968
    },
    "HU":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.127272727272727,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.840909090909091,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0318181818181818,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.127272727272727,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.840909090909091,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.0318181818181818,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "ID":{#South-East Asia
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.245394736842105,
-      "ratio_irr_surface_diesel":0.736184210526316,
-      "ratio_irr_sprinkler_electricity":0.00131578947368421,
-      "ratio_irr_sprinkler_diesel":0.00394736842105263,
-      "ratio_irr_drip_electricity":0.00328947368421053,
-      "ratio_irr_drip_diesel":0.00986842105263158
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.245394736842105,
+      IrrigationType.surface_irrigation_diesel:0.736184210526316,
+      IrrigationType.sprinkler_irrigation_electricity:0.00131578947368421,
+      IrrigationType.sprinkler_irrigation_diesel:0.00394736842105263,
+      IrrigationType.drip_irrigation_electricity:0.00328947368421053,
+      IrrigationType.drip_irrigation_diesel:0.00986842105263158
    },
    "IL":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0043290043290044,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.25974025974026,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.735930735930736,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.0043290043290044,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.25974025974026,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.735930735930736,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "IN":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.459423481116585,
-      "ratio_irr_surface_diesel":0.459423481116585,
-      "ratio_irr_sprinkler_electricity":0.0249995073891626,
-      "ratio_irr_sprinkler_diesel":0.0249995073891626,
-      "ratio_irr_drip_electricity":0.0155770114942529,
-      "ratio_irr_drip_diesel":0.0155770114942529
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.459423481116585,
+      IrrigationType.surface_irrigation_diesel:0.459423481116585,
+      IrrigationType.sprinkler_irrigation_electricity:0.0249995073891626,
+      IrrigationType.sprinkler_irrigation_diesel:0.0249995073891626,
+      IrrigationType.drip_irrigation_electricity:0.0155770114942529,
+      IrrigationType.drip_irrigation_diesel:0.0155770114942529
    },
    "IT":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.41882734082397,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.367476779026217,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.213695880149813,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.41882734082397,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.367476779026217,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.213695880149813,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "KE":{#Africa
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.22,
-      "ratio_irr_surface_diesel":0.66,
-      "ratio_irr_sprinkler_electricity":0.02875,
-      "ratio_irr_sprinkler_diesel":0.08625,
-      "ratio_irr_drip_electricity":0.00125,
-      "ratio_irr_drip_diesel":0.00375
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.22,
+      IrrigationType.surface_irrigation_diesel:0.66,
+      IrrigationType.sprinkler_irrigation_electricity:0.02875,
+      IrrigationType.sprinkler_irrigation_diesel:0.08625,
+      IrrigationType.drip_irrigation_electricity:0.00125,
+      IrrigationType.drip_irrigation_diesel:0.00375
    },
    "LK":{#South-East Asia
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.245394736842105,
-      "ratio_irr_surface_diesel":0.736184210526316,
-      "ratio_irr_sprinkler_electricity":0.00131578947368421,
-      "ratio_irr_sprinkler_diesel":0.00394736842105263,
-      "ratio_irr_drip_electricity":0.00328947368421053,
-      "ratio_irr_drip_diesel":0.00986842105263158
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.245394736842105,
+      IrrigationType.surface_irrigation_diesel:0.736184210526316,
+      IrrigationType.sprinkler_irrigation_electricity:0.00131578947368421,
+      IrrigationType.sprinkler_irrigation_diesel:0.00394736842105263,
+      IrrigationType.drip_irrigation_electricity:0.00328947368421053,
+      IrrigationType.drip_irrigation_diesel:0.00986842105263158
    },
    "MX":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.903225806451613,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.0645161290322581,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.032258064516129,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.903225806451613,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.0645161290322581,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.032258064516129,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "NL":{#Europe
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.0185185185185185,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.00925925925925926,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "NZ":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.0185185185185185,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.00925925925925926,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "PE":{#South america
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.24105504587156,
-      "ratio_irr_surface_diesel":0.723165137614679,
-      "ratio_irr_sprinkler_electricity":0.0036697247706422,
-      "ratio_irr_sprinkler_diesel":0.0110091743119266,
-      "ratio_irr_drip_electricity":0.00527522935779817,
-      "ratio_irr_drip_diesel":0.0158256880733945
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.24105504587156,
+      IrrigationType.surface_irrigation_diesel:0.723165137614679,
+      IrrigationType.sprinkler_irrigation_electricity:0.0036697247706422,
+      IrrigationType.sprinkler_irrigation_diesel:0.0110091743119266,
+      IrrigationType.drip_irrigation_electricity:0.00527522935779817,
+      IrrigationType.drip_irrigation_diesel:0.0158256880733945
    },
    "PH":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.247728618421053,
-      "ratio_irr_surface_diesel":0.743185855263158,
-      "ratio_irr_sprinkler_electricity":0.00118009868421053,
-      "ratio_irr_sprinkler_diesel":0.00354029605263158,
-      "ratio_irr_drip_electricity":0.00109128289473684,
-      "ratio_irr_drip_diesel":0.00327384868421053
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.247728618421053,
+      IrrigationType.surface_irrigation_diesel:0.743185855263158,
+      IrrigationType.sprinkler_irrigation_electricity:0.00118009868421053,
+      IrrigationType.sprinkler_irrigation_diesel:0.00354029605263158,
+      IrrigationType.drip_irrigation_electricity:0.00109128289473684,
+      IrrigationType.drip_irrigation_diesel:0.00327384868421053
    },
    "PL":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.87,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.05,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.08,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.87,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.05,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.08,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "RU":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.217,
-      "ratio_irr_surface_diesel":0.217,
-      "ratio_irr_sprinkler_electricity":0.277777777777778,
-      "ratio_irr_sprinkler_diesel":0.277777777777778,
-      "ratio_irr_drip_electricity":0.00522222222222222,
-      "ratio_irr_drip_diesel":0.00522222222222222
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.217,
+      IrrigationType.surface_irrigation_diesel:0.217,
+      IrrigationType.sprinkler_irrigation_electricity:0.277777777777778,
+      IrrigationType.sprinkler_irrigation_diesel:0.277777777777778,
+      IrrigationType.drip_irrigation_electricity:0.00522222222222222,
+      IrrigationType.drip_irrigation_diesel:0.00522222222222222
    },
    "TH":{#South-East Asia
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.245394736842105,
-      "ratio_irr_surface_diesel":0.736184210526316,
-      "ratio_irr_sprinkler_electricity":0.00131578947368421,
-      "ratio_irr_sprinkler_diesel":0.00394736842105263,
-      "ratio_irr_drip_electricity":0.00328947368421053,
-      "ratio_irr_drip_diesel":0.00986842105263158
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.245394736842105,
+      IrrigationType.surface_irrigation_diesel:0.736184210526316,
+      IrrigationType.sprinkler_irrigation_electricity:0.00131578947368421,
+      IrrigationType.sprinkler_irrigation_diesel:0.00394736842105263,
+      IrrigationType.drip_irrigation_electricity:0.00328947368421053,
+      IrrigationType.drip_irrigation_diesel:0.00986842105263158
    },
    "TR":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.878277153558052,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.0936329588014981,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0280898876404494,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.878277153558052,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.0936329588014981,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.0280898876404494,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "UA":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.25,
-      "ratio_irr_sprinkler_diesel":0.75,
-      "ratio_irr_drip_electricity":0,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.25,
+      IrrigationType.sprinkler_irrigation_diesel:0.75,
+      IrrigationType.drip_irrigation_electricity:0,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "US":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.433690111336032,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.49992624048583,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0663836481781377,
-      "ratio_irr_drip_diesel":0
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.433690111336032,
+      IrrigationType.surface_irrigation_diesel:0,
+      IrrigationType.sprinkler_irrigation_electricity:0.49992624048583,
+      IrrigationType.sprinkler_irrigation_diesel:0,
+      IrrigationType.drip_irrigation_electricity:0.0663836481781377,
+      IrrigationType.drip_irrigation_diesel:0
    },
    "VN":{#South-East Asia
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.245394736842105,
-      "ratio_irr_surface_diesel":0.736184210526316,
-      "ratio_irr_sprinkler_electricity":0.00131578947368421,
-      "ratio_irr_sprinkler_diesel":0.00394736842105263,
-      "ratio_irr_drip_electricity":0.00328947368421053,
-      "ratio_irr_drip_diesel":0.00986842105263158
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.245394736842105,
+      IrrigationType.surface_irrigation_diesel:0.736184210526316,
+      IrrigationType.sprinkler_irrigation_electricity:0.00131578947368421,
+      IrrigationType.sprinkler_irrigation_diesel:0.00394736842105263,
+      IrrigationType.drip_irrigation_electricity:0.00328947368421053,
+      IrrigationType.drip_irrigation_diesel:0.00986842105263158
    },
    "ZA":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.115149401197605,
-      "ratio_irr_surface_diesel":0.115149401197605,
-      "ratio_irr_sprinkler_electricity":0.275466766467066,
-      "ratio_irr_sprinkler_diesel":0.275466766467066,
-      "ratio_irr_drip_electricity":0.109383832335329,
-      "ratio_irr_drip_diesel":0.109383832335329
+      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_electricity:0.115149401197605,
+      IrrigationType.surface_irrigation_diesel:0.115149401197605,
+      IrrigationType.sprinkler_irrigation_electricity:0.275466766467066,
+      IrrigationType.sprinkler_irrigation_diesel:0.275466766467066,
+      IrrigationType.drip_irrigation_electricity:0.109383832335329,
+      IrrigationType.drip_irrigation_diesel:0.109383832335329
    }
 }
 
@@ -1560,605 +1564,605 @@ LAND_USE_CATEGORY_PER_CROP = {
         "wheatwinter":LandUseCategory.arable_land
         }
 
-#Generated in GD_crop using "AR":{"manureliquid_cattle":0.966236579156714,  "manureliquid_fattening_pig":0,  "manureliquid_sows_piglet":0.00694397589098068,  "manureliquid_laying_hen":0.0268194449523053,  "manureliquid_other":0},
+#Generated in GD_crop using "AR":{LiquidManureType.cattle:0.966236579156714,  LiquidManureType.fattening_pigs:0,  LiquidManureType.sows_and_piglets:0.00694397589098068,  LiquidManureType.laying_hens:0.0268194449523053,  LiquidManureType.other:0},
 MANURE_LIQUID_RATIO_PER_COUNTRY={
    "AR":{
-      "manureliquid_cattle":0.966236579156714,
-      "manureliquid_fattening_pig":0,
-      "manureliquid_sows_piglet":0.00694397589098068,
-      "manureliquid_laying_hen":0.0268194449523053,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.966236579156714,
+      LiquidManureType.fattening_pigs:0,
+      LiquidManureType.sows_and_piglets:0.00694397589098068,
+      LiquidManureType.laying_hens:0.0268194449523053,
+      LiquidManureType.other:0
    },
    "AU":{
-      "manureliquid_cattle":0.932419087357062,
-      "manureliquid_fattening_pig":0.0361186743439928,
-      "manureliquid_sows_piglet":0.0177864294747437,
-      "manureliquid_laying_hen":0.013675808824202,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.932419087357062,
+      LiquidManureType.fattening_pigs:0.0361186743439928,
+      LiquidManureType.sows_and_piglets:0.0177864294747437,
+      LiquidManureType.laying_hens:0.013675808824202,
+      LiquidManureType.other:0
    },
    "BE":{
-      "manureliquid_cattle":0.651980577390597,
-      "manureliquid_fattening_pig":0.230792712080711,
-      "manureliquid_sows_piglet":0.106761818722809,
-      "manureliquid_laying_hen":0.0104648918058829,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.651980577390597,
+      LiquidManureType.fattening_pigs:0.230792712080711,
+      LiquidManureType.sows_and_piglets:0.106761818722809,
+      LiquidManureType.laying_hens:0.0104648918058829,
+      LiquidManureType.other:0
    },
    "BR":{
-      "manureliquid_cattle":0.773192504917913,
-      "manureliquid_fattening_pig":0.199364421762063,
-      "manureliquid_sows_piglet":0.00990829408243577,
-      "manureliquid_laying_hen":0.0175347792375884,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.773192504917913,
+      LiquidManureType.fattening_pigs:0.199364421762063,
+      LiquidManureType.sows_and_piglets:0.00990829408243577,
+      LiquidManureType.laying_hens:0.0175347792375884,
+      LiquidManureType.other:0
    },
    "CA":{
-      "manureliquid_cattle":0.692978661588794,
-      "manureliquid_fattening_pig":0.21305503530842,
-      "manureliquid_sows_piglet":0.0743325366490546,
-      "manureliquid_laying_hen":0.0196337664537316,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.692978661588794,
+      LiquidManureType.fattening_pigs:0.21305503530842,
+      LiquidManureType.sows_and_piglets:0.0743325366490546,
+      LiquidManureType.laying_hens:0.0196337664537316,
+      LiquidManureType.other:0
    },
    "CL":{
-      "manureliquid_cattle":0.671554978323718,
-      "manureliquid_fattening_pig":0.299091543393772,
-      "manureliquid_sows_piglet":0.0148646731839603,
-      "manureliquid_laying_hen":0.0144888050985496,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.671554978323718,
+      LiquidManureType.fattening_pigs:0.299091543393772,
+      LiquidManureType.sows_and_piglets:0.0148646731839603,
+      LiquidManureType.laying_hens:0.0144888050985496,
+      LiquidManureType.other:0
    },
    "CN":{
-      "manureliquid_cattle":0.537242763171236,
-      "manureliquid_fattening_pig":0.377139990238825,
-      "manureliquid_sows_piglet":0.0305685909004101,
-      "manureliquid_laying_hen":0.0550486556895287,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.537242763171236,
+      LiquidManureType.fattening_pigs:0.377139990238825,
+      LiquidManureType.sows_and_piglets:0.0305685909004101,
+      LiquidManureType.laying_hens:0.0550486556895287,
+      LiquidManureType.other:0
    },
    "CO":{
-      "manureliquid_cattle":0.851488143861912,
-      "manureliquid_fattening_pig":0.129514806059696,
-      "manureliquid_sows_piglet":0.00643680942134759,
-      "manureliquid_laying_hen":0.0125602406570442,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.851488143861912,
+      LiquidManureType.fattening_pigs:0.129514806059696,
+      LiquidManureType.sows_and_piglets:0.00643680942134759,
+      LiquidManureType.laying_hens:0.0125602406570442,
+      LiquidManureType.other:0
    },
    "CR":{
-      "manureliquid_cattle":0.895766461352508,
-      "manureliquid_fattening_pig":0.0921973662713949,
-      "manureliquid_sows_piglet":0.00458215473161557,
-      "manureliquid_laying_hen":0.00745401764448142,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.895766461352508,
+      LiquidManureType.fattening_pigs:0.0921973662713949,
+      LiquidManureType.sows_and_piglets:0.00458215473161557,
+      LiquidManureType.laying_hens:0.00745401764448142,
+      LiquidManureType.other:0
    },
    "CI":{
-      "manureliquid_cattle":0.334403636655568,
-      "manureliquid_fattening_pig":0.604685709509196,
-      "manureliquid_sows_piglet":0.0300489566658733,
-      "manureliquid_laying_hen":0.0308616971693619,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.334403636655568,
+      LiquidManureType.fattening_pigs:0.604685709509196,
+      LiquidManureType.sows_and_piglets:0.0300489566658733,
+      LiquidManureType.laying_hens:0.0308616971693619,
+      LiquidManureType.other:0
    },
    "EC":{
-      "manureliquid_cattle":0.827252441996018,
-      "manureliquid_fattening_pig":0.156725696233032,
-      "manureliquid_sows_piglet":0.00778917460374488,
-      "manureliquid_laying_hen":0.0082326871672052,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.827252441996018,
+      LiquidManureType.fattening_pigs:0.156725696233032,
+      LiquidManureType.sows_and_piglets:0.00778917460374488,
+      LiquidManureType.laying_hens:0.0082326871672052,
+      LiquidManureType.other:0
    },
    "FI":{
-      "manureliquid_cattle":0.778299855183584,
-      "manureliquid_fattening_pig":0.144037760601221,
-      "manureliquid_sows_piglet":0.0666300644491286,
-      "manureliquid_laying_hen":0.0110323197660669,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.778299855183584,
+      LiquidManureType.fattening_pigs:0.144037760601221,
+      LiquidManureType.sows_and_piglets:0.0666300644491286,
+      LiquidManureType.laying_hens:0.0110323197660669,
+      LiquidManureType.other:0
    },
    "FR":{
-      "manureliquid_cattle":0.859989060959847,
-      "manureliquid_fattening_pig":0.0882421218757529,
-      "manureliquid_sows_piglet":0.0408197006478963,
-      "manureliquid_laying_hen":0.0109491165165037,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.859989060959847,
+      LiquidManureType.fattening_pigs:0.0882421218757529,
+      LiquidManureType.sows_and_piglets:0.0408197006478963,
+      LiquidManureType.laying_hens:0.0109491165165037,
+      LiquidManureType.other:0
    },
    "DE":{
-      "manureliquid_cattle":0.713839694570081,
-      "manureliquid_fattening_pig":0.189846804011912,
-      "manureliquid_sows_piglet":0.0878207543552876,
-      "manureliquid_laying_hen":0.0084927470627198,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.713839694570081,
+      LiquidManureType.fattening_pigs:0.189846804011912,
+      LiquidManureType.sows_and_piglets:0.0878207543552876,
+      LiquidManureType.laying_hens:0.0084927470627198,
+      LiquidManureType.other:0
    },
    "GH":{
-      "manureliquid_cattle":0.263744005199079,
-      "manureliquid_fattening_pig":0.665938316763659,
-      "manureliquid_sows_piglet":0.0330928140996493,
-      "manureliquid_laying_hen":0.0372248639376124,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.263744005199079,
+      LiquidManureType.fattening_pigs:0.665938316763659,
+      LiquidManureType.sows_and_piglets:0.0330928140996493,
+      LiquidManureType.laying_hens:0.0372248639376124,
+      LiquidManureType.other:0
    },
    "HU":{
-      "manureliquid_cattle":0.524511327653383,
-      "manureliquid_fattening_pig":0.308370363066753,
-      "manureliquid_sows_piglet":0.131708236190577,
-      "manureliquid_laying_hen":0.0354100730892873,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.524511327653383,
+      LiquidManureType.fattening_pigs:0.308370363066753,
+      LiquidManureType.sows_and_piglets:0.131708236190577,
+      LiquidManureType.laying_hens:0.0354100730892873,
+      LiquidManureType.other:0
    },
    "IN":{
-      "manureliquid_cattle":0.956101289109399,
-      "manureliquid_fattening_pig":0.021569724484166,
-      "manureliquid_sows_piglet":0.00174911969888512,
-      "manureliquid_laying_hen":0.0205798667075499,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.956101289109399,
+      LiquidManureType.fattening_pigs:0.021569724484166,
+      LiquidManureType.sows_and_piglets:0.00174911969888512,
+      LiquidManureType.laying_hens:0.0205798667075499,
+      LiquidManureType.other:0
    },
    "ID":{
-      "manureliquid_cattle":0.841953137050475,
-      "manureliquid_fattening_pig":0.0865326475149543,
-      "manureliquid_sows_piglet":0.00701379107219114,
-      "manureliquid_laying_hen":0.0645004243623796,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.841953137050475,
+      LiquidManureType.fattening_pigs:0.0865326475149543,
+      LiquidManureType.sows_and_piglets:0.00701379107219114,
+      LiquidManureType.laying_hens:0.0645004243623796,
+      LiquidManureType.other:0
    },
    "IL":{
-      "manureliquid_cattle":0.27213220939371,
-      "manureliquid_fattening_pig":0.611173703624621,
-      "manureliquid_sows_piglet":0.0303695655717747,
-      "manureliquid_laying_hen":0.0863245214098939,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.27213220939371,
+      LiquidManureType.fattening_pigs:0.611173703624621,
+      LiquidManureType.sows_and_piglets:0.0303695655717747,
+      LiquidManureType.laying_hens:0.0863245214098939,
+      LiquidManureType.other:0
    },
    "IT":{
-      "manureliquid_cattle":0.750511965391496,
-      "manureliquid_fattening_pig":0.146961826785265,
-      "manureliquid_sows_piglet":0.0679827008677025,
-      "manureliquid_laying_hen":0.0345435069555363,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.750511965391496,
+      LiquidManureType.fattening_pigs:0.146961826785265,
+      LiquidManureType.sows_and_piglets:0.0679827008677025,
+      LiquidManureType.laying_hens:0.0345435069555363,
+      LiquidManureType.other:0
    },
    "KE":{
-      "manureliquid_cattle":0.897991182476556,
-      "manureliquid_fattening_pig":0.0879315592863415,
-      "manureliquid_sows_piglet":0.00436962810947838,
-      "manureliquid_laying_hen":0.00970763012762398,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.897991182476556,
+      LiquidManureType.fattening_pigs:0.0879315592863415,
+      LiquidManureType.sows_and_piglets:0.00436962810947838,
+      LiquidManureType.laying_hens:0.00970763012762398,
+      LiquidManureType.other:0
    },
    "MX":{
-      "manureliquid_cattle":0.469470222458186,
-      "manureliquid_fattening_pig":0.445254889925465,
-      "manureliquid_sows_piglet":0.0221289052099609,
-      "manureliquid_laying_hen":0.0631459824063886,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.469470222458186,
+      LiquidManureType.fattening_pigs:0.445254889925465,
+      LiquidManureType.sows_and_piglets:0.0221289052099609,
+      LiquidManureType.laying_hens:0.0631459824063886,
+      LiquidManureType.other:0
    },
    "NL":{
-      "manureliquid_cattle":0.63220650185421,
-      "manureliquid_fattening_pig":0.233845124899956,
-      "manureliquid_sows_piglet":0.108173826668685,
-      "manureliquid_laying_hen":0.0257745465771489,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.63220650185421,
+      LiquidManureType.fattening_pigs:0.233845124899956,
+      LiquidManureType.sows_and_piglets:0.108173826668685,
+      LiquidManureType.laying_hens:0.0257745465771489,
+      LiquidManureType.other:0
    },
    "NZ":{
-      "manureliquid_cattle":0.979450321664584,
-      "manureliquid_fattening_pig":0.00944728343075543,
-      "manureliquid_sows_piglet":0.00465225936018097,
-      "manureliquid_laying_hen":0.00645013554447995,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.979450321664584,
+      LiquidManureType.fattening_pigs:0.00944728343075543,
+      LiquidManureType.sows_and_piglets:0.00465225936018097,
+      LiquidManureType.laying_hens:0.00645013554447995,
+      LiquidManureType.other:0
    },
    "PE":{
-      "manureliquid_cattle":0.594188650414037,
-      "manureliquid_fattening_pig":0.365516418753568,
-      "manureliquid_sows_piglet":0.0181659502624421,
-      "manureliquid_laying_hen":0.0221289805699533,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.594188650414037,
+      LiquidManureType.fattening_pigs:0.365516418753568,
+      LiquidManureType.sows_and_piglets:0.0181659502624421,
+      LiquidManureType.laying_hens:0.0221289805699533,
+      LiquidManureType.other:0
    },
    "PH":{
-      "manureliquid_cattle":0.436931601829857,
-      "manureliquid_fattening_pig":0.453039090897989,
-      "manureliquid_sows_piglet":0.0367204936489228,
-      "manureliquid_laying_hen":0.0733088136232304,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.436931601829857,
+      LiquidManureType.fattening_pigs:0.453039090897989,
+      LiquidManureType.sows_and_piglets:0.0367204936489228,
+      LiquidManureType.laying_hens:0.0733088136232304,
+      LiquidManureType.other:0
    },
    "PL":{
-      "manureliquid_cattle":0.683498764026531,
-      "manureliquid_fattening_pig":0.206359038573867,
-      "manureliquid_sows_piglet":0.0881381230023514,
-      "manureliquid_laying_hen":0.0220040743972504,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.683498764026531,
+      LiquidManureType.fattening_pigs:0.206359038573867,
+      LiquidManureType.sows_and_piglets:0.0881381230023514,
+      LiquidManureType.laying_hens:0.0220040743972504,
+      LiquidManureType.other:0
    },
    "RU":{
-      "manureliquid_cattle":0.846999341113014,
-      "manureliquid_fattening_pig":0.0903924909526649,
-      "manureliquid_sows_piglet":0.038607586760282,
-      "manureliquid_laying_hen":0.0240005811740389,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.846999341113014,
+      LiquidManureType.fattening_pigs:0.0903924909526649,
+      LiquidManureType.sows_and_piglets:0.038607586760282,
+      LiquidManureType.laying_hens:0.0240005811740389,
+      LiquidManureType.other:0
    },
    "ZA":{
-      "manureliquid_cattle":0.41919169262082,
-      "manureliquid_fattening_pig":0.523821292346713,
-      "manureliquid_sows_piglet":0.0260305200647327,
-      "manureliquid_laying_hen":0.0309564949677344,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.41919169262082,
+      LiquidManureType.fattening_pigs:0.523821292346713,
+      LiquidManureType.sows_and_piglets:0.0260305200647327,
+      LiquidManureType.laying_hens:0.0309564949677344,
+      LiquidManureType.other:0
    },
    "ES":{
-      "manureliquid_cattle":0.507915454115911,
-      "manureliquid_fattening_pig":0.322542116161643,
-      "manureliquid_sows_piglet":0.149203944188963,
-      "manureliquid_laying_hen":0.0203384855334841,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.507915454115911,
+      LiquidManureType.fattening_pigs:0.322542116161643,
+      LiquidManureType.sows_and_piglets:0.149203944188963,
+      LiquidManureType.laying_hens:0.0203384855334841,
+      LiquidManureType.other:0
    },
    "LK":{
-      "manureliquid_cattle":0.882715893891701,
-      "manureliquid_fattening_pig":0.0306842036733159,
-      "manureliquid_sows_piglet":0.0024882257352391,
-      "manureliquid_laying_hen":0.0841116766997438,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.882715893891701,
+      LiquidManureType.fattening_pigs:0.0306842036733159,
+      LiquidManureType.sows_and_piglets:0.0024882257352391,
+      LiquidManureType.laying_hens:0.0841116766997438,
+      LiquidManureType.other:0
    },
    "CH":{
-      "manureliquid_cattle":0.847633294065572,
-      "manureliquid_fattening_pig":0.100773947340613,
-      "manureliquid_sows_piglet":0.0466167661709276,
-      "manureliquid_laying_hen":0.00497599242288751,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.847633294065572,
+      LiquidManureType.fattening_pigs:0.100773947340613,
+      LiquidManureType.sows_and_piglets:0.0466167661709276,
+      LiquidManureType.laying_hens:0.00497599242288751,
+      LiquidManureType.other:0
    },
    "TH":{
-      "manureliquid_cattle":0.755351921445373,
-      "manureliquid_fattening_pig":0.181480659127386,
-      "manureliquid_sows_piglet":0.0147096785555708,
-      "manureliquid_laying_hen":0.0484577408716699,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.755351921445373,
+      LiquidManureType.fattening_pigs:0.181480659127386,
+      LiquidManureType.sows_and_piglets:0.0147096785555708,
+      LiquidManureType.laying_hens:0.0484577408716699,
+      LiquidManureType.other:0
    },
    "TR":{
-      "manureliquid_cattle":0.97789519996087,
-      "manureliquid_fattening_pig":0.0000194913799417323,
-      "manureliquid_sows_piglet":0.00000157985394494961,
-      "manureliquid_laying_hen":0.0220837288052437,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.97789519996087,
+      LiquidManureType.fattening_pigs:0.0000194913799417323,
+      LiquidManureType.sows_and_piglets:0.00000157985394494961,
+      LiquidManureType.laying_hens:0.0220837288052437,
+      LiquidManureType.other:0
    },
    "UA":{
-      "manureliquid_cattle":0.741443874469408,
-      "manureliquid_fattening_pig":0.144482931054176,
-      "manureliquid_sows_piglet":0.0617101845237894,
-      "manureliquid_laying_hen":0.0523630099526263,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.741443874469408,
+      LiquidManureType.fattening_pigs:0.144482931054176,
+      LiquidManureType.sows_and_piglets:0.0617101845237894,
+      LiquidManureType.laying_hens:0.0523630099526263,
+      LiquidManureType.other:0
    },
    "US":{
-      "manureliquid_cattle":0.766419201590052,
-      "manureliquid_fattening_pig":0.148289201791209,
-      "manureliquid_sows_piglet":0.0517364563148683,
-      "manureliquid_laying_hen":0.0335551403038707,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.766419201590052,
+      LiquidManureType.fattening_pigs:0.148289201791209,
+      LiquidManureType.sows_and_piglets:0.0517364563148683,
+      LiquidManureType.laying_hens:0.0335551403038707,
+      LiquidManureType.other:0
    },
    "VN":{
-      "manureliquid_cattle":0.474349921379399,
-      "manureliquid_fattening_pig":0.458224208589946,
-      "manureliquid_sows_piglet":0.0371407666642503,
-      "manureliquid_laying_hen":0.0302851033664051,
-      "manureliquid_other":0
+      LiquidManureType.cattle:0.474349921379399,
+      LiquidManureType.fattening_pigs:0.458224208589946,
+      LiquidManureType.sows_and_piglets:0.0371407666642503,
+      LiquidManureType.laying_hens:0.0302851033664051,
+      LiquidManureType.other:0
    }
 }
 
 
-#FIXME: Check if "manuresolid_horses" = "Share of solid manure from other poultry" in GD_crop, otherwise this is wrong!!!
-#Generated in GD_crop using "AR":{"manuresolid_cattle":0.891984968037592,  "manuresolid_pig":0.00428250486383302,  "manuresolid_sheep_goat":0.00785192210275657,  "manuresolid_laying_hen":0.0213496972784334,  "manuresolid_broiler":0.037377288700972,  "manuresolid_horses":0.0154080727192603,  "manuresolid_other":0},
+#FIXME: Check if SolidManureType.horses = "Share of solid manure from other poultry" in GD_crop, otherwise this is wrong!!!
+#Generated in GD_crop using "AR":{SolidManureType.cattle:0.891984968037592,  SolidManureType.pigs:0.00428250486383302,  SolidManureType.sheep_goats:0.00785192210275657,  SolidManureType.laying_hen_litter:0.0213496972784334,  SolidManureType.broiler_litter:0.037377288700972,  SolidManureType.horses:0.0154080727192603,  SolidManureType.other:0},
 MANURE_SOLID_RATIO_PER_COUNTRY = {
    "AR":{
-      "manuresolid_cattle":0.891984968037592,
-      "manuresolid_pig":0.00428250486383302,
-      "manuresolid_sheep_goat":0.00785192210275657,
-      "manuresolid_laying_hen":0.0213496972784334,
-      "manuresolid_broiler":0.037377288700972,
-      "manuresolid_horses":0.0154080727192603,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.891984968037592,
+      SolidManureType.pigs:0.00428250486383302,
+      SolidManureType.sheep_goats:0.00785192210275657,
+      SolidManureType.laying_hen_litter:0.0213496972784334,
+      SolidManureType.broiler_litter:0.037377288700972,
+      SolidManureType.horses:0.0154080727192603,
+      SolidManureType.other:0
    },
    "AU":{
-      "manuresolid_cattle":0.866230714363227,
-      "manuresolid_pig":0.0396558670056438,
-      "manuresolid_sheep_goat":0,
-      "manuresolid_laying_hen":0.0109557804224684,
-      "manuresolid_broiler":0.0733270306340694,
-      "manuresolid_horses":0.00983060757459108,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.866230714363227,
+      SolidManureType.pigs:0.0396558670056438,
+      SolidManureType.sheep_goats:0,
+      SolidManureType.laying_hen_litter:0.0109557804224684,
+      SolidManureType.broiler_litter:0.0733270306340694,
+      SolidManureType.horses:0.00983060757459108,
+      SolidManureType.other:0
    },
    "BE":{
-      "manuresolid_cattle":0.680918401872099,
-      "manuresolid_pig":0.280055070828466,
-      "manuresolid_sheep_goat":0.00287090731445683,
-      "manuresolid_laying_hen":0.00942460225008602,
-      "manuresolid_broiler":0.0242052132533888,
-      "manuresolid_horses":0.00182107880156133,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.680918401872099,
+      SolidManureType.pigs:0.280055070828466,
+      SolidManureType.sheep_goats:0.00287090731445683,
+      SolidManureType.laying_hen_litter:0.00942460225008602,
+      SolidManureType.broiler_litter:0.0242052132533888,
+      SolidManureType.horses:0.00182107880156133,
+      SolidManureType.other:0
    },
    "BR":{
-      "manuresolid_cattle":0.747215795807973,
-      "manuresolid_pig":0.170711134549261,
-      "manuresolid_sheep_goat":0.00150204832846079,
-      "manuresolid_laying_hen":0.0146125693780566,
-      "manuresolid_broiler":0.0518691431751504,
-      "manuresolid_horses":0.00957908786756611,
-      "manuresolid_other":0.00105803096597614
+      SolidManureType.cattle:0.747215795807973,
+      SolidManureType.pigs:0.170711134549261,
+      SolidManureType.sheep_goats:0.00150204832846079,
+      SolidManureType.laying_hen_litter:0.0146125693780566,
+      SolidManureType.broiler_litter:0.0518691431751504,
+      SolidManureType.horses:0.00957908786756611,
+      SolidManureType.other:0.00105803096597614
    },
    "CA":{
-      "manuresolid_cattle":0.642672694527304,
-      "manuresolid_pig":0.21456568114916,
-      "manuresolid_sheep_goat":0.00589291129178607,
-      "manuresolid_laying_hen":0.0157015122396743,
-      "manuresolid_broiler":0.0858889325733874,
-      "manuresolid_horses":0.0233093573163688,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.642672694527304,
+      SolidManureType.pigs:0.21456568114916,
+      SolidManureType.sheep_goats:0.00589291129178607,
+      SolidManureType.laying_hen_litter:0.0157015122396743,
+      SolidManureType.broiler_litter:0.0858889325733874,
+      SolidManureType.horses:0.0233093573163688,
+      SolidManureType.other:0
    },
    "CL":{
-      "manuresolid_cattle":0.552250451631966,
-      "manuresolid_pig":0.217928697517175,
-      "manuresolid_sheep_goat":0.00217715952451313,
-      "manuresolid_laying_hen":0.0102743641022689,
-      "manuresolid_broiler":0.0335863045430743,
-      "manuresolid_horses":0.180852077242765,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.552250451631966,
+      SolidManureType.pigs:0.217928697517175,
+      SolidManureType.sheep_goats:0.00217715952451313,
+      SolidManureType.laying_hen_litter:0.0102743641022689,
+      SolidManureType.broiler_litter:0.0335863045430743,
+      SolidManureType.horses:0.180852077242765,
+      SolidManureType.other:0
    },
    "CN":{
-      "manuresolid_cattle":0.362384649367369,
-      "manuresolid_pig":0.230730522410369,
-      "manuresolid_sheep_goat":0.14772992931581,
-      "manuresolid_laying_hen":0.0320194458398477,
-      "manuresolid_broiler":0.0356692347556989,
-      "manuresolid_horses":0.0289955821559536,
-      "manuresolid_other":0.154310465771057
+      SolidManureType.cattle:0.362384649367369,
+      SolidManureType.pigs:0.230730522410369,
+      SolidManureType.sheep_goats:0.14772992931581,
+      SolidManureType.laying_hen_litter:0.0320194458398477,
+      SolidManureType.broiler_litter:0.0356692347556989,
+      SolidManureType.horses:0.0289955821559536,
+      SolidManureType.other:0.154310465771057
    },
    "CO":{
-      "manuresolid_cattle":0.838197032202166,
-      "manuresolid_pig":0.112964690235755,
-      "manuresolid_sheep_goat":0.00133593378235541,
-      "manuresolid_laying_hen":0.0106618691740995,
-      "manuresolid_broiler":0.0320696061132552,
-      "manuresolid_horses":0,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.838197032202166,
+      SolidManureType.pigs:0.112964690235755,
+      SolidManureType.sheep_goats:0.00133593378235541,
+      SolidManureType.laying_hen_litter:0.0106618691740995,
+      SolidManureType.broiler_litter:0.0320696061132552,
+      SolidManureType.horses:0,
+      SolidManureType.other:0
    },
    "CR":{
-      "manuresolid_cattle":0.86703206910812,
-      "manuresolid_pig":0.0790705320551174,
-      "manuresolid_sheep_goat":0.0000342803689755446,
-      "manuresolid_laying_hen":0.00622155084472631,
-      "manuresolid_broiler":0.0448468278062416,
-      "manuresolid_horses":0,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.86703206910812,
+      SolidManureType.pigs:0.0790705320551174,
+      SolidManureType.sheep_goats:0.0000342803689755446,
+      SolidManureType.laying_hen_litter:0.00622155084472631,
+      SolidManureType.broiler_litter:0.0448468278062416,
+      SolidManureType.horses:0,
+      SolidManureType.other:0
    },
    "CI":{
-      "manuresolid_cattle":0.30319915656893,
-      "manuresolid_pig":0.485781032504727,
-      "manuresolid_sheep_goat":0.0773942195973608,
-      "manuresolid_laying_hen":0.0241292974698366,
-      "manuresolid_broiler":0.109496293859146,
-      "manuresolid_horses":0,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.30319915656893,
+      SolidManureType.pigs:0.485781032504727,
+      SolidManureType.sheep_goats:0.0773942195973608,
+      SolidManureType.laying_hen_litter:0.0241292974698366,
+      SolidManureType.broiler_litter:0.109496293859146,
+      SolidManureType.horses:0,
+      SolidManureType.other:0
    },
    "EC":{
-      "manuresolid_cattle":0.732791342645394,
-      "manuresolid_pig":0.123009389316786,
-      "manuresolid_sheep_goat":0.000401295431772118,
-      "manuresolid_laying_hen":0.00628856797963098,
-      "manuresolid_broiler":0.130112643083882,
-      "manuresolid_horses":0.00260223066010027,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.732791342645394,
+      SolidManureType.pigs:0.123009389316786,
+      SolidManureType.sheep_goats:0.000401295431772118,
+      SolidManureType.laying_hen_litter:0.00628856797963098,
+      SolidManureType.broiler_litter:0.130112643083882,
+      SolidManureType.horses:0.00260223066010027,
+      SolidManureType.other:0
    },
    "FI":{
-      "manuresolid_cattle":0.796050906155418,
-      "manuresolid_pig":0.171171394598401,
-      "manuresolid_sheep_goat":0.00813728584106536,
-      "manuresolid_laying_hen":0.00973035325899764,
-      "manuresolid_broiler":0.0056705957360577,
-      "manuresolid_horses":0.0050773244121249,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.796050906155418,
+      SolidManureType.pigs:0.171171394598401,
+      SolidManureType.sheep_goats:0.00813728584106536,
+      SolidManureType.laying_hen_litter:0.00973035325899764,
+      SolidManureType.broiler_litter:0.0056705957360577,
+      SolidManureType.horses:0.0050773244121249,
+      SolidManureType.other:0
    },
    "FR":{
-      "manuresolid_cattle":0.817006208590229,
-      "manuresolid_pig":0.0974023218136786,
-      "manuresolid_sheep_goat":0.028576974423064,
-      "manuresolid_laying_hen":0.00896973024206114,
-      "manuresolid_broiler":0.0139016721218404,
-      "manuresolid_horses":0.0328108856640718,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.817006208590229,
+      SolidManureType.pigs:0.0974023218136786,
+      SolidManureType.sheep_goats:0.028576974423064,
+      SolidManureType.laying_hen_litter:0.00896973024206114,
+      SolidManureType.broiler_litter:0.0139016721218404,
+      SolidManureType.horses:0.0328108856640718,
+      SolidManureType.other:0
    },
    "DE":{
-      "manuresolid_cattle":0.727786900832796,
-      "manuresolid_pig":0.224888769346684,
-      "manuresolid_sheep_goat":0.00877737537493331,
-      "manuresolid_laying_hen":0.00746654359647748,
-      "manuresolid_broiler":0.0143180400820094,
-      "manuresolid_horses":0.0144175727979649,
-      "manuresolid_other":0.000516497646563295
+      SolidManureType.cattle:0.727786900832796,
+      SolidManureType.pigs:0.224888769346684,
+      SolidManureType.sheep_goats:0.00877737537493331,
+      SolidManureType.laying_hen_litter:0.00746654359647748,
+      SolidManureType.broiler_litter:0.0143180400820094,
+      SolidManureType.horses:0.0144175727979649,
+      SolidManureType.other:0.000516497646563295
    },
    "GH":{
-      "manuresolid_cattle":0.229471343581357,
-      "manuresolid_pig":0.513373819312835,
-      "manuresolid_sheep_goat":0.154434937260582,
-      "manuresolid_laying_hen":0.0279284514119134,
-      "manuresolid_broiler":0.0741635040869972,
-      "manuresolid_horses":0,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.229471343581357,
+      SolidManureType.pigs:0.513373819312835,
+      SolidManureType.sheep_goats:0.154434937260582,
+      SolidManureType.laying_hen_litter:0.0279284514119134,
+      SolidManureType.broiler_litter:0.0741635040869972,
+      SolidManureType.horses:0,
+      SolidManureType.other:0
    },
    "HU":{
-      "manuresolid_cattle":0.43790738862665,
-      "manuresolid_pig":0.293028837016495,
-      "manuresolid_sheep_goat":0.130362255346065,
-      "manuresolid_laying_hen":0.0254930676931773,
-      "manuresolid_broiler":0.0406661992373601,
-      "manuresolid_horses":0.0661343707038014,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.43790738862665,
+      SolidManureType.pigs:0.293028837016495,
+      SolidManureType.sheep_goats:0.130362255346065,
+      SolidManureType.laying_hen_litter:0.0254930676931773,
+      SolidManureType.broiler_litter:0.0406661992373601,
+      SolidManureType.horses:0.0661343707038014,
+      SolidManureType.other:0
    },
    "IN":{
-      "manuresolid_cattle":0.25834922642825,
-      "manuresolid_pig":0.0052864383650807,
-      "manuresolid_sheep_goat":0.0981507817052525,
-      "manuresolid_laying_hen":0.00479527694451115,
-      "manuresolid_broiler":0.00965129781910674,
-      "manuresolid_horses":0.0012356837639976,
-      "manuresolid_other":0.62187056561929
+      SolidManureType.cattle:0.25834922642825,
+      SolidManureType.pigs:0.0052864383650807,
+      SolidManureType.sheep_goats:0.0981507817052525,
+      SolidManureType.laying_hen_litter:0.00479527694451115,
+      SolidManureType.broiler_litter:0.00965129781910674,
+      SolidManureType.horses:0.0012356837639976,
+      SolidManureType.other:0.62187056561929
    },
    "ID":{
-      "manuresolid_cattle":0.467197539586431,
-      "manuresolid_pig":0.0435507726372292,
-      "manuresolid_sheep_goat":0.119821943999018,
-      "manuresolid_laying_hen":0.0308633507533585,
-      "manuresolid_broiler":0.189432018409211,
-      "manuresolid_horses":0.019514805386779,
-      "manuresolid_other":0.126346233077757
+      SolidManureType.cattle:0.467197539586431,
+      SolidManureType.pigs:0.0435507726372292,
+      SolidManureType.sheep_goats:0.119821943999018,
+      SolidManureType.laying_hen_litter:0.0308633507533585,
+      SolidManureType.broiler_litter:0.189432018409211,
+      SolidManureType.horses:0.019514805386779,
+      SolidManureType.other:0.126346233077757
    },
    "IL":{
-      "manuresolid_cattle":0.199236580122689,
-      "manuresolid_pig":0.39646666414798,
-      "manuresolid_sheep_goat":0,
-      "manuresolid_laying_hen":0.0544993327490837,
-      "manuresolid_broiler":0.204647504694381,
-      "manuresolid_horses":0.145149918285867,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.199236580122689,
+      SolidManureType.pigs:0.39646666414798,
+      SolidManureType.sheep_goats:0,
+      SolidManureType.laying_hen_litter:0.0544993327490837,
+      SolidManureType.broiler_litter:0.204647504694381,
+      SolidManureType.horses:0.145149918285867,
+      SolidManureType.other:0
    },
    "IT":{
-      "manuresolid_cattle":0.623557125987676,
-      "manuresolid_pig":0.141867888486309,
-      "manuresolid_sheep_goat":0.0623664331281349,
-      "manuresolid_laying_hen":0.024748730552871,
-      "manuresolid_broiler":0.0213561547460622,
-      "manuresolid_horses":0.0502110092774215,
-      "manuresolid_other":0.0737720357806156
+      SolidManureType.cattle:0.623557125987676,
+      SolidManureType.pigs:0.141867888486309,
+      SolidManureType.sheep_goats:0.0623664331281349,
+      SolidManureType.laying_hen_litter:0.024748730552871,
+      SolidManureType.broiler_litter:0.0213561547460622,
+      SolidManureType.horses:0.0502110092774215,
+      SolidManureType.other:0.0737720357806156
    },
    "KE":{
-      "manuresolid_cattle":0.716502772802802,
-      "manuresolid_pig":0.0621647840759193,
-      "manuresolid_sheep_goat":0.159458408168703,
-      "manuresolid_laying_hen":0.00667923769381902,
-      "manuresolid_broiler":0.00578424256117285,
-      "manuresolid_horses":0,
-      "manuresolid_other":0.0493881369381422
+      SolidManureType.cattle:0.716502772802802,
+      SolidManureType.pigs:0.0621647840759193,
+      SolidManureType.sheep_goats:0.159458408168703,
+      SolidManureType.laying_hen_litter:0.00667923769381902,
+      SolidManureType.broiler_litter:0.00578424256117285,
+      SolidManureType.horses:0,
+      SolidManureType.other:0.0493881369381422
    },
    "MX":{
-      "manuresolid_cattle":0.437879115151199,
-      "manuresolid_pig":0.367968515803388,
-      "manuresolid_sheep_goat":0.00791315611290666,
-      "manuresolid_laying_hen":0.0507878443580435,
-      "manuresolid_broiler":0.0939603230870931,
-      "manuresolid_horses":0.0139241223195238,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.437879115151199,
+      SolidManureType.pigs:0.367968515803388,
+      SolidManureType.sheep_goats:0.00791315611290666,
+      SolidManureType.laying_hen_litter:0.0507878443580435,
+      SolidManureType.broiler_litter:0.0939603230870931,
+      SolidManureType.horses:0.0139241223195238,
+      SolidManureType.other:0
    },
    "NL":{
-      "manuresolid_cattle":0.650340967131297,
-      "manuresolid_pig":0.279493306740428,
-      "manuresolid_sheep_goat":0.0140888719565466,
-      "manuresolid_laying_hen":0.0228634131090672,
-      "manuresolid_broiler":0.0274477631619806,
-      "manuresolid_horses":0.00440480042111328,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.650340967131297,
+      SolidManureType.pigs:0.279493306740428,
+      SolidManureType.sheep_goats:0.0140888719565466,
+      SolidManureType.laying_hen_litter:0.0228634131090672,
+      SolidManureType.broiler_litter:0.0274477631619806,
+      SolidManureType.horses:0.00440480042111328,
+      SolidManureType.other:0
    },
    "NZ":{
-      "manuresolid_cattle":0.963421730440515,
-      "manuresolid_pig":0.0109823225235529,
-      "manuresolid_sheep_goat":0,
-      "manuresolid_laying_hen":0.00547105071638433,
-      "manuresolid_broiler":0.0184228426712389,
-      "manuresolid_horses":0.00170205364830849,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.963421730440515,
+      SolidManureType.pigs:0.0109823225235529,
+      SolidManureType.sheep_goats:0,
+      SolidManureType.laying_hen_litter:0.00547105071638433,
+      SolidManureType.broiler_litter:0.0184228426712389,
+      SolidManureType.horses:0.00170205364830849,
+      SolidManureType.other:0
    },
    "PE":{
-      "manuresolid_cattle":0.496720484396516,
-      "manuresolid_pig":0.270738732154887,
-      "manuresolid_sheep_goat":0.00617767908700828,
-      "manuresolid_laying_hen":0.0159520683102628,
-      "manuresolid_broiler":0.122493270732421,
-      "manuresolid_horses":0,
-      "manuresolid_other":0.0754721922606031
+      SolidManureType.cattle:0.496720484396516,
+      SolidManureType.pigs:0.270738732154887,
+      SolidManureType.sheep_goats:0.00617767908700828,
+      SolidManureType.laying_hen_litter:0.0159520683102628,
+      SolidManureType.broiler_litter:0.122493270732421,
+      SolidManureType.horses:0,
+      SolidManureType.other:0.0754721922606031
    },
    "PH":{
-      "manuresolid_cattle":0.181039090379967,
-      "manuresolid_pig":0.170254196102749,
-      "manuresolid_sheep_goat":0.0236394474661915,
-      "manuresolid_laying_hen":0.0261928628054136,
-      "manuresolid_broiler":0.029492131725624,
-      "manuresolid_horses":0.0112876207841742,
-      "manuresolid_other":0.55372825869861
+      SolidManureType.cattle:0.181039090379967,
+      SolidManureType.pigs:0.170254196102749,
+      SolidManureType.sheep_goats:0.0236394474661915,
+      SolidManureType.laying_hen_litter:0.0261928628054136,
+      SolidManureType.broiler_litter:0.029492131725624,
+      SolidManureType.horses:0.0112876207841742,
+      SolidManureType.other:0.55372825869861
    },
    "PL":{
-      "manuresolid_cattle":0.682243198492267,
-      "manuresolid_pig":0.234441939364468,
-      "manuresolid_sheep_goat":0.0062009560207519,
-      "manuresolid_laying_hen":0.0189396723167528,
-      "manuresolid_broiler":0.0282322761692945,
-      "manuresolid_horses":0.0250107466216499,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.682243198492267,
+      SolidManureType.pigs:0.234441939364468,
+      SolidManureType.sheep_goats:0.0062009560207519,
+      SolidManureType.laying_hen_litter:0.0189396723167528,
+      SolidManureType.broiler_litter:0.0282322761692945,
+      SolidManureType.horses:0.0250107466216499,
+      SolidManureType.other:0
    },
    "RU":{
-      "manuresolid_cattle":0.713799208422998,
-      "manuresolid_pig":0.086703308957753,
-      "manuresolid_sheep_goat":0.125362195508399,
-      "manuresolid_laying_hen":0.0174414514252454,
-      "manuresolid_broiler":0.028538107776735,
-      "manuresolid_horses":0.0198904771946972,
-      "manuresolid_other":0.000806021904680627
+      SolidManureType.cattle:0.713799208422998,
+      SolidManureType.pigs:0.086703308957753,
+      SolidManureType.sheep_goats:0.125362195508399,
+      SolidManureType.laying_hen_litter:0.0174414514252454,
+      SolidManureType.broiler_litter:0.028538107776735,
+      SolidManureType.horses:0.0198904771946972,
+      SolidManureType.other:0.000806021904680627
    },
    "ZA":{
-      "manuresolid_cattle":0.356625251567831,
-      "manuresolid_pig":0.394853891860788,
-      "manuresolid_sheep_goat":0.132864576090439,
-      "manuresolid_laying_hen":0.0227101017834964,
-      "manuresolid_broiler":0.0842235633176526,
-      "manuresolid_horses":0.00236287438764808,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.356625251567831,
+      SolidManureType.pigs:0.394853891860788,
+      SolidManureType.sheep_goats:0.132864576090439,
+      SolidManureType.laying_hen_litter:0.0227101017834964,
+      SolidManureType.broiler_litter:0.0842235633176526,
+      SolidManureType.horses:0.00236287438764808,
+      SolidManureType.other:0
    },
    "ES":{
-      "manuresolid_cattle":0.474296687896011,
-      "manuresolid_pig":0.349950028157995,
-      "manuresolid_sheep_goat":0.12997128300961,
-      "manuresolid_laying_hen":0.0163774073286205,
-      "manuresolid_broiler":0.0258809175900883,
-      "manuresolid_horses":0.00150157348727131,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.474296687896011,
+      SolidManureType.pigs:0.349950028157995,
+      SolidManureType.sheep_goats:0.12997128300961,
+      SolidManureType.laying_hen_litter:0.0163774073286205,
+      SolidManureType.broiler_litter:0.0258809175900883,
+      SolidManureType.horses:0.00150157348727131,
+      SolidManureType.other:0
    },
    "LK":{
-      "manuresolid_cattle":0.358031210049245,
-      "manuresolid_pig":0.0112883407239895,
-      "manuresolid_sheep_goat":0.0270469208521131,
-      "manuresolid_laying_hen":0.029418742522326,
-      "manuresolid_broiler":0.0267171307871851,
-      "manuresolid_horses":0.00015138202065572,
-      "manuresolid_other":0.547036369869872
+      SolidManureType.cattle:0.358031210049245,
+      SolidManureType.pigs:0.0112883407239895,
+      SolidManureType.sheep_goats:0.0270469208521131,
+      SolidManureType.laying_hen_litter:0.029418742522326,
+      SolidManureType.broiler_litter:0.0267171307871851,
+      SolidManureType.horses:0.00015138202065572,
+      SolidManureType.other:0.547036369869872
    },
    "CH":{
-      "manuresolid_cattle":0.847661071767102,
-      "manuresolid_pig":0.117090979573841,
-      "manuresolid_sheep_goat":0.0171437568569013,
-      "manuresolid_laying_hen":0.00429103263320877,
-      "manuresolid_broiler":0.0110806584861638,
-      "manuresolid_horses":0.000565871544344061,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.847661071767102,
+      SolidManureType.pigs:0.117090979573841,
+      SolidManureType.sheep_goats:0.0171437568569013,
+      SolidManureType.laying_hen_litter:0.00429103263320877,
+      SolidManureType.broiler_litter:0.0110806584861638,
+      SolidManureType.horses:0.000565871544344061,
+      SolidManureType.other:0
    },
    "TH":{
-      "manuresolid_cattle":0.483365490034822,
-      "manuresolid_pig":0.105331894540662,
-      "manuresolid_sheep_goat":0.00325053153676041,
-      "manuresolid_laying_hen":0.0267397498762904,
-      "manuresolid_broiler":0.0594253500881106,
-      "manuresolid_horses":0.0284856028547359,
-      "manuresolid_other":0.293286711741945
+      SolidManureType.cattle:0.483365490034822,
+      SolidManureType.pigs:0.105331894540662,
+      SolidManureType.sheep_goats:0.00325053153676041,
+      SolidManureType.laying_hen_litter:0.0267397498762904,
+      SolidManureType.broiler_litter:0.0594253500881106,
+      SolidManureType.horses:0.0284856028547359,
+      SolidManureType.other:0.293286711741945
    },
    "TR":{
-      "manuresolid_cattle":0.715196837161228,
-      "manuresolid_pig":0.0000129294244842317,
-      "manuresolid_sheep_goat":0.223468643242192,
-      "manuresolid_laying_hen":0.0139275123117529,
-      "manuresolid_broiler":0.0318351921540885,
-      "manuresolid_horses":0.00372002554680684,
-      "manuresolid_other":0.00865029140642073
+      SolidManureType.cattle:0.715196837161228,
+      SolidManureType.pigs:0.0000129294244842317,
+      SolidManureType.sheep_goats:0.223468643242192,
+      SolidManureType.laying_hen_litter:0.0139275123117529,
+      SolidManureType.broiler_litter:0.0318351921540885,
+      SolidManureType.horses:0.00372002554680684,
+      SolidManureType.other:0.00865029140642073
    },
    "UA":{
-      "manuresolid_cattle":0.698618141080016,
-      "manuresolid_pig":0.154948882686506,
-      "manuresolid_sheep_goat":0.0332941900836932,
-      "manuresolid_laying_hen":0.0425455414624761,
-      "manuresolid_broiler":0.0414121380138285,
-      "manuresolid_horses":0.0193823535285322,
-      "manuresolid_other":0.0000199842093849127
+      SolidManureType.cattle:0.698618141080016,
+      SolidManureType.pigs:0.154948882686506,
+      SolidManureType.sheep_goats:0.0332941900836932,
+      SolidManureType.laying_hen_litter:0.0425455414624761,
+      SolidManureType.broiler_litter:0.0414121380138285,
+      SolidManureType.horses:0.0193823535285322,
+      SolidManureType.other:0.0000199842093849127
    },
    "US":{
-      "manuresolid_cattle":0.582965251842265,
-      "manuresolid_pig":0.122485390244081,
-      "manuresolid_sheep_goat":0.00534999988371993,
-      "manuresolid_laying_hen":0.0220091477664882,
-      "manuresolid_broiler":0.128299034748168,
-      "manuresolid_horses":0.105902046051912,
-      "manuresolid_other":0
+      SolidManureType.cattle:0.582965251842265,
+      SolidManureType.pigs:0.122485390244081,
+      SolidManureType.sheep_goats:0.00534999988371993,
+      SolidManureType.laying_hen_litter:0.0220091477664882,
+      SolidManureType.broiler_litter:0.128299034748168,
+      SolidManureType.horses:0.105902046051912,
+      SolidManureType.other:0
    },
    "VN":{
-      "manuresolid_cattle":0.289461071985541,
-      "manuresolid_pig":0.253613640613564,
-      "manuresolid_sheep_goat":0.00536369937026225,
-      "manuresolid_laying_hen":0.0159363283195119,
-      "manuresolid_broiler":0.0372640411471001,
-      "manuresolid_horses":0.0554421692672654,
-      "manuresolid_other":0.341748931506976
+      SolidManureType.cattle:0.289461071985541,
+      SolidManureType.pigs:0.253613640613564,
+      SolidManureType.sheep_goats:0.00536369937026225,
+      SolidManureType.laying_hen_litter:0.0159363283195119,
+      SolidManureType.broiler_litter:0.0372640411471001,
+      SolidManureType.horses:0.0554421692672654,
+      SolidManureType.other:0.341748931506976
    }
 }
 

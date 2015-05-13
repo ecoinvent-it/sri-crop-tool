@@ -51,7 +51,7 @@ class OutputMapping(object):
         self._mapEnumMap(allInputs["k_fertiliser_quantities"])
         self._mapEnumMap(allInputs["other_mineral_fertiliser_quantities"])
         #TODO: Is this the best place for that?
-        self.output["fert_n_ammonia_liquid_as_nh3"] = allInputs["fertnmin_ammonia_liquid"] * MA_NH3/MA_N
+        self.output["fert_n_ammonia_liquid_as_nh3"] = allInputs["fert_n_ammonia_liquid"] * MA_NH3/MA_N
         
     def mapOtherOrganicFertilizers(self, allInputs):
         self._mapEnumMap(allInputs["other_organic_fertiliser_quantities"])
@@ -67,7 +67,8 @@ class OutputMapping(object):
             self.output[k.value] = v
             
     _DIRECT_OUTPUT_MAPPING = {
-        "system_boundary":identity,      
+        # FIXME: No system_boundary input anymore, use ecospold name metadata instead?
+        #"system_boundary":identity,      
         "record_entry_by":identity,
         "collection_method":identity,
         "data_treatment_extrapolations":identity,

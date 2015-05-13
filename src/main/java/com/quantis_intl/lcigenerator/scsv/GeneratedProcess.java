@@ -168,8 +168,9 @@ public class GeneratedProcess implements ProductScsvProcess
     private String generateProcessAndProductName()
     {
         StringBuilder sb = new StringBuilder(PropertiesLoader.CROPS.getProperty(modelOutputs.get("crop")));
-        if (modelOutputs.containsKey("system_boundary"))
-            sb.append(", ").append(modelOutputs.get("system_boundary"));
+        // FIXME: No system_boundary input anymore, use ecospold name metadata instead?
+        /*if (modelOutputs.containsKey("system_boundary"))
+            sb.append(", ").append(modelOutputs.get("system_boundary"));*/
         sb.append("/kg");
         sb.append("/").append(modelOutputs.get("country"));
         return sb.toString();

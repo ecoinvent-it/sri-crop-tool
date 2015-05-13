@@ -78,7 +78,7 @@ class ConvertRatioToValueDefaultGenerator(object):
         
     def generateDefault(self, field, generators):
         total = generators[self._totalField]
-        return {k:v * total for k,v in self._ratioTable[generators[self._tableKeyField]]}
+        return {k:v * total for k,v in self._ratioTable[generators[self._tableKeyField]].items()}
     
 class CropCyclePerYearDefaultGenerator(object):
     def generateDefault(self, field, generators):
@@ -181,7 +181,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "average_annual_precipitation": TableLookupDefaultGenerator("country", ANNUAL_PRECIPITATION_PER_COUNTRY),
                    "clay_content": TableLookupDefaultGenerator("country", CLAY_CONTENT_PER_COUNTRY),
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
-                   "farming_type": "non_organic",
+                   "farming_type": SimpleValueDefaultGenerator("non_organic"),
                    "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),
                    "water_use_total": SimpleValueDefaultGenerator(0.0), #FIXME: to calculate
                    "yield_main_product_per_year":CropCountryMatrixLookupDefaultGenerator(YIELD_PER_YEAR_PER_CROP_PER_COUNTRY),

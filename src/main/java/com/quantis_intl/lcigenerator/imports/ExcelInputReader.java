@@ -88,7 +88,6 @@ public class ExcelInputReader
         private int dataColumnIndex = -1;
         private int commentColumnIndex = -1;
         private int sourceColumnIndex = -1;
-        private int dataLevelColumnIndex = -1;
 
         private Row currentTaggedRow;
         private String currentTag;
@@ -182,24 +181,13 @@ public class ExcelInputReader
                         }
                         break;
                     }
-                    case "data_level_column":
-                    {
-                        if (this.dataLevelColumnIndex != -1)
-                            manageDuplicateProperty();
-                        else
-                        {
-                            this.dataLevelColumnIndex = columnIndex;
-                            nbFilledColumns++;
-                        }
-                        break;
-                    }
                     default:
                         errorReporter.warning("", "", "Original template has been modified");
                 }
 
             }
 
-            if (nbFilledColumns < 6)
+            if (nbFilledColumns < 5)
             {
                 if (nbFilledColumns < 1)
                     errorReporter.error("", "", "Bad template, please use the original template");
@@ -217,8 +205,8 @@ public class ExcelInputReader
         {
             while (loadNextTaggedRowInfo())
             {
-                if ("dataset_row".equals(currentTag))
-                    readDatasetRow();
+                if ("crop".equals(currentTag) || "country".equals(currentTag))
+                    readCropOrCountry();
                 else if (LabelForBlockTags.LABELS_FOR_NUMERIC.containsKey(currentTag))
                     readBlock(LabelForBlockTags.LABELS_FOR_NUMERIC.get(currentTag));
                 else if (LabelForBlockTags.LABELS_FOR_RATIO.containsKey(currentTag))
@@ -228,26 +216,10 @@ public class ExcelInputReader
             }
         }
 
-        private void readDatasetRow()
+        private void readCropOrCountry()
         {
-            readCrop();
-            readCountry();
-            readSystemBoundary();
-        }
-
-        private void readCrop()
-        {
-            addCellToExtractedInputs("crop", "Crop", currentTaggedRow.getCell(labelColumnIndex));
-        }
-
-        private void readCountry()
-        {
-            addCellToExtractedInputs("country", "Country", currentTaggedRow.getCell(countryColumnIndex));
-        }
-
-        private void readSystemBoundary()
-        {
-            addCellToExtractedInputs("system_boundary", "System boundary", currentTaggedRow.getCell(dataColumnIndex));
+            String title = POIHelper.getCellStringValue(currentTaggedRow, labelColumnIndex, "");
+            addCellToExtractedInputs(currentTag, title, currentTaggedRow.getCell(countryColumnIndex));
         }
 
         private void readData()
