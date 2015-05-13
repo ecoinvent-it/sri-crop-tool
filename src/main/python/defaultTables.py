@@ -1,305 +1,46 @@
 from models.pmodel import LandUseCategory
 from models.modelEnums import SoilTexture
+from models.seedmodel import SeedType
 
-CLAY_CONTENT_PER_COUNTRY = {
-                            "AR":0.292466663312031,
-                            "AU":0.254921189470263,
-                            "BE":0.308178506375228,
-                            "BR":0.437376412776413,
-                            "CA":0.31123525871545,
-                            "CL":0.306546165119687,
-                            "CN":0.294914334944001,
-                            "CO":0.366829819277108,
-                            "CR":0.365213675213675,
-                            "CI":0.474068430900829,
-                            "EC":0.331469798657718,
-                            "FI":0.345413595413595,
-                            "FR":0.304420218037661,
-                            "DE":0.307058249267816,
-                            "GH":0.467859531772575,
-                            "HU":0.279274035317201,
-                            "IN":0.346841483315514,
-                            "ID":0.393157729037674,
-                            "IL":0.3,
-                            "IT":0.301079680414597,
-                            "KE":0.343026018950218,
-                            "MX":0.305421469017309,
-                            "NL":0.327041742286751,
-                            "NZ":0.328650578675203,
-                            "PE":0.338214661753093,
-                            "PH":0.456787439613527,
-                            "PL":0.300541961210803,
-                            "RU":0.323891074146178,
-                            "ZA":0.291097108969607,
-                            "ES":0.300886342684051,
-                            "LK":0.357411764705882,
-                            "CH":0.313327370304114,
-                            "TH":0.470251694094869,
-                            "TR":0.307997221981075,
-                            "UA":0.307020760574311,
-                            "US":0.332748853695815,
-                            "VN":0.44672620566471
-                            }
+#Generated from GD_crop GrossEnergy_C_L1 column D
+CARBON_CONTENT_PER_CROP = {
+                "almond":626.55914,
+                "apple":431.788079,
+                "apricot":475,
+                "asparagus":475,
+                "banana":429.522,
+                "carrot":475,
+                "cocoa":535.987,
+                "coconut":645.262412752311,
+                "coffee":475,
+                "lemonlime":384.1230769,
+                "linseed":590.234292,
+                "maizegrain":435.01682,
+                "mandarin":384.1230769,
+                "mint":445.395683453237,
+                "oat":475,
+                "olive":599.451774112943,
+                "onion":424.377803,
+                "orange":384.1230769,
+                "palmtree":599.451774112943,
+                "peach":412.732283,
+                "peanut":580.63,
+                "pear":475,
+                "potato":423.959628,
+                "rapeseed":470.88,
+                "rice":475,
+                "soybean":681.929577464789,
+                "strawberry":475,
+                "sugarbeet":381.46638,
+                "sugarcane":475,
+                "sunflower":842.802816901409,
+                "sweetcorn":435.01682,
+                "tea":475,
+                "tomato":383.275862,
+                "wheatwinter":424.10592
+    }
 
-SAND_CONTENT_PER_COUNTRY = {
-                       "AR":0.040180143913853,
-                       "AU":0.253381946701333,
-                       "BE":0.0200364298724954,
-                       "BR":0.0428501228501229,
-                       "CA":0.0100422280913798,
-                       "CL":0.0180752320468979,
-                       "CN":0.0885942240701202,
-                       "CO":0.0813253012048193,
-                       "CR":0,
-                       "CI":0.0149692595562684,
-                       "EC":0.00570469798657718,
-                       "FI":0,
-                       "FR":0.00947032265169034,
-                       "DE":0.0165961601041328,
-                       "GH":0.00520252694165738,
-                       "HU":0.0843688685415304,
-                       "IN":0.0174722863091554,
-                       "ID":0.0477489768076398,
-                       "IL":0,
-                       "IT":0,
-                       "KE":0.0551962701158069,
-                       "MX":0,
-                       "NL":0,
-                       "NZ":0.00861856685545432,
-                       "PE":0.0285601474072124,
-                       "PH":0.0111714975845411,
-                       "PL":0.0572775058908827,
-                       "RU":0.00505958625598585,
-                       "ZA":0.146219421793921,
-                       "ES":0.00948241801659423,
-                       "LK":0.0235294117647059,
-                       "CH":0,
-                       "TH":0.0037108744756373,
-                       "TR":0.00243076655959719,
-                       "UA":0.00950717889018238,
-                       "US":0.0167799421157036,
-                       "VN":0.0109721867823424
-}
-
-#src except unknown: EUROPEAN COMMISSION DIRECTORATE GENERAL JRC JOINT RESEARCH CENTRE Space Applications Institute European Soil Bureau
-SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE = {
-                        SoilTexture.unknown:0.032,#Panagos et al. 2014
-                        SoilTexture.coarse:0.0115,
-                        SoilTexture.medium:0.0311,
-                        SoilTexture.medium_fine:0.0438,
-                        SoilTexture.fine:0.0339,
-                        SoilTexture.very_fine:0.017
-                        }
-
-SOIL_CARBON_CONTENT_PER_COUNTRY = {
-                            "AR":0.0148,
-                            "AU":0.0063,
-                            "BE":0.0132,
-                            "BR":0.0121,
-                            "CA":0.0428,
-                            "CL":0.0223,
-                            "CN":0.0229, #mean of other values
-                            "CO":0.0382,
-                            "CR":0.033,
-                            "CI":0.0089,
-                            "EC":0.0212,
-                            "FI":0.1103,
-                            "FR":0.0142,
-                            "DE":0.0301,
-                            "GH":0.0088,
-                            "HU":0.0239,
-                            "IN":0.0088,
-                            "ID":0.0521,
-                            "IL":0.0096,
-                            "IT":0.011,
-                            "KE":0.009,
-                            "MX":0.0301,
-                            "NL":0.0637,
-                            "NZ":0.0185,
-                            "PE":0.0163,
-                            "PH":0.0128,
-                            "PL":0.034,
-                            "RU":0.0389,
-                            "ZA":0.0058,
-                            "ES":0.0125,
-                            "LK":0.0088,
-                            "CH":0.0209,
-                            "TH":0.0101,
-                            "TR":0.0098,
-                            "UA":0.0233,
-                            "US":0.0152,
-                            "VN":0.0126
-}
-
-#FIXME: Validate mapping
-ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
-            "linseed": 18.48,#protein peas
-            "maizegrain": 18.52,#grain maize
-            "potato": 17.59,#potatoes
-            "rapeseed": 26.48,#rape seed
-            "rice": 18.11,#Wheat grains
-            "soybean": 22.98,#soy beans
-            "sugarbeet": 16.43,#sugar beets
-            "sunflower": 30.25,#sunflower grains
-            "sweetcorn": 18.52,#grain maize
-            "wheatwinter": 18.11,#Wheat grains
-            }
-
-ROOTING_DEPTH_PER_CROP = {
-                        "almond": 1.5,
-                        "apple": 1.5,
-                        "apricot": 1.5,
-                        "asparagus": 0.5,
-                        "banana": 1, #FIXME: Default
-                        "carrot": 0.5,
-                        "cocoa": 2, #TODO: Took from another source
-                        "coconut": 1.5,
-                        "coffee": 1.5,
-                        "lemonlime": 1.5,
-                        "linseed": 0.9,
-                        "maizegrain": 1.35,
-                        "mandarin": 1.5,
-                        "mint": 0.5,
-                        "oat": 1.2,
-                        "olive": 1.5,
-                        "onion": 0.5,
-                        "orange": 1.5,
-                        "palmtree": 1,
-                        "peach": 1.5,
-                        "peanut": 0.9,
-                        "pear": 1.5,
-                        "pineapple": 1, #FIXME: Default
-                        "potato": 0.5,
-                        "rapeseed": 0.9,
-                        "rice": 0.6,
-                        "soybean": 0.95,
-                        "strawberry": 0.5,
-                        "sugarbeet": 1, # FIXME: Default
-                        "sugarcane": 1.6,
-                        "sunflower": 1.35,
-                        "sweetcorn": 1.35,
-                        "tea": 1.5,
-                        "tomato": 0.5,
-                        "wheatwinter": 1.2
-}
-
-#From GD_crop
-WATER_CONTENT_FM_RATIO_PER_CROP = {
-        "almond": 0.0565,
-        "apple": 0.849,
-        "apricot": 0.853,
-        "asparagus": 0.92,
-        "banana": 0.781,
-        "carrot": 0.882,
-        "cocoa": 0.056,
-        "coconut": 0.446,
-        "coffee": 0.102,
-        "lemonlime": 0.842,#lemon
-        "linseed": 0.1,
-        "maizegrain": 0.14,
-        "mandarin": 0.842,
-        "mint": 0.681,
-        "oat": 0.15,
-        "olive": 0.748,
-        "onion": 0.886,
-        "orange": 0.842,
-        "palmtree": 0.87,#palmfruitbunch
-        "peach": 0.873,
-        "peanut": 0.05968,
-        "pear": 0.829,
-        "pineapple": 0.8,#FIXME: Default
-        "potato": 0.78,
-        "rapeseed": 0.12,
-        "rice": 0.131,
-        "soybean": 0.11,
-        "strawberry": 0.895,
-        "sugarbeet": 0.77,
-        "sugarcane": 0.774,
-        "sunflower": 0.06,
-        "sweetcorn": 0.72,
-        "tea": 0.0764,
-        "tomato": 0.942,
-        "wheatwinter": 0.15
-        }
-
-LAND_USE_CATEGORY_PER_CROP = {
-        "almond":LandUseCategory.fruit_trees,
-        "apple":LandUseCategory.fruit_trees,
-        "apricot":LandUseCategory.fruit_trees,
-        "asparagus":LandUseCategory.vegetables,
-        "banana":LandUseCategory.fruit_trees,
-        "carrot":LandUseCategory.vegetables,
-        "cocoa":LandUseCategory.fruit_trees, #FIXME: To be verified
-        "coconut":LandUseCategory.fruit_trees,
-        "coffee":LandUseCategory.fruit_trees,#FIXME: To be verified
-        "lemonlime":LandUseCategory.fruit_trees,
-        "linseed":LandUseCategory.arable_land,
-        "maizegrain":LandUseCategory.arable_land,
-        "mandarin":LandUseCategory.fruit_trees,
-        "mint":LandUseCategory.vegetables,
-        "oat":LandUseCategory.arable_land,
-        "olive":LandUseCategory.fruit_trees,
-        "onion":LandUseCategory.vegetables,
-        "orange":LandUseCategory.fruit_trees,
-        "palmtree":LandUseCategory.fruit_trees,
-        "peach":LandUseCategory.fruit_trees,
-        "peanut":LandUseCategory.vegetables,#FIXME: To be verified
-        "pear":LandUseCategory.fruit_trees,
-        "pineapple":LandUseCategory.arable_land,
-        "potato":LandUseCategory.arable_land,
-        "rapeseed":LandUseCategory.arable_land,
-        "rice":LandUseCategory.arable_land,
-        "soybean":LandUseCategory.arable_land,
-        "strawberry":LandUseCategory.vegetables,
-        "sugarbeet":LandUseCategory.arable_land,
-        "sugarcane":LandUseCategory.arable_land,
-        "sunflower":LandUseCategory.arable_land,
-        "sweetcorn":LandUseCategory.arable_land,
-        "tea":LandUseCategory.vegetables,#FIXME: To be verified
-        "tomato":LandUseCategory.vegetables,
-        "wheatwinter":LandUseCategory.arable_land
-        }
-
-#from GD_crop Cfactor_L1
-CROP_FACTOR_PER_CROP = {
-        "almond":0.1,
-        "apple":0.1,
-        "apricot":0.1,
-        "asparagus":0.5,
-        "banana":0.33,
-        "carrot":0.5,
-        "cocoa":0.21,
-        "coconut":0.3,#No data found yet; same value as for banana and coffee
-        "coffee":0.26,
-        "lemonlime":0.1,#lemon
-        "linseed":0.18,
-        "maizegrain":0.35,
-        "mandarin":0.1,
-        "mint":0.47,
-        "oat":0.26,
-        "olive":0.1,
-        "onion":0.45,
-        "orange":0.1,
-        "palmtree":0.21,#palmfruitbunch
-        "peach":0.1,
-        "peanut":0.51,
-        "pear":0.1,
-        "pineapple":0.48,
-        "potato":0.44,
-        "rapeseed":0.33,
-        "rice":0.17,
-        "soybean":0.28,
-        "strawberry":0.47,
-        "sugarbeet":0.35,
-        "sugarcane":0.4,
-        "sunflower":0.32,
-        "sweetcorn":0.37,
-        "tea":0.3,
-        "tomato":0.47,
-        "wheatwinter":0.22
-        }
-
-#Generated from GD_crop
+#Generated from GD_crop precipitation_L1 line 16
 ANNUAL_PRECIPITATION_PER_COUNTRY = {
    "AR":559.045870807,
    "AU":473.091499829,
@@ -340,386 +81,327 @@ ANNUAL_PRECIPITATION_PER_COUNTRY = {
    "VN":1835.16079337
 }
 
-YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY = {
-   "AR":0,
-   "AU":0,
-   "BE":0,
-   "BR":0,
-   "CA":0.535441893912093,
-   "CL":0,
-   "CN":0.0932626571867323,
-   "CO":0,
-   "CR":0,
-   "CI":0,
-   "EC":0,
-   "FI":0.31411007733821,
-   "FR":0,
-   "DE":0.0717855087687475,
-   "GH":0,
-   "HU":0.0603055148410166,
-   "IN":0,
-   "ID":0,
-   "IL":0,
-   "IT":0,
-   "KE":0,
-   "MX":0,
-   "NL":0,
-   "NZ":0,
-   "PE":0,
-   "PH":0,
-   "PL":0.168512374426543,
-   "RU":0.399109339441838,
-   "ZA":0,
-   "ES":0,
-   "LK":0,
-   "CH":0.215816922864692,
-   "TH":0,
-   "TR":0.125603689935222,
-   "UA":0.217717386416183,
-   "US":0.20931054440831,
-   "VN":0
-}
+#from GD_crop SoilTypes_L1 line 15
+CLAY_CONTENT_PER_COUNTRY = {
+                            "AR":0.292466663312031,
+                            "AU":0.254921189470263,
+                            "BE":0.308178506375228,
+                            "BR":0.437376412776413,
+                            "CA":0.31123525871545,
+                            "CL":0.306546165119687,
+                            "CN":0.294914334944001,
+                            "CO":0.366829819277108,
+                            "CR":0.365213675213675,
+                            "CI":0.474068430900829,
+                            "EC":0.331469798657718,
+                            "FI":0.345413595413595,
+                            "FR":0.304420218037661,
+                            "DE":0.307058249267816,
+                            "GH":0.467859531772575,
+                            "HU":0.279274035317201,
+                            "IN":0.346841483315514,
+                            "ID":0.393157729037674,
+                            "IL":0.3,
+                            "IT":0.301079680414597,
+                            "KE":0.343026018950218,
+                            "MX":0.305421469017309,
+                            "NL":0.327041742286751,
+                            "NZ":0.328650578675203,
+                            "PE":0.338214661753093,
+                            "PH":0.456787439613527,
+                            "PL":0.300541961210803,
+                            "RU":0.323891074146178,
+                            "ZA":0.291097108969607,
+                            "ES":0.300886342684051,
+                            "LK":0.357411764705882,
+                            "CH":0.313327370304114,
+                            "TH":0.470251694094869,
+                            "TR":0.307997221981075,
+                            "UA":0.307020760574311,
+                            "US":0.332748853695815,
+                            "VN":0.44672620566471
+                            }
 
-#Generated in GD_crop using =""""&Z5&""":{""ratio_irr_surface_no_energy"":"&Q5&",  ""ratio_irr_surface_electricity"":"&S5&",  ""ratio_irr_surface_diesel"":"&T5&",  ""ratio_irr_sprinkler_electricity"":"&U5&",  ""ratio_irr_sprinkler_diesel"":"&V5&",  ""ratio_irr_drip_electricity"":"&W5&", ""ratio_irr_drip_diesel"":"&X5&"},"
-IRR_TECH_RATIO_PER_COUNTRY = {
-   "AR":{#South america
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.24105504587156,
-      "ratio_irr_surface_diesel":0.723165137614679,
-      "ratio_irr_sprinkler_electricity":0.0036697247706422,
-      "ratio_irr_sprinkler_diesel":0.0110091743119266,
-      "ratio_irr_drip_electricity":0.00527522935779817,
-      "ratio_irr_drip_diesel":0.0158256880733945
+
+#from GD_crop Cfactor_L1
+CROP_FACTOR_PER_CROP = {
+        "almond":0.1,
+        "apple":0.1,
+        "apricot":0.1,
+        "asparagus":0.5,
+        "banana":0.33,
+        "carrot":0.5,
+        "cocoa":0.21,
+        "coconut":0.3,#No data found yet; same value as for banana and coffee
+        "coffee":0.26,
+        "lemonlime":0.1,#lemon
+        "linseed":0.18,
+        "maizegrain":0.35,
+        "mandarin":0.1,
+        "mint":0.47,
+        "oat":0.26,
+        "olive":0.1,
+        "onion":0.45,
+        "orange":0.1,
+        "palmtree":0.21,#palmfruitbunch
+        "peach":0.1,
+        "peanut":0.51,
+        "pear":0.1,
+        "pineapple":0.48,
+        "potato":0.44,
+        "rapeseed":0.33,
+        "rice":0.17,
+        "soybean":0.28,
+        "strawberry":0.47,
+        "sugarbeet":0.35,
+        "sugarcane":0.4,
+        "sunflower":0.32,
+        "sweetcorn":0.37,
+        "tea":0.3,
+        "tomato":0.47,
+        "wheatwinter":0.22
+        }
+
+ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
+            "maizegrain": 18.52,#grain maize
+            "potato": 17.59,#potatoes
+            "rapeseed": 26.48,#rape seed
+            "rice": 18.11,#Wheat grains
+            "soybean": 22.98,#soy beans
+            "sugarbeet": 16.43,#sugar beets
+            "sunflower": 30.25,#sunflower grains
+            "sweetcorn": 18.52,#grain maize
+            "wheatwinter": 18.11#Wheat grains
+            }
+
+#Generated in GD_crop using "AR":{"fertkmin_potassium_salt_kcl":0.451949860724234,    "fertkmin_potassium_sulphate_k2so4":0.139275766016713,    "fertkmin_potassium_nitrate":0.302924791086351,    "fertkmin_patent_potassium":0.105849582172702},
+FERT_K_RATIO_PER_COUNTRY={
+   "AR":{
+      "fertkmin_potassium_salt_kcl":0.451949860724234,
+      "fertkmin_potassium_sulphate_k2so4":0.139275766016713,
+      "fertkmin_potassium_nitrate":0.302924791086351,
+      "fertkmin_patent_potassium":0.105849582172702
    },
    "AU":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.718978388998035,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.206082514734774,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0749390962671906,
-      "ratio_irr_drip_diesel":0
+      "fertkmin_potassium_salt_kcl":0.296028880866426,
+      "fertkmin_potassium_sulphate_k2so4":0.108580949736184,
+      "fertkmin_potassium_nitrate":0.590391557900583,
+      "fertkmin_patent_potassium":0.00499861149680644
    },
-   "BE":{#Europe
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
+   "BE":{
+      "fertkmin_potassium_salt_kcl":0.3710407239819,
+      "fertkmin_potassium_sulphate_k2so4":0.0180995475113122,
+      "fertkmin_potassium_nitrate":0.592760180995475,
+      "fertkmin_patent_potassium":0.0180995475113122
    },
    "BR":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.192036629213483,
-      "ratio_irr_surface_diesel":0.192036629213483,
-      "ratio_irr_sprinkler_electricity":0.271124494382022,
-      "ratio_irr_sprinkler_diesel":0.271124494382022,
-      "ratio_irr_drip_electricity":0.0368388764044944,
-      "ratio_irr_drip_diesel":0.0368388764044944
+      "fertkmin_potassium_salt_kcl":0.973469946185887,
+      "fertkmin_potassium_sulphate_k2so4":0.00246267976042078,
+      "fertkmin_potassium_nitrate":0.0223343771852482,
+      "fertkmin_patent_potassium":0.00173299686844426
    },
    "CA":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.207973563218391,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.785090804597701,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00693563218390805,
-      "ratio_irr_drip_diesel":0
-   },
-   "CH":{#Europe
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
-   },
-   "CI":{#Africa
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.22,
-      "ratio_irr_surface_diesel":0.66,
-      "ratio_irr_sprinkler_electricity":0.02875,
-      "ratio_irr_sprinkler_diesel":0.08625,
-      "ratio_irr_drip_electricity":0.00125,
-      "ratio_irr_drip_diesel":0.00375
+      "fertkmin_potassium_salt_kcl":0.917746113989637,
+      "fertkmin_potassium_sulphate_k2so4":0.0145725388601036,
+      "fertkmin_potassium_nitrate":0.0158678756476684,
+      "fertkmin_patent_potassium":0.0518134715025907
    },
    "CL":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.964220183486238,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.0146788990825688,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0211009174311927,
-      "ratio_irr_drip_diesel":0
+      "fertkmin_potassium_salt_kcl":0.648272167157782,
+      "fertkmin_potassium_sulphate_k2so4":0.0720600053576212,
+      "fertkmin_potassium_nitrate":0.279667827484597,
+      "fertkmin_patent_potassium":0
    },
    "CN":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.461248060708263,
-      "ratio_irr_surface_diesel":0.461248060708263,
-      "ratio_irr_sprinkler_electricity":0.024677150084317,
-      "ratio_irr_sprinkler_diesel":0.024677150084317,
-      "ratio_irr_drip_electricity":0.0140747892074199,
-      "ratio_irr_drip_diesel":0.0140747892074199
+      "fertkmin_potassium_salt_kcl":0.722896546735081,
+      "fertkmin_potassium_sulphate_k2so4":0.0339435840993763,
+      "fertkmin_potassium_nitrate":0.218961695267327,
+      "fertkmin_patent_potassium":0.0241981738982158
    },
-   "CO":{#South america
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.24105504587156,
-      "ratio_irr_surface_diesel":0.723165137614679,
-      "ratio_irr_sprinkler_electricity":0.0036697247706422,
-      "ratio_irr_sprinkler_diesel":0.0110091743119266,
-      "ratio_irr_drip_electricity":0.00527522935779817,
-      "ratio_irr_drip_diesel":0.0158256880733945
+   "CO":{
+      "fertkmin_potassium_salt_kcl":0.527710843373494,
+      "fertkmin_potassium_sulphate_k2so4":0.0301204819277108,
+      "fertkmin_potassium_nitrate":0.403614457831325,
+      "fertkmin_patent_potassium":0.0385542168674699
    },
-   "CR":{#central America,caribbean
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.225806451612903,
-      "ratio_irr_surface_diesel":0.67741935483871,
-      "ratio_irr_sprinkler_electricity":0.0161290322580645,
-      "ratio_irr_sprinkler_diesel":0.0483870967741936,
-      "ratio_irr_drip_electricity":0.00806451612903226,
-      "ratio_irr_drip_diesel":0.0241935483870968
+   "CR":{
+      "fertkmin_potassium_salt_kcl":0.861878453038674,
+      "fertkmin_potassium_sulphate_k2so4":0.0386740331491713,
+      "fertkmin_potassium_nitrate":0.0552486187845304,
+      "fertkmin_patent_potassium":0.0441988950276243
    },
-   "DE":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
+   "CI":{
+      "fertkmin_potassium_salt_kcl":0.233830845771144,
+      "fertkmin_potassium_sulphate_k2so4":0.233830845771144,
+      "fertkmin_potassium_nitrate":0.298507462686567,
+      "fertkmin_patent_potassium":0.233830845771144
    },
-   "EC":{#South america
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.24105504587156,
-      "ratio_irr_surface_diesel":0.723165137614679,
-      "ratio_irr_sprinkler_electricity":0.0036697247706422,
-      "ratio_irr_sprinkler_diesel":0.0110091743119266,
-      "ratio_irr_drip_electricity":0.00527522935779817,
-      "ratio_irr_drip_diesel":0.0158256880733945
-   },
-   "ES":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.296592219020173,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.225506628242075,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.477901152737752,
-      "ratio_irr_drip_diesel":0
+   "EC":{
+      "fertkmin_potassium_salt_kcl":0.881638846737481,
+      "fertkmin_potassium_sulphate_k2so4":0.0121396054628225,
+      "fertkmin_potassium_nitrate":0.106221547799697,
+      "fertkmin_patent_potassium":0
    },
    "FI":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.857142857142857,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.142857142857143,
-      "ratio_irr_drip_diesel":0
+      "fertkmin_potassium_salt_kcl":0,
+      "fertkmin_potassium_sulphate_k2so4":0,
+      "fertkmin_potassium_nitrate":1,
+      "fertkmin_patent_potassium":0
    },
    "FR":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.488586206896552,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.475793103448276,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0356206896551724,
-      "ratio_irr_drip_diesel":0
+      "fertkmin_potassium_salt_kcl":0.417530913442362,
+      "fertkmin_potassium_sulphate_k2so4":0.01770043877144,
+      "fertkmin_potassium_nitrate":0.505434782608696,
+      "fertkmin_patent_potassium":0.059333865177503
    },
-   "GH":{#central America,caribbean
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.225806451612903,
-      "ratio_irr_surface_diesel":0.67741935483871,
-      "ratio_irr_sprinkler_electricity":0.0161290322580645,
-      "ratio_irr_sprinkler_diesel":0.0483870967741936,
-      "ratio_irr_drip_electricity":0.00806451612903226,
-      "ratio_irr_drip_diesel":0.0241935483870968
+   "DE":{
+      "fertkmin_potassium_salt_kcl":0.634493078937523,
+      "fertkmin_potassium_sulphate_k2so4":0.0548696844993141,
+      "fertkmin_potassium_nitrate":0.287941139792992,
+      "fertkmin_patent_potassium":0.0226960967701708
+   },
+   "GH":{#Using GLO
+      "fertkmin_potassium_salt_kcl":0.96,
+      "fertkmin_potassium_sulphate_k2so4":0.04,
+      "fertkmin_potassium_nitrate":0,
+      "fertkmin_patent_potassium":0
    },
    "HU":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.127272727272727,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.840909090909091,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0318181818181818,
-      "ratio_irr_drip_diesel":0
-   },
-   "ID":{#South-East Asia
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.245394736842105,
-      "ratio_irr_surface_diesel":0.736184210526316,
-      "ratio_irr_sprinkler_electricity":0.00131578947368421,
-      "ratio_irr_sprinkler_diesel":0.00394736842105263,
-      "ratio_irr_drip_electricity":0.00328947368421053,
-      "ratio_irr_drip_diesel":0.00986842105263158
-   },
-   "IL":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0043290043290044,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.25974025974026,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.735930735930736,
-      "ratio_irr_drip_diesel":0
+      "fertkmin_potassium_salt_kcl":0.881720430107527,
+      "fertkmin_potassium_sulphate_k2so4":0.021505376344086,
+      "fertkmin_potassium_nitrate":0.0967741935483871,
+      "fertkmin_patent_potassium":0
    },
    "IN":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.459423481116585,
-      "ratio_irr_surface_diesel":0.459423481116585,
-      "ratio_irr_sprinkler_electricity":0.0249995073891626,
-      "ratio_irr_sprinkler_diesel":0.0249995073891626,
-      "ratio_irr_drip_electricity":0.0155770114942529,
-      "ratio_irr_drip_diesel":0.0155770114942529
+      "fertkmin_potassium_salt_kcl":0.702927698574338,
+      "fertkmin_potassium_sulphate_k2so4":0.00486252545824847,
+      "fertkmin_potassium_nitrate":0.292209775967413,
+      "fertkmin_patent_potassium":0
+   },
+   "ID":{
+      "fertkmin_potassium_salt_kcl":0.748280048563335,
+      "fertkmin_potassium_sulphate_k2so4":0.00202347227842979,
+      "fertkmin_potassium_nitrate":0.249696479158236,
+      "fertkmin_patent_potassium":0
+   },
+   "IL":{
+      "fertkmin_potassium_salt_kcl":0.166666666666667,
+      "fertkmin_potassium_sulphate_k2so4":0,
+      "fertkmin_potassium_nitrate":0.833333333333333,
+      "fertkmin_patent_potassium":0
    },
    "IT":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.41882734082397,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.367476779026217,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.213695880149813,
-      "ratio_irr_drip_diesel":0
+      "fertkmin_potassium_salt_kcl":0.333333333333333,
+      "fertkmin_potassium_sulphate_k2so4":0.174329501915709,
+      "fertkmin_potassium_nitrate":0.440613026819923,
+      "fertkmin_patent_potassium":0.0517241379310345
    },
-   "KE":{#Africa
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.22,
-      "ratio_irr_surface_diesel":0.66,
-      "ratio_irr_sprinkler_electricity":0.02875,
-      "ratio_irr_sprinkler_diesel":0.08625,
-      "ratio_irr_drip_electricity":0.00125,
-      "ratio_irr_drip_diesel":0.00375
-   },
-   "LK":{#South-East Asia
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.245394736842105,
-      "ratio_irr_surface_diesel":0.736184210526316,
-      "ratio_irr_sprinkler_electricity":0.00131578947368421,
-      "ratio_irr_sprinkler_diesel":0.00394736842105263,
-      "ratio_irr_drip_electricity":0.00328947368421053,
-      "ratio_irr_drip_diesel":0.00986842105263158
+   "KE":{
+      "fertkmin_potassium_salt_kcl":0,
+      "fertkmin_potassium_sulphate_k2so4":0,
+      "fertkmin_potassium_nitrate":1,
+      "fertkmin_patent_potassium":0
    },
    "MX":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.903225806451613,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.0645161290322581,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.032258064516129,
-      "ratio_irr_drip_diesel":0
+      "fertkmin_potassium_salt_kcl":0.555328089645512,
+      "fertkmin_potassium_sulphate_k2so4":0.13252882232518,
+      "fertkmin_potassium_nitrate":0.276909815752613,
+      "fertkmin_patent_potassium":0.0352332722766943
    },
-   "NL":{#Europe
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
+   "NL":{
+      "fertkmin_potassium_salt_kcl":0.492537313432836,
+      "fertkmin_potassium_sulphate_k2so4":0.119402985074627,
+      "fertkmin_potassium_nitrate":0.388059701492537,
+      "fertkmin_patent_potassium":0
    },
    "NZ":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.0185185185185185,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.972222222222222,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.00925925925925926,
-      "ratio_irr_drip_diesel":0
+      "fertkmin_potassium_salt_kcl":0.869218126320733,
+      "fertkmin_potassium_sulphate_k2so4":0.065977929091336,
+      "fertkmin_potassium_nitrate":0.0648039445879314,
+      "fertkmin_patent_potassium":0
    },
-   "PE":{#South america
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.24105504587156,
-      "ratio_irr_surface_diesel":0.723165137614679,
-      "ratio_irr_sprinkler_electricity":0.0036697247706422,
-      "ratio_irr_sprinkler_diesel":0.0110091743119266,
-      "ratio_irr_drip_electricity":0.00527522935779817,
-      "ratio_irr_drip_diesel":0.0158256880733945
+   "PE":{
+      "fertkmin_potassium_salt_kcl":0.790960451977401,
+      "fertkmin_potassium_sulphate_k2so4":0.135593220338983,
+      "fertkmin_potassium_nitrate":0,
+      "fertkmin_patent_potassium":0.0734463276836158
    },
    "PH":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.247728618421053,
-      "ratio_irr_surface_diesel":0.743185855263158,
-      "ratio_irr_sprinkler_electricity":0.00118009868421053,
-      "ratio_irr_sprinkler_diesel":0.00354029605263158,
-      "ratio_irr_drip_electricity":0.00109128289473684,
-      "ratio_irr_drip_diesel":0.00327384868421053
+      "fertkmin_potassium_salt_kcl":0.169270833333333,
+      "fertkmin_potassium_sulphate_k2so4":0.078125,
+      "fertkmin_potassium_nitrate":0.752604166666667,
+      "fertkmin_patent_potassium":0
    },
    "PL":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.87,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.05,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.08,
-      "ratio_irr_drip_diesel":0
+      "fertkmin_potassium_salt_kcl":0.293371757925072,
+      "fertkmin_potassium_sulphate_k2so4":0,
+      "fertkmin_potassium_nitrate":0.706628242074928,
+      "fertkmin_patent_potassium":0
    },
    "RU":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.217,
-      "ratio_irr_surface_diesel":0.217,
-      "ratio_irr_sprinkler_electricity":0.277777777777778,
-      "ratio_irr_sprinkler_diesel":0.277777777777778,
-      "ratio_irr_drip_electricity":0.00522222222222222,
-      "ratio_irr_drip_diesel":0.00522222222222222
-   },
-   "TH":{#South-East Asia
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.245394736842105,
-      "ratio_irr_surface_diesel":0.736184210526316,
-      "ratio_irr_sprinkler_electricity":0.00131578947368421,
-      "ratio_irr_sprinkler_diesel":0.00394736842105263,
-      "ratio_irr_drip_electricity":0.00328947368421053,
-      "ratio_irr_drip_diesel":0.00986842105263158
-   },
-   "TR":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.878277153558052,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.0936329588014981,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0280898876404494,
-      "ratio_irr_drip_diesel":0
-   },
-   "UA":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.25,
-      "ratio_irr_sprinkler_diesel":0.75,
-      "ratio_irr_drip_electricity":0,
-      "ratio_irr_drip_diesel":0
-   },
-   "US":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.433690111336032,
-      "ratio_irr_surface_diesel":0,
-      "ratio_irr_sprinkler_electricity":0.49992624048583,
-      "ratio_irr_sprinkler_diesel":0,
-      "ratio_irr_drip_electricity":0.0663836481781377,
-      "ratio_irr_drip_diesel":0
-   },
-   "VN":{#South-East Asia
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.245394736842105,
-      "ratio_irr_surface_diesel":0.736184210526316,
-      "ratio_irr_sprinkler_electricity":0.00131578947368421,
-      "ratio_irr_sprinkler_diesel":0.00394736842105263,
-      "ratio_irr_drip_electricity":0.00328947368421053,
-      "ratio_irr_drip_diesel":0.00986842105263158
+      "fertkmin_potassium_salt_kcl":0.345803049736355,
+      "fertkmin_potassium_sulphate_k2so4":0.0391905372666382,
+      "fertkmin_potassium_nitrate":0.590779535413995,
+      "fertkmin_patent_potassium":0.0242268775830127
    },
    "ZA":{
-      "ratio_irr_surface_no_energy":0,
-      "ratio_irr_surface_electricity":0.115149401197605,
-      "ratio_irr_surface_diesel":0.115149401197605,
-      "ratio_irr_sprinkler_electricity":0.275466766467066,
-      "ratio_irr_sprinkler_diesel":0.275466766467066,
-      "ratio_irr_drip_electricity":0.109383832335329,
-      "ratio_irr_drip_diesel":0.109383832335329
+      "fertkmin_potassium_salt_kcl":0.149092480553155,
+      "fertkmin_potassium_sulphate_k2so4":0.0280898876404494,
+      "fertkmin_potassium_nitrate":0.822817631806396,
+      "fertkmin_patent_potassium":0
+   },
+   "ES":{
+      "fertkmin_potassium_salt_kcl":0.290322580645161,
+      "fertkmin_potassium_sulphate_k2so4":0.0552884615384615,
+      "fertkmin_potassium_nitrate":0.654388957816377,
+      "fertkmin_patent_potassium":0
+   },
+   "LK":{
+      "fertkmin_potassium_salt_kcl":0.948529411764706,
+      "fertkmin_potassium_sulphate_k2so4":0,
+      "fertkmin_potassium_nitrate":0.0514705882352941,
+      "fertkmin_patent_potassium":0
+   },
+   "CH":{
+      "fertkmin_potassium_salt_kcl":0,
+      "fertkmin_potassium_sulphate_k2so4":0.0444444444444444,
+      "fertkmin_potassium_nitrate":0.955555555555556,
+      "fertkmin_patent_potassium":0
+   },
+   "TH":{
+      "fertkmin_potassium_salt_kcl":0,
+      "fertkmin_potassium_sulphate_k2so4":0,
+      "fertkmin_potassium_nitrate":1,
+      "fertkmin_patent_potassium":0
+   },
+   "TR":{
+      "fertkmin_potassium_salt_kcl":0,
+      "fertkmin_potassium_sulphate_k2so4":0.0944972630365889,
+      "fertkmin_potassium_nitrate":0.905502736963411,
+      "fertkmin_patent_potassium":0
+   },
+   "UA":{
+      "fertkmin_potassium_salt_kcl":0.0695825049701789,
+      "fertkmin_potassium_sulphate_k2so4":0.073558648111332,
+      "fertkmin_potassium_nitrate":0.78727634194831,
+      "fertkmin_patent_potassium":0.0695825049701789
+   },
+   "US":{
+      "fertkmin_potassium_salt_kcl":0.712309762296307,
+      "fertkmin_potassium_sulphate_k2so4":0.0336612348632083,
+      "fertkmin_potassium_nitrate":0.236011361937509,
+      "fertkmin_patent_potassium":0.018017640902975
+   },
+   "VN":{#Using GLO
+      "fertkmin_potassium_salt_kcl":0.96,
+      "fertkmin_potassium_sulphate_k2so4":0.04,
+      "fertkmin_potassium_nitrate":0,
+      "fertkmin_patent_potassium":0
    }
 }
 
-
 #Generated in GD_crop using =""""&C3&""":{""fertnmin_ammonium_nitrate"":"&C5&", ""fertnmin_urea"":"&C6&", ""fertnmin_urea_an"":"&C7&", ""fertnmin_mono_ammonium_phosphate"":"&C8&", ""fertnmin_di_ammonium_phosphate"":"&C9&", ""fertnmin_an_phosphate"":"&C10&", ""fertnmin_lime_ammonium_nitrate"":"&C11&", ""fertnmin_ammonium_sulphate"":"&C12&", ""fertnmin_potassium_nitrate"":"&C13&", ""fertnmin_ammonia_liquid"":"&C14&"},"
-N_FERT_RATIO_PER_COUNTRY = {
+FERT_N_RATIO_PER_COUNTRY = {
     "AR":{
       "fertnmin_ammonium_nitrate":0.0395983072479344,
       "fertnmin_urea":0.27525693558138,
@@ -1167,7 +849,7 @@ N_FERT_RATIO_PER_COUNTRY = {
 }
 
 #Generated in GD_crop using "AR":{"fertpmin_triple_superphosphate":0.0790316503391107,   "fertpmin_superphosphate":0.14764925060705,   "fertpmin_mono_ammonium_phosphate":0.376231544279773,   "fertpmin_di_ammonium_phosphate":0.376231544279773,  "fertpmin_an_phosphate":0.0144296519579112,   "fertpmin_hypophosphate_raw_phosphate":0.00321317926819057,  "fertpmin_ground_basic_slag":0.00321317926819057},                           
-P_FERT_RATIO_PER_COUNTRY = {
+FERT_P_RATIO_PER_COUNTRY = {
    "AR":{
       "fertpmin_triple_superphosphate":0.0790316503391107,
       "fertpmin_superphosphate":0.14764925060705,
@@ -1503,234 +1185,383 @@ P_FERT_RATIO_PER_COUNTRY = {
    }
 }
 
-#Generated in GD_crop using "AR":{"fertkmin_potassium_salt_kcl":0.451949860724234,    "fertkmin_potassium_sulphate_k2so4":0.139275766016713,    "fertkmin_potassium_nitrate":0.302924791086351,    "fertkmin_patent_potassium":0.105849582172702},
-K_FERT_RATIO_PER_COUNTRY={
-   "AR":{
-      "fertkmin_potassium_salt_kcl":0.451949860724234,
-      "fertkmin_potassium_sulphate_k2so4":0.139275766016713,
-      "fertkmin_potassium_nitrate":0.302924791086351,
-      "fertkmin_patent_potassium":0.105849582172702
+#Generated in GD_crop using =""""&Z5&""":{""ratio_irr_surface_no_energy"":"&Q5&",  ""ratio_irr_surface_electricity"":"&S5&",  ""ratio_irr_surface_diesel"":"&T5&",  ""ratio_irr_sprinkler_electricity"":"&U5&",  ""ratio_irr_sprinkler_diesel"":"&V5&",  ""ratio_irr_drip_electricity"":"&W5&", ""ratio_irr_drip_diesel"":"&X5&"},"
+IRR_TECH_RATIO_PER_COUNTRY = {
+   "AR":{#South america
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.24105504587156,
+      "ratio_irr_surface_diesel":0.723165137614679,
+      "ratio_irr_sprinkler_electricity":0.0036697247706422,
+      "ratio_irr_sprinkler_diesel":0.0110091743119266,
+      "ratio_irr_drip_electricity":0.00527522935779817,
+      "ratio_irr_drip_diesel":0.0158256880733945
    },
    "AU":{
-      "fertkmin_potassium_salt_kcl":0.296028880866426,
-      "fertkmin_potassium_sulphate_k2so4":0.108580949736184,
-      "fertkmin_potassium_nitrate":0.590391557900583,
-      "fertkmin_patent_potassium":0.00499861149680644
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.718978388998035,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.206082514734774,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.0749390962671906,
+      "ratio_irr_drip_diesel":0
    },
-   "BE":{
-      "fertkmin_potassium_salt_kcl":0.3710407239819,
-      "fertkmin_potassium_sulphate_k2so4":0.0180995475113122,
-      "fertkmin_potassium_nitrate":0.592760180995475,
-      "fertkmin_patent_potassium":0.0180995475113122
+   "BE":{#Europe
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.0185185185185185,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.972222222222222,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.00925925925925926,
+      "ratio_irr_drip_diesel":0
    },
    "BR":{
-      "fertkmin_potassium_salt_kcl":0.973469946185887,
-      "fertkmin_potassium_sulphate_k2so4":0.00246267976042078,
-      "fertkmin_potassium_nitrate":0.0223343771852482,
-      "fertkmin_patent_potassium":0.00173299686844426
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.192036629213483,
+      "ratio_irr_surface_diesel":0.192036629213483,
+      "ratio_irr_sprinkler_electricity":0.271124494382022,
+      "ratio_irr_sprinkler_diesel":0.271124494382022,
+      "ratio_irr_drip_electricity":0.0368388764044944,
+      "ratio_irr_drip_diesel":0.0368388764044944
    },
    "CA":{
-      "fertkmin_potassium_salt_kcl":0.917746113989637,
-      "fertkmin_potassium_sulphate_k2so4":0.0145725388601036,
-      "fertkmin_potassium_nitrate":0.0158678756476684,
-      "fertkmin_patent_potassium":0.0518134715025907
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.207973563218391,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.785090804597701,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.00693563218390805,
+      "ratio_irr_drip_diesel":0
+   },
+   "CH":{#Europe
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.0185185185185185,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.972222222222222,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.00925925925925926,
+      "ratio_irr_drip_diesel":0
+   },
+   "CI":{#Africa
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.22,
+      "ratio_irr_surface_diesel":0.66,
+      "ratio_irr_sprinkler_electricity":0.02875,
+      "ratio_irr_sprinkler_diesel":0.08625,
+      "ratio_irr_drip_electricity":0.00125,
+      "ratio_irr_drip_diesel":0.00375
    },
    "CL":{
-      "fertkmin_potassium_salt_kcl":0.648272167157782,
-      "fertkmin_potassium_sulphate_k2so4":0.0720600053576212,
-      "fertkmin_potassium_nitrate":0.279667827484597,
-      "fertkmin_patent_potassium":0
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.964220183486238,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.0146788990825688,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.0211009174311927,
+      "ratio_irr_drip_diesel":0
    },
    "CN":{
-      "fertkmin_potassium_salt_kcl":0.722896546735081,
-      "fertkmin_potassium_sulphate_k2so4":0.0339435840993763,
-      "fertkmin_potassium_nitrate":0.218961695267327,
-      "fertkmin_patent_potassium":0.0241981738982158
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.461248060708263,
+      "ratio_irr_surface_diesel":0.461248060708263,
+      "ratio_irr_sprinkler_electricity":0.024677150084317,
+      "ratio_irr_sprinkler_diesel":0.024677150084317,
+      "ratio_irr_drip_electricity":0.0140747892074199,
+      "ratio_irr_drip_diesel":0.0140747892074199
    },
-   "CO":{
-      "fertkmin_potassium_salt_kcl":0.527710843373494,
-      "fertkmin_potassium_sulphate_k2so4":0.0301204819277108,
-      "fertkmin_potassium_nitrate":0.403614457831325,
-      "fertkmin_patent_potassium":0.0385542168674699
+   "CO":{#South america
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.24105504587156,
+      "ratio_irr_surface_diesel":0.723165137614679,
+      "ratio_irr_sprinkler_electricity":0.0036697247706422,
+      "ratio_irr_sprinkler_diesel":0.0110091743119266,
+      "ratio_irr_drip_electricity":0.00527522935779817,
+      "ratio_irr_drip_diesel":0.0158256880733945
    },
-   "CR":{
-      "fertkmin_potassium_salt_kcl":0.861878453038674,
-      "fertkmin_potassium_sulphate_k2so4":0.0386740331491713,
-      "fertkmin_potassium_nitrate":0.0552486187845304,
-      "fertkmin_patent_potassium":0.0441988950276243
-   },
-   "CI":{
-      "fertkmin_potassium_salt_kcl":0.233830845771144,
-      "fertkmin_potassium_sulphate_k2so4":0.233830845771144,
-      "fertkmin_potassium_nitrate":0.298507462686567,
-      "fertkmin_patent_potassium":0.233830845771144
-   },
-   "EC":{
-      "fertkmin_potassium_salt_kcl":0.881638846737481,
-      "fertkmin_potassium_sulphate_k2so4":0.0121396054628225,
-      "fertkmin_potassium_nitrate":0.106221547799697,
-      "fertkmin_patent_potassium":0
-   },
-   "FI":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":1,
-      "fertkmin_patent_potassium":0
-   },
-   "FR":{
-      "fertkmin_potassium_salt_kcl":0.417530913442362,
-      "fertkmin_potassium_sulphate_k2so4":0.01770043877144,
-      "fertkmin_potassium_nitrate":0.505434782608696,
-      "fertkmin_patent_potassium":0.059333865177503
+   "CR":{#central America,caribbean
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.225806451612903,
+      "ratio_irr_surface_diesel":0.67741935483871,
+      "ratio_irr_sprinkler_electricity":0.0161290322580645,
+      "ratio_irr_sprinkler_diesel":0.0483870967741936,
+      "ratio_irr_drip_electricity":0.00806451612903226,
+      "ratio_irr_drip_diesel":0.0241935483870968
    },
    "DE":{
-      "fertkmin_potassium_salt_kcl":0.634493078937523,
-      "fertkmin_potassium_sulphate_k2so4":0.0548696844993141,
-      "fertkmin_potassium_nitrate":0.287941139792992,
-      "fertkmin_patent_potassium":0.0226960967701708
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.0185185185185185,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.972222222222222,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.00925925925925926,
+      "ratio_irr_drip_diesel":0
    },
-   "GH":{#Using GLO
-      "fertkmin_potassium_salt_kcl":0.96,
-      "fertkmin_potassium_sulphate_k2so4":0.04,
-      "fertkmin_potassium_nitrate":0,
-      "fertkmin_patent_potassium":0
-   },
-   "HU":{
-      "fertkmin_potassium_salt_kcl":0.881720430107527,
-      "fertkmin_potassium_sulphate_k2so4":0.021505376344086,
-      "fertkmin_potassium_nitrate":0.0967741935483871,
-      "fertkmin_patent_potassium":0
-   },
-   "IN":{
-      "fertkmin_potassium_salt_kcl":0.702927698574338,
-      "fertkmin_potassium_sulphate_k2so4":0.00486252545824847,
-      "fertkmin_potassium_nitrate":0.292209775967413,
-      "fertkmin_patent_potassium":0
-   },
-   "ID":{
-      "fertkmin_potassium_salt_kcl":0.748280048563335,
-      "fertkmin_potassium_sulphate_k2so4":0.00202347227842979,
-      "fertkmin_potassium_nitrate":0.249696479158236,
-      "fertkmin_patent_potassium":0
-   },
-   "IL":{
-      "fertkmin_potassium_salt_kcl":0.166666666666667,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":0.833333333333333,
-      "fertkmin_patent_potassium":0
-   },
-   "IT":{
-      "fertkmin_potassium_salt_kcl":0.333333333333333,
-      "fertkmin_potassium_sulphate_k2so4":0.174329501915709,
-      "fertkmin_potassium_nitrate":0.440613026819923,
-      "fertkmin_patent_potassium":0.0517241379310345
-   },
-   "KE":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":1,
-      "fertkmin_patent_potassium":0
-   },
-   "MX":{
-      "fertkmin_potassium_salt_kcl":0.555328089645512,
-      "fertkmin_potassium_sulphate_k2so4":0.13252882232518,
-      "fertkmin_potassium_nitrate":0.276909815752613,
-      "fertkmin_patent_potassium":0.0352332722766943
-   },
-   "NL":{
-      "fertkmin_potassium_salt_kcl":0.492537313432836,
-      "fertkmin_potassium_sulphate_k2so4":0.119402985074627,
-      "fertkmin_potassium_nitrate":0.388059701492537,
-      "fertkmin_patent_potassium":0
-   },
-   "NZ":{
-      "fertkmin_potassium_salt_kcl":0.869218126320733,
-      "fertkmin_potassium_sulphate_k2so4":0.065977929091336,
-      "fertkmin_potassium_nitrate":0.0648039445879314,
-      "fertkmin_patent_potassium":0
-   },
-   "PE":{
-      "fertkmin_potassium_salt_kcl":0.790960451977401,
-      "fertkmin_potassium_sulphate_k2so4":0.135593220338983,
-      "fertkmin_potassium_nitrate":0,
-      "fertkmin_patent_potassium":0.0734463276836158
-   },
-   "PH":{
-      "fertkmin_potassium_salt_kcl":0.169270833333333,
-      "fertkmin_potassium_sulphate_k2so4":0.078125,
-      "fertkmin_potassium_nitrate":0.752604166666667,
-      "fertkmin_patent_potassium":0
-   },
-   "PL":{
-      "fertkmin_potassium_salt_kcl":0.293371757925072,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":0.706628242074928,
-      "fertkmin_patent_potassium":0
-   },
-   "RU":{
-      "fertkmin_potassium_salt_kcl":0.345803049736355,
-      "fertkmin_potassium_sulphate_k2so4":0.0391905372666382,
-      "fertkmin_potassium_nitrate":0.590779535413995,
-      "fertkmin_patent_potassium":0.0242268775830127
-   },
-   "ZA":{
-      "fertkmin_potassium_salt_kcl":0.149092480553155,
-      "fertkmin_potassium_sulphate_k2so4":0.0280898876404494,
-      "fertkmin_potassium_nitrate":0.822817631806396,
-      "fertkmin_patent_potassium":0
+   "EC":{#South america
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.24105504587156,
+      "ratio_irr_surface_diesel":0.723165137614679,
+      "ratio_irr_sprinkler_electricity":0.0036697247706422,
+      "ratio_irr_sprinkler_diesel":0.0110091743119266,
+      "ratio_irr_drip_electricity":0.00527522935779817,
+      "ratio_irr_drip_diesel":0.0158256880733945
    },
    "ES":{
-      "fertkmin_potassium_salt_kcl":0.290322580645161,
-      "fertkmin_potassium_sulphate_k2so4":0.0552884615384615,
-      "fertkmin_potassium_nitrate":0.654388957816377,
-      "fertkmin_patent_potassium":0
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.296592219020173,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.225506628242075,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.477901152737752,
+      "ratio_irr_drip_diesel":0
    },
-   "LK":{
-      "fertkmin_potassium_salt_kcl":0.948529411764706,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":0.0514705882352941,
-      "fertkmin_patent_potassium":0
+   "FI":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.857142857142857,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.142857142857143,
+      "ratio_irr_drip_diesel":0
    },
-   "CH":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0.0444444444444444,
-      "fertkmin_potassium_nitrate":0.955555555555556,
-      "fertkmin_patent_potassium":0
+   "FR":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.488586206896552,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.475793103448276,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.0356206896551724,
+      "ratio_irr_drip_diesel":0
    },
-   "TH":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0,
-      "fertkmin_potassium_nitrate":1,
-      "fertkmin_patent_potassium":0
+   "GH":{#central America,caribbean
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.225806451612903,
+      "ratio_irr_surface_diesel":0.67741935483871,
+      "ratio_irr_sprinkler_electricity":0.0161290322580645,
+      "ratio_irr_sprinkler_diesel":0.0483870967741936,
+      "ratio_irr_drip_electricity":0.00806451612903226,
+      "ratio_irr_drip_diesel":0.0241935483870968
+   },
+   "HU":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.127272727272727,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.840909090909091,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.0318181818181818,
+      "ratio_irr_drip_diesel":0
+   },
+   "ID":{#South-East Asia
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.245394736842105,
+      "ratio_irr_surface_diesel":0.736184210526316,
+      "ratio_irr_sprinkler_electricity":0.00131578947368421,
+      "ratio_irr_sprinkler_diesel":0.00394736842105263,
+      "ratio_irr_drip_electricity":0.00328947368421053,
+      "ratio_irr_drip_diesel":0.00986842105263158
+   },
+   "IL":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.0043290043290044,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.25974025974026,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.735930735930736,
+      "ratio_irr_drip_diesel":0
+   },
+   "IN":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.459423481116585,
+      "ratio_irr_surface_diesel":0.459423481116585,
+      "ratio_irr_sprinkler_electricity":0.0249995073891626,
+      "ratio_irr_sprinkler_diesel":0.0249995073891626,
+      "ratio_irr_drip_electricity":0.0155770114942529,
+      "ratio_irr_drip_diesel":0.0155770114942529
+   },
+   "IT":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.41882734082397,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.367476779026217,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.213695880149813,
+      "ratio_irr_drip_diesel":0
+   },
+   "KE":{#Africa
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.22,
+      "ratio_irr_surface_diesel":0.66,
+      "ratio_irr_sprinkler_electricity":0.02875,
+      "ratio_irr_sprinkler_diesel":0.08625,
+      "ratio_irr_drip_electricity":0.00125,
+      "ratio_irr_drip_diesel":0.00375
+   },
+   "LK":{#South-East Asia
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.245394736842105,
+      "ratio_irr_surface_diesel":0.736184210526316,
+      "ratio_irr_sprinkler_electricity":0.00131578947368421,
+      "ratio_irr_sprinkler_diesel":0.00394736842105263,
+      "ratio_irr_drip_electricity":0.00328947368421053,
+      "ratio_irr_drip_diesel":0.00986842105263158
+   },
+   "MX":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.903225806451613,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.0645161290322581,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.032258064516129,
+      "ratio_irr_drip_diesel":0
+   },
+   "NL":{#Europe
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.0185185185185185,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.972222222222222,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.00925925925925926,
+      "ratio_irr_drip_diesel":0
+   },
+   "NZ":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.0185185185185185,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.972222222222222,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.00925925925925926,
+      "ratio_irr_drip_diesel":0
+   },
+   "PE":{#South america
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.24105504587156,
+      "ratio_irr_surface_diesel":0.723165137614679,
+      "ratio_irr_sprinkler_electricity":0.0036697247706422,
+      "ratio_irr_sprinkler_diesel":0.0110091743119266,
+      "ratio_irr_drip_electricity":0.00527522935779817,
+      "ratio_irr_drip_diesel":0.0158256880733945
+   },
+   "PH":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.247728618421053,
+      "ratio_irr_surface_diesel":0.743185855263158,
+      "ratio_irr_sprinkler_electricity":0.00118009868421053,
+      "ratio_irr_sprinkler_diesel":0.00354029605263158,
+      "ratio_irr_drip_electricity":0.00109128289473684,
+      "ratio_irr_drip_diesel":0.00327384868421053
+   },
+   "PL":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.87,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.05,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.08,
+      "ratio_irr_drip_diesel":0
+   },
+   "RU":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.217,
+      "ratio_irr_surface_diesel":0.217,
+      "ratio_irr_sprinkler_electricity":0.277777777777778,
+      "ratio_irr_sprinkler_diesel":0.277777777777778,
+      "ratio_irr_drip_electricity":0.00522222222222222,
+      "ratio_irr_drip_diesel":0.00522222222222222
+   },
+   "TH":{#South-East Asia
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.245394736842105,
+      "ratio_irr_surface_diesel":0.736184210526316,
+      "ratio_irr_sprinkler_electricity":0.00131578947368421,
+      "ratio_irr_sprinkler_diesel":0.00394736842105263,
+      "ratio_irr_drip_electricity":0.00328947368421053,
+      "ratio_irr_drip_diesel":0.00986842105263158
    },
    "TR":{
-      "fertkmin_potassium_salt_kcl":0,
-      "fertkmin_potassium_sulphate_k2so4":0.0944972630365889,
-      "fertkmin_potassium_nitrate":0.905502736963411,
-      "fertkmin_patent_potassium":0
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.878277153558052,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.0936329588014981,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.0280898876404494,
+      "ratio_irr_drip_diesel":0
    },
    "UA":{
-      "fertkmin_potassium_salt_kcl":0.0695825049701789,
-      "fertkmin_potassium_sulphate_k2so4":0.073558648111332,
-      "fertkmin_potassium_nitrate":0.78727634194831,
-      "fertkmin_patent_potassium":0.0695825049701789
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.25,
+      "ratio_irr_sprinkler_diesel":0.75,
+      "ratio_irr_drip_electricity":0,
+      "ratio_irr_drip_diesel":0
    },
    "US":{
-      "fertkmin_potassium_salt_kcl":0.712309762296307,
-      "fertkmin_potassium_sulphate_k2so4":0.0336612348632083,
-      "fertkmin_potassium_nitrate":0.236011361937509,
-      "fertkmin_patent_potassium":0.018017640902975
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.433690111336032,
+      "ratio_irr_surface_diesel":0,
+      "ratio_irr_sprinkler_electricity":0.49992624048583,
+      "ratio_irr_sprinkler_diesel":0,
+      "ratio_irr_drip_electricity":0.0663836481781377,
+      "ratio_irr_drip_diesel":0
    },
-   "VN":{#Using GLO
-      "fertkmin_potassium_salt_kcl":0.96,
-      "fertkmin_potassium_sulphate_k2so4":0.04,
-      "fertkmin_potassium_nitrate":0,
-      "fertkmin_patent_potassium":0
+   "VN":{#South-East Asia
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.245394736842105,
+      "ratio_irr_surface_diesel":0.736184210526316,
+      "ratio_irr_sprinkler_electricity":0.00131578947368421,
+      "ratio_irr_sprinkler_diesel":0.00394736842105263,
+      "ratio_irr_drip_electricity":0.00328947368421053,
+      "ratio_irr_drip_diesel":0.00986842105263158
+   },
+   "ZA":{
+      "ratio_irr_surface_no_energy":0,
+      "ratio_irr_surface_electricity":0.115149401197605,
+      "ratio_irr_surface_diesel":0.115149401197605,
+      "ratio_irr_sprinkler_electricity":0.275466766467066,
+      "ratio_irr_sprinkler_diesel":0.275466766467066,
+      "ratio_irr_drip_electricity":0.109383832335329,
+      "ratio_irr_drip_diesel":0.109383832335329
    }
 }
 
+LAND_USE_CATEGORY_PER_CROP = {
+        "almond":LandUseCategory.fruit_trees,
+        "apple":LandUseCategory.fruit_trees,
+        "apricot":LandUseCategory.fruit_trees,
+        "asparagus":LandUseCategory.vegetables,
+        "banana":LandUseCategory.fruit_trees,
+        "carrot":LandUseCategory.vegetables,
+        "cocoa":LandUseCategory.fruit_trees, #FIXME: To be verified
+        "coconut":LandUseCategory.fruit_trees,
+        "coffee":LandUseCategory.fruit_trees,#FIXME: To be verified
+        "lemonlime":LandUseCategory.fruit_trees,
+        "linseed":LandUseCategory.arable_land,
+        "maizegrain":LandUseCategory.arable_land,
+        "mandarin":LandUseCategory.fruit_trees,
+        "mint":LandUseCategory.vegetables,
+        "oat":LandUseCategory.arable_land,
+        "olive":LandUseCategory.fruit_trees,
+        "onion":LandUseCategory.vegetables,
+        "orange":LandUseCategory.fruit_trees,
+        "palmtree":LandUseCategory.fruit_trees,
+        "peach":LandUseCategory.fruit_trees,
+        "peanut":LandUseCategory.vegetables,#FIXME: To be verified
+        "pear":LandUseCategory.fruit_trees,
+        "pineapple":LandUseCategory.arable_land,
+        "potato":LandUseCategory.arable_land,
+        "rapeseed":LandUseCategory.arable_land,
+        "rice":LandUseCategory.arable_land,
+        "soybean":LandUseCategory.arable_land,
+        "strawberry":LandUseCategory.vegetables,
+        "sugarbeet":LandUseCategory.arable_land,
+        "sugarcane":LandUseCategory.arable_land,
+        "sunflower":LandUseCategory.arable_land,
+        "sweetcorn":LandUseCategory.arable_land,
+        "tea":LandUseCategory.vegetables,#FIXME: To be verified
+        "tomato":LandUseCategory.vegetables,
+        "wheatwinter":LandUseCategory.arable_land
+        }
+
 #Generated in GD_crop using "AR":{"manureliquid_cattle":0.966236579156714,  "manureliquid_fattening_pig":0,  "manureliquid_sows_piglet":0.00694397589098068,  "manureliquid_laying_hen":0.0268194449523053,  "manureliquid_other":0},
-LIQUID_MANURE_RATIO_PER_COUNTRY={
+MANURE_LIQUID_RATIO_PER_COUNTRY={
    "AR":{
       "manureliquid_cattle":0.966236579156714,
       "manureliquid_fattening_pig":0,
@@ -1995,7 +1826,7 @@ LIQUID_MANURE_RATIO_PER_COUNTRY={
 
 #FIXME: Check if "manuresolid_horses" = "Share of solid manure from other poultry" in GD_crop, otherwise this is wrong!!!
 #Generated in GD_crop using "AR":{"manuresolid_cattle":0.891984968037592,  "manuresolid_pig":0.00428250486383302,  "manuresolid_sheep_goat":0.00785192210275657,  "manuresolid_laying_hen":0.0213496972784334,  "manuresolid_broiler":0.037377288700972,  "manuresolid_horses":0.0154080727192603,  "manuresolid_other":0},
-SOLID_MANURE_RATIO_PER_COUNTRY = {
+MANURE_SOLID_RATIO_PER_COUNTRY = {
    "AR":{
       "manuresolid_cattle":0.891984968037592,
       "manuresolid_pig":0.00428250486383302,
@@ -2329,4 +2160,330 @@ SOLID_MANURE_RATIO_PER_COUNTRY = {
       "manuresolid_horses":0.0554421692672654,
       "manuresolid_other":0.341748931506976
    }
+}
+
+ROOTING_DEPTH_PER_CROP = {
+                        "almond": 1.5,
+                        "apple": 1.5,
+                        "apricot": 1.5,
+                        "asparagus": 0.5,
+                        "banana": 1, #FIXME: Default
+                        "carrot": 0.5,
+                        "cocoa": 2, #TODO: Took from another source
+                        "coconut": 1.5,
+                        "coffee": 1.5,
+                        "lemonlime": 1.5,
+                        "linseed": 0.9,
+                        "maizegrain": 1.35,
+                        "mandarin": 1.5,
+                        "mint": 0.5,
+                        "oat": 1.2,
+                        "olive": 1.5,
+                        "onion": 0.5,
+                        "orange": 1.5,
+                        "palmtree": 1,
+                        "peach": 1.5,
+                        "peanut": 0.9,
+                        "pear": 1.5,
+                        "pineapple": 1, #FIXME: Default
+                        "potato": 0.5,
+                        "rapeseed": 0.9,
+                        "rice": 0.6,
+                        "soybean": 0.95,
+                        "strawberry": 0.5,
+                        "sugarbeet": 1, # FIXME: Default
+                        "sugarcane": 1.6,
+                        "sunflower": 1.35,
+                        "sweetcorn": 1.35,
+                        "tea": 1.5,
+                        "tomato": 0.5,
+                        "wheatwinter": 1.2
+}
+
+#from GD_crop SoilTypes_L1, line 6
+SAND_CONTENT_PER_COUNTRY = {
+                       "AR":0.040180143913853,
+                       "AU":0.253381946701333,
+                       "BE":0.0200364298724954,
+                       "BR":0.0428501228501229,
+                       "CA":0.0100422280913798,
+                       "CL":0.0180752320468979,
+                       "CN":0.0885942240701202,
+                       "CO":0.0813253012048193,
+                       "CR":0,
+                       "CI":0.0149692595562684,
+                       "EC":0.00570469798657718,
+                       "FI":0,
+                       "FR":0.00947032265169034,
+                       "DE":0.0165961601041328,
+                       "GH":0.00520252694165738,
+                       "HU":0.0843688685415304,
+                       "IN":0.0174722863091554,
+                       "ID":0.0477489768076398,
+                       "IL":0,
+                       "IT":0,
+                       "KE":0.0551962701158069,
+                       "MX":0,
+                       "NL":0,
+                       "NZ":0.00861856685545432,
+                       "PE":0.0285601474072124,
+                       "PH":0.0111714975845411,
+                       "PL":0.0572775058908827,
+                       "RU":0.00505958625598585,
+                       "ZA":0.146219421793921,
+                       "ES":0.00948241801659423,
+                       "LK":0.0235294117647059,
+                       "CH":0,
+                       "TH":0.0037108744756373,
+                       "TR":0.00243076655959719,
+                       "UA":0.00950717889018238,
+                       "US":0.0167799421157036,
+                       "VN":0.0109721867823424
+}
+
+SEED_TYPE_IP_PER_CROP ={
+                        "almond":SeedType.tree_seedlings_ip,
+                        "apple":SeedType.tree_seedlings_ip,
+                        "apricot":SeedType.tree_seedlings_ip,
+                        "asparagus":SeedType.vegetable_ip,
+                        "banana":SeedType.tree_seedlings_ip,
+                        "carrot":SeedType.vegetable_ip,
+                        "cocoa":SeedType.vegetable_ip,
+                        "coconut":SeedType.tree_seedlings_ip,
+                        "coffee":SeedType.other,#FIXME: no data
+                        "lemonlime":SeedType.tree_seedlings_ip,
+                        "linseed":SeedType.pea_ip,
+                        "maizegrain":SeedType.maize_ip,
+                        "mandarin":SeedType.tree_seedlings_ip,
+                        "mint":SeedType.vegetable_ip,
+                        "oat":SeedType.other,#FIXME: no data but indicated "oat seed" in mireille file
+                        "olive":SeedType.tree_seedlings_ip,
+                        "onion":SeedType.vegetable_ip,
+                        "orange":SeedType.tree_seedlings_ip,
+                        "palmtree":SeedType.tree_seedlings_ip,
+                        "peach":SeedType.tree_seedlings_ip,
+                        "peanut":SeedType.vegetable_ip,
+                        "pear":SeedType.tree_seedlings_ip,
+                        "pineapple":SeedType.other,#FIXME: no data
+                        "potato":SeedType.potato_ip,
+                        "rapeseed":SeedType.rape,
+                        "rice":SeedType.wheat_ip,
+                        "soybean":SeedType.soya_bean_ip,
+                        "strawberry":SeedType.vegetable_ip,
+                        "sugarbeet":SeedType.sugar_fodder_beet,
+                        "sugarcane":SeedType.other,#FIXME: no data
+                        "sunflower":SeedType.sunflower_ip,
+                        "sweetcorn":SeedType.maize_ip,
+                        "tea":SeedType.other,#FIXME: no data
+                        "tomato":SeedType.vegetable_ip,
+                        "wheatwinter":SeedType.wheat_ip
+                        }
+
+SEED_TYPE_ORG_PER_CROP ={
+                         "almond":SeedType.tree_seedlings_org,
+                        "apple":SeedType.tree_seedlings_org,
+                        "apricot":SeedType.tree_seedlings_org,
+                        "asparagus":SeedType.vegetable_org,
+                        "banana":SeedType.tree_seedlings_org,
+                        "carrot":SeedType.vegetable_org,
+                        "cocoa":SeedType.vegetable_org,
+                        "coconut":SeedType.tree_seedlings_org,
+                        "coffee":SeedType.other,#FIXME: no data
+                        "lemonlime":SeedType.tree_seedlings_org,
+                        "linseed":SeedType.pea_org,
+                        "maizegrain":SeedType.maize_org,
+                        "mandarin":SeedType.tree_seedlings_org,
+                        "mint":SeedType.vegetable_org,
+                        "oat":SeedType.other,#FIXME: no data but indicated "oat seed" in mireille file
+                        "olive":SeedType.tree_seedlings_org,
+                        "onion":SeedType.vegetable_org,
+                        "orange":SeedType.tree_seedlings_org,
+                        "palmtree":SeedType.tree_seedlings_org,
+                        "peach":SeedType.tree_seedlings_org,
+                        "peanut":SeedType.vegetable_org,
+                        "pear":SeedType.tree_seedlings_org,
+                        "pineapple":SeedType.other,#FIXME: no data
+                        "potato":SeedType.potato_org,
+                        "rapeseed":SeedType.rape,
+                        "rice":SeedType.wheat_org,
+                        "soybean":SeedType.soya_bean_org,
+                        "strawberry":SeedType.vegetable_org,
+                        "sugarbeet":SeedType.sugar_fodder_beet,
+                        "sugarcane":SeedType.other,#FIXME: no data
+                        "sunflower":SeedType.sunflower_org,
+                        "sweetcorn":SeedType.maize_org,
+                        "tea":SeedType.other,#FIXME: no data
+                        "tomato":SeedType.vegetable_org,
+                        "wheatwinter":SeedType.wheat_org
+                         }
+
+SOIL_CARBON_CONTENT_PER_COUNTRY = {
+                            "AR":0.0148,
+                            "AU":0.0063,
+                            "BE":0.0132,
+                            "BR":0.0121,
+                            "CA":0.0428,
+                            "CL":0.0223,
+                            "CN":0.0229, #mean of other values
+                            "CO":0.0382,
+                            "CR":0.033,
+                            "CI":0.0089,
+                            "EC":0.0212,
+                            "FI":0.1103,
+                            "FR":0.0142,
+                            "DE":0.0301,
+                            "GH":0.0088,
+                            "HU":0.0239,
+                            "IN":0.0088,
+                            "ID":0.0521,
+                            "IL":0.0096,
+                            "IT":0.011,
+                            "KE":0.009,
+                            "MX":0.0301,
+                            "NL":0.0637,
+                            "NZ":0.0185,
+                            "PE":0.0163,
+                            "PH":0.0128,
+                            "PL":0.034,
+                            "RU":0.0389,
+                            "ZA":0.0058,
+                            "ES":0.0125,
+                            "LK":0.0088,
+                            "CH":0.0209,
+                            "TH":0.0101,
+                            "TR":0.0098,
+                            "UA":0.0233,
+                            "US":0.0152,
+                            "VN":0.0126
+}
+
+#src except unknown: EUROPEAN COMMISSION DIRECTORATE GENERAL JRC JOINT RESEARCH CENTRE Space Applications Institute European Soil Bureau
+SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE = {
+                        SoilTexture.unknown:0.032,#Panagos et al. 2014
+                        SoilTexture.coarse:0.0115,
+                        SoilTexture.medium:0.0311,
+                        SoilTexture.medium_fine:0.0438,
+                        SoilTexture.fine:0.0339,
+                        SoilTexture.very_fine:0.017
+                        }
+
+#from GD_crop Soil_pH_L0
+SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY = {
+                       "AR":0,
+                       "AU":0.4,
+                       "BE":0.8,#default CH
+                       "BR":0.95,
+                       "CA":0.9,
+                       "CL":0.5,
+                       "CN":0.35,
+                       "CO":0.95,
+                       "CR":1,
+                       "CI":1,
+                       "EC":0.95,
+                       "FI":1,
+                       "FR":0.8,#default CH
+                       "DE":0.8,#default CH
+                       "GH":0.95,
+                       "HU":0.8,#default CH
+                       "IN":0.5,
+                       "ID":1,
+                       "IL":0,
+                       "IT":0.8,#default CH
+                       "KE":0.5,
+                       "MX":0.33,
+                       "NL":0.8,#default CH
+                       "NZ":0.95,
+                       "PE":0.8,
+                       "PH":1,
+                       "PL":0.8,#default CH
+                       "RU":0.9,
+                       "ZA":0.2,
+                       "ES":0.6,
+                       "LK":0.8,
+                       "CH":0.8,
+                       "TH":0.95,
+                       "TR":0.33,
+                       "UA":0.95,
+                       "US":0.5,
+                       "VN":1
+                    }
+
+#From GD_crop WaterNutrient_L1 column C
+WATER_CONTENT_FM_RATIO_PER_CROP = {
+        "almond": 0.0565,
+        "apple": 0.849,
+        "apricot": 0.853,
+        "asparagus": 0.92,
+        "banana": 0.781,
+        "carrot": 0.882,
+        "cocoa": 0.056,
+        "coconut": 0.446,
+        "coffee": 0.102,
+        "lemonlime": 0.842,#lemon
+        "linseed": 0.1,
+        "maizegrain": 0.14,
+        "mandarin": 0.842,
+        "mint": 0.681,
+        "oat": 0.15,
+        "olive": 0.748,
+        "onion": 0.886,
+        "orange": 0.842,
+        "palmtree": 0.87,#palmfruitbunch
+        "peach": 0.873,
+        "peanut": 0.05968,
+        "pear": 0.829,
+        "pineapple": 0.8,#FIXME: Default
+        "potato": 0.78,
+        "rapeseed": 0.12,
+        "rice": 0.131,
+        "soybean": 0.11,
+        "strawberry": 0.895,
+        "sugarbeet": 0.77,
+        "sugarcane": 0.774,
+        "sunflower": 0.06,
+        "sweetcorn": 0.72,
+        "tea": 0.0764,
+        "tomato": 0.942,
+        "wheatwinter": 0.15
+        }
+
+#from GD_crop precipitation_L1 line 17
+YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY = {
+   "AR":0,
+   "AU":0,
+   "BE":0,
+   "BR":0,
+   "CA":0.535441893912093,
+   "CL":0,
+   "CN":0.0932626571867323,
+   "CO":0,
+   "CR":0,
+   "CI":0,
+   "EC":0,
+   "FI":0.31411007733821,
+   "FR":0,
+   "DE":0.0717855087687475,
+   "GH":0,
+   "HU":0.0603055148410166,
+   "IN":0,
+   "ID":0,
+   "IL":0,
+   "IT":0,
+   "KE":0,
+   "MX":0,
+   "NL":0,
+   "NZ":0,
+   "PE":0,
+   "PH":0,
+   "PL":0.168512374426543,
+   "RU":0.399109339441838,
+   "ZA":0,
+   "ES":0,
+   "LK":0,
+   "CH":0.215816922864692,
+   "TH":0,
+   "TR":0.125603689935222,
+   "UA":0.217717386416183,
+   "US":0.20931054440831,
+   "VN":0
 }

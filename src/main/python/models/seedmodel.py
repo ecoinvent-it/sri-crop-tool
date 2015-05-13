@@ -30,8 +30,6 @@ class SeedType(Enum):
         sugar_fodder_beet=26
         tree_seedlings_ip=27
         tree_seedlings_org=28
-        salix=29
-        miscanthus=30
         other=31
 
 class SeedModel(object):
@@ -75,8 +73,6 @@ class SeedModel(object):
             SeedType.sugar_fodder_beet: 0.22,
             SeedType.tree_seedlings_ip: 0.73, #mean
             SeedType.tree_seedlings_org: 0.73, #mean
-            SeedType.salix: 1.0,
-            SeedType.miscanthus: 1.0,
             SeedType.other: 0.73 #mean
                     }
                                                                 
@@ -111,8 +107,6 @@ class SeedModel(object):
             SeedType.sugar_fodder_beet: [0.5, 10.3, 41.4, 1.8, 1.5, 1.9, 0.0],
             SeedType.tree_seedlings_ip:  [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #generic
             SeedType.tree_seedlings_org: [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #generic
-            SeedType.salix: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], #FIXME: Use value when we have it, or maybe generic?
-            SeedType.miscanthus: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], #FIXME: Use value when we have it, or maybe generic?
             SeedType.other: [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04] #generic
         }
     

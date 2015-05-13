@@ -1,11 +1,13 @@
 from defaultTables import CLAY_CONTENT_PER_COUNTRY, SOIL_CARBON_CONTENT_PER_COUNTRY,\
-    ROOTING_DEPTH_PER_CROP, N_FERT_RATIO_PER_COUNTRY, P_FERT_RATIO_PER_COUNTRY, K_FERT_RATIO_PER_COUNTRY,\
-    LIQUID_MANURE_RATIO_PER_COUNTRY, SOLID_MANURE_RATIO_PER_COUNTRY,\
+    ROOTING_DEPTH_PER_CROP, FERT_N_RATIO_PER_COUNTRY, FERT_P_RATIO_PER_COUNTRY, FERT_K_RATIO_PER_COUNTRY,\
+    MANURE_LIQUID_RATIO_PER_COUNTRY, MANURE_SOLID_RATIO_PER_COUNTRY,\
     ANNUAL_PRECIPITATION_PER_COUNTRY, YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY,\
     WATER_CONTENT_FM_RATIO_PER_CROP, IRR_TECH_RATIO_PER_COUNTRY,\
     LAND_USE_CATEGORY_PER_CROP, CROP_FACTOR_PER_CROP, SAND_CONTENT_PER_COUNTRY,\
     SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE,\
-    ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL
+    ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL,\
+    SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, SEED_TYPE_IP_PER_CROP,\
+    SEED_TYPE_ORG_PER_CROP, CARBON_CONTENT_PER_CROP
 from models.hmmodel import LandUseCategoryForHM, PesticideType
 from models.otherorganicfertilisermodel import OtherOrganicFertiliserType
 from models.pmodel import LandUseCategory
@@ -14,6 +16,13 @@ from models.seedmodel import SeedType
 from models.erosionmodel import TillageMethod, AntiErosionPractice
 from models.modelEnums import SoilTexture
 from models.atomicmass import MA_CO2, MA_C
+from defaultMatrixYieldPerYear import YIELD_PER_YEAR_PER_CROP_PER_COUNTRY
+from defaultMatrixTotalMineralFert import NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY
+from defaultMatrixNUptake import NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY
+from defaultMatrixTotalManure import TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY,\
+    TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY
+from defaultMatrixSeed import NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY,\
+    NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY
 
 class DefaultValuesWrapper(object):
     def __init__(self, inputMapping, generatorMap):
@@ -34,6 +43,7 @@ class DefaultValuesWrapper(object):
     def __contains__(self, name):
         return name in self.inputMapping or name in self._generatorMap
 
+#FIXME: Why is it not used?
 class NotFoundGenerator(object):
     def generateDefault(self, field, generators):
         raise "No generator found for field " + field
@@ -108,6 +118,10 @@ class SoilTextureDefaultGenerator(object):
 class PerCropCyclePrecipitationDefaultGenerator(object):
     def generateDefault(self, field, generators): #mm/year -> m3/(ha*crop cycle)
         return generators["average_annual_precipitation"] * 10.0 / generators["crop_cycle_per_year"]
+    
+class PerCropCycleYieldDefaultGenerator(object):
+    def generateDefault(self, field, generators):
+        return generators["yield_main_product_per_year"] / generators["crop_cycle_per_year"]
    
 class DryingDefaultGenerator(object):    
     def generateDefault(self, field, generators):
@@ -135,6 +149,32 @@ class EnergyGrossCalorificValueGenerator(object):
             return ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL[generators["crop"]] * (1 - generators["yield_main_product_water_content"])
         else:
             return generators["CO2_from_yield"] * 11.5
+        
+class SeedTypeDefaultGenerator(object):
+    def generateDefault(self, field, generators):
+        if (generators["farming_type"] == "non_organic"):
+            return generators["seed_type_ip"]
+        else:
+            return generators["seed_type_org"]
+        
+class SeedQuantitiesDefaultGenerator(object):
+    def generateDefault(self, field, generators):
+        #FIXME: What to do with nb_seedlings?
+        if (generators["seed_type"] == SeedType.tree_seedlings_ip or generators["seed_type"] == SeedType.tree_seedlings_org):
+            return {generators["seed_type"]:generators["nb_planted_trees"]}
+        else:
+            return {generators["seed_type"]:generators["seeds"]}
+        
+class CropCountryMatrixLookupDefaultGenerator(object):
+    def __init__(self, table):
+        self._table = table
+        
+    def generateDefault(self, field, generators):
+        currentCropTable = self._table[generators["crop"]]
+        if (generators["country"] in currentCropTable):
+            return currentCropTable[generators["country"]]
+        else:
+            return currentCropTable["GLO"]
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
@@ -144,28 +184,34 @@ DEFAULTS_VALUES_GENERATORS = {
                    "farming_type": "non_organic",
                    "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),
                    "water_use_total": SimpleValueDefaultGenerator(0.0), #FIXME: to calculate
-                   "yield_main_product_per_crop_cycle": SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop + country) GD_crop Yield_2009_2012_L1
+                   "yield_main_product_per_year":CropCountryMatrixLookupDefaultGenerator(YIELD_PER_YEAR_PER_CROP_PER_COUNTRY),
+                   "yield_main_product_per_crop_cycle": PerCropCycleYieldDefaultGenerator(),
                    
                    #Fertiliser defaults
-                   #FIXME: Should we compute total before quantities from ratio and total?
-                   "nitrogen_from_mineral_fert":SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop+country)
-                   "p2O5_from_mineral_fert":SimpleValueDefaultGenerator(0.0), #FIXME: missing Default (crop+country)
-                   "k2O_from_mineral_fert":SimpleValueDefaultGenerator(0.0), #FIXME: missing Default (crop+country)
-                   "n_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", N_FERT_RATIO_PER_COUNTRY, "nitrogen_from_mineral_fert"),
-                   "p_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", P_FERT_RATIO_PER_COUNTRY, "p2O5_from_mineral_fert"),
-                   "k_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", K_FERT_RATIO_PER_COUNTRY, "k2O_from_mineral_fert"),
+                   "nitrogen_from_mineral_fert": CropCountryMatrixLookupDefaultGenerator(NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY), #FIXME: no values for mint and pineapple
+                   "p2O5_from_mineral_fert": SimpleValueDefaultGenerator(0.0), #FIXME: missing Default (crop+country)
+                   "k2O_from_mineral_fert": SimpleValueDefaultGenerator(0.0), #FIXME: missing Default (crop+country)
+                   "n_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", FERT_N_RATIO_PER_COUNTRY, "nitrogen_from_mineral_fert"),
+                   "p_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", FERT_P_RATIO_PER_COUNTRY, "p2O5_from_mineral_fert"),
+                   "k_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", FERT_K_RATIO_PER_COUNTRY, "k2O_from_mineral_fert"),
                    "other_mineral_fertiliser_quantities": ZeroMapDefaultGenerator(OtherMineralFertiliserType),
-                   "soil_with_ph_under_or_7": SimpleValueDefaultGenerator(0.5), #FIXME: Default
+                   "soil_with_ph_under_or_7": TableLookupDefaultGenerator("country", SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY),
                    #Manure defaults
                    "liquid_manure_part_before_dilution": SimpleValueDefaultGenerator(0.5),
-                   "total_manureliquid":SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop+country)
-                   "total_manuresolid":SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop+country)
-                   "liquid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", LIQUID_MANURE_RATIO_PER_COUNTRY, "total_manureliquid"),
-                   "solid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", SOLID_MANURE_RATIO_PER_COUNTRY, "total_manuresolid"),
+                   "total_manureliquid":CropCountryMatrixLookupDefaultGenerator(TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY), #FIXME: no values for mint and pineapple
+                   "total_manuresolid":CropCountryMatrixLookupDefaultGenerator(TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY), #FIXME: no values for mint and pineapple
+                   "liquid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", MANURE_LIQUID_RATIO_PER_COUNTRY, "total_manureliquid"),
+                   "solid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", MANURE_SOLID_RATIO_PER_COUNTRY, "total_manuresolid"),
                    #Other organic fertilisers defaults
                    "other_organic_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),
                    #Seed defaults
-                   "seed_quantities":ZeroMapDefaultGenerator(SeedType),#FIXME: Default
+                   "seed_type_ip": TableLookupDefaultGenerator("crop", SEED_TYPE_IP_PER_CROP),
+                   "seed_type_org": TableLookupDefaultGenerator("crop", SEED_TYPE_ORG_PER_CROP),
+                   "seed_type": SeedTypeDefaultGenerator(),
+                   "seeds": CropCountryMatrixLookupDefaultGenerator(NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY),#FIXME: missing some defaults, some strange values (zero)
+                   "nb_seedlings": SimpleValueDefaultGenerator(0.0),#FIXME: no values?
+                   "nb_planted_trees": CropCountryMatrixLookupDefaultGenerator(NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY),#FIXME: lifetime planted trees, how to normalize? #FIXME: we have some values for non tree_seedlings crop: coffee,cocoa,tea
+                   "seed_quantities": SeedQuantitiesDefaultGenerator(),
                    #Erosion defaults
                    "yearly_precipitation_as_snow": TableLookupDefaultGenerator("country", YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY),
                    "annualized_irrigation": AnnualizedIrrigationDefaultGenerator(),
@@ -176,7 +222,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "sand_content": TableLookupDefaultGenerator("country", SAND_CONTENT_PER_COUNTRY),
                    "soil_texture": SoilTextureDefaultGenerator(), 
                    "soil_erodibility_factor": TableLookupDefaultGenerator("soil_texture", SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE),
-                   "crop_factor": TableLookupDefaultGenerator("crop", CROP_FACTOR_PER_CROP),#FIXME: missing value for coconut (idem GD_crop)
+                   "crop_factor": TableLookupDefaultGenerator("crop", CROP_FACTOR_PER_CROP),
                    #CO2 model defaults
                    "part_of_urea_in_UAN": SimpleValueDefaultGenerator(0.5),
                    "magnesium_from_fertilizer": SimpleValueDefaultGenerator(0.0),
@@ -189,7 +235,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "considered_soil_volume": SimpleValueDefaultGenerator(5000.0),
                    "drained_part": SimpleValueDefaultGenerator(0.0),
                    "organic_carbon_content": TableLookupDefaultGenerator("country", SOIL_CARBON_CONTENT_PER_COUNTRY),
-                   "nitrogen_uptake_by_crop": SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop+country) GD_crop NUptake_L1
+                   "nitrogen_uptake_by_crop": CropCountryMatrixLookupDefaultGenerator(NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY), #FIXME: no values for mint and pineapple
                    "norg_per_ntotal_ratio": SimpleValueDefaultGenerator(0.85),
                    "rooting_depth": TableLookupDefaultGenerator("crop", ROOTING_DEPTH_PER_CROP), #FIXME: Missing some default
                    "nitrogen_from_crop_residues": SimpleValueDefaultGenerator(0.0), #FIXME: Default
@@ -200,12 +246,13 @@ DEFAULTS_VALUES_GENERATORS = {
                    "land_use_category": TableLookupDefaultGenerator("crop", LAND_USE_CATEGORY_PER_CROP), #FIXME: some defaults to be verified
                    #HM defaults
                    "hm_land_use_category": LandUseCategoryForHMDefaultGenerator(),
-                   "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default (crop+country) GD_crop Perticides_L1
+                   "pest_total": SimpleValueDefaultGenerator(0),#FIXME: Default (crop+country) GD_crop Pesticides_L1, no values for:Apricot,Asparagus,Carrot,Coconut,Lemon,Mint,Oat,Olive,Onion,Pear,Pineapple,Strawberry,SweetCorn,Tea
+                   "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default
                    #Direct outputs
                    "computed_drying":DryingDefaultGenerator(),
                    "type_of_drying":SimpleValueDefaultGenerator("ambient_air"),
                    "yield_main_product_water_content": TableLookupDefaultGenerator("crop", WATER_CONTENT_FM_RATIO_PER_CROP),
-                   "yield_main_product_carbon_content": SimpleValueDefaultGenerator(0.0), #FIXME: Default (crop + country)
+                   "yield_main_product_carbon_content": TableLookupDefaultGenerator("crop", CARBON_CONTENT_PER_CROP),
                    "CO2_from_yield": CO2FromYieldGenerator(),
                    "energy_gross_calorific_value": EnergyGrossCalorificValueGenerator()
                    }
