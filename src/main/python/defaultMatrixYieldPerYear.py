@@ -898,7 +898,7 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "US":83705.24825,
       "GLO":87758.02061
    },
-   "wheatwinter":{
+   "wheat":{
       "AR":3070.70775,
       "AU":1847.71475,
       "BE":8758.68875,

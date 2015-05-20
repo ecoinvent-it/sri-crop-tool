@@ -68,7 +68,7 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "tomato":{
       "GLO":3.125
    },
-   "wheatwinter":{ #FIXME: no value
+   "wheat":{ #FIXME: no value
 
    }
 }

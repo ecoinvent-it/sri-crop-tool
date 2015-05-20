@@ -195,7 +195,7 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "CH":398.38761154694,
       "GLO":353.365585740376
    },
-   "wheatwinter":{
+   "wheat":{
       "AU":44.0064062958333,
       "CA":68.0685096666667,
       "GLO":56.03745798125
