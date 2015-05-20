@@ -1,8 +1,8 @@
-<form id="processGeneratorUploadForm" ng-submit="upload()" method="post" enctype="multipart/form-data">
+<form id="processGeneratorUploadForm" ng-submit="upload($event.target)" method="post" enctype="multipart/form-data">
        <input type="file" name="uploadFile" 
                       accept=".xls,.xlsx" required="required" 
                       ng-disabled="step != 0" id="fileUploadBtn" class="stepBtn"
-                      ng-change="submitUploadForm()"/>
+                      ng-change="submitUploadForm($event.target)"/>
 
       <input type="checkbox" checked name="canBeStored" value="true" id="canBeStoredCheckbox" ng-disabled="step != 0"/> 
       <!-- I agree that Quantis stores this file for testing purposes -->

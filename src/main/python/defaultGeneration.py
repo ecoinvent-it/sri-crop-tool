@@ -101,16 +101,18 @@ class LandUseCategoryForHMDefaultGenerator(object):
         
 class SoilTextureDefaultGenerator(object):
     def generateDefault(self, field, generators):
-        if (generators["clay_content"] < 0.18 and generators["sand_content"] > 0.65):
+        clay_content = generators["clay_content"]
+        sand_content = generators["sand_content"]
+        if (clay_content < 0.18 and sand_content > 0.65):
             return SoilTexture.coarse
-        elif ((0.18 < generators["clay_content"] and generators["clay_content"] < 0.35 and generators["sand_content"] > 0.15)
-              or (generators["clay_content"] < 0.18 and 0.15 < generators["sand_content"] and generators["sand_content"] < 0.65)):
+        elif ((0.18 < clay_content and clay_content < 0.35 and sand_content > 0.15)
+              or (clay_content < 0.18 and 0.15 < sand_content and sand_content < 0.65)):
             return SoilTexture.medium
-        elif (generators["clay_content"] < 0.35 and generators["sand_content"] < 0.15):
+        elif (clay_content < 0.35 and sand_content < 0.15):
             return SoilTexture.medium_fine
-        elif (0.35 < generators["clay_content"]  and generators["clay_content"]  < 0.60):
+        elif (0.35 < clay_content  and clay_content  < 0.60):
             return SoilTexture.fine
-        elif (generators["clay_content"] > 0.60):
+        elif (clay_content > 0.60):
             return SoilTexture.very_fine
         else:
             return SoilTexture.unknown

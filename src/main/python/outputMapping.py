@@ -51,7 +51,7 @@ class OutputMapping(object):
         self._mapEnumMap(allInputs["k_fertiliser_quantities"])
         self._mapEnumMap(allInputs["other_mineral_fertiliser_quantities"])
         #TODO: Is this the best place for that?
-        self.output["fert_n_ammonia_liquid_as_nh3"] = allInputs["fert_n_ammonia_liquid"] * MA_NH3/MA_N
+        self.output["fert_n_ammonia_liquid_as_nh3"] = self.output["fert_n_ammonia_liquid"] * MA_NH3/MA_N
         
     def mapOtherOrganicFertilizers(self, allInputs):
         self._mapEnumMap(allInputs["other_organic_fertiliser_quantities"])
