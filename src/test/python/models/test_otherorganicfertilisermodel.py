@@ -30,8 +30,8 @@ class Test(unittest.TestCase):
         self.assertAlmostEqual(results, expectedResults)
         
     def testNH3(self):
-        expectedResults = 0.0
-        results = OtherOrganicFertModel(self.inputs).computeN()
+        expectedResults = 2080.75027
+        results = OtherOrganicFertModel(self.inputs).computeNH3()
         self.assertAlmostEqual(results, expectedResults)
             
     def testHeavyMetal(self):

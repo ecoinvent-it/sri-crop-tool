@@ -18,15 +18,17 @@
  */
 package com.quantis_intl.lcigenerator.scsv;
 
+import com.quantis_intl.commons.scsv.ScsvEnums.SubCompartment;
+
 public class TemplateSubstanceUsage
 {
     public final String name;
-    public final String subCompartment;
+    public final SubCompartment subCompartment;
     public final String unit;
     public final String amountVariable;
     public final String commentVariable;
 
-    public TemplateSubstanceUsage(String name, String subCompartment, String unit, String amountVariable,
+    public TemplateSubstanceUsage(String name, SubCompartment subCompartment, String unit, String amountVariable,
             String commentVariable)
     {
         this.name = name;
@@ -43,52 +45,69 @@ public class TemplateSubstanceUsage
             // LUC: new TemplateSubstanceUsage("Tranformation, to {TODO}", "", "m2", "", ""),
             // LUC: new TemplateSubstanceUsage("Gross energy {TODO}", "", "MJ", "", ""),
             // LUC: new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "", ""),
-            new TemplateSubstanceUsage("Carbon dioxide, in air", "", "kg", "CO2_from_yield", ""),
-            new TemplateSubstanceUsage("Energy, gross calorific value, in biomass", "", "MJ",
+            new TemplateSubstanceUsage("Carbon dioxide, in air", SubCompartment.RAW_UNSPECIFIED, "kg",
+                    "CO2_from_yield", ""),
+            new TemplateSubstanceUsage("Energy, gross calorific value, in biomass", SubCompartment.RAW_UNSPECIFIED,
+                    "MJ",
                     "energy_gross_calorific_value", "")
     };
 
     public static final TemplateSubstanceUsage[] toAir = {
-            new TemplateSubstanceUsage("Carbon dioxide, land transformation", "low. pop.", "kg", "", ""),
-            new TemplateSubstanceUsage("Ammonia", "low. pop.", "kg", "ammonia_total", ""),
-            new TemplateSubstanceUsage("Carbon dioxide, fossil", "low. pop.", "kg", "CO2_from_fertilisers", ""),
-            new TemplateSubstanceUsage("Nitrogen oxides", "low. pop.", "kg", "Nox_as_n2o_air", ""),
-            new TemplateSubstanceUsage("Dinitrogen monoxide", "low. pop.", "kg", "N2o_air", ""),
-            new TemplateSubstanceUsage("Water, {country}", "low. pop.", "kg", "water_to_air", "")
+            new TemplateSubstanceUsage("Carbon dioxide, land transformation", SubCompartment.AIR_LOW_POP, "kg", "", ""),
+            new TemplateSubstanceUsage("Ammonia", SubCompartment.AIR_LOW_POP, "kg", "ammonia_total", ""),
+            new TemplateSubstanceUsage("Carbon dioxide, fossil", SubCompartment.AIR_LOW_POP, "kg",
+                    "CO2_from_fertilisers", ""),
+            new TemplateSubstanceUsage("Nitrogen oxides", SubCompartment.AIR_LOW_POP, "kg", "Nox_as_n2o_air", ""),
+            new TemplateSubstanceUsage("Dinitrogen monoxide", SubCompartment.AIR_LOW_POP, "kg", "N2o_air", ""),
+            new TemplateSubstanceUsage("Water, {country}", SubCompartment.AIR_LOW_POP, "kg", "water_to_air", "")
     };
 
     public static final TemplateSubstanceUsage[] toWater = {
-            new TemplateSubstanceUsage("Nitrate", "river", "kg", "nitrate_to_surfacewater", ""),
-            new TemplateSubstanceUsage("Nitrate", "groundwater", "kg", "nitrate_to_groundwater", ""),
-            new TemplateSubstanceUsage("Phosphorus", "river", "kg", "P_surfacewater_erosion", ""),
-            new TemplateSubstanceUsage("Phosphate", "river", "kg", "PO4_surfacewater", ""),
-            new TemplateSubstanceUsage("Phosphate", "groundwater", "kg", "PO4_groundwater", ""),
-            new TemplateSubstanceUsage("Cadmium, ion", "river", "kg", "heavymetal_to_surface_water_cd", ""),
-            new TemplateSubstanceUsage("Cadmium, ion", "groundwater", "kg", "heavymetal_to_ground_water_cd", ""),
-            new TemplateSubstanceUsage("Chromium, ion", "river", "kg", "heavymetal_to_surface_water_cr", ""),
-            new TemplateSubstanceUsage("Chromium, ion", "groundwater", "kg", "heavymetal_to_ground_water_cr", ""),
-            new TemplateSubstanceUsage("Copper, ion", "river", "kg", "heavymetal_to_surface_water_cu", ""),
-            new TemplateSubstanceUsage("Copper, ion", "groundwater", "kg", "heavymetal_to_ground_water_cu", ""),
-            new TemplateSubstanceUsage("Lead", "river", "kg", "heavymetal_to_surface_water_pb", ""),
-            new TemplateSubstanceUsage("Lead", "groundwater", "kg", "heavymetal_to_ground_water_pb", ""),
-            new TemplateSubstanceUsage("Mercury", "river", "kg", "heavymetal_to_surface_water_hg", ""),
-            new TemplateSubstanceUsage("Mercury", "groundwater", "kg", "heavymetal_to_ground_water_hg", ""),
-            new TemplateSubstanceUsage("Nickel, ion", "river", "kg", "heavymetal_to_surface_water_ni", ""),
-            new TemplateSubstanceUsage("Nickel, ion", "groundwater", "kg", "heavymetal_to_ground_water_ni", ""),
-            new TemplateSubstanceUsage("Zinc, ion", "river", "kg", "heavymetal_to_surface_water_zn", ""),
-            new TemplateSubstanceUsage("Zinc, ion", "groundwater", "kg", "heavymetal_to_ground_water_zn", ""),
-            new TemplateSubstanceUsage("Water, {country}", "river", "m3", "water_to_water_river", ""),
-            new TemplateSubstanceUsage("Water, {country}", "groundwater", "m3", "water_to_water_groundwater", "")
+            new TemplateSubstanceUsage("Nitrate", SubCompartment.WATER_RIVER, "kg", "nitrate_to_surfacewater", ""),
+            new TemplateSubstanceUsage("Nitrate", SubCompartment.WATER_GROUNDWATER, "kg", "nitrate_to_groundwater", ""),
+            new TemplateSubstanceUsage("Phosphorus", SubCompartment.WATER_RIVER, "kg", "P_surfacewater_erosion", ""),
+            new TemplateSubstanceUsage("Phosphate", SubCompartment.WATER_RIVER, "kg", "PO4_surfacewater", ""),
+            new TemplateSubstanceUsage("Phosphate", SubCompartment.WATER_GROUNDWATER, "kg", "PO4_groundwater", ""),
+            new TemplateSubstanceUsage("Cadmium, ion", SubCompartment.WATER_RIVER, "kg",
+                    "heavymetal_to_surface_water_cd", ""),
+            new TemplateSubstanceUsage("Cadmium, ion", SubCompartment.WATER_GROUNDWATER, "kg",
+                    "heavymetal_to_ground_water_cd", ""),
+            new TemplateSubstanceUsage("Chromium, ion", SubCompartment.WATER_RIVER, "kg",
+                    "heavymetal_to_surface_water_cr", ""),
+            new TemplateSubstanceUsage("Chromium, ion", SubCompartment.WATER_GROUNDWATER, "kg",
+                    "heavymetal_to_ground_water_cr", ""),
+            new TemplateSubstanceUsage("Copper, ion", SubCompartment.WATER_RIVER, "kg",
+                    "heavymetal_to_surface_water_cu", ""),
+            new TemplateSubstanceUsage("Copper, ion", SubCompartment.WATER_GROUNDWATER, "kg",
+                    "heavymetal_to_ground_water_cu", ""),
+            new TemplateSubstanceUsage("Lead", SubCompartment.WATER_RIVER, "kg", "heavymetal_to_surface_water_pb", ""),
+            new TemplateSubstanceUsage("Lead", SubCompartment.WATER_GROUNDWATER, "kg", "heavymetal_to_ground_water_pb",
+                    ""),
+            new TemplateSubstanceUsage("Mercury", SubCompartment.WATER_RIVER, "kg", "heavymetal_to_surface_water_hg",
+                    ""),
+            new TemplateSubstanceUsage("Mercury", SubCompartment.WATER_GROUNDWATER, "kg",
+                    "heavymetal_to_ground_water_hg", ""),
+            new TemplateSubstanceUsage("Nickel, ion", SubCompartment.WATER_RIVER, "kg",
+                    "heavymetal_to_surface_water_ni", ""),
+            new TemplateSubstanceUsage("Nickel, ion", SubCompartment.WATER_GROUNDWATER, "kg",
+                    "heavymetal_to_ground_water_ni", ""),
+            new TemplateSubstanceUsage("Zinc, ion", SubCompartment.WATER_RIVER, "kg", "heavymetal_to_surface_water_zn",
+                    ""),
+            new TemplateSubstanceUsage("Zinc, ion", SubCompartment.WATER_GROUNDWATER, "kg",
+                    "heavymetal_to_ground_water_zn", ""),
+            new TemplateSubstanceUsage("Water, {country}", SubCompartment.WATER_RIVER, "m3", "water_to_water_river", ""),
+            new TemplateSubstanceUsage("Water, {country}", SubCompartment.WATER_GROUNDWATER, "m3",
+                    "water_to_water_groundwater", "")
     };
 
     public static final TemplateSubstanceUsage[] toSoil = {
-            new TemplateSubstanceUsage("Cadmium", "agricultural", "kg", "heavymetal_to_soil_cd", ""),
-            new TemplateSubstanceUsage("Chromium", "agricultural", "kg", "heavymetal_to_soil_cr", ""),
-            new TemplateSubstanceUsage("Copper", "agricultural", "kg", "heavymetal_to_soil_cu", ""),
-            new TemplateSubstanceUsage("Lead", "agricultural", "kg", "heavymetal_to_soil_pb", ""),
-            new TemplateSubstanceUsage("Mercury", "agricultural", "kg", "heavymetal_to_soil_hg", ""),
-            new TemplateSubstanceUsage("Nickel", "agricultural", "kg", "heavymetal_to_soil_ni", ""),
-            new TemplateSubstanceUsage("Zinc", "agricultural", "kg", "heavymetal_to_soil_zn", "")
+            new TemplateSubstanceUsage("Cadmium", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_cd", ""),
+            new TemplateSubstanceUsage("Chromium", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_cr", ""),
+            new TemplateSubstanceUsage("Copper", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_cu", ""),
+            new TemplateSubstanceUsage("Lead", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_pb", ""),
+            new TemplateSubstanceUsage("Mercury", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_hg", ""),
+            new TemplateSubstanceUsage("Nickel", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_ni", ""),
+            new TemplateSubstanceUsage("Zinc", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_zn", "")
             // FIXME: Pesticides
     };
 }

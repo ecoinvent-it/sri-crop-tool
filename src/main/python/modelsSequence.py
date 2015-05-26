@@ -13,6 +13,7 @@ from models.otherorganicfertilisermodel import OtherOrganicFertModel
 from models.erosionmodel import ErosionModel
 from models.hmmodel import HmModel
 from models.seedmodel import SeedModel
+from models.packmodel import PackModel
 
 class ModelsSequence(object):
     
@@ -36,6 +37,7 @@ class ModelsSequence(object):
         self.outputMapping.mapNModel(NModel(self.allInputs).compute())
         self.outputMapping.mapPModel(PModel(self.allInputs).compute())
         self.outputMapping.mapHMModel(HmModel(self.allInputs).compute())
+        self.outputMapping.mapPackModel(PackModel(self.allInputs).compute())
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
         return self.outputMapping.output;
     
@@ -63,3 +65,4 @@ class ModelsSequence(object):
     def _computeSeed(self):
         seedM = SeedModel(self.allInputs)
         self._intermediateValues["hm_from_seed"] = seedM.computeHeavyMetal()
+        

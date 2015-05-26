@@ -1,0 +1,58 @@
+class PackModel(object):
+    """Inputs:
+        nitrogen_from_mineral_fert: kg N/ha
+        p2O5_from_mineral_fert: kg P2O5/ha
+        k2O_from_mineral_fert: kg K2O/ha
+        magnesium_from_fertilizer: kg Mg/ha
+        ca_from_mineral_fert: kg Ca/ha
+        fert_n_ammonia_liquid: kg N/ha
+        pest_total: g/ha
+    
+    Outputs:
+      m_pack_liquid_fertilisers_and_pesticides: kg/ha
+      m_pack_solid_fertilisers_and_pesticides: kg/ha
+    """
+    
+    _input_variables = ["nitrogen_from_mineral_fert",
+                        "p2O5_from_mineral_fert",
+                        "k2O_from_mineral_fert",
+                        "magnesium_from_fertilizer",
+                        "ca_from_mineral_fert",
+                        "fert_n_ammonia_liquid",
+                        "pest_total"
+                       ]
+    
+    def __init__(self, inputs):
+        #TODO: Should we log usage of default value?
+        for key in PackModel._input_variables:
+            setattr(self, key, inputs[key])
+    
+    def compute(self):
+        totalFert = self.computeTotalFertilisers();
+        fert_solid,fert_liquid = self.computeFertilisers(totalFert)
+        pest_solid,pest_liquid = self.computePesticides()
+
+        return {"m_Pack_packaging_liquid_fertilisers_and_pesticides": (pest_liquid + fert_liquid)*2.0,
+                "m_Pack_packaging_solid_fertilisers_and_pesticides": (pest_solid + fert_solid)*2.0}
+    
+    
+    def computeTotalFertilisers(self):
+        return self.nitrogen_from_mineral_fert \
+                + self.p2O5_from_mineral_fert \
+                + self.k2O_from_mineral_fert \
+                + self.magnesium_from_fertilizer \
+                + self.ca_from_mineral_fert
+        
+    def computeFertilisers(self, totalFert):
+        #FIXME: check if it is correct to remove ammonia_liquid from solid ferts
+        liquid = self.fert_n_ammonia_liquid
+        solid = totalFert - self.fert_n_ammonia_liquid
+        return (solid,liquid)
+    
+    def computePesticides(self):
+        solid = 0.0
+        liquid = self.pest_total
+        #FIXME: remove Chlorsulfuron from liquid, put in solid
+        #FIXME: other solid pesticides?
+        return (solid / 1000.0,liquid /1000.0)
+    

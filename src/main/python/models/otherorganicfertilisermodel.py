@@ -67,6 +67,23 @@ class OtherOrganicFertModel(object):
     #src: Walther Ryser 2001, Tab. 48
     #kg/t FM
     _P205_CONCENTRATION_IN_LIQUID_SEWAGE_SLUDGE = 3.5
+    
+    # src: Agribalyse Table 67 * Table 154
+    #kg TAN /t or m3
+    _NH3N_CONCENTRATION_CONTENT_ORG_FERT = {
+                            OtherOrganicFertiliserType.compost: 0.83 * 0.71, #FIXME: table 67: household or green waste compost?
+                            OtherOrganicFertiliserType.meat_and_bone_meal: 6.50 * 0.71, #Feather meal
+                            OtherOrganicFertiliserType.castor_oil_shell_coarse: 0.83 * 0.71,#compost #FIXME: table 67: manure / slurry compost?
+                            OtherOrganicFertiliserType.vinasse: 0.96 * 0.81,
+                            OtherOrganicFertiliserType.dried_poultry_manure: 0.83 * 0.69,#dry layer droppings
+                            OtherOrganicFertiliserType.stone_meal: 6.50 * 0.71,#Feather meal
+                            OtherOrganicFertiliserType.feather_meal: 6.50 * 0.71,#Feather meal
+                            OtherOrganicFertiliserType.horn_meal: 6.50 * 0.71,#Feather meal
+                            OtherOrganicFertiliserType.horn_shavings_fine: 6.50 * 0.71,#Feather meal
+                            OtherOrganicFertiliserType.sewagesludge_liquid: 2.13 * 0.4,#sludge
+                            OtherOrganicFertiliserType.sewagesludge_dehydrated: 3.20 * 0.4,#FIXME: table 67: semi-solid sludge?
+                            OtherOrganicFertiliserType.sewagesludge_dried: 1.80 * 0.4#sludge
+                             }
                                                                 
     #src: Freiermuth 2006, table 13 if not specified
     # g/t TS
@@ -97,9 +114,8 @@ class OtherOrganicFertModel(object):
     def computeN(self):
         return sum(v * self._N_CONCENTRATION_ORG_FERT[k] for k,v in self.other_organic_fertiliser_quantities.items())
     
-    #FIXME: To Complete
     def computeNH3(self):
-        return 0.0
+        return sum(v * self._NH3N_CONCENTRATION_CONTENT_ORG_FERT[k] for k,v in self.other_organic_fertiliser_quantities.items())
     
     def computeHeavyMetal(self):
         total_hm_values = dict.fromkeys(HeavyMetalType,0.0)

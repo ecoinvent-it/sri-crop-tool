@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.quantis_intl.commons.scsv.ScsvEnums.SubCompartment;
 import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
 
 public class GeneratedSubstanceUsage implements SubstanceUsage
@@ -59,7 +60,7 @@ public class GeneratedSubstanceUsage implements SubstanceUsage
     }
 
     @Override
-    public String getSubCompartment()
+    public SubCompartment getSubCompartment()
     {
         return template.subCompartment;
     }

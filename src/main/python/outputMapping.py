@@ -61,6 +61,10 @@ class OutputMapping(object):
             prefix = key.replace("m_hm_", "") + "_"
             for k, v in hmMap.items():
                 self.output[prefix + k.name] = v
+                
+    def mapPackModel(self, packOutput):
+        for key, value in packOutput.items():
+            self.output[key.replace("m_Pack_", "")] = value
             
     def _mapEnumMap(self, enumdict):
         for k,v in enumdict.items():

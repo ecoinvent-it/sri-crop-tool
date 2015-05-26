@@ -115,4 +115,6 @@ EXCEL_INPUT_MAPPING_RULES = {
                     #P model rules
                     #HM model rules
                     #pesticides_quantities: TODO map PesticideType -> kg i /(ha*year) (i: pest type)
+                    #Packaging rules
+                    "ca_from_mineral_fert": SimpleInputMappingRule("total_fertotherca"),
                    }

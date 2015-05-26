@@ -250,6 +250,8 @@ DEFAULTS_VALUES_GENERATORS = {
                    "hm_land_use_category": LandUseCategoryForHMDefaultGenerator(),
                    "pest_total": SimpleValueDefaultGenerator(0),#FIXME: Default (crop+country) GD_crop Pesticides_L1, no values for:Apricot,Asparagus,Carrot,Coconut,Lemon,Mint,Oat,Olive,Onion,Pear,Pineapple,Strawberry,SweetCorn,Tea
                    "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default
+                   #Packaging rules
+                   "ca_from_mineral_fert": SimpleValueDefaultGenerator(0),
                    #Direct outputs
                    "computed_drying":DryingDefaultGenerator(),
                    "type_of_drying":SimpleValueDefaultGenerator("ambient_air"),

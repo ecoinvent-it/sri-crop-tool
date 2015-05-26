@@ -87,22 +87,17 @@ public class TemplateProductUsage
             new TemplateProductUsage("Magnesium sulphate, at plant/RER U", "kg", "fert_other_total_mg", ""),
 
             new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg",
-                    "TODO", ""),
+                    "packaging_solid_fertilisers_and_pesticides", ""),
             new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg",
-                    "TODO", ""),
+                    "packaging_liquid_fertilisers_and_pesticides", ""),
 
             new TemplateProductUsage("Compost, at plant/CH U", "t", "composttype_compost", ""),
-            // new TemplateProductUsage("TODO", "kg", "", ""),
-            // new TemplateProductUsage("TODO", "kg", "", ""),
-            // new TemplateProductUsage("TODO", "kg", "", ""),
-            // new TemplateProductUsage("TODO", "kg", "", ""),
-            // new TemplateProductUsage("TODO", "kg", "", ""),
             new TemplateProductUsage("Vinasse, at fermentation plant/CH U", "t", "composttype_vinasse", ""),
             new TemplateProductUsage("Stone meal, at regional storehouse/CH U", "t", "composttype_stone_meal", ""),
-            new TemplateProductUsage("chemicals inorganic, at plant/GLO U", "kg", "", ""), // FIXME: MISSING OR NOT?
-            // new TemplateProductUsage("TODO", "kg", "", ""),
-            // new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg", "", ""), // FIXME: MISSING
-            // new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg", "", ""), // FIXME: MISSING
+            // new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg", "composttype_horn_meal", ""), //
+            // FIXME: MISSING
+            // new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg",
+            // "composttype_horn_shavings_fine", ""), // FIXME: MISSING
             new TemplateProductUsage("poultry manure, dried, at regional storehouse/CH U", "t",
                     "composttype_dried_poultry_manure", ""),
 
