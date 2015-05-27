@@ -22,6 +22,8 @@ class PackModel(object):
                         "pest_total"
                        ]
     
+    _DILUTION_FACTOR = 2.0;
+    
     def __init__(self, inputs):
         #TODO: Should we log usage of default value?
         for key in PackModel._input_variables:
@@ -32,8 +34,8 @@ class PackModel(object):
         fert_solid,fert_liquid = self.computeFertilisers(totalFert)
         pest_solid,pest_liquid = self.computePesticides()
 
-        return {"m_Pack_packaging_liquid_fertilisers_and_pesticides": (pest_liquid + fert_liquid)*2.0,
-                "m_Pack_packaging_solid_fertilisers_and_pesticides": (pest_solid + fert_solid)*2.0}
+        return {"m_Pack_packaging_liquid_fertilisers_and_pesticides": (pest_liquid + fert_liquid)*self._DILUTION_FACTOR,
+                "m_Pack_packaging_solid_fertilisers_and_pesticides": (pest_solid + fert_solid)*self._DILUTION_FACTOR}
     
     
     def computeTotalFertilisers(self):

@@ -34,6 +34,21 @@ public class TemplateProductUsage
     }
 
     public static final TemplateProductUsage[] materialsFuels = {
+            new TemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 2.0)/{TODO} U", "m3",
+                    "surface_irrigation_electricity", ""),
+            new TemplateProductUsage("Irrigating, surface, diesel powered (WFLDB 2.0)/GLO U", "m3",
+                    "surface_irrigation_diesel", ""),
+            // new TemplateProductUsage("Irrigating, surface, gravity/GLO U", "m3", "surface_irrigation_no_energy",
+            // ""),// FIXME: Missing
+            new TemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 2.0)/{TODO} U", "m3",
+                    "sprinkler_irrigation_electricity", ""),
+            new TemplateProductUsage("Irrigating, sprinkler, diesel powered (WFLDB 2.0)/GLO U", "m3",
+                    "sprinkler_irrigation_diesel", ""),
+            new TemplateProductUsage("Irrigating, drip, electricity powered (WFLDB 2.0)/{TODO} U", "m3",
+                    "drip_irrigation_electricity", ""),
+            new TemplateProductUsage("Irrigating, drip, diesel powered (WFLDB 2.0)/GLO U", "m3",
+                    "drip_irrigation_diesel", ""),
+
             new TemplateProductUsage("Ammonium nitrate, as N, at regional storehouse/RER U", "kg",
                     "fert_n_ammonium_nitrate", ""),
             new TemplateProductUsage("Urea, as N, at regional storehouse/RER U", "kg", "fert_n_urea", ""),
@@ -167,7 +182,8 @@ public class TemplateProductUsage
             new TemplateProductUsage("Potato haulm cutting/CH U", "ha", "harvesting_removing_potatoes_haulms", ""),
             new TemplateProductUsage("Swath, by rotary windrower/CH U", "ha", "harvesting_windrowing_rotary_swather",
                     ""),
-            // new TemplateProductUsage("Flaming/CH U", "ha", "plantprotection_flaming", ""), // FIXME: MISSING
+            new TemplateProductUsage("Natural gas, burned in boiler modulating <100kW/RER U", "MJ",
+                    "plantprotection_flaming", ""), // FIXME: Be careful with the unit
             new TemplateProductUsage("Application of plant protection products, by field sprayer/CH U", "ha",
                     "plantprotection_spraying", ""),
             // NOTE: Baling in upper

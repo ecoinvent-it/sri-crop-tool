@@ -78,8 +78,8 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
       "ES":2.3321907050988,
       "GLO":1.76300389419428
    },
-   "mint":{#FIXME: Missing values and/or GLO
-
+   "mint":{
+      "GLO":0.0
    },
    "oat":{
       "CA":2.74319434970925,
@@ -126,8 +126,8 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
       "CN":1.11366882736282,
       "GLO":1.88859691786775
    },
-   "pineapple":{#FIXME: Missing values and/or GLO
-
+   "pineapple":{
+      "GLO":0.0
    },
    "potato":{
       "CN":2.10777848289342,
@@ -281,8 +281,8 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
       "ES":1.58471189303512,
       "GLO":1.26498121935193
    },
-   "mint":{#FIXME: Missing values and/or GLO
-
+   "mint":{
+      "GLO":0.0
    },
    "oat":{
       "CA":1.95477933861887,
@@ -329,8 +329,8 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
       "CN":0.881790084506163,
       "GLO":1.42566168205149
    },
-   "pineapple":{#FIXME: Missing values and/or GLO
-
+   "pineapple":{
+      "GLO":0.0
    },
    "potato":{
       "CN":1.66891460089809,

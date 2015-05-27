@@ -10,36 +10,36 @@ from models.irrigationmodel import IrrigationType
 CARBON_CONTENT_PER_CROP = {
                 "almond":626.55914,
                 "apple":431.788079,
-                "apricot":475,
-                "asparagus":475,
+                "apricot":475.0,
+                "asparagus":475.0,
                 "banana":429.522,
-                "carrot":475,
+                "carrot":475.0,
                 "cocoa":535.987,
                 "coconut":645.262412752311,
-                "coffee":475,
+                "coffee":475.0,
                 "lemonlime":384.1230769,
                 "linseed":590.234292,
                 "maizegrain":435.01682,
                 "mandarin":384.1230769,
                 "mint":445.395683453237,
-                "oat":475,
+                "oat":475.0,
                 "olive":599.451774112943,
                 "onion":424.377803,
                 "orange":384.1230769,
                 "palmtree":599.451774112943,
                 "peach":412.732283,
                 "peanut":580.63,
-                "pear":475,
+                "pear":475.0,
                 "potato":423.959628,
                 "rapeseed":470.88,
-                "rice":475,
+                "rice":475.0,
                 "soybean":681.929577464789,
-                "strawberry":475,
+                "strawberry":475.0,
                 "sugarbeet":381.46638,
-                "sugarcane":475,
+                "sugarcane":475.0,
                 "sunflower":842.802816901409,
                 "sweetcorn":435.01682,
-                "tea":475,
+                "tea":475.0,
                 "tomato":383.275862,
                 "wheat":424.10592
     }
@@ -1189,10 +1189,11 @@ FERT_P_RATIO_PER_COUNTRY = {
    }
 }
 
-#Generated in GD_crop using =""""&Z5&""":{"IrrigationType.surface_irrigation_no_energy":"&Q5&",  "IrrigationType.surface_irrigation_electricity":"&S5&",  "IrrigationType.surface_irrigation_diesel":"&T5&",  "IrrigationType.sprinkler_irrigation_electricity":"&U5&",  "IrrigationType.sprinkler_irrigation_diesel":"&V5&",  "IrrigationType.drip_irrigation_electricity":"&W5&", "IrrigationType.drip_irrigation_diesel":"&X5&"},"
+#Generated in GD_crop (combinaison of IrrTechn_L0 and IrrTechn_L1) 
+# using =""""&B$3&""":{IrrigationType.surface_irrigation_no_energy:0.0"&",  IrrigationType.surface_irrigation_electricity:"&B5&",  IrrigationType.surface_irrigation_diesel:"&B6&",  IrrigationType.sprinkler_irrigation_electricity:"&B7&",  IrrigationType.sprinkler_irrigation_diesel:"&B8&",  IrrigationType.drip_irrigation_electricity:"&B9&", IrrigationType.drip_irrigation_diesel:"&B10&"},"
 IRR_TECH_RATIO_PER_COUNTRY = {
-   "AR":{#South america
-      IrrigationType.surface_irrigation_no_energy:0,
+   "AR":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.24105504587156,
       IrrigationType.surface_irrigation_diesel:0.723165137614679,
       IrrigationType.sprinkler_irrigation_electricity:0.0036697247706422,
@@ -1201,7 +1202,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.0158256880733945
    },
    "AU":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.718978388998035,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.206082514734774,
@@ -1209,8 +1210,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.0749390962671906,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "BE":{#Europe
-      IrrigationType.surface_irrigation_no_energy:0,
+   "BE":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.0185185185185185,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
@@ -1219,7 +1220,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0
    },
    "BR":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.192036629213483,
       IrrigationType.surface_irrigation_diesel:0.192036629213483,
       IrrigationType.sprinkler_irrigation_electricity:0.271124494382022,
@@ -1228,7 +1229,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.0368388764044944
    },
    "CA":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.207973563218391,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.785090804597701,
@@ -1236,8 +1237,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.00693563218390805,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "CH":{#Europe
-      IrrigationType.surface_irrigation_no_energy:0,
+   "CH":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.0185185185185185,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
@@ -1245,8 +1246,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.00925925925925926,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "CI":{#Africa
-      IrrigationType.surface_irrigation_no_energy:0,
+   "CI":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.22,
       IrrigationType.surface_irrigation_diesel:0.66,
       IrrigationType.sprinkler_irrigation_electricity:0.02875,
@@ -1255,7 +1256,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.00375
    },
    "CL":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.964220183486238,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.0146788990825688,
@@ -1264,7 +1265,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0
    },
    "CN":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.461248060708263,
       IrrigationType.surface_irrigation_diesel:0.461248060708263,
       IrrigationType.sprinkler_irrigation_electricity:0.024677150084317,
@@ -1272,8 +1273,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.0140747892074199,
       IrrigationType.drip_irrigation_diesel:0.0140747892074199
    },
-   "CO":{#South america
-      IrrigationType.surface_irrigation_no_energy:0,
+   "CO":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.24105504587156,
       IrrigationType.surface_irrigation_diesel:0.723165137614679,
       IrrigationType.sprinkler_irrigation_electricity:0.0036697247706422,
@@ -1281,8 +1282,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.00527522935779817,
       IrrigationType.drip_irrigation_diesel:0.0158256880733945
    },
-   "CR":{#central America,caribbean
-      IrrigationType.surface_irrigation_no_energy:0,
+   "CR":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.225806451612903,
       IrrigationType.surface_irrigation_diesel:0.67741935483871,
       IrrigationType.sprinkler_irrigation_electricity:0.0161290322580645,
@@ -1291,7 +1292,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.0241935483870968
    },
    "DE":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.0185185185185185,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
@@ -1299,8 +1300,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.00925925925925926,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "EC":{#South america
-      IrrigationType.surface_irrigation_no_energy:0,
+   "EC":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.24105504587156,
       IrrigationType.surface_irrigation_diesel:0.723165137614679,
       IrrigationType.sprinkler_irrigation_electricity:0.0036697247706422,
@@ -1309,7 +1310,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.0158256880733945
    },
    "ES":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.296592219020173,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.225506628242075,
@@ -1318,7 +1319,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0
    },
    "FI":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.857142857142857,
@@ -1327,7 +1328,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0
    },
    "FR":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.488586206896552,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.475793103448276,
@@ -1335,17 +1336,17 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.0356206896551724,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "GH":{#central America,caribbean
-      IrrigationType.surface_irrigation_no_energy:0,
-      IrrigationType.surface_irrigation_electricity:0.225806451612903,
-      IrrigationType.surface_irrigation_diesel:0.67741935483871,
-      IrrigationType.sprinkler_irrigation_electricity:0.0161290322580645,
-      IrrigationType.sprinkler_irrigation_diesel:0.0483870967741936,
-      IrrigationType.drip_irrigation_electricity:0.00806451612903226,
-      IrrigationType.drip_irrigation_diesel:0.0241935483870968
+   "GH":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
+      IrrigationType.surface_irrigation_electricity:0.22,
+      IrrigationType.surface_irrigation_diesel:0.66,
+      IrrigationType.sprinkler_irrigation_electricity:0.02875,
+      IrrigationType.sprinkler_irrigation_diesel:0.08625,
+      IrrigationType.drip_irrigation_electricity:0.00125,
+      IrrigationType.drip_irrigation_diesel:0.00375
    },
    "HU":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.127272727272727,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.840909090909091,
@@ -1353,8 +1354,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.0318181818181818,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "ID":{#South-East Asia
-      IrrigationType.surface_irrigation_no_energy:0,
+   "ID":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.245394736842105,
       IrrigationType.surface_irrigation_diesel:0.736184210526316,
       IrrigationType.sprinkler_irrigation_electricity:0.00131578947368421,
@@ -1363,7 +1364,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.00986842105263158
    },
    "IL":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.0043290043290044,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.25974025974026,
@@ -1372,7 +1373,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0
    },
    "IN":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.459423481116585,
       IrrigationType.surface_irrigation_diesel:0.459423481116585,
       IrrigationType.sprinkler_irrigation_electricity:0.0249995073891626,
@@ -1381,7 +1382,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.0155770114942529
    },
    "IT":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.41882734082397,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.367476779026217,
@@ -1389,8 +1390,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.213695880149813,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "KE":{#Africa
-      IrrigationType.surface_irrigation_no_energy:0,
+   "KE":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.22,
       IrrigationType.surface_irrigation_diesel:0.66,
       IrrigationType.sprinkler_irrigation_electricity:0.02875,
@@ -1398,8 +1399,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.00125,
       IrrigationType.drip_irrigation_diesel:0.00375
    },
-   "LK":{#South-East Asia
-      IrrigationType.surface_irrigation_no_energy:0,
+   "LK":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.245394736842105,
       IrrigationType.surface_irrigation_diesel:0.736184210526316,
       IrrigationType.sprinkler_irrigation_electricity:0.00131578947368421,
@@ -1408,7 +1409,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.00986842105263158
    },
    "MX":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.903225806451613,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.0645161290322581,
@@ -1416,8 +1417,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.032258064516129,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "NL":{#Europe
-      IrrigationType.surface_irrigation_no_energy:0,
+   "NL":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.0185185185185185,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
@@ -1426,7 +1427,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0
    },
    "NZ":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.0185185185185185,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.972222222222222,
@@ -1434,8 +1435,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.00925925925925926,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "PE":{#South america
-      IrrigationType.surface_irrigation_no_energy:0,
+   "PE":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.24105504587156,
       IrrigationType.surface_irrigation_diesel:0.723165137614679,
       IrrigationType.sprinkler_irrigation_electricity:0.0036697247706422,
@@ -1444,7 +1445,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.0158256880733945
    },
    "PH":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.247728618421053,
       IrrigationType.surface_irrigation_diesel:0.743185855263158,
       IrrigationType.sprinkler_irrigation_electricity:0.00118009868421053,
@@ -1453,7 +1454,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.00327384868421053
    },
    "PL":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.87,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.05,
@@ -1462,16 +1463,16 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0
    },
    "RU":{
-      IrrigationType.surface_irrigation_no_energy:0,
-      IrrigationType.surface_irrigation_electricity:0.217,
-      IrrigationType.surface_irrigation_diesel:0.217,
-      IrrigationType.sprinkler_irrigation_electricity:0.277777777777778,
-      IrrigationType.sprinkler_irrigation_diesel:0.277777777777778,
-      IrrigationType.drip_irrigation_electricity:0.00522222222222222,
-      IrrigationType.drip_irrigation_diesel:0.00522222222222222
+      IrrigationType.surface_irrigation_no_energy:0.0,
+      IrrigationType.surface_irrigation_electricity:0.229022988505747,
+      IrrigationType.surface_irrigation_diesel:0.687068965517241,
+      IrrigationType.sprinkler_irrigation_electricity:0.0132183908045977,
+      IrrigationType.sprinkler_irrigation_diesel:0.0396551724137931,
+      IrrigationType.drip_irrigation_electricity:0.00775862068965517,
+      IrrigationType.drip_irrigation_diesel:0.0232758620689655
    },
-   "TH":{#South-East Asia
-      IrrigationType.surface_irrigation_no_energy:0,
+   "TH":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.245394736842105,
       IrrigationType.surface_irrigation_diesel:0.736184210526316,
       IrrigationType.sprinkler_irrigation_electricity:0.00131578947368421,
@@ -1480,8 +1481,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.00986842105263158
    },
    "TR":{
-      IrrigationType.surface_irrigation_no_energy:0,
-      IrrigationType.surface_irrigation_electricity:0.878277153558052,
+      IrrigationType.surface_irrigation_no_energy:0.0,
+      IrrigationType.surface_irrigation_electricity:0.878277153558053,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.0936329588014981,
       IrrigationType.sprinkler_irrigation_diesel:0,
@@ -1489,7 +1490,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0
    },
    "UA":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.25,
@@ -1498,7 +1499,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0
    },
    "US":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.433690111336032,
       IrrigationType.surface_irrigation_diesel:0,
       IrrigationType.sprinkler_irrigation_electricity:0.49992624048583,
@@ -1506,8 +1507,8 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.0663836481781377,
       IrrigationType.drip_irrigation_diesel:0
    },
-   "VN":{#South-East Asia
-      IrrigationType.surface_irrigation_no_energy:0,
+   "VN":{
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.245394736842105,
       IrrigationType.surface_irrigation_diesel:0.736184210526316,
       IrrigationType.sprinkler_irrigation_electricity:0.00131578947368421,
@@ -1516,7 +1517,7 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_diesel:0.00986842105263158
    },
    "ZA":{
-      IrrigationType.surface_irrigation_no_energy:0,
+      IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.115149401197605,
       IrrigationType.surface_irrigation_diesel:0.115149401197605,
       IrrigationType.sprinkler_irrigation_electricity:0.275466766467066,
@@ -1533,9 +1534,9 @@ LAND_USE_CATEGORY_PER_CROP = {
         "asparagus":LandUseCategory.vegetables,
         "banana":LandUseCategory.fruit_trees,
         "carrot":LandUseCategory.vegetables,
-        "cocoa":LandUseCategory.fruit_trees, #FIXME: To be verified
+        "cocoa":LandUseCategory.fruit_trees,
         "coconut":LandUseCategory.fruit_trees,
-        "coffee":LandUseCategory.fruit_trees,#FIXME: To be verified
+        "coffee":LandUseCategory.fruit_trees,
         "lemonlime":LandUseCategory.fruit_trees,
         "linseed":LandUseCategory.arable_land,
         "maizegrain":LandUseCategory.arable_land,
@@ -1547,7 +1548,7 @@ LAND_USE_CATEGORY_PER_CROP = {
         "orange":LandUseCategory.fruit_trees,
         "palmtree":LandUseCategory.fruit_trees,
         "peach":LandUseCategory.fruit_trees,
-        "peanut":LandUseCategory.vegetables,#FIXME: To be verified
+        "peanut":LandUseCategory.arable_land,
         "pear":LandUseCategory.fruit_trees,
         "pineapple":LandUseCategory.arable_land,
         "potato":LandUseCategory.arable_land,
@@ -2169,9 +2170,9 @@ ROOTING_DEPTH_PER_CROP = {
                         "apple": 1.5,
                         "apricot": 1.5,
                         "asparagus": 0.5,
-                        "banana": 1, #FIXME: Default
+                        "banana": 1.5,
                         "carrot": 0.5,
-                        "cocoa": 2, #TODO: Took from another source
+                        "cocoa": 2.0, #TODO: Took from another source
                         "coconut": 1.5,
                         "coffee": 1.5,
                         "lemonlime": 1.5,
@@ -2187,13 +2188,13 @@ ROOTING_DEPTH_PER_CROP = {
                         "peach": 1.5,
                         "peanut": 0.9,
                         "pear": 1.5,
-                        "pineapple": 1, #FIXME: Default
+                        "pineapple": 0.5,
                         "potato": 0.5,
                         "rapeseed": 0.9,
                         "rice": 0.6,
                         "soybean": 0.95,
                         "strawberry": 0.5,
-                        "sugarbeet": 1, # FIXME: Default
+                        "sugarbeet": 0.5,
                         "sugarcane": 1.6,
                         "sunflower": 1.35,
                         "sweetcorn": 1.35,
@@ -2271,13 +2272,13 @@ SEED_TYPE_IP_PER_CROP ={
                         "rapeseed":SeedType.rape,
                         "rice":SeedType.wheat_ip,
                         "soybean":SeedType.soya_bean_ip,
-                        "strawberry":SeedType.vegetable_ip,
+                        "strawberry":SeedType.tree_seedlings_ip,
                         "sugarbeet":SeedType.sugar_fodder_beet,
                         "sugarcane":SeedType.other,#FIXME: no data
                         "sunflower":SeedType.sunflower_ip,
                         "sweetcorn":SeedType.maize_ip,
                         "tea":SeedType.other,#FIXME: no data
-                        "tomato":SeedType.vegetable_ip,
+                        "tomato":SeedType.tree_seedlings_ip,
                         "wheat":SeedType.wheat_ip
                         }
 
@@ -2309,13 +2310,13 @@ SEED_TYPE_ORG_PER_CROP ={
                         "rapeseed":SeedType.rape,
                         "rice":SeedType.wheat_org,
                         "soybean":SeedType.soya_bean_org,
-                        "strawberry":SeedType.vegetable_org,
+                        "strawberry":SeedType.tree_seedlings_org,
                         "sugarbeet":SeedType.sugar_fodder_beet,
                         "sugarcane":SeedType.other,#FIXME: no data
                         "sunflower":SeedType.sunflower_org,
                         "sweetcorn":SeedType.maize_org,
                         "tea":SeedType.other,#FIXME: no data
-                        "tomato":SeedType.vegetable_org,
+                        "tomato":SeedType.tree_seedlings_org,
                         "wheat":SeedType.wheat_org
                          }
 
@@ -2421,7 +2422,7 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "cocoa": 0.056,
         "coconut": 0.446,
         "coffee": 0.102,
-        "lemonlime": 0.842,#lemon
+        "lemonlime": 0.842,
         "linseed": 0.1,
         "maizegrain": 0.14,
         "mandarin": 0.842,
@@ -2430,11 +2431,11 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "olive": 0.748,
         "onion": 0.886,
         "orange": 0.842,
-        "palmtree": 0.87,#palmfruitbunch
+        "palmtree": 0.87,
         "peach": 0.873,
         "peanut": 0.05968,
         "pear": 0.829,
-        "pineapple": 0.8,#FIXME: Default
+        "pineapple": 0.87,#src: web
         "potato": 0.78,
         "rapeseed": 0.12,
         "rice": 0.131,

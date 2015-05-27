@@ -46,15 +46,15 @@ class OutputMapping(object):
         self.output["PO4_surfacewater"] = self.output["PO4_surfacewater_drained"] + self.output["PO4_surfacewater_ro"]
     
     def mapFertilizers(self, allInputs):
-        self._mapEnumMap(allInputs["n_fertiliser_quantities"])
-        self._mapEnumMap(allInputs["p_fertiliser_quantities"])
-        self._mapEnumMap(allInputs["k_fertiliser_quantities"])
-        self._mapEnumMap(allInputs["other_mineral_fertiliser_quantities"])
+        self.mapEnumMap(allInputs["n_fertiliser_quantities"])
+        self.mapEnumMap(allInputs["p_fertiliser_quantities"])
+        self.mapEnumMap(allInputs["k_fertiliser_quantities"])
+        self.mapEnumMap(allInputs["other_mineral_fertiliser_quantities"])
         #TODO: Is this the best place for that?
         self.output["fert_n_ammonia_liquid_as_nh3"] = self.output["fert_n_ammonia_liquid"] * MA_NH3/MA_N
         
     def mapOtherOrganicFertilizers(self, allInputs):
-        self._mapEnumMap(allInputs["other_organic_fertiliser_quantities"])
+        self.mapEnumMap(allInputs["other_organic_fertiliser_quantities"])
        
     def mapHMModel(self,hmOutput):
         for key, hmMap in hmOutput.items():
@@ -66,7 +66,7 @@ class OutputMapping(object):
         for key, value in packOutput.items():
             self.output[key.replace("m_Pack_", "")] = value
             
-    def _mapEnumMap(self, enumdict):
+    def mapEnumMap(self, enumdict):
         for k,v in enumdict.items():
             self.output[k.value] = v
             

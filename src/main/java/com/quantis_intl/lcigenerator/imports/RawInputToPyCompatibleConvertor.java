@@ -162,6 +162,7 @@ public class RawInputToPyCompatibleConvertor
                     // TODO: Warn
                     inputs.putAll(Maps.transformValues(ratios, v -> v / sum));
                 }
+                // TODO: Let Python do that
                 Double total = (Double) inputs.get("total_" + ratiosEntry.getKey());
                 if (total != null)
                 {

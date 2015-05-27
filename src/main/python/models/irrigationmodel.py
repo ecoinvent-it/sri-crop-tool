@@ -1,13 +1,13 @@
 from enum import Enum
 
 class IrrigationType(Enum):
-    surface_irrigation_no_energy=1
-    surface_irrigation_electricity=2
-    surface_irrigation_diesel=3
-    sprinkler_irrigation_electricity=4
-    sprinkler_irrigation_diesel=5
-    drip_irrigation_electricity=6
-    drip_irrigation_diesel=7
+    surface_irrigation_no_energy="surface_irrigation_no_energy"
+    surface_irrigation_electricity="surface_irrigation_electricity"
+    surface_irrigation_diesel="surface_irrigation_diesel"
+    sprinkler_irrigation_electricity="sprinkler_irrigation_electricity"
+    sprinkler_irrigation_diesel="sprinkler_irrigation_diesel"
+    drip_irrigation_electricity="drip_irrigation_electricity"
+    drip_irrigation_diesel="drip_irrigation_diesel"
 
 class IrrigationModel(object):
     """Inputs:

@@ -80,6 +80,16 @@ class ConvertRatioToValueDefaultGenerator(object):
         total = generators[self._totalField]
         return {k:v * total for k,v in self._ratioTable[generators[self._tableKeyField]].items()}
     
+class RatioToValueConvertor(object):
+    def __init__(self, ratiosField, totalField):
+        self._ratiosField = ratiosField
+        self._totalField = totalField
+        
+    def generateDefault(self, field, generators):
+        total = generators[self._totalField]
+        return {k:v * total for k,v in generators[self._ratiosField].items()}
+    
+    
 class CropCyclePerYearDefaultGenerator(object):
     def generateDefault(self, field, generators):
         return 1.0 #FIXME Implement
@@ -231,6 +241,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "magnesium_as_dolomite": SimpleValueDefaultGenerator(1.0),
                    #Irrigation defaults
                    "irrigation_types_proportions": TableLookupDefaultGenerator("country", IRR_TECH_RATIO_PER_COUNTRY),
+                   "irrigation_types_quantities": RatioToValueConvertor("irrigation_types_proportions", "water_use_total"),
                    #N model defaults
                    "bulk_density_of_soil": SimpleValueDefaultGenerator(1300.0),
                    "c_per_n_ratio": SimpleValueDefaultGenerator(11.0),
