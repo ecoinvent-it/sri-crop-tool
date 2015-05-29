@@ -32,21 +32,19 @@ class Test(unittest.TestCase):
                     SeedType.sugar_fodder_beet: 26.26,
                     SeedType.tree_seedlings_ip: 27.27,
                     SeedType.tree_seedlings_org: 28.28,
-                    SeedType.salix: 29.29,
-                    SeedType.miscanthus: 30.3,
                     SeedType.other: 31.31
                   }
              }
             
     def testHeavyMetal(self):
         expectedResults = {
-                            HeavyMetalType.cd: 119.662601,
-                            HeavyMetalType.cu: 6490.90505,
-                            HeavyMetalType.zn: 33038.76163,
-                            HeavyMetalType.pb: 563.827147,
-                            HeavyMetalType.ni: 1125.987457,
-                            HeavyMetalType.cr: 517.883863,
-                            HeavyMetalType.hg: 38.175756}
+                            HeavyMetalType.cd: 56.144201,
+                            HeavyMetalType.cu: 2298.69065,
+                            HeavyMetalType.zn: 12712.87363,
+                            HeavyMetalType.pb: 220.827787,
+                            HeavyMetalType.ni: 465.396097,
+                            HeavyMetalType.cr: 168.532663,
+                            HeavyMetalType.hg: 12.768396}
                         
         results = SeedModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():

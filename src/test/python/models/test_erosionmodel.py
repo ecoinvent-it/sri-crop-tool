@@ -7,7 +7,7 @@ class Test(unittest.TestCase):
     def testModel(self):
         inputs = {"average_annual_precipitation":1200,
                 "yearly_precipitation_as_snow":0.2,
-                "annualized_water_use_total":30000,
+                "annualized_irrigation":30000,
                 "slope":0.03,
                 "slope_length":50.0,
                 "tillage_method":TillageMethod.spring_plow,

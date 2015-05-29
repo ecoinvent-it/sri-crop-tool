@@ -17,6 +17,7 @@ class LandUseCategoryForHM(Enum):
 class HmModel(object):
     
     """Inputs:
+      crop_cycle_per_year: ratio
       hm_from_manure : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
       hm_from_mineral_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
       hm_from_other_organic_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
@@ -42,7 +43,8 @@ class HmModel(object):
 
     """
     
-    _input_variables = ['hm_from_manure',
+    _input_variables = ['crop_cycle_per_year',
+                        'hm_from_manure',
                         'hm_from_mineral_fert',
                         'hm_from_other_organic_fert',
                         'hm_from_seed',
@@ -134,7 +136,7 @@ class HmModel(object):
                 + sumPest[hmElement]
     
     def _compute_allocation_factor_for_hm_element(self, agro_input, hmElement):
-        return agro_input / (agro_input + self._HM_DEPOSITIONS[hmElement])
+        return agro_input / (agro_input + self._HM_DEPOSITIONS[hmElement] / self.crop_cycle_per_year)
         
     def _compute_pesticides(self):
         hm_values = dict.fromkeys(HeavyMetalType,0.0)
@@ -148,8 +150,8 @@ class HmModel(object):
     def _compute_pesticides_ratio_to_zn(self,pest):#mg/g -> mg/kg
         return self._ZINC_MW * self._PEST_NB_ZN_ATOMS[pest] / self._PEST_MW[pest] / 1000.0
     
-    def _compute_leaching_for_hm_element(self, allocation_factor, hmElement): # mg/ha/y > kg/ha/y
-        return self._LEACHING_TO_GW[hmElement] * allocation_factor / 1000000.0;
+    def _compute_leaching_for_hm_element(self, allocation_factor, hmElement): # mg/ha/y > kg/ha/crop cycle
+        return self._LEACHING_TO_GW[hmElement] / self.crop_cycle_per_year * allocation_factor / 1000000.0;
   
     def _split_leaching_between_surface_and_ground_water(self, total_leaching):
         surface = total_leaching * self.drained_part
@@ -158,7 +160,7 @@ class HmModel(object):
     
     def _compute_erosion_gw(self, allocation_factor, hmElement, hmIndex): #mg/ha -> kg/ha
         return self._SOIL_HM_CONTENT[self.hm_land_use_category][hmIndex] / 1000000.0 \
-                * self.eroded_soil * self._ACCUMULATION_FACTOR \
+                * self.eroded_soil / self.crop_cycle_per_year * self._ACCUMULATION_FACTOR \
                 * self._EROSION_FACTOR * allocation_factor
 
     def _compute_soil(self, agro_input, allocation_factor, leaching, erosion_gw, hmElement):

@@ -138,7 +138,7 @@ CROP_FACTOR_PER_CROP = {
         "cocoa":0.21,
         "coconut":0.3,#No data found yet; same value as for banana and coffee
         "coffee":0.26,
-        "lemonlime":0.1,#lemon
+        "lemonlime":0.1,
         "linseed":0.18,
         "maizegrain":0.35,
         "mandarin":0.1,
@@ -147,7 +147,7 @@ CROP_FACTOR_PER_CROP = {
         "olive":0.1,
         "onion":0.45,
         "orange":0.1,
-        "palmtree":0.21,#palmfruitbunch
+        "palmtree":0.21,
         "peach":0.1,
         "peanut":0.51,
         "pear":0.1,

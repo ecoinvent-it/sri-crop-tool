@@ -26,9 +26,9 @@ class Test(unittest.TestCase):
                  }
         
         expectedResults = {"m_N_ammonia_total": 55.73,
-                "m_N_nitrate_to_groundwater": 434.57611254,
-                "m_N_nitrate_to_surfacewater": 186.24690537,
-                "m_N_N2o_air": 16.66281472,
+                "m_N_nitrate_to_groundwater": 388.7931347107028,
+                "m_N_nitrate_to_surfacewater": 166.62562916172976,
+                "m_N_N2o_air": 16.314621137550432,
                 "m_N_Nox_as_n2o_air": 11.39094064}
         
         results = nmodel.NModel(inputs).compute()

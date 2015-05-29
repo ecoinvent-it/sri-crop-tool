@@ -3,7 +3,8 @@ from models.modelEnums import HeavyMetalType
 from models.hmmodel import PesticideType, LandUseCategoryForHM, HmModel
 
 class Test(unittest.TestCase):
-    inputs = {"hm_from_manure":
+    inputs = {"crop_cycle_per_year":2.0,
+              "hm_from_manure":
                     {   HeavyMetalType.cd: 1.1,
                         HeavyMetalType.cu: 2.2,
                         HeavyMetalType.zn: 3.3,
@@ -54,29 +55,29 @@ class Test(unittest.TestCase):
         
     def testHeavyMetal(self):
         expectedResults = {'m_hm_heavymetal_to_soil':{
-                            HeavyMetalType.cd: 5.425636757133336,
-                            HeavyMetalType.cu: 2.6017050394326233,
-                            HeavyMetalType.zn: 0.05926202634623969,
-                            HeavyMetalType.pb: 0.32068577733307085,
-                            HeavyMetalType.ni: 1.2100046055033435,
-                            HeavyMetalType.cr: 1.9974101446193773,
-                            HeavyMetalType.hg: 58.555680872214516},
+                            HeavyMetalType.cd: 10.008104171275004,
+                            HeavyMetalType.cu: 5.0402847363033825,
+                            HeavyMetalType.zn: 0.11845499831864793,
+                            HeavyMetalType.pb: 0.638734633016328,
+                            HeavyMetalType.ni: 2.3848192219865365,
+                            HeavyMetalType.cr: 3.9050128869822758,
+                            HeavyMetalType.hg: 71.19723603975736},
                            'm_hm_heavymetal_to_ground_water':{
-                            HeavyMetalType.cd: 2.5835260043956044e-06,
-                            HeavyMetalType.cu: 7.270955511293038e-05,
+                            HeavyMetalType.cd: 2.382779051351351e-06,
+                            HeavyMetalType.cu: 7.042851701936917e-05,
                             HeavyMetalType.zn: 1.6151438269742165e-05,
                             HeavyMetalType.pb: 1.7107378220858893e-06,
                             HeavyMetalType.ni: 7.930930214144322e-07,
-                            HeavyMetalType.cr: 0.0002954886104699711,
-                            HeavyMetalType.hg: 6.106263886363636e-07},
+                            HeavyMetalType.cr: 0.00028881020303442507,
+                            HeavyMetalType.hg: 3.71227096373057e-07},
                            'm_hm_heavymetal_to_surface_water':{
-                            HeavyMetalType.cd: 1.684981684981685e-06,
-                            HeavyMetalType.cu: 4.6638705367384134e-05,
+                            HeavyMetalType.cd: 1.5540540540540541e-06,
+                            HeavyMetalType.cu: 4.517555979577188e-05,
                             HeavyMetalType.zn: 1.0685637145043578e-05,
                             HeavyMetalType.pb: 9.918200408997955e-07,
                             HeavyMetalType.ni: 0.0,
-                            HeavyMetalType.cr: 0.0001960903543517825,
-                            HeavyMetalType.hg: 3.353409090909091e-07}
+                            HeavyMetalType.cr: 0.00019165847023124415,
+                            HeavyMetalType.hg: 2.038687392055268e-07}
                         }
         results = HmModel(self.inputs).compute();
         for key, value in expectedResults.items():

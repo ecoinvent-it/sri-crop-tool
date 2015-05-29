@@ -19,7 +19,6 @@ class AntiErosionPractice(Enum):
     strip_cropping_contour="strip_cropping_contour"
     unknown="unknown"
     
-#FIXME: Irrigation per crop cycle
 class ErosionModel(object):
     """Inputs:
       average_annual_precipitation: mm/year
@@ -51,22 +50,6 @@ class ErosionModel(object):
     _POW_FOR_SLOPE_1_TO_3_5_PERCENT = 0.3;
     _POW_FOR_SLOPE_3_5_TO_5_PERCENT = 0.4;
     _POW_FOR_SLOPE_OVER_5_PERCENT = 0.5;
-    
-    #FIXME: match with input crop
-    # put in input module
-    # Complete with GD_crop / Cfactor_L1 ; même principe (Prinzip Hoffnung)
-    _CROP_FACTOR = { "Jatropha":0.2,
-                    "Sunflower":0.5,
-                    "Wheat":0.35,
-                    "Castor bean":0.5,
-                        
-                    "Potato":0.4,
-                    "Sugar beet":0.5,
-                    "Sugar cane":0.3,
-                    "Sweet sorghum":0.4,
-                    "Rapeseed":0.5,
-                    "Soya":0.4,
-                    "Palm":0.2};
                     
     _TILLAGE_METHOD_FACTOR = {TillageMethod.unknown:1.0,
                                 TillageMethod.fall_plaw:1.0,
