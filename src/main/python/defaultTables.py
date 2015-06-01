@@ -2244,81 +2244,43 @@ SAND_CONTENT_PER_COUNTRY = {
                        "VN":0.0109721867823424
 }
 
-SEED_TYPE_IP_PER_CROP ={
-                        "almond":SeedType.tree_seedlings_ip,
-                        "apple":SeedType.tree_seedlings_ip,
-                        "apricot":SeedType.tree_seedlings_ip,
-                        "asparagus":SeedType.vegetable_ip,
-                        "banana":SeedType.tree_seedlings_ip,
-                        "carrot":SeedType.vegetable_ip,
-                        "cocoa":SeedType.vegetable_ip,
-                        "coconut":SeedType.tree_seedlings_ip,
+SEED_TYPE_PER_CROP ={
+                        "almond":SeedType.tree_seedlings,
+                        "apple":SeedType.tree_seedlings,
+                        "apricot":SeedType.tree_seedlings,
+                        "asparagus":SeedType.vegetable,
+                        "banana":SeedType.tree_seedlings,
+                        "carrot":SeedType.vegetable,
+                        "cocoa":SeedType.vegetable,
+                        "coconut":SeedType.tree_seedlings,
                         "coffee":SeedType.other,#FIXME: no data
-                        "lemonlime":SeedType.tree_seedlings_ip,
-                        "linseed":SeedType.pea_ip,
-                        "maizegrain":SeedType.maize_ip,
-                        "mandarin":SeedType.tree_seedlings_ip,
-                        "mint":SeedType.vegetable_ip,
+                        "lemonlime":SeedType.tree_seedlings,
+                        "linseed":SeedType.pea,
+                        "maizegrain":SeedType.maize,
+                        "mandarin":SeedType.tree_seedlings,
+                        "mint":SeedType.vegetable,
                         "oat":SeedType.other,#FIXME: no data but indicated "oat seed" in mireille file
-                        "olive":SeedType.tree_seedlings_ip,
-                        "onion":SeedType.vegetable_ip,
-                        "orange":SeedType.tree_seedlings_ip,
-                        "palmtree":SeedType.tree_seedlings_ip,
-                        "peach":SeedType.tree_seedlings_ip,
-                        "peanut":SeedType.vegetable_ip,
-                        "pear":SeedType.tree_seedlings_ip,
+                        "olive":SeedType.tree_seedlings,
+                        "onion":SeedType.vegetable,
+                        "orange":SeedType.tree_seedlings,
+                        "palmtree":SeedType.tree_seedlings,
+                        "peach":SeedType.tree_seedlings,
+                        "peanut":SeedType.vegetable,
+                        "pear":SeedType.tree_seedlings,
                         "pineapple":SeedType.other,#FIXME: no data
-                        "potato":SeedType.potato_ip,
+                        "potato":SeedType.potato,
                         "rapeseed":SeedType.rape,
-                        "rice":SeedType.wheat_ip,
-                        "soybean":SeedType.soya_bean_ip,
-                        "strawberry":SeedType.tree_seedlings_ip,
+                        "rice":SeedType.wheat,
+                        "soybean":SeedType.soya_bean,
+                        "strawberry":SeedType.tree_seedlings,
                         "sugarbeet":SeedType.sugar_fodder_beet,
                         "sugarcane":SeedType.other,#FIXME: no data
-                        "sunflower":SeedType.sunflower_ip,
-                        "sweetcorn":SeedType.maize_ip,
+                        "sunflower":SeedType.sunflower,
+                        "sweetcorn":SeedType.maize,
                         "tea":SeedType.other,#FIXME: no data
-                        "tomato":SeedType.tree_seedlings_ip,
-                        "wheat":SeedType.wheat_ip
+                        "tomato":SeedType.tree_seedlings,
+                        "wheat":SeedType.wheat
                         }
-
-SEED_TYPE_ORG_PER_CROP ={
-                         "almond":SeedType.tree_seedlings_org,
-                        "apple":SeedType.tree_seedlings_org,
-                        "apricot":SeedType.tree_seedlings_org,
-                        "asparagus":SeedType.vegetable_org,
-                        "banana":SeedType.tree_seedlings_org,
-                        "carrot":SeedType.vegetable_org,
-                        "cocoa":SeedType.vegetable_org,
-                        "coconut":SeedType.tree_seedlings_org,
-                        "coffee":SeedType.other,#FIXME: no data
-                        "lemonlime":SeedType.tree_seedlings_org,
-                        "linseed":SeedType.pea_org,
-                        "maizegrain":SeedType.maize_org,
-                        "mandarin":SeedType.tree_seedlings_org,
-                        "mint":SeedType.vegetable_org,
-                        "oat":SeedType.other,#FIXME: no data but indicated "oat seed" in mireille file
-                        "olive":SeedType.tree_seedlings_org,
-                        "onion":SeedType.vegetable_org,
-                        "orange":SeedType.tree_seedlings_org,
-                        "palmtree":SeedType.tree_seedlings_org,
-                        "peach":SeedType.tree_seedlings_org,
-                        "peanut":SeedType.vegetable_org,
-                        "pear":SeedType.tree_seedlings_org,
-                        "pineapple":SeedType.other,#FIXME: no data
-                        "potato":SeedType.potato_org,
-                        "rapeseed":SeedType.rape,
-                        "rice":SeedType.wheat_org,
-                        "soybean":SeedType.soya_bean_org,
-                        "strawberry":SeedType.tree_seedlings_org,
-                        "sugarbeet":SeedType.sugar_fodder_beet,
-                        "sugarcane":SeedType.other,#FIXME: no data
-                        "sunflower":SeedType.sunflower_org,
-                        "sweetcorn":SeedType.maize_org,
-                        "tea":SeedType.other,#FIXME: no data
-                        "tomato":SeedType.tree_seedlings_org,
-                        "wheat":SeedType.wheat_org
-                         }
 
 SOIL_CARBON_CONTENT_PER_COUNTRY = {
                             "AR":0.0148,

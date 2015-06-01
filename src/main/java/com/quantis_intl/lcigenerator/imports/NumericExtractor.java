@@ -34,10 +34,8 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("seeds");
         TAGS_FOR_NUMERIC.add("nb_seedlings");
         TAGS_FOR_NUMERIC.add("nb_planted_trees");
-        TAGS_FOR_NUMERIC.add("nb_crop_cycles_per_year");
         TAGS_FOR_NUMERIC.add("total_wateruse");
         TAGS_FOR_NUMERIC.add("yield_main_product_per_crop_cycle");
-        TAGS_FOR_NUMERIC.add("yield_main_product_carbon_content");
         TAGS_FOR_NUMERIC.add("total_manureliquid");
         TAGS_FOR_NUMERIC.add("total_manuresolid");
         TAGS_FOR_NUMERIC.add("total_composttype");
@@ -99,13 +97,11 @@ public class NumericExtractor
         TAGS_FOR_RATIO.add("ratio_wateruse_ground");
         TAGS_FOR_RATIO.add("ratio_wateruse_surface");
         TAGS_FOR_RATIO.add("ratio_wateruse_non_conventional_sources");
-        TAGS_FOR_RATIO.add("yield_main_product_water_content");
         TAGS_FOR_RATIO.add("ratio_manureliquid_cattle");
         TAGS_FOR_RATIO.add("ratio_manureliquid_fattening_pig");
         TAGS_FOR_RATIO.add("ratio_manureliquid_sows_piglet");
         TAGS_FOR_RATIO.add("ratio_manureliquid_laying_hen");
         TAGS_FOR_RATIO.add("ratio_manureliquid_other");
-        TAGS_FOR_RATIO.add("manureliquid_dilution_level");
         TAGS_FOR_RATIO.add("ratio_manuresolid_cattle");
         TAGS_FOR_RATIO.add("ratio_manuresolid_pig");
         TAGS_FOR_RATIO.add("ratio_manuresolid_sheep_goat");

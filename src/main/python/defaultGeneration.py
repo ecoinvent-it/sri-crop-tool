@@ -6,8 +6,7 @@ from defaultTables import CLAY_CONTENT_PER_COUNTRY, SOIL_CARBON_CONTENT_PER_COUN
     LAND_USE_CATEGORY_PER_CROP, CROP_FACTOR_PER_CROP, SAND_CONTENT_PER_COUNTRY,\
     SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE,\
     ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL,\
-    SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, SEED_TYPE_IP_PER_CROP,\
-    SEED_TYPE_ORG_PER_CROP, CARBON_CONTENT_PER_CROP
+    SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, CARBON_CONTENT_PER_CROP, SEED_TYPE_PER_CROP
 from models.hmmodel import LandUseCategoryForHM, PesticideType
 from models.otherorganicfertilisermodel import OtherOrganicFertiliserType
 from models.pmodel import LandUseCategory
@@ -162,17 +161,10 @@ class EnergyGrossCalorificValueGenerator(object):
         else:
             return generators["CO2_from_yield"] * 11.5
         
-class SeedTypeDefaultGenerator(object):
-    def generateDefault(self, field, generators):
-        if (generators["farming_type"] == "non_organic"):
-            return generators["seed_type_ip"]
-        else:
-            return generators["seed_type_org"]
-        
 class SeedQuantitiesDefaultGenerator(object):
     def generateDefault(self, field, generators):
         #FIXME: What to do with nb_seedlings?
-        if (generators["seed_type"] == SeedType.tree_seedlings_ip or generators["seed_type"] == SeedType.tree_seedlings_org):
+        if (generators["seed_type"] == SeedType.tree_seedlings):
             return {generators["seed_type"]:generators["nb_planted_trees"]}
         else:
             return {generators["seed_type"]:generators["seeds"]}
@@ -217,9 +209,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    #Other organic fertilisers defaults
                    "other_organic_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),
                    #Seed defaults
-                   "seed_type_ip": TableLookupDefaultGenerator("crop", SEED_TYPE_IP_PER_CROP),
-                   "seed_type_org": TableLookupDefaultGenerator("crop", SEED_TYPE_ORG_PER_CROP),
-                   "seed_type": SeedTypeDefaultGenerator(),
+                   "seed_type": TableLookupDefaultGenerator("crop", SEED_TYPE_PER_CROP),
                    "seeds": CropCountryMatrixLookupDefaultGenerator(NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY),#FIXME: missing some defaults, some strange values (zero)
                    "nb_seedlings": SimpleValueDefaultGenerator(0.0),#FIXME: no values?
                    "nb_planted_trees": CropCountryMatrixLookupDefaultGenerator(NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY),#FIXME: lifetime planted trees, how to normalize? #FIXME: we have some values for non tree_seedlings crop: coffee,cocoa,tea

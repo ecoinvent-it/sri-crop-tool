@@ -98,7 +98,6 @@ EXCEL_INPUT_MAPPING_RULES = {
                     "k_fertiliser_quantities": MapMappingRule(_K_ENUM_TO_FIELD),
                     "other_mineral_fertiliser_quantities": MapMappingRule(_OTHERMIN_ENUM_TO_FIELD),
                     #Manure rules
-                    "liquid_manure_part_before_dilution":  SimpleInputMappingRule("manureliquid_dilution_level"),
                     "liquid_manure_quantities": MapMappingRule(_LIQUID_MANURE_ENUM_TO_FIELD),
                     "solid_manure_quantities": MapMappingRule(_SOLID_MANURE_ENUM_TO_FIELD),
                     #Other organic fertiliser rules

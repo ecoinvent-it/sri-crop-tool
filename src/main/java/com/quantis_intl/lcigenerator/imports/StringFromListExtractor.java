@@ -28,7 +28,6 @@ public class StringFromListExtractor
 {
     private static final Map<String, String> CROPS = PropertiesLoader.reverse(PropertiesLoader.CROPS);
     private static final Map<String, String> COUNTRIES = PropertiesLoader.reverseProperties("/countries.properties");
-    private static final Map<String, String> FARMING_TYPES = new HashMap<String, String>();
     private static final Map<String, String> TILLAGE_METHOD = new HashMap<String, String>();
     private static final Map<String, String> ANTI_EROSION_PRACTICE = new HashMap<String, String>();
     private static final Map<String, String> TYPE_OF_DRYING = new HashMap<String, String>();
@@ -40,10 +39,6 @@ public class StringFromListExtractor
     {
         MANDATORY_TAGS_TO_MAP.put("crop", CROPS);
         MANDATORY_TAGS_TO_MAP.put("country", COUNTRIES);
-
-        FARMING_TYPES.put("non-organic", "non_organic");
-        FARMING_TYPES.put("organic", "organic");
-        TAGS_TO_MAP.put("farming_type", FARMING_TYPES);
 
         TILLAGE_METHOD.put("Fall plow", "fall_plaw");
         TILLAGE_METHOD.put("Spring plow", "spring_plow");
