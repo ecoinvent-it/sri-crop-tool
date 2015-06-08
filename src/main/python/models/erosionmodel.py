@@ -88,7 +88,7 @@ class ErosionModel(object):
         else:
             return 587.8 - 1.219 * precipitation_factor + 0.004105 * precipitation_factor**2;
     
-    def _compute_precipitation_factor(self):#FIXME: check if we have to add or remove the second part
+    def _compute_precipitation_factor(self):
         return self.average_annual_precipitation * (1.0 - self.yearly_precipitation_as_snow) \
                 + 0.1 * ((self.annualized_irrigation * 0.1) + self.yearly_precipitation_as_snow * self.average_annual_precipitation);
     

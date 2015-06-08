@@ -106,7 +106,6 @@ class OtherOrganicFertModel(object):
         for key in OtherOrganicFertModel._input_variables:
             setattr(self, key, inputs[key])
             
-    #FIXME: To validate
     def computeP2O5(self):
         return self.other_organic_fertiliser_quantities[OtherOrganicFertiliserType.sewagesludge_liquid] \
                 * self._P205_CONCENTRATION_IN_LIQUID_SEWAGE_SLUDGE

@@ -1560,7 +1560,7 @@ LAND_USE_CATEGORY_PER_CROP = {
         "sugarcane":LandUseCategory.arable_land,
         "sunflower":LandUseCategory.arable_land,
         "sweetcorn":LandUseCategory.arable_land,
-        "tea":LandUseCategory.vegetables,#FIXME: To be verified
+        "tea":LandUseCategory.vegetables,#NOTE: No info, can be wrong
         "tomato":LandUseCategory.vegetables,
         "wheat":LandUseCategory.arable_land
         }

@@ -240,13 +240,13 @@ DEFAULTS_VALUES_GENERATORS = {
                    "organic_carbon_content": TableLookupDefaultGenerator("country", SOIL_CARBON_CONTENT_PER_COUNTRY),
                    "nitrogen_uptake_by_crop": CropCountryMatrixLookupDefaultGenerator(NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY), #FIXME: no values for mint and pineapple
                    "norg_per_ntotal_ratio": SimpleValueDefaultGenerator(0.85),
-                   "rooting_depth": TableLookupDefaultGenerator("crop", ROOTING_DEPTH_PER_CROP), #FIXME: Missing some default
+                   "rooting_depth": TableLookupDefaultGenerator("crop", ROOTING_DEPTH_PER_CROP),
                    "nitrogen_from_crop_residues": SimpleValueDefaultGenerator(0.0), #FIXME: Default
                    #P defaults
                    "eroded_reaching_river": SimpleValueDefaultGenerator(0.2),
                    "eroded_soil_p_enrichment": SimpleValueDefaultGenerator(1.86),
                    "p_content_in_soil": SimpleValueDefaultGenerator(0.00095),
-                   "land_use_category": TableLookupDefaultGenerator("crop", LAND_USE_CATEGORY_PER_CROP), #FIXME: some defaults to be verified
+                   "land_use_category": TableLookupDefaultGenerator("crop", LAND_USE_CATEGORY_PER_CROP),
                    #HM defaults
                    "hm_land_use_category": LandUseCategoryForHMDefaultGenerator(),
                    "pest_total": SimpleValueDefaultGenerator(0),#FIXME: Default (crop+country) GD_crop Pesticides_L1, no values for:Apricot,Asparagus,Carrot,Coconut,Lemon,Mint,Oat,Olive,Onion,Pear,Pineapple,Strawberry,SweetCorn,Tea

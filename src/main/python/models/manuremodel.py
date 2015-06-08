@@ -28,21 +28,6 @@ class ManureTypeForHM(Enum):
     broiler=7,#solid
     laying_hen_manure=8,#liquid
     laying_hen_litter=9#solid
-    
-#FIXME: Should this be elsewhere?
-_WORLD_PROPORTIONS_OF_LIQUID_MANURE = {LiquidManureType.cattle: 0.6608,
-                                       LiquidManureType.fattening_pigs: 0.2179,
-                                       LiquidManureType.laying_hens: 0.0870,
-                                       LiquidManureType.sows_and_piglets: 0.0343,
-                                      }
-
-_WORLD_PROPORTIONS_OF_SOLID_MANURE = {SolidManureType.broiler_litter: 0.1029,
-                                      SolidManureType.cattle: 0.5505,
-                                      SolidManureType.horses: 0.0038,
-                                      SolidManureType.laying_hen_litter: 0.0724,
-                                      SolidManureType.pigs: 0.2101,
-                                      SolidManureType.sheep_goats: 0.0603,
-                                     }
 
 class ManureModel(object):
     """Inputs:
@@ -50,7 +35,6 @@ class ManureModel(object):
       liquid_manure_quantities: map LiquidManureType -> m3/ha
       solid_manure_quantities: map SolidManureType -> t/ha
       
-    #FIXME: Should the outputs be also in input, in case of known value?
     Outputs:
       computeP2O5: tuple of:
         P2O5 contents liquid manure: kg P2O5/ha
