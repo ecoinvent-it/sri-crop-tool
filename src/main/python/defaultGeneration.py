@@ -22,6 +22,8 @@ from defaultMatrixTotalManure import TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY,\
     TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY
 from defaultMatrixSeed import NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY,\
     NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY
+from datetime import date
+import dateutil.relativedelta as relativedelta
 
 class DefaultValuesWrapper(object):
     def __init__(self, inputMapping, generatorMap):
@@ -91,7 +93,16 @@ class RatioToValueConvertor(object):
     
 class CropCyclePerYearDefaultGenerator(object):
     def generateDefault(self, field, generators):
-        return 1.0 #FIXME Implement
+        try:
+            previousHarvestDate = generators["harvest_date_previous_crop"];
+            previousHarvestDate = date(previousHarvestDate[0], previousHarvestDate[1], previousHarvestDate[2]);
+            harvestDate = generators["harvesting_date_main_crop"];
+            harvestDate = date(harvestDate[0], harvestDate[1], harvestDate[2]);
+            dateDiff = relativedelta.relativedelta(harvestDate, previousHarvestDate);
+            #If remaining days are more than 4 weeks, consider a month, if more than 2 weeks, consider half a month 
+            return 1.0 / (dateDiff.years + dateDiff.months/12.0 + (dateDiff.days // 14.0) / 24.0);
+        except KeyError:
+            return 1.0;
     
 class AnnualizedIrrigationDefaultGenerator(object):
     def generateDefault(self, field, generators): #m3/(ha*crop cycle) -> mm/year

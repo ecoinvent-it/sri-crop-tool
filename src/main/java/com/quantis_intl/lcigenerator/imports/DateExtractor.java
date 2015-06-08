@@ -72,8 +72,7 @@ public class DateExtractor
 
     private LocalDate manageDateAsNumber(Date date, RawInputLine line)
     {
-        // FIXME: TO TEST!!!!
-        LocalDate localDate = date.toInstant().atZone(ZoneId.of("UTC")).toLocalDate();
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         return localDate;
     }
 

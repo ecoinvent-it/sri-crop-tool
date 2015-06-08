@@ -31,6 +31,8 @@ import javax.ws.rs.client.WebTarget;
 
 import org.glassfish.jersey.jackson.JacksonFeature;
 
+import com.quantis_intl.stack.jersey.QtsApplication.ObjectMapperProvider;
+
 public class PyBridgeService
 {
     private final WebTarget pyBridgeTarget;
@@ -38,7 +40,9 @@ public class PyBridgeService
     @Inject
     public PyBridgeService(@Named("configuration.properties") Properties properties)
     {
-        this.pyBridgeTarget = ClientBuilder.newClient().register(JacksonFeature.class)
+        // FIXME: Don't use the ObjectMapperProvider from the stack
+        this.pyBridgeTarget = ClientBuilder.newClient().register(ObjectMapperProvider.class)
+                .register(JacksonFeature.class)
                 .target(properties.getProperty("pyBridge.url"));
     }
 

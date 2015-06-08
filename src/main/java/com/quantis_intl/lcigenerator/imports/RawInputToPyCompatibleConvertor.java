@@ -18,6 +18,7 @@
  */
 package com.quantis_intl.lcigenerator.imports;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -144,6 +145,8 @@ public class RawInputToPyCompatibleConvertor
             validateSum("total_machinery_diesel", "total_plantprotection", "total_soilcultivation",
                     "total_sowingplanting", "total_fertilisation", "total_harvesting", "total_otherworkprocesses");
             validateSum("pest_total", "total_herbicides", "total_fungicides", "total_insecticides");
+            validateDatesInOrder("harvest_date_previous_crop", "soil_cultivating_date_main_crop",
+                    "sowing_date_main_crop", "harvesting_date_main_crop");
         }
 
         private void validateAndNormalizeRatios(Map.Entry<String, Map<String, Double>> ratiosEntry)
@@ -152,7 +155,7 @@ public class RawInputToPyCompatibleConvertor
             double sum = ratios.values().stream().mapToDouble(Double::doubleValue).sum();
             if (sum <= 0.001)
             {
-                // TODO: Warn
+                // FIXME: Warn
                 inputs.keySet().removeAll(ratios.keySet());
             }
             else
@@ -191,9 +194,32 @@ public class RawInputToPyCompatibleConvertor
             // FIXME: what about "else" case? There is a thing about "other"
             if (sum > enteredTotal)
             {
-                // TODO: Warn
+                // FIXME: Warn
                 inputs.put(totalKey, sum);
             }
+        }
+
+        // FIXME: Warn
+        private void validateDatesInOrder(String... variables)
+        {
+            LocalDate previousDate = (LocalDate) inputs.get(variables[0]);
+            if (previousDate == null)
+                removeVariables(variables);
+            for (int i = 1; i < variables.length; i++)
+            {
+                LocalDate otherDate = (LocalDate) inputs.get(variables[i]);
+                if (otherDate == null || previousDate.isAfter(otherDate))
+                {
+                    removeVariables(variables);
+                    break;
+                }
+                previousDate = otherDate;
+            }
+        }
+
+        private void removeVariables(String... variables)
+        {
+            inputs.keySet().removeAll(Arrays.asList(variables));
         }
     }
 
