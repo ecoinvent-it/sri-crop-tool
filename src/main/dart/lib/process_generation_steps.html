@@ -7,17 +7,17 @@
     <td>
         <a id="#step1Link" href="LCI-Database_Data-collection_Crop_v1.xlsx" target="_blank">
             <div id="step1" class="stepBtn">
-              <div class="stepTitle text27 text-uppercase">Step 1</div>
+              <div class="stepTitle text-big text-uppercase">Step 1</div>
               <div class="stepText">Download the template</div>
             </div>
         </a>
     </td>
     <td id="step2" class="stepBtn">
-        <div class="stepTitle text27 text-uppercase">Step 2</div>
+        <div class="stepTitle text-big text-uppercase">Step 2</div>
         <div class="stepText">Fill in the template with your data</div>
     </td>
     <td id="step3" class="stepBtn">
-      <div class="stepTitle text27 text-uppercase">Step 3</div>
+      <div class="stepTitle text-big text-uppercase">Step 3</div>
       <form id="processGeneratorUploadForm" ng-submit="upload($event.target)" method="post" enctype="multipart/form-data">
           <input type="file" name="uploadFile" 
                       accept=".xls,.xlsx" required="required" 
@@ -31,8 +31,8 @@
           <input type="hidden" name="idTab" value="{{idTab}}">
 			</form>
     </td>
-    <td id="step4" class="stepBtn">
-      <div class="stepTitle text27 text-uppercase">Step 4</div>
+    <td id="step4" class="stepBtn" ng-class="{disabledStep: step == 0}">
+      <div class="stepTitle text-big text-uppercase">Step 4</div>
       <form action="app/api/pub/generateScsv" method="post" ng-if="step == 1" style="display: inline;">
 			  <input type="hidden" name="idResult" value="{{idResult}}">
 			  <input type="hidden" name="idTab" value="{{idTab}}">
@@ -42,7 +42,6 @@
 	  </td>
   </tr>
 </table>
-
 
 <!-- 
 <form id="processGeneratorUploadForm" ng-submit="upload($event.target)" method="post" enctype="multipart/form-data">
@@ -84,6 +83,3 @@
     <td>{{warning.message}}</td>
   </tr>
 </table>-->
-
-<input type="button" value="Reset" id="resetUploadBtn" ng-if="step != 0" ng-click="reset()"/>
-

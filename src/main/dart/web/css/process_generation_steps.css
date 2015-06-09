@@ -20,7 +20,7 @@
   position: relative;
 }
 
-.stepBtn:hover
+.stepBtn:not(.disabledStep):hover
 {
   color: #f9b233;
 }
@@ -31,7 +31,7 @@
   color: white;
 }
 
-#step1:hover
+#step1:not(.disabledStep):hover
 {
 	text-decoration: none;
   background-image: url('../img/btn_step1_over.png');
@@ -57,7 +57,7 @@
   cursor: default;
 }
 
-#step3:hover
+#step3:not(.disabledStep):hover
 {
   background-image: url('../img/btn_step3_over.png');
 }
@@ -87,14 +87,15 @@
   background-image: url('../img/btn_step4.png');
 }
 
-#step4:hover
+#step4:not(.disabledStep):hover
 {
   background-image: url('../img/btn_step4_over.png');
 }
 
-#resetUploadBtn
+.disabledStep
 {
-  display: none;
+  opacity: 0.5;
+  cursor: default;
 }
 
 #scsvDownloadBtn
@@ -109,3 +110,9 @@
 	filter: alpha(opacity=0);
 }
 
+.odd {
+  background-color: #eeeeee;
+}
+.even {
+  background-color: #ffffff;
+}

@@ -52,13 +52,5 @@ class ProcessGeneratorSteps
       }
     });
   }
-  
-  void reset()
-  {
-    warnings = null;
-    errors = null;
-    idResult = null;
-    step = 0;
-  }
 
 }

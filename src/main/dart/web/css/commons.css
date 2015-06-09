@@ -80,22 +80,22 @@ table img
 	font-weight: bold;
 }
 
-.text27
+.text-big
 {
   font-size: 24px;
 }
 
-.text22
+.text-medium
 {
 	font-size: 19px;
 }
 
-.text19
+.text-normal
 {
   font-size: 16px;
 }
 
-.text16
+.text-small
 {
 	font-size: 14px;
 }
@@ -114,11 +114,4 @@ table img
 
 .qts-btn:HOVER {
   background-color: rgba(255,255,255,0.9);
-}
-
-.odd {
-  background-color: #eeeeee;
-}
-.even {
-  background-color: #ffffff;
 }
