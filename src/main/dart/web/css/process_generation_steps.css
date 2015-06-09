@@ -78,7 +78,6 @@
 #step3CheckboxText
 {
   color: white;
-  font-size: 12px;
   font-weight: normal;
 }
 
@@ -98,6 +97,11 @@
   cursor: default;
 }
 
+#step3fileNameContainer
+{
+	height: 25px;
+}
+
 #scsvDownloadBtn
 {
 	border: 1px solid black;
@@ -110,9 +114,31 @@
 	filter: alpha(opacity=0);
 }
 
+.errors-and-warnings-table
+{
+	text-align: left;
+	width: 100%;
+	background-color: white;
+}
+
 .odd {
   background-color: #eeeeee;
 }
 .even {
   background-color: #ffffff;
+}
+
+.errors
+{
+	background-color: #f2dede;
+}
+
+.warnings
+{
+  background-color: #fcf8e3;
+}
+
+.successful
+{
+  background-color: #dff0d8;
 }

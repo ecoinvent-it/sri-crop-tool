@@ -80,6 +80,11 @@ table img
 	font-weight: bold;
 }
 
+.not-bold
+{
+	font-weight: normal;
+}
+
 .text-big
 {
   font-size: 24px;
@@ -98,6 +103,11 @@ table img
 .text-small
 {
 	font-size: 14px;
+}
+
+.text-very-small
+{
+  font-size: 12px;
 }
 
 .qts-btn

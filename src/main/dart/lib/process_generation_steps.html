@@ -21,12 +21,12 @@
       <form id="processGeneratorUploadForm" ng-submit="upload($event.target)" method="post" enctype="multipart/form-data">
           <input type="file" name="uploadFile" 
                       accept=".xls,.xlsx" required="required" 
-                      ng-disabled="step != 0" class="upload"
+                      class="upload"
                       ng-change="submitUploadForm($event.target)"/>
           <div class="stepText">Upload your template to ALCIG</div>
           <div>
             <input type="checkbox" checked name="canBeStored" value="true" ng-disabled="step != 0"/> 
-            <span id="step3CheckboxText">I agree that Quantis stores this file for testing purposes</span>
+            <span id="step3CheckboxText" class="text-very-small">I agree that Quantis stores this file for testing purposes</span>
           </div>
           <input type="hidden" name="idTab" value="{{idTab}}">
 			</form>
@@ -43,43 +43,58 @@
   </tr>
 </table>
 
-<!-- 
-<form id="processGeneratorUploadForm" ng-submit="upload($event.target)" method="post" enctype="multipart/form-data">
-       <input type="file" name="uploadFile" 
-                      accept=".xls,.xlsx" required="required" 
-                      ng-disabled="step != 0" id="fileUploadBtn" class="stepBtn"
-                      ng-change="submitUploadForm($event.target)"/>
+<!-- NOTE: kept as an example for later: we may want to display again the pop-up if we've closed it by mistake -->
+<!-- Button trigger modal -->
+<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#process-generation-step3-modal"> -->
+<!--   Launch demo modal -->
+<!-- </button> -->
 
-      <input type="checkbox" checked name="canBeStored" value="true" id="canBeStoredCheckbox" ng-disabled="step != 0"/> 
-
-      <input type="hidden" name="idTab" value="{{idTab}}">
-</form> -->
-
-<!--<div ng-if="errors != null  &amp;&amp; errors.length > 0">Some errors were found during generation:</div>
-<table ng-if="errors != null  &amp;&amp; errors.length > 0">
-  <tr>
-    <th>Label</th>
-    <th>Line</th>
-    <th>Message</th>
-  </tr>
-  <tr ng-repeat="error in errors" ng-class-odd="'odd'" ng-class-even="'even'">
-    <td>{{error.resource}}</td>
-    <td>{{error.location}}</td>
-    <td>{{error.message}}</td>
-  </tr>
-</table>
-
-<span ng-if="step == 1">File successfully uploaded</span>
-<div ng-if="warnings != null &amp;&amp; warnings.length > 0">Some warnings for generation:</div>
-<table ng-if="warnings != null &amp;&amp; warnings.length > 0">
-  <tr>
-    <th>Label</th>
-    <th>Line</th>
-    <th>Message</th>
-  </tr>
-  <tr ng-repeat="warning in warnings" ng-class-odd="'odd'" ng-class-even="'even'">
-    <td>{{warning.resource}}</td>
-    <td>{{warning.location}}</td>
-    <td>{{warning.message}}</td>
-  </tr>
-</table>-->
+<!-- Modal -->
+<div class="modal fade" id="process-generation-step3-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" ng-class="{'modal-lg':hasWarnings, 'modal-lg': hasErrors}">
+    <div class="modal-content alert" ng-class="{'successful':step == 1 ,'warnings':hasWarnings, 'errors': hasErrors}">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">
+          <span ng-if="step == 1">File successfully uploaded</span>
+          <span ng-if="step == 0">Generation Failed</span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <div ng-if="step == 1">You can now click on Step 4 to download the generated Simapro file</div>
+        
+        <div ng-if="hasErrors || hasWarnings">Uploaded file: {{filename}}</div>
+        <div ng-if="hasErrors">Some errors were found during generation:</div>
+					<table ng-if="hasErrors" class="errors-and-warnings-table">
+					  <tr>
+					    <th>Label</th>
+					    <th>Line</th>
+					    <th>Message</th>
+					  </tr>
+					  <tr ng-repeat="error in errors" ng-class-odd="'odd'" ng-class-even="'even'">
+					    <td>{{error.resource}}</td>
+					    <td>{{error.location}}</td>
+					    <td>{{error.message}}</td>
+					  </tr>
+					</table>
+					
+					<div ng-if="hasWarnings">Some warnings for generation:</div>
+					<table ng-if="hasWarnings" class="errors-and-warnings-table">
+					  <tr>
+					    <th>Label</th>
+					    <th>Line</th>
+					    <th>Message</th>
+					  </tr>
+					  <tr ng-repeat="warning in warnings" ng-class-odd="'odd'" ng-class-even="'even'">
+					    <td>{{warning.resource}}</td>
+					    <td>{{warning.location}}</td>
+					    <td>{{warning.message}}</td>
+					  </tr>
+					</table>
+      </div>
+      <div class="modal-footer" ng-if="hasWarnings || hasErrors">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
