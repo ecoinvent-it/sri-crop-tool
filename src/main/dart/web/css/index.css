@@ -1,0 +1,61 @@
+header
+{
+	font-size: 27px;
+}
+
+#headerTitlePart1
+{
+	padding-left: 30px;
+}
+
+.content
+{
+	width: 986px;
+	margin-left: auto;
+	margin-right: auto;
+	overflow: hidden;
+}
+
+.toolPage
+{
+	min-height: 450px;
+}
+
+.pagePart
+{
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+#logo, #quantisLogo
+{
+	vertical-align: middle;
+}
+
+#quantisLink
+{
+  margin-left: 220px;
+}
+
+#welcomeTextContainer
+{
+	width: 40%;
+}
+
+#contactInfoContainer > *
+{
+	display: inline-block;
+	vertical-align: middle;
+	margin-top: 30px;
+}
+
+#contactText
+{
+	padding-left: 15px;
+	padding-right: 30px;
+}
+
+#howToTitle
+{
+	margin-top: 20px;
+}

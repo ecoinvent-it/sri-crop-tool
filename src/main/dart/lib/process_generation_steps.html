@@ -1,3 +1,50 @@
+<table class="color4 bold">
+  <col width="25%"/>
+  <col width="25%"/>
+  <col width="25%"/>
+  <col width="25%"/>
+  <tr>
+    <td>
+        <a id="#step1Link" href="LCI-Database_Data-collection_Crop_v1.xlsx" target="_blank">
+            <div id="step1" class="stepBtn">
+              <div class="stepTitle text27 text-uppercase">Step 1</div>
+              <div class="stepText">Download the template</div>
+            </div>
+        </a>
+    </td>
+    <td id="step2" class="stepBtn">
+        <div class="stepTitle text27 text-uppercase">Step 2</div>
+        <div class="stepText">Fill in the template with your data</div>
+    </td>
+    <td id="step3" class="stepBtn">
+      <div class="stepTitle text27 text-uppercase">Step 3</div>
+      <form id="processGeneratorUploadForm" ng-submit="upload($event.target)" method="post" enctype="multipart/form-data">
+          <input type="file" name="uploadFile" 
+                      accept=".xls,.xlsx" required="required" 
+                      ng-disabled="step != 0" class="upload"
+                      ng-change="submitUploadForm($event.target)"/>
+          <div class="stepText">Upload your template to ALCIG</div>
+          <div>
+            <input type="checkbox" checked name="canBeStored" value="true" ng-disabled="step != 0"/> 
+            <span id="step3CheckboxText">I agree that Quantis stores this file for testing purposes</span>
+          </div>
+          <input type="hidden" name="idTab" value="{{idTab}}">
+			</form>
+    </td>
+    <td id="step4" class="stepBtn">
+      <div class="stepTitle text27 text-uppercase">Step 4</div>
+      <form action="app/api/pub/generateScsv" method="post" ng-if="step == 1" style="display: inline;">
+			  <input type="hidden" name="idResult" value="{{idResult}}">
+			  <input type="hidden" name="idTab" value="{{idTab}}">
+			  <input type="submit" id="scsvDownloadBtn"/>
+			</form>
+			<div class="stepText">Get a ready-to-import file for Simapro</div>
+	  </td>
+  </tr>
+</table>
+
+
+<!-- 
 <form id="processGeneratorUploadForm" ng-submit="upload($event.target)" method="post" enctype="multipart/form-data">
        <input type="file" name="uploadFile" 
                       accept=".xls,.xlsx" required="required" 
@@ -5,11 +52,9 @@
                       ng-change="submitUploadForm($event.target)"/>
 
       <input type="checkbox" checked name="canBeStored" value="true" id="canBeStoredCheckbox" ng-disabled="step != 0"/> 
-      <!-- I agree that Quantis stores this file for testing purposes -->
 
       <input type="hidden" name="idTab" value="{{idTab}}">
-<!--        <input type="submit" value="Upload" ng-disabled="step != 0"/> -->
-</form>
+</form> -->
 
 <!--<div ng-if="errors != null  &amp;&amp; errors.length > 0">Some errors were found during generation:</div>
 <table ng-if="errors != null  &amp;&amp; errors.length > 0">
@@ -42,8 +87,3 @@
 
 <input type="button" value="Reset" id="resetUploadBtn" ng-if="step != 0" ng-click="reset()"/>
 
-<form action="app/api/pub/generateScsv" method="post" ng-if="step == 1" style="display: inline;">
-  <input type="hidden" name="idResult" value="{{idResult}}">
-  <input type="hidden" name="idTab" value="{{idTab}}">
-  <input type="submit" value="Export to Simapro CSV" id="scsvDownloadBtn" class="stepBtn"/>
-</form>

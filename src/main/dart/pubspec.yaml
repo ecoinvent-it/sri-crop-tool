@@ -1,4 +1,4 @@
-name: lci_generator
+name: alcig
 description: A sample web application
 dependencies:
   angular: ">=1.1.0 <2.0.0"

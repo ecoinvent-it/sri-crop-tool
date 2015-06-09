@@ -3,11 +3,11 @@ import 'dart:math';
 import 'package:angular/angular.dart';
 import 'package:angular/application_factory.dart';
 
-import 'package:lci_generator/api/api.dart';
-import 'package:lci_generator/api/api_impl.dart';
-import 'package:lci_generator/custom_annotations.dart';
+import 'package:alcig/api/api.dart';
+import 'package:alcig/api/api_impl.dart';
+import 'package:alcig/custom_annotations.dart';
 
-import 'package:lci_generator/process_generation_steps.dart';
+import 'package:alcig/process_generation_steps.dart';
 
 void main() {
   applicationFactory()

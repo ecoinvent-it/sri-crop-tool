@@ -2,12 +2,12 @@ import 'dart:html';
 import 'dart:convert';
 import 'package:angular/angular.dart';
 
-import 'package:lci_generator/api/api.dart';
-import 'package:lci_generator/custom_annotations.dart';
+import 'package:alcig/api/api.dart';
+import 'package:alcig/custom_annotations.dart';
 
 @Component(
     selector: 'process-generation-steps',
-    templateUrl: 'packages/lci_generator/process_generation_steps.html',
+    templateUrl: 'packages/alcig/process_generation_steps.html',
     useShadowDom: false)
 class ProcessGeneratorSteps
 {

@@ -1,0 +1,124 @@
+*
+{
+  -webkit-box-sizing:  border-box;
+  -moz-box-sizing:  border-box;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+table
+{
+  table-layout: fixed;
+  width: 821px;
+  text-align: center;
+}
+
+td
+{
+  overflow: hidden;
+  padding: 0px 5px;
+  vertical-align: top;
+  padding: 0px 18px;
+}
+
+a:HOVER
+{
+	text-decoration: none;
+}
+
+table img
+{
+  margin: 20px 0px;
+}
+
+/*dark blue*/
+.bgColor1
+{
+	background-color: #445272;
+}
+
+.color1
+{
+	color: #445272;
+}
+
+/* dark orange */
+.bgColor2
+{
+  background-color: #e87e05;
+}
+
+.color2
+{
+  color: #e87e05;
+}
+
+/* light orange */
+.bgColor3
+{
+  background-color: #f9b233;
+}
+
+.color3
+{
+  color: #f9b233;
+}
+
+/* white */
+.bgColor4
+{
+  background-color: #ffffff;
+}
+
+.color4
+{
+  color: #ffffff;
+}
+
+.bold
+{
+	font-weight: bold;
+}
+
+.text27
+{
+  font-size: 24px;
+}
+
+.text22
+{
+	font-size: 19px;
+}
+
+.text19
+{
+  font-size: 16px;
+}
+
+.text16
+{
+	font-size: 14px;
+}
+
+.qts-btn
+{
+  border: 0px;
+  margin: 0;
+  padding: 8px 40px 8px 40px;
+  text-align: center;
+  font-size: 22px;
+  min-width: 80px;
+  background-color: rgb(255,255,255);
+  cursor: pointer;
+}
+
+.qts-btn:HOVER {
+  background-color: rgba(255,255,255,0.9);
+}
+
+.odd {
+  background-color: #eeeeee;
+}
+.even {
+  background-color: #ffffff;
+}

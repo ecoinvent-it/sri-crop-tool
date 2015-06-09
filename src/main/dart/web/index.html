@@ -2,18 +2,107 @@
 <html ng-app>
 <head>
 <meta charset="UTF-8">
-<title>LCI generator</title>
-<link rel="stylesheet" href="commons.css" />
-<link rel="stylesheet" href="index.css" />
+<title>ALCIG</title>
+<link rel="stylesheet" href="packages/alcig/qts_bootstrap/css/bootstrap.css">
+<link rel="stylesheet" href="packages/alcig/qts_bootstrap/css/bootstrap-theme.css">
+<link rel="stylesheet" href="css/commons.css" />
+<link rel="stylesheet" href="css/index.css" />
+<link rel="stylesheet" href="css/process_generation_steps.css" />
+<script src="packages/alcig/qts_bootstrap/js/jquery-2.1.1.min.js"></script>
+<script src="packages/alcig/qts_bootstrap/js/bootstrap.js"></script>
 <script src="packages/web_components/webcomponents.js"></script>
 <script src="packages/web_components/dart_support.js"></script>
 </head>
 <body>
-
-	<div id="tmpForDemo">
-	     <a href="LCI-Database_Data-collection_Crop_v1.xlsx" target="_blank"><div id="templateDownloadBtn" class="stepBtn"></div></a>
-			 <process-generation-steps></process-generation-steps>
+  <header class="bgColor1">
+    <div class="content">
+      <img id="logo" class="bgColor4" src="img/ALCIG_logo.png"/>
+      <span id="headerTitlePart1" class="color3">ALCIG - </span>
+      <span class="color4">Agricultural Life Cycle Inventory Generator</span>
+    </div>
+  </header>
+  <div class="tab-content" id="mainContentContainer">
+    <div role="tabpanel" class="tab-pane active toolPage" id="toolPage">
+    
+      <div class="content pagePart">
+			  <div id="welcomeTextContainer">
+			    <div class="color1 text22 bold">Easily and quickly generate reliable, precise and specific LCI data for agricultural production</div>
+			    <div class="color1 text19">ALCIG is a web-based tool that generates LCI data or crops to be directly imported in LCA software (Simapro). The tool focuses on inventory data for agricultural production. Models used are all publicy available and described in the methodological report.</div>
+			  </div>
+			  <div id="loginContainer"></div>
+		  </div>
+			
+			<div class="bgColor1 pagePart">
+				<div class="content ">
+				   <h1 id="howToTitle" class="color4 bold">How does it work?</h1>
+					 <process-generation-steps></process-generation-steps>
+					 
+					 <div id="contactInfoContainer">
+					   <img src="img/contact_icon.png"/>
+					   <div id="contactText">
+						   <span class="color3 bold text27">Contact us</span>
+						   <span class="color4 bold text27">for more information <br/>and the pricing</span>
+					   </div>
+					   <button class="qts-btn color1 bold" onclick="">contact us</button>
+					 </div>
+				</div>
+		  </div>
+		  
+		  <div class="bgColor2 pagePart">
+		    <div class="content">
+			    <table class="color4">
+			      <col width="25%"/>
+			      <col width="25%"/>
+			      <col width="25%"/>
+            <col width="25%"/>
+			      <tr class="bold text27">
+			        <td>High<br/>quality data</td>
+			        <td>Easy<br/>to use</td>
+			        <td>Save time<br/>and money</td>
+			        <td>The best<br/>science inside</td>
+			      </tr>
+			      <tr>
+              <td><img src="img/feature1.png"/></td>
+              <td><img src="img/feature2.png"/></td>
+              <td><img src="img/feature3.png"/></td>
+              <td><img src="img/feature4.png"/></td>
+            </tr>
+            <tr id="featuresTextTr" class="bold text16 text-left">
+              <td>ALCIG produces inventory data for crops with very high reliability: precise and specific, coherent and transparent.</td>
+              <td>ALCIG is easy to use: LCI are generated in 4 steps and can directly be integrated and used in Simapro</td>
+              <td>ALCIG increases the reliability and lower your budget: very precised data are quickly generated based on non LCA specific primary data</td>
+              <td>ALCIG uses the most up-do-date science: the most recent and reliable agriculture models are integrated and used. In addition, it helps you being up-to-date in terms of
+scientific development</td>
+            </tr>
+			    </table>
+        </div>
+		  </div>
+	  </div>
+	  
+	  <div role="tabpanel" class="tab-pane toolPage" id="contactPage">
+	     <div class="content">contact</div>
+	  </div>
+	  
+	  <div role="tabpanel" class="tab-pane toolPage" id="faqPage">
+	     <div class="content">FAQ</div>
+	  </div>
+	  
   </div>
+  
+  <footer class="bgColor1">
+    <div class="content">
+      <img id="quantisLogo" src="img/quantis_logo.png"/>
+      <a id="quantisLink" href="http://www.quantis-intl.com" target="_blank">www.quantis-intl.com</a>
+        
+      <!-- FIXME: unhide when we will have registration and FAQ info -->
+      <ul id="mainMenu" class="nav nav-tabs customMenu hide" role="tablist">
+	      <li role="presentation" class="active"><a href="#toolPage" role="tab" data-toggle="tab">Methodology</a></li>
+	      <li role="presentation"><a href="#contactPage" role="tab" data-toggle="tab">Contact</a></li>
+	      <li role="presentation"><a href="#faqPage" id="webToolTabLink" role="tab" data-toggle="tab">FAQ</a></li>
+	    </ul>
+
+    </div>
+  </footer>
   
 	<script type="application/dart" src="index.dart"></script>
 	<script type="text/javascript" src="packages/browser/dart.js"></script>
