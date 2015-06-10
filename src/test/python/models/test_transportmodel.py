@@ -8,12 +8,12 @@ class Test(unittest.TestCase):
         inputs = {"country":"CH",
                     "total_composttype":100.0,
                     "total_sewagesludge":200.0,
-                    "nitrogen_from_mineral_fert":300.0,
-                    "p2O5_from_mineral_fert":400.0,
-                    "k2O_from_mineral_fert":500.0,
-                    "magnesium_from_fertilizer":10.0,
-                    "ca_from_mineral_fert":20.0,
-                    "pest_total":1000.0,
+                    "nitrogen_from_mineral_fert":150.0,
+                    "p2O5_from_mineral_fert":200.0,
+                    "k2O_from_mineral_fert":250.0,
+                    "magnesium_from_fertilizer":5.0,
+                    "ca_from_mineral_fert":10.0,
+                    "pest_total":500.0,
                     "seeds":50.0
                     }
         expectedResults = {"m_transport_transport_tkm":

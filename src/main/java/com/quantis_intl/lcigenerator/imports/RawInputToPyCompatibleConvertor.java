@@ -54,7 +54,7 @@ public class RawInputToPyCompatibleConvertor
                         refinedInputs.put(e.getKey(), o);
                 });
 
-        AllValidatorsAndNormalizers allValidators = new AllValidatorsAndNormalizers(refinedInputs);
+        AllValidatorsAndNormalizers allValidators = new AllValidatorsAndNormalizers(refinedInputs, errorReporter);
         allValidators.validateAndNormalize();
 
         return refinedInputs;
@@ -94,13 +94,15 @@ public class RawInputToPyCompatibleConvertor
     private static class AllValidatorsAndNormalizers
     {
         private final Map<String, Object> inputs;
+        private final ErrorReporter errorReporter;
 
         private final Map<String, Map<String, Double>> ratiosPerGroup = new HashMap<>();
         private final Map<String, Map<String, Double>> partsPerGroup = new HashMap<>();
 
-        public AllValidatorsAndNormalizers(Map<String, Object> inputs)
+        public AllValidatorsAndNormalizers(Map<String, Object> inputs, ErrorReporter errorReporter)
         {
             this.inputs = inputs;
+            this.errorReporter = errorReporter;
         }
 
         public void validateAndNormalize()
@@ -142,6 +144,7 @@ public class RawInputToPyCompatibleConvertor
                 validateAggregations(entry);
 
             // TODO: Ugly hardcode
+            validateMandatoryFields("crop", "country");
             validateSum("total_machinery_diesel", "total_plantprotection", "total_soilcultivation",
                     "total_sowingplanting", "total_fertilisation", "total_harvesting", "total_otherworkprocesses");
             validateSum("pest_total", "total_herbicides", "total_fungicides", "total_insecticides");
@@ -180,6 +183,15 @@ public class RawInputToPyCompatibleConvertor
             Map<String, Double> parts = partsEntry.getValue();
             double sum = parts.values().stream().mapToDouble(Double::doubleValue).sum();
             validateSum("total_" + partsEntry.getKey(), sum);
+        }
+
+        private void validateMandatoryFields(String... mandatoryKeys)
+        {
+            for (String key : mandatoryKeys)
+            {
+                if (!inputs.containsKey(key))
+                    errorReporter.error(key, "", "Mandatory field not found");
+            }
         }
 
         private void validateSum(String totalKey, String... partKeys)

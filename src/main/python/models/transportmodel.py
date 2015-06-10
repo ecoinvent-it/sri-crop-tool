@@ -23,8 +23,10 @@ class TransportModel(object):
       map TransportDataset -> tkm / ha
     """
     
+    #NOTE: omit manure transport for the moment
+    #NOTE: omit transport of seedlings and planted trees for the moment
     _input_variables = ["country",
-                        "total_composttype",#FIXME: no transport for the manure?
+                        "total_composttype",
                         "total_sewagesludge",
                         "nitrogen_from_mineral_fert",
                         "p2O5_from_mineral_fert",
@@ -32,7 +34,7 @@ class TransportModel(object):
                         "magnesium_from_fertilizer",
                         "ca_from_mineral_fert",
                         "pest_total",
-                        "seeds"#FIXME: no transport for the seedlings? no transport for the planted trees?
+                        "seeds"
                        ]            
     
     _ORG_FERT_TRANSPORT_DEFAULT_KM = {TransportDataset.transport_lorry_sup_16t_fleet_average_RER: 50.0}
@@ -51,6 +53,8 @@ class TransportModel(object):
     
     _SEEDS_TRANSPORT_DEFAULT_KM = {TransportDataset.transport_lorry_sup_16t_fleet_average_RER: 300.0}
     
+    _DILUTION_FACTOR = 2.0;
+    
     def __init__(self, inputs):
         #TODO: Should we log usage of default value?
         for key in TransportModel._input_variables:
@@ -61,8 +65,8 @@ class TransportModel(object):
         organic_fert_total = self._compute_organic_fert_total_in_t();
         self._add_transport_for_quantity_in_t(total_transports, organic_fert_total, self._ORG_FERT_TRANSPORT_DEFAULT_KM);
         mineral_fert_total = self._compute_mineral_fert_total_in_t();        
-        self._add_transport_for_quantity_in_t(total_transports, mineral_fert_total, self._MINERAL_FERT_TRANSPORT_DEFAULT_KM);
-        self._add_transport_for_quantity_in_t(total_transports, self.pest_total / 1000000.0, self._PESTICIDES_TRANSPORT_DEFAULT_KM);
+        self._add_transport_for_quantity_in_t(total_transports, mineral_fert_total * self._DILUTION_FACTOR, self._MINERAL_FERT_TRANSPORT_DEFAULT_KM);
+        self._add_transport_for_quantity_in_t(total_transports, self.pest_total * self._DILUTION_FACTOR / 1000000.0, self._PESTICIDES_TRANSPORT_DEFAULT_KM);
         self._add_transport_for_quantity_in_t(total_transports, self.seeds / 1000.0, self._SEEDS_TRANSPORT_DEFAULT_KM);
         return {"m_transport_transport_tkm":total_transports};
 
