@@ -42,8 +42,8 @@ class TransportModel(object):
     _MINERAL_FERT_TRANSPORT_DEFAULT_KM = {
                              TransportDataset.transport_lorry_sup_16t_fleet_average_RER: 300.0,
                              TransportDataset.transport_transoceanic_freight_ship_OCE: 5000.0,
-                             TransportDataset.transport_freight_rail_RER: 500.0,# not for US/CAN
-                             TransportDataset.transport_freight_rail_diesel_US: 500.0#for US/CAN only
+                             TransportDataset.transport_freight_rail_RER: 500.0,# not for US/CA
+                             TransportDataset.transport_freight_rail_diesel_US: 500.0#for US/CA only
                              }
     
     _PESTICIDES_TRANSPORT_DEFAULT_KM = {
@@ -73,7 +73,7 @@ class TransportModel(object):
     def _init_transports_map(self):
         transports = {TransportDataset.transport_lorry_sup_16t_fleet_average_RER: 0.0,
                       TransportDataset.transport_transoceanic_freight_ship_OCE: 0.0}
-        if ( self.country == "US" or self.country == "CAN"):
+        if ( self.country == "US" or self.country == "CA"):
             transports[TransportDataset.transport_freight_rail_diesel_US] = 0.0
         else: 
             transports[TransportDataset.transport_freight_rail_RER] = 0.0

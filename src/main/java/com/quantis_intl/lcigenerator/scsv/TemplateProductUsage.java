@@ -49,6 +49,8 @@ public class TemplateProductUsage
             new TemplateProductUsage("Irrigating, drip, diesel powered (WFLDB 2.0)/GLO U", "m3",
                     "drip_irrigation_diesel", ""),
 
+            new TemplateProductUsage("Tap water, at user/RER U", "kg", "wateruse_non_conventional_sources", ""),
+
             new TemplateProductUsage("Ammonium nitrate, as N, at regional storehouse/RER U", "kg",
                     "fert_n_ammonium_nitrate", ""),
             new TemplateProductUsage("Urea, as N, at regional storehouse/RER U", "kg", "fert_n_urea", ""),
@@ -106,15 +108,14 @@ public class TemplateProductUsage
             new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg",
                     "packaging_liquid_fertilisers_and_pesticides", ""),
 
-            new TemplateProductUsage("Compost, at plant/CH U", "t", "composttype_compost", ""),
-            new TemplateProductUsage("Vinasse, at fermentation plant/CH U", "t", "composttype_vinasse", ""),
-            new TemplateProductUsage("Stone meal, at regional storehouse/CH U", "t", "composttype_stone_meal", ""),
-            // new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg", "composttype_horn_meal", ""), //
-            // FIXME: MISSING
-            // new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg",
-            // "composttype_horn_shavings_fine", ""), // FIXME: MISSING
+            new TemplateProductUsage("Compost, at plant/CH U", "t", "composttype_compost_in_t", ""),
+            new TemplateProductUsage("Vinasse, at fermentation plant/CH U", "t", "composttype_vinasse_in_t", ""),
+            new TemplateProductUsage("Stone meal, at regional storehouse/CH U", "t", "composttype_stone_meal_in_t", ""),
+            new TemplateProductUsage("Horn meal, at regional storehouse/CH U", "kg", "composttype_horn_meal", ""),
+            new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg", "composttype_horn_shavings_fine",
+                    ""),
             new TemplateProductUsage("poultry manure, dried, at regional storehouse/CH U", "t",
-                    "composttype_dried_poultry_manure", ""),
+                    "composttype_dried_poultry_manure_in_t", ""),
 
             // FIXME: Some of them should be in electricity heat
             new TemplateProductUsage("Grain drying, high temperature/CH U", "kg", "drying_heating", ""),
@@ -126,18 +127,16 @@ public class TemplateProductUsage
                     ""),
             new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "kg", "materials_bird_net", ""),
 
-            // FIXME: MISSING are probably from agrybalise
-            // new TemplateProductUsage("Plastic tunnel/FR U", "m2", "greenhouse_plastic_tunnel", ""),// FIXME: MISSING
-            new TemplateProductUsage("Greenhouse, glass walls and roof, metal tubes/FR/I U", "m2",
-                    "greenhouse_glass_roof_metal_tubes", ""),
+            // FIXME: all greenhouse MISSING (belongs to agrybalise. allowed to use?)
+            // new TemplateProductUsage("Plastic tunnel/FR U", "m2", "greenhouse_plastic_tunnel", ""),
+            // new TemplateProductUsage("Greenhouse, glass walls and roof, metal tubes/FR/I U", "m2",
+            // "greenhouse_glass_roof_metal_tubes", ""),
             // new TemplateProductUsage("Greenhouse, glass walls and roof, plastic tubes/FR/I U", "m2",
             // "greenhouse_glass_roof_plastic_tubes", ""), //
-            // FIXME:
-            // MISSING
-            new TemplateProductUsage("Greenhouse, plastic walls and roof, metal tubes/FR/I U", "m2",
-                    "greenhouse_plastic_roof_metal_tubes", ""),
-            new TemplateProductUsage("Greenhouse, plastic walls and roof, plastic tubes/FR/I U", "m2",
-                    "greenhouse_plastic_roof_plastic_tubes", ""),
+            // new TemplateProductUsage("Greenhouse, plastic walls and roof, metal tubes/FR/I U", "m2",
+            // "greenhouse_plastic_roof_metal_tubes", ""),
+            // new TemplateProductUsage("Greenhouse, plastic walls and roof, plastic tubes/FR/I U", "m2",
+            // "greenhouse_plastic_roof_plastic_tubes", ""),
 
             new TemplateProductUsage("Soil decompactation, with 4.5m chisel/FR U", "hr",
                     "soilcultivation_decompaction", ""),
@@ -178,7 +177,6 @@ public class TemplateProductUsage
             new TemplateProductUsage("Loading bales/CH U", "unit", "harvesting_loading_bales", ""),
             new TemplateProductUsage("Mowing, by motor mower/CH U", "ha", "harvesting_mowing_motor_mower", ""),
             new TemplateProductUsage("Mowing, by rotary mower/CH U", "ha", "harvesting_mowing_rotary_mower", ""),
-            // removed from template: new TemplateProductUsage("Potato grading/CH U", "kg", "", ""),
             new TemplateProductUsage("Potato haulm cutting/CH U", "ha", "harvesting_removing_potatoes_haulms", ""),
             new TemplateProductUsage("Swath, by rotary windrower/CH U", "ha", "harvesting_windrowing_rotary_swather",
                     ""),
@@ -209,23 +207,31 @@ public class TemplateProductUsage
             new TemplateProductUsage("Wood chips, from industry, mixed, burned in furnace 50kW/CH U", "MJ",
                     "energy_wood_chips_fresh_humidity_40_percent", ""),
             new TemplateProductUsage("Logs, mixed, burned in furnace 100kW/CH U", "MJ", "energy_wood_logs", ""),
-            new TemplateProductUsage("electricity, low voltage, at grid/{TODO} U", "kWh",
+            new TemplateProductUsage("electricity, low voltage, at grid/{country} U", "kWh",
                     "energy_electricity_low_voltage_at_grid", ""),
-            new TemplateProductUsage("electricity, production mix photovoltaic, at plant/{TODO} U", "kWh",
+            new TemplateProductUsage("electricity, production mix photovoltaic, at plant/{country} U", "kWh",
                     "energy_electricity_photovoltaic_produced_locally", ""),
             new TemplateProductUsage("electricity, at wind power plant/RER U", "kWh",
                     "energy_electricity_wind_power_produced_locally", ""),
             new TemplateProductUsage("heat, natural gas, at industrial furnace >100kW/RER U", "MJ",
                     "energy_heat_district_heating", ""),
-            // new TemplateProductUsage("heat, at flat plate collector, multiple dwelling, for hot water/CH U", "MJ",
-            // "energy_heat_solar_collector",
-            // ""), // FIXME: MISSING
+            new TemplateProductUsage("Heat, at flat plate collector, multiple dwelling, for hot water/CH U", "MJ",
+                    "energy_heat_solar_collector", ""),
+
+            new TemplateProductUsage("Tap water, at user/RER U", "kg", "utilities_wateruse_non_conventional_sources",
+                    ""),
 
             // TODO: Transport
-            // TODO: Pesticides, seeds
+            // TODO: Pesticides
+            // TODO: Seeds
+
+            // TODO: HM uptake
+            new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 2.0)/GLO U", "kg", "", ""),
 
             new TemplateProductUsage("lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil", ""),
 
+            new TemplateProductUsage("LUC emissions, {crop}, {country}", "", "", ""),// TODO: Complete, #FIXME: Add
+                                                                                     // param in export
     };
 
     public static final TemplateProductUsage[] electricityHeat = {
@@ -233,12 +239,11 @@ public class TemplateProductUsage
             };
 
     public static final TemplateProductUsage[] wastes = {
-            // FIXME: Missing : eol_plastic_disposal_fleece_and_other
             new TemplateProductUsage("Disposal, polyethylene, 0.4% water, to sanitary landfill/CH U", "kg",
-                    "eol_landfill", ""),
+                    "eol_plastic_disposal_landfill_quantity", ""),
             new TemplateProductUsage("Disposal, polyethylene, 0.4% water, to municipal incineration/CH U", "kg",
-                    "eol_incineration", ""),
+                    "eol_plastic_disposal_incineration_quantity", ""),
             new TemplateProductUsage("Treatment, sewage, to wastewater treatment, class 4/CH U", "m3",
-                    "eol_waste_water", ""),
+                    "eol_waste_water_to_treatment_facility", ""),
     };
 }

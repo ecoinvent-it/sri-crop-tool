@@ -2,12 +2,12 @@ from enum import Enum
 from models.modelEnums import HeavyMetalType
       
 class PesticideType(Enum):
-        cu=1
-        mancozeb=2
-        metiram=3
-        propineb=4
-        zineb=5
-        ziram=6
+        cu=1 #fungicide "copper_cu" 
+        mancozeb=2 #fungicide
+        metiram=3 #fungicide
+        propineb=4 #fungicide
+        zineb=5 #fungicide
+        ziram=6 #fungicide
         
 class LandUseCategoryForHM(Enum):
         permanent_grassland=1

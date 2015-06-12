@@ -18,7 +18,7 @@ class OtherOrganicFertiliserType(Enum):
 
 class OtherOrganicFertModel(object):
     """Inputs:
-      other_organic_fertiliser_quantities: map OtherOrganicFertiliserType -> t fert/ha
+      other_organic_fertiliser_quantities: map OtherOrganicFertiliserType -> kg fert/ha
 
     Outputs:
       computeP2O5:
@@ -71,7 +71,7 @@ class OtherOrganicFertModel(object):
     # src: Agribalyse Table 67 * Table 154
     #kg TAN /t or m3
     _NH3N_CONCENTRATION_CONTENT_ORG_FERT = {
-                            OtherOrganicFertiliserType.compost: 0.83 * 0.71, #FIXME: table 67: household or green waste compost?
+                            OtherOrganicFertiliserType.compost: 0.83 * 0.71, #green waste compost
                             OtherOrganicFertiliserType.meat_and_bone_meal: 6.50 * 0.71, #Feather meal
                             OtherOrganicFertiliserType.castor_oil_shell_coarse: 0.83 * 0.71,#compost #FIXME: table 67: manure / slurry compost?
                             OtherOrganicFertiliserType.vinasse: 0.96 * 0.81,
@@ -86,7 +86,7 @@ class OtherOrganicFertModel(object):
                              }
                                                                 
     #src: Freiermuth 2006, table 13 if not specified
-    # g/t TS
+    # g/t TS (i.e. mg/kg)
     _HM_FERT_VALUES = { OtherOrganicFertiliserType.compost: [0.36, 57.7, 183.5, 49.0, 16.3, 22.3, 0.12],
                         OtherOrganicFertiliserType.meat_and_bone_meal: [0.6, 208.0, 125.0, 3.8, 34.0, 5.9, 0.6],#Tiermehl
                         OtherOrganicFertiliserType.castor_oil_shell_coarse: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0], #TODO: Complete when we will have more info
@@ -108,13 +108,13 @@ class OtherOrganicFertModel(object):
             
     def computeP2O5(self):
         return self.other_organic_fertiliser_quantities[OtherOrganicFertiliserType.sewagesludge_liquid] \
-                * self._P205_CONCENTRATION_IN_LIQUID_SEWAGE_SLUDGE
+                * self._P205_CONCENTRATION_IN_LIQUID_SEWAGE_SLUDGE / 1000.0
 
     def computeN(self):
-        return sum(v * self._N_CONCENTRATION_ORG_FERT[k] for k,v in self.other_organic_fertiliser_quantities.items())
+        return sum(v * self._N_CONCENTRATION_ORG_FERT[k] / 1000.0 for k,v in self.other_organic_fertiliser_quantities.items())
     
     def computeNH3(self):
-        return sum(v * self._NH3N_CONCENTRATION_CONTENT_ORG_FERT[k] for k,v in self.other_organic_fertiliser_quantities.items())
+        return sum(v * self._NH3N_CONCENTRATION_CONTENT_ORG_FERT[k] / 1000.0 for k,v in self.other_organic_fertiliser_quantities.items())
     
     def computeHeavyMetal(self):
         total_hm_values = dict.fromkeys(HeavyMetalType,0.0)
@@ -124,6 +124,6 @@ class OtherOrganicFertModel(object):
     def _add_hm_values_for_fert_type(self,total_hm_values, fert_quantities,fert_hm_map):
         for fertKey,fertQuantity in fert_quantities.items():
             for hm_element_index,hm_element_value in enumerate(fert_hm_map[fertKey]):
-                total_hm_values[HeavyMetalType(hm_element_index)] += hm_element_value * self._FERT_DM[fertKey] * fertQuantity * 1000.0
+                total_hm_values[HeavyMetalType(hm_element_index)] += hm_element_value * self._FERT_DM[fertKey] * fertQuantity
 
     

@@ -58,6 +58,10 @@ class OutputMapping(object):
         
     def mapOtherOrganicFertilizers(self, allInputs):
         self._mapEnumMap(allInputs["other_organic_fertiliser_quantities"])
+        self.output["composttype_compost_in_t"] = self.output["composttype_compost"] / 1000.0 # kg -> t
+        self.output["composttype_vinasse_in_t"] = self.output["composttype_vinasse"] / 1000.0 # kg -> t
+        self.output["composttype_stone_meal_in_t"] = self.output["composttype_stone_meal"] / 1000.0 # kg -> t
+        self.output["composttype_dried_poultry_manure_in_t"] = self.output["composttype_dried_poultry_manure"] / 1000.0 # kg -> t
        
     def mapHMModel(self,hmOutput):
         for key, hmMap in hmOutput.items():
@@ -68,6 +72,10 @@ class OutputMapping(object):
     def mapPackModel(self, packOutput):
         for key, value in packOutput.items():
             self.output[key.replace("m_Pack_", "")] = value
+            
+    def mapCODWasteWater(self, allInputs):
+        total_waste_water = allInputs["eol_waste_water_to_treatment_facility"] + allInputs["eol_waste_water_to_nature"]
+        self.output["cod_in_waste_water"] = (total_waste_water * allInputs["cod_in_waste_water"] ) / 1000.0
             
     def _mapEnumMap(self, enumdict):
         for k,v in enumdict.items():
@@ -139,10 +147,18 @@ class OutputMapping(object):
         "energy_heat_district_heating": identity,
         "energy_heat_solar_collector": identity,
         
-        "materials_fleece": lambda x: x * 0.1, #m2 -> kg,
-        "materials_silage_foil": lambda x: x* 0.3, #m2 -> kg,
-        "materials_covering_sheet": lambda x: x* 0.3, #m2 -> kg,
-        "materials_bird_net": lambda x: x* 0.3, #m2 -> kg,
+        "wateruse_ground": identity,
+        "wateruse_surface": identity,
+        "wateruse_non_conventional_sources": lambda x: x * 1000.0, #m3 -> kg
+        
+        "utilities_wateruse_ground": identity,
+        "utilities_wateruse_surface": identity,
+        "utilities_wateruse_non_conventional_sources": lambda x: x * 1000.0, #m3 -> kg
+        
+        "materials_fleece": identity,
+        "materials_silage_foil": identity,
+        "materials_covering_sheet": identity,
+        "materials_bird_net": identity,
         
         "greenhouse_plastic_tunnel": identity,
         "greenhouse_glass_roof_metal_tubes": identity,
@@ -150,8 +166,9 @@ class OutputMapping(object):
         "greenhouse_plastic_roof_metal_tubes": identity,
         "greenhouse_plastic_roof_plastic_tubes": identity,
     
-        "eol_plastic_disposal_fleece_and_other": identity,
-        "eol_landfill": identity,
-        "eol_incineration": identity,
-        "eol_waste_water": identity}
+        "eol_plastic_disposal_landfill_quantity": identity,
+        "eol_plastic_disposal_incineration_quantity": identity,
+        "eol_waste_water_to_treatment_facility": identity,
+        "eol_waste_water_to_nature": identity
+    }
         

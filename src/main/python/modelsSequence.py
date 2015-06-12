@@ -40,6 +40,7 @@ class ModelsSequence(object):
         self.outputMapping.mapHMModel(HmModel(self.allInputs).compute())
         self.outputMapping.mapPackModel(PackModel(self.allInputs).compute())
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
+        self.outputMapping.mapCODWasteWater(self.allInputs)
         return self.outputMapping.output;
     
     def _computeFertiliser(self):

@@ -81,9 +81,9 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("greenhouse_plastic_roof_metal_tubes");
         TAGS_FOR_NUMERIC.add("greenhouse_plastic_roof_plastic_tubes");
         TAGS_FOR_NUMERIC.add("eol_plastic_disposal_fleece_and_other");
-        TAGS_FOR_NUMERIC.add("eol_landfill");
-        TAGS_FOR_NUMERIC.add("eol_incineration");
-        TAGS_FOR_NUMERIC.add("eol_waste_water");
+        TAGS_FOR_NUMERIC.add("eol_waste_water_to_treatment_facility");
+        TAGS_FOR_NUMERIC.add("eol_waste_water_to_nature");
+        TAGS_FOR_NUMERIC.add("cod_in_waste_water");
 
         TAGS_FOR_RATIO.add("yearly_precipitation_as_snow");
         TAGS_FOR_RATIO.add("drainage");
@@ -137,6 +137,8 @@ public class NumericExtractor
         TAGS_FOR_RATIO.add("drying_yield_to_be_dryied");
         TAGS_FOR_RATIO.add("drying_humidity_before_drying");
         TAGS_FOR_RATIO.add("drying_humidity_after_drying");
+        TAGS_FOR_RATIO.add("eol_plastic_disposal_landfill");
+        TAGS_FOR_RATIO.add("eol_plastic_disposal_incineration");
     }
 
     private ErrorReporter errorReporter;
