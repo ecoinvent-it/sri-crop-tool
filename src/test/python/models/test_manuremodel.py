@@ -6,13 +6,12 @@ class Test(unittest.TestCase):
     inputs = {"liquid_manure_part_before_dilution":0.5,
               "liquid_manure_quantities":
                   {LiquidManureType.cattle: 1234.5 * 0.5,
-                   LiquidManureType.fattening_pigs: 1234.5 * 0.2,
+                   LiquidManureType.pig: 1234.5 * 0.3,
                    LiquidManureType.laying_hens: 1234.5 * 0.0,
-                   LiquidManureType.sows_and_piglets: 1234.5 * 0.1,
                    LiquidManureType.other: 1234.5 * 0.0
                   },
               "solid_manure_quantities":
-                  {SolidManureType.broiler_litter: 9876.5 * 0.0 * 1000.0,
+                  {#SolidManureType.broiler_litter: 9876.5 * 0.0 * 1000.0,
                    SolidManureType.cattle: 9876.5 * 0.05 * 1000.0,
                    SolidManureType.horses: 9876.5 * 0.0 * 1000.0,
                    SolidManureType.laying_hen_litter: 9876.5 * 0.25 * 1000.0,
@@ -23,17 +22,17 @@ class Test(unittest.TestCase):
              }
     
     def testP2O5(self):
-        expectedResults = (1129.5675, 116893.355256)
+        expectedResults = (1111.05, 104547.730256)
         results = ManureModel(self.inputs).computeP2O5()
         self._assertTuplesEqual(results, expectedResults)
             
     def testN(self):
-        expectedResults = 2450.4825 + 126081.3940705
+        expectedResults = 2410.36125 + 134723.3315705
         results = ManureModel(self.inputs).computeN()
         self.assertAlmostEqual(results, expectedResults)
             
     def testNH3(self):
-        expectedResults = 891.56112189 + 31325.641473536725
+        expectedResults = 858.8579139382183 + 34050.108599716696
         result = ManureModel(self.inputs).computeNH3()
         self.assertAlmostEqual(result, expectedResults)
         
@@ -43,13 +42,13 @@ class Test(unittest.TestCase):
             
     def testHeavyMetal(self):
         expectedResults = {
-                            HeavyMetalType.cd: 643.7351365,
-                            HeavyMetalType.cu: 193483.06650425,
-                            HeavyMetalType.zn: 1466829.67538725,
-                            HeavyMetalType.pb: 6712.52877915,
-                            HeavyMetalType.ni: 24156.51939425,
-                            HeavyMetalType.cr: 17067.08426725,
-                            HeavyMetalType.hg: 1413.7372515}
+                            HeavyMetalType.cd: 731.1619145,
+                            HeavyMetalType.cu: 205919.60468675,
+                            HeavyMetalType.zn: 1502306.2609172503,
+                            HeavyMetalType.pb: 7708.44540965,
+                            HeavyMetalType.ni: 47301.3317155,
+                            HeavyMetalType.cr: 21383.2382235,
+                            HeavyMetalType.hg: 1462.5271615}
                         
         results = ManureModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():

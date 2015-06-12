@@ -44,14 +44,12 @@ _OTHERMIN_ENUM_TO_FIELD = {
 
 _LIQUID_MANURE_ENUM_TO_FIELD = {
                 LiquidManureType.cattle:"manureliquid_cattle",
-                LiquidManureType.fattening_pigs:"manureliquid_fattening_pig",
+                LiquidManureType.pig:"manureliquid_pig",
                 LiquidManureType.laying_hens:"manureliquid_laying_hen",
-                LiquidManureType.sows_and_piglets:"manureliquid_sows_piglet",
                 LiquidManureType.other:"manureliquid_other"
                                 }
 
 _SOLID_MANURE_ENUM_TO_FIELD = {
-                SolidManureType.broiler_litter:"manuresolid_broiler",
                 SolidManureType.cattle:"manuresolid_cattle",
                 SolidManureType.horses:"manuresolid_horses",
                 SolidManureType.laying_hen_litter:"manuresolid_laying_hen",

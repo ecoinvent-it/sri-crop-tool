@@ -1755,264 +1755,227 @@ LAND_USE_CATEGORY_PER_CROP = {
         "wheat":LandUseCategory.arable_land
         }
 
-#Generated in GD_crop using =""""&C$3&""":{LiquidManureType.cattle:"&C5&",  LiquidManureType.fattening_pigs:"&C6&",   LiquidManureType.sows_and_piglets:"&C7&",  LiquidManureType.laying_hens:"&C8&",  LiquidManureType.other:"&C9&"},"
+#Generated in GD_crop using =""""&C$3&""":{LiquidManureType.cattle:"&C5&",  LiquidManureType.pig:"&C6+C7&",  LiquidManureType.laying_hens:"&C8&",  LiquidManureType.other:"&C9&"},"
 MANURE_LIQUID_RATIO_PER_COUNTRY={
    "AR":{
       LiquidManureType.cattle:0.966236579156714,
-      LiquidManureType.fattening_pigs:0,
-      LiquidManureType.sows_and_piglets:0.00694397589098068,
+      LiquidManureType.pig:0.00694397589098068,
       LiquidManureType.laying_hens:0.0268194449523053,
       LiquidManureType.other:0
    },
    "AU":{
       LiquidManureType.cattle:0.932419087357062,
-      LiquidManureType.fattening_pigs:0.0361186743439928,
-      LiquidManureType.sows_and_piglets:0.0177864294747437,
+      LiquidManureType.pig:0.0539051038187365,
       LiquidManureType.laying_hens:0.013675808824202,
       LiquidManureType.other:0
    },
    "BE":{
       LiquidManureType.cattle:0.651980577390597,
-      LiquidManureType.fattening_pigs:0.230792712080711,
-      LiquidManureType.sows_and_piglets:0.106761818722809,
+      LiquidManureType.pig:0.33755453080352,
       LiquidManureType.laying_hens:0.0104648918058829,
       LiquidManureType.other:0
    },
    "BR":{
       LiquidManureType.cattle:0.773192504917913,
-      LiquidManureType.fattening_pigs:0.199364421762063,
-      LiquidManureType.sows_and_piglets:0.00990829408243577,
+      LiquidManureType.pig:0.209272715844499,
       LiquidManureType.laying_hens:0.0175347792375884,
       LiquidManureType.other:0
    },
    "CA":{
       LiquidManureType.cattle:0.692978661588794,
-      LiquidManureType.fattening_pigs:0.21305503530842,
-      LiquidManureType.sows_and_piglets:0.0743325366490546,
+      LiquidManureType.pig:0.287387571957475,
       LiquidManureType.laying_hens:0.0196337664537316,
       LiquidManureType.other:0
    },
    "CL":{
       LiquidManureType.cattle:0.671554978323718,
-      LiquidManureType.fattening_pigs:0.299091543393772,
-      LiquidManureType.sows_and_piglets:0.0148646731839603,
+      LiquidManureType.pig:0.313956216577732,
       LiquidManureType.laying_hens:0.0144888050985496,
       LiquidManureType.other:0
    },
    "CN":{
       LiquidManureType.cattle:0.537242763171236,
-      LiquidManureType.fattening_pigs:0.377139990238825,
-      LiquidManureType.sows_and_piglets:0.0305685909004101,
+      LiquidManureType.pig:0.407708581139235,
       LiquidManureType.laying_hens:0.0550486556895287,
       LiquidManureType.other:0
    },
    "CO":{
       LiquidManureType.cattle:0.851488143861912,
-      LiquidManureType.fattening_pigs:0.129514806059696,
-      LiquidManureType.sows_and_piglets:0.00643680942134759,
+      LiquidManureType.pig:0.135951615481044,
       LiquidManureType.laying_hens:0.0125602406570442,
       LiquidManureType.other:0
    },
    "CR":{
       LiquidManureType.cattle:0.895766461352508,
-      LiquidManureType.fattening_pigs:0.0921973662713949,
-      LiquidManureType.sows_and_piglets:0.00458215473161557,
+      LiquidManureType.pig:0.0967795210030105,
       LiquidManureType.laying_hens:0.00745401764448142,
       LiquidManureType.other:0
    },
    "CI":{
       LiquidManureType.cattle:0.334403636655568,
-      LiquidManureType.fattening_pigs:0.604685709509196,
-      LiquidManureType.sows_and_piglets:0.0300489566658733,
+      LiquidManureType.pig:0.634734666175069,
       LiquidManureType.laying_hens:0.0308616971693619,
       LiquidManureType.other:0
    },
    "EC":{
       LiquidManureType.cattle:0.827252441996018,
-      LiquidManureType.fattening_pigs:0.156725696233032,
-      LiquidManureType.sows_and_piglets:0.00778917460374488,
+      LiquidManureType.pig:0.164514870836777,
       LiquidManureType.laying_hens:0.0082326871672052,
       LiquidManureType.other:0
    },
    "FI":{
       LiquidManureType.cattle:0.778299855183584,
-      LiquidManureType.fattening_pigs:0.144037760601221,
-      LiquidManureType.sows_and_piglets:0.0666300644491286,
+      LiquidManureType.pig:0.21066782505035,
       LiquidManureType.laying_hens:0.0110323197660669,
       LiquidManureType.other:0
    },
    "FR":{
       LiquidManureType.cattle:0.859989060959847,
-      LiquidManureType.fattening_pigs:0.0882421218757529,
-      LiquidManureType.sows_and_piglets:0.0408197006478963,
+      LiquidManureType.pig:0.129061822523649,
       LiquidManureType.laying_hens:0.0109491165165037,
       LiquidManureType.other:0
    },
    "DE":{
       LiquidManureType.cattle:0.713839694570081,
-      LiquidManureType.fattening_pigs:0.189846804011912,
-      LiquidManureType.sows_and_piglets:0.0878207543552876,
+      LiquidManureType.pig:0.2776675583672,
       LiquidManureType.laying_hens:0.0084927470627198,
       LiquidManureType.other:0
    },
    "GH":{
       LiquidManureType.cattle:0.263744005199079,
-      LiquidManureType.fattening_pigs:0.665938316763659,
-      LiquidManureType.sows_and_piglets:0.0330928140996493,
+      LiquidManureType.pig:0.699031130863308,
       LiquidManureType.laying_hens:0.0372248639376124,
       LiquidManureType.other:0
    },
    "HU":{
       LiquidManureType.cattle:0.524511327653383,
-      LiquidManureType.fattening_pigs:0.308370363066753,
-      LiquidManureType.sows_and_piglets:0.131708236190577,
+      LiquidManureType.pig:0.44007859925733,
       LiquidManureType.laying_hens:0.0354100730892873,
       LiquidManureType.other:0
    },
    "IN":{
       LiquidManureType.cattle:0.956101289109399,
-      LiquidManureType.fattening_pigs:0.021569724484166,
-      LiquidManureType.sows_and_piglets:0.00174911969888512,
+      LiquidManureType.pig:0.0233188441830511,
       LiquidManureType.laying_hens:0.0205798667075499,
       LiquidManureType.other:0
    },
    "ID":{
       LiquidManureType.cattle:0.841953137050475,
-      LiquidManureType.fattening_pigs:0.0865326475149543,
-      LiquidManureType.sows_and_piglets:0.00701379107219114,
+      LiquidManureType.pig:0.0935464385871454,
       LiquidManureType.laying_hens:0.0645004243623796,
       LiquidManureType.other:0
    },
    "IL":{
       LiquidManureType.cattle:0.27213220939371,
-      LiquidManureType.fattening_pigs:0.611173703624621,
-      LiquidManureType.sows_and_piglets:0.0303695655717747,
+      LiquidManureType.pig:0.641543269196396,
       LiquidManureType.laying_hens:0.0863245214098939,
       LiquidManureType.other:0
    },
    "IT":{
       LiquidManureType.cattle:0.750511965391496,
-      LiquidManureType.fattening_pigs:0.146961826785265,
-      LiquidManureType.sows_and_piglets:0.0679827008677025,
+      LiquidManureType.pig:0.214944527652967,
       LiquidManureType.laying_hens:0.0345435069555363,
       LiquidManureType.other:0
    },
    "KE":{
       LiquidManureType.cattle:0.897991182476556,
-      LiquidManureType.fattening_pigs:0.0879315592863415,
-      LiquidManureType.sows_and_piglets:0.00436962810947838,
+      LiquidManureType.pig:0.0923011873958199,
       LiquidManureType.laying_hens:0.00970763012762398,
       LiquidManureType.other:0
    },
    "MX":{
       LiquidManureType.cattle:0.469470222458186,
-      LiquidManureType.fattening_pigs:0.445254889925465,
-      LiquidManureType.sows_and_piglets:0.0221289052099609,
+      LiquidManureType.pig:0.467383795135426,
       LiquidManureType.laying_hens:0.0631459824063886,
       LiquidManureType.other:0
    },
    "NL":{
       LiquidManureType.cattle:0.63220650185421,
-      LiquidManureType.fattening_pigs:0.233845124899956,
-      LiquidManureType.sows_and_piglets:0.108173826668685,
+      LiquidManureType.pig:0.342018951568641,
       LiquidManureType.laying_hens:0.0257745465771489,
       LiquidManureType.other:0
    },
    "NZ":{
       LiquidManureType.cattle:0.979450321664584,
-      LiquidManureType.fattening_pigs:0.00944728343075543,
-      LiquidManureType.sows_and_piglets:0.00465225936018097,
+      LiquidManureType.pig:0.0140995427909364,
       LiquidManureType.laying_hens:0.00645013554447995,
       LiquidManureType.other:0
    },
    "PE":{
       LiquidManureType.cattle:0.594188650414037,
-      LiquidManureType.fattening_pigs:0.365516418753568,
-      LiquidManureType.sows_and_piglets:0.0181659502624421,
+      LiquidManureType.pig:0.38368236901601,
       LiquidManureType.laying_hens:0.0221289805699533,
       LiquidManureType.other:0
    },
    "PH":{
       LiquidManureType.cattle:0.436931601829857,
-      LiquidManureType.fattening_pigs:0.453039090897989,
-      LiquidManureType.sows_and_piglets:0.0367204936489228,
+      LiquidManureType.pig:0.489759584546912,
       LiquidManureType.laying_hens:0.0733088136232304,
       LiquidManureType.other:0
    },
    "PL":{
       LiquidManureType.cattle:0.683498764026531,
-      LiquidManureType.fattening_pigs:0.206359038573867,
-      LiquidManureType.sows_and_piglets:0.0881381230023514,
+      LiquidManureType.pig:0.294497161576218,
       LiquidManureType.laying_hens:0.0220040743972504,
       LiquidManureType.other:0
    },
    "RU":{
       LiquidManureType.cattle:0.846999341113014,
-      LiquidManureType.fattening_pigs:0.0903924909526649,
-      LiquidManureType.sows_and_piglets:0.038607586760282,
+      LiquidManureType.pig:0.129000077712947,
       LiquidManureType.laying_hens:0.0240005811740389,
       LiquidManureType.other:0
    },
    "ZA":{
       LiquidManureType.cattle:0.41919169262082,
-      LiquidManureType.fattening_pigs:0.523821292346713,
-      LiquidManureType.sows_and_piglets:0.0260305200647327,
+      LiquidManureType.pig:0.549851812411446,
       LiquidManureType.laying_hens:0.0309564949677344,
       LiquidManureType.other:0
    },
    "ES":{
       LiquidManureType.cattle:0.507915454115911,
-      LiquidManureType.fattening_pigs:0.322542116161643,
-      LiquidManureType.sows_and_piglets:0.149203944188963,
+      LiquidManureType.pig:0.471746060350606,
       LiquidManureType.laying_hens:0.0203384855334841,
       LiquidManureType.other:0
    },
    "LK":{
       LiquidManureType.cattle:0.882715893891701,
-      LiquidManureType.fattening_pigs:0.0306842036733159,
-      LiquidManureType.sows_and_piglets:0.0024882257352391,
+      LiquidManureType.pig:0.033172429408555,
       LiquidManureType.laying_hens:0.0841116766997438,
       LiquidManureType.other:0
    },
    "CH":{
       LiquidManureType.cattle:0.847633294065572,
-      LiquidManureType.fattening_pigs:0.100773947340613,
-      LiquidManureType.sows_and_piglets:0.0466167661709276,
+      LiquidManureType.pig:0.147390713511541,
       LiquidManureType.laying_hens:0.00497599242288751,
       LiquidManureType.other:0
    },
    "TH":{
       LiquidManureType.cattle:0.755351921445373,
-      LiquidManureType.fattening_pigs:0.181480659127386,
-      LiquidManureType.sows_and_piglets:0.0147096785555708,
+      LiquidManureType.pig:0.196190337682957,
       LiquidManureType.laying_hens:0.0484577408716699,
       LiquidManureType.other:0
    },
    "TR":{
       LiquidManureType.cattle:0.97789519996087,
-      LiquidManureType.fattening_pigs:0.0000194913799417323,
-      LiquidManureType.sows_and_piglets:0.00000157985394494961,
+      LiquidManureType.pig:0.0000210712338866819,
       LiquidManureType.laying_hens:0.0220837288052437,
       LiquidManureType.other:0
    },
    "UA":{
       LiquidManureType.cattle:0.741443874469408,
-      LiquidManureType.fattening_pigs:0.144482931054176,
-      LiquidManureType.sows_and_piglets:0.0617101845237894,
+      LiquidManureType.pig:0.206193115577965,
       LiquidManureType.laying_hens:0.0523630099526263,
       LiquidManureType.other:0
    },
    "US":{
       LiquidManureType.cattle:0.766419201590052,
-      LiquidManureType.fattening_pigs:0.148289201791209,
-      LiquidManureType.sows_and_piglets:0.0517364563148683,
+      LiquidManureType.pig:0.200025658106077,
       LiquidManureType.laying_hens:0.0335551403038707,
       LiquidManureType.other:0
    },
    "VN":{
       LiquidManureType.cattle:0.474349921379399,
-      LiquidManureType.fattening_pigs:0.458224208589946,
-      LiquidManureType.sows_and_piglets:0.0371407666642503,
+      LiquidManureType.pig:0.495364975254196,
       LiquidManureType.laying_hens:0.0302851033664051,
       LiquidManureType.other:0
    }
@@ -2024,8 +1987,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.891984968037592,
       SolidManureType.pigs:0.00428250486383302,
       SolidManureType.sheep_goats:0.00785192210275657,
-      SolidManureType.laying_hen_litter:0.0213496972784334,
-      SolidManureType.broiler_litter:0.037377288700972,
+      SolidManureType.laying_hen_litter:0.0587269859794054,
       SolidManureType.horses:0,
       SolidManureType.other:0.0154080727192603
    },
@@ -2033,8 +1995,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.866230714363227,
       SolidManureType.pigs:0.0396558670056438,
       SolidManureType.sheep_goats:0,
-      SolidManureType.laying_hen_litter:0.0109557804224684,
-      SolidManureType.broiler_litter:0.0733270306340694,
+      SolidManureType.laying_hen_litter:0.0842828110565378,
       SolidManureType.horses:0,
       SolidManureType.other:0.00983060757459108
    },
@@ -2042,8 +2003,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.680918401872099,
       SolidManureType.pigs:0.280055070828466,
       SolidManureType.sheep_goats:0.00287090731445683,
-      SolidManureType.laying_hen_litter:0.00942460225008602,
-      SolidManureType.broiler_litter:0.0242052132533888,
+      SolidManureType.laying_hen_litter:0.0336298155034748,
       SolidManureType.horses:0,
       SolidManureType.other:0.00182107880156133
    },
@@ -2051,8 +2011,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.747215795807973,
       SolidManureType.pigs:0.170711134549261,
       SolidManureType.sheep_goats:0.00150204832846079,
-      SolidManureType.laying_hen_litter:0.0146125693780566,
-      SolidManureType.broiler_litter:0.0518691431751504,
+      SolidManureType.laying_hen_litter:0.066481712553207,
       SolidManureType.horses:0,
       SolidManureType.other:0.0106371188335423
    },
@@ -2060,8 +2019,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.642672694527304,
       SolidManureType.pigs:0.21456568114916,
       SolidManureType.sheep_goats:0.00589291129178607,
-      SolidManureType.laying_hen_litter:0.0157015122396743,
-      SolidManureType.broiler_litter:0.0858889325733874,
+      SolidManureType.laying_hen_litter:0.101590444813062,
       SolidManureType.horses:0,
       SolidManureType.other:0.0233093573163688
    },
@@ -2069,8 +2027,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.552250451631966,
       SolidManureType.pigs:0.217928697517175,
       SolidManureType.sheep_goats:0.00217715952451313,
-      SolidManureType.laying_hen_litter:0.0102743641022689,
-      SolidManureType.broiler_litter:0.0335863045430743,
+      SolidManureType.laying_hen_litter:0.0438606686453432,
       SolidManureType.horses:0,
       SolidManureType.other:0.180852077242765
    },
@@ -2078,8 +2035,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.362384649367369,
       SolidManureType.pigs:0.230730522410369,
       SolidManureType.sheep_goats:0.14772992931581,
-      SolidManureType.laying_hen_litter:0.0320194458398477,
-      SolidManureType.broiler_litter:0.0356692347556989,
+      SolidManureType.laying_hen_litter:0.0676886805955466,
       SolidManureType.horses:0,
       SolidManureType.other:0.183306047927011
    },
@@ -2087,8 +2043,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.838197032202166,
       SolidManureType.pigs:0.112964690235755,
       SolidManureType.sheep_goats:0.00133593378235541,
-      SolidManureType.laying_hen_litter:0.0106618691740995,
-      SolidManureType.broiler_litter:0.0320696061132552,
+      SolidManureType.laying_hen_litter:0.0427314752873547,
       SolidManureType.horses:0,
       SolidManureType.other:0
    },
@@ -2096,8 +2051,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.86703206910812,
       SolidManureType.pigs:0.0790705320551174,
       SolidManureType.sheep_goats:0.0000342803689755446,
-      SolidManureType.laying_hen_litter:0.00622155084472631,
-      SolidManureType.broiler_litter:0.0448468278062416,
+      SolidManureType.laying_hen_litter:0.0510683786509679,
       SolidManureType.horses:0,
       SolidManureType.other:0
    },
@@ -2105,8 +2059,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.30319915656893,
       SolidManureType.pigs:0.485781032504727,
       SolidManureType.sheep_goats:0.0773942195973608,
-      SolidManureType.laying_hen_litter:0.0241292974698366,
-      SolidManureType.broiler_litter:0.109496293859146,
+      SolidManureType.laying_hen_litter:0.133625591328983,
       SolidManureType.horses:0,
       SolidManureType.other:0
    },
@@ -2114,8 +2067,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.732791342645394,
       SolidManureType.pigs:0.123009389316786,
       SolidManureType.sheep_goats:0.000401295431772118,
-      SolidManureType.laying_hen_litter:0.00628856797963098,
-      SolidManureType.broiler_litter:0.130112643083882,
+      SolidManureType.laying_hen_litter:0.136401211063513,
       SolidManureType.horses:0,
       SolidManureType.other:0.00260223066010027
    },
@@ -2123,8 +2075,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.796050906155418,
       SolidManureType.pigs:0.171171394598401,
       SolidManureType.sheep_goats:0.00813728584106536,
-      SolidManureType.laying_hen_litter:0.00973035325899764,
-      SolidManureType.broiler_litter:0.0056705957360577,
+      SolidManureType.laying_hen_litter:0.0154009489950553,
       SolidManureType.horses:0,
       SolidManureType.other:0.0050773244121249
    },
@@ -2132,8 +2083,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.817006208590229,
       SolidManureType.pigs:0.0974023218136786,
       SolidManureType.sheep_goats:0.028576974423064,
-      SolidManureType.laying_hen_litter:0.00896973024206114,
-      SolidManureType.broiler_litter:0.0139016721218404,
+      SolidManureType.laying_hen_litter:0.0228714023639015,
       SolidManureType.horses:0,
       SolidManureType.other:0.0328108856640718
    },
@@ -2141,8 +2091,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.727786900832796,
       SolidManureType.pigs:0.224888769346684,
       SolidManureType.sheep_goats:0.00877737537493331,
-      SolidManureType.laying_hen_litter:0.00746654359647748,
-      SolidManureType.broiler_litter:0.0143180400820094,
+      SolidManureType.laying_hen_litter:0.0217845836784869,
       SolidManureType.horses:0,
       SolidManureType.other:0.0149340704445282
    },
@@ -2150,8 +2099,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.229471343581357,
       SolidManureType.pigs:0.513373819312835,
       SolidManureType.sheep_goats:0.154434937260582,
-      SolidManureType.laying_hen_litter:0.0279284514119134,
-      SolidManureType.broiler_litter:0.0741635040869972,
+      SolidManureType.laying_hen_litter:0.102091955498911,
       SolidManureType.horses:0,
       SolidManureType.other:0
    },
@@ -2159,8 +2107,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.43790738862665,
       SolidManureType.pigs:0.293028837016495,
       SolidManureType.sheep_goats:0.130362255346065,
-      SolidManureType.laying_hen_litter:0.0254930676931773,
-      SolidManureType.broiler_litter:0.0406661992373601,
+      SolidManureType.laying_hen_litter:0.0661592669305374,
       SolidManureType.horses:0,
       SolidManureType.other:0.0661343707038014
    },
@@ -2168,8 +2115,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.25834922642825,
       SolidManureType.pigs:0.0052864383650807,
       SolidManureType.sheep_goats:0.0981507817052525,
-      SolidManureType.laying_hen_litter:0.00479527694451115,
-      SolidManureType.broiler_litter:0.00965129781910674,
+      SolidManureType.laying_hen_litter:0.0144465747636179,
       SolidManureType.horses:0,
       SolidManureType.other:0.623106249383288
    },
@@ -2177,8 +2123,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.467197539586431,
       SolidManureType.pigs:0.0435507726372292,
       SolidManureType.sheep_goats:0.119821943999018,
-      SolidManureType.laying_hen_litter:0.0308633507533585,
-      SolidManureType.broiler_litter:0.189432018409211,
+      SolidManureType.laying_hen_litter:0.220295369162569,
       SolidManureType.horses:0,
       SolidManureType.other:0.145861038464536
    },
@@ -2186,8 +2131,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.199236580122689,
       SolidManureType.pigs:0.39646666414798,
       SolidManureType.sheep_goats:0,
-      SolidManureType.laying_hen_litter:0.0544993327490837,
-      SolidManureType.broiler_litter:0.204647504694381,
+      SolidManureType.laying_hen_litter:0.259146837443465,
       SolidManureType.horses:0,
       SolidManureType.other:0.145149918285867
    },
@@ -2195,8 +2139,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.623557125987676,
       SolidManureType.pigs:0.141867888486309,
       SolidManureType.sheep_goats:0.0623664331281349,
-      SolidManureType.laying_hen_litter:0.024748730552871,
-      SolidManureType.broiler_litter:0.0213561547460622,
+      SolidManureType.laying_hen_litter:0.0461048852989332,
       SolidManureType.horses:0,
       SolidManureType.other:0.123983045058037
    },
@@ -2204,8 +2147,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.716502772802802,
       SolidManureType.pigs:0.0621647840759193,
       SolidManureType.sheep_goats:0.159458408168703,
-      SolidManureType.laying_hen_litter:0.00667923769381902,
-      SolidManureType.broiler_litter:0.00578424256117285,
+      SolidManureType.laying_hen_litter:0.0124634802549919,
       SolidManureType.horses:0,
       SolidManureType.other:0.0493881369381422
    },
@@ -2213,8 +2155,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.437879115151199,
       SolidManureType.pigs:0.367968515803388,
       SolidManureType.sheep_goats:0.00791315611290666,
-      SolidManureType.laying_hen_litter:0.0507878443580435,
-      SolidManureType.broiler_litter:0.0939603230870931,
+      SolidManureType.laying_hen_litter:0.144748167445137,
       SolidManureType.horses:0,
       SolidManureType.other:0.0139241223195238
    },
@@ -2222,8 +2163,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.650340967131297,
       SolidManureType.pigs:0.279493306740428,
       SolidManureType.sheep_goats:0.0140888719565466,
-      SolidManureType.laying_hen_litter:0.0228634131090672,
-      SolidManureType.broiler_litter:0.0274477631619806,
+      SolidManureType.laying_hen_litter:0.0503111762710478,
       SolidManureType.horses:0,
       SolidManureType.other:0.00440480042111328
    },
@@ -2231,8 +2171,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.963421730440515,
       SolidManureType.pigs:0.0109823225235529,
       SolidManureType.sheep_goats:0,
-      SolidManureType.laying_hen_litter:0.00547105071638433,
-      SolidManureType.broiler_litter:0.0184228426712389,
+      SolidManureType.laying_hen_litter:0.0238938933876232,
       SolidManureType.horses:0,
       SolidManureType.other:0.00170205364830849
    },
@@ -2240,8 +2179,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.496720484396516,
       SolidManureType.pigs:0.270738732154887,
       SolidManureType.sheep_goats:0.00617767908700828,
-      SolidManureType.laying_hen_litter:0.0159520683102628,
-      SolidManureType.broiler_litter:0.122493270732421,
+      SolidManureType.laying_hen_litter:0.138445339042684,
       SolidManureType.horses:0,
       SolidManureType.other:0.0754721922606031
    },
@@ -2249,8 +2187,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.181039090379967,
       SolidManureType.pigs:0.170254196102749,
       SolidManureType.sheep_goats:0.0236394474661915,
-      SolidManureType.laying_hen_litter:0.0261928628054136,
-      SolidManureType.broiler_litter:0.029492131725624,
+      SolidManureType.laying_hen_litter:0.0556849945310376,
       SolidManureType.horses:0,
       SolidManureType.other:0.565015879482784
    },
@@ -2258,8 +2195,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.682243198492267,
       SolidManureType.pigs:0.234441939364468,
       SolidManureType.sheep_goats:0.0062009560207519,
-      SolidManureType.laying_hen_litter:0.0189396723167528,
-      SolidManureType.broiler_litter:0.0282322761692945,
+      SolidManureType.laying_hen_litter:0.0471719484860473,
       SolidManureType.horses:0,
       SolidManureType.other:0.0250107466216499
    },
@@ -2267,8 +2203,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.713799208422998,
       SolidManureType.pigs:0.086703308957753,
       SolidManureType.sheep_goats:0.125362195508399,
-      SolidManureType.laying_hen_litter:0.0174414514252454,
-      SolidManureType.broiler_litter:0.028538107776735,
+      SolidManureType.laying_hen_litter:0.0459795592019804,
       SolidManureType.horses:0,
       SolidManureType.other:0.0206964990993778
    },
@@ -2276,8 +2211,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.356625251567831,
       SolidManureType.pigs:0.394853891860788,
       SolidManureType.sheep_goats:0.132864576090439,
-      SolidManureType.laying_hen_litter:0.0227101017834964,
-      SolidManureType.broiler_litter:0.0842235633176526,
+      SolidManureType.laying_hen_litter:0.106933665101149,
       SolidManureType.horses:0,
       SolidManureType.other:0.00236287438764808
    },
@@ -2285,8 +2219,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.474296687896011,
       SolidManureType.pigs:0.349950028157995,
       SolidManureType.sheep_goats:0.12997128300961,
-      SolidManureType.laying_hen_litter:0.0163774073286205,
-      SolidManureType.broiler_litter:0.0258809175900883,
+      SolidManureType.laying_hen_litter:0.0422583249187088,
       SolidManureType.horses:0,
       SolidManureType.other:0.00150157348727131
    },
@@ -2294,8 +2227,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.358031210049245,
       SolidManureType.pigs:0.0112883407239895,
       SolidManureType.sheep_goats:0.0270469208521131,
-      SolidManureType.laying_hen_litter:0.029418742522326,
-      SolidManureType.broiler_litter:0.0267171307871851,
+      SolidManureType.laying_hen_litter:0.0561358733095111,
       SolidManureType.horses:0,
       SolidManureType.other:0.547187751890528
    },
@@ -2303,8 +2235,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.847661071767102,
       SolidManureType.pigs:0.117090979573841,
       SolidManureType.sheep_goats:0.0171437568569013,
-      SolidManureType.laying_hen_litter:0.00429103263320877,
-      SolidManureType.broiler_litter:0.0110806584861638,
+      SolidManureType.laying_hen_litter:0.0153716911193726,
       SolidManureType.horses:0,
       SolidManureType.other:0.000565871544344061
    },
@@ -2312,8 +2243,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.483365490034822,
       SolidManureType.pigs:0.105331894540662,
       SolidManureType.sheep_goats:0.00325053153676041,
-      SolidManureType.laying_hen_litter:0.0267397498762904,
-      SolidManureType.broiler_litter:0.0594253500881106,
+      SolidManureType.laying_hen_litter:0.086165099964401,
       SolidManureType.horses:0,
       SolidManureType.other:0.321772314596681
    },
@@ -2321,8 +2251,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.715196837161228,
       SolidManureType.pigs:0.0000129294244842317,
       SolidManureType.sheep_goats:0.223468643242192,
-      SolidManureType.laying_hen_litter:0.0139275123117529,
-      SolidManureType.broiler_litter:0.0318351921540885,
+      SolidManureType.laying_hen_litter:0.0457627044658414,
       SolidManureType.horses:0,
       SolidManureType.other:0.0123703169532276
    },
@@ -2330,8 +2259,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.698618141080016,
       SolidManureType.pigs:0.154948882686506,
       SolidManureType.sheep_goats:0.0332941900836932,
-      SolidManureType.laying_hen_litter:0.0425455414624761,
-      SolidManureType.broiler_litter:0.0414121380138285,
+      SolidManureType.laying_hen_litter:0.0839576794763046,
       SolidManureType.horses:0,
       SolidManureType.other:0.0194023377379171
    },
@@ -2339,8 +2267,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.582965251842265,
       SolidManureType.pigs:0.122485390244081,
       SolidManureType.sheep_goats:0.00534999988371993,
-      SolidManureType.laying_hen_litter:0.0220091477664882,
-      SolidManureType.broiler_litter:0.128299034748168,
+      SolidManureType.laying_hen_litter:0.150308182514656,
       SolidManureType.horses:0,
       SolidManureType.other:0.105902046051912
    },
@@ -2348,8 +2275,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.cattle:0.289461071985541,
       SolidManureType.pigs:0.253613640613564,
       SolidManureType.sheep_goats:0.00536369937026225,
-      SolidManureType.laying_hen_litter:0.0159363283195119,
-      SolidManureType.broiler_litter:0.0372640411471001,
+      SolidManureType.laying_hen_litter:0.053200369466612,
       SolidManureType.horses:0,
       SolidManureType.other:0.397191100774241
    }

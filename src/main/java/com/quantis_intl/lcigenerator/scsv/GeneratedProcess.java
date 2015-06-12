@@ -209,7 +209,7 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public List<SubstanceUsage> getEmissionsToSoil()
     {
-        // TODO: Add persiticides
+        // TODO: Add pesticides
         return toSubstanceUsage(TemplateSubstanceUsage.toSoil);
     }
 

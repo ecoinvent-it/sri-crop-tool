@@ -58,10 +58,6 @@ class OutputMapping(object):
         
     def mapOtherOrganicFertilizers(self, allInputs):
         self._mapEnumMap(allInputs["other_organic_fertiliser_quantities"])
-        self.output["composttype_compost_in_t"] = self.output["composttype_compost"] / 1000.0 # kg -> t
-        self.output["composttype_vinasse_in_t"] = self.output["composttype_vinasse"] / 1000.0 # kg -> t
-        self.output["composttype_stone_meal_in_t"] = self.output["composttype_stone_meal"] / 1000.0 # kg -> t
-        self.output["composttype_dried_poultry_manure_in_t"] = self.output["composttype_dried_poultry_manure"] / 1000.0 # kg -> t
        
     def mapHMModel(self,hmOutput):
         for key, hmMap in hmOutput.items():

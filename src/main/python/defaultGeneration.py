@@ -74,8 +74,8 @@ class CountryMatrixLookupDefaultGenerator(object):
         if (generators["country"] in self._table):
             currentCountryTable = self._table[generators["country"]]
         else:
-            currentCountryTable = self._table[generators["GLO"]]
-        return currentCountryTable[generators[self._keyField]];
+            currentCountryTable = self._table["GLO"]
+        return currentCountryTable[self._keyField];
     
 class ZeroMapDefaultGenerator(object):
     def __init__(self, enumClass):
@@ -109,8 +109,7 @@ class OneRatioToValueConvertor(object):
         self._totalField = totalField
         
     def generateDefault(self, field, generators):
-        total = generators[self._totalField]
-        return {k:v * total for k,v in generators[self._ratioField].items()}
+        return generators[self._ratioField] *generators[self._totalField]
     
 class CropCyclePerYearDefaultGenerator(object):
     def generateDefault(self, field, generators):
@@ -272,6 +271,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "magnesium_as_dolomite": SimpleValueDefaultGenerator(1.0),
                    #Irrigation defaults
                    "irrigation_types_proportions": TableLookupDefaultGenerator("country", IRR_TECH_RATIO_PER_COUNTRY),
+                   "irrigation_types_quantities": RatioToValueConvertor("irrigation_types_proportions", "water_use_total"),
                    "irrigation_water_use_quantities": ConvertRatioToValueDefaultGenerator("country", IRR_WATERUSE_RATIO_PER_COUNTRY, "water_use_total"),
                    #N model defaults
                    "bulk_density_of_soil": SimpleValueDefaultGenerator(1300.0),
@@ -311,9 +311,12 @@ DEFAULTS_VALUES_GENERATORS = {
                    "materials_silage_foil": SimpleValueDefaultGenerator(0.0),
                    "materials_covering_sheet": SimpleValueDefaultGenerator(0.0),
                    "materials_bird_net": SimpleValueDefaultGenerator(0.0),
-                   "eol_plastic_disposal_fleece_and_other": EolPlasticDisposalGenerator(),
-                   "eol_plastic_disposal_landfill":SimpleValueDefaultGenerator(0.5),
-                   "eol_plastic_disposal_incineration":SimpleValueDefaultGenerator(0.5),
-                   "eol_plastic_disposal_landfill_quantity":OneRatioToValueConvertor("eol_plastic_disposal_landfill","eol_plastic_disposal_fleece_and_other"),
-                   "eol_plastic_disposal_incineration_quantity":OneRatioToValueConvertor("eol_plastic_disposal_incineration","eol_plastic_disposal_fleece_and_other"),
+                   "total_eol_plastic_disposal_fleece_and_other": EolPlasticDisposalGenerator(),
+                   "ratio_eol_plastic_disposal_landfill":SimpleValueDefaultGenerator(0.5),
+                   "ratio_eol_plastic_disposal_incineration":SimpleValueDefaultGenerator(0.5),
+                   "eol_plastic_disposal_landfill":OneRatioToValueConvertor("ratio_eol_plastic_disposal_landfill","total_eol_plastic_disposal_fleece_and_other"),
+                   "eol_plastic_disposal_incineration":OneRatioToValueConvertor("ratio_eol_plastic_disposal_incineration","total_eol_plastic_disposal_fleece_and_other"),
+                   "eol_waste_water_to_treatment_facility": SimpleValueDefaultGenerator(0.0),#FIXME: Default?
+                   "eol_waste_water_to_nature": SimpleValueDefaultGenerator(0.0),#FIXME: Default?
+                   "cod_in_waste_water": SimpleValueDefaultGenerator(0.0)
                    }

@@ -108,14 +108,14 @@ public class TemplateProductUsage
             new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg",
                     "packaging_liquid_fertilisers_and_pesticides", ""),
 
-            new TemplateProductUsage("Compost, at plant/CH U", "t", "composttype_compost_in_t", ""),
-            new TemplateProductUsage("Vinasse, at fermentation plant/CH U", "t", "composttype_vinasse_in_t", ""),
-            new TemplateProductUsage("Stone meal, at regional storehouse/CH U", "t", "composttype_stone_meal_in_t", ""),
+            new TemplateProductUsage("Compost, at plant/CH U", "kg", "composttype_compost", ""),
+            new TemplateProductUsage("Vinasse, at fermentation plant/CH U", "kg", "composttype_vinasse", ""),
+            new TemplateProductUsage("Stone meal, at regional storehouse/CH U", "kg", "composttype_stone_meal", ""),
             new TemplateProductUsage("Horn meal, at regional storehouse/CH U", "kg", "composttype_horn_meal", ""),
             new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg", "composttype_horn_shavings_fine",
                     ""),
-            new TemplateProductUsage("poultry manure, dried, at regional storehouse/CH U", "t",
-                    "composttype_dried_poultry_manure_in_t", ""),
+            new TemplateProductUsage("poultry manure, dried, at regional storehouse/CH U", "kg",
+                    "composttype_dried_poultry_manure", ""),
 
             // FIXME: Some of them should be in electricity heat
             new TemplateProductUsage("Grain drying, high temperature/CH U", "kg", "drying_heating", ""),
@@ -240,9 +240,9 @@ public class TemplateProductUsage
 
     public static final TemplateProductUsage[] wastes = {
             new TemplateProductUsage("Disposal, polyethylene, 0.4% water, to sanitary landfill/CH U", "kg",
-                    "eol_plastic_disposal_landfill_quantity", ""),
+                    "eol_plastic_disposal_landfill", ""),
             new TemplateProductUsage("Disposal, polyethylene, 0.4% water, to municipal incineration/CH U", "kg",
-                    "eol_plastic_disposal_incineration_quantity", ""),
+                    "eol_plastic_disposal_incineration", ""),
             new TemplateProductUsage("Treatment, sewage, to wastewater treatment, class 4/CH U", "m3",
                     "eol_waste_water_to_treatment_facility", ""),
     };
