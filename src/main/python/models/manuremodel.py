@@ -33,7 +33,7 @@ class ManureModel(object):
     """Inputs:
       liquid_manure_part_before_dilution: ratio
       liquid_manure_quantities: map LiquidManureType -> m3/ha
-      solid_manure_quantities: map SolidManureType -> t/ha
+      solid_manure_quantities: map SolidManureType -> kg/ha
       
     Outputs:
       computeP2O5: tuple of:
@@ -182,27 +182,31 @@ class ManureModel(object):
     def computeP2O5(self):
         return (self._sum_prod(self._P205_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_quantities)
                     * self.liquid_manure_part_before_dilution,
-                self._sum_prod(self._P205_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities))
+                self._sum_prod_for_solid(self._P205_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities))
         
     def computeN(self):
         return self._sum_prod(self._N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_quantities) \
                     * self.liquid_manure_part_before_dilution \
-                + self._sum_prod(self._N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities)
+                + self._sum_prod_for_solid(self._N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities)
         
     def computeNH3(self):
         nh3_as_n_liquid = self._sum_prod(self._NH3N_CONCENTRATION_IN_LIQUID_MANURE, self.liquid_manure_quantities) * self.liquid_manure_part_before_dilution
-        nh3_as_n_solid = self._sum_prod(self._NH3N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities)
+        nh3_as_n_solid = self._sum_prod_for_solid(self._NH3N_CONCENTRATION_IN_SOLID_MANURE, self.solid_manure_quantities)
         return nh3_as_n_liquid * N_TO_NH3_FACTOR \
                + nh3_as_n_solid * N_TO_NH3_FACTOR
         
     def _sum_prod(self, reference, factors):
         return sum(v*factors[k] for k,v in reference.items())
     
+    def _sum_prod_for_solid(self, reference, factors):
+        return sum(v*factors[k] / 1000.0 for k,v in reference.items())
+    
     def computeHeavyMetal(self):
         hm_manure_total_values = dict.fromkeys(self._HM_MANURE_VALUES.keys(),0.0)
         self._convert_manure_input_types_to_manure_for_HM(hm_manure_total_values,
                                                           self.solid_manure_quantities,
-                                                          self._SOLID_MANURE_TO_HM_MANURE)
+                                                          self._SOLID_MANURE_TO_HM_MANURE,
+                                                          factor=0.001)
         self._convert_manure_input_types_to_manure_for_HM(hm_manure_total_values,
                                                           self.liquid_manure_quantities,
                                                           self._LIQUID_MANURE_TO_HM_MANURE,

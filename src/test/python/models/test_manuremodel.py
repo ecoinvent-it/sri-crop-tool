@@ -12,13 +12,13 @@ class Test(unittest.TestCase):
                    LiquidManureType.other: 1234.5 * 0.0
                   },
               "solid_manure_quantities":
-                  {SolidManureType.broiler_litter: 9876.5 * 0.0,
-                   SolidManureType.cattle: 9876.5 * 0.05,
-                   SolidManureType.horses: 9876.5 * 0.0,
-                   SolidManureType.laying_hen_litter: 9876.5 * 0.25,
-                   SolidManureType.pigs: 9876.5 * 0.4,
-                   SolidManureType.sheep_goats: 9876.5 * 0.2,
-                   SolidManureType.other: 9876.5 * 0.1
+                  {SolidManureType.broiler_litter: 9876.5 * 0.0 * 1000.0,
+                   SolidManureType.cattle: 9876.5 * 0.05 * 1000.0,
+                   SolidManureType.horses: 9876.5 * 0.0 * 1000.0,
+                   SolidManureType.laying_hen_litter: 9876.5 * 0.25 * 1000.0,
+                   SolidManureType.pigs: 9876.5 * 0.4 * 1000.0,
+                   SolidManureType.sheep_goats: 9876.5 * 0.2 * 1000.0,
+                   SolidManureType.other: 9876.5 * 0.1 * 1000.0
                   }
              }
     
