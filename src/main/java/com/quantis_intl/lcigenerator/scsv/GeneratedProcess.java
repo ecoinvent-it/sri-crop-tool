@@ -148,7 +148,7 @@ public class GeneratedProcess implements ProductScsvProcess
             @Override
             public String getAmount()
             {
-                return "1.0";
+                return modelOutputs.get("yield_main_product_per_crop_cycle");
             }
 
             @Override
@@ -223,7 +223,7 @@ public class GeneratedProcess implements ProductScsvProcess
     private List<SubstanceUsage> toSubstanceUsage(TemplateSubstanceUsage[] templates)
     {
         return Arrays.stream(templates).map(r -> new GeneratedSubstanceUsage(r, modelOutputs))
-                // .filter(s -> !s.getAmount().equals("0.0")) FIXME: Re-add
+                .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0")) // FIXME: Re-add
                 .collect(Collectors.toList());
     }
 
@@ -231,7 +231,7 @@ public class GeneratedProcess implements ProductScsvProcess
     private List<ProductUsage> toProductUsage(TemplateProductUsage[] templates)
     {
         return Arrays.stream(templates).map(r -> new GeneratedProductUsage(r, modelOutputs))
-                // .filter(s -> !s.getAmount().equals("0.0")) FIXME: Re-add
+                .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0")) // FIXME: Re-add
                 .collect(Collectors.toList());
     }
 }

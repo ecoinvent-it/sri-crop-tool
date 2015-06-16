@@ -55,13 +55,13 @@ class Test(unittest.TestCase):
         
     def testHeavyMetal(self):
         expectedResults = {'m_hm_heavymetal_to_soil':{
-                            HeavyMetalType.cd: 10.008104171275004,
-                            HeavyMetalType.cu: 5.0402847363033825,
-                            HeavyMetalType.zn: 0.11845499831864793,
-                            HeavyMetalType.pb: 0.638734633016328,
-                            HeavyMetalType.ni: 2.3848192219865365,
-                            HeavyMetalType.cr: 3.9050128869822758,
-                            HeavyMetalType.hg: 71.19723603975736},
+                            HeavyMetalType.cd: 1.0008104171275004e-05,
+                            HeavyMetalType.cu: 5.0402847363033825e-06,
+                            HeavyMetalType.zn: 0.11845499831864793e-06,
+                            HeavyMetalType.pb: 0.638734633016328e-06,
+                            HeavyMetalType.ni: 2.3848192219865365e-06,
+                            HeavyMetalType.cr: 3.9050128869822758e-06,
+                            HeavyMetalType.hg: 7.119723603975736e-05},
                            'm_hm_heavymetal_to_ground_water':{
                             HeavyMetalType.cd: 2.382779051351351e-06,
                             HeavyMetalType.cu: 7.042851701936917e-05,

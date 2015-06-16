@@ -163,7 +163,7 @@ class HmModel(object):
                 * self.eroded_soil / self.crop_cycle_per_year * self._ACCUMULATION_FACTOR \
                 * self._EROSION_FACTOR * allocation_factor
 
-    def _compute_soil(self, agro_input, allocation_factor, leaching, erosion_gw, hmElement):
-        return (agro_input \
+    def _compute_soil(self, agro_input, allocation_factor, leaching, erosion_gw, hmElement): #mg/ha -> kg/ha
+        return 0.0 if allocation_factor == 0.0 else (agro_input \
                -(leaching + erosion_gw)/allocation_factor ) \
-                * allocation_factor 
+                * allocation_factor / 1000000.0

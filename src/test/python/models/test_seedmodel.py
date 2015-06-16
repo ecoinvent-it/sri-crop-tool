@@ -4,7 +4,7 @@ from models.seedmodel import SeedModel, SeedType
 
 class Test(unittest.TestCase):
     inputs = {"seed_quantities":
-                  { SeedType.field_bean_seed: 3.3,
+                  { SeedType.field_bean: 3.3,
                     SeedType.flower: 7.7,
                     SeedType.pea: 11.11,
                     SeedType.vegetable: 15.15,
@@ -26,13 +26,13 @@ class Test(unittest.TestCase):
             
     def testHeavyMetal(self):
         expectedResults = {
-                            HeavyMetalType.cd: 56.144201,
-                            HeavyMetalType.cu: 2298.69065,
-                            HeavyMetalType.zn: 12712.87363,
-                            HeavyMetalType.pb: 220.827787,
-                            HeavyMetalType.ni: 465.396097,
-                            HeavyMetalType.cr: 168.532663,
-                            HeavyMetalType.hg: 12.768396}
+                            HeavyMetalType.cd: 55.918916,
+                            HeavyMetalType.cu: 2270.93635,
+                            HeavyMetalType.zn: 12579.36313,
+                            HeavyMetalType.pb: 220.092977,
+                            HeavyMetalType.ni: 459.150732,
+                            HeavyMetalType.cr: 167.279358,
+                            HeavyMetalType.hg: 12.720561}
                         
         results = SeedModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():

@@ -180,17 +180,25 @@ class SlopePerCropGenerator(object):
         if (generators["crop"] == "rice"):
             return 0.00
         else: return 0.03
+        
+class DryContentGenerator(object):
+    def generateDefault(self, field, generators):
+        return 1 - generators["yield_main_product_water_content"]
     
 class CO2FromYieldGenerator(object):
     def generateDefault(self, field, generators):
-        return generators["yield_main_product_carbon_content"] * 1000.0 * MA_CO2/MA_C * (1 - generators["yield_main_product_water_content"])
+        return generators["yield_main_product_carbon_content"] * MA_CO2/MA_C * generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
 
 class EnergyGrossCalorificValueGenerator(object):
     def generateDefault(self, field, generators):
         if (generators["crop"] in ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL):
-            return ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL[generators["crop"]] * (1 - generators["yield_main_product_water_content"])
+            return ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL[generators["crop"]] * generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
         else:
             return generators["CO2_from_yield"] * 11.5
+        
+class HmUptakeGenerator(object):
+    def generateDefault(self, field, generators):
+        return generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
         
 class EolPlasticDisposalGenerator(object):
     def generateDefault(self, field, generators):
@@ -294,6 +302,8 @@ DEFAULTS_VALUES_GENERATORS = {
                    "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default
                    #Packaging rules
                    "ca_from_mineral_fert": SimpleValueDefaultGenerator(0),
+                   #LUC rules
+                   "allocated_time_for_crop": SimpleValueDefaultGenerator(1.0),
                    #Direct outputs
                    "ratio_wateruse_ground": CountryMatrixLookupDefaultGenerator("ratio_wateruse_ground", IRR_WATERUSE_RATIO_PER_COUNTRY),
                    "ratio_wateruse_surface": CountryMatrixLookupDefaultGenerator("ratio_wateruse_surface", IRR_WATERUSE_RATIO_PER_COUNTRY),
@@ -304,9 +314,11 @@ DEFAULTS_VALUES_GENERATORS = {
                    "computed_drying":DryingDefaultGenerator(),
                    "type_of_drying":SimpleValueDefaultGenerator("ambient_air"),
                    "yield_main_product_water_content": TableLookupDefaultGenerator("crop", WATER_CONTENT_FM_RATIO_PER_CROP),
+                   "yield_main_product_dry_content": DryContentGenerator(),
                    "yield_main_product_carbon_content": TableLookupDefaultGenerator("crop", CARBON_CONTENT_PER_CROP),
                    "CO2_from_yield": CO2FromYieldGenerator(),
                    "energy_gross_calorific_value": EnergyGrossCalorificValueGenerator(),
+                   "hm_uptake": HmUptakeGenerator(),
                    "materials_fleece": SimpleValueDefaultGenerator(0.0),
                    "materials_silage_foil": SimpleValueDefaultGenerator(0.0),
                    "materials_covering_sheet": SimpleValueDefaultGenerator(0.0),

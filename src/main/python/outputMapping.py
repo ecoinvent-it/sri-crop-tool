@@ -10,6 +10,8 @@ class OutputMapping(object):
     def mapAsIsOutput(self, allInputs):
         self.output["country"] = allInputs["country"]
         self.output["crop"] = allInputs["crop"]
+        self.output["yield_main_product_per_crop_cycle"] = allInputs["yield_main_product_per_crop_cycle"]
+        self.output["hm_uptake"] = allInputs["hm_uptake"]
         for k,f in self._DIRECT_OUTPUT_MAPPING.items():
             if (k in allInputs):
                 self.output[k] = f(allInputs[k])
@@ -64,10 +66,24 @@ class OutputMapping(object):
             prefix = key.replace("m_hm_", "") + "_"
             for k, v in hmMap.items():
                 self.output[prefix + k.name] = v
-                
+                        
     def mapPackModel(self, packOutput):
         for key, value in packOutput.items():
             self.output[key.replace("m_Pack_", "")] = value
+            
+    def mapLucModel(self, lucOuput):
+        for key, value in lucOuput.items():
+            self.output[key.replace("m_LUC_", "")] = value
+        #FIXME: Probably not the right place
+        if (self.output["luc_crop_type"]=="annual"):
+            self.output["occupation_arable"] = 10027
+            self.output["transformation_from_arable"] = 10000
+            self.output["transformation_to_arable"] = 10000
+        elif (self.output["luc_crop_type"]=="perennial"):
+            self.output["occupation_permanent"] = 10027
+            self.output["transformation_from_permanent"] = 500
+            self.output["transformation_to_permanent"] = 500
+        #else TODO: Rice 
             
     def mapCODWasteWater(self, allInputs):
         total_waste_water = allInputs["eol_waste_water_to_treatment_facility"] + allInputs["eol_waste_water_to_nature"]

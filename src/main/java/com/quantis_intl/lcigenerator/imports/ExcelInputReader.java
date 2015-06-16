@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Cell;
@@ -45,7 +46,8 @@ public class ExcelInputReader
         try
         {
             Workbook workbook = WorkbookFactory.create(is);
-            Sheet sheet = workbook.getSheet("Template");
+            Sheet sheet = IntStream.range(2, workbook.getNumberOfSheets()).mapToObj(workbook::getSheetAt)
+                    .filter(s -> s.getSheetName().startsWith("Template")).findFirst().orElse(null);
             if (sheet != null)
             {
                 DataFileReader dataFileReader = new DataFileReader(sheet, errorReporter);

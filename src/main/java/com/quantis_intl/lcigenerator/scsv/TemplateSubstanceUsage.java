@@ -40,21 +40,32 @@ public class TemplateSubstanceUsage
 
     public static final TemplateSubstanceUsage[] resources = {
 
-            new TemplateSubstanceUsage("Carbon dioxide, in air", SubCompartment.RAW_UNSPECIFIED, "kg",
+            new TemplateSubstanceUsage("Carbon dioxide, in air", SubCompartment.RAW_IN_AIR, "kg",
                     "CO2_from_yield", ""),
             new TemplateSubstanceUsage("Energy, gross calorific value, in biomass", SubCompartment.RAW_UNSPECIFIED,
                     "MJ",
                     "energy_gross_calorific_value", ""),
 
-            new TemplateSubstanceUsage("Water, well, in ground {country}", SubCompartment.RAW_IN_WATER,
+            new TemplateSubstanceUsage("Water, well, in ground, {country}", SubCompartment.RAW_IN_WATER,
                     "m3", "wateruse_ground", ""),
-            new TemplateSubstanceUsage("Water, river {country}", SubCompartment.RAW_IN_WATER,
+            new TemplateSubstanceUsage("Water, river, {country}", SubCompartment.RAW_IN_WATER,
                     "m3", "wateruse_surface", ""),
 
             new TemplateSubstanceUsage("Water, well, in ground {country}", SubCompartment.RAW_IN_WATER,
                     "m3", "utilities_wateruse_ground", ""),
             new TemplateSubstanceUsage("Water, river {country}", SubCompartment.RAW_IN_WATER,
-                    "m3", "utilities_wateruse_surface", "")
+                    "m3", "utilities_wateruse_surface", ""),
+            new TemplateSubstanceUsage("Occupation, arable", SubCompartment.RAW_LAND, "m2a", "occupation_arable", ""),
+            new TemplateSubstanceUsage("Occupation, permanent crop, fruit", SubCompartment.RAW_LAND, "m2a",
+                    "occupation_permanent", ""),
+            new TemplateSubstanceUsage("Transformation, from arable", SubCompartment.RAW_LAND, "m2",
+                    "transformation_from_arable", ""),
+            new TemplateSubstanceUsage("Transformation, from permanent crop, fruit", SubCompartment.RAW_LAND, "m2",
+                    "transformation_from_permanent", ""),
+            new TemplateSubstanceUsage("Transformation, to arable", SubCompartment.RAW_LAND, "m2",
+                    "transformation_to_arable", ""),
+            new TemplateSubstanceUsage("Transformation, to permanent crop, fruit", SubCompartment.RAW_LAND, "m2",
+                    "transformation_to_permanent", "")
     };
 
     public static final TemplateSubstanceUsage[] toAir = {

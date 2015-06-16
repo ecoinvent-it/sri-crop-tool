@@ -34,19 +34,19 @@ public class TemplateProductUsage
     }
 
     public static final TemplateProductUsage[] materialsFuels = {
-            new TemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 2.0)/{TODO} U", "m3",
+            new TemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 3.0)/{TODO} U", "m3",
                     "surface_irrigation_electricity", ""),
-            new TemplateProductUsage("Irrigating, surface, diesel powered (WFLDB 2.0)/GLO U", "m3",
+            new TemplateProductUsage("Irrigating, surface, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "surface_irrigation_diesel", ""),
             // new TemplateProductUsage("Irrigating, surface, gravity/GLO U", "m3", "surface_irrigation_no_energy",
             // ""),// FIXME: Missing
-            new TemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 2.0)/{TODO} U", "m3",
+            new TemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.0)/{TODO} U", "m3",
                     "sprinkler_irrigation_electricity", ""),
-            new TemplateProductUsage("Irrigating, sprinkler, diesel powered (WFLDB 2.0)/GLO U", "m3",
+            new TemplateProductUsage("Irrigating, sprinkler, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "sprinkler_irrigation_diesel", ""),
-            new TemplateProductUsage("Irrigating, drip, electricity powered (WFLDB 2.0)/{TODO} U", "m3",
+            new TemplateProductUsage("Irrigating, drip, electricity powered (WFLDB 3.0)/{TODO} U", "m3",
                     "drip_irrigation_electricity", ""),
-            new TemplateProductUsage("Irrigating, drip, diesel powered (WFLDB 2.0)/GLO U", "m3",
+            new TemplateProductUsage("Irrigating, drip, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "drip_irrigation_diesel", ""),
 
             new TemplateProductUsage("Tap water, at user/RER U", "kg", "wateruse_non_conventional_sources", ""),
@@ -103,9 +103,9 @@ public class TemplateProductUsage
 
             new TemplateProductUsage("Magnesium sulphate, at plant/RER U", "kg", "fert_other_total_mg", ""),
 
-            new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg",
+            new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
                     "packaging_solid_fertilisers_and_pesticides", ""),
-            new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 2.0)/GLO U", "kg",
+            new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
                     "packaging_liquid_fertilisers_and_pesticides", ""),
 
             new TemplateProductUsage("Compost, at plant/CH U", "kg", "composttype_compost", ""),
@@ -225,13 +225,12 @@ public class TemplateProductUsage
             // TODO: Pesticides
             // TODO: Seeds
 
-            // TODO: HM uptake
-            new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 2.0)/GLO U", "kg", "", ""),
+            new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.0)/GLO U", "kg", "hm_uptake", ""),
 
             new TemplateProductUsage("lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil", ""),
 
-            new TemplateProductUsage("LUC emissions, {crop}, {country}", "", "", ""),// TODO: Complete, #FIXME: Add
-                                                                                     // param in export
+            new TemplateProductUsage("Land use change, {luc_crop_type} crop (WFLDB 3.0)/{country} U", "ha",
+                    "luc_formula", ""),
     };
 
     public static final TemplateProductUsage[] electricityHeat = {

@@ -6,7 +6,8 @@ class LUCModel(object):
       allocated_time_for_crop: ratio
 
     Outputs:
-      m_co2_CO2_from_fertilisers: kg/ha
+      m_LUC_luc_crop_type: crop type 
+      m_LUC_luc_formula: formula /ha
     """
     _input_variables = ["crop",
                         "country",
@@ -19,8 +20,12 @@ class LUCModel(object):
             setattr(self, key, inputs[key])
             
     def compute(self):
+        crop_type = self._compute_crop_type()
         formula = self._compute_formula()
-        return {'m_LUC_luc_formula': formula}
+        return {'m_LUC_luc_crop_type': crop_type, 'm_LUC_luc_formula': formula}
+    
+    def _compute_crop_type(self):
+        return self._CROP_TO_CROP_TYPE[self.crop]
         
     def _compute_formula(self):
         cropSpecific = self._compute_crop_specific()
@@ -80,5 +85,44 @@ class LUCModel(object):
 }
     
     _RELATIVE_AREAS_EXPANSION_PER_CROP_PER_COUNTRY = {
-        "almond":{"AR": 0.5}#FIXME: This is a test value
+        "almond":{"AR": 0.5},#FIXME: This is a test value
+        "soybean":{"AR": 0.73}#FIXME: This one as well
+     }
+    
+    _CROP_TO_CROP_TYPE = {
+        "almond":"perennial",
+        "apple":"perennial",
+        "apricot":"perennial",
+        "asparagus":"annual",
+        "banana":"perennial",
+        "carrot":"annual",
+        "cocoa":"perennial",
+        "coconut":"perennial",
+        "coffee":"perennial",
+        "lemonlime":"perennial",
+        "linseed":"annual",
+        "maizegrain":"annual",
+        "mandarin":"perennial",
+        "mint":"annual", #FIXME: Only if mint is peppermint
+        "oat":"annual",
+        "olive":"perennial",
+        "onion":"annual",
+        "orange":"perennial",
+        "palmtree":"perennial", #FIXME: Only if plamtree is oil palm fruit
+        "peach":"perennial",
+        "peanut":"annual", #FIXME: Only if peanut is groundnuts
+        "pear":"perennial",
+        "pineapple":"perennial",
+        "potato":"annual",
+        "rapeseed":"annual",
+        "rice":"Paddy rice", #FIXME: Check if fully implemented
+        "soybean":"annual",
+        "strawberry":"annual",
+        "sugarbeet":"annual",
+        "sugarcane":"perennial",
+        "sunflower":"annual",
+        "sweetcorn":"annual",
+        "tea":"perennial",
+        "tomato":"annual",
+        "wheat":"annual"
      }

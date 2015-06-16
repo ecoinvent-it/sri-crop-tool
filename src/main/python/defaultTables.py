@@ -6,42 +6,42 @@ from models.fertilisermodel import NFertiliserType, KFertiliserType,\
 from models.manuremodel import LiquidManureType, SolidManureType
 from models.irrigationmodel import IrrigationType
 
-#Generated from GD_crop GrossEnergy_C_L1 column D
+#Generated from GD_crop GrossEnergy_C_L1 column D, kgC/kgDM
 CARBON_CONTENT_PER_CROP = {
-                "almond":626.55914,
-                "apple":431.788079,
-                "apricot":475.0,
-                "asparagus":475.0,
-                "banana":429.522,
-                "carrot":475.0,
-                "cocoa":535.987,
-                "coconut":645.262412752311,
-                "coffee":475.0,
-                "lemonlime":384.1230769,
-                "linseed":590.234292,
-                "maizegrain":435.01682,
-                "mandarin":384.1230769,
-                "mint":445.395683453237,
-                "oat":475.0,
-                "olive":599.451774112943,
-                "onion":424.377803,
-                "orange":384.1230769,
-                "palmtree":599.451774112943,
-                "peach":412.732283,
-                "peanut":580.63,
-                "pear":475.0,
-                "potato":423.959628,
-                "rapeseed":470.88,
-                "rice":475.0,
-                "soybean":681.929577464789,
-                "strawberry":475.0,
-                "sugarbeet":381.46638,
-                "sugarcane":475.0,
-                "sunflower":842.802816901409,
-                "sweetcorn":435.01682,
-                "tea":475.0,
-                "tomato":383.275862,
-                "wheat":424.10592
+                "almond":0.62655914,
+                "apple":0.431788079,
+                "apricot":0.475,
+                "asparagus":0.475,
+                "banana":0.429522,
+                "carrot":0.475,
+                "cocoa":0.535987,
+                "coconut":0.645262412752311,
+                "coffee":0.475,
+                "lemonlime":0.3841230769,
+                "linseed":0.590234292,
+                "maizegrain":0.43501682,
+                "mandarin":0.3841230769,
+                "mint":0.445395683453237,
+                "oat":0.475,
+                "olive":0.599451774112943,
+                "onion":0.424377803,
+                "orange":0.3841230769,
+                "palmtree":0.599451774112943,
+                "peach":0.412732283,
+                "peanut":0.58063,
+                "pear":0.475,
+                "potato":0.423959628,
+                "rapeseed":0.47088,
+                "rice":0.475,
+                "soybean":0.681929577464789,
+                "strawberry":0.475,
+                "sugarbeet":0.38146638,
+                "sugarcane":0.475,
+                "sunflower":0.842802816901409,
+                "sweetcorn":0.43501682,
+                "tea":0.475,
+                "tomato":0.383275862,
+                "wheat":0.42410592
     }
 
 #Generated from GD_crop precipitation_L1 line 16
@@ -166,6 +166,7 @@ CROP_FACTOR_PER_CROP = {
         "wheat":0.22
         }
 
+#MJ/kgDM
 ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
             "maizegrain": 18.52,#grain maize
             "potato": 17.59,#potatoes

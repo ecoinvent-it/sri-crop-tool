@@ -14,6 +14,7 @@ from models.erosionmodel import ErosionModel
 from models.hmmodel import HmModel
 from models.seedmodel import SeedModel
 from models.packmodel import PackModel
+from models.lucmodel import LUCModel
 
 class ModelsSequence(object):
     
@@ -39,6 +40,7 @@ class ModelsSequence(object):
         self.outputMapping.mapPModel(PModel(self.allInputs).compute())
         self.outputMapping.mapHMModel(HmModel(self.allInputs).compute())
         self.outputMapping.mapPackModel(PackModel(self.allInputs).compute())
+        self.outputMapping.mapLucModel(LUCModel(self.allInputs).compute())
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
         self.outputMapping.mapCODWasteWater(self.allInputs)
         return self.outputMapping.output;
