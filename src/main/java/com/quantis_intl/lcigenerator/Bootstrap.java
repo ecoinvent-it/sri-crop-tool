@@ -64,7 +64,7 @@ public class Bootstrap
         // FIXME: Should be optional
         p.setProperty("server.appResourcesFolder", "src/main/dart/web");
         p.setProperty("server.logFolder", "");
-        p.setProperty("pyBridge.url", "http://localhost:7880/computeLci");
+        p.setProperty("pyBridge.url", "http://localhost:11001/computeLci");
         return p;
     }
 

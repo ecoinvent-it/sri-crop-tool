@@ -4,7 +4,7 @@ from modelsSequence import ModelsSequence
 
 #TODO: Read from external properties
 hostName = "localhost"
-hostPort = 7880
+hostPort = 11001
 
 class QtsRequestHandler(BaseHTTPRequestHandler):
     def do_POST(self):
