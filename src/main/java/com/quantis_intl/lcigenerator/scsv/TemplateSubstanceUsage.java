@@ -51,10 +51,11 @@ public class TemplateSubstanceUsage
             new TemplateSubstanceUsage("Water, river, {country}", SubCompartment.RAW_IN_WATER,
                     "m3", "wateruse_surface", ""),
 
-            new TemplateSubstanceUsage("Water, well, in ground {country}", SubCompartment.RAW_IN_WATER,
+            new TemplateSubstanceUsage("Water, well, in ground, {country}", SubCompartment.RAW_IN_WATER,
                     "m3", "utilities_wateruse_ground", ""),
-            new TemplateSubstanceUsage("Water, river {country}", SubCompartment.RAW_IN_WATER,
+            new TemplateSubstanceUsage("Water, river, {country}", SubCompartment.RAW_IN_WATER,
                     "m3", "utilities_wateruse_surface", ""),
+            // TODO: Annualiser
             new TemplateSubstanceUsage("Occupation, arable", SubCompartment.RAW_LAND, "m2a", "occupation_arable", ""),
             new TemplateSubstanceUsage("Occupation, permanent crop, fruit", SubCompartment.RAW_LAND, "m2a",
                     "occupation_permanent", ""),

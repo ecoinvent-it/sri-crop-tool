@@ -98,15 +98,13 @@ public class NumericExtractor
         TAGS_FOR_RATIO.add("ratio_wateruse_surface");
         TAGS_FOR_RATIO.add("ratio_wateruse_non_conventional_sources");
         TAGS_FOR_RATIO.add("ratio_manureliquid_cattle");
-        TAGS_FOR_RATIO.add("ratio_manureliquid_fattening_pig");
-        TAGS_FOR_RATIO.add("ratio_manureliquid_sows_piglet");
+        TAGS_FOR_RATIO.add("ratio_manureliquid_pig");
         TAGS_FOR_RATIO.add("ratio_manureliquid_laying_hen");
         TAGS_FOR_RATIO.add("ratio_manureliquid_other");
         TAGS_FOR_RATIO.add("ratio_manuresolid_cattle");
         TAGS_FOR_RATIO.add("ratio_manuresolid_pig");
         TAGS_FOR_RATIO.add("ratio_manuresolid_sheep_goat");
         TAGS_FOR_RATIO.add("ratio_manuresolid_laying_hen");
-        TAGS_FOR_RATIO.add("ratio_manuresolid_broiler");
         TAGS_FOR_RATIO.add("ratio_manuresolid_horses");
         TAGS_FOR_RATIO.add("ratio_manuresolid_other");
         TAGS_FOR_RATIO.add("ratio_fertnmin_ammonium_nitrate");
@@ -137,8 +135,8 @@ public class NumericExtractor
         TAGS_FOR_RATIO.add("drying_yield_to_be_dryied");
         TAGS_FOR_RATIO.add("drying_humidity_before_drying");
         TAGS_FOR_RATIO.add("drying_humidity_after_drying");
-        TAGS_FOR_RATIO.add("ratio_eol_plastic_disposal_landfill");
-        TAGS_FOR_RATIO.add("ratio_eol_plastic_disposal_incineration");
+        TAGS_FOR_RATIO.add("ratio_eol_landfill");
+        TAGS_FOR_RATIO.add("ratio_eol_incineration");
     }
 
     private ErrorReporter errorReporter;

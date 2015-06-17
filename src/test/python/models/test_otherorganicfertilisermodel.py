@@ -1,21 +1,24 @@
 import unittest
-from models.otherorganicfertilisermodel import OtherOrganicFertiliserType, OtherOrganicFertModel
+from models.otherorganicfertilisermodel import OtherOrganicFertModel, CompostType, SludgeType
 from models.modelEnums import HeavyMetalType
 
 class Test(unittest.TestCase):
-    inputs = {"other_organic_fertiliser_quantities":
-                  { OtherOrganicFertiliserType.compost: 98.0 * 1000.0,
-                    OtherOrganicFertiliserType.meat_and_bone_meal: 78.2 * 1000.0,
-                    OtherOrganicFertiliserType.castor_oil_shell_coarse: 12.0 * 1000.0,#No value for now
-                    OtherOrganicFertiliserType.vinasse: 13.0 * 1000.0,#No value for now
-                    OtherOrganicFertiliserType.dried_poultry_manure: 44.1 * 1000.0,
-                    OtherOrganicFertiliserType.stone_meal: 63.1 * 1000.0,#No value for now
-                    OtherOrganicFertiliserType.feather_meal: 88.2 * 1000.0,
-                    OtherOrganicFertiliserType.horn_meal: 96.1 * 1000.0,
-                    OtherOrganicFertiliserType.horn_shavings_fine: 63.2 * 1000.0,
-                    OtherOrganicFertiliserType.sewagesludge_liquid: 54.2 * 1000.0,
-                    OtherOrganicFertiliserType.sewagesludge_dehydrated: 83.5 * 1000.0,
-                    OtherOrganicFertiliserType.sewagesludge_dried: 46.1 * 1000.0
+    inputs = {"compost_quantities":
+                  { CompostType.compost: 98.0 * 1000.0,
+                    CompostType.meat_and_bone_meal: 78.2 * 1000.0,
+                    CompostType.castor_oil_shell_coarse: 12.0 * 1000.0,
+                    CompostType.vinasse: 13.0 * 1000.0,
+                    CompostType.dried_poultry_manure: 44.1 * 1000.0,
+                    CompostType.stone_meal: 63.1 * 1000.0,
+                    CompostType.feather_meal: 88.2 * 1000.0,
+                    CompostType.horn_meal: 96.1 * 1000.0,
+                    CompostType.horn_shavings_fine: 63.2 * 1000.0
+                  },
+              "sludge_quantities":
+                  {
+                    SludgeType.sewagesludge_liquid: 54.2 * 1000.0,
+                    SludgeType.sewagesludge_dehydrated: 83.5 * 1000.0,
+                    SludgeType.sewagesludge_dried: 46.1 * 1000.0
                   }
              }
     
@@ -25,7 +28,7 @@ class Test(unittest.TestCase):
         self.assertAlmostEqual(results, expectedResults)
         
     def testN(self):
-        expectedResults = 34230.815
+        expectedResults = 43066.915
         results = OtherOrganicFertModel(self.inputs).computeN()
         self.assertAlmostEqual(results, expectedResults)
         
@@ -36,13 +39,13 @@ class Test(unittest.TestCase):
             
     def testHeavyMetal(self):
         expectedResults = {
-                            HeavyMetalType.cd: 235307.08,
-                            HeavyMetalType.cu: 44818680.9,
-                            HeavyMetalType.zn: 133614262.1,
-                            HeavyMetalType.pb: 11094829.1,
-                            HeavyMetalType.ni: 6496816.8,
-                            HeavyMetalType.cr: 22064443.6,
-                            HeavyMetalType.hg: 197829.58}
+                            HeavyMetalType.cd: 237467.08,
+                            HeavyMetalType.cu: 45260190.9,
+                            HeavyMetalType.zn: 135075977.1,
+                            HeavyMetalType.pb: 11335739.1,
+                            HeavyMetalType.ni: 6625926.8,
+                            HeavyMetalType.cr: 22177843.6,
+                            HeavyMetalType.hg: 198369.58}
                         
         results = OtherOrganicFertModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():

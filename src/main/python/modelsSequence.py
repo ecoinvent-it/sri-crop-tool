@@ -26,6 +26,7 @@ class ModelsSequence(object):
         
     def executeSequence(self):
         self.outputMapping.mapAsIsOutput(self.allInputs)
+        self.outputMapping.mapDictsToOutput(self.allInputs)
         self._computeFertiliser()
         self._computeManure()
         self._computeOtherOrganicFertiliser()
@@ -42,6 +43,7 @@ class ModelsSequence(object):
         self.outputMapping.mapPackModel(PackModel(self.allInputs).compute())
         self.outputMapping.mapLucModel(LUCModel(self.allInputs).compute())
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
+        self.outputMapping.mapMachineries(self.allInputs)
         self.outputMapping.mapCODWasteWater(self.allInputs)
         return self.outputMapping.output;
     

@@ -9,7 +9,7 @@ from defaultTables import CLAY_CONTENT_PER_COUNTRY, SOIL_CARBON_CONTENT_PER_COUN
     SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, CARBON_CONTENT_PER_CROP, SEED_TYPE_PER_CROP,\
     IRR_WATERUSE_RATIO_PER_COUNTRY
 from models.hmmodel import LandUseCategoryForHM, PesticideType
-from models.otherorganicfertilisermodel import OtherOrganicFertiliserType
+from models.otherorganicfertilisermodel import CompostType, SludgeType
 from models.pmodel import LandUseCategory
 from models.fertilisermodel import OtherMineralFertiliserType
 from models.seedmodel import SeedType
@@ -25,6 +25,8 @@ from defaultMatrixSeed import NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY,\
     NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY
 from datetime import date
 import dateutil.relativedelta as relativedelta
+from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation,\
+    Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
 
 class DefaultValuesWrapper(object):
     def __init__(self, inputMapping, generatorMap):
@@ -94,7 +96,7 @@ class ConvertRatioToValueDefaultGenerator(object):
         total = generators[self._totalField]
         return {k:v * total for k,v in self._ratioTable[generators[self._tableKeyField]].items()}
     
-class RatioToValueConvertor(object):
+class RatiosToValuesConvertor(object):
     def __init__(self, ratiosField, totalField):
         self._ratiosField = ratiosField
         self._totalField = totalField
@@ -225,6 +227,13 @@ class CropCountryMatrixLookupDefaultGenerator(object):
             return currentCropTable[generators["country"]]
         else:
             return currentCropTable["GLO"]
+        
+class FlatRatioRepartitionGenerator(object):
+    def __init__(self, enumClass):
+        self._enumClass = enumClass
+    
+    def generateDefault(self, attrName, mapping):
+        return {k: 1.0 / self._enumClass.len() for k in self._enumClass}
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
@@ -255,7 +264,10 @@ DEFAULTS_VALUES_GENERATORS = {
                    #Other organic fertilisers defaults
                    "total_composttype":SimpleValueDefaultGenerator(0.0),
                    "total_sewagesludge":SimpleValueDefaultGenerator(0.0),
-                   "other_organic_fertiliser_quantities": ZeroMapDefaultGenerator(OtherOrganicFertiliserType),
+                   "compost_proportions": FlatRatioRepartitionGenerator(CompostType),
+                   "sludge_proportions": FlatRatioRepartitionGenerator(SludgeType),
+                   "compost_quantities": RatiosToValuesConvertor("compost_proportions", "total_composttype"),
+                   "sludge_quantities": RatiosToValuesConvertor("sludge_proportions", "total_sewagesludge"),
                    #Seed defaults
                    "seed_type": TableLookupDefaultGenerator("crop", SEED_TYPE_PER_CROP),
                    "seeds": CropCountryMatrixLookupDefaultGenerator(NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY),#FIXME: missing some defaults, some strange values (zero)
@@ -279,7 +291,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "magnesium_as_dolomite": SimpleValueDefaultGenerator(1.0),
                    #Irrigation defaults
                    "irrigation_types_proportions": TableLookupDefaultGenerator("country", IRR_TECH_RATIO_PER_COUNTRY),
-                   "irrigation_types_quantities": RatioToValueConvertor("irrigation_types_proportions", "water_use_total"),
+                   "irrigation_types_quantities": RatiosToValuesConvertor("irrigation_types_proportions", "water_use_total"),
                    "irrigation_water_use_quantities": ConvertRatioToValueDefaultGenerator("country", IRR_WATERUSE_RATIO_PER_COUNTRY, "water_use_total"),
                    #N model defaults
                    "bulk_density_of_soil": SimpleValueDefaultGenerator(1300.0),
@@ -319,16 +331,34 @@ DEFAULTS_VALUES_GENERATORS = {
                    "CO2_from_yield": CO2FromYieldGenerator(),
                    "energy_gross_calorific_value": EnergyGrossCalorificValueGenerator(),
                    "hm_uptake": HmUptakeGenerator(),
+                   #---
+                   "total_plantprotection": SimpleValueDefaultGenerator(0.0),
+                   "total_soilcultivation": SimpleValueDefaultGenerator(0.0),
+                   "total_sowingplanting": SimpleValueDefaultGenerator(0.0),
+                   "total_fertilisation": SimpleValueDefaultGenerator(0.0),
+                   "total_harvesting": SimpleValueDefaultGenerator(0.0),
+                   "total_otherworkprocesses": SimpleValueDefaultGenerator(0.0),
+                   "plantprotection_proportions": SimpleValueDefaultGenerator({Plantprotection.other: 1.0}),
+                   "soilcultivation_proportions": SimpleValueDefaultGenerator({Soilcultivation.other: 1.0}),
+                   "sowingplanting_proportions": SimpleValueDefaultGenerator({Sowingplanting.other: 1.0}),
+                   "fertilisation_proportions": SimpleValueDefaultGenerator({Fertilisation.other: 1.0}),
+                   "harvesting_proportions": SimpleValueDefaultGenerator({Harvesting.other: 1.0}),
+                   "otherworkprocesses_proportions": SimpleValueDefaultGenerator({OtherWorkProcesses.other: 1.0}),
+                   "plantprotection_quantities": RatiosToValuesConvertor("plantprotection_proportions", "total_plantprotection"),
+                   "soilcultivation_quantities": RatiosToValuesConvertor("soilcultivation_proportions", "total_soilcultivation"),
+                   "sowingplanting_quantities": RatiosToValuesConvertor("sowingplanting_proportions", "total_sowingplanting"),
+                   "fertilisation_quantities": RatiosToValuesConvertor("fertilisation_proportions", "total_fertilisation"),
+                   "harvesting_quantities": RatiosToValuesConvertor("harvesting_proportions", "total_harvesting"),
+                   "otherworkprocesses_quantities": RatiosToValuesConvertor("otherworkprocesses_proportions", "total_otherworkprocesses"),
                    "materials_fleece": SimpleValueDefaultGenerator(0.0),
                    "materials_silage_foil": SimpleValueDefaultGenerator(0.0),
                    "materials_covering_sheet": SimpleValueDefaultGenerator(0.0),
                    "materials_bird_net": SimpleValueDefaultGenerator(0.0),
                    "total_eol_plastic_disposal_fleece_and_other": EolPlasticDisposalGenerator(),
-                   "ratio_eol_plastic_disposal_landfill":SimpleValueDefaultGenerator(0.5),
-                   "ratio_eol_plastic_disposal_incineration":SimpleValueDefaultGenerator(0.5),
-                   "eol_plastic_disposal_landfill":OneRatioToValueConvertor("ratio_eol_plastic_disposal_landfill","total_eol_plastic_disposal_fleece_and_other"),
-                   "eol_plastic_disposal_incineration":OneRatioToValueConvertor("ratio_eol_plastic_disposal_incineration","total_eol_plastic_disposal_fleece_and_other"),
+                   "plastic_disposal_proportions":SimpleValueDefaultGenerator({PlasticDisposal.landfill: 0.5, PlasticDisposal.incineration:0.5}),
+                   "plastic_disposal_quantities":RatiosToValuesConvertor("plastic_disposal_proportions", "total_eol_plastic_disposal_fleece_and_other"),
                    "eol_waste_water_to_treatment_facility": SimpleValueDefaultGenerator(0.0),#FIXME: Default?
                    "eol_waste_water_to_nature": SimpleValueDefaultGenerator(0.0),#FIXME: Default?
                    "cod_in_waste_water": SimpleValueDefaultGenerator(0.0)
                    }
+                                

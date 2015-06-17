@@ -1,4 +1,6 @@
 from models.atomicmass import MA_NH3, MA_N
+from directMappingEnums import Plantprotection, Soilcultivation, Sowingplanting,\
+    Fertilisation, Harvesting, OtherWorkProcesses
 
 def identity(x): return x
 
@@ -23,7 +25,10 @@ class OutputMapping(object):
             self.output["drying_ambient_air"] = allInputs["computed_drying"]
         elif (allInputs["type_of_drying"] == "heating"):
             self.output["drying_heating"] = allInputs["computed_drying"]
-        
+            
+    def mapDictsToOutput(self, allInputs):
+        self._mapEnumMap(allInputs["plastic_disposal_quantities"])
+    
     def mapIrrigationModel(self, irrOutput):
         for key, value in irrOutput.items():
             self.output[key.replace("m_Irr_", "")] = value
@@ -59,7 +64,8 @@ class OutputMapping(object):
         self.output["fert_n_ammonia_liquid_as_nh3"] = self.output["fert_n_ammonia_liquid"] * MA_NH3/MA_N
         
     def mapOtherOrganicFertilizers(self, allInputs):
-        self._mapEnumMap(allInputs["other_organic_fertiliser_quantities"])
+        self._mapEnumMap(allInputs["compost_quantities"])
+        self._mapEnumMap(allInputs["sludge_quantities"])
        
     def mapHMModel(self,hmOutput):
         for key, hmMap in hmOutput.items():
@@ -87,10 +93,24 @@ class OutputMapping(object):
             
     def mapCODWasteWater(self, allInputs): #m3 * mg/L(==g/m3) -> g
         self.output["cod_in_waste_water"] = allInputs["eol_waste_water_to_nature"] * allInputs["cod_in_waste_water"]
+        
+    def mapMachineries(self, allInputs):
+        if ("remains_machinery_diesel" in allInputs):
+            self.output["remains_machinery_diesel"] = allInputs["remains_machinery_diesel"]
+        self._convertEnumMap(allInputs["plantprotection_quantities"], self._PLANTPROTECTION_FACTORS)
+        self._convertEnumMap(allInputs["soilcultivation_quantities"], self._SOILCULTIVATION_FACTORS)
+        self._convertEnumMap(allInputs["sowingplanting_quantities"], self._SOWINGPLANTING_FACTORS)
+        self._convertEnumMap(allInputs["fertilisation_quantities"], self._FERTILISATION_FACTORS)
+        self._convertEnumMap(allInputs["harvesting_quantities"], self._HARVESTING_FACTORS)
+        self._convertEnumMap(allInputs["otherworkprocesses_quantities"], self._OTHERWORK_FACTORS)
             
     def _mapEnumMap(self, enumdict):
         for k,v in enumdict.items():
             self.output[k.value] = v
+    
+    def _convertEnumMap(self, enumdict, factors):
+        for k,v in enumdict.items():
+            self.output[k.value] = v * factors[k]
             
     _DIRECT_OUTPUT_MAPPING = {
         # FIXME: No system_boundary input anymore, use ecospold name metadata instead?
@@ -104,46 +124,14 @@ class OutputMapping(object):
         "CO2_from_yield": identity,
         "energy_gross_calorific_value": identity,
         "pest_horticultural_oil": identity,
-         #kg diesel -> hr,
-        "soilcultivation_decompaction": lambda x: x / 15.921,
-        #kg diesel -> ha (except specified),
-        "soilcultivation_tillage_chisel": lambda x: x / 15.5,
-        "soilcultivation_tillage_spring_tine_weeder": lambda x: x / 1.6,
-        "soilcultivation_tillage_rotary_harrow": lambda x: x / 11.5,
-        "soilcultivation_tillage_sprint_tine_harrow": lambda x: x / 4.4,
-        "soilcultivation_tillage_hoeing_earthing_up": lambda x: x / 3.6 ,
-        "soilcultivation_tillage_plough": lambda x: x / 26.1,
-        "soilcultivation_tillage_roll": lambda x: x / 3.18,
-        "soilcultivation_tillage_rotary_cultivator": lambda x: x / 14.1,
-        "sowingplanting_sowing": lambda x: x / 3.82,
-        "sowingplanting_planting_seedlings": lambda x: x / 16.8,
-        "sowingplanting_planting_trees": lambda x: x / 0.18333, # kg diesel -> p
-        "sowingplanting_planting_potatoes": lambda x: x / 8.9,
-        "fertilisation_fertilizing_broadcaster": lambda x: x / 5.29,
-        "fertilisation_liquid_manure_vaccum_tanker": lambda x: x / 0.217,
-        "fertilisation_solid_manure": lambda x: x / 0.000531,
-        "harvesting_chopping_maize": lambda x: x / 52.8,
-        "harvesting_threshing_combine_harvester": lambda x: x / 33.3,
-        "harvesting_picking_up_forage_self_propelled_loader": lambda x: x / 0.106, # kg diesel -> m3
-        "harvesting_beets_complete_havester": lambda x: x / 103.0,
-        "harvesting_potatoes_complete_havester": lambda x: x / 28.1,
-        "harvesting_making_hay_rotary_tedder": lambda x: x / 1.92,
-        "harvesting_loading_bales": lambda x: x / 0.0811, #kg diesel -> unit
-        "harvesting_mowing_motor_mower": lambda x: x / 3.0,
-        "harvesting_mowing_rotary_mower": lambda x: x / 4.31,
-        "harvesting_removing_potatoes_haulms": lambda x: x / 4.79,
-        "harvesting_windrowing_rotary_swather": lambda x: x / 2.94,
-        #"": lambda x: x / 1.0 #FIXME: missing conv factor,
-        "plantprotection_spraying": lambda x: x / 1.76,
         
-        "otherworkprocesses_baling": lambda x:  x / 0.743, # kg diesel -> unit
-        "otherworkprocesses_chopping": lambda x: x / 52.8, #same as harvesting_chopping_maize
-        "otherworkprocesses_mulching": lambda x: x / 3.51,
-        "otherworkprocesses_transport_tractor_trailer": lambda x: x / 0.0436, # kg diesel -> tkm
-        
-        "energy_electricity_low_voltage_at_grid": lambda x: x / 3.6, #MJ -> kWh
-        "energy_electricity_photovoltaic_produced_locally": lambda x: x / 3.6, #MJ -> kWh
-        "energy_electricity_wind_power_produced_locally": lambda x: x / 3.6, #MJ -> kWh
+        "wateruse_ground": identity,
+        "wateruse_surface": identity,
+        "wateruse_non_conventional_sources": lambda x: x * 1000.0, #m3 -> kg
+
+        "energy_electricity_low_voltage_at_grid": identity,
+        "energy_electricity_photovoltaic_produced_locally": identity,
+        "energy_electricity_wind_power_produced_locally": identity,
         "energy_diesel_excluding_diesel_used_in_tractor": identity,
         # kg -> MJ
         "energy_lignite_briquette": lambda x: x / 0.111,
@@ -154,13 +142,8 @@ class OutputMapping(object):
         "energy_wood_pellets_humidity_10_percent": lambda x: x / 0.0587,
         "energy_wood_chips_fresh_humidity_40_percent": lambda x: x / 0.0545,
         "energy_wood_logs": lambda x: x / 0.0643,
-        
         "energy_heat_district_heating": identity,
         "energy_heat_solar_collector": identity,
-        
-        "wateruse_ground": identity,
-        "wateruse_surface": identity,
-        "wateruse_non_conventional_sources": lambda x: x * 1000.0, #m3 -> kg
         
         "utilities_wateruse_ground": identity,
         "utilities_wateruse_surface": identity,
@@ -177,9 +160,63 @@ class OutputMapping(object):
         "greenhouse_plastic_roof_metal_tubes": identity,
         "greenhouse_plastic_roof_plastic_tubes": identity,
     
-        "eol_plastic_disposal_landfill_quantity": identity,
-        "eol_plastic_disposal_incineration_quantity": identity,
         "eol_waste_water_to_treatment_facility": identity,
         "eol_waste_water_to_nature": identity
     }
-        
+    
+    _PLANTPROTECTION_FACTORS = {
+                                 Plantprotection.spraying: 1.0 / 1.76,
+                                 Plantprotection.flaming: 46.35,
+                                 Plantprotection.other: 1.0
+                                 }
+
+    _SOILCULTIVATION_FACTORS = {
+                                 Soilcultivation.decompaction: 1.0 / 15.921,
+                                 Soilcultivation.tillage_chisel: 1.0 / 15.5,
+                                 Soilcultivation.tillage_spring_tine_weeder: 1.0 / 1.6,
+                                 Soilcultivation.tillage_rotary_harrow: 1.0 / 11.5,
+                                 Soilcultivation.tillage_sprint_tine_harrow: 1.0 / 4.4,
+                                 Soilcultivation.tillage_hoeing_earthing_up: 1.0 / 3.6,
+                                 Soilcultivation.tillage_plough: 1.0 / 26.1,
+                                 Soilcultivation.tillage_roll: 1.0 / 3.18,
+                                 Soilcultivation.tillage_rotary_cultivator: 1.0 / 14.1,
+                                 Soilcultivation.other: 1.0,
+                                 }
+
+    _SOWINGPLANTING_FACTORS = {
+                                Sowingplanting.sowing: 1.0 / 3.82,
+                                Sowingplanting.planting_seedlings: 1.0 / 16.8,
+                                Sowingplanting.planting_trees: 1.0 / 0.18333,
+                                Sowingplanting.planting_potatoes: 1.0 / 8.9,
+                                Sowingplanting.other: 1.0,
+                                 }
+
+    _FERTILISATION_FACTORS = {
+                           Fertilisation.fertilizing_broadcaster: 1.0 / 5.29,
+                           Fertilisation.liquid_manure_vacuum_tanker: 1.0 / 0.217,
+                           Fertilisation.solid_manure: 1.0 / 0.000531,
+                           Fertilisation.other: 1.0,
+                             }
+
+    _HARVESTING_FACTORS = {
+                        Harvesting.chopping_maize: 1.0 / 52.8,
+                        Harvesting.threshing_combine_harvester: 1.0 / 33.3,
+                        Harvesting.picking_up_forage_self_propelled_loader: 1.0 / 0.106,
+                        Harvesting.beets_complete_havester: 1.0 / 103.0,
+                        Harvesting.potatoes_complete_havester: 1.0 / 28.1,
+                        Harvesting.making_hay_rotary_tedder: 1.0 / 1.92,
+                        Harvesting.loading_bales: 1.0 / 0.0811,
+                        Harvesting.mowing_motor_mower: 1.0 / 3.0,
+                        Harvesting.mowing_rotary_mower: 1.0 / 4.31,
+                        Harvesting.removing_potatoes_haulms: 1.0 / 4.79,
+                        Harvesting.windrowing_rotary_swather: 1.0 / 2.94,
+                        Harvesting.other: 1.0,
+                             }
+
+    _OTHERWORK_FACTORS = {
+                       OtherWorkProcesses.baling: 1.0 / 0.743,
+                       OtherWorkProcesses.chopping: 1.0 / 52.8,
+                       OtherWorkProcesses.mulching: 1.0 / 3.51,
+                       OtherWorkProcesses.transport_tractor_trailer: 1.0 / 0.0436,
+                       OtherWorkProcesses.other: 1.0,
+                             }

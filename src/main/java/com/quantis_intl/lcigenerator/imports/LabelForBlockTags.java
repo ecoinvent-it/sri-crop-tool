@@ -92,7 +92,7 @@ public class LabelForBlockTags
         LABELS_FOR_RATIO.put("ratio_sowingplanting_", SOWING_PLANTING);
 
         FERTILISATION.put("Fertilizing, with broadcaster", "fertilizing_broadcaster");
-        FERTILISATION.put("Liquid manure application, with vacuum tanker", "liquid_manure_vaccum_tanker");
+        FERTILISATION.put("Liquid manure application, with vacuum tanker", "liquid_manure_vacuum_tanker");
         FERTILISATION.put("Solid manure application", "solid_manure");
         FERTILISATION.put("Other", "other");
         LABELS_FOR_RATIO.put("ratio_fertilisation_", FERTILISATION);

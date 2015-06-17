@@ -168,13 +168,6 @@ public class RawInputToPyCompatibleConvertor
                     // TODO: Warn
                     inputs.putAll(Maps.transformValues(ratios, v -> v / sum));
                 }
-                // TODO: Let Python do that
-                Double total = (Double) inputs.get("total_" + ratiosEntry.getKey());
-                if (total != null)
-                {
-                    for (String k : ratios.keySet())
-                        inputs.put(k.substring(6), ((Double) inputs.get(k)) * total);
-                }
             }
         }
 
@@ -204,10 +197,18 @@ public class RawInputToPyCompatibleConvertor
         {
             double enteredTotal = (Double) inputs.getOrDefault(totalKey, -1.0);
             // FIXME: what about "else" case? There is a thing about "other"
-            if (sum > enteredTotal)
+            if (Math.abs(sum - enteredTotal) > 0.000001)
             {
-                // FIXME: Warn
-                inputs.put(totalKey, sum);
+                if (sum > enteredTotal)
+                {
+                    // FIXME: Warn
+                    inputs.put(totalKey, sum);
+                }
+                else
+                {
+                    // FIXME: Warn
+                    inputs.put(totalKey.replace("total_", "remains_"), enteredTotal - sum);
+                }
             }
         }
 
