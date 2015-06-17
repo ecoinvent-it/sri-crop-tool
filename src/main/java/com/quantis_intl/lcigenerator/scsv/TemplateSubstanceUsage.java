@@ -118,8 +118,8 @@ public class TemplateSubstanceUsage
                     "water_to_water_groundwater", ""),
             new TemplateSubstanceUsage("Water, {country}", SubCompartment.WATER_RIVER, "m3",
                     "eol_waste_water_to_nature", ""),
-            // new TemplateSubstanceUsage("COD, Chemical Oxygen Demand", ???, "kg",
-            // "cod_in_waste_water", "")// FIXME: Which subcompartment?
+            new TemplateSubstanceUsage("COD, Chemical Oxygen Demand", SubCompartment.WATER_RIVER, "g",
+                    "cod_in_waste_water", "")
     };
 
     public static final TemplateSubstanceUsage[] toSoil = {

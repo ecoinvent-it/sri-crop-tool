@@ -85,9 +85,8 @@ class OutputMapping(object):
             self.output["transformation_to_permanent"] = 500
         #else TODO: Rice 
             
-    def mapCODWasteWater(self, allInputs):
-        total_waste_water = allInputs["eol_waste_water_to_treatment_facility"] + allInputs["eol_waste_water_to_nature"]
-        self.output["cod_in_waste_water"] = (total_waste_water * allInputs["cod_in_waste_water"] ) / 1000.0
+    def mapCODWasteWater(self, allInputs): #m3 * mg/L(==g/m3) -> g
+        self.output["cod_in_waste_water"] = allInputs["eol_waste_water_to_nature"] * allInputs["cod_in_waste_water"]
             
     def _mapEnumMap(self, enumdict):
         for k,v in enumdict.items():
