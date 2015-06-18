@@ -30,7 +30,6 @@ public class StringFromListExtractor
     private static final Map<String, String> COUNTRIES = PropertiesLoader.reverseProperties("/countries.properties");
     private static final Map<String, String> TILLAGE_METHOD = new HashMap<String, String>();
     private static final Map<String, String> ANTI_EROSION_PRACTICE = new HashMap<String, String>();
-    private static final Map<String, String> TYPE_OF_DRYING = new HashMap<String, String>();
 
     public static final Map<String, Map<String, String>> TAGS_TO_MAP = new HashMap<>();
     public static final Map<String, Map<String, String>> MANDATORY_TAGS_TO_MAP = new HashMap<>();
@@ -56,10 +55,6 @@ public class StringFromListExtractor
         ANTI_EROSION_PRACTICE.put("Strip cropping, contour", "strip_cropping_contour");
         ANTI_EROSION_PRACTICE.put("unknown", "unknown");
         TAGS_TO_MAP.put("anti_erosion_practice", ANTI_EROSION_PRACTICE);
-
-        TYPE_OF_DRYING.put("Ambient air", "ambient_air");
-        TYPE_OF_DRYING.put("Heating", "heating");
-        TAGS_TO_MAP.put("type_of_drying", TYPE_OF_DRYING);
     }
 
     private ErrorReporter errorReporter;

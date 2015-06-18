@@ -20,14 +20,12 @@ class OutputMapping(object):
         
         self._mapTypeOfDrying(allInputs)
        
-    def _mapTypeOfDrying(self,allInputs):
-        if (allInputs["type_of_drying"] == "ambient_air"):
-            self.output["drying_ambient_air"] = allInputs["computed_drying"]
-        elif (allInputs["type_of_drying"] == "heating"):
-            self.output["drying_heating"] = allInputs["computed_drying"]
-            
     def mapDictsToOutput(self, allInputs):
         self._mapEnumMap(allInputs["plastic_disposal_quantities"])
+        
+    def mapSeeds(self, allInputs):
+        for key, value in allInputs["seed_quantities"].items():
+            self.output["seeds_" + key] = value
     
     def mapIrrigationModel(self, irrOutput):
         for key, value in irrOutput.items():

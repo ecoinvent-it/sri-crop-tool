@@ -1,6 +1,5 @@
 from models.pmodel import LandUseCategory
 from models.modelEnums import SoilTexture
-from models.seedmodel import SeedType
 from models.fertilisermodel import NFertiliserType, KFertiliserType,\
     PFertiliserType
 from models.manuremodel import LiquidManureType, SolidManureType
@@ -2360,44 +2359,6 @@ SAND_CONTENT_PER_COUNTRY = {
                        "US":0.0167799421157036,
                        "VN":0.0109721867823424
 }
-
-SEED_TYPE_PER_CROP ={
-                        "almond":SeedType.tree_seedlings,
-                        "apple":SeedType.tree_seedlings,
-                        "apricot":SeedType.tree_seedlings,
-                        "asparagus":SeedType.vegetable,
-                        "banana":SeedType.tree_seedlings,
-                        "carrot":SeedType.vegetable,
-                        "cocoa":SeedType.vegetable,
-                        "coconut":SeedType.tree_seedlings,
-                        "coffee":SeedType.other,#FIXME: no data
-                        "lemonlime":SeedType.tree_seedlings,
-                        "linseed":SeedType.pea,
-                        "maizegrain":SeedType.maize,
-                        "mandarin":SeedType.tree_seedlings,
-                        "mint":SeedType.vegetable,
-                        "oat":SeedType.other,#FIXME: no data but indicated "oat seed" in mireille file
-                        "olive":SeedType.tree_seedlings,
-                        "onion":SeedType.vegetable,
-                        "orange":SeedType.tree_seedlings,
-                        "palmtree":SeedType.tree_seedlings,
-                        "peach":SeedType.tree_seedlings,
-                        "peanut":SeedType.vegetable,
-                        "pear":SeedType.tree_seedlings,
-                        "pineapple":SeedType.other,#FIXME: no data
-                        "potato":SeedType.potato,
-                        "rapeseed":SeedType.rape,
-                        "rice":SeedType.wheat,
-                        "soybean":SeedType.soya_bean,
-                        "strawberry":SeedType.tree_seedlings,
-                        "sugarbeet":SeedType.sugar_fodder_beet,
-                        "sugarcane":SeedType.other,#FIXME: no data
-                        "sunflower":SeedType.sunflower,
-                        "sweetcorn":SeedType.maize,
-                        "tea":SeedType.other,#FIXME: no data
-                        "tomato":SeedType.tree_seedlings,
-                        "wheat":SeedType.wheat
-                        }
 
 SOIL_CARBON_CONTENT_PER_COUNTRY = {
                             "AR":0.0148,

@@ -6,13 +6,11 @@ from defaultTables import CLAY_CONTENT_PER_COUNTRY, SOIL_CARBON_CONTENT_PER_COUN
     LAND_USE_CATEGORY_PER_CROP, CROP_FACTOR_PER_CROP, SAND_CONTENT_PER_COUNTRY,\
     SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE,\
     ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL,\
-    SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, CARBON_CONTENT_PER_CROP, SEED_TYPE_PER_CROP,\
-    IRR_WATERUSE_RATIO_PER_COUNTRY
+    SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, CARBON_CONTENT_PER_CROP, IRR_WATERUSE_RATIO_PER_COUNTRY
 from models.hmmodel import LandUseCategoryForHM, PesticideType
 from models.otherorganicfertilisermodel import CompostType, SludgeType
 from models.pmodel import LandUseCategory
 from models.fertilisermodel import OtherMineralFertiliserType
-from models.seedmodel import SeedType
 from models.erosionmodel import TillageMethod, AntiErosionPractice
 from models.modelEnums import SoilTexture
 from models.atomicmass import MA_CO2, MA_C
@@ -166,16 +164,6 @@ class PerCropCyclePrecipitationDefaultGenerator(object):
 class PerCropCycleYieldDefaultGenerator(object):
     def generateDefault(self, field, generators):
         return generators["yield_main_product_per_year"] / generators["crop_cycle_per_year"]
-   
-class DryingDefaultGenerator(object):    
-    def generateDefault(self, field, generators):
-        if ("drying_yield_to_be_dryied" in generators
-            and "drying_humidity_before_drying" in generators
-            and "drying_humidity_after_drying" in generators):
-            return generators["yield_main_product_per_crop_cycle"] \
-                * generators["drying_yield_to_be_dryied"] \
-                * (generators["drying_humidity_before_drying"] - generators["drying_humidity_after_drying"])
-        else: return 0.0
         
 class SlopePerCropGenerator(object):
     def generateDefault(self, field, generators):
@@ -211,11 +199,17 @@ class EolPlasticDisposalGenerator(object):
         
 class SeedQuantitiesDefaultGenerator(object):
     def generateDefault(self, field, generators):
-        #FIXME: What to do with nb_seedlings?
-        if (generators["seed_type"] == SeedType.tree_seedlings):
-            return {generators["seed_type"]:generators["nb_planted_trees"]}
+        crop = generators["crop"]
+        if ( crop in ["almond", "apple", "apricot", "banana", "cocoa", "coconut", "coffee", "lemonlime", "mandarin", "olive", "orange", "palmtree", "peach", "pear", "pineapple", "sugarcane", "tea"]):
+            value_field = "nb_planted_trees"
+        elif (crop in ["asparagus", "mint", "onion", "strawberry", "tomato"]):
+            value_field = "nb_seedlings"
         else:
-            return {generators["seed_type"]:generators["seeds"]}
+            value_field = "seeds"
+        try:
+            return {crop: generators[value_field]}
+        except KeyError:
+            return {crop: 0.0}
         
 class CropCountryMatrixLookupDefaultGenerator(object):
     def __init__(self, table):
@@ -315,10 +309,9 @@ DEFAULTS_VALUES_GENERATORS = {
                    "compost_quantities": RatiosToValuesConvertor("compost_proportions", "total_composttype"),
                    "sludge_quantities": RatiosToValuesConvertor("sludge_proportions", "total_sewagesludge"),
                    #Seed defaults
-                   "seed_type": TableLookupDefaultGenerator("crop", SEED_TYPE_PER_CROP),
-                   "seeds": CropCountryMatrixLookupDefaultGenerator(NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY),#FIXME: missing some defaults, some strange values (zero)
-                   "nb_seedlings": SimpleValueDefaultGenerator(0.0),#FIXME: no values?
-                   "nb_planted_trees": CropCountryMatrixLookupDefaultGenerator(NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY),#FIXME: lifetime planted trees, how to normalize? #FIXME: we have some values for non tree_seedlings crop: coffee,cocoa,tea
+                   "seeds": CropCountryMatrixLookupDefaultGenerator(NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY),
+                   "nb_seedlings": CropCountryMatrixLookupDefaultGenerator({}),
+                   "nb_planted_trees": CropCountryMatrixLookupDefaultGenerator(NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY),
                    "seed_quantities": SeedQuantitiesDefaultGenerator(),
                    #Erosion defaults
                    "yearly_precipitation_as_snow": TableLookupDefaultGenerator("country", YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY),
@@ -364,14 +357,6 @@ DEFAULTS_VALUES_GENERATORS = {
                    #LUC rules
                    "allocated_time_for_crop": SimpleValueDefaultGenerator(1.0),
                    #Direct outputs
-                   "ratio_wateruse_ground": CountryMatrixLookupDefaultGenerator("ratio_wateruse_ground", IRR_WATERUSE_RATIO_PER_COUNTRY),
-                   "ratio_wateruse_surface": CountryMatrixLookupDefaultGenerator("ratio_wateruse_surface", IRR_WATERUSE_RATIO_PER_COUNTRY),
-                   "ratio_wateruse_non_conventional_sources": CountryMatrixLookupDefaultGenerator("ratio_wateruse_non_conventional_sources", IRR_WATERUSE_RATIO_PER_COUNTRY),
-                   "wateruse_ground": OneRatioToValueConvertor("ratio_wateruse_ground", "water_use_total"),
-                   "wateruse_surface": OneRatioToValueConvertor("ratio_wateruse_surface", "water_use_total"),
-                   "wateruse_non_conventional_sources": OneRatioToValueConvertor("ratio_wateruse_non_conventional_sources", "water_use_total"),
-                   "computed_drying":DryingDefaultGenerator(),
-                   "type_of_drying":SimpleValueDefaultGenerator("ambient_air"),
                    "yield_main_product_water_content": TableLookupDefaultGenerator("crop", WATER_CONTENT_FM_RATIO_PER_CROP),
                    "yield_main_product_dry_content": DryContentGenerator(),
                    "yield_main_product_carbon_content": TableLookupDefaultGenerator("crop", CARBON_CONTENT_PER_CROP),

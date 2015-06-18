@@ -31,6 +31,7 @@ class ModelsSequence(object):
         self._computeManure()
         self._computeOtherOrganicFertiliser()
         self._computeSeed()
+        self.outputMapping.mapSeeds(self.allInputs)
         self._intermediateValues["eroded_soil"] = ErosionModel(self.allInputs).compute()["m_Erosion_eroded_soil"]
         self.outputMapping.mapIrrigationModel(IrrigationModel(self.allInputs).compute())
         self.outputMapping.mapIrrigationQuantities(self.allInputs)

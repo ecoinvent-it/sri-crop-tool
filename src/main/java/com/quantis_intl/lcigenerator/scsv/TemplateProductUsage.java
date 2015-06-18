@@ -34,13 +34,48 @@ public class TemplateProductUsage
     }
 
     public static final TemplateProductUsage[] materialsFuels = {
-            new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
-                    "packaging_solid_fertilisers_and_pesticides", ""),
-            new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
-                    "packaging_liquid_fertilisers_and_pesticides", ""),
-
-            new TemplateProductUsage("Grain drying, high temperature/CH U", "kg", "drying_heating", ""),
-            new TemplateProductUsage("Grain drying, low temperature/CH U", "kg", "drying_ambient_air", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_almond", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_apple", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_apricot", ""),
+            new TemplateProductUsage("Asparagus seedling, at farm (WFLDB 3.0)/FR U", "p", "seeds_asparagus", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_banana", ""),
+            new TemplateProductUsage("Carrot seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_carrot", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_cocoa", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_coconut", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_coffee", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_lemonlime",
+                    ""),
+            new TemplateProductUsage("Linseed seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_linseed", ""),
+            new TemplateProductUsage("Maize seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_maizegrain",
+                    ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_mandarin", ""),
+            new TemplateProductUsage("Mint seedling, at farm (WFLDB 3.0)/US U", "p", "seeds_mint", ""),
+            new TemplateProductUsage("Oat seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_oat", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_olive", ""),
+            new TemplateProductUsage("Onion seedling, at farm (WFLDB 3.0)/NZ U", "p", "seeds_onion", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_orange", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_palmtree", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_peach", ""),
+            new TemplateProductUsage("Peanut seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_peanut", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_pear", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_pineapple",
+                    ""),
+            new TemplateProductUsage("Potato seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_potato", ""),
+            new TemplateProductUsage("Rape seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_rapeseed", ""),
+            new TemplateProductUsage("Rice seed, at regional storehouse (WFLDB 3.0)/GLO U", "kg", "seeds_rice", ""),
+            new TemplateProductUsage("Soybean seed, at farm (WFLDB 3.0)/CH U", "kg", "seeds_soybean", ""),
+            // new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+            // "seeds_strawberry", ""),//FIXME: Lequel ?
+            new TemplateProductUsage("Sugar beet seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
+                    "seeds_sugarbeet", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_sugarcane",
+                    ""),
+            new TemplateProductUsage("Sunflower seed, at farm (WFLDB 3.0)/CH U", "kg", "seeds_sunflower", ""),
+            new TemplateProductUsage("Maize seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_sweetcorn", ""),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_tea", ""),
+            // new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_tomato",
+            // ""),//FIXME: Lequel ?
+            new TemplateProductUsage("Wheat seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_wheat", ""),
 
             new TemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 3.0)/{country} U", "m3",
                     "surface_irrigation_electricity", ""),
@@ -245,12 +280,15 @@ public class TemplateProductUsage
             new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.0)/GLO U", "kg",
                     "yield_main_product_dry_per_crop_cycle", ""),
 
-            new TemplateProductUsage("lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil", ""),
-
             new TemplateProductUsage("Land use change, {luc_crop_type} crop (WFLDB 3.0)/{country} U", "ha",
                     "luc_formula", ""),
             // TODO: Transport
-            // TODO: Seeds
+            new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
+                    "packaging_solid_fertilisers_and_pesticides", ""),
+            new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
+                    "packaging_liquid_fertilisers_and_pesticides", ""),
+
+            new TemplateProductUsage("lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil", ""),
     };
 
     public static final TemplateProductUsage[] electricityHeat = {

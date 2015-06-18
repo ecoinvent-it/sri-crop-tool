@@ -1,28 +1,8 @@
-from enum import Enum
 from models.modelEnums import HeavyMetalType
-
-class SeedType(Enum):
-        field_bean=1
-        flower=2
-        pea=3
-        vegetable=4
-        barley=5
-        grass=6
-        clover=7
-        potato=8
-        maize=9
-        rape=10
-        rye=11
-        soya_bean=12
-        sunflower=13
-        wheat=14
-        sugar_fodder_beet=15
-        tree_seedlings=16
-        other=17
 
 class SeedModel(object):
     """Inputs:
-      seed_quantities: map SeedType -> quantity (kg or unit) / ha
+      seed_quantities: map Crop -> quantity (kg or unit) / ha
 
     Outputs:
       computeHeavyMetal:
@@ -33,45 +13,81 @@ class SeedModel(object):
                        ]
     
     _SEED_DM = {
-            SeedType.field_bean: 0.85,
-            SeedType.flower: 0.73, #mean
-            SeedType.pea: 0.85,
-            SeedType.vegetable: 0.73, #mean
-            SeedType.barley:  0.85,
-            SeedType.grass: 0.73, #mean
-            SeedType.clover: 0.73, #mean
-            SeedType.potato:  0.18,
-            SeedType.maize: 0.85,
-            SeedType.rape: 0.90,
-            SeedType.rye:  0.85,
-            SeedType.soya_bean:  0.85,
-            SeedType.sunflower: 0.85,
-            SeedType.wheat:  0.85,
-            SeedType.sugar_fodder_beet: 0.22,
-            SeedType.tree_seedlings: 0.73, #mean
-            SeedType.other: 0.73 #mean
+                "almond": 0.73, #tree_seedlings
+                "apple": 0.73, #tree_seedlings
+                "apricot": 0.73, #tree_seedlings
+                "asparagus": 0.73, #vegetable
+                "banana": 0.73, #tree_seedlings
+                "carrot": 0.73, #vegetable
+                "cocoa": 0.73, #other
+                "coconut": 0.73, #tree_seedlings
+                "coffee": 0.73, #other
+                "lemonlime": 0.73, #tree_seedlings
+                "linseed": 0.85, #pea
+                "maizegrain": 0.85,
+                "mandarin": 0.73, #tree_seedlings
+                "mint": 0.73, #vegetable
+                "oat": 0.73, #other
+                "olive": 0.73, #tree_seedlings
+                "onion": 0.73, #vegetable
+                "orange": 0.73, #tree_seedlings
+                "palmtree": 0.73, #tree_seedlings
+                "peach": 0.73, #tree_seedlings
+                "peanut": 0.73, #other
+                "pear": 0.73, #tree_seedlings
+                "pineapple": 0.73, #tree_seedlings
+                "potato": 0.18,
+                "rapeseed": 0.90,
+                "rice":0.85, #wheat
+                "soybean": 0.85,
+                "strawberry": 0.73, #other
+                "sugarbeet": 0.22,
+                "sugarcane": 0.73, #other
+                "sunflower": 0.85,
+                "sweetcorn": 0.85, #maize
+                "tea": 0.73, #other
+                "tomato": 0.73, #other
+                "wheat": 0.85
                     }
                                                                 
     #src: Table 7 Freiermuth 2006
     # mg/kg TS
     _HM_SEED_VALUES = { 
-            SeedType.field_bean: [0.04, 6.0, 30.1, 0.87, 1.3, 0.69, 0],
-            SeedType.flower:  [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #generic
-            SeedType.pea: [0.09, 10.0, 73.0, 0.16, 0.83, 0.32, 0.01],
-            SeedType.vegetable:  [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #generic
-            SeedType.barley:  [0.08, 6.0, 44.5, 0.41, 0.39, 0.37, 0.06],
-            SeedType.grass:  [0.13, 8.6, 40.0, 1.2, 1.68, 1.09, 0.15],
-            SeedType.clover: [0.13, 8.6, 40.0, 1.2, 1.68, 1.09, 0.15], #grass
-            SeedType.potato:  [0.04, 6.45, 15.0, 0.55, 0.33, 0.57, 0.09],
-            SeedType.maize:  [0.03, 2.5, 21.5, 0.3, 1.16, 0.32, 0],
-            SeedType.rape: [1.6, 3.3, 48.0, 5.25, 2.6, 0.5, 0.1],
-            SeedType.rye:  [0.08, 6.0, 44.5, 0.41, 0.39, 0.37, 0.06],
-            SeedType.soya_bean:  [0.06, 15.1, 47.7, 0.08, 5.32, 0.52, 0],
-            SeedType.sunflower:  [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #generic
-            SeedType.wheat:  [0.15, 5.0, 45.0, 0.16, 0.3, 0.3, 0.01],
-            SeedType.sugar_fodder_beet: [0.5, 10.3, 41.4, 1.8, 1.5, 1.9, 0.0],
-            SeedType.tree_seedlings:  [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #generic
-            SeedType.other: [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04] #generic
+                "almond": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "apple": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "apricot": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "asparagus": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
+                "banana": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "carrot": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
+                "cocoa": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
+                "coconut": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "coffee": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
+                "lemonlime": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "linseed": [0.09, 10.0, 73.0, 0.16, 0.83, 0.32, 0.01], #pea
+                "maizegrain": [0.03, 2.5, 21.5, 0.3, 1.16, 0.32, 0],
+                "mandarin": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "mint": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
+                "oat": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
+                "olive": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "onion": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
+                "orange": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "palmtree": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "peach": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "peanut": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
+                "pear": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "pineapple": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+                "potato": [0.04, 6.45, 15.0, 0.55, 0.33, 0.57, 0.09],
+                "rapeseed": [1.6, 3.3, 48.0, 5.25, 2.6, 0.5, 0.1],
+                "rice": [0.15, 5.0, 45.0, 0.16, 0.3, 0.3, 0.01], #wheat
+                "soybean": [0.06, 15.1, 47.7, 0.08, 5.32, 0.52, 0],
+                "strawberry": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
+                "sugarbeet": [0.5, 10.3, 41.4, 1.8, 1.5, 1.9, 0.0],
+                "sugarcane": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
+                "sunflower": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+                "sweetcorn": [0.03, 2.5, 21.5, 0.3, 1.16, 0.32, 0], #maize
+                "tea": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
+                "tomato": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
+                "wheat": [0.15, 5.0, 45.0, 0.16, 0.3, 0.3, 0.01]
         }
     
     def __init__(self, inputs):
