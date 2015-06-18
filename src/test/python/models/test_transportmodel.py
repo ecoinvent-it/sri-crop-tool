@@ -16,19 +16,16 @@ class Test(unittest.TestCase):
                     "pest_total":500.0,
                     "seeds":50.0
                     }
-        expectedResults = {"m_transport_transport_tkm":
-                           {
+        expectedResults = {
                             TransportDataset.transport_lorry_sup_16t_fleet_average_RER:399.5,
                             TransportDataset.transport_transoceanic_freight_ship_OCE:6155.0,
                             TransportDataset.transport_freight_rail_RER:615.0
-                            }
                            }
         
         results = transportmodel.TransportModel(inputs).compute()
         
-        for key, value in expectedResults.items():
-            for k,v in value.items():
-                self.assertAlmostEqual(results[key][k], v)
+        for k, v in expectedResults.items():
+            self.assertAlmostEqual(results[k], v)
                 
     def testModelForCA(self):
         inputs = {"country":"CA",
@@ -42,19 +39,16 @@ class Test(unittest.TestCase):
                     "pest_total":500.0,
                     "seeds":50.0
                     }
-        expectedResults = {"m_transport_transport_tkm":
-                           {
+        expectedResults = {
                             TransportDataset.transport_lorry_sup_16t_fleet_average_RER:399.5,
                             TransportDataset.transport_transoceanic_freight_ship_OCE:6155.0,
                             TransportDataset.transport_freight_rail_diesel_US:615.0,
                             }
-                           }
         
         results = transportmodel.TransportModel(inputs).compute()
         
-        for key, value in expectedResults.items():
-            for k,v in value.items():
-                self.assertAlmostEqual(results[key][k], v)
+        for k, v in expectedResults.items():
+            self.assertAlmostEqual(results[k], v)
         
 if __name__ == "__main__":
     unittest.main()

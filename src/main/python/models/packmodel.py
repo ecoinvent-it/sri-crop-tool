@@ -1,3 +1,4 @@
+from models.fertilisermodel import NFertiliserType
 class PackModel(object):
     """Inputs:
         nitrogen_from_mineral_fert: kg N/ha
@@ -5,7 +6,7 @@ class PackModel(object):
         k2O_from_mineral_fert: kg K2O/ha
         magnesium_from_fertilizer: kg Mg/ha
         ca_from_mineral_fert: kg Ca/ha
-        fert_n_ammonia_liquid: kg N/ha
+        n_fertiliser_quantities: Map NFertiliserType -> kg N/ha
         pest_total: g/ha
     
     Outputs:
@@ -18,7 +19,7 @@ class PackModel(object):
                         "k2O_from_mineral_fert",
                         "magnesium_from_fertilizer",
                         "ca_from_mineral_fert",
-                        "fert_n_ammonia_liquid",
+                        "n_fertiliser_quantities",
                         "pest_total"
                        ]
     
@@ -46,15 +47,12 @@ class PackModel(object):
                 + self.ca_from_mineral_fert
         
     def computeFertilisers(self, totalFert):
-        #FIXME: check if it is correct to remove ammonia_liquid from solid ferts
-        liquid = self.fert_n_ammonia_liquid
-        solid = totalFert - self.fert_n_ammonia_liquid
+        liquid = self.n_fertiliser_quantities[NFertiliserType.ammonia_liquid]
+        solid = totalFert - liquid
         return (solid,liquid)
     
     def computePesticides(self):
         solid = 0.0
         liquid = self.pest_total
-        #FIXME: remove Chlorsulfuron from liquid, put in solid
-        #FIXME: other solid pesticides?
         return (solid / 1000.0,liquid /1000.0)
     

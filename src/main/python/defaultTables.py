@@ -3,7 +3,7 @@ from models.modelEnums import SoilTexture
 from models.fertilisermodel import NFertiliserType, KFertiliserType,\
     PFertiliserType
 from models.manuremodel import LiquidManureType, SolidManureType
-from models.irrigationmodel import IrrigationType
+from models.irrigationmodel import IrrigationType, WaterUseType
 
 #Generated from GD_crop GrossEnergy_C_L1 column D, kgC/kgDM
 CARBON_CONTENT_PER_CROP = {
@@ -1528,192 +1528,192 @@ IRR_TECH_RATIO_PER_COUNTRY = {
 }
 
 #Generated in GD_crop (IrrWaterSource_L1)
-# using =""""&C$3&""":{""ratio_wateruse_ground"":"&C4 &",  ""ratio_wateruse_surface"":"&C5 &", ""ratio_wateruse_non_conventional_sources"":"&C6&"},"
+# using =""""&C$3&""":{WaterUseType.groundwater:"&C4 &",  WaterUseType.surfacewater:"&C5 &", WaterUseType.nonconventional:"&C6&"},"
 IRR_WATERUSE_RATIO_PER_COUNTRY = {
    "AR":{
-      "ratio_wateruse_ground":0.23914616909283,
-      "ratio_wateruse_surface":0.76085383090717,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.23914616909283,
+      WaterUseType.surfacewater:0.76085383090717,
+      WaterUseType.nonconventional:0.0
    },
    "AU":{
-      "ratio_wateruse_ground":0.211339450682171,
-      "ratio_wateruse_surface":0.769530030353248,
-      "ratio_wateruse_non_conventional_sources":0.0191305189645816
+      WaterUseType.groundwater:0.211339450682171,
+      WaterUseType.surfacewater:0.769530030353248,
+      WaterUseType.nonconventional:0.0191305189645816
    },
    "BE":{
-      "ratio_wateruse_ground":0.580962162162162,
-      "ratio_wateruse_surface":0.419037837837838,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.580962162162162,
+      WaterUseType.surfacewater:0.419037837837838,
+      WaterUseType.nonconventional:0.0
    },
    "BR":{
-      "ratio_wateruse_ground":0.187805022645312,
-      "ratio_wateruse_surface":0.812194977354688,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.187805022645312,
+      WaterUseType.surfacewater:0.812194977354688,
+      WaterUseType.nonconventional:0.0
    },
    "CA":{
-      "ratio_wateruse_ground":0.08577824612747,
-      "ratio_wateruse_surface":0.91422175387253,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.08577824612747,
+      WaterUseType.surfacewater:0.91422175387253,
+      WaterUseType.nonconventional:0.0
    },
    "CL":{
-      "ratio_wateruse_ground":0.0543166377237681,
-      "ratio_wateruse_surface":0.945683362276232,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.0543166377237681,
+      WaterUseType.surfacewater:0.945683362276232,
+      WaterUseType.nonconventional:0.0
    },
    "CN":{
-      "ratio_wateruse_ground":0.297593503621964,
-      "ratio_wateruse_surface":0.702406496378036,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.297593503621964,
+      WaterUseType.surfacewater:0.702406496378036,
+      WaterUseType.nonconventional:0.0
    },
    "CO":{
-      "ratio_wateruse_ground":0.05,
-      "ratio_wateruse_surface":0.95,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.05,
+      WaterUseType.surfacewater:0.95,
+      WaterUseType.nonconventional:0.0
    },
    "CR":{
-      "ratio_wateruse_ground":0.17,
-      "ratio_wateruse_surface":0.83,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.17,
+      WaterUseType.surfacewater:0.83,
+      WaterUseType.nonconventional:0.0
    },
    "CI":{
-      "ratio_wateruse_ground":0.0,
-      "ratio_wateruse_surface":1.0,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.0,
+      WaterUseType.surfacewater:1.0,
+      WaterUseType.nonconventional:0.0
    },
    "EC":{
-      "ratio_wateruse_ground":0.118820056727693,
-      "ratio_wateruse_surface":0.881179943272307,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.118820056727693,
+      WaterUseType.surfacewater:0.881179943272307,
+      WaterUseType.nonconventional:0.0
    },
    "FI":{
-      "ratio_wateruse_ground":0.15,
-      "ratio_wateruse_surface":0.85,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.15,
+      WaterUseType.surfacewater:0.85,
+      WaterUseType.nonconventional:0.0
    },
    "FR":{
-      "ratio_wateruse_ground":0.446022143207711,
-      "ratio_wateruse_surface":0.553977856792289,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.446022143207711,
+      WaterUseType.surfacewater:0.553977856792289,
+      WaterUseType.nonconventional:0.0
    },
    "DE":{
-      "ratio_wateruse_ground":0.787726881335413,
-      "ratio_wateruse_surface":0.212273118664586,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.787726881335413,
+      WaterUseType.surfacewater:0.212273118664586,
+      WaterUseType.nonconventional:0.0
    },
    "GH":{
-      "ratio_wateruse_ground":0.214630656412091,
-      "ratio_wateruse_surface":0.7639062779467,
-      "ratio_wateruse_non_conventional_sources":0.0214630656412091
+      WaterUseType.groundwater:0.214630656412091,
+      WaterUseType.surfacewater:0.7639062779467,
+      WaterUseType.nonconventional:0.0214630656412091
    },
    "HU":{
-      "ratio_wateruse_ground":0.220485875706215,
-      "ratio_wateruse_surface":0.779514124293785,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.220485875706215,
+      WaterUseType.surfacewater:0.779514124293785,
+      WaterUseType.nonconventional:0.0
    },
    "IN":{
-      "ratio_wateruse_ground":0.633925342549058,
-      "ratio_wateruse_surface":0.366074657450942,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.633925342549058,
+      WaterUseType.surfacewater:0.366074657450942,
+      WaterUseType.nonconventional:0.0
    },
    "ID":{
-      "ratio_wateruse_ground":0.00998417468157694,
-      "ratio_wateruse_surface":0.990015825318423,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.00998417468157694,
+      WaterUseType.surfacewater:0.990015825318423,
+      WaterUseType.nonconventional:0.0
    },
    "IL":{
-      "ratio_wateruse_ground":0.49,
-      "ratio_wateruse_surface":0.33,
-      "ratio_wateruse_non_conventional_sources":0.18
+      WaterUseType.groundwater:0.49,
+      WaterUseType.surfacewater:0.33,
+      WaterUseType.nonconventional:0.18
    },
    "IT":{
-      "ratio_wateruse_ground":0.32698606155749,
-      "ratio_wateruse_surface":0.67301393844251,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.32698606155749,
+      WaterUseType.surfacewater:0.67301393844251,
+      WaterUseType.nonconventional:0.0
    },
    "KE":{
-      "ratio_wateruse_ground":0.0099998969189061,
-      "ratio_wateruse_surface":0.990000103081094,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.0099998969189061,
+      WaterUseType.surfacewater:0.990000103081094,
+      WaterUseType.nonconventional:0.0
    },
    "MX":{
-      "ratio_wateruse_ground":0.387889248911863,
-      "ratio_wateruse_surface":0.612110751088137,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.387889248911863,
+      WaterUseType.surfacewater:0.612110751088137,
+      WaterUseType.nonconventional:0.0
    },
    "NL":{
-      "ratio_wateruse_ground":0.58029522431259,
-      "ratio_wateruse_surface":0.41970477568741,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.58029522431259,
+      WaterUseType.surfacewater:0.41970477568741,
+      WaterUseType.nonconventional:0.0
    },
    "NZ":{
-      "ratio_wateruse_ground":0.306927386271384,
-      "ratio_wateruse_surface":0.693072613728616,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.306927386271384,
+      WaterUseType.surfacewater:0.693072613728616,
+      WaterUseType.nonconventional:0.0
    },
    "PE":{
-      "ratio_wateruse_ground":0.283358103917645,
-      "ratio_wateruse_surface":0.716641896082355,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.283358103917645,
+      WaterUseType.surfacewater:0.716641896082355,
+      WaterUseType.nonconventional:0.0
    },
    "PH":{
-      "ratio_wateruse_ground":0.135192998290657,
-      "ratio_wateruse_surface":0.864807001709343,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.135192998290657,
+      WaterUseType.surfacewater:0.864807001709343,
+      WaterUseType.nonconventional:0.0
    },
    "PL":{
-      "ratio_wateruse_ground":0.1,
-      "ratio_wateruse_surface":0.9,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.1,
+      WaterUseType.surfacewater:0.9,
+      WaterUseType.nonconventional:0.0
    },
    "RU":{
-      "ratio_wateruse_ground":0.36,
-      "ratio_wateruse_surface":0.64,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.36,
+      WaterUseType.surfacewater:0.64,
+      WaterUseType.nonconventional:0.0
    },
    "ZA":{
-      "ratio_wateruse_ground":0.085,
-      "ratio_wateruse_surface":0.915,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.085,
+      WaterUseType.surfacewater:0.915,
+      WaterUseType.nonconventional:0.0
    },
    "ES":{
-      "ratio_wateruse_ground":0.371089129707478,
-      "ratio_wateruse_surface":0.628910870292522,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.371089129707478,
+      WaterUseType.surfacewater:0.628910870292522,
+      WaterUseType.nonconventional:0.0
    },
    "LK":{
-      "ratio_wateruse_ground":0.0119794385964912,
-      "ratio_wateruse_surface":0.988020561403509,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.0119794385964912,
+      WaterUseType.surfacewater:0.988020561403509,
+      WaterUseType.nonconventional:0.0
    },
    "CH":{
-      "ratio_wateruse_ground":0.22,
-      "ratio_wateruse_surface":0.78,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.22,
+      WaterUseType.surfacewater:0.78,
+      WaterUseType.nonconventional:0.0
    },
    "TH":{
-      "ratio_wateruse_ground":0.0911128154913198,
-      "ratio_wateruse_surface":0.90888718450868,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.0911128154913198,
+      WaterUseType.surfacewater:0.90888718450868,
+      WaterUseType.nonconventional:0.0
    },
    "TR":{
-      "ratio_wateruse_ground":0.493354749015524,
-      "ratio_wateruse_surface":0.506645250984476,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.493354749015524,
+      WaterUseType.surfacewater:0.506645250984476,
+      WaterUseType.nonconventional:0.0
    },
    "UA":{
-      "ratio_wateruse_ground":0.0,
-      "ratio_wateruse_surface":1.0,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.0,
+      WaterUseType.surfacewater:1.0,
+      WaterUseType.nonconventional:0.0
    },
    "US":{
-      "ratio_wateruse_ground":0.602191204788111,
-      "ratio_wateruse_surface":0.397808795211889,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.602191204788111,
+      WaterUseType.surfacewater:0.397808795211889,
+      WaterUseType.nonconventional:0.0
    },
    "VN":{
-      "ratio_wateruse_ground":0.01,
-      "ratio_wateruse_surface":0.99,
-      "ratio_wateruse_non_conventional_sources":0.0
+      WaterUseType.groundwater:0.01,
+      WaterUseType.surfacewater:0.99,
+      WaterUseType.nonconventional:0.0
    }
 }
 

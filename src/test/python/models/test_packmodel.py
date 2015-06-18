@@ -1,5 +1,6 @@
 import unittest
 import models.packmodel as packmodel
+from models.fertilisermodel import NFertiliserType
 
 class Test(unittest.TestCase):
     
@@ -9,7 +10,7 @@ class Test(unittest.TestCase):
                   "k2O_from_mineral_fert": 3.0,
                   "magnesium_from_fertilizer": 4.0,
                   "ca_from_mineral_fert": 5.0,
-                  "fert_n_ammonia_liquid": 0.5,
+                  "n_fertiliser_quantities": {NFertiliserType.ammonia_liquid: 0.5},
                   "pest_total": 70.0
                  }
         expectedResults = {"m_Pack_packaging_liquid_fertilisers_and_pesticides": 1.14,

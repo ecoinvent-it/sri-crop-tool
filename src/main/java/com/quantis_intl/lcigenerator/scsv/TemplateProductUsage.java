@@ -278,7 +278,7 @@ public class TemplateProductUsage
                     "greenhouse_plastic_roof_plastic_tubes", ""),
 
             new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.0)/GLO U", "kg",
-                    "yield_main_product_dry_per_crop_cycle", ""),
+                    "hm_uptake_formula", ""),
 
             new TemplateProductUsage("Land use change, {luc_crop_type} crop (WFLDB 3.0)/{country} U", "ha",
                     "luc_formula", ""),

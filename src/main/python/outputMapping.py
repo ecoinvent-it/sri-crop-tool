@@ -13,12 +13,10 @@ class OutputMapping(object):
         self.output["country"] = allInputs["country"]
         self.output["crop"] = allInputs["crop"]
         self.output["yield_main_product_per_crop_cycle"] = allInputs["yield_main_product_per_crop_cycle"]
-        self.output["yield_main_product_dry_per_crop_cycle"] = allInputs["yield_main_product_dry_per_crop_cycle"]
+        self.output["hm_uptake_formula"] = str(allInputs["yield_main_product_dry_per_crop_cycle"]) + " * Heavy_metal_uptake"
         for k,f in self._DIRECT_OUTPUT_MAPPING.items():
             if (k in allInputs):
                 self.output[k] = f(allInputs[k])
-        
-        self._mapTypeOfDrying(allInputs)
        
     def mapDictsToOutput(self, allInputs):
         self._mapEnumMap(allInputs["plastic_disposal_quantities"])

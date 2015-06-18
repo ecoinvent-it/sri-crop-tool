@@ -68,7 +68,7 @@ class TransportModel(object):
         self._add_transport_for_quantity_in_t(total_transports, mineral_fert_total * self._DILUTION_FACTOR, self._MINERAL_FERT_TRANSPORT_DEFAULT_KM);
         self._add_transport_for_quantity_in_t(total_transports, self.pest_total * self._DILUTION_FACTOR / 1000000.0, self._PESTICIDES_TRANSPORT_DEFAULT_KM);
         self._add_transport_for_quantity_in_t(total_transports, self.seeds / 1000.0, self._SEEDS_TRANSPORT_DEFAULT_KM);
-        return {"m_transport_transport_tkm":total_transports};
+        return total_transports;
 
     def _init_transports_map(self):
         transports = {TransportDataset.transport_lorry_sup_16t_fleet_average_RER: 0.0,

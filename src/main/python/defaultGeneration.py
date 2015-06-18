@@ -177,7 +177,7 @@ class DryContentGenerator(object):
     
 class DryYieldGenerator(object):
     def generateDefault(self, field, generators):
-        generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
+        return generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
     
 class CO2FromYieldGenerator(object):
     def generateDefault(self, field, generators):
@@ -227,7 +227,7 @@ class FlatRatioRepartitionGenerator(object):
         self._enumClass = enumClass
     
     def generateDefault(self, field, generators):
-        return {k: 1.0 / self._enumClass.len() for k in self._enumClass}
+        return {k: 1.0 / len(self._enumClass) for k in self._enumClass}
     
 class SafeDefaultGenerator(object):
     def __init__(self, field, defaultValue):

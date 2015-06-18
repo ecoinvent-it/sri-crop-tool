@@ -55,7 +55,7 @@ public class TemplateSubstanceUsage
                     "m3", "utilities_wateruse_ground", ""),
             new TemplateSubstanceUsage("Water, river, {country}", SubCompartment.RAW_IN_WATER,
                     "m3", "utilities_wateruse_surface", ""),
-            // TODO: Annualiser
+
             new TemplateSubstanceUsage("Occupation, arable", SubCompartment.RAW_LAND, "m2a", "occupation_arable", ""),
             new TemplateSubstanceUsage("Occupation, permanent crop, fruit", SubCompartment.RAW_LAND, "m2a",
                     "occupation_permanent", ""),
