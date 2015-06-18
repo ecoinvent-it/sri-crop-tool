@@ -76,16 +76,16 @@ class OutputMapping(object):
         for key, value in packOutput.items():
             self.output[key.replace("m_Pack_", "")] = value
             
-    def mapLucModel(self, lucOuput):
+    def mapLucModel(self, lucOuput, allInputs):
         for key, value in lucOuput.items():
             self.output[key.replace("m_LUC_", "")] = value
         #FIXME: Probably not the right place
         if (self.output["luc_crop_type"]=="annual"):
-            self.output["occupation_arable"] = 10027
+            self.output["occupation_arable"] = 10027.0 / allInputs["crop_cycle_per_year"]
             self.output["transformation_from_arable"] = 10000
             self.output["transformation_to_arable"] = 10000
         elif (self.output["luc_crop_type"]=="perennial"):
-            self.output["occupation_permanent"] = 10027
+            self.output["occupation_permanent"] = 10027.0 / allInputs["crop_cycle_per_year"]
             self.output["transformation_from_permanent"] = 500
             self.output["transformation_to_permanent"] = 500
         #else TODO: Rice 

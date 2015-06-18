@@ -354,8 +354,6 @@ DEFAULTS_VALUES_GENERATORS = {
                    "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default
                    #Packaging rules
                    "ca_from_mineral_fert": SimpleValueDefaultGenerator(0),
-                   #LUC rules
-                   "allocated_time_for_crop": SimpleValueDefaultGenerator(1.0),
                    #Direct outputs
                    "yield_main_product_water_content": TableLookupDefaultGenerator("crop", WATER_CONTENT_FM_RATIO_PER_CROP),
                    "yield_main_product_dry_content": DryContentGenerator(),

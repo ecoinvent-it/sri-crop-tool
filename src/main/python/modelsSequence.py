@@ -42,7 +42,7 @@ class ModelsSequence(object):
         self.outputMapping.mapPModel(PModel(self.allInputs).compute())
         self.outputMapping.mapHMModel(HmModel(self.allInputs).compute())
         self.outputMapping.mapPackModel(PackModel(self.allInputs).compute())
-        self.outputMapping.mapLucModel(LUCModel(self.allInputs).compute())
+        self.outputMapping.mapLucModel(LUCModel(self.allInputs).compute(), self.allInputs)
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
         self.outputMapping.mapMachineries(self.allInputs)
         self.outputMapping.mapCODWasteWater(self.allInputs)
