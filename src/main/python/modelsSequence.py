@@ -15,6 +15,7 @@ from models.hmmodel import HmModel
 from models.seedmodel import SeedModel
 from models.packmodel import PackModel
 from models.lucmodel import LUCModel
+from models.transportmodel import TransportModel
 
 class ModelsSequence(object):
     
@@ -43,6 +44,7 @@ class ModelsSequence(object):
         self.outputMapping.mapHMModel(HmModel(self.allInputs).compute())
         self.outputMapping.mapPackModel(PackModel(self.allInputs).compute())
         self.outputMapping.mapLucModel(LUCModel(self.allInputs).compute(), self.allInputs)
+        self.outputMapping.mapTransportModel(TransportModel(self.allInputs).compute())
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
         self.outputMapping.mapMachineries(self.allInputs)
         self.outputMapping.mapCODWasteWater(self.allInputs)

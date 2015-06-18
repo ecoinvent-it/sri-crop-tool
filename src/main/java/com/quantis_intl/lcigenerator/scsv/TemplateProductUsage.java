@@ -282,7 +282,15 @@ public class TemplateProductUsage
 
             new TemplateProductUsage("Land use change, {luc_crop_type} crop (WFLDB 3.0)/{country} U", "ha",
                     "luc_formula", ""),
-            // TODO: Transport
+
+            new TemplateProductUsage("Transport, lorry >16t, fleet average/RER U", "tkm",
+                    "transport_lorry_sup_16t_fleet_average_RER", ""),
+            new TemplateProductUsage("Transport, transoceanic freight ship/OCDE U", "tkm",
+                    "transport_transoceanic_freight_ship_OCE", ""),
+            new TemplateProductUsage("Transport, freight, rail/RER U", "tkm", "transport_freight_rail_RER", ""),
+            new TemplateProductUsage("Transport, freight, rail, diesel/US U", "tkm",
+                    "transport_freight_rail_diesel_US", ""),
+
             new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
                     "packaging_solid_fertilisers_and_pesticides", ""),
             new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",

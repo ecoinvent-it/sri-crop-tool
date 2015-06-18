@@ -205,7 +205,7 @@ class SeedQuantitiesDefaultGenerator(object):
         elif (crop in ["asparagus", "mint", "onion", "strawberry", "tomato"]):
             value_field = "nb_seedlings"
         else:
-            value_field = "seeds"
+            value_field = "unsafe_seeds"
         try:
             return {crop: generators[value_field]}
         except KeyError:
@@ -228,6 +228,17 @@ class FlatRatioRepartitionGenerator(object):
     
     def generateDefault(self, field, generators):
         return {k: 1.0 / self._enumClass.len() for k in self._enumClass}
+    
+class SafeDefaultGenerator(object):
+    def __init__(self, field, defaultValue):
+        self._field = field
+        self._defaultValue = defaultValue
+    
+    def generateDefault(self, field, generators):
+        try:
+            return generators[self._field]
+        except KeyError:
+            return self._defaultValue
     
 class NitrogenFromCropResiduesDefaultGenerator(object):
     def generateDefault(self, field, generators):
@@ -265,7 +276,6 @@ class NitrogenFromCropResiduesDefaultGenerator(object):
             return 159.0
         else:
             return 0.0
-
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
@@ -309,7 +319,8 @@ DEFAULTS_VALUES_GENERATORS = {
                    "compost_quantities": RatiosToValuesConvertor("compost_proportions", "total_composttype"),
                    "sludge_quantities": RatiosToValuesConvertor("sludge_proportions", "total_sewagesludge"),
                    #Seed defaults
-                   "seeds": CropCountryMatrixLookupDefaultGenerator(NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY),
+                   "unsafe_seeds": CropCountryMatrixLookupDefaultGenerator(NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY),
+                   "seeds": SafeDefaultGenerator("unsafe_seeds", 0.0),
                    "nb_seedlings": CropCountryMatrixLookupDefaultGenerator({}),
                    "nb_planted_trees": CropCountryMatrixLookupDefaultGenerator(NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY),
                    "seed_quantities": SeedQuantitiesDefaultGenerator(),

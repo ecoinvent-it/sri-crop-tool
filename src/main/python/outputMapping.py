@@ -90,6 +90,9 @@ class OutputMapping(object):
             self.output["transformation_to_permanent"] = 500
         #else TODO: Rice 
             
+    def mapTransportModel(self, transportOutput):
+        self._mapEnumMap(transportOutput)
+        
     def mapCODWasteWater(self, allInputs): #m3 * mg/L(==g/m3) -> g
         self.output["cod_in_waste_water"] = allInputs["eol_waste_water_to_nature"] * allInputs["cod_in_waste_water"]
         
