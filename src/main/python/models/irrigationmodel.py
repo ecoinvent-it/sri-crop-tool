@@ -8,6 +8,11 @@ class IrrigationType(Enum):
     sprinkler_irrigation_diesel="sprinkler_irrigation_diesel"
     drip_irrigation_electricity="drip_irrigation_electricity"
     drip_irrigation_diesel="drip_irrigation_diesel"
+    
+class WaterUseType(Enum):
+    groundwater="wateruse_ground"
+    surfacewater="wateruse_surface"
+    nonconventional="wateruse_non_conventional_sources"
 
 class IrrigationModel(object):
     """Inputs:

@@ -187,20 +187,20 @@ class DryContentGenerator(object):
     def generateDefault(self, field, generators):
         return 1 - generators["yield_main_product_water_content"]
     
+class DryYieldGenerator(object):
+    def generateDefault(self, field, generators):
+        generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
+    
 class CO2FromYieldGenerator(object):
     def generateDefault(self, field, generators):
-        return generators["yield_main_product_carbon_content"] * MA_CO2/MA_C * generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
+        return generators["yield_main_product_carbon_content"] * MA_CO2/MA_C * generators["yield_main_product_dry_per_crop_cycle"]
 
 class EnergyGrossCalorificValueGenerator(object):
     def generateDefault(self, field, generators):
         if (generators["crop"] in ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL):
-            return ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL[generators["crop"]] * generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
+            return ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL[generators["crop"]] * generators["yield_main_product_dry_per_crop_cycle"]
         else:
             return generators["CO2_from_yield"] * 11.5
-        
-class HmUptakeGenerator(object):
-    def generateDefault(self, field, generators):
-        return generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
         
 class EolPlasticDisposalGenerator(object):
     def generateDefault(self, field, generators):
@@ -232,8 +232,46 @@ class FlatRatioRepartitionGenerator(object):
     def __init__(self, enumClass):
         self._enumClass = enumClass
     
-    def generateDefault(self, attrName, mapping):
+    def generateDefault(self, field, generators):
         return {k: 1.0 / self._enumClass.len() for k in self._enumClass}
+    
+class NitrogenFromCropResiduesDefaultGenerator(object):
+    def generateDefault(self, field, generators):
+        crop = generators["crop"]
+        if (crop == "carrot"):#(YieldDM * slope + intercept*1000) * (Nag*(1-FracRemove)+Rbg-bio*Nbg)
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 1.07 + 1540.0) * (0.016+0.2*0.014)
+        elif (crop == "linseed"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 1.13 + 850.0) * (0.008+0.19*0.008)
+        elif (crop == "maizegrain"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 1.03 + 610.0) * (0.006+0.22*0.007)
+        elif (crop == "oat"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 0.91 + 890.0) * (0.007*0.8+0.25*0.008)
+        elif (crop == "peanut"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 1.07 + 1540.0) * (0.016+0.2*0.014)
+        elif (crop == "potato"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 0.1 + 1060.0) * (0.019+0.2*0.014)
+        elif (crop == "rapeseed"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 1.5) * (0.011+0.19*0.017)
+        elif (crop == "rice"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 0.95 + 2460.0) * (0.007)
+        elif (crop == "soybean"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 0.93 + 1350.0) * (0.008+0.19*0.008)
+        elif (crop == "sweetcorn"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 1.03 + 610.0) * (0.006+0.22*0.007)
+        elif (crop == "wheat"):
+            return (generators["yield_main_product_dry_per_crop_cycle"] * 1.61 + 400.0) * (0.006*0.8+0.23*0.009)
+        #Other formula
+        elif (crop == "sugarbeet"):
+            return generators["yield_main_product_dry_per_crop_cycle"] * (0.5*0.016 + 0.2*0.014)
+        elif (crop == "sugarcane"):
+            return generators["yield_main_product_dry_per_crop_cycle"] / 6.0 * 0.43 * 0.004 
+        elif (crop == "coconut"):
+            return 44.0
+        elif (crop == "palmtree"):
+            return 159.0
+        else:
+            return 0.0
+
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
@@ -245,22 +283,30 @@ DEFAULTS_VALUES_GENERATORS = {
                    "water_use_total": SimpleValueDefaultGenerator(0.0), #FIXME: to calculate
                    "yield_main_product_per_year":CropCountryMatrixLookupDefaultGenerator(YIELD_PER_YEAR_PER_CROP_PER_COUNTRY),
                    "yield_main_product_per_crop_cycle": PerCropCycleYieldDefaultGenerator(),
+                   "yield_main_product_dry_per_crop_cycle": DryYieldGenerator(),
                    
                    #Fertiliser defaults
-                   "nitrogen_from_mineral_fert": CropCountryMatrixLookupDefaultGenerator(NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY), #FIXME: no values for mint and pineapple
-                   "p2O5_from_mineral_fert": SimpleValueDefaultGenerator(0.0), #FIXME: missing Default (crop+country)
-                   "k2O_from_mineral_fert": SimpleValueDefaultGenerator(0.0), #FIXME: missing Default (crop+country)
-                   "n_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", FERT_N_RATIO_PER_COUNTRY, "nitrogen_from_mineral_fert"),
-                   "p_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", FERT_P_RATIO_PER_COUNTRY, "p2O5_from_mineral_fert"),
-                   "k_fertiliser_quantities": ConvertRatioToValueDefaultGenerator("country", FERT_K_RATIO_PER_COUNTRY, "k2O_from_mineral_fert"),
-                   "other_mineral_fertiliser_quantities": ZeroMapDefaultGenerator(OtherMineralFertiliserType),
+                   "nitrogen_from_mineral_fert": CropCountryMatrixLookupDefaultGenerator(NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY),
+                   "p2O5_from_mineral_fert": SimpleValueDefaultGenerator(0.0), #NOTE: No default for now, maybe in fertistat
+                   "k2O_from_mineral_fert": SimpleValueDefaultGenerator(0.0), #NOTE: No default for now, maybe in fertistat
+                   "n_fertiliser_proportions": TableLookupDefaultGenerator("country", FERT_N_RATIO_PER_COUNTRY),
+                   "p_fertiliser_proportions": TableLookupDefaultGenerator("country", FERT_P_RATIO_PER_COUNTRY),
+                   "k_fertiliser_proportions": TableLookupDefaultGenerator("country", FERT_K_RATIO_PER_COUNTRY),
+                   "n_fertiliser_quantities": RatiosToValuesConvertor("n_fertiliser_proportions", "nitrogen_from_mineral_fert"),
+                   "p_fertiliser_quantities": RatiosToValuesConvertor("p_fertiliser_proportions", "p2O5_from_mineral_fert"),
+                   "k_fertiliser_quantities": RatiosToValuesConvertor("k_fertiliser_proportions", "k2O_from_mineral_fert"),
+                   "ca_from_mineral_fert": SimpleValueDefaultGenerator(0.0),
+                   "other_mineral_fertiliser_proportions": FlatRatioRepartitionGenerator(OtherMineralFertiliserType),
+                   "other_mineral_fertiliser_quantities": RatiosToValuesConvertor("other_mineral_fertiliser_proportions", "ca_from_mineral_fert"),
                    "soil_with_ph_under_or_7": TableLookupDefaultGenerator("country", SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY),
                    #Manure defaults
                    "liquid_manure_part_before_dilution": SimpleValueDefaultGenerator(0.5),
-                   "total_manureliquid":CropCountryMatrixLookupDefaultGenerator(TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY), #FIXME: no values for mint and pineapple
-                   "total_manuresolid":CropCountryMatrixLookupDefaultGenerator(TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY), #FIXME: no values for mint and pineapple
-                   "liquid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", MANURE_LIQUID_RATIO_PER_COUNTRY, "total_manureliquid"),
-                   "solid_manure_quantities": ConvertRatioToValueDefaultGenerator("country", MANURE_SOLID_RATIO_PER_COUNTRY, "total_manuresolid"),
+                   "total_manureliquid":CropCountryMatrixLookupDefaultGenerator(TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY),
+                   "total_manuresolid":CropCountryMatrixLookupDefaultGenerator(TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY),
+                   "liquid_manure_proportions": TableLookupDefaultGenerator("country", MANURE_LIQUID_RATIO_PER_COUNTRY),
+                   "solid_manure_proportions": TableLookupDefaultGenerator("country", MANURE_SOLID_RATIO_PER_COUNTRY),
+                   "liquid_manure_quantities": RatiosToValuesConvertor("liquid_manure_proportions", "total_manureliquid"),
+                   "solid_manure_quantities": RatiosToValuesConvertor("solid_manure_proportions", "total_manuresolid"),
                    #Other organic fertilisers defaults
                    "total_composttype":SimpleValueDefaultGenerator(0.0),
                    "total_sewagesludge":SimpleValueDefaultGenerator(0.0),
@@ -292,17 +338,18 @@ DEFAULTS_VALUES_GENERATORS = {
                    #Irrigation defaults
                    "irrigation_types_proportions": TableLookupDefaultGenerator("country", IRR_TECH_RATIO_PER_COUNTRY),
                    "irrigation_types_quantities": RatiosToValuesConvertor("irrigation_types_proportions", "water_use_total"),
-                   "irrigation_water_use_quantities": ConvertRatioToValueDefaultGenerator("country", IRR_WATERUSE_RATIO_PER_COUNTRY, "water_use_total"),
+                   "irrigation_water_use_proportions": TableLookupDefaultGenerator("country", IRR_WATERUSE_RATIO_PER_COUNTRY),
+                   "irrigation_water_use_quantities": RatiosToValuesConvertor("irrigation_water_use_proportions", "water_use_total"),
                    #N model defaults
                    "bulk_density_of_soil": SimpleValueDefaultGenerator(1300.0),
                    "c_per_n_ratio": SimpleValueDefaultGenerator(11.0),
                    "considered_soil_volume": SimpleValueDefaultGenerator(5000.0),
                    "drained_part": SimpleValueDefaultGenerator(0.0),
                    "organic_carbon_content": TableLookupDefaultGenerator("country", SOIL_CARBON_CONTENT_PER_COUNTRY),
-                   "nitrogen_uptake_by_crop": CropCountryMatrixLookupDefaultGenerator(NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY), #FIXME: no values for mint and pineapple
+                   "nitrogen_uptake_by_crop": CropCountryMatrixLookupDefaultGenerator(NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY),
                    "norg_per_ntotal_ratio": SimpleValueDefaultGenerator(0.85),
                    "rooting_depth": TableLookupDefaultGenerator("crop", ROOTING_DEPTH_PER_CROP),
-                   "nitrogen_from_crop_residues": SimpleValueDefaultGenerator(0.0), #FIXME: Default
+                   "nitrogen_from_crop_residues": NitrogenFromCropResiduesDefaultGenerator(),
                    #P defaults
                    "eroded_reaching_river": SimpleValueDefaultGenerator(0.2),
                    "eroded_soil_p_enrichment": SimpleValueDefaultGenerator(1.86),
@@ -330,7 +377,6 @@ DEFAULTS_VALUES_GENERATORS = {
                    "yield_main_product_carbon_content": TableLookupDefaultGenerator("crop", CARBON_CONTENT_PER_CROP),
                    "CO2_from_yield": CO2FromYieldGenerator(),
                    "energy_gross_calorific_value": EnergyGrossCalorificValueGenerator(),
-                   "hm_uptake": HmUptakeGenerator(),
                    #---
                    "total_plantprotection": SimpleValueDefaultGenerator(0.0),
                    "total_soilcultivation": SimpleValueDefaultGenerator(0.0),

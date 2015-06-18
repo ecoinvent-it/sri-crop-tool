@@ -79,8 +79,10 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "ES":46.6502755884,
       "GLO":39.268859744
    },
-   "mint":{#FIXME: missing values for country and/or glo
-
+   "mint":{#NOTE: IT assumption based on WFLDB 3 applied N
+      "IN": 160.0,
+      "US": 294.0,
+      "GLO": 227.0
    },
    "oat":{
       "CA":62.0985962727273,

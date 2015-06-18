@@ -78,8 +78,8 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "ES":37.32022047072,
       "GLO":31.4150877952
    },
-   "mint":{#FIXME: Missing values and/or GLO
-
+   "mint":{
+      "GLO": 0.0
    },
    "oat":{
       "CA":49.6788770181818,
@@ -126,8 +126,8 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "CN":23.79731552,
       "GLO":30.5857629333333
    },
-   "pineapple":{#FIXME: Missing values and/or GLO
-
+   "pineapple":{
+      "GLO": 0.0
    },
    "potato":{
       "CN":45.0398434177778,

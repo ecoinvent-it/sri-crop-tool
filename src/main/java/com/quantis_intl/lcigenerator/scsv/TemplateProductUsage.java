@@ -34,22 +34,30 @@ public class TemplateProductUsage
     }
 
     public static final TemplateProductUsage[] materialsFuels = {
-            new TemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 3.0)/{TODO} U", "m3",
+            new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
+                    "packaging_solid_fertilisers_and_pesticides", ""),
+            new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
+                    "packaging_liquid_fertilisers_and_pesticides", ""),
+
+            new TemplateProductUsage("Grain drying, high temperature/CH U", "kg", "drying_heating", ""),
+            new TemplateProductUsage("Grain drying, low temperature/CH U", "kg", "drying_ambient_air", ""),
+
+            new TemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 3.0)/{country} U", "m3",
                     "surface_irrigation_electricity", ""),
             new TemplateProductUsage("Irrigating, surface, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "surface_irrigation_diesel", ""),
             // new TemplateProductUsage("Irrigating, surface, gravity/GLO U", "m3", "surface_irrigation_no_energy",
             // ""),// FIXME: Missing
-            new TemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.0)/{TODO} U", "m3",
+            new TemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.0)/{country} U", "m3",
                     "sprinkler_irrigation_electricity", ""),
             new TemplateProductUsage("Irrigating, sprinkler, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "sprinkler_irrigation_diesel", ""),
-            new TemplateProductUsage("Irrigating, drip, electricity powered (WFLDB 3.0)/{TODO} U", "m3",
+            new TemplateProductUsage("Irrigating, drip, electricity powered (WFLDB 3.0)/{country} U", "m3",
                     "drip_irrigation_electricity", ""),
             new TemplateProductUsage("Irrigating, drip, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "drip_irrigation_diesel", ""),
 
-            new TemplateProductUsage("Tap water, at user/RER U", "kg", "wateruse_non_conventional_sources", ""),
+            new TemplateProductUsage("Tap water, at user/RER U", "t", "wateruse_non_conventional_sources", ""),
 
             new TemplateProductUsage("Ammonium nitrate, as N, at regional storehouse/RER U", "kg",
                     "fert_n_ammonium_nitrate", ""),
@@ -95,22 +103,12 @@ public class TemplateProductUsage
             new TemplateProductUsage("Potassium chloride, as K2O, at regional storehouse/RER U", "kg",
                     "fert_k_patent_potassium", ""),
 
+            new TemplateProductUsage("Magnesium sulphate, at plant/RER U", "kg", "magnesium_from_fertilizer", ""),
             new TemplateProductUsage("Limestone, milled, packed, at plant/CH U", "kg", "fert_ca_limestone", ""),
             new TemplateProductUsage("Lime, from carbonation, at regional storehouse/CH U", "kg",
                     "fert_ca_carbonation_linestone", ""),
             new TemplateProductUsage("Lime, algae, at regional storehouse/CH U", "kg", "fert_ca_seaweed_limestone",
                     ""),
-
-            new TemplateProductUsage("Magnesium sulphate, at plant/RER U", "kg", "fert_other_total_mg", ""),
-
-            new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
-                    "packaging_solid_fertilisers_and_pesticides", ""),
-            new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
-                    "packaging_liquid_fertilisers_and_pesticides", ""),
-
-            // FIXME: Some of them should be in electricity heat
-            new TemplateProductUsage("Grain drying, high temperature/CH U", "kg", "drying_heating", ""),
-            new TemplateProductUsage("Grain drying, low temperature/CH U", "kg", "drying_ambient_air", ""),
 
             new TemplateProductUsage("Compost, at plant/CH U", "kg", "composttype_compost", ""),
             new TemplateProductUsage("Vinasse, at fermentation plant/CH U", "kg", "composttype_vinasse", ""),
@@ -244,7 +242,8 @@ public class TemplateProductUsage
             new TemplateProductUsage("Greenhouse, plastic walls and roof, plastic tubes (WFLDB 3.0)/FR/I U", "m2",
                     "greenhouse_plastic_roof_plastic_tubes", ""),
 
-            new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.0)/GLO U", "kg", "hm_uptake", ""),
+            new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.0)/GLO U", "kg",
+                    "yield_main_product_dry_per_crop_cycle", ""),
 
             new TemplateProductUsage("lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil", ""),
 

@@ -13,7 +13,7 @@ class OutputMapping(object):
         self.output["country"] = allInputs["country"]
         self.output["crop"] = allInputs["crop"]
         self.output["yield_main_product_per_crop_cycle"] = allInputs["yield_main_product_per_crop_cycle"]
-        self.output["hm_uptake"] = allInputs["hm_uptake"]
+        self.output["yield_main_product_dry_per_crop_cycle"] = allInputs["yield_main_product_dry_per_crop_cycle"]
         for k,f in self._DIRECT_OUTPUT_MAPPING.items():
             if (k in allInputs):
                 self.output[k] = f(allInputs[k])
@@ -32,10 +32,10 @@ class OutputMapping(object):
     def mapIrrigationModel(self, irrOutput):
         for key, value in irrOutput.items():
             self.output[key.replace("m_Irr_", "")] = value
-        self.output["water_to_air"] = self.output["water_to_air"] * 1000.0 #m3/ha -> kg
         
     def mapIrrigationQuantities(self, allInputs):
         self._mapEnumMap(allInputs["irrigation_types_quantities"])
+        self._mapEnumMap(allInputs["irrigation_water_use_quantities"])
             
     def mapCo2Model(self, co2Output):
         for key, value in co2Output.items():
@@ -59,6 +59,7 @@ class OutputMapping(object):
         self._mapEnumMap(allInputs["n_fertiliser_quantities"])
         self._mapEnumMap(allInputs["p_fertiliser_quantities"])
         self._mapEnumMap(allInputs["k_fertiliser_quantities"])
+        self.output["magnesium_from_fertilizer"] = allInputs["magnesium_from_fertilizer"]
         self._mapEnumMap(allInputs["other_mineral_fertiliser_quantities"])
         #TODO: Is this the best place for that?
         self.output["fert_n_ammonia_liquid_as_nh3"] = self.output["fert_n_ammonia_liquid"] * MA_NH3/MA_N
@@ -124,10 +125,6 @@ class OutputMapping(object):
         "CO2_from_yield": identity,
         "energy_gross_calorific_value": identity,
         "pest_horticultural_oil": identity,
-        
-        "wateruse_ground": identity,
-        "wateruse_surface": identity,
-        "wateruse_non_conventional_sources": lambda x: x * 1000.0, #m3 -> kg
 
         "energy_electricity_low_voltage_at_grid": identity,
         "energy_electricity_photovoltaic_produced_locally": identity,
