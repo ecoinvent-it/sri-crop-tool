@@ -1,5 +1,5 @@
 from inputMappings import SimpleInputMappingRule, MapMappingRule,\
-    InputAsEnumMappingRule
+    InputAsEnumMappingRule, InputMappingRule
 from models.fertilisermodel import NFertiliserType, PFertiliserType, KFertiliserType, OtherMineralFertiliserType
 from models.manuremodel import LiquidManureType, SolidManureType
 from models.irrigationmodel import IrrigationType, WaterUseType
@@ -7,6 +7,7 @@ from models.otherorganicfertilisermodel import CompostType, SludgeType
 from models.erosionmodel import TillageMethod, AntiErosionPractice
 from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation,\
     Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
+from models.hmmodel import PesticideType
 
 _N_ENUM_TO_FIELD = {
                 NFertiliserType.ammonium_nitrate:"ratio_fertnmin_ammonium_nitrate",
@@ -150,10 +151,27 @@ _OTHERWORK_RATIOS_ENUM_TO_FIELD = {
                                    OtherWorkProcesses.other:"ratio_otherworkprocesses_other",
                                          }
 
+_HM_PESTICIDES_ENUM_TO_FIELD = {
+                                PesticideType.cu: "part_fungicides_copper_cu",
+                                PesticideType.mancozeb:"part_fungicides_mancozeb",
+                                PesticideType.metiram:"part_fungicides_metiram",
+                                PesticideType.propineb:"part_fungicides_propineb",
+                                PesticideType.zineb:"part_fungicides_zineb",
+                                PesticideType.ziram:"part_fungicides_ziram"
+                                }
+
 _WASTE_PLASTIC_RATIOS_ENUM_TO_FIELD = {
                                    PlasticDisposal.landfill:"ratio_eol_landfill",
                                    PlasticDisposal.incineration:"ratio_eol_incineration"
                                     }
+
+class RegroupPesticides(InputMappingRule):
+    def mapField(self, attrName, mapping):
+        res = {}
+        for k,v in self.mapping.originalInputs.items():
+            if (k.startswith("part_herbicides") or k.startswith("part_fungicides") or k.startswith("part_insecticides")):
+                res[k] = v
+        return res
         
 EXCEL_INPUT_MAPPING_RULES = {
                     #Cross-models rules
@@ -186,8 +204,10 @@ EXCEL_INPUT_MAPPING_RULES = {
                     #N model rules
                     #P model rules
                     #HM model rules
-                    #pesticides_quantities: TODO map PesticideType -> kg i /(ha*year) (i: pest type)
+                    "hm_pesticides_quantities": MapMappingRule(_HM_PESTICIDES_ENUM_TO_FIELD),
                     #Packaging rules
+                    #Pesticides rules
+                    "specified_pesticides": RegroupPesticides(),
                     #Machineries rules
                     "plantprotection_proportions": MapMappingRule(_PLANTPROTECTION_RATIOS_ENUM_TO_FIELD),
                     "soilcultivation_proportions": MapMappingRule(_SOILCULTIVATION_RATIOS_ENUM_TO_FIELD),

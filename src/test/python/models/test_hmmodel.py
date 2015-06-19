@@ -40,7 +40,7 @@ class Test(unittest.TestCase):
                         HeavyMetalType.cr: 36.6,
                         HeavyMetalType.hg: 37.7
                     },
-              "pesticides_quantities":
+              "hm_pesticides_quantities":
                     {   PesticideType.cu: 12.14,
                         PesticideType.mancozeb: 15.2,
                         PesticideType.metiram: 11.5,

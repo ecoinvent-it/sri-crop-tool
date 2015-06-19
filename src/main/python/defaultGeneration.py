@@ -25,6 +25,7 @@ from datetime import date
 import dateutil.relativedelta as relativedelta
 from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation,\
     Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
+from defaultMatrixTotalPesticides import TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY
 
 class DefaultValuesWrapper(object):
     def __init__(self, inputMapping, generatorMap):
@@ -196,6 +197,12 @@ class EolPlasticDisposalGenerator(object):
              + generators["materials_silage_foil"] \
              + generators["materials_covering_sheet"]\
              + generators["materials_bird_net"];
+             
+class EolWaterWasteGenerator(object):
+    def generateDefault(self, field, generators):
+        return generators["utilities_wateruse_ground"] \
+             + generators["utilities_wateruse_surface"] \
+             + generators["utilities_wateruse_non_conventional_sources"];
         
 class SeedQuantitiesDefaultGenerator(object):
     def generateDefault(self, field, generators):
@@ -217,6 +224,16 @@ class CropCountryMatrixLookupDefaultGenerator(object):
         
     def generateDefault(self, field, generators):
         currentCropTable = self._table[generators["crop"]]
+        if (generators["country"] in currentCropTable):
+            return currentCropTable[generators["country"]]
+        else:
+            return currentCropTable["GLO"]
+        
+class NitrogenUptakeGenerator(object):
+    def generateDefault(self, field, generators):
+        if ("crop" == "pineapple"):
+            return generators["yield_main_product_dry_per_crop_cycle"] * 0.02
+        currentCropTable = NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY[generators["crop"]]
         if (generators["country"] in currentCropTable):
             return currentCropTable[generators["country"]]
         else:
@@ -350,7 +367,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "considered_soil_volume": SimpleValueDefaultGenerator(5000.0),
                    "drained_part": SimpleValueDefaultGenerator(0.0),
                    "organic_carbon_content": TableLookupDefaultGenerator("country", SOIL_CARBON_CONTENT_PER_COUNTRY),
-                   "nitrogen_uptake_by_crop": CropCountryMatrixLookupDefaultGenerator(NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY),
+                   "nitrogen_uptake_by_crop": NitrogenUptakeGenerator(),
                    "norg_per_ntotal_ratio": SimpleValueDefaultGenerator(0.85),
                    "rooting_depth": TableLookupDefaultGenerator("crop", ROOTING_DEPTH_PER_CROP),
                    "nitrogen_from_crop_residues": NitrogenFromCropResiduesDefaultGenerator(),
@@ -361,17 +378,18 @@ DEFAULTS_VALUES_GENERATORS = {
                    "land_use_category": TableLookupDefaultGenerator("crop", LAND_USE_CATEGORY_PER_CROP),
                    #HM defaults
                    "hm_land_use_category": LandUseCategoryForHMDefaultGenerator(),
-                   "pest_total": SimpleValueDefaultGenerator(0),#FIXME: Default (crop+country) GD_crop Pesticides_L1, no values for:Apricot,Asparagus,Carrot,Coconut,Lemon,Mint,Oat,Olive,Onion,Pear,Pineapple,Strawberry,SweetCorn,Tea
-                   "pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),#FIXME: Default
+                   "pest_total": CropCountryMatrixLookupDefaultGenerator(TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY),
+                   "hm_pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),
                    #Packaging rules
                    "ca_from_mineral_fert": SimpleValueDefaultGenerator(0),
+                   #Pesticides rules
+                   "specified_pesticides": SimpleValueDefaultGenerator({}),
                    #Direct outputs
                    "yield_main_product_water_content": TableLookupDefaultGenerator("crop", WATER_CONTENT_FM_RATIO_PER_CROP),
                    "yield_main_product_dry_content": DryContentGenerator(),
                    "yield_main_product_carbon_content": TableLookupDefaultGenerator("crop", CARBON_CONTENT_PER_CROP),
                    "CO2_from_yield": CO2FromYieldGenerator(),
                    "energy_gross_calorific_value": EnergyGrossCalorificValueGenerator(),
-                   #---
                    "total_plantprotection": SimpleValueDefaultGenerator(0.0),
                    "total_soilcultivation": SimpleValueDefaultGenerator(0.0),
                    "total_sowingplanting": SimpleValueDefaultGenerator(0.0),
@@ -390,6 +408,9 @@ DEFAULTS_VALUES_GENERATORS = {
                    "fertilisation_quantities": RatiosToValuesConvertor("fertilisation_proportions", "total_fertilisation"),
                    "harvesting_quantities": RatiosToValuesConvertor("harvesting_proportions", "total_harvesting"),
                    "otherworkprocesses_quantities": RatiosToValuesConvertor("otherworkprocesses_proportions", "total_otherworkprocesses"),
+                   "utilities_wateruse_ground": SimpleValueDefaultGenerator(0.0),
+                   "utilities_wateruse_surface": SimpleValueDefaultGenerator(0.0),
+                   "utilities_wateruse_non_conventional_sources": SimpleValueDefaultGenerator(0.0),
                    "materials_fleece": SimpleValueDefaultGenerator(0.0),
                    "materials_silage_foil": SimpleValueDefaultGenerator(0.0),
                    "materials_covering_sheet": SimpleValueDefaultGenerator(0.0),
@@ -397,8 +418,8 @@ DEFAULTS_VALUES_GENERATORS = {
                    "total_eol_plastic_disposal_fleece_and_other": EolPlasticDisposalGenerator(),
                    "plastic_disposal_proportions":SimpleValueDefaultGenerator({PlasticDisposal.landfill: 0.5, PlasticDisposal.incineration:0.5}),
                    "plastic_disposal_quantities":RatiosToValuesConvertor("plastic_disposal_proportions", "total_eol_plastic_disposal_fleece_and_other"),
-                   "eol_waste_water_to_treatment_facility": SimpleValueDefaultGenerator(0.0),#FIXME: Default?
-                   "eol_waste_water_to_nature": SimpleValueDefaultGenerator(0.0),#FIXME: Default?
+                   "eol_waste_water_to_treatment_facility": SimpleValueDefaultGenerator(0.0),
+                   "eol_waste_water_to_nature": EolWaterWasteGenerator(),
                    "cod_in_waste_water": SimpleValueDefaultGenerator(0.0)
                    }
                                 

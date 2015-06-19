@@ -2,12 +2,12 @@ from enum import Enum
 from models.modelEnums import HeavyMetalType
       
 class PesticideType(Enum):
-        cu=1 #fungicide "copper_cu" 
-        mancozeb=2 #fungicide
-        metiram=3 #fungicide
-        propineb=4 #fungicide
-        zineb=5 #fungicide
-        ziram=6 #fungicide
+        cu="copper_cu" #fungicide
+        mancozeb="mancozeb" #fungicide
+        metiram="metiram" #fungicide
+        propineb="propineb" #fungicide
+        zineb="zineb" #fungicide
+        ziram="ziram" #fungicide
         
 class LandUseCategoryForHM(Enum):
         permanent_grassland=1
@@ -22,7 +22,7 @@ class HmModel(object):
       hm_from_mineral_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
       hm_from_other_organic_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
       hm_from_seed: map HeavyMetalType -> mg i/(ha*year) (i:hm type)
-      pesticides_quantities: map PesticideType -> kg i /(ha*year) (i: pest type)
+      hm_pesticides_quantities: map PesticideType -> kg i /(ha*year) (i: pest type)
       drained_part: ratio
       eroded_soil: kg/(ha*year)
       hm_land_use_category: LandUseCategoryForHM
@@ -48,7 +48,7 @@ class HmModel(object):
                         'hm_from_mineral_fert',
                         'hm_from_other_organic_fert',
                         'hm_from_seed',
-                        'pesticides_quantities',
+                        'hm_pesticides_quantities',
                         'drained_part',
                         'eroded_soil',
                         'hm_land_use_category'
@@ -140,10 +140,10 @@ class HmModel(object):
         
     def _compute_pesticides(self):
         hm_values = dict.fromkeys(HeavyMetalType,0.0)
-        hm_values[HeavyMetalType.cu] = self.pesticides_quantities[PesticideType.cu] * self._PEST_TO_SOIL_RATIO
+        hm_values[HeavyMetalType.cu] = self.hm_pesticides_quantities[PesticideType.cu] * self._PEST_TO_SOIL_RATIO
         for pest in self._PEST_NB_ZN_ATOMS.keys():
             hm_values[HeavyMetalType.zn] += self._compute_pesticides_ratio_to_zn(pest) \
-                                            * self.pesticides_quantities[pest] \
+                                            * self.hm_pesticides_quantities[pest] \
                                             * self._PEST_TO_SOIL_RATIO
         return hm_values
             

@@ -34,6 +34,7 @@ public class TemplateProductUsage
     }
 
     public static final TemplateProductUsage[] materialsFuels = {
+            // NOTE: There is one process per crop. No other process is added (rooting trees, oilseed processing, etc)
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_almond", ""),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_apple", ""),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_apricot", ""),
@@ -64,8 +65,8 @@ public class TemplateProductUsage
             new TemplateProductUsage("Rape seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_rapeseed", ""),
             new TemplateProductUsage("Rice seed, at regional storehouse (WFLDB 3.0)/GLO U", "kg", "seeds_rice", ""),
             new TemplateProductUsage("Soybean seed, at farm (WFLDB 3.0)/CH U", "kg", "seeds_soybean", ""),
-            // new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
-            // "seeds_strawberry", ""),//FIXME: Lequel ?
+            new TemplateProductUsage("Strawberry seedling, greenhouse, heated, at farm (WFLDB 3.0)/NL U", "p",
+                    "seeds_strawberry", ""),
             new TemplateProductUsage("Sugar beet seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
                     "seeds_sugarbeet", ""),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_sugarcane",
@@ -73,8 +74,8 @@ public class TemplateProductUsage
             new TemplateProductUsage("Sunflower seed, at farm (WFLDB 3.0)/CH U", "kg", "seeds_sunflower", ""),
             new TemplateProductUsage("Maize seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_sweetcorn", ""),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_tea", ""),
-            // new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_tomato",
-            // ""),//FIXME: Lequel ?
+            new TemplateProductUsage("Tomato seedling, greenhouse, heated, at farm (WFLDB 3.0)/NL U", "p",
+                    "seeds_tomato", ""),
             new TemplateProductUsage("Wheat seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_wheat", ""),
 
             new TemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 3.0)/{country} U", "m3",
@@ -154,44 +155,38 @@ public class TemplateProductUsage
             new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg", "composttype_horn_shavings_fine",
                     ""),
 
-            // TODO: Pesticides
-
-            // FIXME: This process has maybe been renamed
-            new TemplateProductUsage("Diesel combusted in agricultural machinery (WFLDB 3.0)/GLO U", "kg",
+            new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "remains_machinery_diesel", ""),
             new TemplateProductUsage("Application of plant protection products, by field sprayer/CH U", "ha",
                     "plantprotection_spraying", ""),
             new TemplateProductUsage("Natural gas, burned in boiler modulating <100kW/RER U", "MJ",
                     "plantprotection_flaming", ""),
-            // FIXME: This process has maybe been renamed
-            new TemplateProductUsage("Diesel combusted in agricultural machinery (WFLDB 3.0)/GLO U", "kg",
+            new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "plantprotection_other", ""),
             new TemplateProductUsage("Soil decompactation, with 4.5m chisel/FR U", "hr",
                     "soilcultivation_decompaction", ""),
-            // FIXME: Confirm processes name (two in WFLDB)
-            new TemplateProductUsage("Tillage, cultivating, chiselling/CH U", "ha", "soilcultivation_tillage_chisel",
-                    ""),
-            new TemplateProductUsage("Tillage, currying, by weeder/CH U", "ha",
+            new TemplateProductUsage("Tillage, cultivating, chiselling (WFLDB 3.0)/CH U", "ha",
+                    "soilcultivation_tillage_chisel", ""),
+            // FIXME: Typo, recheck the 25.06
+            new TemplateProductUsage("Tillage, currying, by weeder(WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_spring_tine_weeder", ""),
-            new TemplateProductUsage("Tillage, harrowing, by rotary harrow/CH U", "ha",
+            new TemplateProductUsage("Tillage, harrowing, by rotary harrow (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_rotary_harrow", ""),
-            new TemplateProductUsage("Tillage, harrowing, by spring tine harrow/CH U", "ha",
+            new TemplateProductUsage("Tillage, harrowing, by spring tine harrow (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_sprint_tine_harrow", ""),
-            new TemplateProductUsage("Tillage, hoeing and earthing-up, potatoes/CH U", "ha",
+            new TemplateProductUsage("Tillage, hoeing and earthing-up, potatoes (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_hoeing_earthing_up", ""),
-            new TemplateProductUsage("Tillage, ploughing/CH U", "ha", "soilcultivation_tillage_plough", ""),
-            new TemplateProductUsage("Tillage, rolling/CH U", "ha", "soilcultivation_tillage_roll", ""),
-            new TemplateProductUsage("Tillage, rotary cultivator/CH U", "ha",
+            new TemplateProductUsage("Tillage, ploughing (WFLDB 3.0)/CH U", "ha", "soilcultivation_tillage_plough", ""),
+            new TemplateProductUsage("Tillage, rolling (WFLDB 3.0)/CH U", "ha", "soilcultivation_tillage_roll", ""),
+            new TemplateProductUsage("Tillage, rotary cultivator (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_rotary_cultivator", ""),
-            // FIXME: This process has maybe been renamed
-            new TemplateProductUsage("Diesel combusted in agricultural machinery (WFLDB 3.0)/GLO U", "kg",
+            new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "soilcultivation_other", ""),
             new TemplateProductUsage("Sowing/CH U", "ha", "sowingplanting_sowing", ""),
             new TemplateProductUsage("Planting/CH U", "ha", "sowingplanting_planting_seedlings", ""),
             new TemplateProductUsage("Plantation of trees (WFLDB 3.0)/p/CH U", "p", "sowingplanting_planting_trees", ""),
             new TemplateProductUsage("Potato planting/CH U", "ha", "sowingplanting_planting_potatoes", ""),
-            // FIXME: This process has maybe been renamed
-            new TemplateProductUsage("Diesel combusted in agricultural machinery (WFLDB 3.0)/GLO U", "kg",
+            new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "sowingplanting_other", ""),
             new TemplateProductUsage("Fertilising, by broadcaster/CH U", "ha", "fertilisation_fertilizing_broadcaster",
                     ""),
@@ -199,8 +194,7 @@ public class TemplateProductUsage
                     "fertilisation_liquid_manure_vacuum_tanker", ""),
             new TemplateProductUsage("Solid manure loading and spreading, by hydraulic loader and spreader/CH U", "t",
                     "fertilisation_solid_manure", ""),
-            // FIXME: This process has maybe been renamed
-            new TemplateProductUsage("Diesel combusted in agricultural machinery (WFLDB 3.0)/GLO U", "kg",
+            new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "fertilisation_other", ""),
             new TemplateProductUsage("Chopping, maize/CH U", "ha", "harvesting_chopping_maize", ""),
             new TemplateProductUsage("Combine harvesting/CH U", "ha", "harvesting_threshing_combine_harvester", ""),
@@ -217,8 +211,7 @@ public class TemplateProductUsage
             new TemplateProductUsage("Potato haulm cutting/CH U", "ha", "harvesting_removing_potatoes_haulms", ""),
             new TemplateProductUsage("Swath, by rotary windrower/CH U", "ha", "harvesting_windrowing_rotary_swather",
                     ""),
-            // FIXME: This process has maybe been renamed
-            new TemplateProductUsage("Diesel combusted in agricultural machinery (WFLDB 3.0)/GLO U", "kg",
+            new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "harvesting_other", ""),
 
             new TemplateProductUsage("Baling/CH U", "unit", "otherworkprocesses_baling", ""),// in other work processes
@@ -226,8 +219,7 @@ public class TemplateProductUsage
             new TemplateProductUsage("Mulching/CH U", "ha", "otherworkprocesses_mulching", ""),
             new TemplateProductUsage("Transport, tractor and trailer/CH U", "tkm",
                     "otherworkprocesses_transport_tractor_trailer", ""),
-            // FIXME: This process has maybe been renamed
-            new TemplateProductUsage("Diesel combusted in agricultural machinery (WFLDB 3.0)/GLO U", "kg",
+            new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "otherworkprocesses_other", ""),
 
             new TemplateProductUsage("Electricity, low voltage, at grid/{country} U", "kWh",
@@ -297,6 +289,19 @@ public class TemplateProductUsage
                     "packaging_liquid_fertilisers_and_pesticides", ""),
 
             new TemplateProductUsage("lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil", ""),
+
+            new TemplateProductUsage("Pesticide unspecified, at regional storehouse/RER U", "g", "pest_remains", ""),
+            new TemplateProductUsage("Emissions from pesticides, unspecified (WFLDB 3.0)/GLO S", "g", "pest_remains",
+                    ""),
+            new TemplateProductUsage("Herbicides, at regional storehouse/RER U", "g", "remains_herbicides", ""),
+            new TemplateProductUsage("Emissions from herbicides, unspecified (WFLDB 3.0)/GLO S", "g",
+                    "remains_herbicides", ""),
+            new TemplateProductUsage("Fungicides, at regional storehouse/RER U", "g", "remains_fungicides", ""),
+            new TemplateProductUsage("Emissions from fungicides, unspecified (WFLDB 3.0)/GLO S", "g",
+                    "remains_fungicides", ""),
+            new TemplateProductUsage("Insecticides, at regional storehouse/RER U", "g", "remains_insecticides", ""),
+            new TemplateProductUsage("Emissions from insecticides, unspecified (WFLDB 3.0)/GLO S", "g",
+                    "remains_insecticides", "")
     };
 
     public static final TemplateProductUsage[] electricityHeat = {

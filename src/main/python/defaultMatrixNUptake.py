@@ -129,8 +129,7 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "CN":29.7466444,
       "GLO":38.2322036666667
    },
-   "pineapple":{#FIXME: missing values for country and/or glo
-
+   "pineapple":{
    },
    "potato":{
       "CN":56.2998042722222,

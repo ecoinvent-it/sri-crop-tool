@@ -79,7 +79,7 @@ class TransportModel(object):
             transports[TransportDataset.transport_freight_rail_RER] = 0.0
         return transports;
     
-    def _compute_organic_fert_total_in_t(self):
+    def _compute_organic_fert_total_in_t(self): #Manure is considered as produced on site, so no transport for manure
         return (self.total_composttype + self.total_sewagesludge) / 1000.0;
     
     def _compute_mineral_fert_total_in_t(self):
