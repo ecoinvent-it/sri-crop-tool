@@ -48,6 +48,7 @@ class ModelsSequence(object):
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
         self.outputMapping.mapMachineries(self.allInputs)
         self.outputMapping.mapCODWasteWater(self.allInputs)
+        self.outputMapping.mapPesticides(self.allInputs)
         return self.outputMapping.output;
     
     def _computeFertiliser(self):

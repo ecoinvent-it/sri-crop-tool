@@ -185,7 +185,9 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public List<ProductUsage> getMaterialsFuels()
     {
-        return toProductUsage(TemplateProductUsage.materialsFuels);
+        List<ProductUsage> res = toProductUsage(TemplateProductUsage.materialsFuels);
+        res.addAll(buildPesticidesProductUsages());
+        return res;
     }
 
     @Override
@@ -209,8 +211,9 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public List<SubstanceUsage> getEmissionsToSoil()
     {
-        // TODO: Add pesticides
-        return toSubstanceUsage(TemplateSubstanceUsage.toSoil);
+        List<SubstanceUsage> res = toSubstanceUsage(TemplateSubstanceUsage.toSoil);
+        res.addAll(buildPesticidesSubstanceUsages());
+        return res;
     }
 
     @Override
@@ -233,5 +236,23 @@ public class GeneratedProcess implements ProductScsvProcess
         return Arrays.stream(templates).map(r -> new GeneratedProductUsage(r, modelOutputs))
                 .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0")) // FIXME: Re-add
                 .collect(Collectors.toList());
+    }
+
+    private List<SubstanceUsage> buildPesticidesSubstanceUsages()
+    {
+        return modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
+                .filter(e -> !e.getKey().endsWith("_other"))
+                .filter(e -> !e.getKey().endsWith("_unspecified"))
+                .map(e -> new PesticideSubstanceUsage(e.getKey(), e.getValue())).collect(Collectors.toList());
+    }
+
+    private List<ProductUsage> buildPesticidesProductUsages()
+    {
+        List<ProductUsage> res = modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
+                .map(e -> new PesticideProductUsage(e.getKey(), e.getValue())).collect(Collectors.toList());
+        res.addAll(modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
+                .filter(e -> e.getKey().endsWith("_other") || e.getKey().endsWith("_unspecified"))
+                .map(e -> new PesticideEmissions(e.getKey(), e.getValue())).collect(Collectors.toList()));
+        return res;
     }
 }

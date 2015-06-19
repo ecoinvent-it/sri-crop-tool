@@ -16,52 +16,50 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.quantis_intl.lcigenerator.imports;
+package com.quantis_intl.lcigenerator.scsv;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
+import java.util.Objects;
 
-public class PropertiesLoader
+import com.google.common.collect.Maps;
+import com.quantis_intl.commons.scsv.processes.ProductUsage;
+import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
+
+public class PesticideProductUsage implements ProductUsage
 {
-    // FIXME: It is the right place?
-    public static final Properties CROPS = loadProperties("/crops.properties");
+    private static final Map<String, String> MAPPING = Maps.fromProperties(PropertiesLoader
+            .loadProperties("/pesticides_product_mapping.properties"));
 
-    public static Map<String, String> reverseProperties(String filename)
+    protected final String variable;
+    private final String amount;
+
+    public PesticideProductUsage(String variable, String amount)
     {
-        return reverse(loadProperties(filename));
+        this.variable = variable;
+        this.amount = amount;
     }
 
-    public static Properties loadProperties(String fileName)
+    @Override
+    public String getName()
     {
-        InputStream inStream = PropertiesLoader.class.getResourceAsStream(fileName);
-        if (inStream == null)
-            throw new IllegalStateException("properties file not found: " + fileName);
-
-        Properties prop = new Properties();
-
-        try
-        {
-            prop.load(inStream);
-        }
-        catch (IOException e)
-        {
-            throw new IllegalStateException("unreadable properties file: " + fileName);
-        }
-
-        return prop;
+        return Objects.requireNonNull(MAPPING.get(variable));
     }
 
-    public static Map<String, String> reverse(Properties prop)
+    @Override
+    public String getUnit()
     {
-        HashMap<String, String> map = new HashMap<String, String>();
-        for (Entry<Object, Object> entry : prop.entrySet())
-        {
-            map.put((String) entry.getValue(), (String) entry.getKey());
-        }
-        return map;
+        return "g";
+    }
+
+    @Override
+    public String getAmount()
+    {
+        return amount;
+    }
+
+    @Override
+    public String getComment()
+    {
+        return "TODO";
     }
 }

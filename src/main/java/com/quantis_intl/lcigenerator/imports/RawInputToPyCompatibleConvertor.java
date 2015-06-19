@@ -207,7 +207,7 @@ public class RawInputToPyCompatibleConvertor
                 else
                 {
                     // FIXME: Warn
-                    inputs.put(totalKey.replace("total_", "remains_"), enteredTotal - sum);
+                    inputs.put(totalKey.replace("total", "remains"), enteredTotal - sum);
                 }
             }
         }

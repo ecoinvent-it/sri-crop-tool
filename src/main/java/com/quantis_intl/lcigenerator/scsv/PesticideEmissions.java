@@ -16,52 +16,25 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.quantis_intl.lcigenerator.imports;
+package com.quantis_intl.lcigenerator.scsv;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Properties;
-
-public class PropertiesLoader
+public class PesticideEmissions extends PesticideProductUsage
 {
-    // FIXME: It is the right place?
-    public static final Properties CROPS = loadProperties("/crops.properties");
-
-    public static Map<String, String> reverseProperties(String filename)
+    public PesticideEmissions(String variable, String amount)
     {
-        return reverse(loadProperties(filename));
+        super(variable, amount);
     }
 
-    public static Properties loadProperties(String fileName)
+    @Override
+    public String getName()
     {
-        InputStream inStream = PropertiesLoader.class.getResourceAsStream(fileName);
-        if (inStream == null)
-            throw new IllegalStateException("properties file not found: " + fileName);
-
-        Properties prop = new Properties();
-
-        try
-        {
-            prop.load(inStream);
-        }
-        catch (IOException e)
-        {
-            throw new IllegalStateException("unreadable properties file: " + fileName);
-        }
-
-        return prop;
-    }
-
-    public static Map<String, String> reverse(Properties prop)
-    {
-        HashMap<String, String> map = new HashMap<String, String>();
-        for (Entry<Object, Object> entry : prop.entrySet())
-        {
-            map.put((String) entry.getValue(), (String) entry.getKey());
-        }
-        return map;
+        if (variable.startsWith("pesti_herbicides"))
+            return "Emissions from herbicides, unspecified (WFLDB 3.0)/GLO S";
+        else if (variable.startsWith("pesti_fungicides"))
+            return "Emissions from fungicides, unspecified (WFLDB 3.0)/GLO S";
+        else if (variable.startsWith("pesti_insecticides"))
+            return "Emissions from insecticides, unspecified (WFLDB 3.0)/GLO S";
+        else
+            throw new IllegalStateException();
     }
 }

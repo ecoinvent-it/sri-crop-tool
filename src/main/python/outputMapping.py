@@ -94,6 +94,18 @@ class OutputMapping(object):
     def mapCODWasteWater(self, allInputs): #m3 * mg/L(==g/m3) -> g
         self.output["cod_in_waste_water"] = allInputs["eol_waste_water_to_nature"] * allInputs["cod_in_waste_water"]
         
+    def mapPesticides(self, allInputs):
+        for k,v in allInputs["specified_pesticides"]:
+            self.output[k.replace("part_", "pesti_")] = v
+        if ("pest_remains" in allInputs):
+            self.output["pest_remains"] = allInputs["pest_remains"]
+        if ("remains_herbicides" in allInputs):
+            self.output["remains_herbicides"] = allInputs["remains_herbicides"]
+        if ("remains_fungicides" in allInputs):
+            self.output["remains_fungicides"] = allInputs["remains_fungicides"]
+        if ("remains_insecticides" in allInputs):
+            self.output["remains_insecticides"] = allInputs["remains_insecticides"]
+
     def mapMachineries(self, allInputs):
         if ("remains_machinery_diesel" in allInputs):
             self.output["remains_machinery_diesel"] = allInputs["remains_machinery_diesel"]
@@ -167,7 +179,7 @@ class OutputMapping(object):
                                  }
 
     _SOILCULTIVATION_FACTORS = {
-                                 Soilcultivation.decompaction: 1.0 / 15.921,
+                                 Soilcultivation.decompaction: 1.0 / 22.5,
                                  Soilcultivation.tillage_chisel: 1.0 / 15.5,
                                  Soilcultivation.tillage_spring_tine_weeder: 1.0 / 1.6,
                                  Soilcultivation.tillage_rotary_harrow: 1.0 / 11.5,
