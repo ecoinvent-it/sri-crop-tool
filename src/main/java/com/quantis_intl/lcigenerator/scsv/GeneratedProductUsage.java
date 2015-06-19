@@ -22,6 +22,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.quantis_intl.commons.scsv.Uncertainty;
+import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
 import com.quantis_intl.commons.scsv.processes.ProductUsage;
 
 public class GeneratedProductUsage implements ProductUsage
@@ -77,8 +79,18 @@ public class GeneratedProductUsage implements ProductUsage
     }
 
     @Override
+    public Uncertainty getUncertainty()
+    {
+        return UncertaintyBean.LognormalBean.of(template.uncertainty.standardDeviation);
+    }
+
+    @Override
     public String getComment()
     {
-        return modelOutputs.getOrDefault(template.commentVariable, "");
+        String res = template.uncertainty.pedigreeMatrix;
+        String comment = modelOutputs.getOrDefault(template.commentVariable, "");
+        if (comment.isEmpty())
+            return res;
+        return res + " - " + comment;
     }
 }

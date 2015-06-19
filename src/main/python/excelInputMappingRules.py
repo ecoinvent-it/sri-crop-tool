@@ -168,7 +168,7 @@ _WASTE_PLASTIC_RATIOS_ENUM_TO_FIELD = {
 class RegroupPesticides(InputMappingRule):
     def mapField(self, attrName, mapping):
         res = {}
-        for k,v in self.mapping.originalInputs.items():
+        for k,v in mapping.originalInputs.items():
             if (k.startswith("part_herbicides") or k.startswith("part_fungicides") or k.startswith("part_insecticides")):
                 res[k] = v
         return res

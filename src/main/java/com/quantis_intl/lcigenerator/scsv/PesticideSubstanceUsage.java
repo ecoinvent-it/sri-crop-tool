@@ -23,6 +23,8 @@ import java.util.Objects;
 
 import com.google.common.collect.Maps;
 import com.quantis_intl.commons.scsv.ScsvEnums.SubCompartment;
+import com.quantis_intl.commons.scsv.Uncertainty;
+import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
 import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
 import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
 
@@ -65,8 +67,16 @@ public class PesticideSubstanceUsage implements SubstanceUsage
     }
 
     @Override
+    public Uncertainty getUncertainty()
+    {
+        return UncertaintyBean.LognormalBean
+                .of(StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL.standardDeviation);
+    }
+
+    @Override
     public String getComment()
     {
-        return "TODO";
+        // TODO: Add user comment
+        return StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL.pedigreeMatrix;
     }
 }

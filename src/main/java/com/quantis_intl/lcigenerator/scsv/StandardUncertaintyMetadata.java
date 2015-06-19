@@ -18,57 +18,41 @@
  */
 package com.quantis_intl.lcigenerator.scsv;
 
-import java.util.Map;
-import java.util.Objects;
-
-import com.google.common.collect.Maps;
-import com.quantis_intl.commons.scsv.Uncertainty;
-import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
-import com.quantis_intl.commons.scsv.processes.ProductUsage;
-import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
-
-public class PesticideProductUsage implements ProductUsage
+public enum StandardUncertaintyMetadata
 {
-    private static final Map<String, String> MAPPING = Maps.fromProperties(PropertiesLoader
-            .loadProperties("/pesticides_product_mapping.properties"));
+    SEEDS("1.0714", "(2,1,1,1,1,na)"),
+    FERTILISERS("1.0714", "(2,1,1,1,1,na)"),
+    PESTICIDES_MANUFACTURING("1.0744", "(2,2,1,1,1,na)"),
+    PESTICIDES_EMISSION_TO_SOIL("1.2090", "(2,2,1,1,1,na)"),
+    LAND_OCCUPATION("1.1130", "(2,1,1,1,1,na)"),
+    LAND_TRANSFORMATION("1.2077", "(2,1,1,1,1,na)"),
+    ENERGY_CARRIERS_FUEL_WORK("1.0714", "(2,1,1,1,1,na)"),
+    ELECTRICITY("1.0714", "(2,1,1,1,1,na)"),
+    TRANSPORTS("2.0477", "(4,1,1,1,1,na)"),
+    IRRIGATION_WATER("1.0714", "(2,1,1,1,1,na)"),
+    CO2_ENERGY_BIOMASS("1.0744", "(2,2,1,1,1,na)"),
+    CO2_EMISSIONS("1.0714", "(2,2,1,1,1,na)"),
+    WATER_EMISSIONS("1.0744", "(2,2,1,1,1,na)"),
+    CO("5.0043", "(2,2,1,1,1,na)"),
+    CH4_NH3_TO_AIR("1.2090", "(2,2,1,1,1,na)"),
+    N2O_NOX_TO_AIR("1.4057", "(2,2,1,1,1,na)"),
+    NO3_PO4_TO_WATER("1.5051", "(2,2,1,1,1,na)"),
+    HM_TO_WATER("1.8042", "(2,2,1,1,1,na)"),
+    HM_TO_SOIL("1.5051", "(2,2,1,1,1,na)"),
+    UTILITIES_FUELS("1.0714", "(2,1,1,1,1,na)"),
+    UTILITIES_ELECTRICITY("1.0714", "(2,1,1,1,1,na)"),
+    UTILITIES_WATER("1.0714", "(2,1,1,1,1,na)"),
+    OTHER_MATERIALS("1.0744", "(2,2,1,1,1,na)"),
+    OTHER_GREEHOUSES("1.0744", "(2,2,1,1,1,na)"),
+    WASTE_MANAGEMENT("1.2090", "(4,2,1,1,1,na)"),
+    COD_IN_WASTEWATER("1.5605", "(4,2,1,1,1,na)");
 
-    protected final String variable;
-    private final String amount;
+    public final String standardDeviation;
+    public final String pedigreeMatrix;
 
-    public PesticideProductUsage(String variable, String amount)
+    private StandardUncertaintyMetadata(String standardDeviation, String pedigreeMatrix)
     {
-        this.variable = variable;
-        this.amount = amount;
-    }
-
-    @Override
-    public String getName()
-    {
-        return Objects.requireNonNull(MAPPING.get(variable));
-    }
-
-    @Override
-    public String getUnit()
-    {
-        return "g";
-    }
-
-    @Override
-    public String getAmount()
-    {
-        return amount;
-    }
-
-    @Override
-    public Uncertainty getUncertainty()
-    {
-        return UncertaintyBean.LognormalBean.of(StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING.standardDeviation);
-    }
-
-    @Override
-    public String getComment()
-    {
-        // TODO: Add user comment
-        return StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING.pedigreeMatrix;
+        this.standardDeviation = standardDeviation;
+        this.pedigreeMatrix = pedigreeMatrix;
     }
 }

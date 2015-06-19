@@ -18,6 +18,9 @@
  */
 package com.quantis_intl.lcigenerator.scsv;
 
+import com.quantis_intl.commons.scsv.Uncertainty;
+import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
+
 public class PesticideEmissions extends PesticideProductUsage
 {
     public PesticideEmissions(String variable, String amount)
@@ -36,5 +39,19 @@ public class PesticideEmissions extends PesticideProductUsage
             return "Emissions from insecticides, unspecified (WFLDB 3.0)/GLO S";
         else
             throw new IllegalStateException();
+    }
+
+    @Override
+    public Uncertainty getUncertainty()
+    {
+        return UncertaintyBean.LognormalBean
+                .of(StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL.standardDeviation);
+    }
+
+    @Override
+    public String getComment()
+    {
+        // TODO: Add user comment
+        return StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL.pedigreeMatrix;
     }
 }

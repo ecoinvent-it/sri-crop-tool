@@ -95,7 +95,7 @@ class OutputMapping(object):
         self.output["cod_in_waste_water"] = allInputs["eol_waste_water_to_nature"] * allInputs["cod_in_waste_water"]
         
     def mapPesticides(self, allInputs):
-        for k,v in allInputs["specified_pesticides"]:
+        for k,v in allInputs["specified_pesticides"].items():
             self.output[k.replace("part_", "pesti_")] = v
         if ("pest_remains" in allInputs):
             self.output["pest_remains"] = allInputs["pest_remains"]
