@@ -22,7 +22,7 @@ class HmModel(object):
       hm_from_mineral_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
       hm_from_other_organic_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
       hm_from_seed: map HeavyMetalType -> mg i/(ha*year) (i:hm type)
-      hm_pesticides_quantities: map PesticideType -> kg i /(ha*year) (i: pest type)
+      hm_pesticides_quantities: map PesticideType -> g i /(ha*year) (i: pest type)
       drained_part: ratio
       eroded_soil: kg/(ha*year)
       hm_land_use_category: LandUseCategoryForHM
@@ -110,19 +110,22 @@ class HmModel(object):
             setattr(self, key, inputs[key])
             
     def compute(self):
-        sumPest = self._compute_pesticides()
+        sumPest = self._compute_pesticides() #mg/ha
         hm_to_gw = dict.fromkeys(HeavyMetalType,0.0)
         hm_to_sw = dict.fromkeys(HeavyMetalType,0.0)
         hm_to_soil = dict.fromkeys(HeavyMetalType,0.0)
         
         for hmIndex, hmElement in enumerate(HeavyMetalType):
-            agro_input = self._compute_agro_input(sumPest, hmElement);
-            allocation_factor = self._compute_allocation_factor_for_hm_element(agro_input,hmElement);
-            leaching = self._compute_leaching_for_hm_element(allocation_factor,hmElement);
-            erosion_gw = self._compute_erosion_gw(allocation_factor, hmElement, hmIndex);
+            agro_input = self._compute_agro_input(sumPest, hmElement); #mg/ha
+            allocation_factor = self._compute_allocation_factor_for_hm_element(agro_input,hmElement); #ratio
+            leaching = self._compute_leaching_for_hm_element(allocation_factor,hmElement); #mg/ha
+            erosion_gw = self._compute_erosion_gw(allocation_factor, hmElement, hmIndex); #mg/ha
             hm_to_soil[hmElement] = self._compute_soil(agro_input, allocation_factor, leaching, erosion_gw, hmElement)
-            hm_to_sw[hmElement], hm_to_gw[hmElement] = self._split_leaching_between_surface_and_ground_water(leaching);
-            hm_to_gw[hmElement] += erosion_gw;
+            hm_to_sw[hmElement], hm_to_gw[hmElement] = self._split_leaching_between_surface_and_ground_water(leaching)
+            hm_to_gw[hmElement] += erosion_gw
+            hm_to_soil[hmElement] /= 1000000.0
+            hm_to_sw[hmElement] /= 1000000.0
+            hm_to_gw[hmElement] /= 1000000.0
             
         return {'m_hm_heavymetal_to_soil':hm_to_soil,
                 'm_hm_heavymetal_to_ground_water':hm_to_gw,
@@ -138,32 +141,33 @@ class HmModel(object):
     def _compute_allocation_factor_for_hm_element(self, agro_input, hmElement):
         return agro_input / (agro_input + self._HM_DEPOSITIONS[hmElement] / self.crop_cycle_per_year)
         
-    def _compute_pesticides(self):
+    def _compute_pesticides(self): #mg/ha
         hm_values = dict.fromkeys(HeavyMetalType,0.0)
-        hm_values[HeavyMetalType.cu] = self.hm_pesticides_quantities[PesticideType.cu] * self._PEST_TO_SOIL_RATIO
+        #g/ha -> mg/ha
+        hm_values[HeavyMetalType.cu] = self.hm_pesticides_quantities[PesticideType.cu] * self._PEST_TO_SOIL_RATIO * 1000.0
         for pest in self._PEST_NB_ZN_ATOMS.keys():
             hm_values[HeavyMetalType.zn] += self._compute_pesticides_ratio_to_zn(pest) \
                                             * self.hm_pesticides_quantities[pest] \
-                                            * self._PEST_TO_SOIL_RATIO
+                                            * self._PEST_TO_SOIL_RATIO * 1000.0
         return hm_values
             
-    def _compute_pesticides_ratio_to_zn(self,pest):#mg/g -> mg/kg
-        return self._ZINC_MW * self._PEST_NB_ZN_ATOMS[pest] / self._PEST_MW[pest] / 1000.0
+    def _compute_pesticides_ratio_to_zn(self,pest): #ratio
+        return self._ZINC_MW / self._PEST_MW[pest] * self._PEST_NB_ZN_ATOMS[pest]
     
-    def _compute_leaching_for_hm_element(self, allocation_factor, hmElement): # mg/ha/y > kg/ha/crop cycle
-        return self._LEACHING_TO_GW[hmElement] / self.crop_cycle_per_year * allocation_factor / 1000000.0;
+    def _compute_leaching_for_hm_element(self, allocation_factor, hmElement): # mg/ha/y > mg/ha/crop cycle
+        return self._LEACHING_TO_GW[hmElement] / self.crop_cycle_per_year * allocation_factor;
   
-    def _split_leaching_between_surface_and_ground_water(self, total_leaching):
+    def _split_leaching_between_surface_and_ground_water(self, total_leaching): #mg/ha
         surface = total_leaching * self.drained_part
         ground = total_leaching  * (1.0 - self.drained_part)
         return (surface,ground)
     
-    def _compute_erosion_gw(self, allocation_factor, hmElement, hmIndex): #mg/ha -> kg/ha
-        return self._SOIL_HM_CONTENT[self.hm_land_use_category][hmIndex] / 1000000.0 \
+    def _compute_erosion_gw(self, allocation_factor, hmElement, hmIndex): #mg/ha
+        return self._SOIL_HM_CONTENT[self.hm_land_use_category][hmIndex] \
                 * self.eroded_soil / self.crop_cycle_per_year * self._ACCUMULATION_FACTOR \
                 * self._EROSION_FACTOR * allocation_factor
 
-    def _compute_soil(self, agro_input, allocation_factor, leaching, erosion_gw, hmElement): #mg/ha -> kg/ha
+    def _compute_soil(self, agro_input, allocation_factor, leaching, erosion_gw, hmElement): #mg/ha
         return 0.0 if allocation_factor == 0.0 else (agro_input \
                -(leaching + erosion_gw)/allocation_factor ) \
-                * allocation_factor / 1000000.0
+                * allocation_factor

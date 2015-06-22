@@ -347,7 +347,7 @@ public class TemplateProductUsage
 
             new TemplateProductUsage("Transport, lorry >16t, fleet average/RER U", "tkm",
                     "transport_lorry_sup_16t_fleet_average_RER", StandardUncertaintyMetadata.TRANSPORTS, ""),
-            new TemplateProductUsage("Transport, transoceanic freight ship/OCDE U", "tkm",
+            new TemplateProductUsage("Transport, transoceanic freight ship/OCE U", "tkm",
                     "transport_transoceanic_freight_ship_OCE", StandardUncertaintyMetadata.TRANSPORTS, ""),
             new TemplateProductUsage("Transport, freight, rail/RER U", "tkm", "transport_freight_rail_RER",
                     StandardUncertaintyMetadata.TRANSPORTS, ""),
