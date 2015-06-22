@@ -31,27 +31,28 @@ class PackModel(object):
             setattr(self, key, inputs[key])
     
     def compute(self):
-        totalFert = self.computeTotalFertilisers();
-        fert_solid,fert_liquid = self.computeFertilisers(totalFert)
-        pest_solid,pest_liquid = self.computePesticides()
+        totalFert = self._computeTotalFertilisers();
+        fert_solid,fert_liquid = self._computeFertilisers(totalFert)
+        pest_solid,pest_liquid = self._computePesticides()
 
-        return {"m_Pack_packaging_liquid_fertilisers_and_pesticides": (pest_liquid + fert_liquid)*self._DILUTION_FACTOR,
-                "m_Pack_packaging_solid_fertilisers_and_pesticides": (pest_solid + fert_solid)*self._DILUTION_FACTOR}
+        #Values are divided by 100.0, because there are too many packaging otherwise, according to WFLDB. This should be cleaned up
+        return {"m_Pack_packaging_liquid_fertilisers_and_pesticides": (pest_liquid + fert_liquid)*self._DILUTION_FACTOR / 100.0,
+                "m_Pack_packaging_solid_fertilisers_and_pesticides": (pest_solid + fert_solid)*self._DILUTION_FACTOR / 100.0}
     
     
-    def computeTotalFertilisers(self):
+    def _computeTotalFertilisers(self):
         return self.nitrogen_from_mineral_fert \
                 + self.p2O5_from_mineral_fert \
                 + self.k2O_from_mineral_fert \
                 + self.magnesium_from_fertilizer \
                 + self.ca_from_mineral_fert
         
-    def computeFertilisers(self, totalFert):
+    def _computeFertilisers(self, totalFert):
         liquid = self.n_fertiliser_quantities[NFertiliserType.ammonia_liquid]
         solid = totalFert - liquid
         return (solid,liquid)
     
-    def computePesticides(self):
+    def _computePesticides(self):
         solid = 0.0
         liquid = self.pest_total
         return (solid / 1000.0,liquid /1000.0)

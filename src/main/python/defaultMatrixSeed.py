@@ -2,8 +2,6 @@
 #from GD_crop Seeds_L0
 #only glo as all values per country are the same
 NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
-   "asparagus":{
-   },
    "carrot":{
       "GLO":4.2
    },
@@ -13,13 +11,8 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "maizegrain":{
       "GLO":25.0
    },
-   "mint":{
-   },
    "oat":{
       "GLO":190.0
-   },
-   "onion":{
-      "GLO":3.301886792
    },
    "peanut":{
       "GLO":100.0
@@ -36,8 +29,6 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "soybean":{
       "GLO":110.0
    },
-   "strawberry":{
-   },
    "sugarbeet":{
       "GLO":2.1
    },
@@ -47,10 +38,22 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "sweetcorn":{
       "GLO":25.0
    },
+   "wheat":{
+   }
+}
+
+NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY = {
+   "asparagus":{
+   },
+   "mint":{
+   },
+   "onion":{
+      "GLO":3.301886792
+   },
+   "strawberry":{
+   },
    "tomato":{
       "GLO":3.125
-   },
-   "wheat":{
    }
 }
 

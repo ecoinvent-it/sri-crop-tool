@@ -20,7 +20,8 @@ from defaultMatrixNUptake import NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY
 from defaultMatrixTotalManure import TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY,\
     TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY
 from defaultMatrixSeed import NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY,\
-    NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY
+    NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY,\
+    NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY
 from datetime import date
 import dateutil.relativedelta as relativedelta
 from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation,\
@@ -338,7 +339,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    #Seed defaults
                    "unsafe_seeds": CropCountryMatrixLookupDefaultGenerator(NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY),
                    "seeds": SafeDefaultGenerator("unsafe_seeds", 0.0),
-                   "nb_seedlings": CropCountryMatrixLookupDefaultGenerator({}),
+                   "nb_seedlings": CropCountryMatrixLookupDefaultGenerator(NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY),
                    "nb_planted_trees": CropCountryMatrixLookupDefaultGenerator(NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY),
                    "seed_quantities": SeedQuantitiesDefaultGenerator(),
                    #Erosion defaults
