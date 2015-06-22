@@ -27,6 +27,8 @@ import dateutil.relativedelta as relativedelta
 from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation,\
     Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
 from defaultMatrixTotalPesticides import TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY
+from defaultMatrixEvapoTranspiration import EVAPO_TRANSPI_PER_CROP_PER_COUNTRY
+from models.irrigationmodel import IrrigationType
 
 class DefaultValuesWrapper(object):
     def __init__(self, inputMapping, generatorMap):
@@ -125,6 +127,37 @@ class CropCyclePerYearDefaultGenerator(object):
             return 1.0 / (dateDiff.years + dateDiff.months/12.0 + (dateDiff.days // 14.0) / 24.0);
         except KeyError:
             return 1.0;
+        
+class WaterUseDefaultGenerator(object):
+    def generateDefault(self, field, generators):
+        default_evapo_transpiration = CropCountryMatrixLookupDefaultGenerator(EVAPO_TRANSPI_PER_CROP_PER_COUNTRY).generateDefault("", generators);
+        irrigation_efficiency_ratio = self._compute_irrigation_efficiency_ratio(generators["irrigation_types_proportions"])
+        return default_evapo_transpiration / irrigation_efficiency_ratio;
+    
+    _IRRIGATION_EFFICIENCY_FACTOR_SURFACE = 0.45
+    _IRRIGATION_EFFICIENCY_FACTOR_SPRINKLER = 0.75
+    _IRRIGATION_EFFICIENCY_FACTOR_DRIP = 0.9
+    
+    def _compute_irrigation_efficiency_ratio(self, irrigation_types_proportions):
+        return self._compute_surface_irrigation_ratio(irrigation_types_proportions) \
+             + self._compute_sprinkler_irrigation_ratio(irrigation_types_proportions)\
+             + self._compute_drip_irrigation_ratio(irrigation_types_proportions);
+    
+    def _compute_surface_irrigation_ratio(self, irrigation_types_proportions):
+        return (irrigation_types_proportions[IrrigationType.surface_irrigation_diesel] 
+                + irrigation_types_proportions[IrrigationType.surface_irrigation_electricity] 
+                + irrigation_types_proportions[IrrigationType.surface_irrigation_no_energy])\
+                 * self._IRRIGATION_EFFICIENCY_FACTOR_SURFACE
+    
+    def _compute_sprinkler_irrigation_ratio(self, irrigation_types_proportions):
+        return (irrigation_types_proportions[IrrigationType.sprinkler_irrigation_electricity] 
+                + irrigation_types_proportions[IrrigationType.sprinkler_irrigation_diesel])\
+                 * self._IRRIGATION_EFFICIENCY_FACTOR_SPRINKLER
+    
+    def _compute_drip_irrigation_ratio(self, irrigation_types_proportions):
+        return (irrigation_types_proportions[IrrigationType.drip_irrigation_electricity] 
+                + irrigation_types_proportions[IrrigationType.drip_irrigation_diesel])\
+                 * self._IRRIGATION_EFFICIENCY_FACTOR_DRIP
     
 class AnnualizedIrrigationDefaultGenerator(object):
     def generateDefault(self, field, generators): #m3/(ha*crop cycle) -> mm/year
@@ -302,7 +335,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
                    "farming_type": SimpleValueDefaultGenerator("non_organic"),
                    "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),
-                   "water_use_total": SimpleValueDefaultGenerator(0.0), #FIXME: to calculate
+                   "water_use_total": WaterUseDefaultGenerator(),
                    "yield_main_product_per_year":CropCountryMatrixLookupDefaultGenerator(YIELD_PER_YEAR_PER_CROP_PER_COUNTRY),
                    "yield_main_product_per_crop_cycle": PerCropCycleYieldDefaultGenerator(),
                    "yield_main_product_dry_per_crop_cycle": DryYieldGenerator(),
