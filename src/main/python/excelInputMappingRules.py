@@ -101,7 +101,7 @@ _PLANTPROTECTION_RATIOS_ENUM_TO_FIELD = {
                                          }
 
 _SOILCULTIVATION_RATIOS_ENUM_TO_FIELD = {
-                                         Soilcultivation.decompaction:"ratio_soilcultivation_",
+                                         Soilcultivation.decompactation:"ratio_soilcultivation_decompactation",
                                          Soilcultivation.tillage_chisel:"ratio_soilcultivation_tillage_chisel",
                                          Soilcultivation.tillage_spring_tine_weeder:"ratio_soilcultivation_tillage_spring_tine_weeder",
                                          Soilcultivation.tillage_rotary_harrow:"ratio_soilcultivation_tillage_rotary_harrow",

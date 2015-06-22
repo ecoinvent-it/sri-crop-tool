@@ -72,7 +72,7 @@ public class LabelForBlockTags
         PLANT_PROTECTION.put("Other", "other");
         LABELS_FOR_RATIO.put("ratio_plantprotection_", PLANT_PROTECTION);
 
-        SOIL_CULTIVATION.put("Soil decompaction", "decompaction");
+        SOIL_CULTIVATION.put("Soil decompactation", "decompactation");
         SOIL_CULTIVATION.put("Soil tillage, chisel", "tillage_chisel");
         SOIL_CULTIVATION.put("Soil tillage, spring-tine weeder", "tillage_spring_tine_weeder");
         SOIL_CULTIVATION.put("Soil tillage, rotary harrow", "tillage_rotary_harrow");

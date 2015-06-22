@@ -203,7 +203,7 @@ public class TemplateProductUsage
             new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "plantprotection_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
             new TemplateProductUsage("Soil decompactation, with 4.5m chisel/FR U", "hr",
-                    "soilcultivation_decompaction", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
+                    "soilcultivation_decompactation", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
             new TemplateProductUsage("Tillage, cultivating, chiselling (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_chisel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
             // FIXME: Typo, recheck the 25.06

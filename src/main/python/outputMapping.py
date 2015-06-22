@@ -179,7 +179,7 @@ class OutputMapping(object):
                                  }
 
     _SOILCULTIVATION_FACTORS = {
-                                 Soilcultivation.decompaction: 1.0 / 22.5,
+                                 Soilcultivation.decompactation: 1.0 / 22.5,
                                  Soilcultivation.tillage_chisel: 1.0 / 15.5,
                                  Soilcultivation.tillage_spring_tine_weeder: 1.0 / 1.6,
                                  Soilcultivation.tillage_rotary_harrow: 1.0 / 11.5,

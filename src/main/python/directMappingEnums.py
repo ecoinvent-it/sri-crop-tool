@@ -9,7 +9,7 @@ class Plantprotection(Enum):
     other="plantprotection_other"
     
 class Soilcultivation(Enum):
-    decompaction="soilcultivation_decompaction"
+    decompactation="soilcultivation_decompactation"
     tillage_chisel="soilcultivation_tillage_chisel"
     tillage_spring_tine_weeder="soilcultivation_tillage_spring_tine_weeder"
     tillage_rotary_harrow="soilcultivation_tillage_rotary_harrow"
