@@ -69,14 +69,11 @@ public class Api
     @Path("computeLci")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public void computeQuestionnaire(@FormDataParam("idTab") final String idTab,
-            @FormDataParam("uploadFile") InputStream is,
+    public void computeQuestionnaire(@FormDataParam("uploadFile") InputStream is,
             @FormDataParam("canBeStored") boolean canBeStored, @Suspended AsyncResponse response)
             throws URISyntaxException, IOException
     {
         ErrorReporter errorReporter = new ErrorReporterImpl();
-
-        Objects.requireNonNull(idTab, "idTab is null");
 
         // TODO: Store file if it can be stored
         Map<String, RawInputLine> extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
@@ -88,7 +85,7 @@ public class Api
 
             if (!errorReporter.hasErrors())
                 pyBridgeService.callComputeLci(validatedData,
-                        result -> onResult(idTab, result, errorReporter, response),
+                        result -> onResult(result, errorReporter, response),
                         error -> onError(error, response));
             else
             {
@@ -103,11 +100,11 @@ public class Api
         }
     }
 
-    private void onResult(String idTab, Map<String, String> modelsOutput, ErrorReporter errorReporter,
+    private void onResult(Map<String, String> modelsOutput, ErrorReporter errorReporter,
             AsyncResponse response)
     {
-        SecurityUtils.getSubject().getSession().setAttribute(idTab, modelsOutput);
         String idResult = UUID.randomUUID().toString();
+        SecurityUtils.getSubject().getSession().setAttribute(idResult, modelsOutput);
         response.resume(Response.ok(new ImportResult(errorReporter, idResult)).build());
     }
 
@@ -120,13 +117,11 @@ public class Api
     @POST
     @Path("generateScsv")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response generateScsv(@FormParam("idTab") final String idTab, @FormParam("idResult") final String idResult)
+    public Response generateScsv(@FormParam("idResult") final String idResult)
     {
-        Objects.requireNonNull(idTab, "idTab is null");
-
         @SuppressWarnings("unchecked")
         Map<String, String> modelsOutput = (Map<String, String>) SecurityUtils.getSubject().getSession()
-                .getAttribute(idTab);
+                .getAttribute(idResult);
 
         Objects.requireNonNull(modelsOutput, "results not found");
 

@@ -4,7 +4,6 @@ import 'dart:js' as js;
 import 'package:angular/angular.dart';
 
 import 'package:alcig/api/api.dart';
-import 'package:alcig/custom_annotations.dart';
 
 @Component(
     selector: 'process-generation-steps',
@@ -26,9 +25,7 @@ class ProcessGeneratorSteps
   bool get hasWarnings => (warnings != null && warnings.length > 0);
   bool get hasErrors => (errors != null && errors.length > 0);
   
-  String idTab;
-  
-  ProcessGeneratorSteps(Api this._api, @IdTab() String this.idTab);
+  ProcessGeneratorSteps(Api this._api);
   
   void submitUploadForm(target)
   {
