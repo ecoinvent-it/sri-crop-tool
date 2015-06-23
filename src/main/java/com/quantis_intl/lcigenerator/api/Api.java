@@ -117,17 +117,22 @@ public class Api
     @POST
     @Path("generateScsv")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response generateScsv(@FormParam("idResult") final String idResult)
+    public Response generateScsv(@FormParam("idResult") final String idResult,
+            @FormParam("filename") final String importedFilename)
     {
+        Objects.requireNonNull(idResult, "idResult is null");
+        Objects.requireNonNull(importedFilename, "importedFilename is null");
+
         @SuppressWarnings("unchecked")
         Map<String, String> modelsOutput = (Map<String, String>) SecurityUtils.getSubject().getSession()
                 .getAttribute(idResult);
 
         Objects.requireNonNull(modelsOutput, "results not found");
+        String filename = importedFilename.substring(0, importedFilename.lastIndexOf(".xls"));
 
         return Response.ok(
                 (StreamingOutput) outputStream ->
                 scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, outputStream))
-                .header("Content-Disposition", "attachment; filename=\"GeneratedScsv.csv\"").build();
+                .header("Content-Disposition", "attachment; filename=\"" + filename + ".csv\"").build();
     }
 }

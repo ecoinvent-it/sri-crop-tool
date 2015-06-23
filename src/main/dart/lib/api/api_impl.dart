@@ -20,6 +20,7 @@ class ApiImpl implements Api {
                     if ( request.status == 400 )
                       return request;
                     else
+                      // FIXME: Display pop-up
                       throw request;
                   }
           );
