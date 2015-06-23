@@ -15,7 +15,7 @@ class Test(unittest.TestCase):
                 "soil_erodibility_factor":0.032,
                 "crop_factor":0.5
                  }
-        expectedResults = {"m_Erosion_eroded_soil": 20814.14111845}
+        expectedResults = {"m_Erosion_eroded_soil": 218866.16700263688}
         
         results = erosionmodel.ErosionModel(inputs).compute()
         

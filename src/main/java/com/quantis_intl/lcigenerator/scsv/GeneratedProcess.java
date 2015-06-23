@@ -154,7 +154,7 @@ public class GeneratedProcess implements ProductScsvProcess
             @Override
             public String getCategory()
             {
-                return "ALCIG import";
+                return "_ALCIG import";
             }
 
             @Override
