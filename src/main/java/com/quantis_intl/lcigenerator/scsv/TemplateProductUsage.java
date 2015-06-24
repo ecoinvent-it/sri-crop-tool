@@ -206,8 +206,7 @@ public class TemplateProductUsage
                     "soilcultivation_decompactation", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
             new TemplateProductUsage("Tillage, cultivating, chiselling (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_chisel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
-            // FIXME: Typo, recheck the 25.06
-            new TemplateProductUsage("Tillage, currying, by weeder(WFLDB 3.0)/CH U", "ha",
+            new TemplateProductUsage("Tillage, currying, by weeder (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_spring_tine_weeder",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
             new TemplateProductUsage("Tillage, harrowing, by rotary harrow (WFLDB 3.0)/CH U", "ha",
