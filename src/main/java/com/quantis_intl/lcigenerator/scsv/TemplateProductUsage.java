@@ -327,15 +327,15 @@ public class TemplateProductUsage
             new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "kg", "materials_bird_net",
                     StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
 
-            new TemplateProductUsage("Plastic tunnel/FR U", "m2", "greenhouse_plastic_tunnel",
+            new TemplateProductUsage("Plastic tunnel (WFLDB 3.0)/FR U", "m2", "greenhouse_plastic_tunnel",
                     StandardUncertaintyMetadata.OTHER_GREEHOUSES, ""),
-            new TemplateProductUsage("Greenhouse, glass walls and roof, metal tubes (WFLDB 3.0)/FR/I U", "m2",
+            new TemplateProductUsage("Greenhouse, glass walls and roof, metal tubes (WFLDB 3.0)/FR U", "m2",
                     "greenhouse_glass_roof_metal_tubes", StandardUncertaintyMetadata.OTHER_GREEHOUSES, ""),
-            new TemplateProductUsage("Greenhouse, glass walls and roof, plastic tubes (WFLDB 3.0)/FR/I U", "m2",
+            new TemplateProductUsage("Greenhouse, glass walls and roof, plastic tubes (WFLDB 3.0)/FR U", "m2",
                     "greenhouse_glass_roof_plastic_tubes", StandardUncertaintyMetadata.OTHER_GREEHOUSES, ""),
-            new TemplateProductUsage("Greenhouse, plastic walls and roof, metal tubes (WFLDB 3.0)/FR/I U", "m2",
+            new TemplateProductUsage("Greenhouse, plastic walls and roof, metal tubes (WFLDB 3.0)/FR U", "m2",
                     "greenhouse_plastic_roof_metal_tubes", StandardUncertaintyMetadata.OTHER_GREEHOUSES, ""),
-            new TemplateProductUsage("Greenhouse, plastic walls and roof, plastic tubes (WFLDB 3.0)/FR/I U", "m2",
+            new TemplateProductUsage("Greenhouse, plastic walls and roof, plastic tubes (WFLDB 3.0)/FR U", "m2",
                     "greenhouse_plastic_roof_plastic_tubes", StandardUncertaintyMetadata.OTHER_GREEHOUSES, ""),
 
             new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.0)/GLO U", "kg",
@@ -353,9 +353,9 @@ public class TemplateProductUsage
             new TemplateProductUsage("Transport, freight, rail, diesel/US U", "tkm",
                     "transport_freight_rail_diesel_US", StandardUncertaintyMetadata.TRANSPORTS, ""),
 
-            new TemplateProductUsage("Packaging, per kg of dry fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
+            new TemplateProductUsage("Packaging, per kg of dry fertilisers or pesticides (WFLDB 3.0)/GLO U", "kg",
                     "packaging_solid_fertilisers_and_pesticides", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
-            new TemplateProductUsage("Packaging, per kg of liquid fertilizers or pesticides (WFLDB 3.0)/GLO U", "kg",
+            new TemplateProductUsage("Packaging, per kg of liquid fertilisers or pesticides (WFLDB 3.0)/GLO U", "kg",
                     "packaging_liquid_fertilisers_and_pesticides", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
 
             new TemplateProductUsage("Lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil",
