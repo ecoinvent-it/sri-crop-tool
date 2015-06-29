@@ -18,70 +18,89 @@
  */
 package com.quantis_intl.lcigenerator.imports;
 
-import java.util.Date;
-import java.util.Optional;
-
-import org.apache.poi.ss.usermodel.Cell;
-
-import com.quantis_intl.lcigenerator.POIHelper;
-
-public class ExcelRawInputLine implements RawInputLine
+public class SingleValue<T>
 {
-    private String lineVariable;
-    private String lineTitle;
-    private int lineNum;
-    private Cell cell;
+    private String localKey;
 
-    public ExcelRawInputLine(String rawVariable, String rawTitle, int lineNum, Cell cell)
+    private T value;
+
+    private String comment;
+
+    private String source;
+
+    private Origin origin;
+
+    @SuppressWarnings("unused")
+    private SingleValue()
     {
-        this.lineVariable = rawVariable;
-        this.lineTitle = rawTitle;
-        this.lineNum = lineNum;
-        this.cell = cell;
     }
 
-    @Override
-    public String getLineVariable()
+    public SingleValue(String localKey, T value, String comment, String source, Origin origin)
     {
-        return lineVariable;
+        this.localKey = localKey;
+        this.value = value;
+        this.comment = comment;
+        this.source = source;
+        this.origin = origin;
     }
 
-    @Override
-    public String getLineTitle()
+    public String getLocalKey()
     {
-        return lineTitle;
+        return localKey;
     }
 
-    @Override
-    public int getLineNum()
+    public T getValue()
     {
-        return lineNum;
+        return value;
     }
 
-    @Override
-    public boolean isValuePresent()
+    public String getComment()
     {
-        String cellStringValue = POIHelper.getCellStringValue(cell, "-");
-        return cell != null
-                && !"-".equals(cellStringValue)
-                && !(cellStringValue.startsWith("<") && cellStringValue.endsWith(">"));
+        return comment;
     }
 
-    @Override
-    public Optional<String> getValueAsString()
+    public String getSource()
     {
-        return Optional.ofNullable(POIHelper.getCellStringValue(cell, null));
+        return source;
     }
 
-    @Override
-    public Optional<Double> getValueAsDouble()
+    public Origin getOrigin()
     {
-        return Optional.ofNullable(POIHelper.getCellDoubleValue(cell, null));
+        return origin;
     }
 
-    @Override
-    public Optional<Date> getValueAsDate()
+    public SingleValue<T> rename(String newKey)
     {
-        return Optional.ofNullable(POIHelper.getCellDateValue(cell, null));
+        return new SingleValue<T>(newKey, value, comment, source, origin);
     }
+
+    public static class DoubleSingleValue extends SingleValue<Double>
+    {
+        private String unit;
+
+        public DoubleSingleValue(String localKey, Double value, String comment, String source, Origin origin,
+                String unit)
+        {
+            super(localKey, value, comment, source, origin);
+            this.unit = unit;
+        }
+
+        public String getUnit()
+        {
+            return unit;
+        }
+
+        @Override
+        public SingleValue<Double> rename(String newKey)
+        {
+            return new DoubleSingleValue(newKey, getValue(), getComment(), getSource(), getOrigin(), unit);
+        }
+
+        public DoubleSingleValue convert(double factor)
+        {
+            return new DoubleSingleValue(getLocalKey(), getValue() * factor, getComment(), getSource(),
+                    Origin.GENERATED_VALUE, unit);
+        }
+    }
+
 }

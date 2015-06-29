@@ -22,7 +22,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import org.apache.poi.ss.usermodel.Cell;
+
+import com.google.common.collect.ImmutableMap;
 import com.quantis_intl.lcigenerator.ErrorReporter;
+import com.quantis_intl.lcigenerator.POIHelper;
 
 public class StringFromListExtractor
 {
@@ -64,64 +68,35 @@ public class StringFromListExtractor
         this.errorReporter = errorReporter;
     }
 
-    public String extract(RawInputLine line)
+    public Optional<SingleValue<String>> extract(String key, Cell labelCell, Cell dataCell, Cell commentCell,
+            Cell sourceCell)
     {
-        boolean isMandatory = MANDATORY_TAGS_TO_MAP.containsKey(line.getLineVariable());
-        if (isMandatory)
-            return extractMandatory(line);
-        else
-            return extractOptional(line);
+        String value = POIHelper.getCellStringValue(dataCell, null);
+        String code = TAGS_TO_MAP.get(key).get(value);
+        if (code == null)
+        {
+            errorReporter.warning(
+                    ImmutableMap.of("cell", POIHelper.getCellCoordinates(dataCell), "label",
+                            POIHelper.getCellStringValue(labelCell, key)),
+                    "Your selection is not in the list. Please pick a value from the list");
+            return Optional.empty();
+        }
+        return Optional.of(new SingleValue<String>(key, code, POIHelper.getCellStringValue(commentCell, ""), POIHelper
+                .getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(dataCell.getRowIndex() + 1, "Data",
+                POIHelper.getCellStringValue(labelCell, ""))));
     }
 
-    private String extractMandatory(RawInputLine line)
+    public String extractMandatory(String key, Cell dataCell)
     {
-        Optional<String> stringValue = line.getValueAsString();
-        if (stringValue.isPresent())
+        String stringValue = POIHelper.getCellStringValue(dataCell, "");
+        String code = MANDATORY_TAGS_TO_MAP.get(key).get(stringValue);
+        if (code == null)
         {
-            String mapItem = MANDATORY_TAGS_TO_MAP.get(line.getLineVariable()).get(stringValue.get());
-            if (mapItem == null)
-            {
-                errorReporter.error(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                        "Mandatory text is not part of choices list");
-                return null;
-            }
-            else
-            {
-                return mapItem;
-            }
-        }
-        else
-        {
-            errorReporter
-                    .error(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read mandatory text");
+            errorReporter.error(ImmutableMap.of("cell", POIHelper.getCellCoordinates(dataCell), "field", key),
+                    "Your selection is not in the list. Please pick a value from the list");
             return null;
         }
-    }
 
-    private String extractOptional(RawInputLine line)
-    {
-        Optional<String> stringValue = line.getValueAsString();
-        if (stringValue.isPresent())
-        {
-            String mapItem = TAGS_TO_MAP.get(line.getLineVariable()).get(stringValue.get());
-            if (mapItem == null)
-            {
-                errorReporter.warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                        "Text is not part of choices list, use default");
-                return null;
-            }
-            else
-            {
-                return mapItem;
-            }
-        }
-        else
-        {
-            errorReporter
-                    .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read text, use default");
-            return null;
-        }
+        return code;
     }
 }

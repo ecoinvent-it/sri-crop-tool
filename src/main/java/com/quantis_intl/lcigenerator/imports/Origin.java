@@ -18,23 +18,27 @@
  */
 package com.quantis_intl.lcigenerator.imports;
 
-import java.util.Date;
-import java.util.Optional;
-
-public interface RawInputLine
+public interface Origin
 {
-    public String getLineVariable();
+    public static final Origin DEFAULT_VALUE = new Origin()
+    {
+    };
+    public static final Origin GENERATED_VALUE = new Origin()
+    {
+    };
 
-    public String getLineTitle();
+    public static class ExcelUserInput implements Origin
+    {
+        public final int line;
+        public final String column;
+        public final String label;
 
-    public int getLineNum();
-
-    public boolean isValuePresent();
-
-    public Optional<String> getValueAsString();
-
-    public Optional<Double> getValueAsDouble();
-
-    public Optional<Date> getValueAsDate();
+        public ExcelUserInput(int line, String column, String label)
+        {
+            this.line = line;
+            this.column = column;
+            this.label = label;
+        }
+    }
 
 }

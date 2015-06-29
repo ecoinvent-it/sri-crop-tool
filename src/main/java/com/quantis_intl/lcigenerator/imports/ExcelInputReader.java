@@ -20,7 +20,7 @@ package com.quantis_intl.lcigenerator.imports;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.IntStream;
 
@@ -33,16 +33,30 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.collect.ImmutableMap;
 import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.POIHelper;
 import com.quantis_intl.lcigenerator.api.Api;
+import com.quantis_intl.lcigenerator.imports.Origin.ExcelUserInput;
+import com.quantis_intl.lcigenerator.imports.SingleValue.DoubleSingleValue;
+import com.quantis_intl.lcigenerator.imports.ValueGroup.DoubleValueGroup;
+import com.quantis_intl.lcigenerator.imports.ValueGroup.PartValueGroup;
+import com.quantis_intl.lcigenerator.imports.ValueGroup.RatioValueGroup;
 
 public class ExcelInputReader
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
 
-    public Map<String, RawInputLine> getInputDataFromFile(InputStream is, ErrorReporter errorReporter)
+    // FIXME: Ugly hardcode
+    private static final String TOTAL_PESTICIDES = "pest_total";
+    private static final String[] PARTS_PESTICIDES = { "herbicides", "fungicides", "insecticides" };
+    private static final String TOTAL_MACHINERIES = "total_machinery_diesel";
+    private static final String[] PARTS_MACHINERIES = { "plantprotection", "soilcultivation",
+            "sowingplanting", "fertilisation", "harvesting", "otherworkprocesses" };
+
+    public ValueGroup getInputDataFromFile(InputStream is, ErrorReporter errorReporter)
     {
+        // TODO: Add file name to the errorReporter
         try
         {
             Workbook workbook = WorkbookFactory.create(is);
@@ -55,21 +69,21 @@ public class ExcelInputReader
             }
             else
             {
-                errorReporter.error("sheet", "", "invalid file: sheet 'Template' not found");
+                errorReporter.error("The file must contain a tab named \"Template\". Please check your Excel file");
                 return null;
             }
         }
         catch (InvalidFormatException e)
         {
-            errorReporter.error("file", "", "invalid format for file");
+            errorReporter.error("Sorry, we cannot read this file. Please use the Excel formats (.xls or .xlsx)");
         }
         catch (IOException e)
         {
-            errorReporter.error("file", "", "file reading failed");
+            errorReporter.error("Sorry, an error happened when reading your file. Please contact us");
         }
         catch (IllegalArgumentException e)
         {
-            errorReporter.error("file", "", "invalid format for file");
+            errorReporter.error("Sorry, an error happened when reading your file. Please contact us");
         }
         return null;
     }
@@ -81,7 +95,12 @@ public class ExcelInputReader
 
         private final Sheet sheet;
         private final ErrorReporter errorReporter;
-        private final Map<String, RawInputLine> extractedInputs = new HashMap<>();
+        private final ValueGroup extractedInputs = new ValueGroup("");
+
+        private final StringFromListExtractor stringFromListExtractor;
+        private final StringExtractor stringExtractor;
+        private final DateExtractor dateExtractor;
+        private final NumericExtractor numericExtractor;
 
         private String fileVersion;
 
@@ -91,38 +110,55 @@ public class ExcelInputReader
         private int commentColumnIndex = -1;
         private int sourceColumnIndex = -1;
 
-        private Row currentTaggedRow;
+        private Row currentRow;
         private String currentTag;
+        private Cell currentDataCell;
+        private Cell currentLabelCell;
+        private Cell currentCommentCell;
+        private Cell currentSourceCell;
 
         public DataFileReader(Sheet sheet, ErrorReporter errorReporter)
         {
             this.sheet = sheet;
             this.errorReporter = errorReporter;
+            this.stringFromListExtractor = new StringFromListExtractor(errorReporter);
+            this.stringExtractor = new StringExtractor(errorReporter);
+            this.dateExtractor = new DateExtractor(errorReporter);
+            this.numericExtractor = new NumericExtractor(errorReporter);
 
             readHiddenHeaderRow();
             if (!errorReporter.hasErrors())
+            {
+                readCropAndCountry();
                 readOtherRows();
+                gatherBlocklessRatiosAndParts();
+                validateSumsAndRatios();
+            }
         }
 
-        public Map<String, RawInputLine> getExtractedInputs()
+        public ValueGroup getExtractedInputs()
         {
             return extractedInputs;
         }
 
         private void readHiddenHeaderRow()
         {
-            currentTaggedRow = sheet.getRow(METADATA_ROW_INDEX);
-            if (currentTaggedRow == null)
-                errorReporter.error("", "", "Bad template, please use the original template");
+            Row headerRow = sheet.getRow(METADATA_ROW_INDEX);
+            currentRow = headerRow;
+            if (headerRow == null)
+            {
+                errorReporter.error("The structure of the template has been changed, please use the original template");
+                return;
+            }
 
-            this.fileVersion = POIHelper.getCellStringValue(currentTaggedRow, METADATA_COLUMN_INDEX, null);
+            this.fileVersion = POIHelper.getCellStringValue(headerRow, METADATA_COLUMN_INDEX, null);
             // TODO: validate file version
 
             int nbFilledColumns = 0;
-            for (int columnIndex = METADATA_COLUMN_INDEX + 1; columnIndex < currentTaggedRow.getLastCellNum(); columnIndex++)
+            boolean haveDuplicates = false;
+            for (int columnIndex = METADATA_COLUMN_INDEX + 1; columnIndex < headerRow.getLastCellNum(); columnIndex++)
             {
-
-                Cell cell = currentTaggedRow.getCell(columnIndex);
+                Cell cell = headerRow.getCell(columnIndex);
                 if (cell == null || cell.getCellType() != Cell.CELL_TYPE_STRING)
                     continue;
 
@@ -131,7 +167,7 @@ public class ExcelInputReader
                     case "label_column":
                     {
                         if (this.labelColumnIndex != -1)
-                            manageDuplicateProperty();
+                            haveDuplicates = true;
                         else
                         {
                             this.labelColumnIndex = columnIndex;
@@ -142,7 +178,7 @@ public class ExcelInputReader
                     case "country_column":
                     {
                         if (this.countryColumnIndex != -1)
-                            manageDuplicateProperty();
+                            haveDuplicates = true;
                         else
                         {
                             this.countryColumnIndex = columnIndex;
@@ -153,7 +189,7 @@ public class ExcelInputReader
                     case "data_column":
                     {
                         if (this.dataColumnIndex != -1)
-                            manageDuplicateProperty();
+                            haveDuplicates = true;
                         else
                         {
                             this.dataColumnIndex = columnIndex;
@@ -164,7 +200,7 @@ public class ExcelInputReader
                     case "comment_column":
                     {
                         if (this.commentColumnIndex != -1)
-                            manageDuplicateProperty();
+                            haveDuplicates = true;
                         else
                         {
                             this.commentColumnIndex = columnIndex;
@@ -175,7 +211,7 @@ public class ExcelInputReader
                     case "source_column":
                     {
                         if (this.sourceColumnIndex != -1)
-                            manageDuplicateProperty();
+                            haveDuplicates = true;
                         else
                         {
                             this.sourceColumnIndex = columnIndex;
@@ -184,143 +220,381 @@ public class ExcelInputReader
                         break;
                     }
                     default:
-                        errorReporter.warning("", "", "Original template has been modified");
+                        errorReporter
+                                .warning("The structure of the template has been changed, the imported data may not be accurate");
                 }
 
             }
 
-            if (nbFilledColumns < 5)
-            {
-                if (nbFilledColumns < 1)
-                    errorReporter.error("", "", "Bad template, please use the original template");
-                else
-                    errorReporter.error("", "", "Too deep modification of the original template");
-            }
+            if (nbFilledColumns < 5 || haveDuplicates)
+                errorReporter.error("The structure of the template has been changed, please use the original template");
         }
 
-        private void manageDuplicateProperty()
+        private void readCropAndCountry()
         {
-            errorReporter.error("", "", "Too deep modification of the original template");
+            readCropOrCountry("crop");
+            readCropOrCountry("country");
+        }
+
+        private void readCropOrCountry(String expectedTag)
+        {
+            loadNextMeaningfulRow(countryColumnIndex);
+            Cell cell = currentRow.getCell(countryColumnIndex);
+            if (expectedTag.equals(POIHelper.getCellStringValue(currentRow, METADATA_COLUMN_INDEX, null)))
+            {
+                String value = stringFromListExtractor.extractMandatory(expectedTag, cell);
+                if (value != null)
+                {
+                    extractedInputs.addValue(new SingleValue<String>(expectedTag, value, "", "",
+                            new Origin.ExcelUserInput(cell.getRowIndex() + 1, "country", "Country")));
+                }
+            }
+            else
+                errorReporter.error("The structure of the template has been changed, please use the original template");
         }
 
         private void readOtherRows()
         {
-            while (loadNextTaggedRowInfo())
+            while (loadNextUsualDataCells())
             {
-                if ("crop".equals(currentTag) || "country".equals(currentTag))
-                    readCropOrCountry();
-                else if (LabelForBlockTags.LABELS_FOR_NUMERIC.containsKey(currentTag))
+                if (LabelForBlockTags.LABELS_FOR_NUMERIC.containsKey(currentTag))
                     readBlock(LabelForBlockTags.LABELS_FOR_NUMERIC.get(currentTag));
                 else if (LabelForBlockTags.LABELS_FOR_RATIO.containsKey(currentTag))
-                    readBlock(LabelForBlockTags.LABELS_FOR_RATIO.get(currentTag));
-                else
-                    readData();
+                    readRatioBlock(LabelForBlockTags.LABELS_FOR_RATIO.get(currentTag));
+                // TODO: Propagate the info about the availability of a default value, useful for the generated warnings
+                if (dataCellIsFilled())
+                {
+                    if (StringFromListExtractor.TAGS_TO_MAP.containsKey(currentTag))
+                        stringFromListExtractor.extract(currentTag, currentLabelCell, currentDataCell,
+                                currentCommentCell, currentSourceCell).ifPresent(extractedInputs::addValue);
+                    else if (StringExtractor.TAGS_FOR_STRING.contains(currentTag))
+                        stringExtractor.extract(currentTag, currentLabelCell, currentDataCell,
+                                currentCommentCell, currentSourceCell).ifPresent(extractedInputs::addValue);
+                    else if (DateExtractor.TAGS_FOR_STRING.contains(currentTag))
+                        dateExtractor.extract(currentTag, currentLabelCell, currentDataCell,
+                                currentCommentCell, currentSourceCell).ifPresent(extractedInputs::addValue);
+                    else if (NumericExtractor.TAGS_FOR_NUMERIC.contains(currentTag))
+                        numericExtractor.extractNumeric(currentTag, currentLabelCell, currentDataCell,
+                                currentCommentCell, currentSourceCell).ifPresent(extractedInputs::addValue);
+                    else if (NumericExtractor.TAGS_FOR_RATIO.contains(currentTag))
+                        numericExtractor.extractRatio(currentTag, currentLabelCell, currentDataCell,
+                                currentCommentCell, currentSourceCell).ifPresent(extractedInputs::addValue);
+                    else if (!"Data".equals(POIHelper.getCellStringValue(currentDataCell, "Data")))
+                        errorReporter
+                                .warning(
+                                        ImmutableMap.of("cell", POIHelper.getCellCoordinates(currentDataCell)),
+                                        "This cell will be ignored, as we cannot find the corresponding variable. The structure of the template has probably been modified. Please use the original template");
+                }
+                // TODO: Not a good way to handle blocks, should be entierelly handled before the previous line-by-line
+                // handling
             }
+
         }
 
-        private void readCropOrCountry()
+        private boolean dataCellIsFilled()
         {
-            String title = POIHelper.getCellStringValue(currentTaggedRow, labelColumnIndex, "");
-            addCellToExtractedInputs(currentTag, title, currentTaggedRow.getCell(countryColumnIndex));
+            String value = POIHelper.getCellStringValue(currentDataCell, "");
+            if ("".equals(value) || (value.startsWith("<") && value.endsWith(">")) || "-".equals(value))
+            {
+                warnIfDefaultExists(currentTag);
+                return false;
+            }
+            return true;
         }
 
-        private void readData()
+        private void warnIfDefaultExists(String currentTag)
         {
-            String title = POIHelper.getCellStringValue(currentTaggedRow, labelColumnIndex, "");
-            addCellToExtractedInputs(currentTag, title, currentTaggedRow.getCell(dataColumnIndex));
-        }
-
-        private void addCellToExtractedInputs(String key, String title, Cell cell)
-        {
-            if (cell != null)
-                extractedInputs.put(key, new ExcelRawInputLine(key, title, currentTaggedRow.getRowNum(), cell));
+            // TODO: Implement
         }
 
         private void readBlock(Map<String, String> dropDownValues)
         {
-            int rowIndex = currentTaggedRow.getRowNum();
-            Row tmpRow;
-            String tag;
-
-            while (rowIndex < sheet.getLastRowNum())
+            DoubleSingleValue totalHolder = null;
+            if (dataCellIsFilled())
             {
-                rowIndex++;
-                tmpRow = sheet.getRow(rowIndex);
-                if (tmpRow == null)
-                    continue;
+                totalHolder = numericExtractor.extractNumeric("total", currentLabelCell, currentDataCell,
+                        currentCommentCell, currentSourceCell).orElse(null);
+            }
+            // FIXME: Not a good way
+            ValueGroup group = new PartValueGroup(currentTag.replace("total_", ""), totalHolder);
+            extractedInputs.addGroup(group);
 
-                tag = POIHelper.getCellStringValue(tmpRow, METADATA_COLUMN_INDEX, "");
-                if (!tag.isEmpty())
+            Row previousRow = currentRow;
+
+            while (loadNextUsualDataCells())
+            {
+                if ("end".equals(currentTag))
                     break;
-                else
+
+                if (!"".equals(currentTag) && !currentTag.equals("part_" + group.getLocalKey() + "_"))
                 {
-                    readBlockData(tmpRow, dropDownValues);
+                    currentRow = previousRow;
+                    break;
+                }
+
+                if (dataCellIsFilled())
+                {
+                    boolean keyIsMissing = false;
+                    String key = dropDownValues.get(POIHelper.getCellStringValue(currentLabelCell, ""));
+                    if (key == null)
+                    {
+                        keyIsMissing = true;
+                        key = LabelForBlockTags.DEFAULT_VALUE;
+                    }
+                    final String fKey = key;
+                    final boolean fKeyIsMissing = keyIsMissing;
+                    numericExtractor
+                            .extractNumeric(key, currentLabelCell, currentDataCell,
+                                    currentCommentCell, currentSourceCell)
+                            .ifPresent(
+                                    sv -> {
+                                        group.addValue(sv);
+                                        if (fKeyIsMissing)
+                                        {
+                                            errorReporter.warning(ImmutableMap.of("line",
+                                                    String.valueOf(currentRow.getRowNum() + 1), "label",
+                                                    POIHelper.getCellStringValue(currentLabelCell, fKey)),
+                                                    "Your type selection is not in the list. The value you entered will be considered as 'Other' if available, or ignored");
+                                        }
+                                    });
                 }
             }
+
+            previousRow = currentRow;
         }
 
-        private void readBlockData(Row blockRow, Map<String, String> dropDownValues)
+        private void readRatioBlock(Map<String, String> dropDownValues)
         {
-            Cell cell = blockRow.getCell(dataColumnIndex);
-            String cellStringValue = POIHelper.getCellStringValue(cell, "-");
-            if (cell != null
-                    && !"-".equals(cellStringValue)
-                    && !(cellStringValue.startsWith("<") && cellStringValue.endsWith(">")))
+            DoubleSingleValue totalHolder = null;
+            if (dataCellIsFilled())
             {
-                String title = POIHelper.getCellStringValue(blockRow, labelColumnIndex, "");
-                String titleVar = dropDownValues.get(title);
-                if (titleVar == null)
-                {
-                    titleVar = LabelForBlockTags.DEFAULT_VALUE;
+                totalHolder = numericExtractor.extractNumeric("total", currentLabelCell, currentDataCell,
+                        currentCommentCell, currentSourceCell).orElse(null);
+            }
+            // FIXME: Not a good way
+            ValueGroup group = new RatioValueGroup(currentTag.replace("total_", ""), totalHolder);
+            extractedInputs.addGroup(group);
 
-                    errorReporter.warning(title, Integer.toString(cell.getRowIndex()),
-                            "Type is not part of choices list, default type will be used");
-                    LOGGER.warn("Unknown type for block " + currentTag
-                            + ": "
-                            + title
-                            + ", default will be used");
+            Row previousRow = currentRow;
+
+            while (loadNextUsualDataCells())
+            {
+                if ("end".equals(currentTag))
+                    break;
+
+                if (!"".equals(currentTag) && !currentTag.equals("ratio_" + group.getLocalKey() + "_"))
+                {
+                    currentRow = previousRow;
+                    break;
                 }
 
-                String extractedInputKey = currentTag + titleVar;
-                if (extractedInputs.containsKey(extractedInputKey))
+                if (dataCellIsFilled())
                 {
-                    ExcelRawInputBlock inputLine = (ExcelRawInputBlock) extractedInputs.get(extractedInputKey);
-                    inputLine.addCell(cell);
+                    boolean keyIsMissing = false;
+                    String key = dropDownValues.get(POIHelper.getCellStringValue(currentLabelCell, ""));
+                    if (key == null)
+                    {
+                        keyIsMissing = true;
+                        key = LabelForBlockTags.DEFAULT_VALUE;
+                    }
+                    final String fKey = key;
+                    final boolean fKeyIsMissing = keyIsMissing;
+                    numericExtractor
+                            .extractRatio(key, currentLabelCell, currentDataCell,
+                                    currentCommentCell, currentSourceCell)
+                            .ifPresent(
+                                    sv -> {
+                                        group.addValue(sv);
+                                        if (fKeyIsMissing)
+                                        {
+                                            errorReporter.warning(
+                                                    ImmutableMap.of("line",
+                                                            String.valueOf(currentRow.getRowNum() + 1), "label",
+                                                            POIHelper.getCellStringValue(currentLabelCell, fKey)),
+                                                    "Your type selection is not in the list. The value you entered will be considered as \"Other\" if available, or ignored");
+                                        }
+                                    });
                 }
-                else
-                {
-                    ExcelRawInputBlock inputLine = new ExcelRawInputBlock(extractedInputKey, title,
-                            currentTaggedRow.getRowNum(), cell);
-                    extractedInputs.put(extractedInputKey, inputLine);
-                }
+
+                previousRow = currentRow;
             }
         }
 
-        private boolean loadNextTaggedRowInfo()
+        private void loadNextMeaningfulRow(int meaningFulColumn)
         {
+            if (currentRow == null)
+                return;
+
             Row tmpRow = null;
-            String cellValue = null;
-            int rowIndex = currentTaggedRow.getRowNum();
-            while (rowIndex < sheet.getLastRowNum() && cellValue == null)
+            Cell keyCell = null;
+            Cell dataCell = null;
+            int rowIndex = currentRow.getRowNum();
+            int maxRow = sheet.getLastRowNum();
+            while (rowIndex < maxRow && dataCell == null && keyCell == null)
             {
                 rowIndex++;
                 tmpRow = sheet.getRow(rowIndex);
                 if (tmpRow == null)
                     continue;
 
-                cellValue = POIHelper.getCellStringValue(tmpRow, METADATA_COLUMN_INDEX, null);
-
-                // NOTE: don't read end row of block
-                if (LabelForBlockTags.END_BLOCK_TAG.equals(cellValue))
-                    continue;
+                keyCell = tmpRow.getCell(METADATA_COLUMN_INDEX, Row.RETURN_BLANK_AS_NULL);
+                dataCell = tmpRow.getCell(meaningFulColumn, Row.RETURN_BLANK_AS_NULL);
             }
 
-            if (cellValue != null)
+            if (dataCell != null || keyCell != null)
+                currentRow = tmpRow;
+            else
+                currentRow = null;
+        }
+
+        private boolean loadNextUsualDataCells()
+        {
+            loadNextMeaningfulRow(dataColumnIndex);
+            if (currentRow != null)
             {
-                currentTaggedRow = tmpRow;
-                currentTag = cellValue;
+                currentTag = POIHelper.getCellStringValue(currentRow, METADATA_COLUMN_INDEX, "");
+                currentDataCell = currentRow.getCell(dataColumnIndex, Row.RETURN_BLANK_AS_NULL);
+                currentLabelCell = currentRow.getCell(labelColumnIndex, Row.RETURN_BLANK_AS_NULL);
+                currentCommentCell = currentRow.getCell(commentColumnIndex, Row.RETURN_BLANK_AS_NULL);
+                currentSourceCell = currentRow.getCell(sourceColumnIndex, Row.RETURN_BLANK_AS_NULL);
+                return true;
             }
-            return cellValue != null;
+            return false;
+        }
+
+        private void gatherBlocklessRatiosAndParts()
+        {
+            extractedInputs.groupValues();
+        }
+
+        private void validateSumsAndRatios()
+        {
+            for (ValueGroup group : extractedInputs.getSubGroups().values())
+            {
+                if (group instanceof RatioValueGroup)
+                {
+                    DoubleValueGroup dvgroup = ((DoubleValueGroup) group);
+                    dvgroup.validateValues(
+                            r ->
+                            {
+                                errorReporter
+                                        .warning(
+                                                ImmutableMap.of("line",
+                                                        extractExcelOriginalLine(dvgroup.getTotalHolder()), "label",
+                                                        extractExcelOriginalLabel(dvgroup.getTotalHolder())),
+                                                "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally");
+                            },
+                            total ->
+                            {
+                                errorReporter.warning(
+                                        ImmutableMap.of("line",
+                                                extractExcelOriginalLine(dvgroup.getTotalHolder()), "label",
+                                                extractExcelOriginalLabel(dvgroup.getTotalHolder())),
+                                        "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally");
+                            }, z -> {
+                                // TODO: For now, only warn, as the default ratio (including "all in other" for
+                                // machineries) is handled by python. Watch out!
+                            errorReporter.warning(
+                                    ImmutableMap.of("line",
+                                            extractExcelOriginalLine(dvgroup.getTotalHolder()), "label",
+                                            extractExcelOriginalLabel(dvgroup.getTotalHolder())),
+                                    "No repartition has been entered. For now, the default repartition will be used");
+                        });
+
+                }
+                else if (group instanceof PartValueGroup)
+                    validateGroupAggregation((PartValueGroup) group);
+            }
+            // FIXME: Ugly hardcode
+
+            // FIXME: This doesn't work, "other" addition or total modifications are not reflected in extractedInputs
+            // FIXME: There are maybe memory leaks as well
+            DoubleSingleValue pestiTotal = (DoubleSingleValue) extractedInputs.getSingleValue(TOTAL_PESTICIDES);
+            PartValueGroup pestiGroup = new PartValueGroup("", pestiTotal);
+            Arrays.stream(PARTS_PESTICIDES).forEach(
+                    s -> {
+                        DoubleSingleValue dv = (DoubleSingleValue) ((PartValueGroup) extractedInputs.getSubGroups()
+                                .get(s)).getTotalHolder();
+                        if (dv != null)
+                            pestiGroup.addValue(dv);
+                    });
+            validateGroupAggregation(pestiGroup);
+            SingleValue<?> other = pestiGroup.getSingleValue("other");
+            if (other != null)
+                extractedInputs.addValue(other.rename("pest_remains"));
+            else if (!pestiGroup.getTotalHolder().equals(pestiTotal))
+                extractedInputs.replaceValue(new DoubleSingleValue(TOTAL_PESTICIDES, pestiGroup.getTotalHolder()
+                        .getValue(), pestiTotal.getComment(), pestiTotal.getSource(), Origin.GENERATED_VALUE,
+                        pestiTotal.getUnit()));
+
+            DoubleSingleValue machineriesTotal = (DoubleSingleValue) extractedInputs.getSingleValue(TOTAL_MACHINERIES);
+            PartValueGroup machineriesGroup = new PartValueGroup("", machineriesTotal);
+            Arrays.stream(PARTS_MACHINERIES).forEach(
+                    s -> {
+                        DoubleSingleValue dv = (DoubleSingleValue) ((RatioValueGroup) extractedInputs.getSubGroups()
+                                .get(s)).getTotalHolder();
+                        if (dv != null)
+                            machineriesGroup.addValue(dv);
+                    });
+            validateGroupAggregation(machineriesGroup);
+            SingleValue<?> otherMachineries = machineriesGroup.getSingleValue("other");
+            if (otherMachineries != null)
+                extractedInputs.addValue(otherMachineries.rename("remains_machinery_diesel"));
+            else if (!machineriesGroup.getTotalHolder().equals(machineriesTotal))
+                extractedInputs.replaceValue(new DoubleSingleValue(TOTAL_MACHINERIES, machineriesGroup.getTotalHolder()
+                        .getValue(), machineriesTotal.getComment(), machineriesTotal.getSource(),
+                        Origin.GENERATED_VALUE,
+                        machineriesTotal.getUnit()));
+        }
+
+        private void validateGroupAggregation(PartValueGroup group)
+        {
+            group.validateValues(
+                    remains ->
+                    {
+                        group.addValue(new DoubleSingleValue("other", remains,
+                                "Unaffected portion of the total", "", Origin.GENERATED_VALUE,
+                                group.getTotalHolder().getUnit()));
+                        errorReporter
+                                .warning(
+                                        ImmutableMap.of("line", extractExcelOriginalLine(group.getTotalHolder()),
+                                                "label",
+                                                extractExcelOriginalLabel(group.getTotalHolder())),
+                                        "The sum of the decomposition is lower than the entered total. The unaffected value will be considered as \"Other\"");
+                    },
+                    total ->
+                    {
+                        errorReporter.warning(
+                                ImmutableMap.of("line", extractExcelOriginalLine(group.getTotalHolder()), "label",
+                                        extractExcelOriginalLabel(group.getTotalHolder())),
+                                "The sum of the decomposition is higher than the entered total. Please check again your value. For now the higher total will be considered");
+                        group.replaceTotalValue(total);
+                    },
+                    z -> {
+                        group.addValue(new DoubleSingleValue("other", group.getTotalHolder().getValue(),
+                                "Unaffected portion of the total", "", Origin.GENERATED_VALUE, group.getTotalHolder()
+                                        .getUnit()));
+                        errorReporter.warning(
+                                ImmutableMap.of("line", extractExcelOriginalLine(group.getTotalHolder()), "label",
+                                        extractExcelOriginalLabel(group.getTotalHolder())),
+                                "No decomposition has been entered. The total will be considered as \"Other\"");
+                    });
+        }
+
+        private String extractExcelOriginalLabel(SingleValue<?> value)
+        {
+            if (value != null && value.getOrigin() instanceof ExcelUserInput)
+                return ((ExcelUserInput) value.getOrigin()).label;
+
+            return "";
+        }
+
+        private String extractExcelOriginalLine(SingleValue<?> value)
+        {
+            if (value != null && value.getOrigin() instanceof ExcelUserInput)
+                return Integer.toString(((ExcelUserInput) value.getOrigin()).line);
+
+            return "";
         }
     }
 }

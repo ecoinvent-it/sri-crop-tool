@@ -18,11 +18,27 @@
  */
 package com.quantis_intl.lcigenerator;
 
+import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
+
 public interface ErrorReporter
 {
-    void warning(String resource, String location, String message);
+    void warning(Map<String, String> additionalContext, String message);
 
-    void error(String resource, String location, String message);
+    default void warning(String message)
+    {
+        warning(ImmutableMap.of(), message);
+    }
+
+    void error(Map<String, String> additionalContext, String message);
+
+    default void error(String message)
+    {
+        error(ImmutableMap.of(), message);
+    }
+
+    ErrorReporter withAdditionalContext(Map<String, String> additionalContext);
 
     boolean hasErrors();
 }

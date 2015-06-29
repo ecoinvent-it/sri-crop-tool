@@ -284,12 +284,6 @@ public class TemplateProductUsage
             new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "otherworkprocesses_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
 
-            new TemplateProductUsage("Electricity, low voltage, at grid/{country} U", "kWh",
-                    "energy_electricity_low_voltage_at_grid", StandardUncertaintyMetadata.ELECTRICITY, ""),
-            new TemplateProductUsage("Electricity, production mix photovoltaic, at plant/{country} U", "kWh",
-                    "energy_electricity_photovoltaic_produced_locally", StandardUncertaintyMetadata.ELECTRICITY, ""),
-            new TemplateProductUsage("Electricity, at wind power plant/RER U", "kWh",
-                    "energy_electricity_wind_power_produced_locally", StandardUncertaintyMetadata.ELECTRICITY, ""),
             new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "energy_diesel_excluding_diesel_used_in_tractor",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
@@ -311,10 +305,6 @@ public class TemplateProductUsage
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
             new TemplateProductUsage("Logs, mixed, burned in furnace 100kW/CH U", "MJ", "energy_wood_logs",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
-            new TemplateProductUsage("Heat, natural gas, at industrial furnace >100kW/RER U", "MJ",
-                    "energy_heat_district_heating", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
-            new TemplateProductUsage("Heat, at flat plate collector, multiple dwelling, for hot water/CH U", "MJ",
-                    "energy_heat_solar_collector", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
 
             new TemplateProductUsage("Tap water, at user/RER U", "kg", "utilities_wateruse_non_conventional_sources",
                     StandardUncertaintyMetadata.UTILITIES_WATER, ""),
@@ -381,8 +371,17 @@ public class TemplateProductUsage
     };
 
     public static final TemplateProductUsage[] electricityHeat = {
-
-            };
+            new TemplateProductUsage("Electricity, low voltage, at grid/{country} U", "kWh",
+                    "energy_electricity_low_voltage_at_grid", StandardUncertaintyMetadata.ELECTRICITY, ""),
+            new TemplateProductUsage("Electricity, production mix photovoltaic, at plant/{country} U", "kWh",
+                    "energy_electricity_photovoltaic_produced_locally", StandardUncertaintyMetadata.ELECTRICITY, ""),
+            new TemplateProductUsage("Electricity, at wind power plant/RER U", "kWh",
+                    "energy_electricity_wind_power_produced_locally", StandardUncertaintyMetadata.ELECTRICITY, ""),
+            new TemplateProductUsage("Heat, natural gas, at industrial furnace >100kW/RER U", "MJ",
+                    "energy_heat_district_heating", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
+            new TemplateProductUsage("Heat, at flat plate collector, multiple dwelling, for hot water/CH U", "MJ",
+                    "energy_heat_solar_collector", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "")
+    };
 
     public static final TemplateProductUsage[] wastes = {
             new TemplateProductUsage("Disposal, polyethylene, 0.4% water, to sanitary landfill/CH U", "kg",

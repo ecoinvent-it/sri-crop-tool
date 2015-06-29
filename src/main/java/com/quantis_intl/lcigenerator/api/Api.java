@@ -48,8 +48,7 @@ import com.quantis_intl.lcigenerator.ImportResult;
 import com.quantis_intl.lcigenerator.PyBridgeService;
 import com.quantis_intl.lcigenerator.ScsvFileWriter;
 import com.quantis_intl.lcigenerator.imports.ExcelInputReader;
-import com.quantis_intl.lcigenerator.imports.RawInputLine;
-import com.quantis_intl.lcigenerator.imports.RawInputToPyCompatibleConvertor;
+import com.quantis_intl.lcigenerator.imports.ValueGroup;
 
 @Path("pub/")
 public class Api
@@ -76,12 +75,12 @@ public class Api
         ErrorReporter errorReporter = new ErrorReporterImpl();
 
         // TODO: Store file if it can be stored
-        Map<String, RawInputLine> extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
+        ValueGroup extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
 
         if (!errorReporter.hasErrors())
         {
-            RawInputToPyCompatibleConvertor inputConvertor = new RawInputToPyCompatibleConvertor(errorReporter);
-            Map<String, Object> validatedData = inputConvertor.getValidatedData(extractedInputs, errorReporter);
+            // RawInputToPyCompatibleConvertor inputConvertor = new RawInputToPyCompatibleConvertor(errorReporter);
+            Map<String, Object> validatedData = extractedInputs.flattenValues();
 
             if (!errorReporter.hasErrors())
                 pyBridgeService.callComputeLci(validatedData,

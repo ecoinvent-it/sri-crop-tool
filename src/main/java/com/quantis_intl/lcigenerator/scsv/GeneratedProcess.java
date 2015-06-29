@@ -113,7 +113,7 @@ public class GeneratedProcess implements ProductScsvProcess
         if (modelOutputs.containsKey("data_treatment_uncertainty"))
         {
             if (sb.length() > 0)
-                sb.append(" ,");
+                sb.append(", ");
             sb.append("Uncertainty adjustments: ").append(modelOutputs.get("data_treatment_uncertainty"));
         }
 

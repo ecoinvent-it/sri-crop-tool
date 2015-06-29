@@ -27,7 +27,11 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.apache.poi.ss.usermodel.Cell;
+
+import com.google.common.collect.ImmutableMap;
 import com.quantis_intl.lcigenerator.ErrorReporter;
+import com.quantis_intl.lcigenerator.POIHelper;
 
 public class DateExtractor
 {
@@ -52,40 +56,39 @@ public class DateExtractor
         this.errorReporter = errorReporter;
     }
 
-    public LocalDate extract(RawInputLine line)
+    public Optional<SingleValue<LocalDate>> extract(String key, Cell labelCell, Cell dataCell, Cell commentCell,
+            Cell sourceCell)
     {
-        Optional<Date> dateValue;
-        Optional<String> stringValue;
-
-        if ((dateValue = line.getValueAsDate()).isPresent())
-            return manageDateAsNumber(dateValue.get(), line);
-        if ((stringValue = line.getValueAsString()).isPresent())
-            return manageDateAsString(stringValue.get(), line);
+        LocalDate value;
+        Date asDate = POIHelper.getCellDateValue(dataCell, null);
+        if (asDate != null)
+            value = asDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         else
         {
-            errorReporter
-                    .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read date, expected format is dd.mm.yy, use default");
-            return null;
+            value = readDateFromString(POIHelper.getCellStringValue(dataCell, ""));
+            if (value == null)
+            {
+                errorReporter
+                        .warning(
+                                ImmutableMap.of("cell", POIHelper.getCellCoordinates(dataCell), "label",
+                                        POIHelper.getCellStringValue(labelCell, key)),
+                                "We can't read the entered date. Please format your cell as a date, or enter the date in the expected format (dd.mm.yy). For now ee will use the default value, if available.");
+                return Optional.empty();
+            }
         }
+        return Optional.of(new SingleValue<LocalDate>(key, value, POIHelper.getCellStringValue(commentCell, ""),
+                POIHelper.getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(dataCell.getRowIndex() + 1,
+                        "Data", POIHelper.getCellStringValue(labelCell, ""))));
     }
 
-    private LocalDate manageDateAsNumber(Date date, RawInputLine line)
-    {
-        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        return localDate;
-    }
-
-    private LocalDate manageDateAsString(String dateString, RawInputLine line)
+    private LocalDate readDateFromString(String date)
     {
         try
         {
-            return LocalDate.parse(dateString, DATE_FORMATTER);
+            return LocalDate.parse(date, DATE_FORMATTER);
         }
         catch (DateTimeParseException e)
         {
-            errorReporter.warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                    "Can't read date, expected format is dd.mm.yy, use default");
             return null;
         }
     }

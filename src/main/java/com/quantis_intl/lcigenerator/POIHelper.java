@@ -23,6 +23,7 @@ import java.util.Date;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.util.CellReference;
 
 import com.google.common.base.CharMatcher;
 
@@ -96,5 +97,12 @@ public class POIHelper
         if (cell.getCellType() == Cell.CELL_TYPE_STRING)
             return defaultValue;
         return cell.getDateCellValue();
+    }
+
+    public static String getCellCoordinates(Cell cell)
+    {
+        if (cell == null)
+            return "Cell is absent";
+        return CellReference.convertNumToColString(cell.getColumnIndex()) + (cell.getRowIndex() + 1);
     }
 }

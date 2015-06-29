@@ -22,7 +22,12 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import org.apache.poi.ss.usermodel.Cell;
+
+import com.google.common.collect.ImmutableMap;
 import com.quantis_intl.lcigenerator.ErrorReporter;
+import com.quantis_intl.lcigenerator.POIHelper;
+import com.quantis_intl.lcigenerator.imports.SingleValue.DoubleSingleValue;
 
 public class NumericExtractor
 {
@@ -71,6 +76,9 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("energy_wood_logs");
         TAGS_FOR_NUMERIC.add("energy_heat_district_heating");
         TAGS_FOR_NUMERIC.add("energy_heat_solar_collector");
+        TAGS_FOR_NUMERIC.add("utilities_wateruse_ground");
+        TAGS_FOR_NUMERIC.add("utilities_wateruse_surface");
+        TAGS_FOR_NUMERIC.add("utilities_wateruse_non_conventional_sources");
         TAGS_FOR_NUMERIC.add("materials_fleece");
         TAGS_FOR_NUMERIC.add("materials_silage_foil");
         TAGS_FOR_NUMERIC.add("materials_covering_sheet");
@@ -84,6 +92,13 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("eol_waste_water_to_treatment_facility");
         TAGS_FOR_NUMERIC.add("eol_waste_water_to_nature");
         TAGS_FOR_NUMERIC.add("cod_in_waste_water");
+
+        TAGS_FOR_NUMERIC.add("data_quality_techno_representativeness");
+        TAGS_FOR_NUMERIC.add("data_quality_geo_representativeness");
+        TAGS_FOR_NUMERIC.add("data_quality_time_related_representativeness");
+        TAGS_FOR_NUMERIC.add("data_quality_precision_uncertainty");
+        TAGS_FOR_NUMERIC.add("data_quality_completeness");
+        TAGS_FOR_NUMERIC.add("data_quality_methodo_appropriateness_consistency");
 
         TAGS_FOR_RATIO.add("yearly_precipitation_as_snow");
         TAGS_FOR_RATIO.add("drainage");
@@ -146,52 +161,62 @@ public class NumericExtractor
         this.errorReporter = errorReporter;
     }
 
-    public Double extractNumeric(RawInputLine line)
+    public Optional<DoubleSingleValue> extractNumeric(String key, Cell labelCell, Cell dataCell, Cell commentCell,
+            Cell sourceCell)
     {
-        Optional<Double> optDouble = line.getValueAsDouble();
-        if (optDouble.isPresent())
-        {
-            Double doubleValue = optDouble.get();
-            if (doubleValue < 0.0)
-            {
-                errorReporter
-                        .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                                "Can't accept negative value, use default");
-                return null;
-            }
-            return doubleValue;
-        }
-        else
-        {
-            errorReporter
-                    .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read number, use default");
-            return null;
-        }
+        Double value = getPositiveValue(labelCell, dataCell);
+        if (value == null)
+            return Optional.empty();
+
+        return Optional.of(new DoubleSingleValue(key, value, POIHelper.getCellStringValue(commentCell, ""), POIHelper
+                .getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(dataCell.getRowIndex() + 1, "Data",
+                POIHelper.getCellStringValue(labelCell, "")), "TODO"));
     }
 
-    public Double extractRatio(RawInputLine line)
+    private Double getPositiveValue(Cell labelCell, Cell dataCell)
     {
-        Optional<Double> optDouble = line.getValueAsDouble();
-        if (optDouble.isPresent())
-        {
-            Double doubleValue = optDouble.get();
-            if (doubleValue < 0.0 || doubleValue > 1.0)
-            {
-                errorReporter
-                        .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                                "Ratio must be between 0 and 1, use default");
-                return null;
-            }
-            return doubleValue;
-        }
-        else
+        Double value = POIHelper.getCellDoubleValue(dataCell, null);
+        if (value == null)
         {
             errorReporter
-                    .warning(line.getLineTitle(), Integer.toString(line.getLineNum()),
-                            "Can't read ratio, use default");
+                    .warning(
+                            ImmutableMap.of("cell", POIHelper.getCellCoordinates(dataCell), "label",
+                                    POIHelper.getCellStringValue(labelCell, "")),
+                            "Your value is not numeric. Please format your cell to a numeric value. For now, we will use the default value, if available");
+
             return null;
         }
+        else if (value < 0.0)
+        {
+            errorReporter
+                    .warning(
+                            ImmutableMap.of("cell", POIHelper.getCellCoordinates(dataCell), "label",
+                                    POIHelper.getCellStringValue(labelCell, "")),
+                            "Negative values are not authorized. Please use a non-negative value. For now, we will use the default value, if available");
+            return null;
+        }
+        return value;
     }
 
+    public Optional<DoubleSingleValue> extractRatio(String key, Cell labelCell, Cell dataCell, Cell commentCell,
+            Cell sourceCell)
+    {
+        Double value = getPositiveValue(labelCell, dataCell);
+        if (value == null)
+            return Optional.empty();
+
+        if (value > 1.0)
+        {
+            errorReporter
+                    .warning(
+                            ImmutableMap.of("cell", POIHelper.getCellCoordinates(dataCell), "label",
+                                    POIHelper.getCellStringValue(labelCell, key)),
+                            "Your value is too high, we are expecting a ratio between 0 and 1. Please use a value smaller than 1. For now, we will use the default value, if available");
+            return Optional.empty();
+        }
+
+        return Optional.of(new DoubleSingleValue(key, value, POIHelper.getCellStringValue(commentCell, ""), POIHelper
+                .getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(dataCell.getRowIndex() + 1, "Data",
+                POIHelper.getCellStringValue(labelCell, "")), "TODO"));
+    }
 }

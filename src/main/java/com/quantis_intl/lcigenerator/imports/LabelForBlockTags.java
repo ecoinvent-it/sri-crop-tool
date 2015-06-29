@@ -45,9 +45,9 @@ public class LabelForBlockTags
 
     static
     {
-        LABELS_FOR_NUMERIC.put("part_herbicides_", HERBICIDES);
-        LABELS_FOR_NUMERIC.put("part_fungicides_", FUNGICIDES);
-        LABELS_FOR_NUMERIC.put("part_insecticides_", INSECTICIDES);
+        LABELS_FOR_NUMERIC.put("total_herbicides", HERBICIDES);
+        LABELS_FOR_NUMERIC.put("total_fungicides", FUNGICIDES);
+        LABELS_FOR_NUMERIC.put("total_insecticides", INSECTICIDES);
 
         COMPOST_TYPE.put("Compost", "compost");
         COMPOST_TYPE.put("Meat-and-bone meal", "meat_and_bone_meal");
@@ -59,18 +59,18 @@ public class LabelForBlockTags
         COMPOST_TYPE.put("Horn meal", "horn_meal");
         COMPOST_TYPE.put("Horn shavings fine", "horn_shavings_fine");
         COMPOST_TYPE.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_composttype_", COMPOST_TYPE);
+        LABELS_FOR_RATIO.put("total_composttype", COMPOST_TYPE);
 
         SEWAGE_SLUDGE.put("Sewage sludge liquid", "liquid");
         SEWAGE_SLUDGE.put("Sewage sludge dehydrated", "dehydrated");
         SEWAGE_SLUDGE.put("Sewage sludge dried", "dried");
         SEWAGE_SLUDGE.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_sewagesludge_", SEWAGE_SLUDGE);
+        LABELS_FOR_RATIO.put("total_sewagesludge", SEWAGE_SLUDGE);
 
         PLANT_PROTECTION.put("Spraying", "spraying");
         PLANT_PROTECTION.put("Flaming", "flaming");
         PLANT_PROTECTION.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_plantprotection_", PLANT_PROTECTION);
+        LABELS_FOR_RATIO.put("total_plantprotection", PLANT_PROTECTION);
 
         SOIL_CULTIVATION.put("Soil decompactation", "decompactation");
         SOIL_CULTIVATION.put("Soil tillage, chisel", "tillage_chisel");
@@ -82,20 +82,20 @@ public class LabelForBlockTags
         SOIL_CULTIVATION.put("Soil tillage, roll", "tillage_roll");
         SOIL_CULTIVATION.put("Soil tillage, rotary cultivator", "tillage_rotary_cultivator");
         SOIL_CULTIVATION.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_soilcultivation_", SOIL_CULTIVATION);
+        LABELS_FOR_RATIO.put("total_soilcultivation", SOIL_CULTIVATION);
 
         SOWING_PLANTING.put("Sowing", "sowing");
         SOWING_PLANTING.put("Planting seedlings", "planting_seedlings");
         SOWING_PLANTING.put("Planting trees", "planting_trees");
         SOWING_PLANTING.put("Planting potatoes", "planting_potatoes");
         SOWING_PLANTING.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_sowingplanting_", SOWING_PLANTING);
+        LABELS_FOR_RATIO.put("total_sowingplanting", SOWING_PLANTING);
 
         FERTILISATION.put("Fertilizing, with broadcaster", "fertilizing_broadcaster");
         FERTILISATION.put("Liquid manure application, with vacuum tanker", "liquid_manure_vacuum_tanker");
         FERTILISATION.put("Solid manure application", "solid_manure");
         FERTILISATION.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_fertilisation_", FERTILISATION);
+        LABELS_FOR_RATIO.put("total_fertilisation", FERTILISATION);
 
         HARVESTING.put("Chopping maize", "chopping_maize");
         HARVESTING.put("Threshing, with combine harvester", "threshing_combine_harvester");
@@ -109,13 +109,13 @@ public class LabelForBlockTags
         HARVESTING.put("Removing potato haulms", "removing_potatoes_haulms");
         HARVESTING.put("Windrowing, with rotary swather", "windrowing_rotary_swather");
         HARVESTING.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_harvesting_", HARVESTING);
+        LABELS_FOR_RATIO.put("total_harvesting", HARVESTING);
 
         OTHER_WORK_PROCESSES.put("Baling", "baling");
         OTHER_WORK_PROCESSES.put("Chopping", "chopping");
         OTHER_WORK_PROCESSES.put("Mulching", "mulching");
         OTHER_WORK_PROCESSES.put("Transport, tractor and trailer", "transport_tractor_trailer");
         OTHER_WORK_PROCESSES.put("Other", "other");
-        LABELS_FOR_RATIO.put("ratio_otherworkprocesses_", OTHER_WORK_PROCESSES);
+        LABELS_FOR_RATIO.put("total_otherworkprocesses", OTHER_WORK_PROCESSES);
     }
 }

@@ -20,22 +20,46 @@ package com.quantis_intl.lcigenerator;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
+import com.google.common.collect.ImmutableMap;
+
+// FIXME: Use codes for errors
 public class ErrorReporterImpl implements ErrorReporter
 {
+    private final Map<String, String> additionalContext;
     private Collection<ErrorReporterResult> warnings = new ArrayList<>();
     private Collection<ErrorReporterResult> errors = new ArrayList<>();
 
-    @Override
-    public void warning(String resource, String location, String message)
+    public ErrorReporterImpl()
     {
-        warnings.add(new ErrorReporterResult("warning", resource, location, message));
+        additionalContext = ImmutableMap.of();
+    }
+
+    public ErrorReporterImpl(Map<String, String> additionalContext)
+    {
+        this.additionalContext = ImmutableMap.copyOf(additionalContext);
     }
 
     @Override
-    public void error(String resource, String location, String message)
+    public void warning(Map<String, String> context, String message)
     {
-        errors.add(new ErrorReporterResult("error", resource, location, message));
+        warnings.add(new ErrorReporterResult("warning", ImmutableMap.<String, String> builder()
+                .putAll(additionalContext).putAll(context).build(), message));
+    }
+
+    @Override
+    public void error(Map<String, String> context, String message)
+    {
+        errors.add(new ErrorReporterResult("error", ImmutableMap.<String, String> builder().putAll(additionalContext)
+                .putAll(context).build(), message));
+    }
+
+    @Override
+    public ErrorReporter withAdditionalContext(Map<String, String> context)
+    {
+        return new ErrorReporterImpl(ImmutableMap.<String, String> builder().putAll(additionalContext).putAll(context)
+                .build());
     }
 
     public Collection<ErrorReporterResult> getWarnings()
@@ -57,17 +81,14 @@ public class ErrorReporterImpl implements ErrorReporter
     {
         public final String type;
 
-        public final String resource;
-
-        public final String location;
+        public final Map<String, String> context;
 
         public final String message;
 
-        public ErrorReporterResult(String type, String resource, String location, String message)
+        public ErrorReporterResult(String type, Map<String, String> context, String message)
         {
             this.type = type;
-            this.resource = resource;
-            this.location = location;
+            this.context = context;
             this.message = message;
         }
     }
