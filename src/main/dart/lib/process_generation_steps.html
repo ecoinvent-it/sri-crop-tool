@@ -56,14 +56,14 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">
           <span ng-if="step == 1">File successfully uploaded</span>
-          <span ng-if="step == 0">Generation Failed</span>
+          <span ng-if="step == 0">Sorry, we didn't manage to compute your data</span>
         </h4>
       </div>
       <div class="modal-body">
         <div ng-if="step == 1">You can now click on Step 4 to download the generated Simapro file</div>
         
         <div ng-if="hasErrors || hasWarnings">Uploaded file: {{filename}}</div>
-        <div ng-if="hasErrors">Some errors were found during generation:</div>
+        <div ng-if="hasErrors">Please check these points before trying again:</div>
 					<table ng-if="hasErrors" class="errors-and-warnings-table">
 					  <tr>
 					    <th class="tableCellColumn">Cell</th>
@@ -77,7 +77,10 @@
 					  </tr>
 					</table>
 					
-					<div ng-if="hasWarnings">Some warnings for generation:</div>
+					<div ng-if="hasWarnings">
+				    <span ng-if="!hasErrors">Some data have been adapted for this computation:</span>
+				    <span ng-if="hasErrors">We also noticed a few other minor points that will be adapted if you keep them unchanged:</span>
+					</div>
 					<table ng-if="hasWarnings" class="errors-and-warnings-table">
 					  <tr>
 					    <th class="tableCellColumn">Cell</th>
