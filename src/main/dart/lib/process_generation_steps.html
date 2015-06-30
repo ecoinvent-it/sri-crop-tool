@@ -50,8 +50,8 @@
 
 <!-- Modal -->
 <div class="modal fade" id="process-generation-step3-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog" ng-class="{'modal-lg':hasWarnings, 'modal-lg': hasErrors}">
-    <div class="modal-content alert" ng-class="{'successful':step == 1 ,'warnings':hasWarnings, 'errors': hasErrors}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content alert" ng-class="{'successful':step == 1 ,'errors': hasErrors, 'warnings':hasWarnings}">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">
@@ -66,13 +66,13 @@
         <div ng-if="hasErrors">Some errors were found during generation:</div>
 					<table ng-if="hasErrors" class="errors-and-warnings-table">
 					  <tr>
-					    <th>Label</th>
-					    <th>Line</th>
+					    <th class="tableCellColumn">Cell</th>
+					    <th class="tableLabelColumn">Label</th>
 					    <th>Message</th>
 					  </tr>
 					  <tr ng-repeat="error in errors" ng-class-odd="'odd'" ng-class-even="'even'">
-					    <td>{{error.resource}}</td>
-					    <td>{{error.location}}</td>
+					    <td>{{error.context.cell}}</td>
+					    <td>{{error.context.label}}</td>
 					    <td>{{error.message}}</td>
 					  </tr>
 					</table>
@@ -80,13 +80,13 @@
 					<div ng-if="hasWarnings">Some warnings for generation:</div>
 					<table ng-if="hasWarnings" class="errors-and-warnings-table">
 					  <tr>
-					    <th>Label</th>
-					    <th>Line</th>
-					    <th>Message</th>
+					    <th class="tableCellColumn">Cell</th>
+              <th class="tableLabelColumn">Label</th>
+              <th>Message</th>
 					  </tr>
 					  <tr ng-repeat="warning in warnings" ng-class-odd="'odd'" ng-class-even="'even'">
-					    <td>{{warning.resource}}</td>
-					    <td>{{warning.location}}</td>
+					    <td>{{warning.context.cell}}</td>
+					    <td>{{warning.context.label}}</td>
 					    <td>{{warning.message}}</td>
 					  </tr>
 					</table>

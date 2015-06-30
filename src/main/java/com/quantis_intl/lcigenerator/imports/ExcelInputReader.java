@@ -241,13 +241,15 @@ public class ExcelInputReader
         {
             loadNextMeaningfulRow(countryColumnIndex);
             Cell cell = currentRow.getCell(countryColumnIndex);
+            Cell labelCell = currentRow.getCell(labelColumnIndex, Row.RETURN_BLANK_AS_NULL);
             if (expectedTag.equals(POIHelper.getCellStringValue(currentRow, METADATA_COLUMN_INDEX, null)))
             {
-                String value = stringFromListExtractor.extractMandatory(expectedTag, cell);
+                String value = stringFromListExtractor.extractMandatory(expectedTag, labelCell, cell);
                 if (value != null)
                 {
                     extractedInputs.addValue(new SingleValue<String>(expectedTag, value, "", "",
-                            new Origin.ExcelUserInput(cell.getRowIndex() + 1, "country", "Country")));
+                            new Origin.ExcelUserInput(POIHelper.getCellCoordinates(cell), POIHelper.getCellStringValue(
+                                    labelCell, expectedTag))));
                 }
             }
             else
@@ -352,8 +354,8 @@ public class ExcelInputReader
                                         group.addValue(sv);
                                         if (fKeyIsMissing)
                                         {
-                                            errorReporter.warning(ImmutableMap.of("line",
-                                                    String.valueOf(currentRow.getRowNum() + 1), "label",
+                                            errorReporter.warning(ImmutableMap.of("cell",
+                                                    POIHelper.getCellCoordinates(currentLabelCell), "label",
                                                     POIHelper.getCellStringValue(currentLabelCell, fKey)),
                                                     "Your type selection is not in the list. The value you entered will be considered as 'Other' if available, or ignored");
                                         }
@@ -409,8 +411,8 @@ public class ExcelInputReader
                                         if (fKeyIsMissing)
                                         {
                                             errorReporter.warning(
-                                                    ImmutableMap.of("line",
-                                                            String.valueOf(currentRow.getRowNum() + 1), "label",
+                                                    ImmutableMap.of("cell",
+                                                            POIHelper.getCellCoordinates(currentLabelCell), "label",
                                                             POIHelper.getCellStringValue(currentLabelCell, fKey)),
                                                     "Your type selection is not in the list. The value you entered will be considered as \"Other\" if available, or ignored");
                                         }
@@ -480,24 +482,25 @@ public class ExcelInputReader
                             {
                                 errorReporter
                                         .warning(
-                                                ImmutableMap.of("line",
-                                                        extractExcelOriginalLine(dvgroup.getTotalHolder()), "label",
+                                                ImmutableMap.of("cell",
+                                                        extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()),
+                                                        "label",
                                                         extractExcelOriginalLabel(dvgroup.getTotalHolder())),
                                                 "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally");
                             },
                             total ->
                             {
                                 errorReporter.warning(
-                                        ImmutableMap.of("line",
-                                                extractExcelOriginalLine(dvgroup.getTotalHolder()), "label",
+                                        ImmutableMap.of("cell",
+                                                extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()), "label",
                                                 extractExcelOriginalLabel(dvgroup.getTotalHolder())),
                                         "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally");
                             }, z -> {
                                 // TODO: For now, only warn, as the default ratio (including "all in other" for
                                 // machineries) is handled by python. Watch out!
                             errorReporter.warning(
-                                    ImmutableMap.of("line",
-                                            extractExcelOriginalLine(dvgroup.getTotalHolder()), "label",
+                                    ImmutableMap.of("cell",
+                                            extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()), "label",
                                             extractExcelOriginalLabel(dvgroup.getTotalHolder())),
                                     "No repartition has been entered. For now, the default repartition will be used");
                         });
@@ -558,7 +561,8 @@ public class ExcelInputReader
                                 group.getTotalHolder().getUnit()));
                         errorReporter
                                 .warning(
-                                        ImmutableMap.of("line", extractExcelOriginalLine(group.getTotalHolder()),
+                                        ImmutableMap.of("cell",
+                                                extractExcelOriginalCellCoordinates(group.getTotalHolder()),
                                                 "label",
                                                 extractExcelOriginalLabel(group.getTotalHolder())),
                                         "The sum of the decomposition is lower than the entered total. The unaffected value will be considered as \"Other\"");
@@ -566,7 +570,8 @@ public class ExcelInputReader
                     total ->
                     {
                         errorReporter.warning(
-                                ImmutableMap.of("line", extractExcelOriginalLine(group.getTotalHolder()), "label",
+                                ImmutableMap.of("cell", extractExcelOriginalCellCoordinates(group.getTotalHolder()),
+                                        "label",
                                         extractExcelOriginalLabel(group.getTotalHolder())),
                                 "The sum of the decomposition is higher than the entered total. Please check again your value. For now the higher total will be considered");
                         group.replaceTotalValue(total);
@@ -576,7 +581,8 @@ public class ExcelInputReader
                                 "Unaffected portion of the total", "", Origin.GENERATED_VALUE, group.getTotalHolder()
                                         .getUnit()));
                         errorReporter.warning(
-                                ImmutableMap.of("line", extractExcelOriginalLine(group.getTotalHolder()), "label",
+                                ImmutableMap.of("cell", extractExcelOriginalCellCoordinates(group.getTotalHolder()),
+                                        "label",
                                         extractExcelOriginalLabel(group.getTotalHolder())),
                                 "No decomposition has been entered. The total will be considered as \"Other\"");
                     });
@@ -584,18 +590,22 @@ public class ExcelInputReader
 
         private String extractExcelOriginalLabel(SingleValue<?> value)
         {
-            if (value != null && value.getOrigin() instanceof ExcelUserInput)
-                return ((ExcelUserInput) value.getOrigin()).label;
-
-            return "";
+            ExcelUserInput origin = extractExcelOriginalInput(value);
+            return (origin != null ? origin.label : "");
         }
 
-        private String extractExcelOriginalLine(SingleValue<?> value)
+        private String extractExcelOriginalCellCoordinates(SingleValue<?> value)
+        {
+            ExcelUserInput origin = extractExcelOriginalInput(value);
+            return (origin != null ? origin.cellCoordinates : "");
+        }
+
+        private ExcelUserInput extractExcelOriginalInput(SingleValue<?> value)
         {
             if (value != null && value.getOrigin() instanceof ExcelUserInput)
-                return Integer.toString(((ExcelUserInput) value.getOrigin()).line);
+                return (ExcelUserInput) value.getOrigin();
 
-            return "";
+            return null;
         }
     }
 }

@@ -29,14 +29,12 @@ public interface Origin
 
     public static class ExcelUserInput implements Origin
     {
-        public final int line;
-        public final String column;
+        public final String cellCoordinates;
         public final String label;
 
-        public ExcelUserInput(int line, String column, String label)
+        public ExcelUserInput(String cellCoordinates, String label)
         {
-            this.line = line;
-            this.column = column;
+            this.cellCoordinates = cellCoordinates;
             this.label = label;
         }
     }

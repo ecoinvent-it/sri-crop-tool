@@ -82,17 +82,19 @@ public class StringFromListExtractor
             return Optional.empty();
         }
         return Optional.of(new SingleValue<String>(key, code, POIHelper.getCellStringValue(commentCell, ""), POIHelper
-                .getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(dataCell.getRowIndex() + 1, "Data",
+                .getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(POIHelper.getCellCoordinates(dataCell),
                 POIHelper.getCellStringValue(labelCell, ""))));
     }
 
-    public String extractMandatory(String key, Cell dataCell)
+    public String extractMandatory(String key, Cell labelCell, Cell dataCell)
     {
         String stringValue = POIHelper.getCellStringValue(dataCell, "");
         String code = MANDATORY_TAGS_TO_MAP.get(key).get(stringValue);
         if (code == null)
         {
-            errorReporter.error(ImmutableMap.of("cell", POIHelper.getCellCoordinates(dataCell), "field", key),
+            errorReporter.error(
+                    ImmutableMap.of("cell", POIHelper.getCellCoordinates(dataCell), "label",
+                            POIHelper.getCellStringValue(labelCell, key)),
                     "Your selection is not in the list. Please pick a value from the list");
             return null;
         }

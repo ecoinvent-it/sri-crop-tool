@@ -77,8 +77,8 @@ public class DateExtractor
             }
         }
         return Optional.of(new SingleValue<LocalDate>(key, value, POIHelper.getCellStringValue(commentCell, ""),
-                POIHelper.getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(dataCell.getRowIndex() + 1,
-                        "Data", POIHelper.getCellStringValue(labelCell, ""))));
+                POIHelper.getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(POIHelper
+                        .getCellCoordinates(dataCell), POIHelper.getCellStringValue(labelCell, ""))));
     }
 
     private LocalDate readDateFromString(String date)

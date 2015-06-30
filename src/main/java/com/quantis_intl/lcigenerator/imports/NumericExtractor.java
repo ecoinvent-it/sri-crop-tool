@@ -169,7 +169,7 @@ public class NumericExtractor
             return Optional.empty();
 
         return Optional.of(new DoubleSingleValue(key, value, POIHelper.getCellStringValue(commentCell, ""), POIHelper
-                .getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(dataCell.getRowIndex() + 1, "Data",
+                .getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(POIHelper.getCellCoordinates(dataCell),
                 POIHelper.getCellStringValue(labelCell, "")), "TODO"));
     }
 
@@ -216,7 +216,7 @@ public class NumericExtractor
         }
 
         return Optional.of(new DoubleSingleValue(key, value, POIHelper.getCellStringValue(commentCell, ""), POIHelper
-                .getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(dataCell.getRowIndex() + 1, "Data",
+                .getCellStringValue(sourceCell, ""), new Origin.ExcelUserInput(POIHelper.getCellCoordinates(dataCell),
                 POIHelper.getCellStringValue(labelCell, "")), "TODO"));
     }
 }

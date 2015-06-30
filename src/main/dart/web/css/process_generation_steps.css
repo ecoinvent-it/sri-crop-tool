@@ -121,6 +121,16 @@
 	background-color: white;
 }
 
+.errors-and-warnings-table .tableCellColumn
+{
+	width: 70px; 
+}
+
+.errors-and-warnings-table .tableLabelColumn
+{
+  width: 220px; 
+}
+
 .odd {
   background-color: #eeeeee;
 }
@@ -128,9 +138,9 @@
   background-color: #ffffff;
 }
 
-.errors
+.successful
 {
-	background-color: #f2dede;
+  background-color: #dff0d8;
 }
 
 .warnings
@@ -138,7 +148,7 @@
   background-color: #fcf8e3;
 }
 
-.successful
+.errors
 {
-  background-color: #dff0d8;
+  background-color: #f2dede;
 }

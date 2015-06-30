@@ -102,7 +102,8 @@ public class StringExtractor
     {
         return Optional.of(new SingleValue<String>(key, POIHelper.getCellStringValue(dataCell, ""), POIHelper
                 .getCellStringValue(commentCell, ""), POIHelper.getCellStringValue(sourceCell, ""),
-                new Origin.ExcelUserInput(dataCell.getRowIndex() + 1, "Data", POIHelper.getCellStringValue(labelCell,
+                new Origin.ExcelUserInput(POIHelper.getCellCoordinates(dataCell), POIHelper.getCellStringValue(
+                        labelCell,
                         ""))));
     }
 }

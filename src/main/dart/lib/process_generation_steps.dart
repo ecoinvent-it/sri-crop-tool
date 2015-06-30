@@ -44,15 +44,15 @@ class ProcessGeneratorSteps
       if ( request.status == 400 )
       {
         Map map = JSON.decode(request.responseText); 
-        warnings = map['warnings'];
-        errors = map['errors'];
+        warnings = map['warnings']..sort(_errorsOrWarningsComparator);
+        errors = map['errors']..sort(_errorsOrWarningsComparator);
       }
       else
       {
         step = 1;
         Map map = JSON.decode(request.responseText); 
-        warnings = map['message']['warnings'];
-        errors = map['message']['errors'];
+        warnings = map['message']['warnings']..sort(_errorsOrWarningsComparator);
+        errors = map['message']['errors']..sort(_errorsOrWarningsComparator);
         idResult = map['idResult'];
       }
       js.context.callMethod(r'$', ['#process-generation-step3-modal'])
@@ -66,6 +66,24 @@ class ProcessGeneratorSteps
     idResult = null;
     warnings = null;
     errors = null;
+  }
+  
+  int _errorsOrWarningsComparator(a,b)
+  {
+    String cellA = a['context']['cell'];
+    String cellB = b['context']['cell'];
+    if (cellA == null)
+      return -1;
+    if (cellB == null)
+      return 1;
+    
+    int lineComparator = cellA.substring(1,cellA.length)
+        .compareTo(cellB.substring(1,cellB.length));
+    
+    if (lineComparator == 0)
+      return cellA.compareTo(cellB);
+    else
+      return lineComparator;
   }
 
 }
