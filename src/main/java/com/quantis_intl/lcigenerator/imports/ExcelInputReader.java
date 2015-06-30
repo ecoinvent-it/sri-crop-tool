@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -522,7 +523,7 @@ public class ExcelInputReader
             SingleValue<?> other = pestiGroup.getSingleValue("other");
             if (other != null)
                 extractedInputs.addValue(other.rename("pest_remains"));
-            else if (!pestiGroup.getTotalHolder().equals(pestiTotal))
+            else if (!Objects.equals(pestiGroup.getTotalHolder(), pestiTotal))
                 extractedInputs.replaceValue(new DoubleSingleValue(TOTAL_PESTICIDES, pestiGroup.getTotalHolder()
                         .getValue(), pestiTotal.getComment(), pestiTotal.getSource(), Origin.GENERATED_VALUE,
                         pestiTotal.getUnit()));
@@ -540,7 +541,7 @@ public class ExcelInputReader
             SingleValue<?> otherMachineries = machineriesGroup.getSingleValue("other");
             if (otherMachineries != null)
                 extractedInputs.addValue(otherMachineries.rename("remains_machinery_diesel"));
-            else if (!machineriesGroup.getTotalHolder().equals(machineriesTotal))
+            else if (!Objects.equals(machineriesGroup.getTotalHolder(), machineriesTotal))
                 extractedInputs.replaceValue(new DoubleSingleValue(TOTAL_MACHINERIES, machineriesGroup.getTotalHolder()
                         .getValue(), machineriesTotal.getComment(), machineriesTotal.getSource(),
                         Origin.GENERATED_VALUE,
