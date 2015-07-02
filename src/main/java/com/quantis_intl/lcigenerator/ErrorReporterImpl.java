@@ -77,7 +77,7 @@ public class ErrorReporterImpl implements ErrorReporter
         return !errors.isEmpty();
     }
 
-    private static class ErrorReporterResult
+    public static class ErrorReporterResult
     {
         public final String type;
 
@@ -85,11 +85,17 @@ public class ErrorReporterImpl implements ErrorReporter
 
         public final String message;
 
-        public ErrorReporterResult(String type, Map<String, String> context, String message)
+        private ErrorReporterResult(String type, Map<String, String> context, String message)
         {
             this.type = type;
             this.context = context;
             this.message = message;
+        }
+
+        @Override
+        public String toString()
+        {
+            return message;
         }
     }
 }

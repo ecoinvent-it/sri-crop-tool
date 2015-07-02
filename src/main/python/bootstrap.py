@@ -12,7 +12,6 @@ class QtsRequestHandler(BaseHTTPRequestHandler):
         if (self.path == "/computeLci"):
             try:
                 mapReq = json.loads(str(self.rfile.read(int(self.headers['content-length'])), "utf-8"))
-                #TODO: Do the things
                 mapRes = ModelsSequence(mapReq).executeSequence()
                 jsonRes = json.dumps(mapRes)
             except:

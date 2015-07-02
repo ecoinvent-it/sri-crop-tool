@@ -24,6 +24,7 @@ import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
@@ -35,6 +36,7 @@ import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.StreamingOutput;
 
 import org.apache.shiro.SecurityUtils;
@@ -68,33 +70,31 @@ public class Api
     @Path("computeLci")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public void computeQuestionnaire(@FormDataParam("uploadFile") InputStream is,
+    public void computeLci(@FormDataParam("uploadFile") InputStream is,
             @FormDataParam("canBeStored") boolean canBeStored, @Suspended AsyncResponse response)
             throws URISyntaxException, IOException
     {
-        ErrorReporter errorReporter = new ErrorReporterImpl();
+        ErrorReporterImpl errorReporter = new ErrorReporterImpl();
 
         // TODO: Store file if it can be stored
         ValueGroup extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
 
         if (!errorReporter.hasErrors())
         {
-            // RawInputToPyCompatibleConvertor inputConvertor = new RawInputToPyCompatibleConvertor(errorReporter);
             Map<String, Object> validatedData = extractedInputs.flattenValues();
 
-            if (!errorReporter.hasErrors())
-                pyBridgeService.callComputeLci(validatedData,
-                        result -> onResult(result, errorReporter, response),
-                        error -> onError(error, response));
-            else
-            {
-                LOGGER.warn("Bad content in input file");
-                response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
-            }
+            LOGGER.info("Uploaded file handled with {} warnings ", errorReporter.getErrors().size(),
+                    errorReporter.getWarnings().size());
+
+            pyBridgeService.callComputeLci(validatedData,
+                    result -> onResult(result, errorReporter, response),
+                    error -> onError(error, response));
         }
         else
         {
-            LOGGER.warn("Bad template for input file");
+            LOGGER.info(
+                    "Uploaded file handled with errors: {}",
+                    errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
     }
@@ -104,12 +104,14 @@ public class Api
     {
         String idResult = UUID.randomUUID().toString();
         SecurityUtils.getSubject().getSession().setAttribute(idResult, modelsOutput);
+        LOGGER.info("Computations done and stored in {}", idResult);
         response.resume(Response.ok(new ImportResult(errorReporter, idResult)).build());
     }
 
+    // TODO: Define standards in stack for error handling (e500 template, client code, etc)
     private void onError(Throwable error, AsyncResponse response)
     {
-        LOGGER.warn("Error using pyBridge", error);
+        LOGGER.error("Error using pyBridge", error);
         response.resume(error);
     }
 
@@ -119,8 +121,11 @@ public class Api
     public Response generateScsv(@FormParam("idResult") final String idResult,
             @FormParam("filename") final String importedFilename)
     {
-        Objects.requireNonNull(idResult, "idResult is null");
-        Objects.requireNonNull(importedFilename, "importedFilename is null");
+        if (idResult == null || importedFilename == null)
+        {
+            LOGGER.error("Bad request, idResult {} or filename {} is null", idResult, importedFilename);
+            return Response.status(Status.BAD_REQUEST).entity("idResult or filename is missing").build();
+        }
 
         @SuppressWarnings("unchecked")
         Map<String, String> modelsOutput = (Map<String, String>) SecurityUtils.getSubject().getSession()
@@ -128,6 +133,8 @@ public class Api
 
         Objects.requireNonNull(modelsOutput, "results not found");
         String filename = importedFilename.substring(0, importedFilename.lastIndexOf(".xls"));
+
+        LOGGER.info("Scsv file generated for results {}", idResult);
 
         return Response.ok(
                 (StreamingOutput) outputStream ->
