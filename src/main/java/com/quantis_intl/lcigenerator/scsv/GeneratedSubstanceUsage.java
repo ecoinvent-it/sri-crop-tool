@@ -22,20 +22,26 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.common.base.Strings;
 import com.quantis_intl.commons.scsv.ScsvEnums.SubCompartment;
 import com.quantis_intl.commons.scsv.Uncertainty;
 import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
 import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
+import com.quantis_intl.lcigenerator.imports.SingleValue;
+import com.quantis_intl.lcigenerator.imports.ValueGroup;
 
 public class GeneratedSubstanceUsage implements SubstanceUsage
 {
     private final TemplateSubstanceUsage template;
     private final Map<String, String> modelOutputs;
+    private final ValueGroup extractedInputs;
 
-    public GeneratedSubstanceUsage(TemplateSubstanceUsage template, Map<String, String> modelOutputs)
+    public GeneratedSubstanceUsage(TemplateSubstanceUsage template, Map<String, String> modelOutputs,
+            ValueGroup extractedInputs)
     {
         this.template = template;
         this.modelOutputs = modelOutputs;
+        this.extractedInputs = extractedInputs;
     }
 
     @Override
@@ -80,7 +86,6 @@ public class GeneratedSubstanceUsage implements SubstanceUsage
         if (amount == null)
         {
             amount = "0";
-            // TODO: Warn
         }
         return amount;
     }
@@ -95,9 +100,12 @@ public class GeneratedSubstanceUsage implements SubstanceUsage
     public String getComment()
     {
         String res = template.uncertainty.pedigreeMatrix;
-        String comment = modelOutputs.getOrDefault(template.commentVariable, "");
-        if (comment.isEmpty())
+        if (template.commentVariable.isEmpty())
             return res;
-        return res + " - " + comment;
+
+        SingleValue<?> vg = extractedInputs.getDeepSingleValue(template.commentVariable);
+        if (vg != null && !Strings.isNullOrEmpty(vg.getComment()))
+            res += " - " + vg.getComment();
+        return res;
     }
 }

@@ -528,8 +528,9 @@ public class ExcelInputReader
                 extractedInputs.addValue(other.rename("pest_remains"));
             else if (!Objects.equals(pestiGroup.getTotalHolder(), pestiTotal))
                 extractedInputs.replaceValue(new DoubleSingleValue(TOTAL_PESTICIDES, pestiGroup.getTotalHolder()
-                        .getValue(), pestiTotal.getComment(), pestiTotal.getSource(), Origin.GENERATED_VALUE,
-                        pestiTotal.getUnit()));
+                        .getValue(), pestiTotal == null ? "" : pestiTotal.getComment(), pestiTotal == null ? ""
+                        : pestiTotal.getSource(), Origin.GENERATED_VALUE,
+                        pestiTotal == null ? "" : pestiTotal.getUnit()));
 
             DoubleSingleValue machineriesTotal = (DoubleSingleValue) extractedInputs.getSingleValue(TOTAL_MACHINERIES);
             PartValueGroup machineriesGroup = new PartValueGroup("", machineriesTotal);
@@ -546,9 +547,10 @@ public class ExcelInputReader
                 extractedInputs.addValue(otherMachineries.rename("remains_machinery_diesel"));
             else if (!Objects.equals(machineriesGroup.getTotalHolder(), machineriesTotal))
                 extractedInputs.replaceValue(new DoubleSingleValue(TOTAL_MACHINERIES, machineriesGroup.getTotalHolder()
-                        .getValue(), machineriesTotal.getComment(), machineriesTotal.getSource(),
+                        .getValue(), machineriesTotal == null ? "" : machineriesTotal.getComment(),
+                        machineriesTotal == null ? "" : machineriesTotal.getSource(),
                         Origin.GENERATED_VALUE,
-                        machineriesTotal.getUnit()));
+                        machineriesTotal == null ? "" : machineriesTotal.getUnit()));
         }
 
         private void validateGroupAggregation(PartValueGroup group)

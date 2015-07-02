@@ -34,11 +34,13 @@ public class PesticideProductUsage implements ProductUsage
 
     protected final String variable;
     private final String amount;
+    protected final String comment;
 
-    public PesticideProductUsage(String variable, String amount)
+    public PesticideProductUsage(String variable, String amount, String comment)
     {
         this.variable = variable;
         this.amount = amount;
+        this.comment = comment;
     }
 
     @Override
@@ -68,7 +70,9 @@ public class PesticideProductUsage implements ProductUsage
     @Override
     public String getComment()
     {
-        // TODO: Add user comment
-        return StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING.pedigreeMatrix;
+        String res = StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING.pedigreeMatrix;
+        if (!comment.isEmpty())
+            res += " - " + comment;
+        return res;
     }
 }

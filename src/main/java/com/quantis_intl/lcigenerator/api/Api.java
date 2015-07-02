@@ -87,7 +87,7 @@ public class Api
                     errorReporter.getWarnings().size());
 
             pyBridgeService.callComputeLci(validatedData,
-                    result -> onResult(result, errorReporter, response),
+                    result -> onResult(result, extractedInputs, errorReporter, response),
                     error -> onError(error, response));
         }
         else
@@ -99,11 +99,12 @@ public class Api
         }
     }
 
-    private void onResult(Map<String, String> modelsOutput, ErrorReporter errorReporter,
+    private void onResult(Map<String, String> modelsOutput, ValueGroup extractedInputs, ErrorReporter errorReporter,
             AsyncResponse response)
     {
         String idResult = UUID.randomUUID().toString();
         SecurityUtils.getSubject().getSession().setAttribute(idResult, modelsOutput);
+        SecurityUtils.getSubject().getSession().setAttribute(idResult + "_inputs", extractedInputs);
         LOGGER.info("Computations done and stored in {}", idResult);
         response.resume(Response.ok(new ImportResult(errorReporter, idResult)).build());
     }
@@ -130,6 +131,8 @@ public class Api
         @SuppressWarnings("unchecked")
         Map<String, String> modelsOutput = (Map<String, String>) SecurityUtils.getSubject().getSession()
                 .getAttribute(idResult);
+        ValueGroup extractedInputs = (ValueGroup) SecurityUtils.getSubject().getSession()
+                .getAttribute(idResult + "_inputs");
 
         Objects.requireNonNull(modelsOutput, "results not found");
         String filename = importedFilename.substring(0, importedFilename.lastIndexOf(".xls"));
@@ -138,7 +141,7 @@ public class Api
 
         return Response.ok(
                 (StreamingOutput) outputStream ->
-                scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, outputStream))
+                scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, extractedInputs, outputStream))
                 .header("Content-Disposition", "attachment; filename=\"" + filename + ".csv\"").build();
     }
 }

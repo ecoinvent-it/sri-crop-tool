@@ -152,7 +152,22 @@ public class ValueGroup
 
     public SingleValue<?> getSingleValue(String key)
     {
+        Collection<SingleValue<?>> res = getValue(key);
+        if (res.size() != 1)
+            return null;
         return Iterables.getFirst(values.get(key), null);
+    }
+
+    public SingleValue<?> getDeepSingleValue(String key)
+    {
+        SingleValue<?> res = getSingleValue(key);
+        if (res == null)
+            res = subGroups.values().stream()
+                    .filter(vg -> key.startsWith(vg.localKey))
+                    .map(vg -> vg.getDeepSingleValue(key.substring(vg.localKey.length() + 1)))
+                    .filter(sv -> sv != null).findAny().orElse(null);
+
+        return res;
     }
 
     public static abstract class DoubleValueGroup extends ValueGroup

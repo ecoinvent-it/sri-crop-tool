@@ -35,11 +35,13 @@ public class PesticideSubstanceUsage implements SubstanceUsage
 
     private final String variable;
     private final String amount;
+    private final String comment;
 
-    public PesticideSubstanceUsage(String variable, String amount)
+    public PesticideSubstanceUsage(String variable, String amount, String comment)
     {
         this.variable = variable;
         this.amount = amount;
+        this.comment = comment;
     }
 
     @Override
@@ -76,7 +78,9 @@ public class PesticideSubstanceUsage implements SubstanceUsage
     @Override
     public String getComment()
     {
-        // TODO: Add user comment
-        return StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL.pedigreeMatrix;
+        String res = StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL.pedigreeMatrix;
+        if (!comment.isEmpty())
+            res += " - " + comment;
+        return res;
     }
 }

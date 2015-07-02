@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import com.quantis_intl.commons.scsv.processes.Product;
 import com.quantis_intl.commons.scsv.processes.ProductUsage;
@@ -35,14 +36,18 @@ import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Status;
 import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Type;
 import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
 import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
+import com.quantis_intl.lcigenerator.imports.SingleValue;
+import com.quantis_intl.lcigenerator.imports.ValueGroup;
 
 public class GeneratedProcess implements ProductScsvProcess
 {
     private final Map<String, String> modelOutputs;
+    private final ValueGroup extractedInputs;
 
-    public GeneratedProcess(Map<String, String> modelOutputs)
+    public GeneratedProcess(Map<String, String> modelOutputs, ValueGroup extractedInputs)
     {
         this.modelOutputs = modelOutputs;
+        this.extractedInputs = extractedInputs;
     }
 
     @Override
@@ -160,7 +165,7 @@ public class GeneratedProcess implements ProductScsvProcess
             @Override
             public String getComment()
             {
-                return "";
+                return findComment("yield_main_product_per_crop_cycle");
             }
         });
     }
@@ -225,16 +230,16 @@ public class GeneratedProcess implements ProductScsvProcess
     // TODO: map modelOutputs to template then sort by category, instead of this?
     private List<SubstanceUsage> toSubstanceUsage(TemplateSubstanceUsage[] templates)
     {
-        return Arrays.stream(templates).map(r -> new GeneratedSubstanceUsage(r, modelOutputs))
-                .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0")) // FIXME: Re-add
+        return Arrays.stream(templates).map(r -> new GeneratedSubstanceUsage(r, modelOutputs, extractedInputs))
+                .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0"))
                 .collect(Collectors.toList());
     }
 
     // TODO: map modelOutputs to template then sort by category, instead of this?
     private List<ProductUsage> toProductUsage(TemplateProductUsage[] templates)
     {
-        return Arrays.stream(templates).map(r -> new GeneratedProductUsage(r, modelOutputs))
-                .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0")) // FIXME: Re-add
+        return Arrays.stream(templates).map(r -> new GeneratedProductUsage(r, modelOutputs, extractedInputs))
+                .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0"))
                 .collect(Collectors.toList());
     }
 
@@ -243,16 +248,25 @@ public class GeneratedProcess implements ProductScsvProcess
         return modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
                 .filter(e -> !e.getKey().endsWith("_other"))
                 .filter(e -> !e.getKey().endsWith("_unspecified"))
-                .map(e -> new PesticideSubstanceUsage(e.getKey(), e.getValue())).collect(Collectors.toList());
+                .map(e -> new PesticideSubstanceUsage(e.getKey(), e.getValue(), findComment(e.getKey().substring(6))))
+                .collect(Collectors.toList());
     }
 
     private List<ProductUsage> buildPesticidesProductUsages()
     {
         List<ProductUsage> res = modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
-                .map(e -> new PesticideProductUsage(e.getKey(), e.getValue())).collect(Collectors.toList());
+                .map(e -> new PesticideProductUsage(e.getKey(), e.getValue(), findComment(e.getKey().substring(6))))
+                .collect(Collectors.toList());
         res.addAll(modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
                 .filter(e -> e.getKey().endsWith("_other") || e.getKey().endsWith("_unspecified"))
-                .map(e -> new PesticideEmissions(e.getKey(), e.getValue())).collect(Collectors.toList()));
+                .map(e -> new PesticideEmissions(e.getKey().substring(6), e.getValue(), findComment(e.getKey())))
+                .collect(Collectors.toList()));
         return res;
+    }
+
+    private String findComment(String key)
+    {
+        SingleValue<?> sv = extractedInputs.getDeepSingleValue(key);
+        return sv == null ? "" : Strings.nullToEmpty(sv.getComment());
     }
 }

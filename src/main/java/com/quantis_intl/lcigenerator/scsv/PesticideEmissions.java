@@ -23,9 +23,9 @@ import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
 
 public class PesticideEmissions extends PesticideProductUsage
 {
-    public PesticideEmissions(String variable, String amount)
+    public PesticideEmissions(String variable, String amount, String comment)
     {
-        super(variable, amount);
+        super(variable, amount, comment);
     }
 
     @Override
@@ -51,7 +51,9 @@ public class PesticideEmissions extends PesticideProductUsage
     @Override
     public String getComment()
     {
-        // TODO: Add user comment
-        return StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL.pedigreeMatrix;
+        String res = StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL.pedigreeMatrix;
+        if (!comment.isEmpty())
+            res += " - " + comment;
+        return res;
     }
 }

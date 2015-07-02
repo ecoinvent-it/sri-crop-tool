@@ -31,6 +31,7 @@ import com.quantis_intl.commons.scsv.ScsvLineSerializer;
 import com.quantis_intl.commons.scsv.ScsvLinesWriter;
 import com.quantis_intl.commons.scsv.metadata.ScsvMetadataWriter;
 import com.quantis_intl.commons.scsv.processes.ScsvProcessWriter;
+import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.lcigenerator.scsv.GeneratedMetadata;
 import com.quantis_intl.lcigenerator.scsv.GeneratedProcess;
 
@@ -46,11 +47,12 @@ public class ScsvFileWriter
         this.metadataWriter = new ScsvMetadataWriter();
     }
 
-    public void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, OutputStream os)
+    public void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, ValueGroup extractedInputs,
+            OutputStream os)
     {
         try
         {
-            writeModelsOutputToScsvFile(modelsOutput,
+            writeModelsOutputToScsvFile(modelsOutput, extractedInputs,
                     new BufferedWriter(new OutputStreamWriter(os, Charset.forName("windows-1252"))));
         }
         catch (IOException e)
@@ -59,14 +61,15 @@ public class ScsvFileWriter
         }
     }
 
-    private void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, Writer writer) throws IOException
+    private void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, ValueGroup extractedInputs, Writer writer)
+            throws IOException
     {
         ScsvLinesWriter linesWriter = new ScsvLinesWriter(serializer, writer);
         GeneratedMetadata generatedMetadata = new GeneratedMetadata();
         metadataWriter.write(generatedMetadata, linesWriter);
         linesWriter.writeNewLine();
         ScsvProcessWriter processWriter = new ScsvProcessWriter(linesWriter, generatedMetadata.getDateFormatter());
-        processWriter.write(new GeneratedProcess(modelsOutput));
+        processWriter.write(new GeneratedProcess(modelsOutput, extractedInputs));
 
         writer.flush();
     }

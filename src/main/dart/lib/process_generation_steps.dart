@@ -72,9 +72,9 @@ class ProcessGeneratorSteps
   {
     String cellA = a['context']['cell'];
     String cellB = b['context']['cell'];
-    if (cellA == null)
+    if (cellA == null || cellA == "")
       return -1;
-    if (cellB == null)
+    if (cellB == null || cellB == "")
       return 1;
     
     int lineComparator = cellA.substring(1,cellA.length)

@@ -22,19 +22,25 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.google.common.base.Strings;
 import com.quantis_intl.commons.scsv.Uncertainty;
 import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
 import com.quantis_intl.commons.scsv.processes.ProductUsage;
+import com.quantis_intl.lcigenerator.imports.SingleValue;
+import com.quantis_intl.lcigenerator.imports.ValueGroup;
 
 public class GeneratedProductUsage implements ProductUsage
 {
     private final TemplateProductUsage template;
     private final Map<String, String> modelOutputs;
+    private final ValueGroup extractedInputs;
 
-    public GeneratedProductUsage(TemplateProductUsage template, Map<String, String> modelOutputs)
+    public GeneratedProductUsage(TemplateProductUsage template, Map<String, String> modelOutputs,
+            ValueGroup extractedInputs)
     {
         this.template = template;
         this.modelOutputs = modelOutputs;
+        this.extractedInputs = extractedInputs;
     }
 
     @Override
@@ -73,7 +79,6 @@ public class GeneratedProductUsage implements ProductUsage
         if (amount == null)
         {
             amount = "0";
-            // TODO: Warn
         }
         return amount;
     }
@@ -88,9 +93,12 @@ public class GeneratedProductUsage implements ProductUsage
     public String getComment()
     {
         String res = template.uncertainty.pedigreeMatrix;
-        String comment = modelOutputs.getOrDefault(template.commentVariable, "");
-        if (comment.isEmpty())
+        if (template.commentVariable.isEmpty())
             return res;
-        return res + " - " + comment;
+
+        SingleValue<?> vg = extractedInputs.getDeepSingleValue(template.commentVariable);
+        if (vg != null && !Strings.isNullOrEmpty(vg.getComment()))
+            res += " - " + vg.getComment();
+        return res;
     }
 }
