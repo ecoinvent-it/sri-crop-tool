@@ -48,9 +48,9 @@ public class TemplateSubstanceUsage
                     "MJ", "energy_gross_calorific_value", StandardUncertaintyMetadata.CO2_ENERGY_BIOMASS, ""),
 
             new TemplateSubstanceUsage("Water, well, in ground, {country}", SubCompartment.RAW_IN_WATER,
-                    "m3", "wateruse_ground", StandardUncertaintyMetadata.IRRIGATION_WATER, "ratio_wateruse_ground"),
+                    "m3", "wateruse_ground", StandardUncertaintyMetadata.IRRIGATION_WATER, "wateruse_ground"),
             new TemplateSubstanceUsage("Water, river, {country}", SubCompartment.RAW_IN_WATER,
-                    "m3", "wateruse_surface", StandardUncertaintyMetadata.IRRIGATION_WATER, "ratio_wateruse_surface"),
+                    "m3", "wateruse_surface", StandardUncertaintyMetadata.IRRIGATION_WATER, "wateruse_surface"),
 
             new TemplateSubstanceUsage("Water, well, in ground, {country}", SubCompartment.RAW_IN_WATER,
                     "m3", "utilities_wateruse_ground", StandardUncertaintyMetadata.UTILITIES_WATER,

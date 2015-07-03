@@ -259,7 +259,7 @@ public class GeneratedProcess implements ProductScsvProcess
                 .collect(Collectors.toList());
         res.addAll(modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
                 .filter(e -> e.getKey().endsWith("_other") || e.getKey().endsWith("_unspecified"))
-                .map(e -> new PesticideEmissions(e.getKey().substring(6), e.getValue(), findComment(e.getKey())))
+                .map(e -> new PesticideEmissions(e.getKey(), e.getValue(), findComment(e.getKey().substring(6))))
                 .collect(Collectors.toList()));
         return res;
     }
