@@ -75,6 +75,11 @@
     filter: alpha(opacity=0);
 }
 
+#step3 input.upload:disabled
+{
+	cursor: default;
+}
+
 #step3CheckboxText
 {
   color: white;
@@ -112,6 +117,18 @@
 	width: 100%;
 	opacity: 0;
 	filter: alpha(opacity=0);
+}
+
+.stepNavBtn
+{
+  font-size: 14px;
+  color: #FFFFFF;
+  background-color: #F9B233;
+  cursor: pointer;
+}
+
+.stepNavBtn:HOVER {
+  background-color: #e87e05;
 }
 
 .errors-and-warnings-table

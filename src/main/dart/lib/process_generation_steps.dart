@@ -17,10 +17,13 @@ class ProcessGeneratorSteps
   int step = 0;
   
   String filename = null;
+  FormElement step3Form;
   
   List warnings;
   List errors;
   String idResult;
+  
+  bool fileCanBeStored = true;
   
   bool get hasWarnings => (warnings != null && warnings.length > 0);
   bool get hasErrors => (errors != null && errors.length > 0);
@@ -29,16 +32,16 @@ class ProcessGeneratorSteps
   
   void submitUploadForm(target)
   {
-    _reset();
     filename = (target as FileUploadInputElement).files[0].name;
     // FIXME: Find a better way
-    upload(target.parent);
+    step3Form = target.parent as FormElement;
+    _upload();
   }
   
-  void upload(target)
+  void _upload()
   {
     // FIXME: Find a better way to avoid reading the file client side
-    var formData = new FormData(target);
+    var formData = new FormData(step3Form);
     _api.uploadInputs(formData)
     .then((HttpRequest request) {
       if ( request.status == 400 )
@@ -55,17 +58,20 @@ class ProcessGeneratorSteps
         errors = map['message']['errors']..sort(_errorsOrWarningsComparator);
         idResult = map['idResult'];
       }
+      
       js.context.callMethod(r'$', ['#process-generation-step3-modal'])
               .callMethod('modal', [new js.JsObject.jsify({'show': 'true'})]);
     });
   }
   
-  void _reset()
+  void reset()
   {
     step = 0;
     idResult = null;
     warnings = null;
     errors = null;
+    // NOTE: Needed to be able to send again the same file
+    step3Form.reset();
   }
   
   int _errorsOrWarningsComparator(a,b)

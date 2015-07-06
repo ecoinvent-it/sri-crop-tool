@@ -112,16 +112,10 @@ table img
 
 .qts-btn
 {
-  border: 0px;
+	border: 0px;
   margin: 0;
   padding: 8px 40px 8px 40px;
   text-align: center;
-  font-size: 22px;
   min-width: 80px;
-  background-color: rgb(255,255,255);
   cursor: pointer;
-}
-
-.qts-btn:HOVER {
-  background-color: rgba(255,255,255,0.9);
 }

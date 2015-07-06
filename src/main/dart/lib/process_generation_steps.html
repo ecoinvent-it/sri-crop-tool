@@ -3,6 +3,10 @@
   <col width="25%"/>
   <col width="25%"/>
   <col width="25%"/>
+  <tr ng-if="step == 1">
+    <td colspan="2"></td>
+    <td colspan="2" class="color3 not-bold">Current uploaded file: {{filename}}</td>
+  </tr>
   <tr>
     <td>
         <a id="#step1Link" href="LCI-Database_Data-collection_Crop_v1.xlsx" target="_blank">
@@ -16,13 +20,14 @@
         <div class="stepTitle text-big text-uppercase">Step 2</div>
         <div class="stepText">Fill in the template with your data</div>
     </td>
-    <td id="step3" class="stepBtn">
+    <td id="step3" class="stepBtn" ng-class="{disabledStep: step == 1}">
       <div class="stepTitle text-big text-uppercase">Step 3</div>
-      <form id="processGeneratorUploadForm" ng-submit="upload($event.target)" method="post" enctype="multipart/form-data">
+      <form id="processGeneratorUploadForm" method="post" enctype="multipart/form-data">
           <input type="file" name="uploadFile" 
                       accept=".xls,.xlsx" required="required" 
                       class="upload"
-                      ng-change="submitUploadForm($event.target)"/>
+                      ng-change="submitUploadForm($event.target)"
+                      ng-disabled="step != 0"/>
           <div class="stepText">Upload your template to ALCIG</div>
           <div>
             <input type="checkbox" checked name="canBeStored" value="true" ng-disabled="step != 0"/> 
@@ -40,13 +45,13 @@
 			<div class="stepText">Get a ready-to-import file for Simapro</div>
 	  </td>
   </tr>
+  
+  <tr>
+    <td colspan="2"></td>
+    <td><button class="qts-btn stepNavBtn" ng-if="hasErrors || hasWarnings" data-toggle="modal" data-target="#process-generation-step3-modal">Notifications</button></td>
+    <td><button class="qts-btn stepNavBtn" ng-if="step == 1" ng-click="reset()">Back to step 3</button></td>
+  </tr>
 </table>
-
-<!-- NOTE: kept as an example for later: we may want to display again the pop-up if we've closed it by mistake -->
-<!-- Button trigger modal -->
-<!-- <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#process-generation-step3-modal"> -->
-<!--   Launch demo modal -->
-<!-- </button> -->
 
 <!-- Modal -->
 <div class="modal fade" id="process-generation-step3-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
