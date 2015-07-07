@@ -19,8 +19,6 @@
 package com.quantis_intl.lcigenerator.scsv;
 
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import com.google.common.base.Strings;
 import com.quantis_intl.commons.scsv.Uncertainty;
@@ -46,24 +44,7 @@ public class GeneratedProductUsage implements ProductUsage
     @Override
     public String getName()
     {
-        String templateName = template.name;
-        Pattern pattern = Pattern.compile("\\{(.+?)\\}");
-        Matcher matcher = pattern.matcher(template.name);
-        StringBuilder builder = new StringBuilder();
-        int i = 0;
-        while (matcher.find())
-        {
-            String replacement = modelOutputs.get(matcher.group(1));
-            builder.append(templateName.substring(i, matcher.start()));
-            if (replacement == null)
-                // TODO: Warn
-                builder.append(matcher.group(0));
-            else
-                builder.append(replacement);
-            i = matcher.end();
-        }
-        builder.append(templateName.substring(i, templateName.length()));
-        return builder.toString();
+        return template.provideName(modelOutputs);
     }
 
     @Override

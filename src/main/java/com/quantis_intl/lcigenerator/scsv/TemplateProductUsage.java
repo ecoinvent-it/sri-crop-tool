@@ -18,9 +18,20 @@
  */
 package com.quantis_intl.lcigenerator.scsv;
 
+import java.util.List;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
+
 public class TemplateProductUsage
 {
-    public final String name;
+    private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{(.+?)\\}");
+
+    private final String name;
     public final String unit;
     public final String amountVariable;
     public final StandardUncertaintyMetadata uncertainty;
@@ -34,6 +45,123 @@ public class TemplateProductUsage
         this.amountVariable = amountVariable;
         this.uncertainty = uncertainty;
         this.commentVariable = commentVariable;
+
+    }
+
+    public String provideName(Map<String, String> modelOutputs)
+    {
+        Matcher matcher = VARIABLE_PATTERN.matcher(name);
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        while (matcher.find())
+        {
+            String replacement = lookupVariable(modelOutputs, matcher.group(1));
+            builder.append(name.substring(i, matcher.start()));
+            if (replacement == null)
+                // TODO: Warn
+                builder.append(matcher.group(0));
+            else
+                builder.append(replacement);
+            i = matcher.end();
+        }
+        builder.append(name.substring(i, name.length()));
+        return builder.toString();
+    }
+
+    protected String lookupVariable(Map<String, String> modelOutputs, String variable)
+    {
+        return modelOutputs.get(variable);
+    }
+
+    private static Map<String, String> PHOTOVOLTAIC_REMAP;
+    private static Map<String, String> LOW_VOLTAGE_REMAP;
+    private static List<String> LOW_VOLTAGE_WFLDB = Lists.newArrayList("AR", "CA", "CL", "CO", "CR", "CI", "EC", "GH",
+            "IN", "ID", "MX", "PH", "RU", "TR", "VN");
+    private static Map<String, String> DRIP_REMAP;
+    private static Map<String, String> SURFACE_REMAP;
+    private static Map<String, String> SPRINKLER_REMAP;
+
+    static
+    {
+        ImmutableMap.Builder<String, String> photoBuilder = ImmutableMap.builder();
+        photoBuilder.put("AR", "US");
+        photoBuilder.put("BR", "US");
+        photoBuilder.put("CL", "US");
+        photoBuilder.put("CN", "TR");
+        photoBuilder.put("CO", "US");
+        photoBuilder.put("CR", "US");
+        photoBuilder.put("CI", "TR");
+        photoBuilder.put("EC", "US");
+        photoBuilder.put("GH", "TR");
+        photoBuilder.put("IN", "TR");
+        photoBuilder.put("ID", "TR");
+        photoBuilder.put("IL", "TR");
+        photoBuilder.put("KE", "TR");
+        photoBuilder.put("MX", "US");
+        photoBuilder.put("PE", "US");
+        photoBuilder.put("PH", "AU");
+        photoBuilder.put("PL", "DE");
+        photoBuilder.put("RU", "DE");
+        photoBuilder.put("ZA", "AU");
+        photoBuilder.put("LK", "TR");
+        photoBuilder.put("TH", "TR");
+        photoBuilder.put("UA", "DE");
+        photoBuilder.put("VN", "TR");
+        PHOTOVOLTAIC_REMAP = photoBuilder.build();
+
+        ImmutableMap.Builder<String, String> lowBuilder = ImmutableMap.builder();
+        lowBuilder.put("AU", "CH");
+        lowBuilder.put("IL", "CH");
+        lowBuilder.put("KE", "CH");
+        lowBuilder.put("NZ", "CH");
+        lowBuilder.put("PE", "CH");
+        lowBuilder.put("ZA", "CH");
+        lowBuilder.put("LK", "CH");
+        lowBuilder.put("TH", "CH");
+        lowBuilder.put("UA", "CH");
+        LOW_VOLTAGE_REMAP = lowBuilder.build();
+
+        ImmutableMap.Builder<String, String> dripBuilder = ImmutableMap.builder();
+        dripBuilder.put("AU", "CH");
+        dripBuilder.put("CO", "CH");
+        dripBuilder.put("IL", "CH");
+        dripBuilder.put("KE", "CH");
+        dripBuilder.put("NZ", "CH");
+        dripBuilder.put("PE", "CH");
+        dripBuilder.put("RU", "CH");
+        dripBuilder.put("ZA", "CH");
+        dripBuilder.put("LK", "CH");
+        dripBuilder.put("TH", "CH");
+        dripBuilder.put("UA", "CH");
+        dripBuilder.put("VN", "CH");
+        DRIP_REMAP = dripBuilder.build();
+
+        ImmutableMap.Builder<String, String> surfaceBuilder = ImmutableMap.builder();
+        surfaceBuilder.put("FI", "CH");
+        surfaceBuilder.put("IL", "CH");
+        surfaceBuilder.put("KE", "CH");
+        surfaceBuilder.put("NL", "CH");
+        surfaceBuilder.put("NZ", "CH");
+        surfaceBuilder.put("PE", "CH");
+        surfaceBuilder.put("PL", "CH");
+        surfaceBuilder.put("RU", "CH");
+        surfaceBuilder.put("ZA", "CH");
+        surfaceBuilder.put("LK", "CH");
+        surfaceBuilder.put("TH", "CH");
+        surfaceBuilder.put("UA", "CH");
+        SURFACE_REMAP = surfaceBuilder.build();
+
+        ImmutableMap.Builder<String, String> sprinklerBuilder = ImmutableMap.builder();
+        sprinklerBuilder.put("IL", "CH");
+        sprinklerBuilder.put("KE", "CH");
+        sprinklerBuilder.put("NZ", "CH");
+        sprinklerBuilder.put("PE", "CH");
+        sprinklerBuilder.put("ZA", "CH");
+        sprinklerBuilder.put("LK", "CH");
+        sprinklerBuilder.put("TH", "CH");
+        sprinklerBuilder.put("UA", "CH");
+        sprinklerBuilder.put("VN", "CH");
+        SPRINKLER_REMAP = sprinklerBuilder.build();
     }
 
     public static final TemplateProductUsage[] materialsFuels = {
@@ -109,28 +237,28 @@ public class TemplateProductUsage
             new TemplateProductUsage("Wheat seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_wheat",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
 
-            new TemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 3.0)/{country} U", "m3",
-                    "surface_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
-                    "irr_surface_electricity"),
+            new WithLookupTemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 3.0)/{country} U",
+                    "m3", "surface_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
+                    "irr_surface_electricity", buildBiFun(SURFACE_REMAP)),
             new TemplateProductUsage("Irrigating, surface, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "surface_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "irr_surface_diesel"),
             // new TemplateProductUsage("Irrigating, surface, gravity/GLO U", "m3", "surface_irrigation_no_energy",
             // StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "irr_surface_no_energy"),// FIXME: Missing
-            new TemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.0)/{country} U", "m3",
-                    "sprinkler_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
-                    "irr_sprinkler_electricity"),
+            new WithLookupTemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.0)/{country} U",
+                    "m3", "sprinkler_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
+                    "irr_sprinkler_electricity", buildBiFun(SPRINKLER_REMAP)),
             new TemplateProductUsage("Irrigating, sprinkler, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "sprinkler_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "irr_sprinkler_diesel"),
-            new TemplateProductUsage("Irrigating, drip, electricity powered (WFLDB 3.0)/{country} U", "m3",
+            new WithLookupTemplateProductUsage("Irrigating, drip, electricity powered (WFLDB 3.0)/{country} U", "m3",
                     "drip_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
-                    "irr_drip_electricity"),
+                    "irr_drip_electricity", buildBiFun(DRIP_REMAP)),
             new TemplateProductUsage("Irrigating, drip, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "drip_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "irr_drip_diesel"),
 
-            new TemplateProductUsage("Tap water, at user/RER U", "t", "wateruse_non_conventional_sources",
+            new TemplateProductUsage("Tap water, at user/RER U", "ton", "wateruse_non_conventional_sources",
                     StandardUncertaintyMetadata.IRRIGATION_WATER, "wateruse_non_conventional_sources"),
 
             new TemplateProductUsage("Ammonium nitrate, as N, at regional storehouse/RER U", "kg",
@@ -274,7 +402,8 @@ public class TemplateProductUsage
             new TemplateProductUsage("Slurry spreading, by vacuum tanker/CH U", "m3",
                     "fertilisation_liquid_manure_vacuum_tanker", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "fertilisation_liquid_manure_vacuum_tanker"),
-            new TemplateProductUsage("Solid manure loading and spreading, by hydraulic loader and spreader/CH U", "t",
+            new TemplateProductUsage("Solid manure loading and spreading, by hydraulic loader and spreader/CH U",
+                    "ton",
                     "fertilisation_solid_manure", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "fertilisation_solid_manure"),
             new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
@@ -419,12 +548,12 @@ public class TemplateProductUsage
     };
 
     public static final TemplateProductUsage[] electricityHeat = {
-            new TemplateProductUsage("Electricity, low voltage, at grid/{country} U", "kWh",
+            new LowVoltageTemplateProductUsage("kWh",
                     "energy_electricity_low_voltage_at_grid", StandardUncertaintyMetadata.ELECTRICITY,
                     "energy_electricity_low_voltage_at_grid"),
-            new TemplateProductUsage("Electricity, production mix photovoltaic, at plant/{country} U", "kWh",
+            new WithLookupTemplateProductUsage("Electricity, production mix photovoltaic, at plant/{country} U", "kWh",
                     "energy_electricity_photovoltaic_produced_locally", StandardUncertaintyMetadata.ELECTRICITY,
-                    "energy_electricity_photovoltaic_produced_locally"),
+                    "energy_electricity_photovoltaic_produced_locally", buildBiFun(PHOTOVOLTAIC_REMAP)),
             new TemplateProductUsage("Electricity, at wind power plant/RER U", "kWh",
                     "energy_electricity_wind_power_produced_locally", StandardUncertaintyMetadata.ELECTRICITY,
                     "energy_electricity_wind_power_produced_locally"),
@@ -446,4 +575,50 @@ public class TemplateProductUsage
                     "eol_waste_water_to_treatment_facility", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
                     "eol_waste_water_to_treatment_facility"),
     };
+
+    private static class WithLookupTemplateProductUsage extends TemplateProductUsage
+    {
+        private final BiFunction<Map<String, String>, String, String> variableResolver;
+
+        public WithLookupTemplateProductUsage(String name, String unit, String amountVariable,
+                StandardUncertaintyMetadata uncertainty, String commentVariable,
+                BiFunction<Map<String, String>, String, String> variableResolver)
+        {
+            super(name, unit, amountVariable, uncertainty, commentVariable);
+            this.variableResolver = variableResolver;
+        }
+
+        protected String lookupVariable(Map<String, String> modelOutputs, String variable)
+        {
+            return variableResolver.apply(modelOutputs, variable);
+        }
+    }
+
+    private static class LowVoltageTemplateProductUsage extends TemplateProductUsage
+    {
+        public LowVoltageTemplateProductUsage(String unit, String amountVariable,
+                StandardUncertaintyMetadata uncertainty, String commentVariable)
+        {
+            super("{name}", unit, amountVariable, uncertainty, commentVariable);
+        }
+
+        protected String lookupVariable(Map<String, String> modelOutputs, String variable)
+        {
+            String country = modelOutputs.get("country");
+            country = LOW_VOLTAGE_REMAP.getOrDefault(country, country);
+            if (LOW_VOLTAGE_WFLDB.contains(country))
+                return "Electricity, low voltage, production " + country + ", at grid (WFLDB 3.0)/" + country + " U";
+            else
+                return "Electricity, low voltage, at grid/" + country + " U";
+        }
+    }
+
+    private static BiFunction<Map<String, String>, String, String> buildBiFun(Map<String, String> lookupMap)
+    {
+        return (map, var) -> {
+            String res = map.get(var);
+            return lookupMap.getOrDefault(res, res);
+        };
+    }
+
 }
