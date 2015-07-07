@@ -6,7 +6,7 @@ import 'package:angular/application_factory.dart';
 import 'package:alcig/api/api.dart';
 import 'package:alcig/api/api_impl.dart';
 //import 'package:alcig/custom_annotations.dart';
-
+import 'package:alcig/notificationModal/notification_modal.dart';
 import 'package:alcig/process_generation_steps.dart';
 
 void main() {
@@ -19,6 +19,7 @@ class MyAppModule extends Module {
   MyAppModule() {
     bind(Api, toImplementation: ApiImpl);
     bind(ProcessGeneratorSteps);
+    bind(NotificationModal);
     // NOTE: This doesn't work, we had some issue with null value
     //bind(String, toValue: new Random().nextInt(1<<31).toString(), withAnnotation: const IdTab() );
   }

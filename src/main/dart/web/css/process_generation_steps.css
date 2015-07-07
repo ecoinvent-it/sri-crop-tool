@@ -154,18 +154,3 @@
 .even {
   background-color: #ffffff;
 }
-
-.successful
-{
-  background-color: #dff0d8;
-}
-
-.warnings
-{
-  background-color: #fcf8e3;
-}
-
-.errors
-{
-  background-color: #f2dede;
-}

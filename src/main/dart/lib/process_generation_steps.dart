@@ -61,7 +61,8 @@ class ProcessGeneratorSteps
       
       js.context.callMethod(r'$', ['#process-generation-step3-modal'])
               .callMethod('modal', [new js.JsObject.jsify({'show': 'true'})]);
-    });
+    })
+    .catchError((_) => reset());
   }
   
   void reset()

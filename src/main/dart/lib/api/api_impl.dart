@@ -11,6 +11,9 @@ class ApiImpl implements Api {
   static const String _baseUrl = "app/";
   static final String _baseApiUrl = _baseUrl + "api/";
   static final String _basePubApiUrl = _baseApiUrl + "pub/";
+
+  StreamController<ServerEvent> _dispatcher = new StreamController.broadcast();
+  Stream<ServerEvent> get stream => _dispatcher.stream;
   
   Future<HttpRequest> uploadInputs(dynamic formData){
       return HttpRequest.request(_basePubApiUrl + "computeLci", method: "POST", sendData: formData)
@@ -20,9 +23,13 @@ class ApiImpl implements Api {
                     if ( request.status == 400 )
                       return request;
                     else
-                      // FIXME: Display pop-up
-                      throw request;
+                    {
+                      _dispatcher.add(ServerEvent.SERVER_ERROR);
+                      throw e;
+                    }
                   }
           );
     }
+
 }
+

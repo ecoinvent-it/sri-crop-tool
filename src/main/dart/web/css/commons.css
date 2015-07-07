@@ -119,3 +119,18 @@ table img
   min-width: 80px;
   cursor: pointer;
 }
+
+.successful
+{
+  background-color: #dff0d8;
+}
+
+.warnings
+{
+  background-color: #fcf8e3;
+}
+
+.errors
+{
+  background-color: #f2dede;
+}
