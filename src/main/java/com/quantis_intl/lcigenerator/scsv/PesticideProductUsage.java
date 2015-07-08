@@ -46,7 +46,7 @@ public class PesticideProductUsage implements ProductUsage
     @Override
     public String getName()
     {
-        return Objects.requireNonNull(MAPPING.get(variable));
+        return Objects.requireNonNull(MAPPING.get(variable), variable);
     }
 
     @Override
