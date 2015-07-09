@@ -243,8 +243,9 @@ public class TemplateProductUsage
             new TemplateProductUsage("Irrigating, surface, diesel powered (WFLDB 3.0)/GLO U", "m3",
                     "surface_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "irr_surface_diesel"),
-            // new TemplateProductUsage("Irrigating, surface, gravity/GLO U", "m3", "surface_irrigation_no_energy",
-            // StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "irr_surface_no_energy"),// FIXME: Missing
+            new TemplateProductUsage("Irrigating, surface, gravity (ALCIG)/GLO U", "m3",
+                    "surface_irrigation_no_energy", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "irr_surface_no_energy"),
             new WithLookupTemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.0)/{country} U",
                     "m3", "sprinkler_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
                     "irr_sprinkler_electricity", buildBiFun(SPRINKLER_REMAP)),
