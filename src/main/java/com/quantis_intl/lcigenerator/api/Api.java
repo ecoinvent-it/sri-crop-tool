@@ -83,8 +83,7 @@ public class Api
         {
             Map<String, Object> validatedData = extractedInputs.flattenValues();
 
-            LOGGER.info("Uploaded file handled with {} warnings ", errorReporter.getErrors().size(),
-                    errorReporter.getWarnings().size());
+            LOGGER.info("Uploaded file handled with {} warnings ", errorReporter.getWarnings().size());
 
             pyBridgeService.callComputeLci(validatedData,
                     result -> onResult(result, extractedInputs, errorReporter, response),

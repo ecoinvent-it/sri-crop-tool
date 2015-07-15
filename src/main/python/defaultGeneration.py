@@ -333,7 +333,6 @@ DEFAULTS_VALUES_GENERATORS = {
                    "average_annual_precipitation": TableLookupDefaultGenerator("country", ANNUAL_PRECIPITATION_PER_COUNTRY),
                    "clay_content": TableLookupDefaultGenerator("country", CLAY_CONTENT_PER_COUNTRY),
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
-                   "farming_type": SimpleValueDefaultGenerator("non_organic"),
                    "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),
                    "water_use_total": WaterUseDefaultGenerator(),
                    "yield_main_product_per_year":CropCountryMatrixLookupDefaultGenerator(YIELD_PER_YEAR_PER_CROP_PER_COUNTRY),
@@ -415,7 +414,6 @@ DEFAULTS_VALUES_GENERATORS = {
                    "pest_total": CropCountryMatrixLookupDefaultGenerator(TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY),
                    "hm_pesticides_quantities": ZeroMapDefaultGenerator(PesticideType),
                    #Packaging rules
-                   "ca_from_mineral_fert": SimpleValueDefaultGenerator(0),
                    #Pesticides rules
                    "specified_pesticides": SimpleValueDefaultGenerator({}),
                    #Direct outputs
