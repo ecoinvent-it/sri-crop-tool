@@ -168,7 +168,7 @@ class LandUseCategoryForHMDefaultGenerator(object):
         if (generators["land_use_category"] == LandUseCategory.arable_land):
             return LandUseCategoryForHM.arable_land
         elif (generators["land_use_category"] in [LandUseCategory.grassland_intensive,
-                                                     LandUseCategory.grassland_intensive,
+                                                     LandUseCategory.grassland_extensive,
                                                      LandUseCategory.summer_alpine_pastures]):
             return LandUseCategoryForHM.permanent_grassland
         else:

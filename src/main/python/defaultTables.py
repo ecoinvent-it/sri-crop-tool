@@ -29,6 +29,7 @@ CARBON_CONTENT_PER_CROP = {
                 "peach":0.412732283,
                 "peanut":0.58063,
                 "pear":0.475,
+                "pineapple":0.5, #no src
                 "potato":0.423959628,
                 "rapeseed":0.47088,
                 "rice":0.475,
@@ -135,7 +136,7 @@ CROP_FACTOR_PER_CROP = {
         "banana":0.33,
         "carrot":0.5,
         "cocoa":0.21,
-        "coconut":0.3,#No data found yet; same value as for banana and coffee
+        "coconut":0.3,
         "coffee":0.26,
         "lemonlime":0.1,
         "linseed":0.18,
@@ -165,14 +166,15 @@ CROP_FACTOR_PER_CROP = {
         "wheat":0.22
         }
 
+#src: ecoinvent report no. 15a
 #MJ/kgDM
 ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
-            "maizegrain": 18.52,#grain maize
-            "potato": 17.59,#potatoes
-            "rapeseed": 26.48,#rape seed
+            "maizegrain": 18.52,
+            "potato": 17.59,
+            "rapeseed": 26.48,
             "rice": 18.11,#Wheat grains
-            "soybean": 22.98,#soy beans
-            "sugarbeet": 16.43,#sugar beets
+            "soybean": 22.98,
+            "sugarbeet": 16.43,
             "sunflower": 30.25,#sunflower grains
             "sweetcorn": 18.52,#grain maize
             "wheat": 18.11#Wheat grains
@@ -404,7 +406,7 @@ FERT_K_RATIO_PER_COUNTRY={
    }
 }
 
-#Generated in GD_crop using =""""&C3&""":{NFertiliserType.ammonium_nitrate:"&C5&", NFertiliserType.urea:"&C6&", NFertiliserType.ureaAN:"&C7&", NFertiliserType.mono_ammonium_phosphate:"&C8&", NFertiliserType.di_ammonium_phosphate:"&C9&", NFertiliserType.an_phosphate:"&C10&", NFertiliserType.lime_ammonium_nitrate:"&C11&", NFertiliserType.ammonium_sulphate:"&C12&", NFertiliserType.potassium_nitrate:"&C13&", NFertiliserType.ammonia_liquid:"&C14&"},"
+#Generated in GD_crop MineralFertiliser_L1 using =""""&C3&""":{NFertiliserType.ammonium_nitrate:"&C5&", NFertiliserType.urea:"&C6&", NFertiliserType.ureaAN:"&C7&", NFertiliserType.mono_ammonium_phosphate:"&C8&", NFertiliserType.di_ammonium_phosphate:"&C9&", NFertiliserType.an_phosphate:"&C10&", NFertiliserType.lime_ammonium_nitrate:"&C11&", NFertiliserType.ammonium_sulphate:"&C12&", NFertiliserType.potassium_nitrate:"&C13&", NFertiliserType.ammonia_liquid:"&C14&"},"
 FERT_N_RATIO_PER_COUNTRY = {
     "AR":{
       NFertiliserType.ammonium_nitrate:0.0395983072479344,
@@ -2281,6 +2283,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
    }
 }
 
+#from GD_crop RootingDepth_L0 and RootingDepth_L1
 ROOTING_DEPTH_PER_CROP = {
                         "almond": 1.5,
                         "apple": 1.5,
@@ -2288,7 +2291,7 @@ ROOTING_DEPTH_PER_CROP = {
                         "asparagus": 0.5,
                         "banana": 1.5,
                         "carrot": 0.5,
-                        "cocoa": 2.0, #NOTE: Took from another source
+                        "cocoa": 2.0,
                         "coconut": 1.5,
                         "coffee": 1.5,
                         "lemonlime": 1.5,
@@ -2360,6 +2363,7 @@ SAND_CONTENT_PER_COUNTRY = {
                        "VN":0.0109721867823424
 }
 
+#from GD_crop HumusCcontent_L1
 SOIL_CARBON_CONTENT_PER_COUNTRY = {
                             "AR":0.0148,
                             "AU":0.0063,
@@ -2414,7 +2418,7 @@ SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE = {
 SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY = {
                        "AR":0,
                        "AU":0.4,
-                       "BE":0.8,#default CH
+                       "BE":0.8,
                        "BR":0.95,
                        "CA":0.9,
                        "CL":0.5,
@@ -2424,21 +2428,21 @@ SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY = {
                        "CI":1,
                        "EC":0.95,
                        "FI":1,
-                       "FR":0.8,#default CH
-                       "DE":0.8,#default CH
+                       "FR":0.8,
+                       "DE":0.8,
                        "GH":0.95,
-                       "HU":0.8,#default CH
+                       "HU":0.8,
                        "IN":0.5,
                        "ID":1,
                        "IL":0,
-                       "IT":0.8,#default CH
+                       "IT":0.8,
                        "KE":0.5,
                        "MX":0.33,
-                       "NL":0.8,#default CH
+                       "NL":0.8,
                        "NZ":0.95,
                        "PE":0.8,
                        "PH":1,
-                       "PL":0.8,#default CH
+                       "PL":0.8,
                        "RU":0.9,
                        "ZA":0.2,
                        "ES":0.6,
