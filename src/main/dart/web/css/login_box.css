@@ -1,0 +1,32 @@
+#loginTitle
+{
+	font-weight: bold;
+	font-size: 25px;
+}
+
+form > .loginInput
+{
+	width: 220px;
+}
+
+#passwordInput
+{
+	margin-bottom: 10px;
+}
+
+#loginSubmit
+{
+	display: inline;
+}
+
+#loginLoaderImg
+{
+	margin-lect: 10px;
+}
+
+#loginError
+{
+  height: 25px;
+  color: red;
+  margin-top: 5px;
+}

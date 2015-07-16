@@ -5,7 +5,6 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 
 import 'package:alcig/api/api.dart';
-import 'package:alcig/api/user.dart';
 
 @Component(
     selector: 'contact-page',
@@ -14,7 +13,6 @@ import 'package:alcig/api/user.dart';
 class ContactPage
 {
   Api _api;
-  User _user;
   
   String contactEmail = "";
   String contactName = "";
@@ -23,11 +21,7 @@ class ContactPage
   
   String quantisEmail ="software-support@quantis-intl.com";
   
-  ContactPage(Api this._api, User this._user)
-  {
-    contactEmail = _user.email;
-    contactName = _user.name;
-  }
+  ContactPage(Api this._api);
  
   Future sendMessage(Event e) async
   {

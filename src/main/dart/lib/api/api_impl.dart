@@ -18,7 +18,7 @@ class ApiImpl implements Api {
   Stream<ServerEvent> get stream => _dispatcher.stream;
   
   Future<HttpRequest> uploadInputs(dynamic formData){
-      return HttpRequest.request(_basePubApiUrl + "computeLci", method: "POST", sendData: formData)
+      return HttpRequest.request(_baseApiUrl + "computeLci", method: "POST", sendData: formData)
                   .then((request) {return request;})
                   .catchError( (ProgressEvent e) {
                     HttpRequest request = e.target;

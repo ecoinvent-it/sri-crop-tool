@@ -18,20 +18,189 @@
  */
 package com.quantis_intl.lcigenerator;
 
+import java.security.SecureRandom;
+import java.util.Date;
+
+import javax.inject.Inject;
+import javax.inject.Provider;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Charsets;
+import com.google.common.hash.Hashing;
+import com.google.common.io.BaseEncoding;
+import com.quantis_intl.lcigenerator.dao.LoginDao;
+import com.quantis_intl.lcigenerator.model.User;
+import com.quantis_intl.lcigenerator.model.UserPwd;
 import com.quantis_intl.stack.authentication.LoginService;
 
-// TODO: Implement
 public class LoginServiceImpl implements LoginService
 {
+    private static final Logger LOG = LoggerFactory.getLogger(LoginServiceImpl.class);
+
+    private static final int MAX_ATTEMPS = 8;
+    private static final long LOCKED_DURATION_IN_MILLISECONDS = 20 * 60 * 1000; // 20 min
+
+    // NOTE: Used to add a bit of security to avoid bruteforce without compromising the source code.
+    // TODO: Using HMAC would be even better
+    private String secret_salt = "Jo5xNFdSPUmc4ijk2euM";
+
+    private Provider<LoginDao> dao;
+
+    @Inject
+    public LoginServiceImpl(Provider<LoginDao> dao)
+    {
+        this.dao = dao;
+    }
 
     @Override
     public Object getAuthenticUserId(String username, String password)
     {
-        // FIXME: For testing purpose only!
-        if ("quantis".equals(username) && "pampleMousse".equals(password))
-            return "1";
+        User user = getExistingUser(username);
 
-        throw new LoginFailed(LoginFailedReason.WRONG_CREDENTIALS, null, false);
+        UserPwd userPwd = dao.get().getUserPwdFromUserId(user.getId());
+        checkNotValidatedAccount(userPwd);
+        checkLockedAccount(userPwd);
+        checkPassword(password, userPwd);
+
+        clearLockedState(userPwd);
+
+        return user.getId();
+    }
+
+    private User getExistingUser(String username)
+    {
+        User user = dao.get().getUserFromUsername(username);
+        if (user == null)
+            throw new LoginFailed(LoginFailedReason.USER_NOT_FOUND, -1, false);
+
+        return user;
+    }
+
+    private void checkNotValidatedAccount(UserPwd userPwd)
+    {
+        if (userPwd.getRegistrationCode() != null)
+            failAttemptOfRegisteredUser(userPwd, LoginFailedReason.NON_VALIDATED_USER);
+    }
+
+    private void checkLockedAccount(UserPwd userPwd)
+    {
+        if (isUserLocked(userPwd))
+            failAttemptOfRegisteredUser(userPwd, LoginFailedReason.LOCKED_USER);
+    }
+
+    private void checkPassword(String password, UserPwd userPwd)
+    {
+        if (!isRightPassword(password, userPwd))
+            failAttemptOfRegisteredUser(userPwd, LoginFailedReason.WRONG_CREDENTIALS);
+    }
+
+    private boolean isRightPassword(String password, UserPwd userPwd)
+    {
+        return hashString(password, userPwd.getBase64salt()).equals(userPwd.getPassword());
+    }
+
+    private boolean isUserLocked(UserPwd userPwd)
+    {
+        if (userPwd.getLockedSince() != null)
+        {
+            long diffInMilliSeconds = (new Date()).getTime() - userPwd.getLockedSince().getTime();
+            return diffInMilliSeconds <= LOCKED_DURATION_IN_MILLISECONDS;
+        }
+        return false;
+    }
+
+    // TODO: The account locking is used to prevent brute-force attacks. But it's not the best solution
+    // Think about other solutions.
+    private void failAttemptOfRegisteredUser(UserPwd userPwd, LoginFailedReason reason)
+    {
+        boolean accountHasBeenLocked = false;
+        int nbAttemps = userPwd.getFailedAttemps() + 1;
+        userPwd.setFailedAttemps(nbAttemps);
+        if (nbAttemps >= MAX_ATTEMPS && !isUserLocked(userPwd))
+        {
+            userPwd.setLockedSince(new Date());
+            accountHasBeenLocked = true;
+        }
+
+        dao.get().updateLockedState(userPwd);
+
+        throw new LoginFailed(reason, userPwd.getUserId(), accountHasBeenLocked);
+    }
+
+    private void clearLockedState(UserPwd userPwd)
+    {
+        if (userPwd.getFailedAttemps() != 0 || userPwd.getLockedSince() != null)
+        {
+            userPwd.setFailedAttemps(0);
+            userPwd.setLockedSince(null);
+            dao.get().updateLockedState(userPwd);
+        }
+    }
+
+    /**
+     * Hash the given string using the given salt and an internal secret salt
+     * 
+     * @param stringToHash
+     *            The string to hash
+     * @param base64salt
+     *            The salt to used, represented in a base64 string (should be 33 bytes after decoding)
+     * @return a concatenation of "sha512:" and the sha512 hashed string
+     */
+    private String hashString(String stringToHash, String base64salt)
+    {
+        String hexaHash = Hashing.sha512().newHasher().putBytes(BaseEncoding.base64().decode(base64salt))
+                .putString(stringToHash, Charsets.UTF_8)
+                .putUnencodedChars(secret_salt)
+                .hash()
+                .toString();
+        return "sha512:" + hexaHash;
+    }
+
+    public String createUser(User user)
+    {
+        String username = user.getUsername();
+        User existingUser = dao.get().getUserFromUsername(username);
+        if (existingUser != null)
+        {
+            LOG.warn("Trying to create a user with an already created username: {}", username);
+            throw new UserAlreadyExists(username);
+        }
+
+        /*if (!areAllMandatoryFieldsFilled(user))
+            throw new MissingMandatoryFields();
+
+        if (!isEmailComplient(email))
+            throw new InvalidEmail(email);*/
+
+        final String password = generatePassword();
+        byte[] randomSalt = new byte[33];
+        new SecureRandom().nextBytes(randomSalt);
+        String base64salt = BaseEncoding.base64().encode(randomSalt);
+        UserPwd userPwd = new UserPwd(0, base64salt, hashString(password, base64salt), false, 0, null, null, null, null);
+
+        dao.get().createUser(user, userPwd);
+        User savedUser = dao.get().getUserFromUsername(username);
+
+        LOG.info("New user created ({}) with username: {}", savedUser.getId(), username);
+
+        return password;
+    }
+
+    static final String ALLOWED_SYMBOLS = "!@#$%&()*+,-./:;=?[]^_{}~";
+    static final String CORPUS = "abcdefghijkmnopqrstuvwxyz123456789ABCDEFGHJKLMNPQRSTUVWXYZ";
+
+    private String generatePassword()
+    {
+        SecureRandom secureRandom = new SecureRandom();
+        char[] password = new char[11];
+        for (int i = 0; i < 11; i++)
+            password[i] = CORPUS.charAt(secureRandom.nextInt(CORPUS.length()));
+
+        password[secureRandom.nextInt(9) + 1] = ALLOWED_SYMBOLS.charAt(secureRandom.nextInt(ALLOWED_SYMBOLS.length()));
+
+        return new String(password);
     }
 
     @Override
@@ -50,6 +219,16 @@ public class LoginServiceImpl implements LoginService
     public void notifyUserTimedOut(Object userId)
     {
         // TODO Auto-generated method stub
+    }
+
+    public static class UserAlreadyExists extends RuntimeException
+    {
+        private static final long serialVersionUID = -8416202217479939684L;
+
+        public UserAlreadyExists(String email)
+        {
+            super(email);
+        }
     }
 
 }

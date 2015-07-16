@@ -5,11 +5,14 @@ import 'package:angular/application_factory.dart';
 
 import 'package:alcig/api/api.dart';
 import 'package:alcig/api/api_impl.dart';
-import 'package:alcig/menu_with_selection.dart';
 import 'package:alcig/api/local_notification_service.dart';
-import 'package:alcig/api/user.dart';
+
+import 'package:alcig/menu_with_selection.dart';
+import 'package:alcig/login/login_api.dart';
+import 'package:alcig/login/login_api_impl.dart';
+import 'package:alcig/login/login_service.dart';
+import 'package:alcig/login/login_box.dart';
 //import 'package:alcig/custom_annotations.dart';
-import 'package:alcig/betaUserInfo/beta_user_info.dart';
 import 'package:alcig/contactPage/contact_page.dart';
 import 'package:alcig/notificationModal/notification_modal.dart';
 import 'package:alcig/processGenerationSteps/process_generation_steps.dart';
@@ -25,18 +28,20 @@ void main() {
 
 class MyAppModule extends Module {
   MyAppModule() {
+    Api api = new ApiImpl();
     bind(RouteInitializerFn, toValue: alcigRouteInitializer);
     bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false));
     bind(MenuWithSelection);
-    bind(Api, toImplementation: ApiImpl);
+    bind(Api, toValue: api);
     bind(LocalNotificationService);
     bind(ProcessGeneratorSteps);
     bind(NotificationModal);
-    bind(User, toValue: new User());
-    bind(BetaUserInfo);
     bind(ToolPage);
     bind(ContactPage);
     bind(FaqPage);
+    bind(LoginApi, toImplementation: LoginApiImpl);
+    bind(LoginService);
+    bind(LoginBox);
     // NOTE: This doesn't work, we had some issue with null value
     //bind(String, toValue: new Random().nextInt(1<<31).toString(), withAnnotation: const IdTab() );
   }

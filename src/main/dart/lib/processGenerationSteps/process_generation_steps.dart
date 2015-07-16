@@ -7,7 +7,7 @@ import 'package:angular/angular.dart';
 
 import 'package:alcig/api/api.dart';
 import 'package:alcig/api/local_notification_service.dart';
-import 'package:alcig/api/user.dart';
+import 'package:alcig/login/login_service.dart';
 
 @Component(
     selector: 'process-generation-steps',
@@ -17,12 +17,7 @@ class ProcessGeneratorSteps
 {
   Api _api;
   LocalNotificationService _notifService;
-  User _user;
-  
-  String get userEmail => _user.email;
-  String get userName => _user.name;
-  String get userAddress => _user.address;
-  bool get isEmailValid => _user.isEmailValid;
+  LoginService _loginService;
   
   // FIXME: Use enum when dart 2? (not ok for binding with 1.9)
   int step = 0;
@@ -38,15 +33,17 @@ class ProcessGeneratorSteps
   
   bool get hasWarnings => (warnings != null && warnings.length > 0);
   bool get hasErrors => (errors != null && errors.length > 0);
+  
+  bool get isLogged => _loginService.isLogged;
 
   static const FILE_MAX_SIZE = 10 * 1024 * 1024;// 10 Mo
   
-  ProcessGeneratorSteps(Api this._api, User this._user, LocalNotificationService this._notifService);
+  ProcessGeneratorSteps(Api this._api, LoginService this._loginService, LocalNotificationService this._notifService);
   
   void disabledStep3Click()
   {// TODO: Have a more user friendly message
-    if (step == 0 && !isEmailValid)
-      _notifService.manageWarning("You need to enter your email address before using this feature");
+    if (step == 0 && !_loginService.isLogged)
+      _notifService.manageWarning("You need to be logged to use this feature");
   }
   
   void submitUploadForm(target)
@@ -71,9 +68,10 @@ class ProcessGeneratorSteps
   {
     var formData = new FormData(step3Form);
     formData.append("filename", filename);
-    formData.append("username", userName);
-    formData.append("email", userEmail);
-    formData.append("address", userAddress);
+    // TODO: remove these args
+    formData.append("username", "");
+    formData.append("email", "");
+    formData.append("address", "");
     displayModal("#fileLoadingModal");
     _api.uploadInputs(formData)
     .then((HttpRequest request) {

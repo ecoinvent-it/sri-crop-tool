@@ -22,6 +22,7 @@ import java.util.Properties;
 
 import com.quantis_intl.lcigenerator.guice.CoreModule;
 import com.quantis_intl.stack.QtsStack;
+import com.quantis_intl.stack.features.MyBatisFeature;
 import com.quantis_intl.stack.features.ShiroFeature;
 
 public class Bootstrap
@@ -41,7 +42,10 @@ public class Bootstrap
             stack.withAdditionalProperties(getDefaultProperties());
         }
 
-        stack.withFeatures(ShiroFeature.defaultFilters()).withAdditionalModules(new CoreModule());
+        stack.withFeatures(ShiroFeature.defaultFilters())
+                .withFeatures(MyBatisFeature.withMapperPackages("com.quantis_intl.lcigenerator.mappers"))
+                .withAdditionalModules(new CoreModule());
+
         stack.start();
     }
 
@@ -51,6 +55,9 @@ public class Bootstrap
         p.setProperty("server.port", "7879");
         p.setProperty("server.baseContext", "/");
         p.setProperty("server.webFolder", "src/main/dart/web");
+        p.setProperty("sql.schema", "lcigenerator_test");
+        p.setProperty("sql.username", "root");
+        p.setProperty("sql.password", "root");
         // FIXME: Should be optional
         p.setProperty("server.appResourcesFolder", "src/main/dart/web");
         p.setProperty("server.logFolder", "");

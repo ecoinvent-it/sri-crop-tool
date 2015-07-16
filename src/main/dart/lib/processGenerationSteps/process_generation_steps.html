@@ -20,7 +20,7 @@
         <div class="stepTitle text-big text-uppercase">Step 2</div>
         <div class="stepText">Fill in the template with your data</div>
     </td>
-    <td id="step3Container" ng-class="{disabledStep: step == 1 || !isEmailValid}">
+    <td id="step3Container" ng-class="{disabledStep: step == 1 || !isLogged}">
       <form id="processGeneratorUploadForm" method="post" enctype="multipart/form-data">
           <div id="step3" class="stepBtn">
 	          <div class="stepTitle text-big text-uppercase">Step 3</div>
@@ -28,7 +28,7 @@
 	                      accept=".xls,.xlsx" required="required" 
 	                      class="upload"
 	                      ng-change="submitUploadForm($event.target)"
-	                      ng-if="step == 0 && isEmailValid"/>
+	                      ng-if="step == 0 && isLogged"/>
 	          <div class="stepText">Upload your template to ALCIG</div>
           </div>
           <div>
@@ -36,7 +36,7 @@
             <span id="step3CheckboxText" class="text-very-small">I agree that Quantis stores this file for testing purposes</span>
           </div>
 			</form>
-			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" ng-if="step != 0 || !isEmailValid"></div>
+			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" ng-if="step != 0 || !isLogged"></div>
     </td>
     <td>
       <form action="app/api/pub/generateScsv" method="post" ng-disabled="step != 1" style="display: block;">
