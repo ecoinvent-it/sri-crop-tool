@@ -43,7 +43,7 @@ public enum StandardUncertaintyMetadata
     UTILITIES_ELECTRICITY("1.0714", "(2,1,1,1,1,na)"),
     UTILITIES_WATER("1.0714", "(2,1,1,1,1,na)"),
     OTHER_MATERIALS("1.0744", "(2,2,1,1,1,na)"),
-    OTHER_GREEHOUSES("1.0744", "(2,2,1,1,1,na)"),
+    OTHER_GREENHOUSES("1.0744", "(2,2,1,1,1,na)"),
     WASTE_MANAGEMENT("1.2090", "(4,2,1,1,1,na)"),
     COD_IN_WASTEWATER("1.5605", "(4,2,1,1,1,na)");
 

@@ -10,8 +10,8 @@ class PackModel(object):
         pest_total: g/ha
     
     Outputs:
-      m_pack_liquid_fertilisers_and_pesticides: kg/ha
-      m_pack_solid_fertilisers_and_pesticides: kg/ha
+      m_Pack_packaging_liquid_fertilisers_and_pesticides: kg/ha
+      m_Pack_packaging_solid_fertilisers_and_pesticides: kg/ha
     """
     
     _input_variables = ["nitrogen_from_mineral_fert",

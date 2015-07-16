@@ -18,19 +18,19 @@ class HmModel(object):
     
     """Inputs:
       crop_cycle_per_year: ratio
-      hm_from_manure : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
-      hm_from_mineral_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
-      hm_from_other_organic_fert : map HeavyMetalType -> mg i/(ha*year) (i:hm type)
-      hm_from_seed: map HeavyMetalType -> mg i/(ha*year) (i:hm type)
-      hm_pesticides_quantities: map PesticideType -> g i /(ha*year) (i: pest type)
+      hm_from_manure : map HeavyMetalType -> mg i/(ha*crop cycle) (i:hm type)
+      hm_from_mineral_fert : map HeavyMetalType -> mg i/(ha*crop cycle) (i:hm type)
+      hm_from_other_organic_fert : map HeavyMetalType -> mg i/(ha*crop cycle) (i:hm type)
+      hm_from_seed: map HeavyMetalType -> mg i/(ha*crop cycle) (i:hm type)
+      hm_pesticides_quantities: map PesticideType -> g i /(ha*crop cycle) (i: pest type)
       drained_part: ratio
       eroded_soil: kg/(ha*year)
       hm_land_use_category: LandUseCategoryForHM
       
     Outputs:
-        m_hm_heavymetal_to_soil: map HeavyMetalType -> kg i/(ha*year) (i:hm type)
-        m_hm_heavymetal_to_ground_water: map HeavyMetalType -> kg i/(ha*year) (i:hm type)
-        m_hm_heavymetal_to_surface_water: map HeavyMetalType -> kg i/(ha*year) (i:hm type)
+        m_hm_heavymetal_to_soil: map HeavyMetalType -> kg i/(ha*crop cycle) (i:hm type)
+        m_hm_heavymetal_to_ground_water: map HeavyMetalType -> kg i/(ha*crop cycle) (i:hm type)
+        m_hm_heavymetal_to_surface_water: map HeavyMetalType -> kg i/(ha*crop cycle) (i:hm type)
         
     elements:    
         Cd: Cadmium

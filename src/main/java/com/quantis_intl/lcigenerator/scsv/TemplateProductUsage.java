@@ -20,6 +20,7 @@ package com.quantis_intl.lcigenerator.scsv;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,16 +37,23 @@ public class TemplateProductUsage
     public final String amountVariable;
     public final StandardUncertaintyMetadata uncertainty;
     public final String commentVariable;
+    private final Optional<String> requiredDep;
 
     public TemplateProductUsage(String name, String unit, String amountVariable,
             StandardUncertaintyMetadata uncertainty, String commentVariable)
+    {
+        this(name, unit, amountVariable, uncertainty, commentVariable, null);
+    }
+
+    public TemplateProductUsage(String name, String unit, String amountVariable,
+            StandardUncertaintyMetadata uncertainty, String commentVariable, String requiredDep)
     {
         this.name = name;
         this.unit = unit;
         this.amountVariable = amountVariable;
         this.uncertainty = uncertainty;
         this.commentVariable = commentVariable;
-
+        this.requiredDep = Optional.ofNullable(requiredDep);
     }
 
     public String provideName(Map<String, String> modelOutputs)
@@ -66,6 +74,30 @@ public class TemplateProductUsage
         }
         builder.append(name.substring(i, name.length()));
         return builder.toString();
+    }
+
+    public Optional<String> provideRequiredDep(Map<String, String> modelOutputs)
+    {
+        if (requiredDep.isPresent())
+        {
+            Matcher matcher = VARIABLE_PATTERN.matcher(requiredDep.get());
+            StringBuilder builder = new StringBuilder();
+            int i = 0;
+            while (matcher.find())
+            {
+                String replacement = lookupVariable(modelOutputs, matcher.group(1));
+                builder.append(requiredDep.get().substring(i, matcher.start()));
+                if (replacement == null)
+                    // TODO: Warn
+                    builder.append(matcher.group(0));
+                else
+                    builder.append(replacement);
+                i = matcher.end();
+            }
+            builder.append(requiredDep.get().substring(i, requiredDep.get().length()));
+            return Optional.of(builder.toString());
+        }
+        return requiredDep;
     }
 
     protected String lookupVariable(Map<String, String> modelOutputs, String variable)
@@ -245,7 +277,7 @@ public class TemplateProductUsage
                     "irr_surface_diesel"),
             new TemplateProductUsage("Irrigating, surface, gravity (ALCIG)/GLO U", "m3",
                     "surface_irrigation_no_energy", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                    "irr_surface_no_energy"),
+                    "irr_surface_no_energy", "irrigation_surface_gravity.csv"),
             new WithLookupTemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.0)/{country} U",
                     "m3", "sprinkler_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
                     "irr_sprinkler_electricity", buildBiFun(SPRINKLER_REMAP)),
@@ -337,14 +369,14 @@ public class TemplateProductUsage
                     StandardUncertaintyMetadata.FERTILISERS, "composttype_compost"),
             new TemplateProductUsage("Vinasse, at fermentation plant/CH U", "kg", "composttype_vinasse",
                     StandardUncertaintyMetadata.FERTILISERS, "composttype_vinasse"),
-            new TemplateProductUsage("poultry manure, dried, at regional storehouse/CH U", "kg",
+            new TemplateProductUsage("Poultry manure, dried, at regional storehouse/CH U", "kg",
                     "composttype_dried_poultry_manure", StandardUncertaintyMetadata.FERTILISERS,
                     "composttype_dried_poultry_manure"),
             new TemplateProductUsage("Stone meal, at regional storehouse/CH U", "kg", "composttype_stone_meal",
                     StandardUncertaintyMetadata.FERTILISERS, "composttype_stone_meal"),
             new TemplateProductUsage("Horn meal, at regional storehouse/CH U", "kg", "composttype_horn_meal",
                     StandardUncertaintyMetadata.FERTILISERS, "composttype_horn_meal"),
-            new TemplateProductUsage("horn meal, at regional storehouse/CH U", "kg", "composttype_horn_shavings_fine",
+            new TemplateProductUsage("Horn meal, at regional storehouse/CH U", "kg", "composttype_horn_shavings_fine",
                     StandardUncertaintyMetadata.FERTILISERS, "composttype_horn_shavings_fine"),
 
             new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
@@ -493,25 +525,24 @@ public class TemplateProductUsage
                     StandardUncertaintyMetadata.OTHER_MATERIALS, "materials_bird_net"),
 
             new TemplateProductUsage("Plastic tunnel (WFLDB 3.0)/FR U", "m2", "greenhouse_plastic_tunnel",
-                    StandardUncertaintyMetadata.OTHER_GREEHOUSES, "greenhouse_plastic_tunnel"),
+                    StandardUncertaintyMetadata.OTHER_GREENHOUSES, "greenhouse_plastic_tunnel"),
             new TemplateProductUsage("Greenhouse, glass walls and roof, metal tubes (WFLDB 3.0)/FR U", "m2",
-                    "greenhouse_glass_roof_metal_tubes", StandardUncertaintyMetadata.OTHER_GREEHOUSES,
+                    "greenhouse_glass_roof_metal_tubes", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
                     "greenhouse_glass_roof_metal_tubes"),
             new TemplateProductUsage("Greenhouse, glass walls and roof, plastic tubes (WFLDB 3.0)/FR U", "m2",
-                    "greenhouse_glass_roof_plastic_tubes", StandardUncertaintyMetadata.OTHER_GREEHOUSES,
+                    "greenhouse_glass_roof_plastic_tubes", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
                     "greenhouse_glass_roof_plastic_tubes"),
             new TemplateProductUsage("Greenhouse, plastic walls and roof, metal tubes (WFLDB 3.0)/FR U", "m2",
-                    "greenhouse_plastic_roof_metal_tubes", StandardUncertaintyMetadata.OTHER_GREEHOUSES,
+                    "greenhouse_plastic_roof_metal_tubes", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
                     "greenhouse_plastic_roof_metal_tubes"),
             new TemplateProductUsage("Greenhouse, plastic walls and roof, plastic tubes (WFLDB 3.0)/FR U", "m2",
-                    "greenhouse_plastic_roof_plastic_tubes", StandardUncertaintyMetadata.OTHER_GREEHOUSES,
+                    "greenhouse_plastic_roof_plastic_tubes", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
                     "greenhouse_plastic_roof_plastic_tubes"),
 
             new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.0)/GLO U", "kg",
                     "hm_uptake_formula", StandardUncertaintyMetadata.HM_TO_SOIL, ""),
 
-            new TemplateProductUsage("Land use change, {luc_crop_type} crop (WFLDB 3.0)/{country} U", "ha",
-                    "luc_formula", StandardUncertaintyMetadata.LAND_TRANSFORMATION, ""),
+            new LucTemplateProductUsage("ha", "luc_formula", StandardUncertaintyMetadata.LAND_TRANSFORMATION, ""),
 
             new TemplateProductUsage("Transport, lorry >16t, fleet average/RER U", "tkm",
                     "transport_lorry_sup_16t_fleet_average_RER", StandardUncertaintyMetadata.TRANSPORTS, ""),
@@ -611,6 +642,57 @@ public class TemplateProductUsage
                 return "Electricity, low voltage, production " + country + ", at grid (WFLDB 3.0)/" + country + " U";
             else
                 return "Electricity, low voltage, at grid/" + country + " U";
+        }
+    }
+
+    private static class LucTemplateProductUsage extends TemplateProductUsage
+    {
+        public LucTemplateProductUsage(String unit, String amountVariable,
+                StandardUncertaintyMetadata uncertainty, String commentVariable)
+        {
+            super("", unit, amountVariable, uncertainty, commentVariable);
+        }
+
+        public String provideName(Map<String, String> modelOutputs)
+        {
+            String cropType = modelOutputs.get("luc_crop_type");
+            String country = modelOutputs.get("country");
+            String db = findDb(cropType, country);
+
+            return "Land use change, " + cropType + " crop (" + db + ")/" + country + " U";
+        }
+
+        public Optional<String> provideRequiredDep(Map<String, String> modelOutputs)
+        {
+            String cropType = modelOutputs.get("luc_crop_type");
+            String country = modelOutputs.get("country");
+            String db = findDb(cropType, country);
+
+            if ("ALCIG".equals(db))
+                return Optional.of("luc_" + cropType + "_" + country + ".csv");
+
+            return Optional.empty();
+        }
+
+        private static final List<String> ANNUAL_ALCIG_LUC_COUNTRY = Lists.newArrayList("BE", "CI", "CL", "CO", "CR",
+                "EC", "GH", "ID", "KE", "LK", "PH", "PL", "TR", "VN", "ZA");
+        private static final List<String> PERENNIAL_ALCIG_LUC_COUNTRY = Lists.newArrayList("AU", "CA", "CH", "DE",
+                "FI", "HU", "IL", "NL", "NZ", "PL", "RU", "TH", "UA");
+
+        private String findDb(String cropType, String country)
+        {
+            List<String> alcigLucCountry;
+            if ("annual".equals(cropType))
+                alcigLucCountry = ANNUAL_ALCIG_LUC_COUNTRY;
+            else if ("perennial".equals(cropType))
+                alcigLucCountry = PERENNIAL_ALCIG_LUC_COUNTRY;
+            else
+                throw new IllegalStateException(cropType);
+
+            if (alcigLucCountry.contains(country))
+                return "ALCIG";
+
+            return "WFLDB 3.0";
         }
     }
 

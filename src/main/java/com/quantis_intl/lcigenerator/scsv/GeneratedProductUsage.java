@@ -19,6 +19,7 @@
 package com.quantis_intl.lcigenerator.scsv;
 
 import java.util.Map;
+import java.util.Optional;
 
 import com.google.common.base.Strings;
 import com.quantis_intl.commons.scsv.Uncertainty;
@@ -39,6 +40,11 @@ public class GeneratedProductUsage implements ProductUsage
         this.template = template;
         this.modelOutputs = modelOutputs;
         this.extractedInputs = extractedInputs;
+    }
+
+    public Optional<String> getRequiredDep()
+    {
+        return template.provideRequiredDep(modelOutputs);
     }
 
     @Override

@@ -36,12 +36,10 @@ class ManureModel(object):
       computeP2O5: tuple of:
         P2O5 contents liquid manure: kg P2O5/ha
         P2O5 contents solid manure: kg P2O5/ha
-      computeN: tuple of:
-        N total liquid manure: kg N/ha
-        N total solid manure: kg N/ha
+      computeN:
+        N_total_manure: kg N/ha
       computeNH3:
-        nh3_total_liquid_manure: kg NH3/ha
-        nh3_total_solid_manure: kg NH3/ha
+        nh3_total_manure: kg NH3/ha
       computeHeavyMetal:
         hm_total_manure : map HeavyMetalType -> mg i/ha (i:hm type)
     """

@@ -20,6 +20,7 @@ package com.quantis_intl.lcigenerator.scsv;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -43,11 +44,19 @@ public class GeneratedProcess implements ProductScsvProcess
 {
     private final Map<String, String> modelOutputs;
     private final ValueGroup extractedInputs;
+    // TODO: Would be good to split deps requirements and process generation
+    private final List<String> requiredAlcigProcesses;
 
     public GeneratedProcess(Map<String, String> modelOutputs, ValueGroup extractedInputs)
     {
         this.modelOutputs = modelOutputs;
         this.extractedInputs = extractedInputs;
+        this.requiredAlcigProcesses = new ArrayList<>();
+    }
+
+    public List<String> getRequiredAlcigProcesses()
+    {
+        return requiredAlcigProcesses;
     }
 
     @Override
@@ -238,9 +247,12 @@ public class GeneratedProcess implements ProductScsvProcess
     // TODO: map modelOutputs to template then sort by category, instead of this?
     private List<ProductUsage> toProductUsage(TemplateProductUsage[] templates)
     {
-        return Arrays.stream(templates).map(r -> new GeneratedProductUsage(r, modelOutputs, extractedInputs))
+        List<ProductUsage> res = Arrays.stream(templates)
+                .map(r -> new GeneratedProductUsage(r, modelOutputs, extractedInputs))
                 .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0"))
                 .collect(Collectors.toList());
+        findRequiredDeps(res);
+        return res;
     }
 
     private List<SubstanceUsage> buildPesticidesSubstanceUsages()
@@ -268,5 +280,15 @@ public class GeneratedProcess implements ProductScsvProcess
     {
         SingleValue<?> sv = extractedInputs.getDeepSingleValue(key);
         return sv == null ? "" : Strings.nullToEmpty(sv.getComment());
+    }
+
+    // FIXME: Not the best way to do that
+    private void findRequiredDeps(List<ProductUsage> productUsages)
+    {
+        for (ProductUsage pu : productUsages)
+        {
+            GeneratedProductUsage gpu = (GeneratedProductUsage) pu;
+            gpu.getRequiredDep().ifPresent(requiredAlcigProcesses::add);
+        }
     }
 }
