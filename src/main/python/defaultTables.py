@@ -1757,7 +1757,7 @@ LAND_USE_CATEGORY_PER_CROP = {
         "wheat":LandUseCategory.arable_land
         }
 
-#Generated in GD_crop using =""""&C$3&""":{LiquidManureType.cattle:"&C5&",  LiquidManureType.pig:"&C6+C7&",  LiquidManureType.laying_hens:"&C8&",  LiquidManureType.other:"&C9&"},"
+#Generated in GD_crop OrgFertiliser_L1 using =""""&C$3&""":{LiquidManureType.cattle:"&C5&",  LiquidManureType.pig:"&C6+C7&",  LiquidManureType.laying_hens:"&C8&",  LiquidManureType.other:"&C9&"},"
 MANURE_LIQUID_RATIO_PER_COUNTRY={
    "AR":{
       LiquidManureType.cattle:0.966236579156714,
@@ -1983,7 +1983,7 @@ MANURE_LIQUID_RATIO_PER_COUNTRY={
    }
 }
 
-#Generated in GD_crop using =""""&C$3&""":{SolidManureType.cattle:"&C12&",  SolidManureType.pigs:"&C13&",  SolidManureType.sheep_goats:"&C14&",  SolidManureType.laying_hen_litter:"&C15&",  SolidManureType.broiler_litter:"&C16&",  SolidManureType.horses:0"&",  SolidManureType.other:"&C17+C18&"},"
+#Generated in GD_crop OrgFertiliser_L1 using =""""&C$3&""":{SolidManureType.cattle:"&C12&",  SolidManureType.pigs:"&C13&",  SolidManureType.sheep_goats:"&C14&",  SolidManureType.laying_hen_litter:"&C15&",  SolidManureType.broiler_litter:"&C16&",  SolidManureType.horses:0"&",  SolidManureType.other:"&C17+C18&"},"
 MANURE_SOLID_RATIO_PER_COUNTRY = {
    "AR":{
       SolidManureType.cattle:0.891984968037592,

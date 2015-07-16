@@ -1,38 +1,57 @@
 import unittest
 from models.hmmodel import HeavyMetalType
-from models.seedmodel import SeedModel, SeedType
+from models.seedmodel import SeedModel
 
 class Test(unittest.TestCase):
     inputs = {"seed_quantities":
-                  { SeedType.field_bean: 3.3,
-                    SeedType.flower: 7.7,
-                    SeedType.pea: 11.11,
-                    SeedType.vegetable: 15.15,
-                    SeedType.barley: 20.0,
-                    SeedType.grass: 11.11,
-                    SeedType.clover: 12.12,
-                    SeedType.potato: 27.27,
-                    SeedType.maize: 31.31,
-                    SeedType.rape: 17.17,
-                    SeedType.rye: 37.37,
-                    SeedType.soya_bean:  40.41,
-                    SeedType.sunflower: 45.45,
-                    SeedType.wheat:  49.49,
-                    SeedType.sugar_fodder_beet: 26.26,
-                    SeedType.tree_seedlings: 55.55,
-                    SeedType.other: 31.31
+                  { "almond": 4.27, #tree_seedlings
+                "apple": 4.27, #tree_seedlings
+                "apricot": 4.27, #tree_seedlings
+                "asparagus": 3.7875, #vegetable
+                "banana": 4.27, #tree_seedlings
+                "carrot": 3.7875, #vegetable
+                "cocoa": 3.91375, #other
+                "coconut": 4.27, #tree_seedlings
+                "coffee": 3.91375, #other
+                "lemonlime": 4.27, #tree_seedlings
+                "linseed": 11.11, #pea
+                "maizegrain": 0.85,
+                "mandarin": 4.27, #tree_seedlings
+                "mint": 3.7875, #vegetable
+                "oat": 3.91375, #other
+                "olive": 4.27, #tree_seedlings
+                "onion": 3.7875, #vegetable
+                "orange": 4.27, #tree_seedlings
+                "palmtree": 4.27, #tree_seedlings
+                "peach": 4.27, #tree_seedlings
+                "peanut": 3.91375, #other
+                "pear": 4.27, #tree_seedlings
+                "pineapple": 4.31, #tree_seedlings
+                "potato": 27.27,
+                "rapeseed": 17.17,
+                "rice":24.745, #wheat
+                "soybean": 40.41,
+                "strawberry": 3.91375, #other
+                "sugarbeet": 26.26,
+                "sugarcane": 3.91375, #other
+                "sunflower": 45.45,
+                "sweetcorn": 31.31, #maize
+                "tea": 28.65875, #other
+                "tomato": 3.91375, #other
+                "wheat": 115.445
+                   
                   }
              }
-            
+    
     def testHeavyMetal(self):
         expectedResults = {
-                            HeavyMetalType.cd: 55.918916,
-                            HeavyMetalType.cu: 2270.93635,
-                            HeavyMetalType.zn: 12579.36313,
-                            HeavyMetalType.pb: 220.092977,
-                            HeavyMetalType.ni: 459.150732,
-                            HeavyMetalType.cr: 167.279358,
-                            HeavyMetalType.hg: 12.720561}
+                            HeavyMetalType.cd: 62.531239,
+                            HeavyMetalType.cu: 2285.08547,
+                            HeavyMetalType.zn: 13529.576330,
+                            HeavyMetalType.pb: 196.58079099,
+                            HeavyMetalType.ni: 444.903968999,
+                            HeavyMetalType.cr: 159.0201995,
+                            HeavyMetalType.hg: 8.51967}
                         
         results = SeedModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():
