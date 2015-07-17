@@ -74,6 +74,7 @@ public class Api
             @FormDataParam("canBeStored") boolean canBeStored, @Suspended AsyncResponse response)
             throws URISyntaxException, IOException
     {
+        long startTime = System.nanoTime();
         ErrorReporterImpl errorReporter = new ErrorReporterImpl();
 
         // TODO: Store file if it can be stored
@@ -83,11 +84,11 @@ public class Api
         {
             Map<String, Object> validatedData = extractedInputs.flattenValues();
 
-            LOGGER.info("Uploaded file handled with {} warnings ", errorReporter.getWarnings().size());
-
             pyBridgeService.callComputeLci(validatedData,
-                    result -> onResult(result, extractedInputs, errorReporter, response),
+                    result -> onResult(result, extractedInputs, errorReporter, response, startTime),
                     error -> onError(error, response));
+
+            LOGGER.info("Uploaded file handled with {} warnings", errorReporter.getWarnings().size());
         }
         else
         {
@@ -99,12 +100,13 @@ public class Api
     }
 
     private void onResult(Map<String, String> modelsOutput, ValueGroup extractedInputs, ErrorReporter errorReporter,
-            AsyncResponse response)
+            AsyncResponse response, long startTime)
     {
         String idResult = UUID.randomUUID().toString();
         SecurityUtils.getSubject().getSession().setAttribute(idResult, modelsOutput);
         SecurityUtils.getSubject().getSession().setAttribute(idResult + "_inputs", extractedInputs);
-        LOGGER.info("Computations done and stored in {}", idResult);
+        LOGGER.info("Computations done and stored in {} in {} ms", idResult,
+                (System.nanoTime() - startTime) / 1000000.d);
         response.resume(Response.ok(new ImportResult(errorReporter, idResult)).build());
     }
 
@@ -121,6 +123,7 @@ public class Api
     public Response generateScsv(@FormParam("idResult") final String idResult,
             @FormParam("filename") final String importedFilename)
     {
+        long startTime = System.nanoTime();
         if (idResult == null || importedFilename == null)
         {
             LOGGER.error("Bad request, idResult {} or filename {} is null", idResult, importedFilename);
@@ -136,7 +139,8 @@ public class Api
         Objects.requireNonNull(modelsOutput, "results not found");
         String filename = importedFilename.substring(0, importedFilename.lastIndexOf(".xls"));
 
-        LOGGER.info("Scsv file generated for results {}", idResult);
+        LOGGER.info("Scsv file generated for results {} in {} ms", idResult,
+                (System.nanoTime() - startTime) / 1000000.d);
 
         return Response.ok(
                 (StreamingOutput) outputStream ->

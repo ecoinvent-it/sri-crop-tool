@@ -134,17 +134,54 @@ public class GeneratedProcess implements ProductScsvProcess
         return Optional.of(sb.toString());
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public Optional<String> getComment()
     {
-        // TODO
-        return Optional.ofNullable(modelOutputs.get("comment"));
+        StringBuilder resBuilder = new StringBuilder();
+
+        SingleValue<Double> sTeR = (SingleValue<Double>) extractedInputs
+                .getSingleValue("data_quality_techno_representativeness");
+        SingleValue<Double> sGR = (SingleValue<Double>) extractedInputs.getSingleValue(
+                "data_quality_geo_representativeness");
+        SingleValue<Double> sTiR = (SingleValue<Double>) extractedInputs.getSingleValue(
+                "data_quality_time_related_representativeness");
+        SingleValue<Double> sP = (SingleValue<Double>) extractedInputs.getSingleValue(
+                "data_quality_precision_uncertainty");
+        SingleValue<Double> sC = (SingleValue<Double>) extractedInputs.getSingleValue("data_quality_completeness");
+        SingleValue<Double> sM = (SingleValue<Double>) extractedInputs.getSingleValue(
+                "data_quality_methodo_appropriateness_consistency");
+
+        if (sTeR != null || sGR != null || sTiR != null || sP != null || sC != null || sM != null)
+        {
+            resBuilder.append("TeR: ").append(sTeR == null ? "-" : sTeR.getValue());
+            resBuilder.append("\nGR: ").append(sGR == null ? "-" : sGR.getValue());
+            resBuilder.append("\nTiR: ").append(sTiR == null ? "-" : sTiR.getValue());
+            resBuilder.append("\nP: ").append(sP == null ? "-" : sP.getValue());
+            resBuilder.append("\nC: ").append(sC == null ? "-" : sC.getValue());
+            resBuilder.append("\nM: ").append(sM == null ? "-" : sM.getValue());
+            resBuilder.append("\nDQR: ");
+            try
+            {
+                resBuilder.append(Arrays.stream(new SingleValue[] { sTeR, sGR, sTiR, sP, sC, sM })
+                        .mapToDouble(sv -> (Double) sv.getValue()).average().getAsDouble());
+            }
+            catch (NullPointerException e)
+            {
+                resBuilder.append("-");
+            }
+
+            resBuilder.append("\n\n");
+        }
+
+        resBuilder.append(Strings.nullToEmpty(modelOutputs.get("comment")));
+
+        return Optional.ofNullable(Strings.emptyToNull(resBuilder.toString()));
     }
 
     @Override
     public List<Product> getProducts()
     {
-        // TODO
         return ImmutableList.of(new Product()
         {
             @Override
@@ -182,11 +219,8 @@ public class GeneratedProcess implements ProductScsvProcess
     private String generateProcessAndProductName()
     {
         StringBuilder sb = new StringBuilder(PropertiesLoader.CROPS.getProperty(modelOutputs.get("crop")));
-        // FIXME: No system_boundary input anymore, use ecospold name metadata instead?
-        /*if (modelOutputs.containsKey("system_boundary"))
-            sb.append(", ").append(modelOutputs.get("system_boundary"));*/
-        sb.append("/kg");
-        sb.append("/").append(modelOutputs.get("country"));
+        sb.append(", at farm/kg/");
+        sb.append(modelOutputs.get("country"));
         return sb.toString();
     }
 
