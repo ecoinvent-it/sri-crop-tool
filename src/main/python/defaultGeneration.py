@@ -265,7 +265,7 @@ class CropCountryMatrixLookupDefaultGenerator(object):
         
 class NitrogenUptakeGenerator(object):
     def generateDefault(self, field, generators):
-        if ("crop" == "pineapple"):
+        if (generators["crop"] == "pineapple"):
             return generators["yield_main_product_dry_per_crop_cycle"] * 0.02
         currentCropTable = NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY[generators["crop"]]
         if (generators["country"] in currentCropTable):
