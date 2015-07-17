@@ -2,6 +2,7 @@
 #from GD_crop Nuptake_L1
 # country: =SI(ESTNUM(B4),""""&B$3&""":"&B4&",","")
 #glo: =MOYENNE(B4:AM4)
+# kg/ha
 NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
    "almond":{
       "CN":78.1224116559,

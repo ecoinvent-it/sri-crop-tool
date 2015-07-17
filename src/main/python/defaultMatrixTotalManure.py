@@ -1,6 +1,7 @@
 #From GD_crop ManureLiquid_L1
 #country: =SI(ESTNUM(B4),""""&B$3&""":"&B4&",","")
 #glo: =MOYENNE(B4:AM4)
+# m3/ha
 TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
    "almond":{
       "CN":2.92478349522952,
@@ -204,6 +205,7 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
 #From GD_crop ManureSolid_L1
 #country: =SI(ESTNUM(B4),""""&B$3&""":"&B4*1000&",","")
 #glo: =MOYENNE(B4:AM4)
+# kg/ha
 TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
    "almond":{
       "CN":2315.80971115792,

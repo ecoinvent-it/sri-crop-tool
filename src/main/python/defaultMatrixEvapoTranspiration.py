@@ -1,6 +1,7 @@
 
 #from GD_crop ETirr_m3t_L1
 #glo is calculated as a mean of other country values
+#m3/t
 EVAPO_TRANSPI_PER_CROP_PER_COUNTRY = {
    "almond":{
       "AU":529.520673536715,

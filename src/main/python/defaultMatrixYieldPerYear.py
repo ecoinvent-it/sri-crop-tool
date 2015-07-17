@@ -2,6 +2,7 @@
 #from GD_crop Yield_2009_2012_L1
 # countries: =SI(ESTNUM(B4),""""&B$3&""":"&B4&",","")
 # GLO: =ARRONDI(MOYENNE(B4:AM4),5)
+# kg/(ha and year)
 YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
    "almond":{
       "AR":1961.25025,

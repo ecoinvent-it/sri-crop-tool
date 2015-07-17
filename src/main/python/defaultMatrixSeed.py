@@ -42,6 +42,7 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    }
 }
 
+#GD_crop Seedlings_L0
 NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "asparagus":{
    },
@@ -58,6 +59,7 @@ NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY = {
 }
 
 #No values, as data in GD crops are for the whole lifetime
+#GD_crop Trees_L0
 NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY = {
    "almond":{
    },

@@ -45,6 +45,7 @@ CARBON_CONTENT_PER_CROP = {
     }
 
 #Generated from GD_crop precipitation_L1 line 16
+# mm/year
 ANNUAL_PRECIPITATION_PER_COUNTRY = {
    "AR":559.045870807,
    "AU":473.091499829,
@@ -2284,6 +2285,7 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
 }
 
 #from GD_crop RootingDepth_L0 and RootingDepth_L1
+#in m
 ROOTING_DEPTH_PER_CROP = {
                         "almond": 1.5,
                         "apple": 1.5,
