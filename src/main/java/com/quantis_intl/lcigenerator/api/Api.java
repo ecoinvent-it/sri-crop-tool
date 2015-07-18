@@ -18,15 +18,21 @@
  */
 package com.quantis_intl.lcigenerator.api;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -57,14 +63,23 @@ public class Api
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
 
-    @Inject
     private ExcelInputReader inputReader;
 
-    @Inject
     private PyBridgeService pyBridgeService;
 
-    @Inject
     private ScsvFileWriter scsvFileWriter;
+
+    private final String uploadedFilesFolder;
+
+    @Inject
+    public Api(ExcelInputReader inputReader, PyBridgeService pyBridgeService, ScsvFileWriter scsvFileWriter,
+            @Named("configuration.properties") Properties properties)
+    {
+        this.inputReader = inputReader;
+        this.pyBridgeService = pyBridgeService;
+        this.scsvFileWriter = scsvFileWriter;
+        this.uploadedFilesFolder = properties.getProperty("server.uploadedFilesFolder");
+    }
 
     @POST
     @Path("computeLci")
@@ -82,11 +97,14 @@ public class Api
         ErrorReporterImpl errorReporter = new ErrorReporterImpl();
 
         String idResult = UUID.randomUUID().toString();
-        LOGGER.info("BETA: user using this feature: name {}, email {}, other info: {}, file id (idResult): {}",
-                username, email, address, idResult);
+        LOGGER.info("BETA: user using this feature: name {}, email {}, other info: {}: {}",
+                username, email, address);
 
-        // TODO: Store file if it can be stored, used uuid as filename
-        ValueGroup extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
+        BufferedInputStream bfis = new BufferedInputStream(is);
+        if (canBeStored)
+            saveUploadedFile(bfis, email, idResult);
+
+        ValueGroup extractedInputs = inputReader.getInputDataFromFile(bfis, errorReporter);
 
         if (!errorReporter.hasErrors())
         {
@@ -105,6 +123,37 @@ public class Api
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
+        bfis.close();
+        is.close();
+    }
+
+    private static final String UPLOADED_FILE_EXTENSION = ".xlsx";
+
+    private void saveUploadedFile(BufferedInputStream uploadedInputStream, String email, String idResult)
+            throws IOException
+    {
+        // FIXME: Check if regExp is uncompleted or too strict
+        String safeFolderName = email.replaceAll("[\\\\\\*\\.\\\" ~%$&+,/:;=?@<>#%]+", "_");
+        String userFolderName = uploadedFilesFolder + safeFolderName;
+        new File(userFolderName).mkdir();
+
+        uploadedInputStream.mark(Integer.MAX_VALUE);
+        String uploadedFileLocation = userFolderName + "/" + idResult + UPLOADED_FILE_EXTENSION;
+
+        OutputStream out = new FileOutputStream(new File(uploadedFileLocation));
+        int read = 0;
+        byte[] bytes = new byte[1024];
+
+        out = new FileOutputStream(new File(uploadedFileLocation));
+        while ((read = uploadedInputStream.read(bytes)) != -1)
+        {
+            out.write(bytes, 0, read);
+        }
+        out.flush();
+        out.close();
+        uploadedInputStream.reset();
+
+        LOGGER.info("BETA: file saved for user {}, file id {}", email, idResult);
     }
 
     private void onResult(Map<String, String> modelsOutput, ValueGroup extractedInputs, String idResult,
