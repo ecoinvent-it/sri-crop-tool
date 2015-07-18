@@ -4,6 +4,8 @@ import 'dart:js' as js;
 import 'package:angular/angular.dart';
 
 import 'package:alcig/api/api.dart';
+import 'package:alcig/api/local_notification_service.dart';
+import 'package:alcig/api/user.dart';
 
 @Component(
     selector: 'process-generation-steps',
@@ -12,8 +14,15 @@ import 'package:alcig/api/api.dart';
 class ProcessGeneratorSteps
 {
   Api _api;
+  LocalNotificationService _notifService;
+  User _user;
   
-  // FIXME: Use enum when dart 1.9
+  String get userEmail => _user.email;
+  String get userName => _user.name;
+  String get userAddress => _user.address;
+  bool get isEmailValid => _user.isEmailValid;
+  
+  // FIXME: Use enum when dart 2? (not ok for binding with 1.9)
   int step = 0;
   
   String filename = null;
@@ -28,7 +37,13 @@ class ProcessGeneratorSteps
   bool get hasWarnings => (warnings != null && warnings.length > 0);
   bool get hasErrors => (errors != null && errors.length > 0);
   
-  ProcessGeneratorSteps(Api this._api);
+  ProcessGeneratorSteps(Api this._api, User this._user, LocalNotificationService this._notifService);
+  
+  void disabledStep3Click()
+  {// TODO: Have a more user friendly message
+    if (step == 0 && !isEmailValid)
+      _notifService.manageWarning("You need to enter your email address before using this feature");
+  }
   
   void submitUploadForm(target)
   {

@@ -20,20 +20,24 @@
         <div class="stepTitle text-big text-uppercase">Step 2</div>
         <div class="stepText">Fill in the template with your data</div>
     </td>
-    <td id="step3" class="stepBtn" ng-class="{disabledStep: step == 1}">
+    <td id="step3" class="stepBtn" ng-class="{disabledStep: step == 1 || !isEmailValid}">
       <div class="stepTitle text-big text-uppercase">Step 3</div>
       <form id="processGeneratorUploadForm" method="post" enctype="multipart/form-data">
           <input type="file" name="uploadFile" 
                       accept=".xls,.xlsx" required="required" 
                       class="upload"
                       ng-change="submitUploadForm($event.target)"
-                      ng-disabled="step != 0"/>
+                      ng-if="step == 0 && isEmailValid"/>
           <div class="stepText">Upload your template to ALCIG</div>
           <div>
             <input type="checkbox" checked name="canBeStored" value="true" ng-disabled="step != 0"/> 
+             <input type="hidden" name="username" value="{{userName}}"/>
+             <input type="hidden" name="email" value="{{userEmail}}"/>
+             <input type="hidden" name="address" value="{{userAddress}}"/>
             <span id="step3CheckboxText" class="text-very-small">I agree that Quantis stores this file for testing purposes</span>
           </div>
 			</form>
+			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" ng-if="step != 0 || !isEmailValid"></div>
     </td>
     <td id="step4" class="stepBtn" ng-class="{disabledStep: step == 0}">
       <div class="stepTitle text-big text-uppercase">Step 4</div>

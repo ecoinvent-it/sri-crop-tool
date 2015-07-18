@@ -1,0 +1,10 @@
+#userEmailInput, #userNameInput
+{
+	width: 300px;
+}
+
+#userAddressInput
+{
+	width: 531px;
+	height: 82px;
+}

@@ -40,6 +40,14 @@ header
 #welcomeTextContainer
 {
 	width: 40%;
+	float: left;
+}
+
+#loginContainer
+{
+	width: 50%;
+	float: left;
+	margin-left: 30px;
 }
 
 #contactInfoContainer > *

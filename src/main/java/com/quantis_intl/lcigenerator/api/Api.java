@@ -71,13 +71,21 @@ public class Api
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public void computeLci(@FormDataParam("uploadFile") InputStream is,
-            @FormDataParam("canBeStored") boolean canBeStored, @Suspended AsyncResponse response)
+            @FormDataParam("canBeStored") boolean canBeStored,
+            @FormDataParam("username") String username,
+            @FormDataParam("email") String email,
+            @FormDataParam("address") String address,
+            @Suspended AsyncResponse response)
             throws URISyntaxException, IOException
     {
         long startTime = System.nanoTime();
         ErrorReporterImpl errorReporter = new ErrorReporterImpl();
 
-        // TODO: Store file if it can be stored
+        String idResult = UUID.randomUUID().toString();
+        LOGGER.info("BETA: user using this feature: name {}, email {}, other info: {}, file id (idResult): {}",
+                username, email, address, idResult);
+
+        // TODO: Store file if it can be stored, used uuid as filename
         ValueGroup extractedInputs = inputReader.getInputDataFromFile(is, errorReporter);
 
         if (!errorReporter.hasErrors())
@@ -85,7 +93,7 @@ public class Api
             Map<String, Object> validatedData = extractedInputs.flattenValues();
 
             pyBridgeService.callComputeLci(validatedData,
-                    result -> onResult(result, extractedInputs, errorReporter, response, startTime),
+                    result -> onResult(result, extractedInputs, idResult, errorReporter, response, startTime),
                     error -> onError(error, response));
 
             LOGGER.info("Uploaded file handled with {} warnings", errorReporter.getWarnings().size());
@@ -99,10 +107,9 @@ public class Api
         }
     }
 
-    private void onResult(Map<String, String> modelsOutput, ValueGroup extractedInputs, ErrorReporter errorReporter,
-            AsyncResponse response, long startTime)
+    private void onResult(Map<String, String> modelsOutput, ValueGroup extractedInputs, String idResult,
+            ErrorReporter errorReporter, AsyncResponse response, long startTime)
     {
-        String idResult = UUID.randomUUID().toString();
         SecurityUtils.getSubject().getSession().setAttribute(idResult, modelsOutput);
         SecurityUtils.getSubject().getSession().setAttribute(idResult + "_inputs", extractedInputs);
         LOGGER.info("Computations done and stored in {} in {} ms", idResult,
