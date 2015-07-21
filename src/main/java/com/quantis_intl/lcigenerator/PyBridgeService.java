@@ -19,7 +19,6 @@
 package com.quantis_intl.lcigenerator;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.function.Consumer;
 
 import javax.inject.Inject;
@@ -38,12 +37,12 @@ public class PyBridgeService
     private final WebTarget pyBridgeTarget;
 
     @Inject
-    public PyBridgeService(@Named("configuration.properties") Properties properties)
+    public PyBridgeService(@Named("pyBridge.url") String pyBridgeUrl)
     {
         // FIXME: Don't use the ObjectMapperProvider from the stack
         this.pyBridgeTarget = ClientBuilder.newClient().register(ObjectMapperProvider.class)
                 .register(JacksonFeature.class)
-                .target(properties.getProperty("pyBridge.url"));
+                .target(pyBridgeUrl);
     }
 
     public void callComputeLci(Map<String, Object> request, Consumer<Map<String, String>> onResult,

@@ -27,7 +27,6 @@ import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Properties;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -73,12 +72,12 @@ public class Api
 
     @Inject
     public Api(ExcelInputReader inputReader, PyBridgeService pyBridgeService, ScsvFileWriter scsvFileWriter,
-            @Named("configuration.properties") Properties properties)
+            @Named("server.uploadedFilesFolder") String uploadedFilesFolder)
     {
         this.inputReader = inputReader;
         this.pyBridgeService = pyBridgeService;
         this.scsvFileWriter = scsvFileWriter;
-        this.uploadedFilesFolder = properties.getProperty("server.uploadedFilesFolder");
+        this.uploadedFilesFolder = uploadedFilesFolder;
     }
 
     @POST
