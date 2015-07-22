@@ -57,7 +57,6 @@ public class ExcelInputReader
 
     public ValueGroup getInputDataFromFile(InputStream is, ErrorReporter errorReporter)
     {
-        // TODO: Add file name to the errorReporter
         try
         {
             Workbook workbook = WorkbookFactory.create(is);

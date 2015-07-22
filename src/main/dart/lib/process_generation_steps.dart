@@ -36,6 +36,8 @@ class ProcessGeneratorSteps
   
   bool get hasWarnings => (warnings != null && warnings.length > 0);
   bool get hasErrors => (errors != null && errors.length > 0);
+
+  static const FILE_MAX_SIZE = 10 * 1024 * 1024;// 10 Mo
   
   ProcessGeneratorSteps(Api this._api, User this._user, LocalNotificationService this._notifService);
   
@@ -47,16 +49,28 @@ class ProcessGeneratorSteps
   
   void submitUploadForm(target)
   {
-    filename = (target as FileUploadInputElement).files[0].name;
-    // FIXME: Find a better way
     step3Form = target.parent as FormElement;
-    _upload();
+    File file = (target as FileUploadInputElement).files[0];
+    if (file.size > FILE_MAX_SIZE)
+    {
+      _notifService.manageError("Oh that's a too big file! Maximum authorized is 10Mo" );
+      reset();
+    }
+    else
+    {
+      filename = file.name;
+      _upload();
+    }
+    
   }
   
   void _upload()
   {
-    // FIXME: Find a better way to avoid reading the file client side
     var formData = new FormData(step3Form);
+    formData.append("filename", filename);
+    formData.append("username", userName);
+    formData.append("email", userEmail);
+    formData.append("address", userAddress);
     _api.uploadInputs(formData)
     .then((HttpRequest request) {
       if ( request.status == 400 )

@@ -18,15 +18,14 @@
  */
 package com.quantis_intl.lcigenerator.api;
 
-import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URISyntaxException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -49,6 +48,10 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.io.ByteStreams;
+import com.google.common.io.Files;
 import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.ErrorReporterImpl;
 import com.quantis_intl.lcigenerator.ImportResult;
@@ -61,6 +64,10 @@ import com.quantis_intl.lcigenerator.imports.ValueGroup;
 public class Api
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
+
+    private static final int UPLOADED_FILE_MAX_SIZE = 10 * 1024 * 1024;
+
+    private static final Set<String> UPLOADED_FILE_EXTENSIONS = ImmutableSet.of(".xls", ".xlsx");
 
     private ExcelInputReader inputReader;
 
@@ -86,6 +93,7 @@ public class Api
     @Produces(MediaType.APPLICATION_JSON)
     public void computeLci(@FormDataParam("uploadFile") InputStream is,
             @FormDataParam("canBeStored") boolean canBeStored,
+            @FormDataParam("filename") String filename,
             @FormDataParam("username") String username,
             @FormDataParam("email") String email,
             @FormDataParam("address") String address,
@@ -96,14 +104,30 @@ public class Api
         ErrorReporterImpl errorReporter = new ErrorReporterImpl();
 
         String idResult = UUID.randomUUID().toString();
-        LOGGER.info("BETA: user using this feature: name {}, email {}, other info: {}: {}",
+        LOGGER.info("BETA: user using this feature: name {}, email {}, other info: {}",
                 username, email, address);
 
-        BufferedInputStream bfis = new BufferedInputStream(is);
+        String fileExtension = filename.substring(filename.lastIndexOf("."));
+        if (!UPLOADED_FILE_EXTENSIONS.contains(fileExtension))
+        {
+            errorReporter.error("Sorry, we cannot read this file. Please use the Excel formats (.xls or .xlsx)");
+            LOGGER.info("Uploaded file handled with errors: {}",
+                    errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
+            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
+        }
+        byte[] uploadedFile = ByteStreams.toByteArray(ByteStreams.limit(is, UPLOADED_FILE_MAX_SIZE));
+        if (uploadedFile.length >= UPLOADED_FILE_MAX_SIZE)
+        {
+            errorReporter.error("Sorry, we cannot read this file. Please use a smaller file (max 10Mo)");
+            LOGGER.info("Uploaded file handled with errors: {}",
+                    errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
+            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
+        }
+        ByteArrayInputStream bais = new ByteArrayInputStream(uploadedFile);
         if (canBeStored)
-            saveUploadedFile(bfis, email, idResult);
+            saveUploadedFile(uploadedFile, filename, fileExtension, email, idResult);
 
-        ValueGroup extractedInputs = inputReader.getInputDataFromFile(bfis, errorReporter);
+        ValueGroup extractedInputs = inputReader.getInputDataFromFile(bais, errorReporter);
 
         if (!errorReporter.hasErrors())
         {
@@ -122,37 +146,23 @@ public class Api
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
-        bfis.close();
         is.close();
     }
 
-    private static final String UPLOADED_FILE_EXTENSION = ".xlsx";
-
-    private void saveUploadedFile(BufferedInputStream uploadedInputStream, String email, String idResult)
-            throws IOException
+    private void saveUploadedFile(byte[] fileContent, String filename, String fileExtension,
+            String email, String idResult) throws IOException
     {
-        // FIXME: Check if regExp is uncompleted or too strict
-        String safeFolderName = email.replaceAll("[\\\\\\*\\.\\\" ~%$&+,/:;=?@<>#%]+", "_");
+        // TODO Later: Use user id as folder name
+        String safeFolderName = CharMatcher.JAVA_LETTER_OR_DIGIT.negate().replaceFrom(email, " ")
+                .trim().replace(" ", "_");
         String userFolderName = uploadedFilesFolder + safeFolderName;
         new File(userFolderName).mkdir();
 
-        uploadedInputStream.mark(Integer.MAX_VALUE);
-        String uploadedFileLocation = userFolderName + "/" + idResult + UPLOADED_FILE_EXTENSION;
+        String uploadedFileLocation = userFolderName + "/" + idResult + fileExtension;
 
-        OutputStream out = new FileOutputStream(new File(uploadedFileLocation));
-        int read = 0;
-        byte[] bytes = new byte[1024];
+        Files.write(fileContent, new File(uploadedFileLocation));
 
-        out = new FileOutputStream(new File(uploadedFileLocation));
-        while ((read = uploadedInputStream.read(bytes)) != -1)
-        {
-            out.write(bytes, 0, read);
-        }
-        out.flush();
-        out.close();
-        uploadedInputStream.reset();
-
-        LOGGER.info("BETA: file saved for user {}, file id {}", email, idResult);
+        LOGGER.info("BETA: file saved for user: {}, file id: {}, original name: {}", email, idResult, filename);
     }
 
     private void onResult(Map<String, String> modelsOutput, ValueGroup extractedInputs, String idResult,
