@@ -33,15 +33,13 @@ public class StringExtractor
 
     static
     {
-        // FIXME: No system_boundary input anymore, use ecospold name metadata instead?
-        /*TAGS_FOR_STRING.add("system_boundary");*/
         TAGS_FOR_STRING.add("record_entry_by");
         TAGS_FOR_STRING.add("collection_method");
         TAGS_FOR_STRING.add("data_treatment_extrapolations");
         TAGS_FOR_STRING.add("data_treatment_uncertainty");
         TAGS_FOR_STRING.add("comment");
         TAGS_FOR_STRING.add("ecospold_name");
-        TAGS_FOR_STRING.add("ecopsold_location");
+        TAGS_FOR_STRING.add("ecospold_location");
         TAGS_FOR_STRING.add("ecospold_infra_process");
         TAGS_FOR_STRING.add("ecospold_unit");
         TAGS_FOR_STRING.add("ecospold_type");
