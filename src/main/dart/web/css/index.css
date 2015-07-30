@@ -8,23 +8,23 @@ header
 	padding-left: 30px;
 }
 
+#incompatible, #loading
+{
+  margin-top: 160px;
+  min-height: 450px;
+}
+
+#loading
+{
+  font-size: 20px;
+}
+
 .content
 {
 	width: 986px;
 	margin-left: auto;
 	margin-right: auto;
 	overflow: hidden;
-}
-
-.toolPage
-{
-	min-height: 450px;
-}
-
-.pagePart
-{
-	padding-top: 30px;
-	padding-bottom: 30px;
 }
 
 #logo, #quantisLogo
@@ -35,47 +35,29 @@ header
 #quantisLink
 {
   margin-left: 220px;
+  color:white;
+  opacity: 0.5;
 }
 
-#welcomeTextContainer
+#mainMenu
 {
-	width: 40%;
-	float: left;
+	float: right;
+  text-align: right;
+  margin-right: 100px;
+  padding-top: 20px;
 }
 
-#loginContainer
-{
-	width: 50%;
-	float: left;
-	margin-left: 30px;
+#mainMenu li {
+  display: inline;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-#contactInfoContainer > *
-{
-	display: inline-block;
-	vertical-align: middle;
-	margin-top: 30px;
+.menuItem, .menuItem:HOVER, .menuItem:FOCUS {
+	color: white;
 }
 
-#contactText
-{
-	padding-left: 15px;
-	padding-right: 30px;
-}
-
-.contactBtn
-{
-  font-size: 22px;
-  font-weight: bold;
-  color: #445272;
-  background-color: rgb(255,255,255);
-}
-
-.contactBtn:HOVER {
-  background-color: rgba(255,255,255,0.9);
-}
-
-#howToTitle
-{
-	margin-top: 20px;
+.selectedmenuItem, .selectedmenuItem:VISITED, .selectedmenuItem:HOVER, .selectedmenuItem:FOCUS {
+	text-decoration: none;
+	color: #f9b233;
 }

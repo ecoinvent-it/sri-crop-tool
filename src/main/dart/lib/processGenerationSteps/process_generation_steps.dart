@@ -1,3 +1,5 @@
+library process_generation_steps;
+
 import 'dart:html';
 import 'dart:convert';
 import 'dart:js' as js;
@@ -9,7 +11,7 @@ import 'package:alcig/api/user.dart';
 
 @Component(
     selector: 'process-generation-steps',
-    templateUrl: 'packages/alcig/process_generation_steps.html',
+    templateUrl: 'packages/alcig/processGenerationSteps/process_generation_steps.html',
     useShadowDom: false)
 class ProcessGeneratorSteps
 {

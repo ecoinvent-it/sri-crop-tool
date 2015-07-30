@@ -119,8 +119,7 @@ public class Api
         if (uploadedFile.length >= UPLOADED_FILE_MAX_SIZE)
         {
             errorReporter.error("Sorry, we cannot read this file. Please use a smaller file (max 10Mo)");
-            LOGGER.info("Uploaded file handled with errors: {}",
-                    errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
+            LOGGER.error("File too big: name {}, size in octet: {}", filename, uploadedFile.length);
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
         ByteArrayInputStream bais = new ByteArrayInputStream(uploadedFile);
