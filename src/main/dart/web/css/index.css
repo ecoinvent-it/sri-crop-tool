@@ -3,9 +3,11 @@ header
 	font-size: 27px;
 }
 
-#headerTitlePart1
+#title
 {
-	padding-left: 30px;
+  padding-top: 20px;
+  padding-left: 30px;
+  float: left;
 }
 
 #incompatible, #loading
@@ -25,6 +27,13 @@ header
 	margin-left: auto;
 	margin-right: auto;
 	overflow: hidden;
+}
+
+#logoContainer
+{
+	float: left;
+	background-color: white;
+	padding: 3px 12px;
 }
 
 #logo, #quantisLogo
