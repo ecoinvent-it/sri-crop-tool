@@ -37,7 +37,6 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ImmutableMap;
 import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.POIHelper;
-import com.quantis_intl.lcigenerator.api.Api;
 import com.quantis_intl.lcigenerator.imports.Origin.ExcelUserInput;
 import com.quantis_intl.lcigenerator.imports.SingleValue.DoubleSingleValue;
 import com.quantis_intl.lcigenerator.imports.ValueGroup.DoubleValueGroup;
@@ -46,7 +45,7 @@ import com.quantis_intl.lcigenerator.imports.ValueGroup.RatioValueGroup;
 
 public class ExcelInputReader
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(Api.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ExcelInputReader.class);
 
     // FIXME: Ugly hardcode
     private static final String TOTAL_PESTICIDES = "pest_total";

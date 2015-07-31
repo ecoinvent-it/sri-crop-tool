@@ -31,6 +31,7 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
@@ -42,6 +43,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.StreamingOutput;
+
+import mails.MailSender;
 
 import org.apache.shiro.SecurityUtils;
 import org.glassfish.jersey.media.multipart.FormDataParam;
@@ -75,16 +78,23 @@ public class Api
 
     private ScsvFileWriter scsvFileWriter;
 
+    private Provider<MailSender> mailSender;
+
     private final String uploadedFilesFolder;
+
+    private final String formsMailTo;
 
     @Inject
     public Api(ExcelInputReader inputReader, PyBridgeService pyBridgeService, ScsvFileWriter scsvFileWriter,
-            @Named("server.uploadedFilesFolder") String uploadedFilesFolder)
+            Provider<MailSender> mailSender, @Named("server.uploadedFilesFolder") String uploadedFilesFolder,
+            @Named("forms.mail.to") String formsMailTo)
     {
         this.inputReader = inputReader;
         this.pyBridgeService = pyBridgeService;
         this.scsvFileWriter = scsvFileWriter;
+        this.mailSender = mailSender;
         this.uploadedFilesFolder = uploadedFilesFolder;
+        this.formsMailTo = formsMailTo;
     }
 
     @POST
@@ -210,5 +220,67 @@ public class Api
                 (StreamingOutput) outputStream ->
                 scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, extractedInputs, outputStream))
                 .header("Content-Disposition", "attachment; filename=\"" + filename + ".csv\"").build();
+    }
+
+    @POST
+    @Path("contactUs")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public Response contactUs(@FormDataParam("contactName") final String contactName,
+            @FormDataParam("contactCompany") final String contactCompany,
+            @FormDataParam("contactEmail") final String contactEmail,
+            @FormDataParam("contactMessage") final String contactMessage,
+            @FormDataParam("accept") final boolean accept)
+    {
+        // TODO: Have a default template stored somewhere and replace only some specific parts
+        final String formContent = generateEmailTextFromContactForm(contactName, contactCompany, contactEmail,
+                contactMessage, accept);
+
+        mailSender.get().sendMail(formsMailTo, "[ALCIG] New feedback", formContent);
+
+        if (isEmailComplient(contactEmail))
+            mailSender.get().sendMail(contactEmail,
+                    "[ALCIG] Thank you for your feedback",
+                    generateTextForUser(contactName, formContent));
+        else
+            LOGGER.info("Email not sent to user as the given email was not complient: {}", contactEmail);
+
+        return Response.ok().build();
+    }
+
+    private boolean isEmailComplient(String email)
+    {
+        // FIXME Find a better regExp or another email validation solution
+        return email.matches("^([a-zA-Z0-9_\\.\\-+])+@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,})+$");
+    }
+
+    private String generateTextForUser(String contactName, String messageFromForm)
+    {
+        return new StringBuilder("Dear ")
+                .append(contactName.isEmpty() ? "user" : contactName)
+                .append(",<br/><br/>")
+                .append("Thank you for your message.")
+                .append("<br/>We will get back to you as soon as possible.")
+                .append("<br/><br/>Best regards,")
+                .append("<br/><br/>The ALCIG team")
+                .append("<br/><br/>---------------")
+                .append("Sent message:---------------<br/>")
+                .append(messageFromForm)
+                .toString();
+    }
+
+    private String generateEmailTextFromContactForm(final String contactName, final String contactCompany,
+            final String contactEmail, final String contactMessage, final boolean accept)
+    {
+        return new StringBuilder("Name: ")
+                .append(contactName)
+                .append("<br/>Company: ")
+                .append(contactCompany)
+                .append("<br/>Email: ")
+                .append(contactEmail)
+                .append("<br/>Accept the feedback to be made public : ")
+                .append(accept ? "Yes" : "No")
+                .append("<br/>Message: <br/>")
+                .append(contactMessage)
+                .toString();
     }
 }

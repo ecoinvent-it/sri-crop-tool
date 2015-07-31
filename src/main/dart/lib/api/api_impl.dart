@@ -12,6 +12,8 @@ class ApiImpl implements Api {
   static final String _baseApiUrl = _baseUrl + "api/";
   static final String _basePubApiUrl = _baseApiUrl + "pub/";
 
+  ApiImpl();
+  
   StreamController<ServerEvent> _dispatcher = new StreamController.broadcast();
   Stream<ServerEvent> get stream => _dispatcher.stream;
   
@@ -23,13 +25,22 @@ class ApiImpl implements Api {
                     if ( request.status == 400 )
                       return request;
                     else
-                    {
-                      _dispatcher.add(ServerEvent.SERVER_ERROR);
-                      throw e;
-                    }
+                      _manageError(e);
                   }
           );
     }
+  
+  Future<HttpRequest> contactUs(dynamic formData)
+  {
+    return HttpRequest.request(_basePubApiUrl + "contactUs", method: "POST", sendData: formData)
+                      .then((request) {return request;})
+                      .catchError( _manageError );
+  }
+  
+  void _manageError(ProgressEvent e)
+  {
+    _dispatcher.add(ServerEvent.SERVER_ERROR);
+    throw e;
+  }
 
 }
-

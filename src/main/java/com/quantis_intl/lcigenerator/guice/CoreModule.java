@@ -18,6 +18,8 @@
  */
 package com.quantis_intl.lcigenerator.guice;
 
+import mails.MailSender;
+
 import com.google.inject.AbstractModule;
 import com.quantis_intl.lcigenerator.LoginServiceImpl;
 import com.quantis_intl.lcigenerator.PyBridgeService;
@@ -34,5 +36,6 @@ public class CoreModule extends AbstractModule
         bind(PyBridgeService.class);
         bind(ScsvFileWriter.class);
         bind(ExcelInputReader.class);
+        bind(MailSender.class);
     }
 }

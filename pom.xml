@@ -222,6 +222,12 @@
 			<version>3.11</version>
 		</dependency>
 		<dependency>
+		  <groupId>com.sun.mail</groupId>
+		  <artifactId>javax.mail</artifactId>
+		  <!-- FIXME: version 1.5.3 and 1.5.4 don't work but we dont know why. something concerning SSL? -->
+		  <version>1.5.2</version>
+		</dependency>
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>

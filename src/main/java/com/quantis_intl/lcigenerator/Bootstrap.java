@@ -65,6 +65,10 @@ public class Bootstrap
         p.setProperty("server.appResourcesFolder", "src/main/dart/web");
         p.setProperty("server.logFolder", "");
         p.setProperty("server.uploadedFilesFolder", System.getenv("ALCIG_UPLOADED_FILES_FOLDER"));
+        p.setProperty("mail.from", "");
+        p.setProperty("mailer.username", "");
+        p.setProperty("mailer.password", "");
+        p.setProperty("forms.mail.to", "");
         p.setProperty("pyBridge.url", "http://localhost:11001/computeLci");
         return p;
     }

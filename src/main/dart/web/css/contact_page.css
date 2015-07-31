@@ -1,0 +1,36 @@
+#contactPage
+{
+	background-color: #eaecf0;
+}
+
+#contactForm
+{
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+#contactFormContainer
+{
+	width: 65%;
+	float: left;
+	background-color: white;
+}
+
+#contactInfoContainer
+{
+	width: 35%;
+	background-color: #eaecf0;
+	float: left;
+	padding: 50px 10px 10px 30px;
+}
+
+.contactFieldTitle
+{
+	padding-top:5px;
+}
+
+#contactMessage
+{
+  height: 140px;
+}
+

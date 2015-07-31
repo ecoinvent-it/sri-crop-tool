@@ -8,6 +8,8 @@ abstract class Api {
   Stream<ServerEvent> get stream;
   
   Future<HttpRequest> uploadInputs(dynamic data);
+  
+  Future<HttpRequest> contactUs(dynamic data);
 }
 
 class ServerEvent {

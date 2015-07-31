@@ -134,3 +134,30 @@ table img
 {
   background-color: #f2dede;
 }
+
+input[type="text"], textarea
+{
+	background-color: #eaecf0;
+	border: solid 1px #eaecf0;
+	width: 300px;
+	color: #445272;
+}
+
+input[type="submit"]
+{
+	display: block;
+}
+
+.qts-btn-1
+{
+  font-size: 19px;
+  font-weight: bold;
+  color: white;
+  background-color: #f9b233;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.qts-btn-1:HOVER {
+  background-color: #e87e05;
+}

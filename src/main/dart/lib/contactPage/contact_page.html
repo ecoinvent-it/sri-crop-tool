@@ -1,3 +1,34 @@
-<h1>Contact us</h1>
+<div class="content" id="contactPage">
+	
+	  <div id="contactFormContainer">
+	  
+			<h1 class="color1">Contact us</h1>
+			
+			<div class="color2 text-medium">We will be happy to get any feedback from you</div>
+			<div class="color1">Just send us a message in the form below</div>
+			
+			<form id="contactForm" ng-submit="sendMessage($event)" enctype="multipart/form-data">
+				<div class="color1 contactFieldTitle">Name</div>
+				<input name="contactName" type="text" ng-model="contactName"/>
+				<div class="color1 contactFieldTitle">Company</div>
+				<input name="contactCompany" type="text" ng-model="contactCompany"/>
+				<div class="color1 contactFieldTitle">Email</div>
+		    <input name="contactEmail" type="text" ng-model="contactEmail"/>
+				<div class="color1 contactFieldTitle">Message</div>
+				<textarea id="contactMessage" name="contactMessage" required placeholder="Share with us any information that might help us to improve the tool"></textarea>
+				<div class="color1 contactFieldTitle"></div>
+				<input type="checkbox" name="accept" value="true" /><span class="color1">I accept that this feedback can be made public</span>
+				<input type="submit" class="qts-btn qts-btn-1" value="Send"/>
+				<div class="color2">{{confirmationMessage}}</div>
+			</form>
+		
+		</div>
+		
+		<div id="contactInfoContainer">
+		  <div class="color1">EMAIL</div>
+		  <div><a href="mailto:{{quantisEmail}}">{{quantisEmail}}</a></div>
+		</div>
+		
+	</div>
 
 <script type="text/javascript">ga('send', 'pageview', { 'page': window.location.pathname + window.location.hash });</script>
