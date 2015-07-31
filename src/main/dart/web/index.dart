@@ -14,6 +14,7 @@ import 'package:alcig/contactPage/contact_page.dart';
 import 'package:alcig/notificationModal/notification_modal.dart';
 import 'package:alcig/processGenerationSteps/process_generation_steps.dart';
 import 'package:alcig/toolPage/tool_page.dart';
+import 'package:alcig/faqPage/faq_page.dart';
 
 void main() {
   applicationFactory()
@@ -35,6 +36,7 @@ class MyAppModule extends Module {
     bind(BetaUserInfo);
     bind(ToolPage);
     bind(ContactPage);
+    bind(FaqPage);
     // NOTE: This doesn't work, we had some issue with null value
     //bind(String, toValue: new Random().nextInt(1<<31).toString(), withAnnotation: const IdTab() );
   }
@@ -48,6 +50,9 @@ void alcigRouteInitializer(Router router, RouteViewFactory views) {
         viewHtml: '<tool-page></tool-page>'),
     'contactUs': ngRoute(
         path: 'contactUs',
-        viewHtml: '<contact-page></contact-page>')
+        viewHtml: '<contact-page></contact-page>'),
+    'faq': ngRoute(
+            path: 'faq',
+            viewHtml: '<faq-page></faq-page>')
   });
 }

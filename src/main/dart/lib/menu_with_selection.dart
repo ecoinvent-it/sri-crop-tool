@@ -34,6 +34,10 @@ class MenuWithSelection {
         currentSelectedItemMenu = "#contactUsMenuItem";
         break;
         
+      case 'faq':
+        currentSelectedItemMenu = "#faqMenuItem";
+        break;
+        
       case 'tool':
       default:
         currentSelectedItemMenu = "#homeMenuItem";
