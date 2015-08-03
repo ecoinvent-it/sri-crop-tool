@@ -53,6 +53,8 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.ImmutableSet;
+import com.google.common.escape.Escaper;
+import com.google.common.html.HtmlEscapers;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 import com.quantis_intl.lcigenerator.ErrorReporter;
@@ -231,18 +233,24 @@ public class Api
             @FormDataParam("contactMessage") final String contactMessage,
             @FormDataParam("accept") final boolean accept)
     {
+        Escaper escaper = HtmlEscapers.htmlEscaper();
+        final String escapedContactName = escaper.escape(contactName);
+        final String escapedContactCompany = escaper.escape(contactCompany);
+        final String escapedContactEmail = escaper.escape(contactEmail);
+        final String escapedContactMessage = escaper.escape(contactMessage);
+
         // TODO: Have a default template stored somewhere and replace only some specific parts
-        final String formContent = generateEmailTextFromContactForm(contactName, contactCompany, contactEmail,
-                contactMessage, accept);
+        final String formContent = generateEmailTextFromContactForm(escapedContactName, escapedContactCompany,
+                escapedContactEmail, escapedContactMessage, accept);
 
         mailSender.get().sendMail(formsMailTo, "[ALCIG] New feedback", formContent);
 
-        if (isEmailComplient(contactEmail))
-            mailSender.get().sendMail(contactEmail,
+        if (isEmailComplient(escapedContactEmail))
+            mailSender.get().sendMail(escapedContactEmail,
                     "[ALCIG] Thank you for your feedback",
-                    generateTextForUser(contactName, formContent));
+                    generateTextForUser(escapedContactName, formContent));
         else
-            LOGGER.info("Email not sent to user as the given email was not complient: {}", contactEmail);
+            LOGGER.info("Email not sent to user as the given email was not complient: {}", escapedContactEmail);
 
         return Response.ok().build();
     }

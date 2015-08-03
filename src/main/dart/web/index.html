@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="css/process_generation_steps.css" />
 <link rel="stylesheet" href="css/contact_page.css" />
 <link rel="stylesheet" href="css/faq_page.css" />
-<script src="packages/alcig/qts_bootstrap/js/jquery-1.11.1.js"></script>
+<script src="packages/alcig/qts_bootstrap/js/jquery-1.11.1.min.js"></script>
 <script src="packages/alcig/qts_bootstrap/js/bootstrap.js"></script>
 <script src="packages/web_components/webcomponents.js"></script>
 <script src="packages/web_components/dart_support.js"></script>
@@ -44,10 +44,10 @@
       <a id="quantisLink" href="http://www.quantis-intl.com" target="_blank">www.quantis-intl.com</a>
         
       <ul id="mainMenu" menuWithSelection>
-        <li><a href="/#tool" id="homeMenuItem" class="menuItem selectedmenuItem">Home</a></li>
-	      <li><a href="/#contactUs" id="contactUsMenuItem" class="menuItem">Contact</a></li>
-	      <li><a href="/#faq" id="faqMenuItem" class="menuItem">FAQ</a></li>
-	      <li><a href="ALCIG_methodology.pdf" target="_blank" class="menuItem">Methodology</a></li>
+        <li><a href="#tool" id="homeMenuItem" class="menuItem selectedmenuItem">Home</a></li>
+	      <li><a href="#contactUs" id="contactUsMenuItem" class="menuItem">Contact</a></li>
+	      <li><a href="#faq" id="faqMenuItem" class="menuItem">FAQ</a></li>
+	      <li><a href="ALCIG_methodology.pdf" target="_blank" class="menuItem" onclick="methodoClick(event)">Methodology</a></li>
 	    </ul>
 
     </div>
@@ -60,6 +60,16 @@
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
     
     ga('create', '@@@GOOGLE_ANALYTICS_ACCOUNT@@@', 'auto');
+    
+    function methodoClick(event)
+    {
+    	// window.location.origin is not available for IE
+    	if (!window.location.origin)
+    		  window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+
+    	methodoLocalPath = event.target.href.replace(window.location.origin,"");
+      ga('send', 'pageview', { 'page': methodoLocalPath });
+    }
 
 	  (function() {
 	    "use strict";
@@ -79,6 +89,7 @@
 	    }
 	    
 	    self.addEventListener("message", onMessage);
+	    
 	  })()
   </script>
 	

@@ -65,7 +65,7 @@
 					<artifactId>dart-maven-plugin</artifactId>
 					<version>3.0.8</version>
 					<configuration>
-						<dartSdk>/opt/eclipse/dart-sdk/</dartSdk>
+						<dartSdk>/usr/lib/dart/</dartSdk>
 					</configuration>
 					<executions>
 						<execution>
