@@ -12,6 +12,11 @@ class MenuWithSelection {
   Router _router;
   
   MenuWithSelection(Element this.element, Router this._router) {
+    String initialFragment = window.location.hash;
+    if (initialFragment.isNotEmpty)
+      selectedPage = initialFragment.substring(1);
+
+    _manageMenuItemStyle();
     _router.onRouteStart.listen((RouteStartEvent event) {
           event.completed.then((_) {
             if (_router.activePath.length > 0) {
