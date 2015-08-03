@@ -29,6 +29,7 @@ import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
 import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
 import com.quantis_intl.lcigenerator.imports.SingleValue;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
+import com.quantis_intl.lcigenerator.scsv.TemplateSubstanceUsages.TemplateSubstanceUsage;
 
 public class GeneratedSubstanceUsage implements SubstanceUsage
 {

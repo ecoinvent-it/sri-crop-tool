@@ -1,0 +1,88 @@
+Process
+
+Category type
+material
+
+Process identifier
+
+
+Type
+Unit process
+
+Process name
+Packaging, dry fertilisers or pesticides (ALCIG)/GLO U
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+6/8/2015
+
+Comment
+Packaging for dry (solid) fertilisers or pesticides.Included processes: Polyethylene (HDPE) production, packaging manufacturing, transport to the farm and transport to treatment facilityFunctional unit: Packaging for 1 kg of solid fertiliser or solid pesticide
+
+Products
+Packaging, per kg dry fertilisers or pesticides (ALCIG)/GLO U;kg;1;100;not defined;_ALCIG import\Packaging;
+
+Avoided products
+
+Resources
+
+Materials/fuels
+Polyethylene, HDPE, granulate, at plant/RER U;kg;0.1/50/0.977;Undefined;0;0;0;100 g HDPE per 50 kg bag of dry fertiliser
+Thermoforming, with calendering/RER U;kg;0.1/50/0.977;Undefined;0;0;0;Packaging manufacturing
+Transport, lorry 16-32t, EURO4/RER U;kgkm;0.1/50*300;Undefined;0;0;0;Transport from factory to farm (300 km)
+Transport, municipal waste collection, lorry 21t/CH U;kgkm;0.1/50*5;Undefined;0;0;0;End-of-life transport, from farm to collection center (5 km)
+Transport, lorry 16-32t, EURO4/RER U;kgkm;0.1/50*30;Undefined;0;0;0;End-of-life transport, from collection center to treatment (30 km)
+
+Electricity/heat
+
+Emissions to air
+
+Emissions to water
+
+Emissions to soil
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+Disposal, polyethylene, 0.4% water, to municipal incineration/CH U;kg;0.1/50/2;Undefined;0;0;0;50% is incinerated, 50% is landfilled
+Disposal, polyethylene, 0.4% water, to sanitary landfill/CH U;kg;0.1/50/2;Undefined;0;0;0;50% is incinerated, 50% is landfilled
+
+End

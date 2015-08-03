@@ -62,11 +62,11 @@ Carbon dioxide, in air;in air;kg;2385.8;Lognormal;1.07;0;0;VEG uptake (capture b
 Energy, from peat;biotic;MJ;0.4;Lognormal;1.07;0;0;Peat degradation, considering 8.77 MJ/kg (50% moisture wet basis) and 50% C in dry peat, 34.9 MJ/kg C in peat.
 
 Materials/fuels
-Land tenure, arable land, as carbon NPP, clear-cutting, primary forest to arable land (WFLDB 3.0)/AU U;kg;0.625;Undefined;0;0;0;
-Land tenure, arable land, as carbon NPP, clear-cutting, secondary forest to arable land (WFLDB 3.0)/AU U;kg;17.646;Undefined;0;0;0;
-Land tenure, arable land, as carbon NPP, clear-cutting, grassland to arable land (WFLDB 3.0)/AU U;kg;202.9431;Undefined;0;0;0;
-Land tenure, arable land, as carbon NPP, perennial cropland already in use to arable land (WFLDB 3.0)/AU U;kg;0.047903;Undefined;0;0;0;
-Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (WFLDB 3.0)/AU U;kg;6.23807;Undefined;0;0;0;
+Land tenure, arable land, as carbon NPP, clear-cutting, primary forest to arable land (ALCIG)/AU U;kg;0.625;Undefined;0;0;0;
+Land tenure, arable land, as carbon NPP, clear-cutting, secondary forest to arable land (ALCIG)/AU U;kg;17.646;Undefined;0;0;0;
+Land tenure, arable land, as carbon NPP, clear-cutting, grassland to arable land (ALCIG)/AU U;kg;202.9431;Undefined;0;0;0;
+Land tenure, arable land, as carbon NPP, perennial cropland already in use to arable land (ALCIG)/AU U;kg;0.047903;Undefined;0;0;0;
+Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (ALCIG)/AU U;kg;6.23807;Undefined;0;0;0;
 
 Electricity/heat
 

@@ -1,0 +1,406 @@
+Process
+
+Category type
+material
+
+Process identifier
+
+
+Type
+Unit process
+
+Process name
+electricity, high voltage, production PH, at grid/kWh/PH
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+10/7/2014
+
+Record
+
+
+Generator
+
+
+Literature references
+IEA (2012);
+
+Comment
+Electricity, high voltage, as produced in the Philippines (IEA 2012)Included processes: Included are the electricity production in the Philippines, the transmission network and direct emissions to air (ozone and N2O). Electricity losses are accounted for and assumed similar to European average (RER mix).Remark: This dataset describes the transmission of high voltage electricity.
+
+System description
+Ecoinvent;
+
+Products
+Electricity, high voltage, production PH, at grid (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG import;Based on UCTE mix, adapted to the Philippines
+
+Avoided products
+
+Resources
+
+Materials/fuels
+Electricity, production mix PH (ALCIG)/PH U;kWh;1.0102;Lognormal;1.2355;0;0;"(3,1,1,1,3,1); specific losses of network estimated based on statistics"
+Transmission network, long-distance/UCTE/I U;km;0.000000000317;Lognormal;3.1614;0;0;"(3,1,4,5,3,5); based on consumption statistics"
+Transmission network, electricity, high voltage/CH/I U;km;0.00000000844;Lognormal;3.1614;0;0;"(3,1,4,5,3,5); based on consumption statistics"
+
+Electricity/heat
+
+Emissions to air
+Heat, waste;;MJ;0.035022;Lognormal;1.3221;0;0;"(4,1,3,1,1,5); estimations based on losses"
+Ozone;;kg;0.0000045;Lognormal;1.5;0;0;"(-,-,-,-,-,-); standard deviation based on variation reported in literature"
+Dinitrogen monoxide;;kg;0.000005;Lognormal;1.5;0;0;"(-,-,-,-,-,-); standard deviation based on variation reported in literature"
+
+Emissions to water
+
+Emissions to soil
+Heat, waste;;MJ;0.0018432;Lognormal;1.3221;0;0;"(4,1,3,1,1,5); estimations based on losses"
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+
+End
+
+Process
+
+Category type
+material
+
+Process identifier
+
+
+Type
+Unit process
+
+Process name
+electricity, low voltage, production PH, at grid/kWh/PH
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+10/7/2014
+
+Record
+
+
+Generator
+
+
+Literature references
+IEA (2012);
+
+Comment
+Electricity, low voltage, as produced in the Philippines (IEA 2012)Included processes: Included are the electricity production in the Philippines, the transmission network and direct  SF6-emissions to air. Electricity losses during during low-voltage transmission and transformation from medium-voltage are accounted for (assumed similar to European average (RER mix)).Remark: This dataset describes the transformation from medium to low voltage as well as the transmission of electricity at low voltage.
+
+System description
+Ecoinvent;
+
+Products
+Electricity, low voltage, production PH, at grid (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG import;
+
+Avoided products
+
+Resources
+
+Materials/fuels
+Electricity, medium voltage, production PH, at grid (ALCIG)/PH U;kWh;1.1113;Lognormal;1.2355;0;0;"(3,1,1,1,3,1); specific losses of network estimated based on statistics"
+Sulphur hexafluoride, liquid, at plant/RER U;kg;0.0000000044236;Lognormal;1.129;0;0;"(1,1,2,5,1,3); assumed with data of German statistics"
+Distribution network, electricity, low voltage/CH/I U;km;0.000000294;Lognormal;3.1614;0;0;"(3,1,4,5,3,5); based on consumption statistics"
+
+Electricity/heat
+
+Emissions to air
+Heat, waste;;MJ;0.10016;Lognormal;1.3221;0;0;"(4,1,3,1,1,5); estimations based on losses"
+Sulfur hexafluoride;;kg;0.0000000044236;Lognormal;1.52260000000000040;0;0;"(1,1,2,5,1,3); assumed with data of German statistics"
+
+Emissions to water
+
+Emissions to soil
+Heat, waste;;MJ;0.30047;Lognormal;1.3221;0;0;"(4,1,3,1,1,5); estimations based on losses"
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+
+End
+
+Process
+
+Category type
+material
+
+Process identifier
+
+
+Type
+Unit process
+
+Process name
+electricity, medium voltage, production PH, at grid/kWh/PH
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+10/7/2014
+
+Record
+
+
+Generator
+
+
+Literature references
+IEA (2012);
+
+Comment
+Electricity, medium voltage, as produced in the Philippines (IEA 2012)Included processes: Included are the electricity production in the Philippines, the transmission network and direct  SF6-emissions to air. Electricity losses during medium-voltage transmission and transformation from high-voltage are accounted for (assumed similar to European average (RER mix)).Remark: This dataset describes the transformation from high to medium voltage as well as the transmission of electricity at medium voltage.
+
+System description
+Ecoinvent;
+
+Products
+Electricity, medium voltage, production PH, at grid (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG import;Based on UCTE mix, adapted to the Philippines
+
+Avoided products
+
+Resources
+
+Materials/fuels
+Electricity, high voltage, production PH, at grid (ALCIG)/PH U;kWh;1.01080000000000014;Lognormal;1.2355;0;0;"(3,1,1,1,3,1); specific losses of network estimated based on statistics"
+Sulphur hexafluoride, liquid, at plant/RER U;kg;0.000000075425;Lognormal;1.129;0;0;"(1,1,2,5,1,3); assumed with data of German statistics"
+Transmission network, electricity, medium voltage/CH/I U;km;0.0000000324;Lognormal;3.1614;0;0;"(3,1,4,5,3,5); based on consumption statistics"
+
+Electricity/heat
+
+Emissions to air
+Heat, waste;;MJ;0.021476;Lognormal;1.3221;0;0;"(4,1,3,1,1,5); estimations based on losses"
+Sulfur hexafluoride;;kg;0.000000075425;Lognormal;1.52260000000000040;0;0;"(1,1,2,5,1,3); assumed with data of German statistics"
+
+Emissions to water
+
+Emissions to soil
+Heat, waste;;MJ;0.017572;Lognormal;1.3221;0;0;"(4,1,3,1,1,5); estimations based on losses"
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+
+End
+
+Process
+
+Category type
+material
+
+Process identifier
+
+
+Type
+Unit process
+
+Process name
+electricity, production mix PH/kWh/PH
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+10/7/2014
+
+Record
+
+
+Generator
+
+
+Literature references
+IEA (2012);
+
+Data treatment
+
+
+Comment
+Electricity production mix for the Philippines (IEA 2012)Included processes: It includes the shares of domestic electricity production by technology at the busbar. It does not include transformation, transport nor distribution losses.Geography: Data apply to production in the PhilippinesProduction volume: 72921 GWh
+
+System description
+Ecoinvent;
+
+Products
+Electricity, production mix PH (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG import;Based on www.iea.org
+
+Avoided products
+
+Resources
+
+Materials/fuels
+Electricity, hard coal, at power plant/UCTE U;kWh;0.388;Undefined;0;0;0;
+Electricity, oil, at power plant/UCTE U;kWh;0.0583;Undefined;0;0;0;
+Electricity, natural gas, at power plant/UCTE U;kWh;0.269;Undefined;0;0;0;
+Electricity, at cogen 6400kWth, wood, allocation exergy/CH U;kWh;0.00200;Undefined;0;0;0;Proxy for biofuels
+Electricity from waste, at municipal waste incineration plant/CH U;kWh;0.000494;Undefined;0;0;0;
+Electricity, hydropower, at reservoir power plant/BR U;kWh;0.141;Undefined;0;0;0;
+Electricity, at wind power plant/RER U;kWh;0.141;Undefined;0;0;0;Proxy for geothermal
+Electricity, production mix photovoltaic, at plant/HU U;kWh;0.0000137;Undefined;0;0;0;
+Electricity, at wind power plant/RER U;kWh;0.00103;Undefined;0;0;0;
+
+Electricity/heat
+
+Emissions to air
+
+Emissions to water
+
+Emissions to soil
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+
+End

@@ -20,27 +20,33 @@ package com.quantis_intl.lcigenerator.scsv;
 
 import com.quantis_intl.commons.scsv.ScsvEnums.SubCompartment;
 
-public class TemplateSubstanceUsage
+public class GlobalTemplateSubstanceUsages implements TemplateSubstanceUsages
 {
-    public final String name;
-    public final SubCompartment subCompartment;
-    public final String unit;
-    public final String amountVariable;
-    public final StandardUncertaintyMetadata uncertainty;
-    public final String commentVariable;
-
-    public TemplateSubstanceUsage(String name, SubCompartment subCompartment, String unit, String amountVariable,
-            StandardUncertaintyMetadata uncertainty, String commentVariable)
+    @Override
+    public TemplateSubstanceUsage[] getResources()
     {
-        this.name = name;
-        this.subCompartment = subCompartment;
-        this.unit = unit;
-        this.amountVariable = amountVariable;
-        this.uncertainty = uncertainty;
-        this.commentVariable = commentVariable;
+        return resources;
     }
 
-    public static final TemplateSubstanceUsage[] resources = {
+    @Override
+    public TemplateSubstanceUsage[] getToAir()
+    {
+        return toAir;
+    }
+
+    @Override
+    public TemplateSubstanceUsage[] getToWater()
+    {
+        return toWater;
+    }
+
+    @Override
+    public TemplateSubstanceUsage[] getToSoil()
+    {
+        return toSoil;
+    }
+
+    private static final TemplateSubstanceUsage[] resources = {
 
             new TemplateSubstanceUsage("Carbon dioxide, in air", SubCompartment.RAW_IN_AIR, "kg",
                     "CO2_from_yield", StandardUncertaintyMetadata.CO2_ENERGY_BIOMASS, ""),
@@ -73,7 +79,7 @@ public class TemplateSubstanceUsage
                     "transformation_to_permanent", StandardUncertaintyMetadata.LAND_TRANSFORMATION, "")
     };
 
-    public static final TemplateSubstanceUsage[] toAir = {
+    private static final TemplateSubstanceUsage[] toAir = {
             new TemplateSubstanceUsage("Ammonia", SubCompartment.AIR_LOW_POP, "kg", "ammonia_total",
                     StandardUncertaintyMetadata.CH4_NH3_TO_AIR, ""),
             new TemplateSubstanceUsage("Carbon dioxide, fossil", SubCompartment.AIR_LOW_POP, "kg",
@@ -87,7 +93,7 @@ public class TemplateSubstanceUsage
                     StandardUncertaintyMetadata.CH4_NH3_TO_AIR, "")
     };
 
-    public static final TemplateSubstanceUsage[] toWater = {
+    private static final TemplateSubstanceUsage[] toWater = {
             new TemplateSubstanceUsage("Nitrate", SubCompartment.WATER_RIVER, "kg", "nitrate_to_surfacewater",
                     StandardUncertaintyMetadata.NO3_PO4_TO_WATER, ""),
             new TemplateSubstanceUsage("Nitrate", SubCompartment.WATER_GROUNDWATER, "kg", "nitrate_to_groundwater",
@@ -137,7 +143,7 @@ public class TemplateSubstanceUsage
                     "cod_in_waste_water", StandardUncertaintyMetadata.COD_IN_WASTEWATER, "cod_in_waste_water")
     };
 
-    public static final TemplateSubstanceUsage[] toSoil = {
+    private static final TemplateSubstanceUsage[] toSoil = {
             new TemplateSubstanceUsage("Cadmium", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_cd",
                     StandardUncertaintyMetadata.HM_TO_SOIL, ""),
             new TemplateSubstanceUsage("Chromium", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_cr",

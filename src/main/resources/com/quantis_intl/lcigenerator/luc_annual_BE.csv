@@ -60,9 +60,9 @@ Carbon dioxide, in air;in air;kg;0;Lognormal;1.07;0;0;VEG uptake (capture by per
 Energy, from peat;biotic;MJ;0;Lognormal;1.07;0;0;Peat degradation, considering 8.77 MJ/kg (50% moisture wet basis) and 50% C in dry peat, 34.9 MJ/kg C in peat.
 
 Materials/fuels
-Land tenure, arable land, as carbon NPP, clear-cutting, grassland to arable land (WFLDB 3.0)/BE U;kg;25.9438;Undefined;0;0;0;
-Land tenure, arable land, as carbon NPP, perennial cropland already in use to arable land (WFLDB 3.0)/BE U;kg;5.189930;Undefined;0;0;0;
-Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (WFLDB 3.0)/BE U;kg;244.36624;Undefined;0;0;0;
+Land tenure, arable land, as carbon NPP, clear-cutting, grassland to arable land (ALCIG)/BE U;kg;25.9438;Undefined;0;0;0;
+Land tenure, arable land, as carbon NPP, perennial cropland already in use to arable land (ALCIG)/BE U;kg;5.189930;Undefined;0;0;0;
+Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (ALCIG)/BE U;kg;244.36624;Undefined;0;0;0;
 
 Electricity/heat
 

@@ -18,6 +18,7 @@
  */
 package com.quantis_intl.lcigenerator.scsv;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -27,6 +28,7 @@ import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
 import com.quantis_intl.commons.scsv.processes.ProductUsage;
 import com.quantis_intl.lcigenerator.imports.SingleValue;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
+import com.quantis_intl.lcigenerator.scsv.TemplateProductUsages.TemplateProductUsage;
 
 public class GeneratedProductUsage implements ProductUsage
 {
@@ -42,7 +44,7 @@ public class GeneratedProductUsage implements ProductUsage
         this.extractedInputs = extractedInputs;
     }
 
-    public Optional<String> getRequiredDep()
+    public Optional<List<String>> getRequiredDep()
     {
         return template.provideRequiredDep(modelOutputs);
     }
@@ -62,12 +64,7 @@ public class GeneratedProductUsage implements ProductUsage
     @Override
     public String getAmount()
     {
-        String amount = modelOutputs.get(template.amountVariable);
-        if (amount == null)
-        {
-            amount = "0";
-        }
-        return amount;
+        return template.provideValue(modelOutputs);
     }
 
     @Override

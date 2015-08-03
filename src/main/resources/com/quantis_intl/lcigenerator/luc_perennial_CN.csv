@@ -1,0 +1,93 @@
+Process
+
+Category type
+material
+
+Process identifier
+
+
+Type
+
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+3/25/2015
+
+Generator
+
+
+Comment
+"These are the impacts for 1 ha of land use change, split between change from annual crop, perennial crop, primary forest, secondary forest and grass land according to the 2nd edition of the Quantis modified tool developed by Blonk Consultants ""WFLDB-adapted-Blonk 2014 direct-land-use-change-assessment-tool_2015-05-18a.xlsx"". This process is specific to the country and to the type of the crop (annual or perennial). The amount to take into account depends on the allocated LUC of the crop. This allocation is also calculated using the 2nd edition of the Quantis modified tool developed by Blonk Consultants based on FAO data. This land use change process includes land tenure processes and transformation processes (to balance with land tenure processes that only have arable land as outputs, whereas permanent crop soil is needed for perennial crops). It also includes C and N emissions due to soil degradation, when occuring, according to IPCC 2006. Peat soil degradation is included, but separately, based on Joosten (2010) and IPCC (2013) data."
+
+Products
+Land use change, perennial crop (ALCIG)/CN U;ha;1;100;not defined;_ALCIG import\Land use change;
+
+Avoided products
+
+Resources
+Transformation, from arable;land;m2;500;Lognormal;1.07;0;0;This is the share that is transformed (from land tenure, which always transform to arable)
+Transformation, from permanent crop;land;m2;500;Lognormal;1.07;0;0;This is the share that is transformed but already taken into account by perennial crop
+Carbon, organic, in soil or biomass stock;in ground;kg;-0.0230;Lognormal;1.07;0;0;SOC change, excluding peat degradation
+Carbon, organic, in soil or biomass stock;in ground;kg;0;Lognormal;1.07;0;0;Peat degradation by drainage
+Carbon dioxide, in air;in air;kg;7920.0;Lognormal;1.07;0;0;VEG uptake (capture by perennial crops only)
+Energy, from peat;biotic;MJ;0;Lognormal;1.07;0;0;Peat degradation, considering 8.77 MJ/kg (50% moisture wet basis) and 50% C in dry peat, 34.9 MJ/kg C in peat.
+
+Materials/fuels
+Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (ALCIG)/CN U;kg;0.00942;Undefined;0;0;0;
+
+Electricity/heat
+
+Emissions to air
+Carbon dioxide, land transformation;low. pop.;kg;-0.000084;Lognormal;1.2;0;0;SOC emissions from mineral soils
+Dinitrogen monoxide;low. pop.;kg;0;Lognormal;1.2;0;0;SOC emissions from mineral soils
+Carbon dioxide, land transformation;low. pop.;kg;0;Lognormal;1.5;0;0;Additional emissions for drained organic soils (peatlands)
+Methane, biogenic;low. pop.;kg;0;Lognormal;1.5;0;0;Additional emissions for drained organic soils (peatlands)
+Dinitrogen monoxide;low. pop.;kg;0;Lognormal;1.5;0;0;Additional emissions for drained organic soils (peatlands)
+
+Emissions to water
+
+Emissions to soil
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+
+End

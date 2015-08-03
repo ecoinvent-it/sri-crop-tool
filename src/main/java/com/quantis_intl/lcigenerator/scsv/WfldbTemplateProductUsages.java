@@ -22,87 +22,30 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import jersey.repackaged.com.google.common.collect.ImmutableList;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
-public class TemplateProductUsage
+public class WfldbTemplateProductUsages implements TemplateProductUsages
 {
-    private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{(.+?)\\}");
-
-    private final String name;
-    public final String unit;
-    public final String amountVariable;
-    public final StandardUncertaintyMetadata uncertainty;
-    public final String commentVariable;
-    private final Optional<String> requiredDep;
-
-    public TemplateProductUsage(String name, String unit, String amountVariable,
-            StandardUncertaintyMetadata uncertainty, String commentVariable)
+    @Override
+    public TemplateProductUsage[] getMaterialsFuels()
     {
-        this(name, unit, amountVariable, uncertainty, commentVariable, null);
+        return materialsFuels;
     }
 
-    public TemplateProductUsage(String name, String unit, String amountVariable,
-            StandardUncertaintyMetadata uncertainty, String commentVariable, String requiredDep)
+    @Override
+    public TemplateProductUsage[] getElectricityHeat()
     {
-        this.name = name;
-        this.unit = unit;
-        this.amountVariable = amountVariable;
-        this.uncertainty = uncertainty;
-        this.commentVariable = commentVariable;
-        this.requiredDep = Optional.ofNullable(requiredDep);
+        return electricityHeat;
     }
 
-    public String provideName(Map<String, String> modelOutputs)
+    @Override
+    public TemplateProductUsage[] getWastes()
     {
-        Matcher matcher = VARIABLE_PATTERN.matcher(name);
-        StringBuilder builder = new StringBuilder();
-        int i = 0;
-        while (matcher.find())
-        {
-            String replacement = lookupVariable(modelOutputs, matcher.group(1));
-            builder.append(name.substring(i, matcher.start()));
-            if (replacement == null)
-                // TODO: Warn
-                builder.append(matcher.group(0));
-            else
-                builder.append(replacement);
-            i = matcher.end();
-        }
-        builder.append(name.substring(i, name.length()));
-        return builder.toString();
-    }
-
-    public Optional<String> provideRequiredDep(Map<String, String> modelOutputs)
-    {
-        if (requiredDep.isPresent())
-        {
-            Matcher matcher = VARIABLE_PATTERN.matcher(requiredDep.get());
-            StringBuilder builder = new StringBuilder();
-            int i = 0;
-            while (matcher.find())
-            {
-                String replacement = lookupVariable(modelOutputs, matcher.group(1));
-                builder.append(requiredDep.get().substring(i, matcher.start()));
-                if (replacement == null)
-                    // TODO: Warn
-                    builder.append(matcher.group(0));
-                else
-                    builder.append(replacement);
-                i = matcher.end();
-            }
-            builder.append(requiredDep.get().substring(i, requiredDep.get().length()));
-            return Optional.of(builder.toString());
-        }
-        return requiredDep;
-    }
-
-    protected String lookupVariable(Map<String, String> modelOutputs, String variable)
-    {
-        return modelOutputs.get(variable);
+        return wastes;
     }
 
     private static Map<String, String> PHOTOVOLTAIC_REMAP;
@@ -169,7 +112,9 @@ public class TemplateProductUsage
         DRIP_REMAP = dripBuilder.build();
 
         ImmutableMap.Builder<String, String> surfaceBuilder = ImmutableMap.builder();
+        surfaceBuilder.put("AU", "CH");
         surfaceBuilder.put("FI", "CH");
+        surfaceBuilder.put("DE", "CH");
         surfaceBuilder.put("IL", "CH");
         surfaceBuilder.put("KE", "CH");
         surfaceBuilder.put("NL", "CH");
@@ -184,6 +129,7 @@ public class TemplateProductUsage
         SURFACE_REMAP = surfaceBuilder.build();
 
         ImmutableMap.Builder<String, String> sprinklerBuilder = ImmutableMap.builder();
+        sprinklerBuilder.put("AU", "CH");
         sprinklerBuilder.put("IL", "CH");
         sprinklerBuilder.put("KE", "CH");
         sprinklerBuilder.put("NZ", "CH");
@@ -196,33 +142,43 @@ public class TemplateProductUsage
         SPRINKLER_REMAP = sprinklerBuilder.build();
     }
 
-    public static final TemplateProductUsage[] materialsFuels = {
+    private static final TemplateProductUsage[] materialsFuels = {
             // NOTE: There is one process per crop. No other process is added (rooting trees, oilseed processing, etc)
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_almond",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_almond",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_apple",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_apricot",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_apricot",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Asparagus seedling, at farm (WFLDB 3.0)/FR U", "p", "seeds_asparagus",
                     StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_banana",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_banana",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Carrot seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_carrot",
+            new TemplateProductUsage("Carrot seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
+                    "seeds_carrot",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_cocoa",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_coconut",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_coconut",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_coffee",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_coffee",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_lemonlime",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_lemonlime",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Linseed seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_linseed",
+            new TemplateProductUsage("Linseed seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
+                    "seeds_linseed",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
-            new TemplateProductUsage("Maize seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_maizegrain",
+            new TemplateProductUsage("Maize seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
+                    "seeds_maizegrain",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_mandarin",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_mandarin",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Mint seedling, at farm (WFLDB 3.0)/US U", "p", "seeds_mint",
                     StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
@@ -232,21 +188,27 @@ public class TemplateProductUsage
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Onion seedling, at farm (WFLDB 3.0)/NZ U", "p", "seeds_onion",
                     StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_orange",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_orange",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_palmtree",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_palmtree",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_peach",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Peanut seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_peanut",
+            new TemplateProductUsage("Peanut seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
+                    "seeds_peanut",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_pear",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_pineapple",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_pineapple",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
-            new TemplateProductUsage("Potato seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_potato",
+            new TemplateProductUsage("Potato seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
+                    "seeds_potato",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
-            new TemplateProductUsage("Rape seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_rapeseed",
+            new TemplateProductUsage("Rape seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
+                    "seeds_rapeseed",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Rice seed, at regional storehouse (WFLDB 3.0)/GLO U", "kg", "seeds_rice",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
@@ -256,11 +218,13 @@ public class TemplateProductUsage
                     "seeds_strawberry", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateProductUsage("Sugar beet seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
                     "seeds_sugarbeet", StandardUncertaintyMetadata.SEEDS, "seeds"),
-            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_sugarcane",
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                    "seeds_sugarcane",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Sunflower seed, at farm (WFLDB 3.0)/CH U", "kg", "seeds_sunflower",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
-            new TemplateProductUsage("Maize seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_sweetcorn",
+            new TemplateProductUsage("Maize seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
+                    "seeds_sweetcorn",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_tea",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
@@ -277,7 +241,7 @@ public class TemplateProductUsage
                     "irr_surface_diesel"),
             new TemplateProductUsage("Irrigating, surface, gravity (ALCIG)/GLO U", "m3",
                     "surface_irrigation_no_energy", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                    "irr_surface_no_energy", "irrigation_surface_gravity.csv"),
+                    "irr_surface_no_energy", ImmutableList.of("irrigation_surface_gravity.csv")),
             new WithLookupTemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.0)/{country} U",
                     "m3", "sprinkler_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
                     "irr_sprinkler_electricity", buildBiFun(SPRINKLER_REMAP)),
@@ -362,7 +326,8 @@ public class TemplateProductUsage
             new TemplateProductUsage("Lime, from carbonation, at regional storehouse/CH U", "kg",
                     "fert_ca_carbonation_linestone", StandardUncertaintyMetadata.FERTILISERS,
                     "fertotherca_carbonation_limestone"),
-            new TemplateProductUsage("Lime, algae, at regional storehouse/CH U", "kg", "fert_ca_seaweed_limestone",
+            new TemplateProductUsage("Lime, algae, at regional storehouse/CH U", "kg",
+                    "fert_ca_seaweed_limestone",
                     StandardUncertaintyMetadata.FERTILISERS, "fertotherca_seaweed_limestone"),
 
             new TemplateProductUsage("Compost, at plant/CH U", "kg", "composttype_compost",
@@ -376,7 +341,8 @@ public class TemplateProductUsage
                     StandardUncertaintyMetadata.FERTILISERS, "composttype_stone_meal"),
             new TemplateProductUsage("Horn meal, at regional storehouse/CH U", "kg", "composttype_horn_meal",
                     StandardUncertaintyMetadata.FERTILISERS, "composttype_horn_meal"),
-            new TemplateProductUsage("Horn meal, at regional storehouse/CH U", "kg", "composttype_horn_shavings_fine",
+            new TemplateProductUsage("Horn meal, at regional storehouse/CH U", "kg",
+                    "composttype_horn_shavings_fine",
                     StandardUncertaintyMetadata.FERTILISERS, "composttype_horn_shavings_fine"),
 
             new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
@@ -409,7 +375,8 @@ public class TemplateProductUsage
             new TemplateProductUsage("Tillage, hoeing and earthing-up, potatoes (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_hoeing_earthing_up",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_hoeing_earthing_up"),
-            new TemplateProductUsage("Tillage, ploughing (WFLDB 3.0)/CH U", "ha", "soilcultivation_tillage_plough",
+            new TemplateProductUsage("Tillage, ploughing (WFLDB 3.0)/CH U", "ha",
+                    "soilcultivation_tillage_plough",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_plough"),
             new TemplateProductUsage("Tillage, rolling (WFLDB 3.0)/CH U", "ha", "soilcultivation_tillage_roll",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_roll"),
@@ -423,14 +390,16 @@ public class TemplateProductUsage
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_sowing"),
             new TemplateProductUsage("Planting/CH U", "ha", "sowingplanting_planting_seedlings",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_planting_seedlings"),
-            new TemplateProductUsage("Plantation of trees (WFLDB 3.0)/p/CH U", "p", "sowingplanting_planting_trees",
+            new TemplateProductUsage("Plantation of trees (WFLDB 3.0)/p/CH U", "p",
+                    "sowingplanting_planting_trees",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_planting_trees"),
             new TemplateProductUsage("Potato planting/CH U", "ha", "sowingplanting_planting_potatoes",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_planting_potatoes"),
             new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "sowingplanting_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "sowingplanting_other"),
-            new TemplateProductUsage("Fertilising, by broadcaster/CH U", "ha", "fertilisation_fertilizing_broadcaster",
+            new TemplateProductUsage("Fertilising, by broadcaster/CH U", "ha",
+                    "fertilisation_fertilizing_broadcaster",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "fertilisation_fertilizing_broadcaster"),
             new TemplateProductUsage("Slurry spreading, by vacuum tanker/CH U", "m3",
                     "fertilisation_liquid_manure_vacuum_tanker", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
@@ -455,7 +424,8 @@ public class TemplateProductUsage
             new TemplateProductUsage("Harvesting, by complete harvester, potatoes/CH U", "ha",
                     "harvesting_potatoes_complete_havester", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "harvesting_potatoes_complete_havester"),
-            new TemplateProductUsage("Haying, by rotary tedder/CH U", "ha", "harvesting_making_hay_rotary_tedder",
+            new TemplateProductUsage("Haying, by rotary tedder/CH U", "ha",
+                    "harvesting_making_hay_rotary_tedder",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_making_hay_rotary_tedder"),
             new TemplateProductUsage("Loading bales/CH U", "unit", "harvesting_loading_bales",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_loading_bales"),
@@ -465,7 +435,8 @@ public class TemplateProductUsage
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_mowing_rotary_mower"),
             new TemplateProductUsage("Potato haulm cutting/CH U", "ha", "harvesting_removing_potatoes_haulms",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_removing_potatoes_haulms"),
-            new TemplateProductUsage("Swath, by rotary windrower/CH U", "ha", "harvesting_windrowing_rotary_swather",
+            new TemplateProductUsage("Swath, by rotary windrower/CH U", "ha",
+                    "harvesting_windrowing_rotary_swather",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_windrowing_rotary_swather"),
             new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
                     "harvesting_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_other"),
@@ -494,10 +465,12 @@ public class TemplateProductUsage
             new TemplateProductUsage("Hard coal briquette, burned in stove 5-15kW/RER U", "MJ",
                     "energy_hard_coal_briquette", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "energy_hard_coal_briquette"),
-            new TemplateProductUsage("Light fuel oil, burned in industrial furnace 1MW, non-modulating/RER U", "MJ",
+            new TemplateProductUsage("Light fuel oil, burned in industrial furnace 1MW, non-modulating/RER U",
+                    "MJ",
                     "energy_fuel_oil_light", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "energy_fuel_oil_light"),
-            new TemplateProductUsage("Heavy fuel oil, burned in industrial furnace 1MW, non-modulating/RER U", "MJ",
+            new TemplateProductUsage("Heavy fuel oil, burned in industrial furnace 1MW, non-modulating/RER U",
+                    "MJ",
                     "energy_fuel_oil_heavy", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "energy_fuel_oil_heavy"),
             new TemplateProductUsage("Natural gas, burned in industrial furnace >100kW/RER U", "MJ",
@@ -512,14 +485,17 @@ public class TemplateProductUsage
             new TemplateProductUsage("Logs, mixed, burned in furnace 100kW/CH U", "MJ", "energy_wood_logs",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "energy_wood_logs"),
 
-            new TemplateProductUsage("Tap water, at user/RER U", "kg", "utilities_wateruse_non_conventional_sources",
+            new TemplateProductUsage("Tap water, at user/RER U", "kg",
+                    "utilities_wateruse_non_conventional_sources",
                     StandardUncertaintyMetadata.UTILITIES_WATER, "utilities_wateruse_non_conventional_sources"),
 
             new TemplateProductUsage("Polypropylene, granulate, at plant/RER U", "kg", "materials_fleece",
                     StandardUncertaintyMetadata.OTHER_MATERIALS, "materials_fleece"),
-            new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "kg", "materials_silage_foil",
+            new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "kg",
+                    "materials_silage_foil",
                     StandardUncertaintyMetadata.OTHER_MATERIALS, "materials_silage_foil"),
-            new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "kg", "materials_covering_sheet",
+            new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "kg",
+                    "materials_covering_sheet",
                     StandardUncertaintyMetadata.OTHER_MATERIALS, "materials_covering_sheet"),
             new TemplateProductUsage("Polyethylene, HDPE, granulate, at plant/RER U", "kg", "materials_bird_net",
                     StandardUncertaintyMetadata.OTHER_MATERIALS, "materials_bird_net"),
@@ -545,25 +521,28 @@ public class TemplateProductUsage
             new LucTemplateProductUsage("ha", "luc_formula", StandardUncertaintyMetadata.LAND_TRANSFORMATION, ""),
 
             new TemplateProductUsage("Transport, lorry >16t, fleet average/RER U", "tkm",
-                    "transport_lorry_sup_16t_fleet_average_RER", StandardUncertaintyMetadata.TRANSPORTS, ""),
+                    "wfldb_transport_lorry_sup_16t", StandardUncertaintyMetadata.TRANSPORTS, ""),
             new TemplateProductUsage("Transport, transoceanic freight ship/OCE U", "tkm",
-                    "transport_transoceanic_freight_ship_OCE", StandardUncertaintyMetadata.TRANSPORTS, ""),
-            new TemplateProductUsage("Transport, freight, rail/RER U", "tkm", "transport_freight_rail_RER",
+                    "wfldb_transport_transoceanic", StandardUncertaintyMetadata.TRANSPORTS, ""),
+            new TemplateProductUsage("Transport, freight, rail/RER U", "tkm", "wfldb_transport_freight_rail_RER",
                     StandardUncertaintyMetadata.TRANSPORTS, ""),
             new TemplateProductUsage("Transport, freight, rail, diesel/US U", "tkm",
-                    "transport_freight_rail_diesel_US", StandardUncertaintyMetadata.TRANSPORTS, ""),
+                    "wfldb_transport_freight_rail_diesel_US", StandardUncertaintyMetadata.TRANSPORTS, ""),
 
-            new TemplateProductUsage("Packaging, per kg of dry fertilisers or pesticides (WFLDB 3.0)/GLO U", "kg",
-                    "packaging_solid_fertilisers_and_pesticides", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
-            new TemplateProductUsage("Packaging, per kg of liquid fertilisers or pesticides (WFLDB 3.0)/GLO U", "kg",
-                    "packaging_liquid_fertilisers_and_pesticides", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
+            new TemplateProductUsage("Packaging, per kg of dry fertilisers or pesticides (WFLDB 3.0)/GLO U",
+                    "kg",
+                    "wfldb_packaging_solid", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
+            new TemplateProductUsage("Packaging, per kg of liquid fertilisers or pesticides (WFLDB 3.0)/GLO U",
+                    "kg",
+                    "wfldb_packaging_liquid", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
 
             new TemplateProductUsage("Lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil",
                     StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING, "pest_horticultural_oil"),
 
             new TemplateProductUsage("Pesticide unspecified, at regional storehouse/RER U", "g", "pest_remains",
                     StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING, ""),
-            new TemplateProductUsage("Emissions from pesticides, unspecified (WFLDB 3.0)/GLO S", "g", "pest_remains",
+            new TemplateProductUsage("Emissions from pesticides, unspecified (WFLDB 3.0)/GLO S", "g",
+                    "pest_remains",
                     StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL, ""),
             new TemplateProductUsage("Herbicides, at regional storehouse/RER U", "g", "remains_herbicides",
                     StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING, ""),
@@ -579,7 +558,7 @@ public class TemplateProductUsage
                     "remains_insecticides", StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL, "")
     };
 
-    public static final TemplateProductUsage[] electricityHeat = {
+    private static final TemplateProductUsage[] electricityHeat = {
             new LowVoltageTemplateProductUsage("kWh",
                     "energy_electricity_low_voltage_at_grid", StandardUncertaintyMetadata.ELECTRICITY,
                     "energy_electricity_low_voltage_at_grid"),
@@ -592,12 +571,13 @@ public class TemplateProductUsage
             new TemplateProductUsage("Heat, natural gas, at industrial furnace >100kW/RER U", "MJ",
                     "energy_heat_district_heating", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "energy_heat_district_heating"),
-            new TemplateProductUsage("Heat, at flat plate collector, multiple dwelling, for hot water/CH U", "MJ",
+            new TemplateProductUsage("Heat, at flat plate collector, multiple dwelling, for hot water/CH U",
+                    "MJ",
                     "energy_heat_solar_collector", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "energy_heat_solar_collector")
     };
 
-    public static final TemplateProductUsage[] wastes = {
+    private static final TemplateProductUsage[] wastes = {
             new TemplateProductUsage("Disposal, polyethylene, 0.4% water, to sanitary landfill/CH U", "kg",
                     "eol_plastic_landfill", StandardUncertaintyMetadata.WASTE_MANAGEMENT, "eol_landfill"),
             new TemplateProductUsage("Disposal, polyethylene, 0.4% water, to municipal incineration/CH U", "kg",
@@ -662,14 +642,14 @@ public class TemplateProductUsage
             return "Land use change, " + cropType + " crop (" + db + ")/" + country + " U";
         }
 
-        public Optional<String> provideRequiredDep(Map<String, String> modelOutputs)
+        public Optional<List<String>> provideRequiredDep(Map<String, String> modelOutputs)
         {
             String cropType = modelOutputs.get("luc_crop_type");
             String country = modelOutputs.get("country");
             String db = findDb(cropType, country);
 
             if ("ALCIG".equals(db))
-                return Optional.of("luc_" + cropType + "_" + country + ".csv");
+                return Optional.of(ImmutableList.of("luc_" + cropType + "_" + country + "_wfldb.csv"));
 
             return Optional.empty();
         }

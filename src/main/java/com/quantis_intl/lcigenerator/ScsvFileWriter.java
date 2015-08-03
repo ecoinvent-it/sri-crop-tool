@@ -27,14 +27,18 @@ import java.io.Writer;
 import java.nio.charset.Charset;
 import java.util.Map;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.io.Resources;
 import com.quantis_intl.commons.scsv.ScsvLineSerializer;
 import com.quantis_intl.commons.scsv.ScsvLinesWriter;
 import com.quantis_intl.commons.scsv.metadata.ScsvMetadataWriter;
+import com.quantis_intl.commons.scsv.parameters.InputParameter;
+import com.quantis_intl.commons.scsv.parameters.ScsvInputParameterWriter;
 import com.quantis_intl.commons.scsv.processes.ScsvProcessWriter;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.lcigenerator.scsv.GeneratedMetadata;
 import com.quantis_intl.lcigenerator.scsv.GeneratedProcess;
+import com.quantis_intl.lcigenerator.scsv.OutputTarget;
 
 public class ScsvFileWriter
 {
@@ -49,11 +53,11 @@ public class ScsvFileWriter
     }
 
     public void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, ValueGroup extractedInputs,
-            OutputStream os)
+            OutputTarget outputTarget, OutputStream os)
     {
         try
         {
-            writeModelsOutputToScsvFile(modelsOutput, extractedInputs,
+            writeModelsOutputToScsvFile(modelsOutput, extractedInputs, outputTarget,
                     new BufferedWriter(new OutputStreamWriter(os, Charset.forName("windows-1252"))));
         }
         catch (IOException e)
@@ -62,7 +66,8 @@ public class ScsvFileWriter
         }
     }
 
-    private void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, ValueGroup extractedInputs, Writer writer)
+    private void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, ValueGroup extractedInputs,
+            OutputTarget outputTarget, Writer writer)
             throws IOException
     {
         ScsvLinesWriter linesWriter = new ScsvLinesWriter(serializer, writer);
@@ -70,13 +75,38 @@ public class ScsvFileWriter
         metadataWriter.write(generatedMetadata, linesWriter);
         linesWriter.writeNewLine();
         ScsvProcessWriter processWriter = new ScsvProcessWriter(linesWriter, generatedMetadata.getDateFormatter());
-        GeneratedProcess mainProcess = new GeneratedProcess(modelsOutput, extractedInputs);
+        GeneratedProcess mainProcess = new GeneratedProcess(modelsOutput, extractedInputs, outputTarget);
         processWriter.write(mainProcess);
         for (String dep : mainProcess.getRequiredAlcigProcesses())
         {
             linesWriter.writeNewLine();
             writer.write(Resources.toString(ScsvFileWriter.class.getResource(dep), Charset.forName("windows-1252")));
         }
+        if (outputTarget == OutputTarget.ECOINVENT)
+        {
+            new ScsvInputParameterWriter(linesWriter).writeProjectInputParam(ImmutableList.of(new InputParameter()
+            {
+                @Override
+                public String getName()
+                {
+                    return "Heavy_metal_uptake";
+                }
+
+                @Override
+                public String getValue()
+                {
+                    return "1";
+                }
+
+                @Override
+                public String getComment()
+                {
+                    return "Take the heavy metal uptake into account? Yes = \"1\", No = \"0\"";
+                }
+
+            }));
+        }
+
         writer.flush();
     }
 }

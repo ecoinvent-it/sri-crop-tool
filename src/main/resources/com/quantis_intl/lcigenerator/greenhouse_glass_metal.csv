@@ -1,0 +1,173 @@
+Process
+
+Category type
+material
+
+Process identifier
+
+
+Type
+Unit process
+
+Process name
+Greenhouse, glass walls and roof, metal tubes (ALCIG)/FR/I U
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+Yes
+
+Date
+9/25/2013
+
+Record
+
+
+Generator
+
+
+Verification
+
+
+Comment
+"Process from AGRIBALYSE used for ALCIG, excluding land occupation and transformation processes.Translated name: Serre verre, NordIncluded processes: The inventory includes : the production of the greenhouse as well as the permanent technical infrastructure, that is greenhouse (bearing structure and covering materials), heating and cooling systems, fertirrigation, CO2 injection, stocking facilities and working equipement as far as it is installed permanentely (i.e. chariots on rails etc.) working equipement as far as it is installed permanentely (i.e. chariots on rails etc.).Remark: Refers to 1 m2 of greenhouse during 1 year.Status of LCI: AGRIBALYSE supporting LCI (based on data from Boulard et al, 2011) - V1.1 (february 2014).CAS number: 0; Formula: 0; Geography: North of France (Brittany)Technology: Details see Rapport de stage - L’Analyse du Cycle de Vie appliquée à la culture de tomates sous serreTime period: Inventory data based on the period 2005-2009.Version: 1.10Energy values: UndefinedProduction volume: 0Local category: AgriculturalLocal subcategory: Agri-BALYSE\Others\Buildings + InfrastructureSource file: AGRIBALYSE_COMPLET_V1.1.xml"
+
+Products
+Greenhouse, glass walls and roof, metal tubes (ALCIG)/FR U;m2;1;100;not defined;_ALCIG import\Greenhouses;FRANCE
+
+Avoided products
+
+Resources
+
+Materials/fuels
+Steel, low-alloyed, at plant/RER U;kg;0.176904;Lognormal;1.5;0;0;nameInOrgFile='poteaux poutres treillis, lisses'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Section bar rolling, steel/RER U;kg;0.176904;Lognormal;1.5;0;0;nameInOrgFile='poteaux poutres treillis, lisses'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Zinc coating, coils/RER U;m2;0.0183583;Lognormal;1.5;0;0;nameInOrgFile='poteaux poutres treillis, lisses'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Steel, low-alloyed, at plant/RER U;kg;0.0011664;Lognormal;1.5;0;0;nameInOrgFile='ferraillage plot d'ancrage et muret'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Section bar rolling, steel/RER U;kg;0.0011664;Lognormal;1.5;0;0;nameInOrgFile='ferraillage plot d'ancrage et muret'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Zinc coating, coils/RER U;m2;0.000121044;Lognormal;1.5;0;0;nameInOrgFile='ferraillage plot d'ancrage et muret'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Steel, converter, chromium steel 18/8, at plant/RER U;kg;0.0004;Lognormal;1.5;0;0;nameInOrgFile='boulonnerie'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Section bar rolling, steel/RER U;kg;0.0004;Lognormal;1.5;0;0;nameInOrgFile='boulonnerie'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Zinc coating, coils/RER U;m2;4.0E-5;Lognormal;1.5;0;0;nameInOrgFile='boulonnerie'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Aluminium alloy, AlMg3, at plant/RER U;kg;0.228;Lognormal;1.5;0;0;nameInOrgFile='faitage chenaux, batées'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Section bar extrusion, aluminium/RER U;kg;0.228;Lognormal;1.5;0;0;nameInOrgFile='faitage chenaux, batées'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Flat glass, uncoated, at plant/RER U;kg;0.48;Lognormal;1.5;0;0;nameInOrgFile='verre 4 mm simple'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Concrete, sole plate and foundation, at plant/CH U;m3;0.000368973;Lognormal;1.5;0;0;nameInOrgFile='longrine et muret'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Steel, low-alloyed, at plant/RER U;kg;0.000666667;Lognormal;1.5;0;0;nameInOrgFile='ouvrant partie moteur'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Copper, at regional storage/RER U;kg;0.0001008;Lognormal;1.5;0;0;nameInOrgFile='matèriel électrique (cablage)'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Polyvinylchloride, at regional storage/RER U;kg;0.0001792;Lognormal;1.5;0;0;nameInOrgFile='matèriel électrique (cablage)'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Wire drawing, copper/RER U;kg;0.00028;Lognormal;1.5;0;0;nameInOrgFile='matèriel électrique (cablage)'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Electronics for control units/RER U;kg;0.003;Lognormal;1.5;0;0;nameInOrgFile='matèriel électrique (boitier technique)'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Steel, low-alloyed, at plant/RER U;kg;1.0E-5;Lognormal;1.5;0;0;nameInOrgFile='matèriel électrique (sonde)'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Electricity, medium voltage, at grid/FR U;kWh;0.05972;Lognormal;1.5;0;0;nameInOrgFile='énergie pour la fabrication chez le constructeur'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Diesel, burned in building machine/GLO U;MJ;0.251698;Lognormal;1.5;0;0;nameInOrgFile='énergie pour réalisation bassin de rétention'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Diesel, burned in building machine/GLO U;MJ;0.198307;Lognormal;1.5;0;0;nameInOrgFile='énergie pour la construction chez les serristes'. partOf='Structure de la serre' idEx: 'Stru'. Pedigree-Matrix: 'not evaluated'.
+Polyethylene, HDPE, granulate, at plant/RER U;kg;0.0341;Lognormal;1.5;0;0;nameInOrgFile='tuyeaux'. partOf='Système de ferrtirrigation' idEx: 'Fert'. Pedigree-Matrix: 'not evaluated'.
+Extrusion, plastic pipes/RER U;kg;0.0341;Lognormal;1.5;0;0;nameInOrgFile='tuyeaux'. partOf='Système de ferrtirrigation' idEx: 'Fert'. Pedigree-Matrix: 'not evaluated'.
+Polyethylene, HDPE, granulate, at plant/RER U;kg;0.00223333;Lognormal;1.5;0;0;nameInOrgFile='gouttiers,robinetes,bouchons'. partOf='Système de ferrtirrigation' idEx: 'Fert'. Pedigree-Matrix: 'not evaluated'.
+Injection moulding/RER U;kg;0.00223333;Lognormal;1.5;0;0;nameInOrgFile='gouttiers,robinetes,bouchons'. partOf='Système de ferrtirrigation' idEx: 'Fert'. Pedigree-Matrix: 'not evaluated'.
+Polyethylene, HDPE, granulate, at plant/RER U;kg;0.00225;Lognormal;1.5;0;0;nameInOrgFile='5 bacs 1000 L'. partOf='Système de ferrtirrigation' idEx: 'Fert'. Pedigree-Matrix: 'not evaluated'.
+Blow moulding/RER U;kg;0.00225;Lognormal;1.5;0;0;nameInOrgFile='5 bacs 1000 L'. partOf='Système de ferrtirrigation' idEx: 'Fert'. Pedigree-Matrix: 'not evaluated'.
+Steel, low-alloyed, at plant/RER U;kg;0.00088;Lognormal;1.5;0;0;nameInOrgFile='pompe'. partOf='Système de ferrtirrigation' idEx: 'Fert'. Pedigree-Matrix: 'not evaluated'.
+Oil boiler 100kW/CH/I U;p;1.8612E-6;Lognormal;1.5;0;0;nameInOrgFile='Chaudière'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Cogen unit 200kWe diesel SCR, components for electricity only/RER/I U;p;6.2E-10;Lognormal;1.5;0;0;nameInOrgFile='Groupe électrogène'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Gas motor 206kW/RER/I U;p;6.2E-10;Lognormal;1.5;0;0;nameInOrgFile='Groupe électrogène'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Steel, low-alloyed, at plant/RER U;kg;0.0148;Lognormal;1.5;0;0;nameInOrgFile='support tubes'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Steel, low-alloyed, at plant/RER U;kg;0.32;Lognormal;1.5;0;0;nameInOrgFile='tubes de croissance + thermosiphon'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Drawing of pipes, steel/RER U;kg;0.32;Lognormal;1.5;0;0;nameInOrgFile='tubes de croissance + thermosiphon'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Steel, low-alloyed, at plant/RER U;kg;0.00264;Lognormal;1.5;0;0;nameInOrgFile='support tubes'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Steel, low-alloyed, at plant/RER U;kg;0.001;Lognormal;1.5;0;0;nameInOrgFile='ensemble des équipements'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Steel, converter, chromium steel 18/8, at plant/RER U;kg;0.0224;Lognormal;1.5;0;0;nameInOrgFile='Stockages d'énergie - open buffer'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Sheet rolling, steel/RER U;kg;0.0224;Lognormal;1.5;0;0;nameInOrgFile='Stockages d'énergie - open buffer'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Polyethylene, HDPE, granulate, at plant/RER U;kg;0.000366667;Lognormal;1.5;0;0;nameInOrgFile='cuve 1500 L'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Blow moulding/RER U;kg;0.000366667;Lognormal;1.5;0;0;nameInOrgFile='cuve 1500 L'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Steel, converter, chromium steel 18/8, at plant/RER U;kg;0.01;Lognormal;1.5;0;0;nameInOrgFile='Stockage combustible fioul'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Sheet rolling, steel/RER U;kg;0.01;Lognormal;1.5;0;0;nameInOrgFile='Stockage combustible fioul'. partOf='Système de chauffage' idEx: 'Chau'. Pedigree-Matrix: 'not evaluated'.
+Polyethylene, LLDPE, granulate, at plant/RER U;kg;0.0057;Lognormal;1.5;0;0;nameInOrgFile='Ecran thermique'. partOf='Système de climatisation' idEx: 'Clim'. Pedigree-Matrix: 'not evaluated'.
+Extrusion, plastic film/RER U;kg;0.0057;Lognormal;1.5;0;0;nameInOrgFile='Ecran thermique'. partOf='Système de climatisation' idEx: 'Clim'. Pedigree-Matrix: 'not evaluated'.
+Polyethylene, HDPE, granulate, at plant/RER U;kg;0.008;Lognormal;1.5;0;0;nameInOrgFile='tuyaux'. partOf='Système d'injection de CO2' idEx: 'InCo'. Pedigree-Matrix: 'not evaluated'.
+Extrusion, plastic pipes/RER U;kg;0.008;Lognormal;1.5;0;0;nameInOrgFile='tuyaux'. partOf='Système d'injection de CO2' idEx: 'InCo'. Pedigree-Matrix: 'not evaluated'.
+Polyvinylchloride, at regional storage/RER U;kg;0.0008;Lognormal;1.5;0;0;nameInOrgFile='amenées'. partOf='Système d'injection de CO2' idEx: 'InCo'. Pedigree-Matrix: 'not evaluated'.
+Extrusion, plastic pipes/RER U;kg;0.0008;Lognormal;1.5;0;0;nameInOrgFile='amenées'. partOf='Système d'injection de CO2' idEx: 'InCo'. Pedigree-Matrix: 'not evaluated'.
+Polyethylene, LLDPE, granulate, at plant/RER U;kg;0.0476;Lognormal;1.5;0;0;nameInOrgFile='paillage blanc noir'. partOf='Système de support' idEx: 'Supp'. Pedigree-Matrix: 'not evaluated'.
+Extrusion, plastic film/RER U;kg;0.0476;Lognormal;1.5;0;0;nameInOrgFile='paillage blanc noir'. partOf='Système de support' idEx: 'Supp'. Pedigree-Matrix: 'not evaluated'.
+Polystyrene, expandable, at plant/RER U;kg;0.0049;Lognormal;1.5;0;0;nameInOrgFile='support de sacs'. partOf='Système de support' idEx: 'Supp'. Pedigree-Matrix: 'not evaluated'.
+Foaming, expanding/RER U;kg;0.0049;Lognormal;1.5;0;0;nameInOrgFile='support de sacs'. partOf='Système de support' idEx: 'Supp'. Pedigree-Matrix: 'not evaluated'.
+Agricultural machinery, general, production/CH/I U;kg;0.0003;Lognormal;1.5;0;0;nameInOrgFile='rampe'. partOf='Système de travail du sol' idEx: 'Trav'. Pedigree-Matrix: 'not evaluated'.
+Synthetic rubber, at plant/RER U;kg;0.0003;Lognormal;1.5;0;0;nameInOrgFile='tuyau'. partOf='Système de travail du sol' idEx: 'Trav'. Pedigree-Matrix: 'not evaluated'.
+Extrusion, plastic pipes/RER U;kg;0.0003;Lognormal;1.5;0;0;nameInOrgFile='tuyau'. partOf='Système de travail du sol' idEx: 'Trav'. Pedigree-Matrix: 'not evaluated'.
+Polyethylene, HDPE, granulate, at plant/RER U;kg;0.00055;Lognormal;1.5;0;0;nameInOrgFile='cuve'. partOf='Système de travail du sol' idEx: 'Trav'. Pedigree-Matrix: 'not evaluated'.
+Blow moulding/RER U;kg;0.00055;Lognormal;1.5;0;0;nameInOrgFile='cuve'. partOf='Système de travail du sol' idEx: 'Trav'. Pedigree-Matrix: 'not evaluated'.
+Agricultural machinery, general, production/CH/I U;kg;0.0003;Lognormal;1.5;0;0;nameInOrgFile='enrouleur'. partOf='Système de travail du sol' idEx: 'Trav'. Pedigree-Matrix: 'not evaluated'.
+Concrete block, at plant/DE U;kg;0.10699;Lognormal;1.5;0;0;nameInOrgFile='chaufferie + ferti + local technique'. partOf='Système de stockage' idEx: 'Stoc'. Pedigree-Matrix: 'not evaluated'.
+Concrete, sole plate and foundation, at plant/CH U;m3;5.99879E-5;Lognormal;1.5;0;0;nameInOrgFile='chaufferie + ferti + local technique'. partOf='Système de stockage' idEx: 'Stoc'. Pedigree-Matrix: 'not evaluated'.
+Steel, low-alloyed, at plant/RER U;kg;0.00312;Lognormal;1.5;0;0;nameInOrgFile='toiture'. partOf='Système de stockage' idEx: 'Stoc'. Pedigree-Matrix: 'not evaluated'.
+Sheet rolling, steel/RER U;kg;0.00312;Lognormal;1.5;0;0;nameInOrgFile='toiture'. partOf='Système de stockage' idEx: 'Stoc'. Pedigree-Matrix: 'not evaluated'.
+Zinc coating, coils/RER U;m2;4.0E-8;Lognormal;1.5;0;0;nameInOrgFile='toiture'. partOf='Système de stockage' idEx: 'Stoc'. Pedigree-Matrix: 'not evaluated'.
+Transport, lorry 16-32t, EURO5/RER U;tkm;0.194174;Lognormal;1.5;0;0;
+Transport, lorry 7.5-16t, EURO5/RER U;tkm;0.000789267;Lognormal;1.5;0;0;
+Transport, lorry 16-32t, EURO5/RER U;tkm;0.00810893;Lognormal;1.5;0;0;
+Transport, lorry 7.5-16t, EURO5/RER U;tkm;0.000176;Lognormal;1.5;0;0;
+Transport, lorry 7.5-16t, EURO5/RER U;tkm;0.00105;Lognormal;1.5;0;0;
+Transport, lorry 7.5-16t, EURO5/RER U;tkm;2.9E-5;Lognormal;1.5;0;0;
+Transport, lorry 7.5-16t, EURO5/RER U;tkm;2.0312E-6;Lognormal;1.5;0;0;
+Transport, lorry 7.5-16t, EURO5/RER U;tkm;0.0258898;Lognormal;1.5;0;0;
+
+Electricity/heat
+
+Emissions to air
+
+Emissions to water
+
+Emissions to soil
+
+Final waste flows
+Zinc waste;;kg;9.0E-5;Lognormal;1.5;0;0;
+Oil waste;;kg;0.00018;Lognormal;1.5;0;0;
+Oil waste;;kg;2.2E-5;Lognormal;1.5;0;0;
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+Disposal, steel, 0% water, to inert material landfill/CH U;kg;0.0458025;Undefined;0;0;0;Pedigree-Matrix: 'not evaluated'.
+Disposal, electronics for control units/RER U;kg;0.00328;Undefined;0;0;0;Pedigree-Matrix: 'not evaluated'.
+Disposal, municipal solid waste, 22.9% water, to municipal incineration/CH U;kg;0.4576;Undefined;0;0;0;Pedigree-Matrix: 'not evaluated'.
+Disposal, steel, 0% water, to inert material landfill/CH U;kg;0.60561;Undefined;0;0;0;Pedigree-Matrix: 'not evaluated'.
+Recycling steel and iron/RER U;kg;0.005;Undefined;0;0;0;nameInOrgFile='acier galvanisè'. partOf='0' idEx: '0'. Pedigree-Matrix: 'not evaluated'.
+Recycling steel and iron/RER U;kg;0.137408;Undefined;0;0;0;Pedigree-Matrix: 'not evaluated'.
+Recycling aluminium/RER U;kg;0.171;Undefined;0;0;0;Pedigree-Matrix: 'not evaluated'.
+Disposal, aluminium, 0% water, to sanitary landfill/CH U;kg;0.057;Undefined;0;0;0;Pedigree-Matrix: 'not evaluated'.
+
+End

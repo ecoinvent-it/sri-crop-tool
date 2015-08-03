@@ -20,11 +20,12 @@ package com.quantis_intl.lcigenerator.scsv;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
@@ -39,22 +40,28 @@ import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
 import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
 import com.quantis_intl.lcigenerator.imports.SingleValue;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
+import com.quantis_intl.lcigenerator.scsv.TemplateProductUsages.TemplateProductUsage;
+import com.quantis_intl.lcigenerator.scsv.TemplateSubstanceUsages.TemplateSubstanceUsage;
 
 public class GeneratedProcess implements ProductScsvProcess
 {
     private final Map<String, String> modelOutputs;
     private final ValueGroup extractedInputs;
     // TODO: Would be good to split deps requirements and process generation
-    private final List<String> requiredAlcigProcesses;
+    private final TemplateProductUsages templateProductUsages;
+    private final TemplateSubstanceUsages templateSubstanceUsages;
+    private final Set<String> requiredAlcigProcesses;
 
-    public GeneratedProcess(Map<String, String> modelOutputs, ValueGroup extractedInputs)
+    public GeneratedProcess(Map<String, String> modelOutputs, ValueGroup extractedInputs, OutputTarget outputTarget)
     {
         this.modelOutputs = modelOutputs;
         this.extractedInputs = extractedInputs;
-        this.requiredAlcigProcesses = new ArrayList<>();
+        this.templateProductUsages = outputTarget.templateProductUsages;
+        this.templateSubstanceUsages = outputTarget.templateSubstanceUsages;
+        this.requiredAlcigProcesses = new HashSet<>();
     }
 
-    public List<String> getRequiredAlcigProcesses()
+    public Set<String> getRequiredAlcigProcesses()
     {
         return requiredAlcigProcesses;
     }
@@ -106,7 +113,7 @@ public class GeneratedProcess implements ProductScsvProcess
     public Optional<String> getGenerator()
     {
         // TODO: Change
-        return Optional.of("Generator/publicator: Quantis LCI Generator");
+        return Optional.of("Generator/publicator: Quantis ALCIG");
     }
 
     @Override
@@ -227,13 +234,13 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public List<SubstanceUsage> getResources()
     {
-        return toSubstanceUsage(TemplateSubstanceUsage.resources);
+        return toSubstanceUsage(templateSubstanceUsages.getResources());
     }
 
     @Override
     public List<ProductUsage> getMaterialsFuels()
     {
-        List<ProductUsage> res = toProductUsage(TemplateProductUsage.materialsFuels);
+        List<ProductUsage> res = toProductUsage(templateProductUsages.getMaterialsFuels());
         res.addAll(buildPesticidesProductUsages());
         return res;
     }
@@ -241,25 +248,25 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public List<ProductUsage> getElectricityHeat()
     {
-        return toProductUsage(TemplateProductUsage.electricityHeat);
+        return toProductUsage(templateProductUsages.getElectricityHeat());
     }
 
     @Override
     public List<SubstanceUsage> getEmissionsToAir()
     {
-        return toSubstanceUsage(TemplateSubstanceUsage.toAir);
+        return toSubstanceUsage(templateSubstanceUsages.getToAir());
     }
 
     @Override
     public List<SubstanceUsage> getEmissionsToWater()
     {
-        return toSubstanceUsage(TemplateSubstanceUsage.toWater);
+        return toSubstanceUsage(templateSubstanceUsages.getToWater());
     }
 
     @Override
     public List<SubstanceUsage> getEmissionsToSoil()
     {
-        List<SubstanceUsage> res = toSubstanceUsage(TemplateSubstanceUsage.toSoil);
+        List<SubstanceUsage> res = toSubstanceUsage(templateSubstanceUsages.getToSoil());
         res.addAll(buildPesticidesSubstanceUsages());
         return res;
     }
@@ -267,7 +274,7 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public List<ProductUsage> getWasteToTreatment()
     {
-        return toProductUsage(TemplateProductUsage.wastes);
+        return toProductUsage(templateProductUsages.getWastes());
     }
 
     // TODO: map modelOutputs to template then sort by category, instead of this?
@@ -322,7 +329,7 @@ public class GeneratedProcess implements ProductScsvProcess
         for (ProductUsage pu : productUsages)
         {
             GeneratedProductUsage gpu = (GeneratedProductUsage) pu;
-            gpu.getRequiredDep().ifPresent(requiredAlcigProcesses::add);
+            gpu.getRequiredDep().ifPresent(requiredAlcigProcesses::addAll);
         }
     }
 }

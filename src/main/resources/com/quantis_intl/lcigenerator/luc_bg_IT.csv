@@ -1,0 +1,205 @@
+Process
+
+Category type
+material
+
+Process identifier
+
+
+Type
+Unit process
+
+Process name
+land already in use, annual cropland
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+9/15/2014
+
+Generator
+
+
+Literature references
+Ecoinvent 3;data published in: 2 Data has been published entirely in (refers to field 757)data published by: Modelling of indirect land use changes in LCA 2011 Undefined (default)is copyright protected: true
+
+Collection method
+sampling procedure: Literature data
+
+Data treatment
+extrapolations: This dataset has been extrapolated from year 2009 to the year of the calculation (2013). The uncertainty has been adjusted accordingly.
+
+Comment
+This dataset represents the interventions associated with the provision of 1 kg NPP0  by land that is already in use. Adapted from ecoinvent 3 process, with parametrized NPP value.Production volume: 21810000000000 kgIncluded activities start: Starts with the land already in use.Included activities end: This activity ends with the provision of arable land tenure, measured in unit kg carbon Potential Net Primary Production (NPP0) per square meterThe dataset includes all interventions associated with the provision of 1 kg NPP0 from land already in use.Energy values: Gross valuesGeography: Already used arable land Technology level: 4 OldStart date: 1990-01-01End date: 2013-12-31Is data valid for entire period: trueTime period: Publication of dataMacro-economic scenario name: Business-as-Usual
+
+Products
+Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (ALCIG)/IT U;kg;1.0;100;Wood;_ALCIG import\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
+
+Avoided products
+
+Resources
+Transformation, from arable;land;m2;1/NPP;Undefined;0;0;0;(1,1,3,1,1,na)Calculated value: m2 required per unit land tenure, arable land.
+Transformation, to arable;land;m2;1/NPP;Undefined;0;0;0;(1,1,3,1,1,na)Calculated value: m2 required per unit land tenure, arable land.
+
+Materials/fuels
+
+Electricity/heat
+
+Emissions to air
+
+Emissions to water
+
+Emissions to soil
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+
+Input parameters
+NPP;0.551;Lognormal;1.3;0;0;No;NPP0, net primary productivity of a given land, in kg C / m2.aWorld default, used in ecoinvent 3.1, is 0.694 according to Schmidt et al. (2011)
+VEG;0;Lognormal;1.5;0;0;No;Above and below ground biomass, in kg C / m2.Based on IPCC 2006 Guidelines, Voiume 6, Table 11 Default value suggested for annual cropland: 0
+
+End
+
+Process
+
+Category type
+material
+
+Process identifier
+
+
+Type
+Unit process
+
+Process name
+land already in use, perennial cropland
+
+Status
+
+
+Time period
+Unspecified
+
+Geography
+Unspecified
+
+Technology
+Unspecified
+
+Representativeness
+Unspecified
+
+Multiple output allocation
+Unspecified
+
+Substitution allocation
+Unspecified
+
+Cut off rules
+Unspecified
+
+Capital goods
+Unspecified
+
+Boundary with nature
+Unspecified
+
+Infrastructure
+No
+
+Date
+9/15/2014
+
+Generator
+
+
+Literature references
+Ecoinvent 3;data published in: 2 Data has been published entirely in (refers to field 757)data published by: Modelling of indirect land use changes in LCA 2011 Undefined (default)is copyright protected: true
+
+Collection method
+sampling procedure: Literature data
+
+Data treatment
+extrapolations: This dataset has been extrapolated from year 2009 to the year of the calculation (2013). The uncertainty has been adjusted accordingly.
+
+Comment
+This dataset represents the interventions associated with the provision of 1 kg NPP0  by land that is already in use. Adapted from ecoinvent 3 process, arable land already in use, with parametrized NPP and VEG values.Production volume: 21810000000000 kgIncluded activities start: Starts with the land already in use.Included activities end: This activity ends with the provision of arable land tenure, measured in unit kg carbon Potential Net Primary Production (NPP0) per square meterThe dataset includes all interventions associated with the provision of 1 kg NPP0 from land already in use.Energy values: Gross valuesGeography: Already used arable land Technology level: 4 OldStart date: 1990-01-01End date: 2013-12-31Is data valid for entire period: trueTime period: Publication of dataMacro-economic scenario name: Business-as-Usual
+
+Products
+Land tenure, arable land, as carbon NPP, perennial cropland already in use to arable land (ALCIG)/IT U;kg;1.0;100;Wood;_ALCIG import\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
+
+Avoided products
+
+Resources
+Transformation, from permanent crop;land;m2;1/NPP;Undefined;0;0;0;(1,1,3,1,1,na)Calculated value: m2 required per unit land tenure, arable land.
+Transformation, to arable;land;m2;1/NPP;Undefined;0;0;0;(1,1,3,1,1,na)Calculated value: m2 required per unit land tenure, arable land.
+Carbon, organic, in soil or biomass stock;in ground;kg;VEG/NPP;Undefined;0;0;0;
+Occupation, construction site;land;m2a;0.0276341241956496;Lognormal;1.6494;0;0;(4,3,3,5,1,na)Proxy: The time required for the clear cutting is estimated with 1 week
+Energy, gross calorific value, in biomass;biotic;MJ;VEG/NPP*40;Undefined;0;0;0;Considering 15 MJ/kg (17% moisture wet basis) and 45% C in dry wood, 40 MJ/kg  C in wood. 15 MJ is taken to reflect UHV rather than LHV.
+
+Materials/fuels
+Power sawing, without catalytic converter/RER U;hr;0.000640*VEG/NPP;Undefined;0;0;0;
+
+Electricity/heat
+Diesel, burned in building machine/GLO U;MJ;0.196173399*VEG/NPP;Undefined;0;0;0;
+
+Emissions to air
+Carbon dioxide, land transformation;low. pop.;kg;VEG/NPP*44/12;Undefined;0;0;0;
+
+Emissions to water
+
+Emissions to soil
+
+Final waste flows
+
+Non material emissions
+
+Social issues
+
+Economic issues
+
+Waste to treatment
+
+Input parameters
+NPP;0.551;Lognormal;1.3;0;0;No;NPP0, net primary productivity of a given land, in kg C / m2.aWorld default, used in ecoinvent 3.1, is 0.694 according to Schmidt et al. (2011)
+VEG;4.320;Lognormal;1.5;0;0;No;Above and below ground biomass, in kg C / m2.Based on IPCC 2006 Guidelines, Voiume 6, Table 11 Default value suggested for perennial cropland: 2.45
+
+End
