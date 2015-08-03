@@ -197,7 +197,8 @@ public class Api
     @Path("generateScsv")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response generateScsv(@FormParam("idResult") final String idResult,
-            @FormParam("filename") final String importedFilename)
+            @FormParam("filename") final String importedFilename,
+            @FormParam("dbOption") final String database)
     {
         long startTime = System.nanoTime();
         if (idResult == null || importedFilename == null)

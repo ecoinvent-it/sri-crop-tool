@@ -38,12 +38,21 @@
     </td>
     <td id="step4" class="stepBtn" ng-class="{disabledStep: step == 0}">
       <div class="stepTitle text-big text-uppercase">Step 4</div>
-      <form action="app/api/pub/generateScsv" method="post" ng-if="step == 1" style="display: inline;">
+      <form action="app/api/pub/generateScsv" method="post" ng-disabled="step != 1" style="display: block;">
 			  <input type="hidden" name="idResult" value="{{idResult}}"/>
 			  <input type="hidden" name="filename" value="{{filename}}"/>
 			  <input type="submit" id="scsvDownloadBtn"/>
+			  <div class="stepText">Get a ready-to-import file for Simapro</div>
+			  <div class="btn-group" data-toggle="buttons" ng-if="step == 1">
+				  <label class="btn btn-primary active">
+				    <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
+				  </label>
+				  <label class="btn btn-primary">
+				    <input type="radio" name="dbOption" autocomplete="off" value="WFLDB">WFLDB
+				  </label>
+				</div>
 			</form>
-			<div class="stepText">Get a ready-to-import file for Simapro</div>
+			
 	  </td>
   </tr>
   
