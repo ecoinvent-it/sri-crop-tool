@@ -338,7 +338,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "yield_main_product_per_year":CropCountryMatrixLookupDefaultGenerator(YIELD_PER_YEAR_PER_CROP_PER_COUNTRY),
                    "yield_main_product_per_crop_cycle": PerCropCycleYieldDefaultGenerator(),
                    "yield_main_product_dry_per_crop_cycle": DryYieldGenerator(),
-                   
+                   "pest_horticultural_oil": SimpleValueDefaultGenerator(0.0),
                    #Fertiliser defaults
                    "nitrogen_from_mineral_fert": CropCountryMatrixLookupDefaultGenerator(NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY),
                    "p2O5_from_mineral_fert": SimpleValueDefaultGenerator(0.0), #NOTE: No default for now, maybe in fertistat

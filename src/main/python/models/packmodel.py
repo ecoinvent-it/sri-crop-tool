@@ -8,22 +8,28 @@ class PackModel(object):
         ca_from_mineral_fert: kg Ca/ha
         n_fertiliser_quantities: Map NFertiliserType -> kg N/ha
         pest_total: g/ha
+        pest_horticultural_oil: kg / ha
     
     Outputs:
-      m_Pack_packaging_liquid_fertilisers_and_pesticides: kg/ha
-      m_Pack_packaging_solid_fertilisers_and_pesticides: kg/ha
+      m_Pack_wfldb_packaging_liquid: kg/ha
+      m_Pack_wfldb_packaging_solid: kg/ha
+      m_Pack_ecoinvent_packaging_liquid: kg/ha
+      m_Pack_ecoinvent_packaging_solid: kg/ha
     """
-    
+     
     _input_variables = ["nitrogen_from_mineral_fert",
                         "p2O5_from_mineral_fert",
                         "k2O_from_mineral_fert",
                         "magnesium_from_fertilizer",
                         "ca_from_mineral_fert",
                         "n_fertiliser_quantities",
-                        "pest_total"
+                        "pest_total",
+                        "pest_horticultural_oil"
                        ]
     
     _DILUTION_FACTOR = 2.0;
+    _ECOINVENT_FERT_DILUTION_FACTOR = 2.0;
+    _ECOINVENT_PEST_DILUTION_FACTOR = 3.0;
     
     def __init__(self, inputs):
         #TODO: Should we log usage of default value?
@@ -36,8 +42,13 @@ class PackModel(object):
         pest_solid,pest_liquid = self._computePesticides()
 
         #Values are divided by 100.0, because there are too many packaging otherwise, according to WFLDB. This should be cleaned up
-        return {"m_Pack_packaging_liquid_fertilisers_and_pesticides": (pest_liquid + fert_liquid)*self._DILUTION_FACTOR / 100.0,
-                "m_Pack_packaging_solid_fertilisers_and_pesticides": (pest_solid + fert_solid)*self._DILUTION_FACTOR / 100.0}
+        return {"m_Pack_wfldb_packaging_liquid": ((pest_liquid + fert_liquid)*self._DILUTION_FACTOR + self.pest_horticultural_oil) / 100.0,
+                "m_Pack_wfldb_packaging_solid": (pest_solid + fert_solid)*self._DILUTION_FACTOR / 100.0,
+                "m_Pack_ecoinvent_packaging_liquid": pest_liquid * self._ECOINVENT_PEST_DILUTION_FACTOR 
+                                                    + fert_liquid * self._ECOINVENT_FERT_DILUTION_FACTOR 
+                                                    + self.pest_horticultural_oil,
+                "m_Pack_ecoinvent_packaging_solid": pest_solid * self._ECOINVENT_PEST_DILUTION_FACTOR 
+                                                    + fert_solid * self._ECOINVENT_FERT_DILUTION_FACTOR}
     
     
     def _computeTotalFertilisers(self):
@@ -50,7 +61,7 @@ class PackModel(object):
     def _computeFertilisers(self, totalFert):
         liquid = self.n_fertiliser_quantities[NFertiliserType.ammonia_liquid]
         solid = totalFert - liquid
-        return (solid,liquid)
+        return (solid ,liquid)
     
     def _computePesticides(self):
         solid = 0.0
