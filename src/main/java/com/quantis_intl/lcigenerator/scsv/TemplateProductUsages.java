@@ -126,7 +126,7 @@ public interface TemplateProductUsages
 
         public String provideValue(Map<String, String> modelOutputs)
         {
-            // TODO: This is dirty
+            // TODO: This is dirty...
             try
             {
                 double value = Double.parseDouble(modelOutputs.getOrDefault(amountVariable, "0"));
@@ -134,6 +134,7 @@ public interface TemplateProductUsages
             }
             catch (NumberFormatException e)
             {
+                // TODO: ... and potentially without effect
                 return modelOutputs.getOrDefault(amountVariable, "0");
             }
         }

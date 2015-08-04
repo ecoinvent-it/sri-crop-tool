@@ -25,7 +25,6 @@ import java.util.function.BiFunction;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 public class EcoinventTemplateProductUsages implements TemplateProductUsages
@@ -49,8 +48,6 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
     }
 
     private static Map<String, String> PHOTOVOLTAIC_REMAP;
-    private static List<String> LOW_VOLTAGE_ALCIG = Lists.newArrayList("AR", "CA", "CL", "CO", "CR", "CI", "EC", "GH",
-            "IN", "ID", "MX", "PH", "RU", "TR", "VN");
     private static ItemOfGroupedTemplate DRIP_CH = ItemOfGroupedTemplate.of("CH",
             "Irrigating, drip, electricity powered (ALCIG)/CH U", "irrigation_drip_CH.csv");
     private static List<ItemOfGroupedTemplate> IRR_DRIP_MAP = ImmutableList.of(
@@ -576,7 +573,7 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_planting_seedlings"),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ",
                     "sowingplanting_planting_trees",
-                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_planting_trees", 0.2 * 42.8),
+                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_planting_trees", 42.8),
             new TemplateProductUsage("Potato planting/CH U", "ha", "sowingplanting_planting_potatoes",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_planting_potatoes"),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ",

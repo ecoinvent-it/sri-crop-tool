@@ -194,7 +194,7 @@ class OutputMapping(object):
     _SOWINGPLANTING_FACTORS = {
                                 Sowingplanting.sowing: 1.0 / 3.82,
                                 Sowingplanting.planting_seedlings: 1.0 / 16.8,
-                                Sowingplanting.planting_trees: 1.0 / 0.18333,
+                                Sowingplanting.planting_trees: 1.0,
                                 Sowingplanting.planting_potatoes: 1.0 / 8.9,
                                 Sowingplanting.other: 1.0,
                                  }
