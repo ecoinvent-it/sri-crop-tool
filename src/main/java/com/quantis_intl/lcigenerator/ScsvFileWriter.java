@@ -80,10 +80,13 @@ public class ScsvFileWriter
         for (String dep : mainProcess.getRequiredAlcigProcesses())
         {
             linesWriter.writeNewLine();
+            linesWriter.writeNewLine();
             writer.write(Resources.toString(ScsvFileWriter.class.getResource(dep), Charset.forName("windows-1252")));
         }
         if (outputTarget == OutputTarget.ECOINVENT)
         {
+            linesWriter.writeNewLine();
+            linesWriter.writeNewLine();
             new ScsvInputParameterWriter(linesWriter).writeProjectInputParam(ImmutableList.of(new InputParameter()
             {
                 @Override

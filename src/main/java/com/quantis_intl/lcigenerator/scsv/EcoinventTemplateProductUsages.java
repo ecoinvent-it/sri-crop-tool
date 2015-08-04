@@ -718,10 +718,10 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
 
             new TemplateProductUsage("Packaging, per kg dry fertilisers or pesticides (ALCIG)/GLO U", "kg",
                     "ecoinvent_packaging_solid", StandardUncertaintyMetadata.OTHER_MATERIALS, "",
-                    ImmutableList.of("packaging_solid")),
+                    ImmutableList.of("packaging_solid.csv")),
             new TemplateProductUsage("Packaging, per kg liquid fertilisers or pesticides (ALCIG)/GLO U", "kg",
                     "ecoinvent_packaging_liquid", StandardUncertaintyMetadata.OTHER_MATERIALS, "",
-                    ImmutableList.of("packaging_liquid")),
+                    ImmutableList.of("packaging_liquid.csv")),
 
             new TemplateProductUsage("Lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil",
                     StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING, "pest_horticultural_oil"),

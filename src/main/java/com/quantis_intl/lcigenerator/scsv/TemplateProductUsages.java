@@ -126,8 +126,16 @@ public interface TemplateProductUsages
 
         public String provideValue(Map<String, String> modelOutputs)
         {
-            double value = Double.parseDouble(modelOutputs.getOrDefault(amountVariable, "0"));
-            return Double.toString(value * factor);
+            // TODO: This is dirty
+            try
+            {
+                double value = Double.parseDouble(modelOutputs.getOrDefault(amountVariable, "0"));
+                return Double.toString(value * factor);
+            }
+            catch (NumberFormatException e)
+            {
+                return modelOutputs.getOrDefault(amountVariable, "0");
+            }
         }
 
         protected String lookupVariable(Map<String, String> modelOutputs, String variable)
