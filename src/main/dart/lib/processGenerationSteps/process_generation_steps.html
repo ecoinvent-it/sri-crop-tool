@@ -20,15 +20,17 @@
         <div class="stepTitle text-big text-uppercase">Step 2</div>
         <div class="stepText">Fill in the template with your data</div>
     </td>
-    <td id="step3" class="stepBtn" ng-class="{disabledStep: step == 1 || !isEmailValid}">
-      <div class="stepTitle text-big text-uppercase">Step 3</div>
+    <td id="step3Container" ng-class="{disabledStep: step == 1 || !isEmailValid}">
       <form id="processGeneratorUploadForm" method="post" enctype="multipart/form-data">
-          <input type="file" name="uploadFile" 
-                      accept=".xls,.xlsx" required="required" 
-                      class="upload"
-                      ng-change="submitUploadForm($event.target)"
-                      ng-if="step == 0 && isEmailValid"/>
-          <div class="stepText">Upload your template to ALCIG</div>
+          <div id="step3" class="stepBtn">
+	          <div class="stepTitle text-big text-uppercase">Step 3</div>
+	          <input type="file" name="uploadFile" 
+	                      accept=".xls,.xlsx" required="required" 
+	                      class="upload"
+	                      ng-change="submitUploadForm($event.target)"
+	                      ng-if="step == 0 && isEmailValid"/>
+	          <div class="stepText">Upload your template to ALCIG</div>
+          </div>
           <div>
              <input type="checkbox" checked name="canBeStored" value="true" ng-disabled="step != 0"/> 
             <span id="step3CheckboxText" class="text-very-small">I agree that Quantis stores this file for testing purposes</span>
@@ -36,13 +38,15 @@
 			</form>
 			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" ng-if="step != 0 || !isEmailValid"></div>
     </td>
-    <td id="step4" class="stepBtn" ng-class="{disabledStep: step == 0}">
-      <div class="stepTitle text-big text-uppercase">Step 4</div>
+    <td>
       <form action="app/api/pub/generateScsv" method="post" ng-disabled="step != 1" style="display: block;">
-			  <input type="hidden" name="idResult" value="{{idResult}}"/>
-			  <input type="hidden" name="filename" value="{{filename}}"/>
-			  <input type="submit" id="scsvDownloadBtn"/>
-			  <div class="stepText">Get a ready-to-import file for Simapro</div>
+        <div id="step4" class="stepBtn" ng-class="{disabledStep: step == 0}">
+	        <div class="stepTitle text-big text-uppercase">Step 4</div>
+				  <input type="hidden" name="idResult" value="{{idResult}}"/>
+				  <input type="hidden" name="filename" value="{{filename}}"/>
+				  <input type="submit" id="scsvDownloadBtn" ng-disabled="step != 1"/>
+				  <div class="stepText">Get a ready-to-import file for Simapro</div>
+			  </div>
 			  <div class="btn-group" data-toggle="buttons" ng-if="step == 1">
 				  <label class="btn btn-primary active">
 				    <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent

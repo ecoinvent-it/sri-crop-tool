@@ -51,7 +51,8 @@ class ProcessGeneratorSteps
   
   void submitUploadForm(target)
   {
-    step3Form = target.parent as FormElement;
+    // TODO: dirty
+    step3Form = target.parent.parent as FormElement;
     File file = (target as FileUploadInputElement).files[0];
     if (file.size > FILE_MAX_SIZE)
     {

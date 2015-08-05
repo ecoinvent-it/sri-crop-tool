@@ -49,6 +49,11 @@
   color: white;
 }
 
+#step3Container
+{
+	position: relative;
+}
+
 #step3
 {
   background-image: url('../img/btn_step3.png');
@@ -97,6 +102,11 @@
   font-weight: normal;
 }
 
+#step3fileNameContainer
+{
+  height: 25px;
+}
+
 #step4
 {
   background-image: url('../img/btn_step4.png');
@@ -111,11 +121,6 @@
 {
   opacity: 0.5;
   cursor: default;
-}
-
-#step3fileNameContainer
-{
-	height: 25px;
 }
 
 #scsvDownloadBtn
