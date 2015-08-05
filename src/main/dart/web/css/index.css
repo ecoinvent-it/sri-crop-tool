@@ -43,7 +43,7 @@ header
 
 #quantisLink
 {
-  margin-left: 220px;
+  margin-left: 150px;
   color:white;
   opacity: 0.5;
 }
@@ -52,7 +52,7 @@ header
 {
 	float: right;
   text-align: right;
-  margin-right: 100px;
+  margin-right: 0px;
   padding-top: 20px;
 }
 

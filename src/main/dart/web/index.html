@@ -47,7 +47,9 @@
         <li><a href="#tool" id="homeMenuItem" class="menuItem">Home</a></li>
 	      <li><a href="#contactUs" id="contactUsMenuItem" class="menuItem">Contact</a></li>
 	      <li><a href="#faq" id="faqMenuItem" class="menuItem">FAQ</a></li>
-	      <li><a href="ALCIG_methodology.pdf" target="_blank" class="menuItem" onclick="methodoClick(event)">Methodology</a></li>
+	      <li><a href="ALCIG_methodology.pdf" target="_blank" class="menuItem" onclick="documentLinkClick(event)">Methodology</a></li>
+	      <li><a href="ALCIG_Privacy policy.pdf" target="_blank" class="menuItem" onclick="documentLinkClick(event)">Privacy</a></li>
+	      <li><a href="terms.pdf" target="_blank" class="menuItem" onclick="documentLinkClick(event)">Terms</a></li>
 	    </ul>
 
     </div>
@@ -61,14 +63,14 @@
     
     ga('create', '@@@GOOGLE_ANALYTICS_ACCOUNT@@@', 'auto');
     
-    function methodoClick(event)
+    function documentLinkClick(event)
     {
     	// window.location.origin is not available for IE
     	if (!window.location.origin)
     		  window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
 
-    	methodoLocalPath = event.target.href.replace(window.location.origin,"");
-      ga('send', 'pageview', { 'page': methodoLocalPath });
+    	documentLocalPath = event.target.href.replace(window.location.origin,"");
+      ga('send', 'pageview', { 'page': documentLocalPath });
     }
 
 	  (function() {
