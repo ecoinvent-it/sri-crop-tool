@@ -535,7 +535,7 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Natural gas, burned in boiler modulating <100kW/RER U", "MJ",
                     "plantprotection_flaming", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "plantprotection_flaming"),
-            new TemplateProductUsage("Diesel, burned in building machine/GLO U", "kg",
+            new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ",
                     "plantprotection_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "plantprotection_other", 42.8),
             new TemplateProductUsage(

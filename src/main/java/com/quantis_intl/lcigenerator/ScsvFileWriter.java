@@ -31,6 +31,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.io.Resources;
 import com.quantis_intl.commons.scsv.ScsvLineSerializer;
 import com.quantis_intl.commons.scsv.ScsvLinesWriter;
+import com.quantis_intl.commons.scsv.literaturereferences.ScsvLiteratureRef;
+import com.quantis_intl.commons.scsv.literaturereferences.ScsvLiteratureRefWriter;
 import com.quantis_intl.commons.scsv.metadata.ScsvMetadataWriter;
 import com.quantis_intl.commons.scsv.parameters.InputParameter;
 import com.quantis_intl.commons.scsv.parameters.ScsvInputParameterWriter;
@@ -80,12 +82,27 @@ public class ScsvFileWriter
         for (String dep : mainProcess.getRequiredAlcigProcesses())
         {
             linesWriter.writeNewLine();
-            linesWriter.writeNewLine();
             writer.write(Resources.toString(ScsvFileWriter.class.getResource(dep), Charset.forName("windows-1252")));
+            linesWriter.writeNewLine();
         }
         if (outputTarget == OutputTarget.ECOINVENT)
         {
             linesWriter.writeNewLine();
+            new ScsvLiteratureRefWriter(linesWriter).write(new ScsvLiteratureRef()
+            {
+                @Override
+                public String getName()
+                {
+                    return "Torellas et al. (2012)";
+                }
+
+                @Override
+                public String getDescription()
+                {
+                    return "Torrellas M,Antón A, López JC, Baeza EJ, Pérez Parra J, Muñoz P, Montero JI (2012) LCA of a tomato crop in a multi-tunnel greenhouse in Almeria. Int J Life Cycle Assess (2012) 17:863\u2013875";
+                }
+            });
+
             linesWriter.writeNewLine();
             new ScsvInputParameterWriter(linesWriter).writeProjectInputParam(ImmutableList.of(new InputParameter()
             {

@@ -51,6 +51,7 @@ public class GeneratedProcess implements ProductScsvProcess
     private final TemplateProductUsages templateProductUsages;
     private final TemplateSubstanceUsages templateSubstanceUsages;
     private final Set<String> requiredAlcigProcesses;
+    private final OutputTarget outputTarget;
 
     public GeneratedProcess(Map<String, String> modelOutputs, ValueGroup extractedInputs, OutputTarget outputTarget)
     {
@@ -58,6 +59,7 @@ public class GeneratedProcess implements ProductScsvProcess
         this.extractedInputs = extractedInputs;
         this.templateProductUsages = outputTarget.templateProductUsages;
         this.templateSubstanceUsages = outputTarget.templateSubstanceUsages;
+        this.outputTarget = outputTarget;
         this.requiredAlcigProcesses = new HashSet<>();
     }
 
@@ -310,9 +312,13 @@ public class GeneratedProcess implements ProductScsvProcess
         List<ProductUsage> res = modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
                 .map(e -> new PesticideProductUsage(e.getKey(), e.getValue(), findComment(e.getKey().substring(6))))
                 .collect(Collectors.toList());
-        res.addAll(modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
+        res.addAll(modelOutputs
+                .entrySet()
+                .stream()
+                .filter(e -> e.getKey().startsWith("pesti_"))
                 .filter(e -> e.getKey().endsWith("_other") || e.getKey().endsWith("_unspecified"))
-                .map(e -> new PesticideEmissions(e.getKey(), e.getValue(), findComment(e.getKey().substring(6))))
+                .map(e -> new PesticideEmissions(e.getKey(), e.getValue(), findComment(e.getKey().substring(6)),
+                        outputTarget))
                 .collect(Collectors.toList()));
         return res;
     }

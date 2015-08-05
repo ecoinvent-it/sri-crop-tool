@@ -23,20 +23,24 @@ import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
 
 public class PesticideEmissions extends PesticideProductUsage
 {
-    public PesticideEmissions(String variable, String amount, String comment)
+    private final OutputTarget target;
+
+    public PesticideEmissions(String variable, String amount, String comment, OutputTarget target)
     {
         super(variable, amount, comment);
+        this.target = target;
     }
 
     @Override
     public String getName()
     {
+        String dbName = target == OutputTarget.WFLDB ? "WFLDB 3.0" : "ALCIG";
         if (variable.startsWith("pesti_herbicides"))
-            return "Emissions from herbicides, unspecified (WFLDB 3.0)/GLO S";
+            return "Emissions from herbicides, unspecified (" + dbName + ")/GLO S";
         else if (variable.startsWith("pesti_fungicides"))
-            return "Emissions from fungicides, unspecified (WFLDB 3.0)/GLO S";
+            return "Emissions from fungicides, unspecified (" + dbName + ")/GLO S";
         else if (variable.startsWith("pesti_insecticides"))
-            return "Emissions from insecticides, unspecified (WFLDB 3.0)/GLO S";
+            return "Emissions from insecticides, unspecified (" + dbName + ")/GLO S";
         else
             throw new IllegalStateException();
     }
