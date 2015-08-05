@@ -312,14 +312,28 @@ public class GeneratedProcess implements ProductScsvProcess
         List<ProductUsage> res = modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
                 .map(e -> new PesticideProductUsage(e.getKey(), e.getValue(), findComment(e.getKey().substring(6))))
                 .collect(Collectors.toList());
-        res.addAll(modelOutputs
+        List<ProductUsage> undefined = modelOutputs
                 .entrySet()
                 .stream()
                 .filter(e -> e.getKey().startsWith("pesti_"))
                 .filter(e -> e.getKey().endsWith("_other") || e.getKey().endsWith("_unspecified"))
                 .map(e -> new PesticideEmissions(e.getKey(), e.getValue(), findComment(e.getKey().substring(6)),
                         outputTarget))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+        res.addAll(undefined);
+        // FIXME: Ugly
+        if (outputTarget == OutputTarget.ECOINVENT)
+        {
+            for (ProductUsage u : undefined)
+            {
+                if (u.getName().contains("herbicides"))
+                    requiredAlcigProcesses.add("herbicides_undefined_to_soil.csv");
+                else if (u.getName().contains("fungicides"))
+                    requiredAlcigProcesses.add("fungicides_undefined_to_soil.csv");
+                else if (u.getName().contains("insecticides"))
+                    requiredAlcigProcesses.add("insecticides_undefined_to_soil.csv");
+            }
+        }
         return res;
     }
 
