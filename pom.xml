@@ -108,7 +108,9 @@
          </executions>
          <configuration>
             <includes>
-              <include>${project.build.directory}/classes/web/*</include>
+              <include>${project.build.directory}/classes/web/**.html</include>
+              <include>${project.build.directory}/classes/web/**.dart</include>
+              <include>${project.build.directory}/classes/web/**.js</include>
             </includes>
              <regex>false</regex>
              <replacements>
