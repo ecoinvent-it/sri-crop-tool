@@ -35,7 +35,7 @@ public class LoginServiceImpl implements LoginService
     }
 
     @Override
-    public void confirmAuthenticationSucces(Object userId)
+    public void confirmAuthenticationSuccess(Object userId)
     {
         // TODO Auto-generated method stub
     }
