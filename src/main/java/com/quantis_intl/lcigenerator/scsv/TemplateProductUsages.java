@@ -48,13 +48,13 @@ public interface TemplateProductUsages
         public TemplateProductUsage(String name, String unit, String amountVariable,
                 StandardUncertaintyMetadata uncertainty, String commentVariable)
         {
-            this(name, unit, amountVariable, uncertainty, commentVariable, null);
+            this(name, unit, amountVariable, uncertainty, commentVariable, null, 1.0d);
         }
 
         public TemplateProductUsage(String name, String unit, String amountVariable,
                 StandardUncertaintyMetadata uncertainty, String commentVariable, double factor)
         {
-            this(name, unit, amountVariable, uncertainty, commentVariable, null, 1.0d);
+            this(name, unit, amountVariable, uncertainty, commentVariable, null, factor);
         }
 
         public TemplateProductUsage(String name, String unit, String amountVariable,
