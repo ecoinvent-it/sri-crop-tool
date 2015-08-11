@@ -61,7 +61,7 @@ public class StringFromListExtractor
         TAGS_TO_MAP.put("anti_erosion_practice", ANTI_EROSION_PRACTICE);
     }
 
-    private ErrorReporter errorReporter;
+    private final ErrorReporter errorReporter;
 
     public StringFromListExtractor(ErrorReporter errorReporter)
     {

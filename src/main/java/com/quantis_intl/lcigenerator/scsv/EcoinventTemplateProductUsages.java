@@ -862,6 +862,7 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
             super("", unit, amountVariable, uncertainty, commentVariable);
         }
 
+        @Override
         public String provideName(Map<String, String> modelOutputs)
         {
             String cropType = modelOutputs.get("luc_crop_type");
@@ -870,6 +871,7 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
             return "Land use change, " + cropType + " crop (ALCIG)/" + country + " U";
         }
 
+        @Override
         public Optional<List<String>> provideRequiredDep(Map<String, String> modelOutputs)
         {
             String cropType = modelOutputs.get("luc_crop_type");

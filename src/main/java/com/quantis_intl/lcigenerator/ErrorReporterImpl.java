@@ -28,8 +28,8 @@ import com.google.common.collect.ImmutableMap;
 public class ErrorReporterImpl implements ErrorReporter
 {
     private final Map<String, String> additionalContext;
-    private Collection<ErrorReporterResult> warnings = new ArrayList<>();
-    private Collection<ErrorReporterResult> errors = new ArrayList<>();
+    private final Collection<ErrorReporterResult> warnings = new ArrayList<>();
+    private final Collection<ErrorReporterResult> errors = new ArrayList<>();
 
     public ErrorReporterImpl()
     {
@@ -72,6 +72,7 @@ public class ErrorReporterImpl implements ErrorReporter
         return errors;
     }
 
+    @Override
     public boolean hasErrors()
     {
         return !errors.isEmpty();

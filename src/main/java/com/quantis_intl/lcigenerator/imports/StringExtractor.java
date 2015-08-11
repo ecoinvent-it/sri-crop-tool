@@ -24,12 +24,11 @@ import java.util.Set;
 
 import org.apache.poi.ss.usermodel.Cell;
 
-import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.POIHelper;
 
 public class StringExtractor
 {
-    public static Set<String> TAGS_FOR_STRING = new HashSet<>();
+    public static final Set<String> TAGS_FOR_STRING = new HashSet<>();
 
     static
     {
@@ -86,13 +85,6 @@ public class StringExtractor
         TAGS_FOR_STRING.add("ecospold_validator");
         TAGS_FOR_STRING.add("ecospold_details");
         TAGS_FOR_STRING.add("ecospold_other_details");
-    }
-
-    private ErrorReporter errorReporter;
-
-    public StringExtractor(ErrorReporter errorReporter)
-    {
-        this.errorReporter = errorReporter;
     }
 
     public Optional<SingleValue<String>> extract(String key, Cell labelCell, Cell dataCell, Cell commentCell,

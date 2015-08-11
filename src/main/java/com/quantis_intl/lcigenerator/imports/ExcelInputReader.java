@@ -121,7 +121,7 @@ public class ExcelInputReader
             this.sheet = sheet;
             this.errorReporter = errorReporter;
             this.stringFromListExtractor = new StringFromListExtractor(errorReporter);
-            this.stringExtractor = new StringExtractor(errorReporter);
+            this.stringExtractor = new StringExtractor();
             this.dateExtractor = new DateExtractor(errorReporter);
             this.numericExtractor = new NumericExtractor(errorReporter);
 
@@ -474,34 +474,31 @@ public class ExcelInputReader
             {
                 if (group instanceof RatioValueGroup)
                 {
-                    DoubleValueGroup dvgroup = ((DoubleValueGroup) group);
+                    DoubleValueGroup dvgroup = (DoubleValueGroup) group;
                     dvgroup.validateValues(
-                            r ->
-                            {
-                                errorReporter
-                                        .warning(
-                                                ImmutableMap.of("cell",
-                                                        extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()),
-                                                        "label",
-                                                        extractExcelOriginalLabel(dvgroup.getTotalHolder())),
-                                                "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally");
-                            },
-                            total ->
-                            {
-                                errorReporter.warning(
-                                        ImmutableMap.of("cell",
-                                                extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()), "label",
-                                                extractExcelOriginalLabel(dvgroup.getTotalHolder())),
-                                        "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally");
-                            }, z -> {
-                                // TODO: For now, only warn, as the default ratio (including "all in other" for
-                                // machineries) is handled by python. Watch out!
+                            r -> errorReporter
+                                    .warning(
+                                            ImmutableMap.of("cell",
+                                                    extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()),
+                                                    "label",
+                                                    extractExcelOriginalLabel(dvgroup.getTotalHolder())),
+                                            "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally")
+                            ,
+                            total -> errorReporter.warning(
+                                    ImmutableMap.of("cell",
+                                            extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()), "label",
+                                            extractExcelOriginalLabel(dvgroup.getTotalHolder())),
+                                    "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally")
+                            ,
+                            // TODO: For now, only warn, as the default ratio (including "all in other" for
+                            // machineries) is handled by python. Watch out!
+                            z ->
                             errorReporter.warning(
                                     ImmutableMap.of("cell",
                                             extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()), "label",
                                             extractExcelOriginalLabel(dvgroup.getTotalHolder())),
-                                    "No repartition has been entered. For now, the default repartition will be used");
-                        });
+                                    "No repartition has been entered. For now, the default repartition will be used")
+                            );
 
                 }
                 else if (group instanceof PartValueGroup)
@@ -515,8 +512,8 @@ public class ExcelInputReader
             PartValueGroup pestiGroup = new PartValueGroup("", pestiTotal);
             Arrays.stream(PARTS_PESTICIDES).forEach(
                     s -> {
-                        DoubleSingleValue dv = (DoubleSingleValue) ((PartValueGroup) extractedInputs.getSubGroups()
-                                .get(s)).getTotalHolder();
+                        DoubleSingleValue dv = ((PartValueGroup) extractedInputs.getSubGroups().get(s))
+                                .getTotalHolder();
                         if (dv != null)
                             pestiGroup.addValue(dv);
                     });
@@ -591,13 +588,13 @@ public class ExcelInputReader
         private String extractExcelOriginalLabel(SingleValue<?> value)
         {
             ExcelUserInput origin = extractExcelOriginalInput(value);
-            return (origin != null ? origin.label : "");
+            return origin != null ? origin.label : "";
         }
 
         private String extractExcelOriginalCellCoordinates(SingleValue<?> value)
         {
             ExcelUserInput origin = extractExcelOriginalInput(value);
-            return (origin != null ? origin.cellCoordinates : "");
+            return origin != null ? origin.cellCoordinates : "";
         }
 
         private ExcelUserInput extractExcelOriginalInput(SingleValue<?> value)

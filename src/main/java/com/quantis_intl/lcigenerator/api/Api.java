@@ -77,13 +77,13 @@ public class Api
 
     private static final Set<String> UPLOADED_FILE_EXTENSIONS = ImmutableSet.of(".xls", ".xlsx");
 
-    private ExcelInputReader inputReader;
+    private final ExcelInputReader inputReader;
 
-    private PyBridgeService pyBridgeService;
+    private final PyBridgeService pyBridgeService;
 
-    private ScsvFileWriter scsvFileWriter;
+    private final ScsvFileWriter scsvFileWriter;
 
-    private Provider<MailSender> mailSender;
+    private final Provider<MailSender> mailSender;
 
     private final String uploadedFilesFolder;
 
@@ -126,7 +126,7 @@ public class Api
         LOGGER.info("BETA: user using this feature: name {}, email {}, other info: {}",
                 username, email, address);
 
-        String fileExtension = filename.substring(filename.lastIndexOf("."));
+        String fileExtension = filename.substring(filename.lastIndexOf('.'));
         if (!UPLOADED_FILE_EXTENSIONS.contains(fileExtension))
         {
             errorReporter.error("Sorry, we cannot read this file. Please use the Excel formats (.xls or .xlsx)");

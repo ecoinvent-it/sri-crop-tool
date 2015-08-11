@@ -23,8 +23,8 @@ import java.util.Map;
 
 public class LabelForBlockTags
 {
-    public static Map<String, Map<String, String>> LABELS_FOR_NUMERIC = new HashMap<>();
-    public static Map<String, Map<String, String>> LABELS_FOR_RATIO = new HashMap<>();
+    public static final Map<String, Map<String, String>> LABELS_FOR_NUMERIC = new HashMap<>();
+    public static final Map<String, Map<String, String>> LABELS_FOR_RATIO = new HashMap<>();
 
     public static final String DEFAULT_VALUE = "other";
     public static final String END_BLOCK_TAG = "end";
@@ -117,5 +117,9 @@ public class LabelForBlockTags
         OTHER_WORK_PROCESSES.put("Transport, tractor and trailer", "transport_tractor_trailer");
         OTHER_WORK_PROCESSES.put("Other", "other");
         LABELS_FOR_RATIO.put("total_otherworkprocesses", OTHER_WORK_PROCESSES);
+    }
+
+    private LabelForBlockTags()
+    {
     }
 }

@@ -73,8 +73,8 @@ public class ValueGroup
     public void convertAllValues(double factor)
     {
         Multimap<String, SingleValue<?>> newValues = ArrayListMultimap.create();
-        values.values().stream().map(v -> ((DoubleSingleValue) v).convert(factor))
-                .forEach(v -> newValues.put(v.getLocalKey(), v));
+        values.values().stream().map(v ->
+                ((DoubleSingleValue) v).convert(factor)).forEach(v -> newValues.put(v.getLocalKey(), v));
         values = newValues;
     }
 
@@ -90,7 +90,8 @@ public class ValueGroup
                 String groupingKey = value.substring(6, secondUnderscore);
                 ValueGroup newGroup = subGroups.computeIfAbsent(
                         groupingKey,
-                        key -> {
+                        key ->
+                        {
                             RatioValueGroup vg = new RatioValueGroup(groupingKey,
                                     (DoubleSingleValue) getSingleValue("total_" + groupingKey));
                             subGroups.put(key, vg);
@@ -105,7 +106,8 @@ public class ValueGroup
                 String groupingKey = value.substring(6, secondUnderscore);
                 ValueGroup newGroup = subGroups.computeIfAbsent(
                         groupingKey,
-                        key -> {
+                        key ->
+                        {
                             PartValueGroup vg = new PartValueGroup(groupingKey,
                                     (DoubleSingleValue) getSingleValue("total_" + groupingKey));
                             subGroups.put(key, vg);
@@ -177,6 +179,7 @@ public class ValueGroup
             super(localKey);
         }
 
+        @Override
         public ValueGroup addValue(SingleValue<?> value)
         {
             if (!(value instanceof DoubleSingleValue))
@@ -213,7 +216,7 @@ public class ValueGroup
 
     public static class RatioValueGroup extends DoubleValueGroup
     {
-        private DoubleSingleValue total;
+        private final DoubleSingleValue total;
 
         public RatioValueGroup(String localKey, DoubleSingleValue total)
         {
@@ -228,7 +231,8 @@ public class ValueGroup
             values.asMap()
                     .values()
                     .forEach(
-                            valuesCollection -> {
+                            valuesCollection ->
+                            {
                                 String key = prefix + "ratio_" + localKey + "_"
                                         + Iterables.getFirst(valuesCollection, null).getLocalKey();
                                 res.put(key,
@@ -247,8 +251,9 @@ public class ValueGroup
                 DoubleConsumer biggerTotalConsumer, DoubleConsumer zeroConsumer)
         {
             super.validateValues(remainsConsumer.andThen(remains -> convertAllValues(1.d / (1.d - remains)))
-                    , biggerTotalConsumer.andThen(total -> convertAllValues(1.d / total)),
-                    z -> {
+                    , biggerTotalConsumer.andThen(biggerTotal -> convertAllValues(1.d / biggerTotal)),
+                    z ->
+                    {
                         if (total != null && total.getValue() > 0.001)
                             zeroConsumer.accept(z);
                     });
@@ -284,7 +289,8 @@ public class ValueGroup
             values.asMap()
                     .values()
                     .forEach(
-                            valuesCollection -> {
+                            valuesCollection ->
+                            {
                                 String key = prefix + "part_" + localKey + "_"
                                         + Iterables.getFirst(valuesCollection, null).getLocalKey();
                                 res.put(key,

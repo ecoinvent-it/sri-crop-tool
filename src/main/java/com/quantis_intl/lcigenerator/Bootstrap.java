@@ -29,6 +29,10 @@ import com.quantis_intl.stack.configuration.DefaultParametrizedModulesBuilder;
 
 public class Bootstrap
 {
+    private Bootstrap()
+    {
+    }
+
     public static void main(String[] args) throws Exception
     {
         QtsStack stack;

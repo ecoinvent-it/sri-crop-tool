@@ -35,7 +35,7 @@ import com.quantis_intl.lcigenerator.POIHelper;
 
 public class DateExtractor
 {
-    public static Set<String> TAGS_FOR_STRING = new HashSet<>();
+    public static final Set<String> TAGS_FOR_STRING = new HashSet<>();
 
     // NOTE: Use fixed template as the cell format is specified by user in Excel
     // NOTE: Java considers 80 years in the past and 20 years in the future for 2-letter years
@@ -49,7 +49,7 @@ public class DateExtractor
         TAGS_FOR_STRING.add("harvesting_date_main_crop");
     }
 
-    private ErrorReporter errorReporter;
+    private final ErrorReporter errorReporter;
 
     public DateExtractor(ErrorReporter errorReporter)
     {

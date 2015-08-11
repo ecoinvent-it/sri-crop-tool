@@ -227,9 +227,9 @@ public class GeneratedProcess implements ProductScsvProcess
 
     private String generateProcessAndProductName()
     {
-        StringBuilder sb = new StringBuilder(PropertiesLoader.CROPS.getProperty(modelOutputs.get("crop")));
-        sb.append(", at farm/kg/");
-        sb.append(modelOutputs.get("country"));
+        StringBuilder sb = new StringBuilder(PropertiesLoader.CROPS.getProperty(modelOutputs.get("crop")))
+                .append(", at farm/kg/")
+                .append(modelOutputs.get("country"));
         return sb.toString();
     }
 
@@ -283,7 +283,7 @@ public class GeneratedProcess implements ProductScsvProcess
     private List<SubstanceUsage> toSubstanceUsage(TemplateSubstanceUsage[] templates)
     {
         return Arrays.stream(templates).map(r -> new GeneratedSubstanceUsage(r, modelOutputs, extractedInputs))
-                .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0"))
+                .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
                 .collect(Collectors.toList());
     }
 
@@ -292,7 +292,7 @@ public class GeneratedProcess implements ProductScsvProcess
     {
         List<ProductUsage> res = Arrays.stream(templates)
                 .map(r -> new GeneratedProductUsage(r, modelOutputs, extractedInputs))
-                .filter(s -> !s.getAmount().equals("0.0") && !s.getAmount().equals("0"))
+                .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
                 .collect(Collectors.toList());
         findRequiredDeps(res);
         return res;

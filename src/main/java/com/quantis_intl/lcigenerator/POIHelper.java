@@ -29,6 +29,10 @@ import com.google.common.base.CharMatcher;
 
 public class POIHelper
 {
+    private POIHelper()
+    {
+    }
+
     public static String getCellStringValue(Sheet sheet, int rowIndex, int index, String defaultValue)
     {
         Row row = sheet.getRow(rowIndex);

@@ -76,7 +76,7 @@ public class SingleValue<T>
 
     public static class DoubleSingleValue extends SingleValue<Double>
     {
-        private String unit;
+        private final String unit;
 
         public DoubleSingleValue(String localKey, Double value, String comment, String source, Origin origin,
                 String unit)

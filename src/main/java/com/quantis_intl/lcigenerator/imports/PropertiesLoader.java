@@ -57,11 +57,15 @@ public class PropertiesLoader
 
     public static Map<String, String> reverse(Properties prop)
     {
-        HashMap<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<String, String>();
         for (Entry<Object, Object> entry : prop.entrySet())
         {
             map.put((String) entry.getValue(), (String) entry.getKey());
         }
         return map;
+    }
+
+    private PropertiesLoader()
+    {
     }
 }

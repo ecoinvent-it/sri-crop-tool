@@ -31,8 +31,8 @@ import com.quantis_intl.lcigenerator.imports.SingleValue.DoubleSingleValue;
 
 public class NumericExtractor
 {
-    public static Set<String> TAGS_FOR_NUMERIC = new HashSet<>();
-    public static Set<String> TAGS_FOR_RATIO = new HashSet<>();
+    public static final Set<String> TAGS_FOR_NUMERIC = new HashSet<>();
+    public static final Set<String> TAGS_FOR_RATIO = new HashSet<>();
     static
     {
         TAGS_FOR_NUMERIC.add("average_annual_precipitation");
@@ -154,7 +154,7 @@ public class NumericExtractor
         TAGS_FOR_RATIO.add("ratio_eol_incineration");
     }
 
-    private ErrorReporter errorReporter;
+    private final ErrorReporter errorReporter;
 
     public NumericExtractor(ErrorReporter errorReporter)
     {
