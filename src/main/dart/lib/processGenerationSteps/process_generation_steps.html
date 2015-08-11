@@ -67,8 +67,12 @@
   </tr>
 </table>
 
+<div id="fileLoadingModal" class="modal" data-backdrop="static" data-keyboard="false" style="width:100%; text-align: center" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <img src="img/ajax-loader-big.gif"/>
+</div>
+
 <!-- Modal -->
-<div class="modal fade" id="process-generation-step3-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal topBottomAnimation" id="process-generation-step3-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content alert" ng-class="{'successful':step == 1 ,'errors': hasErrors, 'warnings':hasWarnings}">
       <div class="modal-header">

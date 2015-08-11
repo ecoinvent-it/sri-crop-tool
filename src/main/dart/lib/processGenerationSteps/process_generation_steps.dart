@@ -74,8 +74,10 @@ class ProcessGeneratorSteps
     formData.append("username", userName);
     formData.append("email", userEmail);
     formData.append("address", userAddress);
+    displayModal("#fileLoadingModal");
     _api.uploadInputs(formData)
     .then((HttpRequest request) {
+      
       if ( request.status == 400 )
       {
         Map map = JSON.decode(request.responseText); 
@@ -90,10 +92,16 @@ class ProcessGeneratorSteps
         errors = map['message']['errors']..sort(_errorsOrWarningsComparator);
         idResult = map['idResult'];
       }
-      
+      hideModal("#fileLoadingModal");
       displayModal('#process-generation-step3-modal');
     })
-    .catchError((_) => reset());
+    .catchError((_){ reset(); hideModal("#fileLoadingModal");});
+  }
+
+  void hideModal(String id)
+  {
+    js.context.callMethod(r'$', [id])
+                  .callMethod('modal', ['hide']);
   }
   
   void displayModal(String id)
