@@ -48,7 +48,7 @@ import javax.ws.rs.core.StreamingOutput;
 import mails.MailSender;
 
 import org.apache.shiro.SecurityUtils;
-import org.glassfish.jersey.media.multipart.FormDataParam;
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,23 +110,17 @@ public class Api
     @Path("computeLci")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public void computeLci(@FormDataParam("uploadFile") InputStream is,
-            @FormDataParam("canBeStored") boolean canBeStored,
-            @FormDataParam("filename") String filename,
-            @FormDataParam("username") String username,
-            @FormDataParam("email") String email,
-            @FormDataParam("address") String address,
-            @Suspended AsyncResponse response)
+    public void computeLci(@MultipartForm ComputeLCiForm form, @Suspended AsyncResponse response)
             throws URISyntaxException, IOException
     {
-        long startTime = System.nanoTime();
+        final long startTime = System.nanoTime();
         ErrorReporterImpl errorReporter = new ErrorReporterImpl();
 
         String idResult = UUID.randomUUID().toString();
         LOGGER.info("BETA: user using this feature: name {}, email {}, other info: {}",
-                username, email, address);
+                form.username, form.email, form.address);
 
-        String fileExtension = filename.substring(filename.lastIndexOf('.'));
+        String fileExtension = form.filename.substring(form.filename.lastIndexOf('.'));
         if (!UPLOADED_FILE_EXTENSIONS.contains(fileExtension))
         {
             errorReporter.error("Sorry, we cannot read this file. Please use the Excel formats (.xls or .xlsx)");
@@ -134,16 +128,16 @@ public class Api
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
-        byte[] uploadedFile = ByteStreams.toByteArray(ByteStreams.limit(is, UPLOADED_FILE_MAX_SIZE));
+        byte[] uploadedFile = ByteStreams.toByteArray(ByteStreams.limit(form.is, UPLOADED_FILE_MAX_SIZE));
         if (uploadedFile.length >= UPLOADED_FILE_MAX_SIZE)
         {
             errorReporter.error("Sorry, we cannot read this file. Please use a smaller file (max 10Mo)");
-            LOGGER.error("File too big: name {}, size in octet: {}", filename, uploadedFile.length);
+            LOGGER.error("File too big: name {}, size in octet: {}", form.filename, uploadedFile.length);
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
         ByteArrayInputStream bais = new ByteArrayInputStream(uploadedFile);
-        if (canBeStored)
-            saveUploadedFile(uploadedFile, filename, fileExtension, email, idResult);
+        if (form.canBeStored)
+            saveUploadedFile(uploadedFile, form.filename, fileExtension, form.email, idResult);
 
         ValueGroup extractedInputs = inputReader.getInputDataFromFile(bais, errorReporter);
 
@@ -169,7 +163,7 @@ public class Api
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
-        is.close();
+        form.is.close();
     }
 
     private void saveUploadedFile(byte[] fileContent, String filename, String fileExtension,
@@ -242,21 +236,17 @@ public class Api
     @POST
     @Path("contactUs")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public Response contactUs(@FormDataParam("contactName") final String contactName,
-            @FormDataParam("contactCompany") final String contactCompany,
-            @FormDataParam("contactEmail") final String contactEmail,
-            @FormDataParam("contactMessage") final String contactMessage,
-            @FormDataParam("accept") final boolean accept)
+    public Response contactUs(@MultipartForm final ContactUsForm form)
     {
         Escaper escaper = HtmlEscapers.htmlEscaper();
-        final String escapedContactName = escaper.escape(contactName);
-        final String escapedContactCompany = escaper.escape(contactCompany);
-        final String escapedContactEmail = escaper.escape(contactEmail);
-        final String escapedContactMessage = escaper.escape(contactMessage);
+        final String escapedContactName = escaper.escape(form.contactName);
+        final String escapedContactCompany = escaper.escape(form.contactCompany);
+        final String escapedContactEmail = escaper.escape(form.contactEmail);
+        final String escapedContactMessage = escaper.escape(form.contactMessage);
 
         // TODO: Have a default template stored somewhere and replace only some specific parts
         final String formContent = generateEmailTextFromContactForm(escapedContactName, escapedContactCompany,
-                escapedContactEmail, escapedContactMessage, accept);
+                escapedContactEmail, escapedContactMessage, form.accept);
 
         mailSender.get().sendMail(formsMailTo, "[ALCIG] New feedback", formContent);
 
@@ -305,5 +295,35 @@ public class Api
                 .append("<br/>Message: <br/>")
                 .append(contactMessage)
                 .toString();
+    }
+
+    public static class ComputeLCiForm
+    {
+        @FormParam("uploadFile")
+        public InputStream is;
+        @FormParam("canBeStored")
+        public boolean canBeStored;
+        @FormParam("filename")
+        public String filename;
+        @FormParam("username")
+        public String username;
+        @FormParam("email")
+        public String email;
+        @FormParam("address")
+        public String address;
+    }
+
+    public static class ContactUsForm
+    {
+        @FormParam("contactName")
+        public String contactName;
+        @FormParam("contactCompany")
+        public String contactCompany;
+        @FormParam("contactEmail")
+        public String contactEmail;
+        @FormParam("contactMessage")
+        public String contactMessage;
+        @FormParam("accept")
+        public boolean accept;
     }
 }

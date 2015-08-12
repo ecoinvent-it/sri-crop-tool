@@ -18,13 +18,9 @@
  */
 package com.quantis_intl.lcigenerator.guice;
 
-import mails.MailSender;
-
 import com.google.inject.AbstractModule;
 import com.quantis_intl.lcigenerator.LoginServiceImpl;
-import com.quantis_intl.lcigenerator.PyBridgeService;
-import com.quantis_intl.lcigenerator.ScsvFileWriter;
-import com.quantis_intl.lcigenerator.imports.ExcelInputReader;
+import com.quantis_intl.lcigenerator.api.Api;
 import com.quantis_intl.stack.authentication.LoginService;
 
 public class CoreModule extends AbstractModule
@@ -33,9 +29,6 @@ public class CoreModule extends AbstractModule
     protected void configure()
     {
         bind(LoginService.class).to(LoginServiceImpl.class);
-        bind(PyBridgeService.class);
-        bind(ScsvFileWriter.class);
-        bind(ExcelInputReader.class);
-        bind(MailSender.class);
+        bind(Api.class);
     }
 }

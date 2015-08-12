@@ -28,9 +28,9 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.InvocationCallback;
 import javax.ws.rs.client.WebTarget;
 
-import org.glassfish.jersey.jackson.JacksonFeature;
+import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
 
-import com.quantis_intl.stack.jersey.QtsApplication.ObjectMapperProvider;
+import com.quantis_intl.stack.resteasy.ServletWithJerseyModule.ObjectMapperProvider;
 
 public class PyBridgeService
 {
@@ -41,7 +41,7 @@ public class PyBridgeService
     {
         // FIXME: Don't use the ObjectMapperProvider from the stack
         this.pyBridgeTarget = ClientBuilder.newClient().register(ObjectMapperProvider.class)
-                .register(JacksonFeature.class)
+                .register(ResteasyJackson2Provider.class)
                 .target(pyBridgeUrl);
     }
 
