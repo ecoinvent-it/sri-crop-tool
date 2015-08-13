@@ -113,11 +113,43 @@ table img
 .qts-btn
 {
 	border: 0px;
-  margin: 0;
+  margin: 5px 0px;
   padding: 8px 40px 8px 40px;
   text-align: center;
   min-width: 80px;
   cursor: pointer;
+  font-size: 14px;
+  min-height: 20px;
+}
+
+.qts-btn-style1
+{
+  color: white;
+  background-color: #f9b233;
+}
+
+.qts-btn-style1:HOVER {
+  background-color: #e87e05;
+}
+
+.qts-btn-style2
+{
+  color: #445272;
+  background-color: rgb(255,255,255);
+}
+
+.qts-btn-style2:HOVER {
+  background-color: rgba(255,255,255,0.9);
+}
+
+.qts-btn-style3
+{
+  color: white;
+  background-color: #445272;
+}
+
+.qts-btn-style3:HOVER {
+  background-color: #283959;
 }
 
 .successful
@@ -140,7 +172,12 @@ table img
 	visibility: hidden;
 }
 
-input[type="text"], textarea
+.formFieldTitle
+{
+  padding-top:5px;
+}
+
+input[type="text"], input[type="password"], textarea
 {
 	background-color: #eaecf0;
 	border: solid 1px #eaecf0;
@@ -151,18 +188,4 @@ input[type="text"], textarea
 input[type="submit"]
 {
 	display: block;
-}
-
-.qts-btn-1
-{
-  font-size: 19px;
-  font-weight: bold;
-  color: white;
-  background-color: #f9b233;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.qts-btn-1:HOVER {
-  background-color: #e87e05;
 }

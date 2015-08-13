@@ -137,14 +137,7 @@
 .stepNavBtn
 {
   font-size: 14px;
-  color: #FFFFFF;
-  background-color: #F9B233;
-  cursor: pointer;
   min-height: 20px;
-}
-
-.stepNavBtn:HOVER {
-  background-color: #e87e05;
 }
 
 #filenameContainer

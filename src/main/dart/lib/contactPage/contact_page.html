@@ -8,17 +8,17 @@
 			<div class="color1">Just send us a message using the form below</div>
 			
 			<form id="contactForm" ng-submit="sendMessage($event)" enctype="multipart/form-data">
-				<div class="color1 contactFieldTitle">Name</div>
+				<div class="color1 formFieldTitle">Name</div>
 				<input name="contactName" type="text" ng-model="contactName"/>
-				<div class="color1 contactFieldTitle">Company</div>
+				<div class="color1 formFieldTitle">Company</div>
 				<input name="contactCompany" type="text" ng-model="contactCompany"/>
-				<div class="color1 contactFieldTitle">Email</div>
+				<div class="color1 formFieldTitle">Email</div>
 		    <input name="contactEmail" type="text" ng-model="contactEmail"/>
-				<div class="color1 contactFieldTitle">Message</div>
+				<div class="color1 formFieldTitle">Message</div>
 				<textarea id="contactMessage" name="contactMessage" required placeholder="Share with us any information that might help us to improve the tool"></textarea>
-				<div class="color1 contactFieldTitle"></div>
+				<div class="color1 formFieldTitle"></div>
 				<input type="checkbox" name="accept" value="true" /><span class="color1"> I accept that this feedback can be made public</span>
-				<input type="submit" class="qts-btn qts-btn-1" value="Send"/>
+				<input id="contactSubmitBtn" type="submit" class="qts-btn qts-btn-style1" value="Send"/>
 				<div id="contactConfirmationMsgContainer" class="color2">{{confirmationMessage}}</div>
 			</form>
 		

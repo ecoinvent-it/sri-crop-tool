@@ -24,11 +24,6 @@
 	padding: 30px 10px 10px 30px;
 }
 
-.contactFieldTitle
-{
-	padding-top:5px;
-}
-
 #contactMessage
 {
   height: 140px;
@@ -42,5 +37,11 @@
 .contactInfoTitle
 {
 	padding-top: 20px;
+	font-weight: bold;
+}
+
+#contactSubmitBtn
+{
+	font-size: 19px;
 	font-weight: bold;
 }
