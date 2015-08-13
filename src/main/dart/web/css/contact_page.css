@@ -34,6 +34,11 @@
   height: 140px;
 }
 
+#contactConfirmationMsgContainer
+{
+	height: 25px;
+}
+
 .contactInfoTitle
 {
 	padding-top: 20px;

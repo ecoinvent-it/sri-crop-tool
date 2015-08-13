@@ -135,6 +135,11 @@ table img
   background-color: #f2dede;
 }
 
+.notVisible
+{
+	visibility: hidden;
+}
+
 input[type="text"], textarea
 {
 	background-color: #eaecf0;

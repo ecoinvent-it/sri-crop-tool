@@ -3,9 +3,9 @@
   <col width="25%"/>
   <col width="25%"/>
   <col width="25%"/>
-  <tr ng-if="step == 1">
+  <tr ng-class="{'notVisible':step != 1}">
     <td colspan="2"></td>
-    <td colspan="2" class="color3 not-bold">Current uploaded file: {{filename}}</td>
+    <td colspan="2" class="color3 not-bold" id="filenameContainer"><div>Current uploaded file: {{filename}}</div></td>
   </tr>
   <tr>
     <td>
@@ -47,11 +47,11 @@
 				  <input type="submit" id="scsvDownloadBtn" ng-disabled="step != 1"/>
 				  <div class="stepText">Get a ready-to-import file for Simapro</div>
 			  </div>
-			  <div class="btn-group" data-toggle="buttons" ng-if="step == 1">
-				  <label class="btn btn-primary active">
+			  <div class="btn-group" data-toggle="buttons" ng-class="{'notVisible':step != 1}">
+				  <label class="btn btn-primary active dbOptionLabel">
 				    <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
 				  </label>
-				  <label class="btn btn-primary">
+				  <label class="btn btn-primary dbOptionLabel">
 				    <input type="radio" name="dbOption" autocomplete="off" value="WFLDB">WFLDB
 				  </label>
 				</div>
@@ -62,8 +62,8 @@
   
   <tr>
     <td colspan="2"></td>
-    <td><button class="qts-btn stepNavBtn" ng-if="hasErrors || hasWarnings" data-toggle="modal" data-target="#process-generation-step3-modal">Please note...</button></td>
-    <td><button class="qts-btn stepNavBtn" ng-if="step == 1" ng-click="reset()">Back to step 3</button></td>
+    <td><button class="qts-btn stepNavBtn" ng-class="{'notVisible':!hasErrors && !hasWarnings}" data-toggle="modal" data-target="#process-generation-step3-modal">Please note...</button></td>
+    <td><button class="qts-btn stepNavBtn" ng-class="{'notVisible':step != 1}" ng-click="reset()">Back to step 3</button></td>
   </tr>
 </table>
 

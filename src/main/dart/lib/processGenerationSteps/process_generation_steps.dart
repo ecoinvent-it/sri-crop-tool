@@ -91,10 +91,15 @@ class ProcessGeneratorSteps
         idResult = map['idResult'];
       }
       
-      js.context.callMethod(r'$', ['#process-generation-step3-modal'])
-              .callMethod('modal', [new js.JsObject.jsify({'show': 'true'})]);
+      displayModal('#process-generation-step3-modal');
     })
     .catchError((_) => reset());
+  }
+  
+  void displayModal(String id)
+  {
+    js.context.callMethod(r'$', [id])
+                  .callMethod('modal', [new js.JsObject.jsify({'show': 'true'})]);
   }
   
   void reset()
