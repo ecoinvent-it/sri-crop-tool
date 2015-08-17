@@ -30,7 +30,7 @@ import javax.ws.rs.client.WebTarget;
 
 import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
 
-import com.quantis_intl.stack.resteasy.ServletWithJerseyModule.ObjectMapperProvider;
+import com.quantis_intl.stack.features.CoreFeature.ObjectMapperProvider;
 
 public class PyBridgeService
 {

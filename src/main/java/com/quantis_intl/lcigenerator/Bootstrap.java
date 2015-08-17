@@ -18,14 +18,11 @@
  */
 package com.quantis_intl.lcigenerator;
 
-import java.util.List;
 import java.util.Properties;
 
-import com.google.common.collect.ImmutableList;
-import com.google.inject.Module;
 import com.quantis_intl.lcigenerator.guice.CoreModule;
 import com.quantis_intl.stack.QtsStack;
-import com.quantis_intl.stack.configuration.DefaultParametrizedModulesBuilder;
+import com.quantis_intl.stack.features.ShiroFeature;
 
 public class Bootstrap
 {
@@ -44,18 +41,7 @@ public class Bootstrap
             stack.withAdditionalProperties(getDefaultProperties());
         }
 
-        stack.withAdditionalProperties(getAdditionalProperties());
-        stack.withDefaultBuilders();
-        stack.withParametrizedModulesBuilder(new DefaultParametrizedModulesBuilder()
-        {
-            @Override
-            protected List<Module> buildAdditionalModules(Properties properties)
-            {
-                return ImmutableList.of();
-            }
-        });
-        stack.withAdditionalModules(new CoreModule());
-
+        stack.withFeatures(ShiroFeature.defaultFilters()).withAdditionalModules(new CoreModule());
         stack.start();
     }
 
@@ -74,13 +60,6 @@ public class Bootstrap
         p.setProperty("mailer.password", "");
         p.setProperty("forms.mail.to", "");
         p.setProperty("pyBridge.url", "http://localhost:11001/computeLci");
-        return p;
-    }
-
-    private static Properties getAdditionalProperties()
-    {
-        Properties p = new Properties();
-        p.setProperty("jersey.rest.package", "com.quantis_intl.lcigenerator.api");
         return p;
     }
 }
