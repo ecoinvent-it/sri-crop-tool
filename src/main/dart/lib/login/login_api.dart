@@ -4,13 +4,14 @@ import 'dart:async';
 
 abstract class LoginApi {
   
-  Future<RequestResult> login(String username, String password);
+  Future<AuthRequestResult> login(String username, String password);
       
-  Future<RequestResult> logout();
+  Future<AuthRequestResult> logout();
 }
 
-enum RequestResult {
+enum AuthRequestResult {
   OK,
+  OK_BUT_CHANGE_PASSWORD,
   WRONG_CREDENTIALS,
   LOCKED_USER,
   NON_VALIDATED_USER,

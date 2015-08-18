@@ -5,17 +5,21 @@ import 'dart:html';
 
 import 'api.dart';
 import 'package:di/annotations.dart';
+import 'package:alcig/connectivity_state.dart';
 
 @Injectable()
 class ApiImpl implements Api {
   static const String _baseUrl = "app/";
   static final String _baseApiUrl = _baseUrl + "api/";
   static final String _basePubApiUrl = _baseApiUrl + "pub/";
-
-  ApiImpl();
   
+  ConnectivityState _connectivityState;
+  
+  // NOTE: use for notifications, check if it is still useful or must be put elsewhere
   StreamController<ServerEvent> _dispatcher = new StreamController.broadcast();
   Stream<ServerEvent> get stream => _dispatcher.stream;
+  
+  ApiImpl(ConnectivityState this._connectivityState);
   
   Future<HttpRequest> uploadInputs(dynamic formData){
       return HttpRequest.request(_baseApiUrl + "computeLci", method: "POST", sendData: formData)
@@ -46,8 +50,10 @@ class ApiImpl implements Api {
   
   void _manageError(ProgressEvent e)
   {
-    _dispatcher.add(ServerEvent.SERVER_ERROR);
-    throw e;
+    //_dispatcher.add(ServerEvent.SERVER_ERROR);
+    _connectivityState.loggedOut();
+    HttpRequest request = e.target;
+    throw request.status;
   }
 
 }

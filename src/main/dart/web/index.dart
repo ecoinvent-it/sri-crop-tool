@@ -3,6 +3,7 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/application_factory.dart';
 
+import 'package:alcig/connectivity_state.dart';
 import 'package:alcig/api/api.dart';
 import 'package:alcig/api/api_impl.dart';
 import 'package:alcig/api/local_notification_service.dart';
@@ -28,11 +29,11 @@ void main() {
 
 class MyAppModule extends Module {
   MyAppModule() {
-    Api api = new ApiImpl();
     bind(RouteInitializerFn, toValue: alcigRouteInitializer);
     bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false));
     bind(MenuWithSelection);
-    bind(Api, toValue: api);
+    bind(ConnectivityState);
+    bind(Api, toImplementation: ApiImpl);
     bind(LocalNotificationService);
     bind(ProcessGeneratorSteps);
     bind(NotificationModal);

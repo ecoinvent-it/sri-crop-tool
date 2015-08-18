@@ -3,6 +3,7 @@ library login.service;
 import 'dart:async';
 import 'package:di/annotations.dart';
 import 'package:alcig/login/login_api.dart';
+import 'package:alcig/connectivity_state.dart';
 
 @Injectable()
 class LoginService {
@@ -22,7 +23,14 @@ class LoginService {
   
   bool get isLoading => _isLoading;
   
-  LoginService(LoginApi this._loginApi);
+  LoginService(LoginApi this._loginApi, ConnectivityState connectivityState){
+    connectivityState.stream.listen( (StateEvent event) {
+      if (event == StateEvent.NOT_AUTHED && isLogged) {
+        _username = null;
+        _dispatcher.add(LoginEvent.LOG_OUT_BY_SERVER);
+      }
+    });
+  }
   
   void login(String username, String password) {
     if ( !isLoading ) {
@@ -30,19 +38,19 @@ class LoginService {
       _dispatcher.add(LoginEvent.AUTHENTICATING);
       
       _loginApi.login(username, password)
-               .then( (RequestResult status) {
+               .then( (AuthRequestResult status) {
                    switch ( status ) {
-                     case RequestResult.OK:
+                     case AuthRequestResult.OK:
                        _dispatcher.add(LoginEvent.AUTHENTICATED);
                        _username = username;
                        break;
-                     case RequestResult.WRONG_CREDENTIALS:
+                     case AuthRequestResult.WRONG_CREDENTIALS:
                        _dispatcher.add(LoginEvent.WRONG_CREDENTIALS);
                        break;
-                     case RequestResult.LOCKED_USER:
+                     case AuthRequestResult.LOCKED_USER:
                        _dispatcher.add(LoginEvent.LOCKED_USER);
                        break;
-                     case RequestResult.NON_VALIDATED_USER:
+                     case AuthRequestResult.NON_VALIDATED_USER:
                        _dispatcher.add(LoginEvent.NON_VALIDATED_USER);
                        break;
                      default:
@@ -63,7 +71,7 @@ class LoginService {
       _dispatcher.add(LoginEvent.LOGGING_OUT);
 
       _loginApi.logout()
-               .then((RequestResult rs) => _dispatcher.add(LoginEvent.LOGGED_OUT))
+               .then((AuthRequestResult rs) => _dispatcher.add(LoginEvent.LOGGED_OUT))
                .catchError( (e) {
                  print("Server error: $e");
                  _dispatcher.add(LoginEvent.LOG_OUT_UNSURE);
