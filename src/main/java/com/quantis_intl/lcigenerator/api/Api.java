@@ -188,6 +188,27 @@ public class Api
     }
 
     @POST
+    @Path("checkScsvGeneration")
+    public Response checkScsvGeneration(@FormParam("idResult") final String idResult,
+            @FormParam("filename") final String importedFilename,
+            @FormParam("dbOption") final String database)
+    {
+        if (idResult == null || importedFilename == null)
+        {
+            LOGGER.error("Bad request, idResult {} or filename {} is null", idResult, importedFilename);
+            return Response.status(Status.BAD_REQUEST).entity("idResult or filename is missing").build();
+        }
+
+        @SuppressWarnings("unchecked")
+        Map<String, String> modelsOutput = (Map<String, String>) SecurityUtils.getSubject().getSession()
+                .getAttribute(idResult);
+
+        Objects.requireNonNull(modelsOutput, "results not found");
+
+        return Response.ok().build();
+    }
+
+    @POST
     @Path("generateScsv")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public Response generateScsv(@FormParam("idResult") final String idResult,

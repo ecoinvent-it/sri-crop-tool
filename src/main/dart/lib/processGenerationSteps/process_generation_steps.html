@@ -39,14 +39,14 @@
 			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" ng-if="step != 0 || !isLogged"></div>
     </td>
     <td>
-      <form action="app/api/pub/generateScsv" method="post" ng-disabled="step != 1" style="display: block;">
+      <form action="app/api/generateScsv" ng-submit="checkScsvGeneration($event)" method="post" ng-disabled="step != 1" style="display: block;">
         <div id="step4" class="stepBtn" ng-class="{disabledStep: step == 0}">
 	        <div class="stepTitle text-big text-uppercase">Step 4</div>
-				  <input type="hidden" name="idResult" value="{{idResult}}"/>
-				  <input type="hidden" name="filename" value="{{filename}}"/>
 				  <input type="submit" id="scsvDownloadBtn" ng-disabled="step != 1"/>
 				  <div class="stepText">Get a ready-to-import file for Simapro</div>
 			  </div>
+	 	    <input type="hidden" name="idResult" value="{{idResult}}"/>
+        <input type="hidden" name="filename" value="{{filename}}"/>
 			  <div class="btn-group" data-toggle="buttons" ng-class="{'notVisible':step != 1}">
 				  <label class="btn btn-primary active dbOptionLabel">
 				    <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
@@ -56,7 +56,6 @@
 				  </label>
 				</div>
 			</form>
-			
 	  </td>
   </tr>
   

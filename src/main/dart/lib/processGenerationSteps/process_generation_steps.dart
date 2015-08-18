@@ -1,5 +1,6 @@
 library process_generation_steps;
 
+import 'dart:async';
 import 'dart:html';
 import 'dart:convert';
 import 'dart:js' as js;
@@ -134,6 +135,27 @@ class ProcessGeneratorSteps
       return cellA.compareTo(cellB);
     else
       return lineComparator;
+  }
+  
+  bool isChecked = false;
+
+  Future checkScsvGeneration(Event e) async
+  {
+    if (!isChecked)
+    {
+      e.preventDefault();
+      FormElement form = e.target;
+      String dbOption = (form.querySelector('input[name=dbOption]:checked') as RadioButtonInputElement).value;
+      Map data = new Map();
+      data["dbOption"] = dbOption;
+      data["idResult"] = idResult;
+      data["filename"] = filename;
+      await _api.checkScsvGeneration(data);
+      isChecked = true;
+      form.submit();
+    }
+    else
+      isChecked = false;
   }
 
 }
