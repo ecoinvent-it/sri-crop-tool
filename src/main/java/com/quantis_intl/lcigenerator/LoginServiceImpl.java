@@ -165,14 +165,19 @@ public class LoginServiceImpl implements LoginService
         if (existingUser != null)
         {
             LOG.warn("Trying to create a user with an already created username: {}", username);
-            throw new UserAlreadyExists(username);
+            throw new UsernameAlreadyExists(username);
         }
 
-        /*if (!areAllMandatoryFieldsFilled(user))
-            throw new MissingMandatoryFields();
-
+        String email = user.getEmail();
         if (!isEmailComplient(email))
-            throw new InvalidEmail(email);*/
+            throw new InvalidEmail(email);
+
+        User existingEmailUser = dao.get().getUserFromEmail(email);
+        if (existingEmailUser != null)
+        {
+            LOG.warn("Trying to create a user with an already created email: {}", email);
+            throw new EmailAlreadyExists(email);
+        }
 
         final String password = generatePassword();
         byte[] randomSalt = new byte[33];
@@ -186,6 +191,12 @@ public class LoginServiceImpl implements LoginService
         LOG.info("New user created ({}) with username: {}", savedUser.getId(), username);
 
         return password;
+    }
+
+    private boolean isEmailComplient(String email)
+    {
+        // FIXME Find a better regExp or another email validation solution
+        return email.matches("^([a-zA-Z0-9_\\.\\-+])+@(([a-zA-Z0-9-])+\\.)+([a-zA-Z0-9]{2,})+$");
     }
 
     static final String ALLOWED_SYMBOLS = "!@#$%&()*+,-./:;=?[]^_{}~";
@@ -221,14 +232,33 @@ public class LoginServiceImpl implements LoginService
         // TODO Auto-generated method stub
     }
 
-    public static class UserAlreadyExists extends RuntimeException
+    public static class UsernameAlreadyExists extends RuntimeException
     {
         private static final long serialVersionUID = -8416202217479939684L;
 
-        public UserAlreadyExists(String email)
+        public UsernameAlreadyExists(String username)
+        {
+            super(username);
+        }
+    }
+
+    public static class EmailAlreadyExists extends RuntimeException
+    {
+        private static final long serialVersionUID = 5919844603813070902L;
+
+        public EmailAlreadyExists(String email)
         {
             super(email);
         }
     }
 
+    public static class InvalidEmail extends RuntimeException
+    {
+        private static final long serialVersionUID = 5765614455487162295L;
+
+        public InvalidEmail(String email)
+        {
+            super(email);
+        }
+    }
 }

@@ -37,6 +37,9 @@ public interface LoginMapper
     @SelectProvider(type = UserQueryBuilder.class, method = "selectFromUsername")
     User getUserFromUsername(@Param(UserQueryBuilder.FIELD_USERNAME) String username);
 
+    @SelectProvider(type = UserQueryBuilder.class, method = "selectFromEmail")
+    User getUserFromEmail(@Param(UserQueryBuilder.FIELD_EMAIL) String email);
+
     @Options(useGeneratedKeys = true, keyProperty = "id")
     @InsertProvider(type = UserQueryBuilder.class, method = "insertUser")
     void insertUser(User user);
@@ -61,13 +64,14 @@ public interface LoginMapper
         static final String TABLE_NAME = "user_std";
         static final String FIELD_ID = "id";
         static final String FIELD_USERNAME = "username";
+        static final String FIELD_EMAIL = "email";
 
         static final ImmutableList<String> ALL_EXCEPT_ID_FIELDS = ImmutableList.of(
-                FIELD_USERNAME);
+                FIELD_USERNAME, FIELD_EMAIL);
 
         static final ImmutableList<String> ALL_FIELDS = ImmutableList.of(
                 FIELD_ID,
-                FIELD_USERNAME);
+                FIELD_USERNAME, FIELD_EMAIL);
 
         public String selectFromId()
         {
@@ -84,6 +88,15 @@ public interface LoginMapper
                     .SELECT("*")
                     .FROM(TABLE_NAME)
                     .WHERE_PARAM(FIELD_USERNAME)
+                    .toString();
+        }
+
+        public String selectFromEmail()
+        {
+            return new QsSQL()
+                    .SELECT("*")
+                    .FROM(TABLE_NAME)
+                    .WHERE_PARAM(FIELD_EMAIL)
                     .toString();
         }
 

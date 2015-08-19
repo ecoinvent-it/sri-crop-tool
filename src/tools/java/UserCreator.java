@@ -49,20 +49,25 @@ public class UserCreator
                 buildPropertiesModule(properties));
         service = injector.getInstance(LoginServiceImpl.class);
         // File file = new File(args[0]);
-        String usernames = "test";// Files.toString(file, Charset.forName("windows-1252"));
-        for (String username : usernames.split("\n"))
+        String usersString = "test2;test@plop.com";// Files.toString(file, Charset.forName("windows-1252"));
+        String[] users = usersString.split("\n");
+
+        for (String user : users)
         {
-            String pwd = generateUser(username);
-            System.out.println("\"" + username + "\";\"" + pwd + "\"");
+            String[] info = user.split(";");
+            String username = info[0];
+            String email = info[1];
+            String pwd = generateUser(username, email);
+            System.out.println("\"" + username + "\";\"" + email + "\";\"" + pwd + "\"");
         }
         // }
         // else
         // System.out.println("Args: fileForUsername");
     }
 
-    private static String generateUser(String username)
+    private static String generateUser(String username, String email)
     {
-        User user = new User(0, username);
+        User user = new User(0, username, email);
         return service.createUser(user);
     }
 

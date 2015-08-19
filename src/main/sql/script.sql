@@ -4,8 +4,10 @@ DROP TABLE IF EXISTS `user_std`;
 CREATE TABLE user_std (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `username` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `username_unique` (`username` ASC)
+  UNIQUE INDEX `username_unique` (`username` ASC),
+  UNIQUE INDEX `email_unique` (`email` ASC)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `user_pwd` (

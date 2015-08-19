@@ -28,6 +28,8 @@ public interface LoginDao
 
     User getUserFromUsername(String username);
 
+    User getUserFromEmail(String email);
+
     void createUser(User user, UserPwd userPwd);
 
     void updateUserInfo(User user);

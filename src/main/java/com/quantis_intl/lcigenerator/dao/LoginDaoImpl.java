@@ -49,6 +49,12 @@ public class LoginDaoImpl implements LoginDao
     }
 
     @Transactional
+    public User getUserFromEmail(String email)
+    {
+        return mapper.getUserFromEmail(email);
+    }
+
+    @Transactional
     public void createUser(User user, UserPwd userPwd)
     {
         mapper.insertUser(user);
