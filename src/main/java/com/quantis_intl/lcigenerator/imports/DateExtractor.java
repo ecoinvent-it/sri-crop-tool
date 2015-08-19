@@ -72,7 +72,7 @@ public class DateExtractor
                         .warning(
                                 ImmutableMap.of("cell", POIHelper.getCellCoordinates(dataCell), "label",
                                         POIHelper.getCellStringValue(labelCell, key)),
-                                "We can't read the entered date. Please format your cell as a date, or enter the date in the expected format (dd.mm.yy). For now ee will use the default value, if available.");
+                                "We can't read the entered date. Please format your cell as a date, or enter the date in the expected format (dd.mm.yy). For now we will use the default value, if available.");
                 return Optional.empty();
             }
         }
