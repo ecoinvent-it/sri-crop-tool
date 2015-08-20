@@ -1,0 +1,21 @@
+<div ng-if="!isLoading && isLogged">
+ <div>Welcome {{username}}!</div>
+ <button type="button" class="qts-btn qts-btn-style3" ng-click="logout()">Logout</button>
+</div>
+
+<!-- Force Change Password Modal -->
+<div class="modal topBottomAnimation" id="forceChangePwdModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <div class="color1 loginTitle">Change password</div>
+      </div>
+      <div class="modal-body">
+        <h4 class="color1">
+          You must change your password before going further
+        </h4>
+        <change-password-box></change-password-box>
+      </div>
+    </div>
+  </div>
+</div>

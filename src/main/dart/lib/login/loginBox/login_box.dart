@@ -2,13 +2,14 @@ library login.login_box;
 
 import 'dart:async';
 import 'package:angular/angular.dart';
-import 'login_service.dart';
+import 'package:alcig/login/login_service.dart';
 
 @Component(
     selector: 'login-box',
-    templateUrl: 'packages/alcig/login/login_box.html',
+    templateUrl: 'packages/alcig/login/loginBox/login_box.html',
     useShadowDom: false)
-class LoginBox implements AttachAware, DetachAware{
+class LoginBox implements AttachAware, DetachAware
+{
    bool isLogged = false;
    bool isLoading = false;
    String errorMessage = "";
@@ -64,6 +65,8 @@ class LoginBox implements AttachAware, DetachAware{
         break;
       case LoginEvent.LOG_OUT_BY_SERVER:
         errorMessage = "Your session have been reinitialized. Please log in again";
+        break;
+      default:
         break;
     }
   }

@@ -69,6 +69,12 @@ public class LoginServiceImpl implements LoginService
         return user.getId();
     }
 
+    public boolean mustForcePasswordForUser(int userId)
+    {
+        UserPwd userPwd = dao.get().getUserPwdFromUserId(userId);
+        return userPwd.getForceChangePassword();
+    }
+
     private User getExistingUser(String username)
     {
         User user = dao.get().getUserFromUsername(username);
@@ -232,6 +238,33 @@ public class LoginServiceImpl implements LoginService
         // TODO Auto-generated method stub
     }
 
+    public void changePassword(int userId, String currentPassword, String newPassword)
+    {
+        UserPwd userPwd = dao.get().getUserPwdFromUserId(userId);
+        if (!isRightPassword(currentPassword, userPwd))
+        {
+            LOG.warn("Change password failed for user {}, wrong current password", userId);
+            throw new ChangePasswordFailed(ChangePasswordFailedReason.WRONG_CURRENT_PASSWORD);
+        }
+
+        if (!isPasswordComplient(newPassword))
+        {
+            LOG.warn("Change password failed for user {}, invalid new password", userId);
+            throw new ChangePasswordFailed(ChangePasswordFailedReason.INVALID_NEW_PASSWORD);
+        }
+
+        userPwd.setPassword(hashString(newPassword, userPwd.getBase64salt()));
+        userPwd.setForceChangePassword(false);
+        dao.get().updatePassword(userPwd);
+        LOG.info("Password changed for user {}", userId);
+    }
+
+    protected boolean isPasswordComplient(String password)
+    {
+        // TODO: Implement password rules
+        return password.length() >= 8;
+    }
+
     public static class UsernameAlreadyExists extends RuntimeException
     {
         private static final long serialVersionUID = -8416202217479939684L;
@@ -259,6 +292,24 @@ public class LoginServiceImpl implements LoginService
         public InvalidEmail(String email)
         {
             super(email);
+        }
+    }
+
+    public static enum ChangePasswordFailedReason
+    {
+        WRONG_CURRENT_PASSWORD,
+        INVALID_NEW_PASSWORD
+    }
+
+    public static class ChangePasswordFailed extends RuntimeException
+    {
+        private static final long serialVersionUID = 3828020110649046469L;
+        public final ChangePasswordFailedReason reason;
+
+        public ChangePasswordFailed(ChangePasswordFailedReason reason)
+        {
+            super(reason.toString());
+            this.reason = reason;
         }
     }
 }

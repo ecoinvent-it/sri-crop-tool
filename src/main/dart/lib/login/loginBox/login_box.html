@@ -1,0 +1,15 @@
+<div ng-if="!isLogged">
+
+  <div class="color1 uppercase loginTitle">Login</div>
+  <form id="loginForm" ng-submit="loginSubmit()">
+    <div class="color1 text5 formFieldTitle">Username</div>
+    <input class="text5 loginInput" name="login" ng-model="username" ng-disabled="isLoading">
+    <div class="color1 text5">Password</div>
+    <input class="text5 loginInput lastInput" name="password" type="password" ng-model="password" ng-disabled="isLoading"/>
+    <div>
+       <button id="loginSubmit" type="submit" class="qts-btn qts-btn-style3" ng-disabled="isLoading">Sign in</button>
+       <img ng-class="{'notVisible':!isLoading}" id="loginLoaderImg" src="img/ajax-loader.gif"/>
+    </div>
+     <div class="errorMsg">{{errorMessage}}</div>
+  </form>
+</div>

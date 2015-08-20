@@ -1,4 +1,4 @@
-#loginTitle
+.loginTitle
 {
 	font-weight: bold;
 	font-size: 25px;
@@ -9,7 +9,7 @@ form > .loginInput
 	width: 220px;
 }
 
-#passwordInput
+form > .lastInput
 {
 	margin-bottom: 10px;
 }
@@ -24,9 +24,15 @@ form > .loginInput
 	margin-lect: 10px;
 }
 
-#loginError
+.errorMsg
 {
   height: 25px;
   color: red;
   margin-top: 5px;
+}
+
+#forceChangePwdModal .modal-body
+{
+	padding-left: 75px;
+	padding-right: 75px;
 }

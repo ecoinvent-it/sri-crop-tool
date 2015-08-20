@@ -16,6 +16,8 @@ class LoginService {
   String _username;
     
   bool _isLoading = false;
+  
+  bool forceChangePassword = false;
 
   String get username => _username;
       
@@ -32,54 +34,114 @@ class LoginService {
     });
   }
   
-  void login(String username, String password) {
-    if ( !isLoading ) {
+  Future login(String username, String password) async 
+  {
+    if ( !isLoading ) 
+    {
       _isLoading = true;
       _dispatcher.add(LoginEvent.AUTHENTICATING);
-      
-      _loginApi.login(username, password)
-               .then( (AuthRequestResult status) {
-                   switch ( status ) {
-                     case AuthRequestResult.OK:
-                       _dispatcher.add(LoginEvent.AUTHENTICATED);
-                       _username = username;
-                       break;
-                     case AuthRequestResult.WRONG_CREDENTIALS:
-                       _dispatcher.add(LoginEvent.WRONG_CREDENTIALS);
-                       break;
-                     case AuthRequestResult.LOCKED_USER:
-                       _dispatcher.add(LoginEvent.LOCKED_USER);
-                       break;
-                     case AuthRequestResult.NON_VALIDATED_USER:
-                       _dispatcher.add(LoginEvent.NON_VALIDATED_USER);
-                       break;
-                     default:
-                       throw status;
-                   }
-               })
-               .catchError( (e) {
-                        print("Server error: $e");
-                        _dispatcher.add(LoginEvent.SERVER_ERROR);
-                      })
-               .whenComplete(() => _isLoading = false);
+    
+      try
+      {
+        AuthRequestResult res = await _loginApi.login(username, password);
+        switch ( res ) 
+        {
+           case AuthRequestResult.OK:
+             _dispatcher.add(LoginEvent.AUTHENTICATED);
+             _username = username;
+             _getStatus();
+             break;
+           case AuthRequestResult.WRONG_CREDENTIALS:
+             _dispatcher.add(LoginEvent.WRONG_CREDENTIALS);
+             break;
+           case AuthRequestResult.LOCKED_USER:
+             _dispatcher.add(LoginEvent.LOCKED_USER);
+             break;
+           case AuthRequestResult.NON_VALIDATED_USER:
+             _dispatcher.add(LoginEvent.NON_VALIDATED_USER);
+             break;
+         }
+      }
+      catch(e)
+      {
+        print("Server error: $e");
+        _dispatcher.add(LoginEvent.SERVER_ERROR);
+      }
+      _isLoading = false;
     }
   }
   
-  void logout() {
-    if ( ! isLoading ) {
+  Future logout() async 
+  {
+    if ( ! isLoading ) 
+    {
       _isLoading = true;
       _dispatcher.add(LoginEvent.LOGGING_OUT);
 
-      _loginApi.logout()
-               .then((AuthRequestResult rs) => _dispatcher.add(LoginEvent.LOGGED_OUT))
-               .catchError( (e) {
-                 print("Server error: $e");
-                 _dispatcher.add(LoginEvent.LOG_OUT_UNSURE);
-               })
-               .whenComplete(() {
-                 _isLoading = false;
-                 _username = null;
-               });
+      try
+      {
+        await _loginApi.logout();
+        _dispatcher.add(LoginEvent.LOGGED_OUT);
+      }
+      catch(e)
+      {
+        print("Server error: $e");
+        _dispatcher.add(LoginEvent.LOG_OUT_UNSURE);
+      }
+      _isLoading = false;
+      _username = null;
+    }
+  }
+  
+  Future _getStatus() async
+  {
+    try
+    {
+      StatusResult status = await _loginApi.getStatus();
+      switch(status)
+      {
+        case StatusResult.OK:
+          break;
+        case StatusResult.MUST_CHANGE_PASSWORD:
+          forceChangePassword = true;
+          _dispatcher.add(LoginEvent.FORCE_PASSWORD_CHANGE);
+      }
+    }
+    catch(e)
+    {
+      print("Server error: $e");
+      _dispatcher.add(LoginEvent.LOG_OUT_UNSURE);
+    }
+  }
+  
+  Future changePassword(String oldPassword, String newPassword) async
+  {
+    if ( ! isLoading ) 
+    {
+      _isLoading = true;
+      try
+      {
+        ChangePasswordResult result = await _loginApi.changePassword(oldPassword, newPassword);
+        switch(result)
+        {
+          case ChangePasswordResult.OK:
+            forceChangePassword = false;
+            _dispatcher.add(LoginEvent.PASSWORD_CHANGED);
+            break;
+          case ChangePasswordResult.WRONG_PASSWORD:
+            _dispatcher.add(LoginEvent.WRONG_CURRENT_PASSWORD);
+            break;
+          case ChangePasswordResult.INVALID_NEW_PASSWORD:
+            _dispatcher.add(LoginEvent.INVALID_NEW_PASSWORD);
+            break;
+        }
+      }
+      catch(e)
+      {
+        print("Server error: $e");
+        _dispatcher.add(LoginEvent.LOG_OUT_UNSURE);
+      }
+      _isLoading = false;
     }
   }
 }
@@ -93,6 +155,10 @@ enum LoginEvent {
   SERVER_ERROR,
   LOGGING_OUT,
   LOGGED_OUT,
+  FORCE_PASSWORD_CHANGE,
+  PASSWORD_CHANGED,
+  WRONG_CURRENT_PASSWORD,
+  INVALID_NEW_PASSWORD,
   LOG_OUT_UNSURE,
   LOG_OUT_BY_SERVER
 }

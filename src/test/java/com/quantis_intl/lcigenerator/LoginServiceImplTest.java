@@ -19,7 +19,10 @@
 package com.quantis_intl.lcigenerator;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +33,8 @@ import javax.inject.Provider;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.quantis_intl.lcigenerator.LoginServiceImpl.ChangePasswordFailed;
+import com.quantis_intl.lcigenerator.LoginServiceImpl.ChangePasswordFailedReason;
 import com.quantis_intl.lcigenerator.LoginServiceImpl.EmailAlreadyExists;
 import com.quantis_intl.lcigenerator.LoginServiceImpl.InvalidEmail;
 import com.quantis_intl.lcigenerator.LoginServiceImpl.UsernameAlreadyExists;
@@ -50,9 +55,24 @@ public class LoginServiceImplTest
         }
     });
 
-    static final String correctBase64salt = "hQbHYPFuOxvlKDO1tIeN9IloV3Rtt8EHt1Z2SSGX1CV1";
-    static final String correctHashedPassword = "sha512:eb62accaa6af446fff312872cae3e7e0e2616245c3fb964a6c5a89fc275351df9e2392e83ce014de1c42fa47f5e822ae5c2deaf807aa8cb01cc1767c6c180fb2";
-    static final String correctPassword = "A.4VpADL2m8";
+    static final String CORRECT_BASE64_SALT = "hQbHYPFuOxvlKDO1tIeN9IloV3Rtt8EHt1Z2SSGX1CV1";
+    static final String CORRECT_HASHED_PWD = "sha512:eb62accaa6af446fff312872cae3e7e0e2616245c3fb964a6c5a89fc275351df9e2392e83ce014de1c42fa47f5e822ae5c2deaf807aa8cb01cc1767c6c180fb2";
+    static final String CORRECT_PWD = "A.4VpADL2m8";
+
+    static final int DEFAULT_USER_ID = 1;
+    static final String DEFAULT_USERNAME = "existingUsername";
+    static final String DEFAULT_EMAIL = "existing@mail.com";
+
+    public User buildDefaultUser()
+    {
+        return new User(DEFAULT_USER_ID, DEFAULT_USERNAME, DEFAULT_EMAIL);
+    }
+
+    public UserPwd buildDefaultUserPwd()
+    {
+        return new UserPwd(DEFAULT_USER_ID, CORRECT_BASE64_SALT, CORRECT_HASHED_PWD,
+                false, 0, null, null, null, null);
+    }
 
     @Before
     public void beforeEachTest()
@@ -63,15 +83,10 @@ public class LoginServiceImplTest
     @Test
     public void getAuthenticUserId_ShouldPass()
     {
-        final String username = "existingUsername";
-        User user = new User(1, username, "existing@mail.com");
-        UserPwd userPwd = new UserPwd(
-                1, correctBase64salt, correctHashedPassword,
-                false, 0, null, null, null, null);
-        loginDao.createUser(user, userPwd);
+        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
 
-        Object userId = loginService.getAuthenticUserId(username, correctPassword);
-        assertEquals(1, userId);
+        Object userId = loginService.getAuthenticUserId(DEFAULT_USERNAME, CORRECT_PWD);
+        assertEquals(DEFAULT_USER_ID, userId);
     }
 
     @Test
@@ -79,9 +94,7 @@ public class LoginServiceImplTest
     {
         final String username = "withNoFailedAttemp";
         User user = new User(1, username, "");
-        UserPwd userPwd = new UserPwd(
-                1, correctBase64salt, correctHashedPassword,
-                false, 0, null, null, null, null);
+        UserPwd userPwd = buildDefaultUserPwd();
         loginDao.createUser(user, userPwd);
 
         try
@@ -104,9 +117,8 @@ public class LoginServiceImplTest
     {
         final String username = "userWithAlmostMaxAttemps";
         User user = new User(1, username, "");
-        UserPwd userPwd = new UserPwd(
-                1, correctBase64salt, correctHashedPassword,
-                false, 7, null, null, null, null);
+        UserPwd userPwd = buildDefaultUserPwd();
+        userPwd.setFailedAttemps(7);
         loginDao.createUser(user, userPwd);
 
         try
@@ -129,9 +141,9 @@ public class LoginServiceImplTest
     {
         final String username = "userNewlyLocked";
         User user = new User(1, username, "");
-        UserPwd userPwd = new UserPwd(
-                1, correctBase64salt, correctHashedPassword,
-                false, 8, new Date(), null, null, null);
+        UserPwd userPwd = buildDefaultUserPwd();
+        userPwd.setFailedAttemps(8);
+        userPwd.setLockedSince(new Date());
         loginDao.createUser(user, userPwd);
 
         try
@@ -154,12 +166,12 @@ public class LoginServiceImplTest
     {
         final String username = "userLockedSinceALongTime";
         User user = new User(1, username, "");
-        UserPwd userPwd = new UserPwd(
-                1, correctBase64salt, correctHashedPassword,
-                false, 8, new Date(123), null, null, null);
+        UserPwd userPwd = buildDefaultUserPwd();
+        userPwd.setFailedAttemps(8);
+        userPwd.setLockedSince(new Date(123));
         loginDao.createUser(user, userPwd);
 
-        loginService.getAuthenticUserId(username, correctPassword);
+        loginService.getAuthenticUserId(username, CORRECT_PWD);
 
         User persistedUser = loginDao.getUserFromUsername(username);
         UserPwd persistedPwd = loginDao.getUserPwdFromUserId(persistedUser.getId());
@@ -186,14 +198,13 @@ public class LoginServiceImplTest
     {
         final String username = "userLockedSinceALongTime";
         User user = new User(1, username, "");
-        UserPwd userPwd = new UserPwd(
-                1, correctBase64salt, correctHashedPassword,
-                false, 0, null, "registrationCode", null, null);
+        UserPwd userPwd = buildDefaultUserPwd();
+        userPwd.setRegistrationCode("registrationCode");
         loginDao.createUser(user, userPwd);
 
         try
         {
-            loginService.getAuthenticUserId(username, correctPassword);
+            loginService.getAuthenticUserId(username, CORRECT_PWD);
             assertNotNull(null);
         }
         catch (LoginService.LoginFailed e)
@@ -226,37 +237,102 @@ public class LoginServiceImplTest
     @Test(expected = UsernameAlreadyExists.class)
     public void createUser_shouldForbidExistingUsername()
     {
-        final String username = "existingUsername";
-        User user = new User(1, username, "existing@mail.com");
-        UserPwd userPwd = new UserPwd(
-                1, correctBase64salt, correctHashedPassword,
-                false, 0, null, null, null, null);
-        loginDao.createUser(user, userPwd);
+        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
 
-        User newUser = new User(2, username, "wert@dsfg.co");
+        User newUser = new User(2, DEFAULT_USERNAME, "wert@dsfg.co");
         loginService.createUser(newUser);
     }
 
     @Test(expected = EmailAlreadyExists.class)
     public void createUser_shouldForbidExistingEmail()
     {
-        User user = new User(1, "existingUsername", "existing@mail.com");
-        UserPwd userPwd = new UserPwd(
-                1, correctBase64salt, correctHashedPassword,
-                false, 0, null, null, null, null);
-        loginDao.createUser(user, userPwd);
+        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
 
         final String username = "newUserWithExistingEmail";
-        User newUser = new User(2, username, "existing@mail.com");
+        User newUser = new User(2, username, DEFAULT_EMAIL);
         loginService.createUser(newUser);
+    }
+
+    @Test
+    public void mustForcePasswordForUser_ShouldBeTrue()
+    {
+        UserPwd userPwd = buildDefaultUserPwd();
+        userPwd.setForceChangePassword(true);
+        loginDao.createUser(buildDefaultUser(), userPwd);
+
+        assertTrue("should be true", loginService.mustForcePasswordForUser(DEFAULT_USER_ID));
+    }
+
+    @Test
+    public void mustForcePasswordForUser_ShouldBeFalse()
+    {
+        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
+
+        assertFalse("should be true", loginService.mustForcePasswordForUser(DEFAULT_USER_ID));
+    }
+
+    @Test
+    public void changePassword_ShouldPass()
+    {
+        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
+
+        loginService.changePassword(DEFAULT_USER_ID, CORRECT_PWD, "12345678");
+
+        UserPwd newUserPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
+        assertNotEquals("hashedPassword should have changed", CORRECT_HASHED_PWD, newUserPwd.getPassword());
+    }
+
+    @Test
+    public void changePassword_ShouldPass_ForcedPassword()
+    {
+        UserPwd userPwd = buildDefaultUserPwd();
+        userPwd.setForceChangePassword(true);
+        loginDao.createUser(buildDefaultUser(), userPwd);
+
+        loginService.changePassword(DEFAULT_USER_ID, CORRECT_PWD, "12345678");
+
+        UserPwd newUserPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
+        assertFalse("hashedPassword should have changed", newUserPwd.getForceChangePassword());
+    }
+
+    @Test
+    public void changePassword_ShouldForbidTooShortNewPassword()
+    {
+        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
+
+        try
+        {
+            loginService.changePassword(DEFAULT_USER_ID, CORRECT_PWD, "1234567");
+            assertNotNull(null);
+        }
+        catch (ChangePasswordFailed e)
+        {
+            assertEquals("wrong reason", ChangePasswordFailedReason.INVALID_NEW_PASSWORD, e.reason);
+        }
+    }
+
+    @Test
+    public void changePassword_ShouldFail_WrongCurrentPassword()
+    {
+        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
+
+        try
+        {
+            loginService.changePassword(DEFAULT_USER_ID, "wrongPassword", "12345678");
+            assertNotNull(null);
+        }
+        catch (ChangePasswordFailed e)
+        {
+            assertEquals("wrong reason", ChangePasswordFailedReason.WRONG_CURRENT_PASSWORD, e.reason);
+        }
     }
 
     private class LoginDaoForTest implements LoginDao
     {
-        Map<String, User> usersFromUsername = new HashMap<>();
-        Map<Integer, User> usersFromId = new HashMap<>();
-        Map<String, User> usersFromEmail = new HashMap<>();
-        Map<Integer, UserPwd> userPwdsFormId = new HashMap<>();
+        private Map<String, User> usersFromUsername = new HashMap<>();
+        private Map<Integer, User> usersFromId = new HashMap<>();
+        private Map<String, User> usersFromEmail = new HashMap<>();
+        private Map<Integer, UserPwd> userPwdsFormId = new HashMap<>();
 
         @Override
         public User getUserFromId(int id)

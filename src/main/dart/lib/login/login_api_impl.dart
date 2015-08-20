@@ -10,6 +10,7 @@ import 'package:alcig/connectivity_state.dart';
 @Injectable()
 class LoginApiImpl implements LoginApi {
   static const String _baseUrl = "app/";
+  static final String _basePrincipalUrl = _baseUrl + "api/principal/";
   
   ConnectivityState _connectivityState;
 
@@ -23,10 +24,9 @@ class LoginApiImpl implements LoginApi {
     
     try
     {
-      HttpRequest httpRequest = await HttpRequest.postFormData(_baseUrl + "login", params);
+      await HttpRequest.postFormData(_baseUrl + "login", params);
       _connectivityState..restoreOnline()..loggedIn();
-      return httpRequest.responseText.contains("CHANGE_PASSWORD") ? 
-              AuthRequestResult.OK_BUT_CHANGE_PASSWORD : AuthRequestResult.OK;
+      return AuthRequestResult.OK;
     }
     catch(e)
     {
@@ -72,4 +72,62 @@ class LoginApiImpl implements LoginApi {
     }
 
   }
+  
+  Future<StatusResult> getStatus() async
+  {
+    try
+    {
+      String response = await HttpRequest.getString(_basePrincipalUrl + "getStatus");
+      switch(response)
+      {
+        case "true":
+          return StatusResult.OK;
+        case "false":
+          return StatusResult.MUST_CHANGE_PASSWORD;
+        default:
+          throw response;
+      }
+    }
+    catch(e)
+    {
+      _manageError(e);
+    }
+  }
+  
+  //TODO: In case of failure, we should retry
+  Future<ChangePasswordResult> changePassword(String oldPassword, String newPassword) async
+  {
+    try
+    {
+      await  HttpRequest.postFormData(_basePrincipalUrl + "changePassword",
+                                  {"oldPassword": oldPassword, "newPassword": newPassword});
+      return ChangePasswordResult.OK;
+    }
+    catch(e)
+    {
+      HttpRequest request = e.target;
+      if ( request.status == 400 ) 
+      {
+        switch (request.responseText) 
+        {
+          case 'WRONG_CURRENT_PASSWORD':
+            return ChangePasswordResult.WRONG_PASSWORD;
+          case 'INVALID_NEW_PASSWORD':
+            return ChangePasswordResult.INVALID_NEW_PASSWORD;
+          default:
+            throw request;
+        }
+      }
+      else
+        _manageError(e);
+    }
+  }
+  
+  void _manageError(ProgressEvent e)
+  {
+    _connectivityState.loggedOut();
+    HttpRequest request = e.target;
+    throw request.status;
+  }
+
 }

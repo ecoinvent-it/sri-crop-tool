@@ -21,6 +21,7 @@ package com.quantis_intl.lcigenerator.guice;
 import com.google.inject.AbstractModule;
 import com.quantis_intl.lcigenerator.LoginServiceImpl;
 import com.quantis_intl.lcigenerator.api.Api;
+import com.quantis_intl.lcigenerator.api.PrincipalApi;
 import com.quantis_intl.lcigenerator.api.PublicApi;
 import com.quantis_intl.lcigenerator.dao.LoginDao;
 import com.quantis_intl.lcigenerator.dao.LoginDaoImpl;
@@ -35,5 +36,6 @@ public class CoreModule extends AbstractModule
         bind(LoginService.class).to(LoginServiceImpl.class);
         bind(Api.class);
         bind(PublicApi.class);
+        bind(PrincipalApi.class);
     }
 }
