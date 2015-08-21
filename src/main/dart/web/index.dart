@@ -21,6 +21,7 @@ import 'package:alcig/notificationModal/notification_modal.dart';
 import 'package:alcig/processGenerationSteps/process_generation_steps.dart';
 import 'package:alcig/toolPage/tool_page.dart';
 import 'package:alcig/faqPage/faq_page.dart';
+import 'package:alcig/parametersPage/parameters_page.dart';
 
 void main() {
   applicationFactory()
@@ -42,6 +43,7 @@ class MyAppModule extends Module {
     bind(ToolPage);
     bind(ContactPage);
     bind(FaqPage);
+    bind(ParametersPage);
     bind(LoginApi, toImplementation: LoginApiImpl);
     bind(LoginService);
     bind(LoginBox);
@@ -63,6 +65,9 @@ void alcigRouteInitializer(Router router, RouteViewFactory views) {
         viewHtml: '<contact-page></contact-page>'),
     'faq': ngRoute(
             path: 'faq',
-            viewHtml: '<faq-page></faq-page>')
+            viewHtml: '<faq-page></faq-page>'),
+    'parameters': ngRoute(
+                path: 'parameters',
+                viewHtml: '<params-page></params-page>')
   });
 }

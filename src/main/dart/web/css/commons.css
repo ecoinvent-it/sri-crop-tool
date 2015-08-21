@@ -122,6 +122,17 @@ table img
   min-height: 20px;
 }
 
+.qts-icon-btn
+{
+	border: 0px;
+  margin: 5px 0px;
+  padding: 8px;
+  text-align: center;
+  min-width: 40px;
+  cursor: pointer;
+  min-height: 20px;
+}
+
 .qts-btn-style1
 {
   color: white;

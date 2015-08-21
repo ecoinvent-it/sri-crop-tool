@@ -22,6 +22,9 @@ class UserBox implements AttachAware, DetachAware
   UserBox(LoginService this._loginService);
   
   void attach() {
+    isLoading = _loginService.isLoading;
+    isLogged = _loginService.isLogged;
+    forceChangePassword = _loginService.forceChangePassword;
     _userSubscription = _loginService.stream.listen(_onUserData);
   }
   
@@ -31,8 +34,8 @@ class UserBox implements AttachAware, DetachAware
   }
   
   void _onUserData(LoginEvent event) {
-    isLogged = _loginService.isLogged;
     isLoading = _loginService.isLoading;
+    isLogged = _loginService.isLogged;
     forceChangePassword = _loginService.forceChangePassword;
     switch ( event) {
       case LoginEvent.AUTHENTICATED:
@@ -42,6 +45,8 @@ class UserBox implements AttachAware, DetachAware
         _displayModal("#forceChangePwdModal");
         break;
       case LoginEvent.PASSWORD_CHANGED:
+        new Timer(new Duration(seconds: 2), () => _hideModal("#forceChangePwdModal"));
+        break;
       case LoginEvent.LOGGED_OUT:
       case LoginEvent.LOG_OUT_UNSURE:
       case LoginEvent.LOG_OUT_BY_SERVER:

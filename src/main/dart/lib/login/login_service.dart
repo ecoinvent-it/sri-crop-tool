@@ -17,7 +17,7 @@ class LoginService {
     
   bool _isLoading = false;
   
-  bool forceChangePassword = false;
+  bool forceChangePassword = true;
 
   String get username => _username;
       

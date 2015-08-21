@@ -22,6 +22,8 @@ class LoginBox implements AttachAware, DetachAware
   LoginBox(LoginService this._loginService);
   
   void attach() {
+    isLogged = _loginService.isLogged;
+    isLoading = _loginService.isLoading;
     _userSubscription = _loginService.stream.listen(_onUserData);
   }
   

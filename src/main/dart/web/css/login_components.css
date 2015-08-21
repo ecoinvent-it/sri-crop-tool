@@ -21,18 +21,28 @@ form > .lastInput
 
 #loginLoaderImg
 {
-	margin-lect: 10px;
+	margin-left: 10px;
+}
+
+.msgContainer
+{
+	height: 25px;
+	margin-top: 5px;
 }
 
 .errorMsg
 {
-  height: 25px;
   color: red;
-  margin-top: 5px;
 }
 
 #forceChangePwdModal .modal-body
 {
 	padding-left: 75px;
 	padding-right: 75px;
+}
+
+#forceChangePwdModal .changePasswordBtns,
+#forceChangePwdModal .msgContainer
+{
+	text-align: center;
 }

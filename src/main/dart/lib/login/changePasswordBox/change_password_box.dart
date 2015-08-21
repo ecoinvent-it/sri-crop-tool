@@ -17,6 +17,7 @@ class ChangePasswordBox implements AttachAware, DetachAware
   bool isLoading = false;
   bool forceChangePassword;
   String errorMessage = "";
+  String successMessage = "";
   
   LoginService _loginService;
   StreamSubscription _userSubscription;
@@ -28,6 +29,8 @@ class ChangePasswordBox implements AttachAware, DetachAware
   
   void attach() 
   {
+    isLoading = _loginService.isLoading;
+    forceChangePassword = _loginService.forceChangePassword;
     _userSubscription = _loginService.stream.listen(_onUserData);
   }
     
@@ -40,9 +43,10 @@ class ChangePasswordBox implements AttachAware, DetachAware
   void _onUserData(LoginEvent event) 
   {
     isLoading = _loginService.isLoading;
-    forceChangePassword = _loginService.forceChangePassword;
+    successMessage = "";
     switch ( event) {
       case LoginEvent.PASSWORD_CHANGED:
+        successMessage = "Your password has been changed.";
         errorMessage = "";
         oldPassword = "";
         newPassword = "";
