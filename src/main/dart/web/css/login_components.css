@@ -19,9 +19,15 @@ form > .lastInput
 	display: inline;
 }
 
-#loginLoaderImg
+.loginLoaderImg
 {
 	margin-left: 10px;
+}
+
+.loginLink
+{
+	text-decoration: underline;
+	cursor: pointer;
 }
 
 .msgContainer
@@ -35,14 +41,14 @@ form > .lastInput
   color: red;
 }
 
-#forceChangePwdModal .modal-body
+.loginModal .modal-body
 {
 	padding-left: 75px;
 	padding-right: 75px;
 }
 
 #forceChangePwdModal .changePasswordBtns,
-#forceChangePwdModal .msgContainer
+.loginModal .msgContainer
 {
 	text-align: center;
 }

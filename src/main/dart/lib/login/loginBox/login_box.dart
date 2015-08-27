@@ -1,6 +1,8 @@
 library login.login_box;
 
 import 'dart:async';
+import 'dart:html';
+import 'dart:js' as js;
 import 'package:angular/angular.dart';
 import 'package:alcig/login/login_service.dart';
 
@@ -15,6 +17,9 @@ class LoginBox implements AttachAware, DetachAware
    String errorMessage = "";
    String username = "";
    String password = "";
+   
+  final String idForgotPasswordModal = "#forgotPasswordModal";
+  bool isForgotPwdModalOpened = false;
   
   LoginService _loginService;
   StreamSubscription _userSubscription;
@@ -65,6 +70,9 @@ class LoginBox implements AttachAware, DetachAware
       case LoginEvent.LOG_OUT_UNSURE:
         username = "";//TODO: Should we add a message?
         break;
+      case LoginEvent.PASSWORD_RESET:
+        new Timer(new Duration(seconds: 2), () => _hideModal(idForgotPasswordModal));
+        break;
       case LoginEvent.LOG_OUT_BY_SERVER:
         errorMessage = "Your session have been reinitialized. Please log in again";
         break;
@@ -79,5 +87,36 @@ class LoginBox implements AttachAware, DetachAware
   
   void logout() {
     _loginService.logout();
+  }
+  
+  void openForgotPwdPopUp()
+  {
+    isForgotPwdModalOpened = true;
+    _displayModal(idForgotPasswordModal);
+    _listenModalClosing(idForgotPasswordModal, _onForgotPwdModalClosed);
+  }
+  
+  void _onForgotPwdModalClosed(e)
+  {
+    isForgotPwdModalOpened = false;
+  }
+  
+  void _hideModal(String id)
+  {
+    js.context.callMethod(r'$', [id])
+                  .callMethod('modal', ['hide']);
+  }
+  
+  void _displayModal(String id)
+  {
+    js.context.callMethod(r'$', [id])
+                  .callMethod('modal', [new js.JsObject.jsify({'show': 'true'})]);
+  }
+  
+  void _listenModalClosing(String id, Function callback)
+  {
+    // NOTE: Must be done when modal is displayed, otherwise it doesn't work
+    js.context.callMethod(r'$', [id])
+        .callMethod('on', ['hidden.bs.modal', callback]);
   }
 }

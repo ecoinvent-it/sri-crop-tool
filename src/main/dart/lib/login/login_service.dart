@@ -144,6 +144,66 @@ class LoginService {
       _isLoading = false;
     }
   }
+  
+  Future forgotPassword(String email) async
+  {
+    if ( ! isLoading ) 
+    {
+      _isLoading = true;
+      try
+      {
+        ForgotPasswordResult result = await _loginApi.forgotPassword(email);
+        switch(result)
+        {
+          case ForgotPasswordResult.OK:
+            _dispatcher.add(LoginEvent.VALIDATION_CODE_SENT);
+            break;
+          case ForgotPasswordResult.USER_ACTIVATION_PENDING:
+            _dispatcher.add(LoginEvent.USER_ACTIVATION_PENDING);
+            break;
+        }
+      }
+      catch(e)
+      {
+        print("Server error: $e");
+        _dispatcher.add(LoginEvent.LOG_OUT_UNSURE);
+      }
+      _isLoading = false;
+    }
+  }
+  
+  Future resetPassword(String email, String validationCode, String newPassword) async
+    {
+      if ( ! isLoading ) 
+      {
+        _isLoading = true;
+        try
+        {
+          ResetPasswordResult result = await _loginApi.resetPassword(email, validationCode, newPassword);
+          switch(result)
+          {
+            case ResetPasswordResult.OK:
+              _dispatcher.add(LoginEvent.PASSWORD_RESET);
+              break;
+            case ResetPasswordResult.EXPIRED_VALIDATION_CODE:
+              _dispatcher.add(LoginEvent.EXPIRED_VALIDATION_CODE);
+              break;
+            case ResetPasswordResult.INVALID_NEW_PASSWORD:
+              _dispatcher.add(LoginEvent.INVALID_NEW_PASSWORD);
+              break;
+            case ResetPasswordResult.WRONG_VALIDATION_CODE:
+              _dispatcher.add(LoginEvent.WRONG_VALIDATION_CODE);
+              break;
+          }
+        }
+        catch(e)
+        {
+          print("Server error: $e");
+          _dispatcher.add(LoginEvent.LOG_OUT_UNSURE);
+        }
+        _isLoading = false;
+      }
+    }
 }
 
 enum LoginEvent {
@@ -155,10 +215,15 @@ enum LoginEvent {
   SERVER_ERROR,
   LOGGING_OUT,
   LOGGED_OUT,
+  LOG_OUT_UNSURE,
+  LOG_OUT_BY_SERVER,
   FORCE_PASSWORD_CHANGE,
   PASSWORD_CHANGED,
   WRONG_CURRENT_PASSWORD,
   INVALID_NEW_PASSWORD,
-  LOG_OUT_UNSURE,
-  LOG_OUT_BY_SERVER
+  USER_ACTIVATION_PENDING,
+  VALIDATION_CODE_SENT,
+  PASSWORD_RESET,
+  EXPIRED_VALIDATION_CODE,
+  WRONG_VALIDATION_CODE
 }

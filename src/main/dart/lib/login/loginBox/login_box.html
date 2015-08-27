@@ -2,14 +2,33 @@
 
   <div class="color1 uppercase loginTitle">Login</div>
   <form id="loginForm" ng-submit="loginSubmit()">
-    <div class="color1 text5 formFieldTitle">Username</div>
-    <input class="text5 loginInput" name="login" ng-model="username" ng-disabled="isLoading">
-    <div class="color1 text5">Password</div>
-    <input class="text5 loginInput lastInput" name="password" type="password" ng-model="password" ng-disabled="isLoading"/>
+    <div class="color1 text-small formFieldTitle">Username</div>
+    <input class="text-small loginInput" name="login" ng-model="username" ng-disabled="isLoading">
+    <div class="color1 text-small">Password</div>
+    <input class="text-small loginInput lastInput" name="password" type="password" ng-model="password" ng-disabled="isLoading"/>
     <div>
        <button id="loginSubmit" type="submit" class="qts-btn qts-btn-style3" ng-disabled="isLoading">Sign in</button>
-       <img ng-class="{'notVisible':!isLoading}" id="loginLoaderImg" src="img/ajax-loader.gif"/>
+       <img ng-class="{'notVisible':!isLoading}" class="loginLoaderImg" src="img/ajax-loader.gif"/>
     </div>
-     <div class="msgContainer errorMsg">{{errorMessage}}</div>
+    <span class="color1 text-very-small loginLink" ng-click="openForgotPwdPopUp()">Forgot password?</span>
+    <div class="msgContainer errorMsg">{{errorMessage}}</div>
   </form>
+</div>
+
+<!-- Modal -->
+<div class="modal topBottomAnimation loginModal" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="color1 loginTitle">Forgot password</div>
+      </div>
+      <div class="modal-body">
+        <forgot-password-box ng-if="isForgotPwdModalOpened"></forgot-password-box>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

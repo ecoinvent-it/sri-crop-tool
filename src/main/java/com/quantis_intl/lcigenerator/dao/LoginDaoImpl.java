@@ -85,4 +85,26 @@ public class LoginDaoImpl implements LoginDao
     {
         mapper.updatePassword(userPwd);
     }
+
+    @Transactional
+    public void updatePasswordRegistrationStateAndLockedState(UserPwd userPwd)
+    {
+        mapper.updatePassword(userPwd);
+        mapper.updateRegistrationCode(userPwd);
+        mapper.updateLockedState(userPwd);
+    }
+
+    @Transactional
+    public void updateValidationCode(UserPwd userPwd)
+    {
+        mapper.updateValidationCode(userPwd);
+    }
+
+    @Transactional
+    public void updatePasswordValidationAndLockedStatus(UserPwd userPwd)
+    {
+        mapper.updatePassword(userPwd);
+        mapper.updateValidationCode(userPwd);
+        mapper.updateLockedState(userPwd);
+    }
 }

@@ -23,6 +23,7 @@ import com.quantis_intl.lcigenerator.LoginServiceImpl;
 import com.quantis_intl.lcigenerator.api.Api;
 import com.quantis_intl.lcigenerator.api.PrincipalApi;
 import com.quantis_intl.lcigenerator.api.PublicApi;
+import com.quantis_intl.lcigenerator.api.PublicPrincipalApi;
 import com.quantis_intl.lcigenerator.dao.LoginDao;
 import com.quantis_intl.lcigenerator.dao.LoginDaoImpl;
 import com.quantis_intl.stack.authentication.LoginService;
@@ -37,5 +38,6 @@ public class CoreModule extends AbstractModule
         bind(Api.class);
         bind(PublicApi.class);
         bind(PrincipalApi.class);
+        bind(PublicPrincipalApi.class);
     }
 }

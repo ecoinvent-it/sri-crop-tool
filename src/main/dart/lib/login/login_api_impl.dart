@@ -11,6 +11,7 @@ import 'package:alcig/connectivity_state.dart';
 class LoginApiImpl implements LoginApi {
   static const String _baseUrl = "app/";
   static final String _basePrincipalUrl = _baseUrl + "api/principal/";
+  static final String _basePubPrincipalUrl = _baseUrl + "api/pub/principal/";
   
   ConnectivityState _connectivityState;
 
@@ -114,6 +115,65 @@ class LoginApiImpl implements LoginApi {
             return ChangePasswordResult.WRONG_PASSWORD;
           case 'INVALID_NEW_PASSWORD':
             return ChangePasswordResult.INVALID_NEW_PASSWORD;
+          default:
+            throw request;
+        }
+      }
+      else
+        _manageError(e);
+    }
+  }
+  
+  Future<ForgotPasswordResult> forgotPassword(String email) async
+  {
+    try
+    {
+      await  HttpRequest.postFormData(_basePubPrincipalUrl + "forgotPassword",
+                                  {"email": email});
+      return ForgotPasswordResult.OK;
+    }
+    catch(e)
+    {
+      HttpRequest request = e.target;
+      if ( request.status == 400 ) 
+      {
+        switch (request.responseText) 
+        {
+          case 'USER_ACTIVATION_PENDING':
+            return ForgotPasswordResult.USER_ACTIVATION_PENDING;
+          default:
+            throw request;
+        }
+      }
+      else
+        _manageError(e);
+    }
+  }
+  
+  Future<ResetPasswordResult> resetPassword(String email, String validationCode, String newPassword) async
+  {
+    Map params = new Map();
+    params["email"] = email;
+    params["validationCode"] = validationCode;
+    params["newPassword"] = newPassword;
+    try
+    {
+      await  HttpRequest.postFormData(_basePubPrincipalUrl + "resetPassword", params);
+      return ResetPasswordResult.OK;
+    }
+    catch(e)
+    {
+      HttpRequest request = e.target;
+      if ( request.status == 400 ) 
+      {
+        switch (request.responseText) 
+        {
+          case 'EXPIRED_VALIDATION_CODE':
+            return ResetPasswordResult.EXPIRED_VALIDATION_CODE;
+          case 'INVALID_NEW_PASSWORD':
+            return ResetPasswordResult.INVALID_NEW_PASSWORD;
+          case 'WRONG_VALIDATION_CODE':
+            return ResetPasswordResult.WRONG_VALIDATION_CODE;
           default:
             throw request;
         }

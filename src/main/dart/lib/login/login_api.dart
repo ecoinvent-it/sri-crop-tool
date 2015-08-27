@@ -11,6 +11,10 @@ abstract class LoginApi {
   Future<StatusResult> getStatus();
   
   Future<ChangePasswordResult> changePassword(String oldPassword, String newPassword);
+  
+  Future<ForgotPasswordResult> forgotPassword(String email);
+  
+  Future<ResetPasswordResult> resetPassword(String email, String validationCode, String newPassword);
 }
 
 enum AuthRequestResult {
@@ -29,4 +33,16 @@ enum ChangePasswordResult {
 enum StatusResult {
   OK,
   MUST_CHANGE_PASSWORD
+}
+
+enum ForgotPasswordResult {
+  OK,
+  USER_ACTIVATION_PENDING
+}
+
+enum ResetPasswordResult {
+  OK,
+  WRONG_VALIDATION_CODE,
+  EXPIRED_VALIDATION_CODE,
+  INVALID_NEW_PASSWORD
 }

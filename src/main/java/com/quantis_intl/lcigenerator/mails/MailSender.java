@@ -1,4 +1,4 @@
-package mails;
+package com.quantis_intl.lcigenerator.mails;
 
 import java.util.List;
 import java.util.Properties;
@@ -24,6 +24,7 @@ import com.google.common.collect.ImmutableList;
 // TODO: Promote as a singleton, or service
 // TODO: Test
 // TODO: Implement waiting queue
+// TODO: Add property for mail title prefix like "[NAME APPLI]"
 /**
  * Used to send e-mail using gmail. Mail will be sent using another thread, so the call to sendMail will not be blocking
  */

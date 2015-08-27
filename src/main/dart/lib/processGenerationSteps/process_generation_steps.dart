@@ -20,7 +20,7 @@ class ProcessGeneratorSteps
   LocalNotificationService _notifService;
   LoginService _loginService;
   
-  // FIXME: Use enum when dart 2? (not ok for binding with 1.9)
+  // FIXME: Use enum when angular dart 2? (not ok for binding with 1.9)
   int step = 0;
   
   String filename = null;
@@ -44,7 +44,7 @@ class ProcessGeneratorSteps
   void disabledStep3Click()
   {// TODO: Have a more user friendly message
     if (step == 0 && !_loginService.isLogged)
-      _notifService.manageWarning("You need to be logged to use this feature");
+      _notifService.manageWarning("You need to be authenticated to use this feature");
   }
   
   void submitUploadForm(target)

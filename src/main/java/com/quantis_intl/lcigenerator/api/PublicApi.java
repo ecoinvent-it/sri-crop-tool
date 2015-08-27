@@ -28,14 +28,13 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import mails.MailSender;
-
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.escape.Escaper;
 import com.google.common.html.HtmlEscapers;
+import com.quantis_intl.lcigenerator.mails.MailSender;
 
 @Path("pub/")
 public class PublicApi

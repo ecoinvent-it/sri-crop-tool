@@ -30,7 +30,9 @@ import org.slf4j.LoggerFactory;
 import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import com.google.common.io.BaseEncoding;
+import com.google.common.net.UrlEscapers;
 import com.quantis_intl.lcigenerator.dao.LoginDao;
+import com.quantis_intl.lcigenerator.mails.MailSender;
 import com.quantis_intl.lcigenerator.model.User;
 import com.quantis_intl.lcigenerator.model.UserPwd;
 import com.quantis_intl.stack.authentication.LoginService;
@@ -46,12 +48,15 @@ public class LoginServiceImpl implements LoginService
     // TODO: Using HMAC would be even better
     private String secret_salt = "Jo5xNFdSPUmc4ijk2euM";
 
-    private Provider<LoginDao> dao;
+    private final Provider<LoginDao> dao;
+
+    private final Provider<MailSender> mailSender;
 
     @Inject
-    public LoginServiceImpl(Provider<LoginDao> dao)
+    public LoginServiceImpl(Provider<LoginDao> dao, Provider<MailSender> mailSender)
     {
         this.dao = dao;
+        this.mailSender = mailSender;
     }
 
     @Override
@@ -265,6 +270,162 @@ public class LoginServiceImpl implements LoginService
         return password.length() >= 8;
     }
 
+    public void activateUser(String email, String registrationCode, String newPassword)
+    {
+        User user = dao.get().getUserFromEmail(email);
+        if (user == null)
+        {
+            LOG.error("User tries to activate non existing user: {}", email);
+            throw new EmailNotFound(email);
+        }
+
+        UserPwd userPwd = dao.get().getUserPwdFromUserId(user.getId());
+
+        if (userPwd.getRegistrationCode() == null)
+        {
+            LOG.warn("User already activated: {}", user.getId());
+            throw new UserAlreadyActivated(user.getId());
+        }
+
+        if (!userPwd.getRegistrationCode().equals(registrationCode))
+        {
+            LOG.error("User tries to activate with wrong registrationCode: {}", registrationCode);
+            throw new WrongRegistrationCode();
+        }
+
+        if (!isPasswordComplient(newPassword))
+        {
+            LOG.warn("Change password failed for user {}, invalid new password", user.getId());
+            throw new ChangePasswordFailed(ChangePasswordFailedReason.INVALID_NEW_PASSWORD);
+        }
+
+        userPwd.setRegistrationCode(null);
+        userPwd.setPassword(hashString(newPassword, userPwd.getBase64salt()));
+        userPwd.setFailedAttemps(0);
+        userPwd.setLockedSince(null);
+        dao.get().updatePasswordRegistrationStateAndLockedState(userPwd);
+
+        LOG.info("User activated: {}", user.getId());
+    }
+
+    public void forgotPassword(final String email, final String activationUrl)
+    {
+        User user = dao.get().getUserFromEmail(email);
+        if (user == null)
+        {
+            LOG.error("User tries to request reset password of non existing user: {}", email);
+            throw new EmailNotFound(email);
+        }
+
+        UserPwd userPwd = dao.get().getUserPwdFromUserId(user.getId());
+
+        if (userPwd.getRegistrationCode() != null)
+        {
+            LOG.info("Non activated user ({}) trying to reset password. Re-sending activation mail {}", user.getId(),
+                    email);
+            generateAndSendActivationMail(email, activationUrl, userPwd.getRegistrationCode());
+            throw new UserActivationPending();
+        }
+
+        String validationCode = generatePassword();
+        userPwd.setValidationCode(hashString(validationCode, userPwd.getBase64salt()));
+        userPwd.setCodeGeneration(new Date());
+        dao.get().updateValidationCode(userPwd);
+
+        mailSender.get().sendMail(email, "[ALCIG] Password reset request",
+                getTextForResetPasswordEmail(validationCode));
+
+        LOG.info("Reset password request received for user: {}", user.getId());
+    }
+
+    protected void generateAndSendActivationMail(String email, String activationUrl, String registrationCode)
+    {
+        String activationLink = activationUrl + "?email=" + UrlEscapers.urlFormParameterEscaper().escape(email)
+                + "&registrationCode=" + registrationCode;
+        // TODO: Future to know if mail was sent or not, change request status if error
+        mailSender.get().sendMail(email,
+                "[ALCIG] Activate your access",
+                getTextForActivationEmail(activationLink));
+    }
+
+    // TODO: Use a template to fill
+    protected String getTextForActivationEmail(String activationLink)
+    {
+        StringBuilder sb = new StringBuilder("Dear user,<br/><br/>")
+                .append("Thank you for your interest in ALCIG.<br/>Please activate your access by clicking on the link below:<br/>")
+                .append("<a href='")
+                .append(activationLink)
+                .append("' target='_blank'>")
+                .append(activationLink)
+                .append("</a><br/><br/>")
+                .append("Best regards,<br/><br/>")
+                .append("The ALCIG team");
+
+        return sb.toString();
+    }
+
+    // TODO: Use a template to fill
+    protected String getTextForResetPasswordEmail(String validationCode)
+    {
+        StringBuilder sb = new StringBuilder("Dear user,<br/><br/>")
+                .append("We received a request to reset the password associated with this email address. If you are at the origin of this request, please follow the instructions below.<br/>")
+                .append("Enter this validation code to the displayed pop-up in ALCIG: <b>")
+                .append(validationCode)
+                .append("</b><br/>")
+                .append("After 15 minutes, this code will expire and you will have to restart the procedure.<br/><br/>")
+                .append("If you did not request to reset your password, you can ignore this email. The security of your account is insured.");
+
+        return sb.toString();
+    }
+
+    public void resetPassword(String email, String validationCode, String newPassword)
+    {
+        User user = dao.get().getUserFromEmail(email);
+        if (user == null)
+        {
+            LOG.error("User tries to reset password of non existing user: {}", email);
+            throw new EmailNotFound(email);
+        }
+
+        UserPwd userPwd = dao.get().getUserPwdFromUserId(user.getId());
+
+        if (userPwd.getRegistrationCode() != null)
+        {
+            LOG.error("Non activated user trying to reset password: {}", user.getId());
+            throw new UserActivationPending();
+        }
+
+        if (validationCode == null
+                || !hashString(validationCode, userPwd.getBase64salt()).equals(userPwd.getValidationCode()))
+        {
+            LOG.warn("Invalid validation code for user {}", user.getId());
+            throw new ResetPasswordFailed(ResetPasswordFailedReason.WRONG_VALIDATION_CODE);
+        }
+
+        long diffInMilliSeconds = new Date().getTime() - userPwd.getCodeGeneration().getTime();
+        final long VALIDATION_CODE_VALIDITY_IN_MILLISECONDS = 15 * 60 * 1000; // 15 min
+        if (diffInMilliSeconds > VALIDATION_CODE_VALIDITY_IN_MILLISECONDS)
+        {
+            LOG.warn("Code validation timeout for user {}", user.getId());
+            throw new ResetPasswordFailed(ResetPasswordFailedReason.EXPIRED_VALIDATION_CODE);
+        }
+
+        if (!isPasswordComplient(newPassword))
+        {
+            LOG.error("Reset password failed for user {}, invalid new password", user.getId());
+            throw new ResetPasswordFailed(ResetPasswordFailedReason.INVALID_NEW_PASSWORD);
+        }
+
+        userPwd.setPassword(hashString(newPassword, userPwd.getBase64salt()));
+        userPwd.setForceChangePassword(false);
+        userPwd.setCodeGeneration(null);
+        userPwd.setValidationCode(null);
+        userPwd.setFailedAttemps(0);
+        userPwd.setLockedSince(null);
+        dao.get().updatePasswordValidationAndLockedStatus(userPwd);
+        LOG.info("Password reset for user {}", user.getId());
+    }
+
     public static class UsernameAlreadyExists extends RuntimeException
     {
         private static final long serialVersionUID = -8416202217479939684L;
@@ -280,6 +441,16 @@ public class LoginServiceImpl implements LoginService
         private static final long serialVersionUID = 5919844603813070902L;
 
         public EmailAlreadyExists(String email)
+        {
+            super(email);
+        }
+    }
+
+    public static class EmailNotFound extends RuntimeException
+    {
+        private static final long serialVersionUID = 4878827001016417035L;
+
+        public EmailNotFound(String email)
         {
             super(email);
         }
@@ -307,6 +478,45 @@ public class LoginServiceImpl implements LoginService
         public final ChangePasswordFailedReason reason;
 
         public ChangePasswordFailed(ChangePasswordFailedReason reason)
+        {
+            super(reason.toString());
+            this.reason = reason;
+        }
+    }
+
+    public static class UserAlreadyActivated extends RuntimeException
+    {
+        private static final long serialVersionUID = -533241253171479362L;
+
+        public UserAlreadyActivated(int userId)
+        {
+            super(Integer.toString(userId));
+        }
+    }
+
+    public static class WrongRegistrationCode extends RuntimeException
+    {
+        private static final long serialVersionUID = -4665610085469753248L;
+    }
+
+    public static class UserActivationPending extends RuntimeException
+    {
+        private static final long serialVersionUID = 4155124872930311659L;
+    }
+
+    public static enum ResetPasswordFailedReason
+    {
+        WRONG_VALIDATION_CODE,
+        EXPIRED_VALIDATION_CODE,
+        INVALID_NEW_PASSWORD
+    }
+
+    public static class ResetPasswordFailed extends RuntimeException
+    {
+        private static final long serialVersionUID = 3424809375916565777L;
+        public final ResetPasswordFailedReason reason;
+
+        public ResetPasswordFailed(ResetPasswordFailedReason reason)
         {
             super(reason.toString());
             this.reason = reason;

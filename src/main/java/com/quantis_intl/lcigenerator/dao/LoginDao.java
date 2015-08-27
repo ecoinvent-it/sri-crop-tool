@@ -40,4 +40,9 @@ public interface LoginDao
 
     void updatePassword(UserPwd userPwd);
 
+    void updatePasswordRegistrationStateAndLockedState(UserPwd userPwd);
+
+    void updateValidationCode(UserPwd userPwd);
+
+    void updatePasswordValidationAndLockedStatus(UserPwd userPwd);
 }

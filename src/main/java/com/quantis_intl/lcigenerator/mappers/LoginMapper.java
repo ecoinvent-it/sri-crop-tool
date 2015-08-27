@@ -59,6 +59,12 @@ public interface LoginMapper
     @UpdateProvider(type = UserPwdQueryBuilder.class, method = "updatePassword")
     void updatePassword(UserPwd userPwd);
 
+    @UpdateProvider(type = UserPwdQueryBuilder.class, method = "updateRegistrationCode")
+    void updateRegistrationCode(UserPwd userPwd);
+
+    @UpdateProvider(type = UserPwdQueryBuilder.class, method = "updateValidationCode")
+    void updateValidationCode(UserPwd userPwd);
+
     class UserQueryBuilder
     {
         static final String TABLE_NAME = "user_std";
@@ -168,6 +174,22 @@ public interface LoginMapper
         {
             return new QsSQL().UPDATE(TABLE_NAME)
                     .SET_PARAMS(FIELD_PASSWORD, FIELD_FORCECHANGEPASSWORD)
+                    .WHERE_PARAM(FIELD_USERID)
+                    .toString();
+        }
+
+        public String updateRegistrationCode()
+        {
+            return new QsSQL().UPDATE(TABLE_NAME)
+                    .SET_PARAM(FIELD_REGISTERATIONCODE)
+                    .WHERE_PARAM(FIELD_USERID)
+                    .toString();
+        }
+
+        public String updateValidationCode()
+        {
+            return new QsSQL().UPDATE(TABLE_NAME)
+                    .SET_PARAMS(FIELD_VALIDATIONCODE, FIELD_CODEGENERATION)
                     .WHERE_PARAM(FIELD_USERID)
                     .toString();
         }

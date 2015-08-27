@@ -42,8 +42,8 @@ public class Bootstrap
             stack.withAdditionalProperties(getDefaultProperties());
         }
 
-        stack.withFeatures(ShiroFeature.defaultFilters())
-                .withFeatures(MyBatisFeature.withMapperPackages("com.quantis_intl.lcigenerator.mappers"))
+        stack.withFeatures(ShiroFeature.defaultFilters(),
+                MyBatisFeature.withMapperPackages("com.quantis_intl.lcigenerator.mappers"))
                 .withAdditionalModules(new CoreModule());
 
         stack.start();
