@@ -18,7 +18,7 @@
  */
 package com.quantis_intl.lcigenerator;
 
-import com.quantis_intl.stack.authentication.LoginService;
+import com.quantis_intl.login.authentication.LoginService;
 
 // TODO: Implement
 public class LoginServiceImpl implements LoginService

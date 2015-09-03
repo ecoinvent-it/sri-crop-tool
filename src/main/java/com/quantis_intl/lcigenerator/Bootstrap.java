@@ -22,7 +22,7 @@ import java.util.Properties;
 
 import com.quantis_intl.lcigenerator.guice.CoreModule;
 import com.quantis_intl.stack.QtsStack;
-import com.quantis_intl.stack.features.ShiroFeature;
+import com.quantis_intl.login.ShiroFeature;
 
 public class Bootstrap
 {

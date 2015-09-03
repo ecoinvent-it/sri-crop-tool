@@ -27,10 +27,14 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.InvocationCallback;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.ext.ContextResolver;
+import javax.ws.rs.ext.Provider;
 
 import org.jboss.resteasy.plugins.providers.jackson.ResteasyJackson2Provider;
 
-import com.quantis_intl.stack.features.CoreFeature.ObjectMapperProvider;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
 
 public class PyBridgeService
 {
@@ -39,7 +43,6 @@ public class PyBridgeService
     @Inject
     public PyBridgeService(@Named("pyBridge.url") String pyBridgeUrl)
     {
-        // FIXME: Don't use the ObjectMapperProvider from the stack
         this.pyBridgeTarget = ClientBuilder.newClient().register(ObjectMapperProvider.class)
                 .register(ResteasyJackson2Provider.class)
                 .target(pyBridgeUrl);
@@ -62,5 +65,23 @@ public class PyBridgeService
                 onError.accept(throwable);
             }
         });
+    }
+
+    @Provider
+    public static class ObjectMapperProvider implements ContextResolver<ObjectMapper>
+    {
+        final ObjectMapper objectMapper;
+
+        public ObjectMapperProvider()
+        {
+            this.objectMapper = new ObjectMapper();
+            this.objectMapper.registerModules(new Jdk8Module(), new JSR310Module());
+        }
+
+        @Override
+        public ObjectMapper getContext(Class<?> type)
+        {
+            return objectMapper;
+        }
     }
 }

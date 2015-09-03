@@ -21,7 +21,7 @@ package com.quantis_intl.lcigenerator.guice;
 import com.google.inject.AbstractModule;
 import com.quantis_intl.lcigenerator.LoginServiceImpl;
 import com.quantis_intl.lcigenerator.api.Api;
-import com.quantis_intl.stack.authentication.LoginService;
+import com.quantis_intl.login.authentication.LoginService;
 
 public class CoreModule extends AbstractModule
 {
