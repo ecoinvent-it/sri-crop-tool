@@ -122,7 +122,7 @@ class HmModel(object):
             erosion_gw = self._compute_erosion_gw(allocation_factor, hmElement, hmIndex); #mg/ha
             hm_to_soil[hmElement] = self._compute_soil(agro_input, allocation_factor, leaching, erosion_gw, hmElement)
             hm_to_sw[hmElement], hm_to_gw[hmElement] = self._split_leaching_between_surface_and_ground_water(leaching)
-            hm_to_gw[hmElement] += erosion_gw
+            hm_to_sw[hmElement] += erosion_gw
             hm_to_soil[hmElement] /= 1000000.0
             hm_to_sw[hmElement] /= 1000000.0
             hm_to_gw[hmElement] /= 1000000.0

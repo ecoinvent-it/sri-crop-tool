@@ -63,21 +63,21 @@ class Test(unittest.TestCase):
                             HeavyMetalType.cr: 0.0035112362099359953,
                             HeavyMetalType.hg: 0.015984306683531527},
                            'm_hm_heavymetal_to_ground_water':{
-                            HeavyMetalType.cd: 1.464289234395887e-05,
-                            HeavyMetalType.cu: 0.0010600970642411893,
-                            HeavyMetalType.zn: 0.005239621629345784,
-                            HeavyMetalType.pb: 0.00011513169533934504,
-                            HeavyMetalType.ni: 2.224287219512195e-05,
-                            HeavyMetalType.cr: 0.005678474244193842,
-                            HeavyMetalType.hg: 4.726990690364827e-07},
-                           'm_hm_heavymetal_to_surface_water':{
-                            HeavyMetalType.cd: 9.550128534704371e-06,
-                            HeavyMetalType.cu: 0.000679987032834715,
-                            HeavyMetalType.zn: 0.0034664835770941427,
-                            HeavyMetalType.pb: 6.674893213099193e-05,
+                            HeavyMetalType.cd: 1.4325192802056556e-05,
+                            HeavyMetalType.cu: 0.0010199805492520724,
+                            HeavyMetalType.zn: 0.005199725365641214,
+                            HeavyMetalType.pb: 0.0001001233981964879,
                             HeavyMetalType.ni: 0.0,
-                            HeavyMetalType.cr: 0.0037683145382505336,
-                            HeavyMetalType.hg: 2.5959463673214843e-07}
+                            HeavyMetalType.cr: 0.005652471807375799,
+                            HeavyMetalType.hg: 3.8939195509822265e-07},
+                           'm_hm_heavymetal_to_surface_water':{
+                            HeavyMetalType.cd: 9.867828076606685e-06,
+                            HeavyMetalType.cu: 0.0007201035478238318,
+                            HeavyMetalType.zn: 0.003506379840798713,
+                            HeavyMetalType.pb: 8.175722927384908e-05,
+                            HeavyMetalType.ni: 2.224287219512195e-05,
+                            HeavyMetalType.cr: 0.003794316975068577,
+                            HeavyMetalType.hg: 3.429017506704085e-07}
                         }
         results = HmModel(self.inputs).compute();
         for key, value in expectedResults.items():
