@@ -22,10 +22,7 @@ class ChangePasswordBox implements AttachAware, DetachAware
   LoginService _loginService;
   StreamSubscription _userSubscription;
   
-  ChangePasswordBox(LoginService this._loginService)
-  {
-    forceChangePassword = _loginService.forceChangePassword;
-  }
+  ChangePasswordBox(LoginService this._loginService);
   
   void attach() 
   {
@@ -43,14 +40,12 @@ class ChangePasswordBox implements AttachAware, DetachAware
   void _onUserData(LoginEvent event) 
   {
     isLoading = _loginService.isLoading;
+    forceChangePassword = _loginService.forceChangePassword;
     successMessage = "";
     switch ( event) {
       case LoginEvent.PASSWORD_CHANGED:
+        _resetFields();
         successMessage = "Your password has been changed.";
-        errorMessage = "";
-        oldPassword = "";
-        newPassword = "";
-        newPasswordConfirmation = "";
         break;
       case LoginEvent.INVALID_NEW_PASSWORD:
         errorMessage = "The new password is not valid";
@@ -82,6 +77,16 @@ class ChangePasswordBox implements AttachAware, DetachAware
   
   void logout()
   {
+    _resetFields();
     _loginService.logout();
+  }
+  
+  void _resetFields()
+  {
+    oldPassword = "";
+    newPassword = "";
+    newPasswordConfirmation = "";
+    successMessage = "";
+    errorMessage = "";
   }
 }
