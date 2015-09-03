@@ -62,7 +62,12 @@
   
   <tr>
     <td colspan="2"></td>
-    <td><button class="qts-btn qts-btn-style1 stepNavBtn" ng-class="{'notVisible':!hasErrors && !hasWarnings}" data-toggle="modal" data-target="#process-generation-step3-modal">Please note...</button></td>
+    <td>
+	    <button class="qts-btn qts-btn-style2" ng-class="{'notVisible':!hasErrors && !hasWarnings}" data-toggle="modal" data-target="#process-generation-step3-modal">
+	     <span class="glyphicon" ng-class="{'glyphicon-exclamation-sign':!hasErrors, 'warningsColor':!hasErrors, 'glyphicon-minus-sign':hasErrors, 'errorsColor':hasErrors}" aria-hidden="true"></span>
+	     Upload status
+	    </button>
+    </td>
     <td><button class="qts-btn qts-btn-style1 stepNavBtn" ng-class="{'notVisible':step != 1}" ng-click="reset()">Back to step 3</button></td>
   </tr>
 </table>
@@ -78,6 +83,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">
+           <span class="glyphicon" ng-class="{'glyphicon-exclamation-sign':!hasErrors, 'warningsColor':!hasErrors, 'glyphicon-minus-sign':hasErrors, 'errorsColor':hasErrors}" aria-hidden="true"></span>
           <span ng-if="step == 1">File successfully uploaded</span>
           <span ng-if="step == 0">Sorry, we didn't manage to compute your data</span>
         </h4>
