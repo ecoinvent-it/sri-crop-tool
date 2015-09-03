@@ -21,9 +21,9 @@ package com.quantis_intl.lcigenerator;
 import java.util.Properties;
 
 import com.quantis_intl.lcigenerator.guice.CoreModule;
+import com.quantis_intl.login.ShiroFeature;
 import com.quantis_intl.stack.QtsStack;
 import com.quantis_intl.stack.features.MyBatisFeature;
-import com.quantis_intl.stack.features.ShiroFeature;
 
 public class Bootstrap
 {

@@ -23,6 +23,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,103 +53,78 @@ import com.quantis_intl.lcigenerator.dao.LoginDao;
 import com.quantis_intl.lcigenerator.mails.MailSender;
 import com.quantis_intl.lcigenerator.model.User;
 import com.quantis_intl.lcigenerator.model.UserPwd;
-import com.quantis_intl.stack.authentication.LoginService;
+import com.quantis_intl.login.authentication.LoginService;
 
 public class LoginServiceImplTest
 {
-    private LoginDaoForTest loginDao = new LoginDaoForTest();
-    private MailSenderForTest mailSender = new MailSenderForTest("", "", "");
-    private LoginServiceImpl loginService = new LoginServiceImpl(new Provider<LoginDao>()
-    {
-        @Override
-        public LoginDao get()
-        {
-            return loginDao;
-        }
-    }, new Provider<MailSender>()
-    {
-        @Override
-        public MailSender get()
-        {
-            return mailSender;
-        }
-    });
+    private LoginDaoForTest loginDao;
+    private MailSenderForTest mailSender;
+    private LoginServiceImpl loginService;
 
-    static final String CORRECT_BASE64_SALT = "hQbHYPFuOxvlKDO1tIeN9IloV3Rtt8EHt1Z2SSGX1CV1";
-    static final String CORRECT_HASHED_PWD = "sha512:eb62accaa6af446fff312872cae3e7e0e2616245c3fb964a6c5a89fc275351df9e2392e83ce014de1c42fa47f5e822ae5c2deaf807aa8cb01cc1767c6c180fb2";
-    static final String CORRECT_PWD = "A.4VpADL2m8";
+    static private final int DEFAULT_USER_ID = 1;
+    static private final int FORCE_PWD_USER_ID = 7;
 
-    static final int DEFAULT_USER_ID = 1;
-    static final String DEFAULT_USERNAME = "existingUsername";
-    static final String DEFAULT_EMAIL = "existing@mail.com";
+    static private final String CORRECT_BASE64_SALT = "hQbHYPFuOxvlKDO1tIeN9IloV3Rtt8EHt1Z2SSGX1CV1";
+    static private final String CORRECT_HASHED_PWD = "sha512:ef2c6b46d5d9de57feb791942de4b3f34cbc0a659aee2471abe1d145e9d521e6be37597c1a42d3b68d9c8cc3c3468c022e741d054983ff0a9eaf4129acab8f0a";
+    static private final String DEFAULT_HASHED_VALIDATION_CODE = "sha512:da0bc1be2f537e217ab317153f47ed91390f37684952953ddb784cf9c001fbb2fae476bb3a572779a9edc590e3b56a0a58fbd0475dab8912f453680f6a0cf5db";
 
-    static final String DEFAULT_REGISTRATION_CODE = "registrationCode";
-    static final String DEFAULT_VALIDATION_CODE = "Gxiop!Th27H";
-    static final String DEFAULT_HASHED_VALIDATION_CODE = "sha512:ede0f822f1549b14a12e96726c416e50d1593e98e5dc66d6647bcbc976c8bbcef468290409d363a5529ff6fea06aa0ae8517dd0ceb7d3b5db257b15e9ea305a2";
-
-    static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
-
-    public Date buildDate(String date)
-    {
-        try
-        {
-            return DATE_FORMAT.parse(date);
-        }
-        catch (ParseException e)
-        {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public User buildDefaultUser()
-    {
-        return new User(DEFAULT_USER_ID, DEFAULT_USERNAME, DEFAULT_EMAIL);
-    }
-
-    public UserPwd buildDefaultUserPwd()
-    {
-        return new UserPwd(DEFAULT_USER_ID, CORRECT_BASE64_SALT, CORRECT_HASHED_PWD,
-                false, 0, null, null, null, null);
-    }
-
-    public UserPwd buildDefaultUserPwdToReset()
-    {
-        return new UserPwd(DEFAULT_USER_ID, CORRECT_BASE64_SALT, "passwordToChange",
-                true, 9, buildDate("2014-05-12"), null, DEFAULT_HASHED_VALIDATION_CODE, new Date());
-    }
+    static private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Before
     public void beforeEachTest()
     {
-        loginDao.reset();
-        mailSender.reset();
+        loginDao = new LoginDaoForTest();
+        mailSender = new MailSenderForTest("", "", "");
+        loginService = new LoginServiceImpl(new Provider<LoginDao>()
+        {
+            @Override
+            public LoginDao get()
+            {
+                return loginDao;
+            }
+        }, new Provider<MailSender>()
+        {
+            @Override
+            public MailSender get()
+            {
+                return mailSender;
+            }
+        });
     }
 
     @Test
-    public void getAuthenticUserId_ShouldPass()
+    public void normalUser_ShouldLogin()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
-
-        Object userId = loginService.getAuthenticUserId(DEFAULT_USERNAME, CORRECT_PWD);
+        Object userId = loginService.getAuthenticUserId("existingUsername", "correctPwd");
         assertEquals(DEFAULT_USER_ID, userId);
     }
 
     @Test
-    public void getAuthenticUserId_ShouldForbidWrongPassword()
+    public void wrongPassword_ShouldNotLogin()
     {
         final String username = "withNoFailedAttemp";
-        User user = new User(1, username, "");
-        UserPwd userPwd = buildDefaultUserPwd();
-        loginDao.createUser(user, userPwd);
-
         try
         {
             loginService.getAuthenticUserId(username, "wrongpassword");
-            assertNotNull(null);
+            fail();
         }
         catch (LoginService.LoginFailed e)
         {
             assertEquals("exception with wrong reason", LoginService.LoginFailedReason.WRONG_CREDENTIALS, e.reason);
+        }
+    }
+
+    @Test
+    public void wrongPassword_ShouldUpdateLockedStateOnLogin()
+    {
+        final String username = "withNoFailedAttemp";
+        try
+        {
+            loginService.getAuthenticUserId(username, "wrongpassword");
+            fail();
+        }
+        catch (LoginService.LoginFailed e)
+        {
             User persistedUser = loginDao.getUserFromUsername(username);
             UserPwd persistedPwd = loginDao.getUserPwdFromUserId(persistedUser.getId());
             assertEquals(1, persistedPwd.getFailedAttemps());
@@ -157,22 +133,17 @@ public class LoginServiceImplTest
     }
 
     @Test
-    public void getAuthenticUserId_ShouldLock()
+    public void wrongPasswordWithAlmostMaxAttemps_ShouldLockOnLogin()
     {
         final String username = "userWithAlmostMaxAttemps";
-        User user = new User(1, username, "");
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setFailedAttemps(7);
-        loginDao.createUser(user, userPwd);
 
         try
         {
             loginService.getAuthenticUserId(username, "wrongpassword");
-            assertNotNull(null);
+            fail();
         }
         catch (LoginService.LoginFailed e)
         {
-            assertEquals("exception with wrong reason", LoginService.LoginFailedReason.WRONG_CREDENTIALS, e.reason);
             User persistedUser = loginDao.getUserFromUsername(username);
             UserPwd persistedPwd = loginDao.getUserPwdFromUserId(persistedUser.getId());
             assertEquals("fail attemps must be incremented", 8, persistedPwd.getFailedAttemps());
@@ -181,23 +152,33 @@ public class LoginServiceImplTest
     }
 
     @Test
-    public void getAuthenticUserId_ShouldFail_AlreadyLocked()
+    public void lockedUserRecent_ShouldNotLogin()
     {
         final String username = "userNewlyLocked";
-        User user = new User(1, username, "");
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setFailedAttemps(8);
-        userPwd.setLockedSince(new Date());
-        loginDao.createUser(user, userPwd);
 
         try
         {
             loginService.getAuthenticUserId(username, "wrongpassword");
-            assertNotNull(null);
+            fail();
         }
         catch (LoginService.LoginFailed e)
         {
             assertEquals("exception with wrong reason", LoginService.LoginFailedReason.LOCKED_USER, e.reason);
+        }
+    }
+
+    @Test
+    public void lockedUserRecent_ShouldUpdateLockedStateOnLogin()
+    {
+        final String username = "userNewlyLocked";
+
+        try
+        {
+            loginService.getAuthenticUserId(username, "wrongpassword");
+            fail();
+        }
+        catch (LoginService.LoginFailed e)
+        {
             User persistedUser = loginDao.getUserFromUsername(username);
             UserPwd persistedPwd = loginDao.getUserPwdFromUserId(persistedUser.getId());
             assertEquals("fail attemps must be incremented", 9, persistedPwd.getFailedAttemps());
@@ -206,16 +187,19 @@ public class LoginServiceImplTest
     }
 
     @Test
-    public void getAuthenticUserId_ShouldPassAndUnlock()
+    public void lockedUserOld_ShouldLogin()
     {
         final String username = "userLockedSinceALongTime";
-        User user = new User(1, username, "");
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setFailedAttemps(8);
-        userPwd.setLockedSince(buildDate("2014-01-01"));
-        loginDao.createUser(user, userPwd);
 
-        loginService.getAuthenticUserId(username, CORRECT_PWD);
+        loginService.getAuthenticUserId(username, "correctPwd");
+    }
+
+    @Test
+    public void lockedUserOld_ShouldUnlockOnLogin()
+    {
+        final String username = "userLockedSinceALongTime";
+
+        loginService.getAuthenticUserId(username, "correctPwd");
 
         User persistedUser = loginDao.getUserFromUsername(username);
         UserPwd persistedPwd = loginDao.getUserPwdFromUserId(persistedUser.getId());
@@ -224,12 +208,12 @@ public class LoginServiceImplTest
     }
 
     @Test
-    public void getAuthenticUserId_ShouldForbidUnknownUsername()
+    public void unknownUsername_ShouldNotLogin()
     {
         try
         {
             loginService.getAuthenticUserId("test", "test");
-            assertNotNull(null);
+            fail();
         }
         catch (LoginService.LoginFailed e)
         {
@@ -238,27 +222,23 @@ public class LoginServiceImplTest
     }
 
     @Test
-    public void getAuthenticUserId_ShouldForbidNotValidatedUser()
+    public void nonActivatedUser_ShouldNotLogin()
     {
-        final String username = "userLockedSinceALongTime";
-        User user = new User(1, username, "");
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setRegistrationCode("registrationCode");
-        loginDao.createUser(user, userPwd);
+        final String username = "notActivatedUser";
 
         try
         {
-            loginService.getAuthenticUserId(username, CORRECT_PWD);
-            assertNotNull(null);
+            loginService.getAuthenticUserId(username, "correctPwd");
+            fail();
         }
         catch (LoginService.LoginFailed e)
         {
-            assertEquals("exception with wrong reason", LoginService.LoginFailedReason.NON_VALIDATED_USER, e.reason);
+            assertEquals("exception with wrong reason", LoginService.LoginFailedReason.NON_ACTIVATED_USER, e.reason);
         }
     }
 
     @Test
-    public void createUser_ShouldPass()
+    public void normalUser_ShouldBePersistedOnUserCreation()
     {
         final String username = "newUser";
         User newUser = new User(1, username, "ewrt@ewrt.com");
@@ -271,7 +251,7 @@ public class LoginServiceImplTest
     }
 
     @Test(expected = InvalidEmail.class)
-    public void createUser_shouldForbidInvalidEmail()
+    public void invalidEmail_ShouldNotCreateUser()
     {
         final String username = "newUserWithInvalidEmail";
         User newUser = new User(1, username, "notValidEmail");
@@ -279,75 +259,57 @@ public class LoginServiceImplTest
     }
 
     @Test(expected = UsernameAlreadyExists.class)
-    public void createUser_shouldForbidExistingUsername()
+    public void existingUsername_ShouldNotCreateUser()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
-
-        User newUser = new User(2, DEFAULT_USERNAME, "wert@dsfg.co");
+        User newUser = new User(2, "existingUsername", "wert@dsfg.co");
         loginService.createUser(newUser);
     }
 
     @Test(expected = EmailAlreadyExists.class)
-    public void createUser_shouldForbidExistingEmail()
+    public void existingEmail_ShouldNotCreateUser()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
-
         final String username = "newUserWithExistingEmail";
-        User newUser = new User(2, username, DEFAULT_EMAIL);
+        User newUser = new User(2, username, "existing@mail.com");
         loginService.createUser(newUser);
     }
 
     @Test
-    public void mustForcePasswordForUser_ShouldBeTrue()
+    public void userWithForcePassword_ForcePasswordShouldBeTrue()
     {
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setForceChangePassword(true);
-        loginDao.createUser(buildDefaultUser(), userPwd);
-
-        assertTrue("should be true", loginService.mustForcePasswordForUser(DEFAULT_USER_ID));
+        assertTrue("should be true", loginService.mustForcePasswordForUser(FORCE_PWD_USER_ID));
     }
 
     @Test
-    public void mustForcePasswordForUser_ShouldBeFalse()
+    public void normalUser_ForcePasswordShouldBeFalse()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
-
         assertFalse("should be true", loginService.mustForcePasswordForUser(DEFAULT_USER_ID));
     }
 
     @Test
-    public void changePassword_ShouldPass()
+    public void normalUser_ShouldChangePassword()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
-
-        loginService.changePassword(DEFAULT_USER_ID, CORRECT_PWD, "12345678");
+        loginService.changePassword(DEFAULT_USER_ID, "correctPwd", "correctNewPassword");
 
         UserPwd newUserPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
         assertNotEquals("hashedPassword should have changed", CORRECT_HASHED_PWD, newUserPwd.getPassword());
     }
 
     @Test
-    public void changePassword_ShouldPass_ForcedPassword()
+    public void userWithForcePassword_ShouldChangePassword()
     {
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setForceChangePassword(true);
-        loginDao.createUser(buildDefaultUser(), userPwd);
+        loginService.changePassword(FORCE_PWD_USER_ID, "correctPwd", "correctNewPassword");
 
-        loginService.changePassword(DEFAULT_USER_ID, CORRECT_PWD, "12345678");
-
-        UserPwd newUserPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
+        UserPwd newUserPwd = loginDao.getUserPwdFromUserId(FORCE_PWD_USER_ID);
         assertFalse("hashedPassword should have changed", newUserPwd.getForceChangePassword());
     }
 
     @Test
-    public void changePassword_ShouldForbidTooShortNewPassword()
+    public void tooShortNewPassword_ShouldNotChangePassword()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
-
         try
         {
-            loginService.changePassword(DEFAULT_USER_ID, CORRECT_PWD, "1234567");
-            assertNotNull(null);
+            loginService.changePassword(DEFAULT_USER_ID, "correctPwd", "badPwd");
+            fail();
         }
         catch (ChangePasswordFailed e)
         {
@@ -356,14 +318,12 @@ public class LoginServiceImplTest
     }
 
     @Test
-    public void changePassword_ShouldFail_WrongCurrentPassword()
+    public void wrongPassword_ShouldNotChangePassword()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
-
         try
         {
-            loginService.changePassword(DEFAULT_USER_ID, "wrongPassword", "12345678");
-            assertNotNull(null);
+            loginService.changePassword(DEFAULT_USER_ID, "wrongPassword", "correctNewPassword");
+            fail();
         }
         catch (ChangePasswordFailed e)
         {
@@ -372,49 +332,43 @@ public class LoginServiceImplTest
     }
 
     @Test(expected = EmailNotFound.class)
-    public void activateUser_ShouldForbidUnknownEmail()
+    public void unknownEmail_ShouldNotActivateUser()
     {
-        loginService.activateUser("unknown", DEFAULT_REGISTRATION_CODE, CORRECT_PWD);
+        loginService.activateUser("unknown", "registrationCode", "correctPwd");
     }
 
     @Test(expected = UserAlreadyActivated.class)
-    public void activateUser_ShouldForbidAlreadyActivatedUser()
+    public void alreadyActivatedUser_ShouldNotActivateUser()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
-
-        loginService.activateUser(DEFAULT_EMAIL, DEFAULT_REGISTRATION_CODE, CORRECT_PWD);
+        loginService.activateUser("existing@mail.com", "registrationCode", "correctPwd");
     }
 
     @Test(expected = WrongRegistrationCode.class)
-    public void activateUser_ShouldForbidUnknownRegistrationCode()
+    public void unknownRegistrationCode_ShouldNotActivateUser()
     {
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setRegistrationCode(DEFAULT_REGISTRATION_CODE);
-        loginDao.createUser(buildDefaultUser(), userPwd);
-
-        loginService.activateUser(DEFAULT_EMAIL, "unknownRegistrationCode", CORRECT_PWD);
+        loginService.activateUser("notActivatedUser@a.com", "unknownRegistrationCode", "correctPwd");
     }
 
     @Test(expected = ChangePasswordFailed.class)
-    public void activateUser_ShouldForbidUncomplientPwd()
+    public void tooShortNewPassword_ShouldNotActivateUser()
     {
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setRegistrationCode(DEFAULT_REGISTRATION_CODE);
-        loginDao.createUser(buildDefaultUser(), userPwd);
-
-        loginService.activateUser(DEFAULT_EMAIL, DEFAULT_REGISTRATION_CODE, "pwd");
+        loginService.activateUser("notActivatedUser@a.com", "registrationCode", "pwd");
     }
 
     @Test
-    public void activateUser_ShouldPass()
+    public void nonActivatedUser_ShouldActivateUser()
     {
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setRegistrationCode(DEFAULT_REGISTRATION_CODE);
-        loginDao.createUser(buildDefaultUser(), new UserPwd(DEFAULT_USER_ID, CORRECT_BASE64_SALT, "NOT ACTIVATED",
-                false, 0, null,
-                DEFAULT_REGISTRATION_CODE, null, null));
+        loginService.activateUser("notActivatedUser@a.com", "registrationCode", "correctPwd");
 
-        loginService.activateUser(DEFAULT_EMAIL, DEFAULT_REGISTRATION_CODE, CORRECT_PWD);
+        UserPwd persistedUserPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
+        assertEquals("registrationCode must be reset", null, persistedUserPwd.getRegistrationCode());
+        assertEquals("password must be changed", CORRECT_HASHED_PWD, persistedUserPwd.getPassword());
+    }
+
+    @Test
+    public void nonActivatedUser_ShouldChangeActivationStatusOnUserActivation()
+    {
+        loginService.activateUser("notActivatedUser@a.com", "registrationCode", "correctPwd");
 
         UserPwd persistedUserPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
         assertEquals("registrationCode must be reset", null, persistedUserPwd.getRegistrationCode());
@@ -422,72 +376,83 @@ public class LoginServiceImplTest
     }
 
     @Test(expected = EmailNotFound.class)
-    public void forgotPassword_ShouldFail_EmailNotFound()
+    public void unknownEmail_ShouldNotEnableForgotPasswordFeature()
     {
-        loginService.forgotPassword("unknown", "");
+        loginService.forgotPassword("unknown@a.com", "");
+    }
+
+    @Test(expected = UserActivationPending.class)
+    public void nonActivatedUser_ShouldNotEnableForgotPasswordFeature()
+    {
+        loginService.forgotPassword("notActivatedUser@a.com", "");
     }
 
     @Test
-    public void forgotPassword_ShouldFail_NotRegistered()
+    public void nonActivatedUser_ShouldResendActivationEmailWhenForgotPassword()
     {
-        UserPwd userPwd = buildDefaultUserPwd();
-        userPwd.setRegistrationCode("registration");
-        loginDao.createUser(buildDefaultUser(), userPwd);
-
         try
         {
-            loginService.forgotPassword(DEFAULT_EMAIL, "");
-            assertNotNull(null);
+            loginService.forgotPassword("notActivatedUser@a.com", "");
+            fail();
         }
         catch (UserActivationPending e)
         {
             assertEquals("email not sent", 1, mailSender.messages.size());
             String[] message = mailSender.messages.get(0);
-            assertEquals("wrong recipient", DEFAULT_EMAIL, message[0]);
+            assertEquals("wrong recipient", "notActivatedUser@a.com", message[0]);
             assertTrue("Wrong title", message[1].contains("Activate"));
         }
     }
 
     @Test
-    public void forgotPassword_ShouldPass()
+    public void normalUser_ShouldEnableForgotPasswordFeature()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwd());
+        final String email = "existing@mail.com";
+        loginService.forgotPassword(email, "");
+    }
 
-        loginService.forgotPassword(DEFAULT_EMAIL, "");
+    @Test
+    public void normalUser_ShouldSendValidationEmailWhenForgotPassword()
+    {
+        final String email = "existing@mail.com";
+        loginService.forgotPassword(email, "");
 
         assertEquals("email not sent", 1, mailSender.messages.size());
         String[] message = mailSender.messages.get(0);
-        assertEquals("wrong recipient", DEFAULT_EMAIL, message[0]);
+        assertEquals("wrong recipient", email, message[0]);
         assertTrue("Wrong title", message[1].contains("Password reset"));
+    }
+
+    @Test
+    public void normalUser_ShouldChangeValidationStatusWhenForgotPassword()
+    {
+        final String email = "existing@mail.com";
+        loginService.forgotPassword(email, "");
+
         UserPwd persistedPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
         assertNotNull("validation code should not be null", persistedPwd.getValidationCode());
         assertNotNull("code generation should not be null", persistedPwd.getCodeGeneration());
     }
 
     @Test(expected = EmailNotFound.class)
-    public void resetPassword_ShouldFail_EmailNotFound()
+    public void unknownEmail_ShouldNotResetPassword()
     {
-        loginService.resetPassword("unknownMail", DEFAULT_VALIDATION_CODE, CORRECT_PWD);
+        loginService.resetPassword("unknownMail", "correctValidationCode", "correctPwd");
     }
 
     @Test(expected = UserActivationPending.class)
-    public void resetPassword_ShouldFail_UserNotActivated()
+    public void nonActivatedUser_ShouldNotResetPassword()
     {
-        UserPwd userPwd = buildDefaultUserPwdToReset();
-        userPwd.setRegistrationCode(DEFAULT_REGISTRATION_CODE);
-        loginDao.createUser(buildDefaultUser(), userPwd);
-        loginService.resetPassword(DEFAULT_EMAIL, DEFAULT_VALIDATION_CODE, CORRECT_PWD);
+        loginService.resetPassword("notActivatedUser@a.com", "correctValidationCode", "correctPwd");
     }
 
     @Test
-    public void resetPassword_ShouldFail_WrongValidationCode()
+    public void wrongValidationCode_ShouldNotResetPassword()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwdToReset());
-
         try
         {
-            loginService.resetPassword(DEFAULT_EMAIL, "wrongValidationCode", CORRECT_PWD);
-            assertNotNull(null);
+            loginService.resetPassword("userWithValidationCode@a.com", "wrongValidationCode", "correctPwd");
+            fail();
         }
         catch (ResetPasswordFailed e)
         {
@@ -496,14 +461,12 @@ public class LoginServiceImplTest
     }
 
     @Test
-    public void resetPassword_ShouldFail_UncomplientPassword()
+    public void tooShortNewPassword_ShouldNotResetPassword()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwdToReset());
-
         try
         {
-            loginService.resetPassword(DEFAULT_EMAIL, DEFAULT_VALIDATION_CODE, "badPwd");
-            assertNotNull(null);
+            loginService.resetPassword("userWithValidationCode@a.com", "correctValidationCode", "badPwd");
+            fail();
         }
         catch (ResetPasswordFailed e)
         {
@@ -512,16 +475,12 @@ public class LoginServiceImplTest
     }
 
     @Test
-    public void resetPassword_ShouldFail_CodeTimeout()
+    public void expiredValidationCode_ShouldNotResetPassword()
     {
-        UserPwd userPwd = buildDefaultUserPwdToReset();
-        userPwd.setCodeGeneration(buildDate("2014-01-01"));
-        loginDao.createUser(buildDefaultUser(), userPwd);
-
         try
         {
-            loginService.resetPassword(DEFAULT_EMAIL, DEFAULT_VALIDATION_CODE, CORRECT_PWD);
-            assertNotNull(null);
+            loginService.resetPassword("validationCodeTimeOut@c.com", "correctValidationCode", "correctPwd");
+            fail();
         }
         catch (ResetPasswordFailed e)
         {
@@ -530,11 +489,19 @@ public class LoginServiceImplTest
     }
 
     @Test
-    public void resetPassword_ShouldPass()
+    public void normalUser_ShouldResetPasswordStatusOnResetPassword()
     {
-        loginDao.createUser(buildDefaultUser(), buildDefaultUserPwdToReset());
+        loginService.resetPassword("userWithValidationCode@a.com", "correctValidationCode", "correctPwd");
 
-        loginService.resetPassword(DEFAULT_EMAIL, DEFAULT_VALIDATION_CODE, CORRECT_PWD);
+        UserPwd persistedPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
+        assertEquals("password wasn't changed", CORRECT_HASHED_PWD, persistedPwd.getPassword());
+        assertFalse("forceChangePassword should be reset", persistedPwd.getForceChangePassword());
+    }
+
+    @Test
+    public void normalUser_ShouldResetValidationCodeStatusOnResetPassword()
+    {
+        loginService.resetPassword("userWithValidationCode@a.com", "correctValidationCode", "correctPwd");
 
         UserPwd persistedPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
         assertEquals("validation code should be reset", null, persistedPwd.getValidationCode());
@@ -545,12 +512,100 @@ public class LoginServiceImplTest
         assertFalse("forceChangePassword should be reset", persistedPwd.getForceChangePassword());
     }
 
+    @Test
+    public void lockedUser_ShouldResetLockedStatusOnResetPassword()
+    {
+        loginService.resetPassword("lockedUserWithValidationCode@a.com", "correctValidationCode", "correctPwd");
+
+        UserPwd persistedPwd = loginDao.getUserPwdFromUserId(DEFAULT_USER_ID);
+        assertEquals("failed attemps should be reset", 0, persistedPwd.getFailedAttemps());
+        assertEquals("locked since should be reset", null, persistedPwd.getLockedSince());
+    }
+
     private class LoginDaoForTest implements LoginDao
     {
         private Map<String, User> usersFromUsername = new HashMap<>();
         private Map<Integer, User> usersFromId = new HashMap<>();
         private Map<String, User> usersFromEmail = new HashMap<>();
         private Map<Integer, UserPwd> userPwdsFormId = new HashMap<>();
+
+        public LoginDaoForTest()
+        {
+            createUser(new User(DEFAULT_USER_ID, "existingUsername", "existing@mail.com"),
+                    buildDefaultUserPwd(DEFAULT_USER_ID));
+            createUser(new User(2, "withNoFailedAttemp", "withNoFailedAttemp@a.com"), buildDefaultUserPwd(2));
+            createUser(new User(3, "userWithAlmostMaxAttemps", "userWithAlmostMaxAttemps@a.com"),
+                    buildAlmostMaxAttempsPwd(3));
+            createUser(new User(4, "userNewlyLocked", "userNewlyLocked@a.com"), buildLockedPwd(4, new Date()));
+            createUser(new User(5, "userLockedSinceALongTime", "userLockedSinceALongTime@a.com"),
+                    buildLockedPwd(5, buildDate("2014-01-01")));
+            createUser(new User(6, "notActivatedUser", "notActivatedUser@a.com"), buildNotActivatedPwd(6));
+            createUser(new User(FORCE_PWD_USER_ID, "userWithForcePwd", "userWithForcePwd@a.com"),
+                    buildForceChangePwd(FORCE_PWD_USER_ID));
+            createUser(new User(8, "validationCodeTimeOut", "validationCodeTimeOut@c.com"),
+                    buildDefaultUserPwdToReset(8, buildDate("2014-05-12")));
+            createUser(new User(9, "userWithValidationCode", "userWithValidationCode@a.com"),
+                    buildDefaultUserPwdToReset(9, new Date()));
+            createUser(new User(10, "lockedUserWithValidationCode", "lockedUserWithValidationCode@a.com"),
+                    buildDefaultUserPwdToReset(10, new Date()));
+        }
+
+        private Date buildDate(String date)
+        {
+            try
+            {
+                return DATE_FORMAT.parse(date);
+            }
+            catch (ParseException e)
+            {
+                throw new RuntimeException(e);
+            }
+        }
+
+        private UserPwd buildDefaultUserPwd(int id)
+        {
+            return new UserPwd(id, CORRECT_BASE64_SALT, CORRECT_HASHED_PWD,
+                    false, 0, null, null, null, null);
+        }
+
+        private UserPwd buildAlmostMaxAttempsPwd(int id)
+        {
+            UserPwd userPwd = buildDefaultUserPwd(id);
+            userPwd.setFailedAttemps(7);
+            return userPwd;
+        }
+
+        private UserPwd buildLockedPwd(int id, Date date)
+        {
+            UserPwd userPwd = buildDefaultUserPwd(id);
+            userPwd.setFailedAttemps(8);
+            userPwd.setLockedSince(date);
+            return userPwd;
+        }
+
+        private UserPwd buildNotActivatedPwd(int id)
+        {
+            UserPwd userPwd = buildDefaultUserPwd(id);
+            userPwd.setRegistrationCode("registrationCode");
+            return userPwd;
+        }
+
+        private UserPwd buildForceChangePwd(int id)
+        {
+            UserPwd userPwd = buildDefaultUserPwd(id);
+            userPwd.setForceChangePassword(true);
+            return userPwd;
+        }
+
+        private UserPwd buildDefaultUserPwdToReset(int id, Date codeGenerationDate)
+        {
+            UserPwd userPwd = buildDefaultUserPwd(id);
+            userPwd.setFailedAttemps(9);
+            userPwd.setLockedSince(buildDate("2014-01-01"));
+            userPwd.setValidationCode(DEFAULT_HASHED_VALIDATION_CODE);
+            userPwd.setCodeGeneration(codeGenerationDate);
+            return userPwd;
+        }
 
         @Override
         public User getUserFromId(int id)
@@ -567,10 +622,16 @@ public class LoginServiceImplTest
         @Override
         public void createUser(User user, UserPwd userPwd)
         {
-            usersFromUsername.put(user.getUsername(), user);
-            usersFromId.put(user.getId(), user);
-            usersFromEmail.put(user.getEmail(), user);
-            userPwdsFormId.put(user.getId(), userPwd);
+            User persistedUser = new User(user.getId(), user.getUsername(), user.getEmail());
+            UserPwd persistedUserPwd = new UserPwd(userPwd.getUserId(), userPwd.getBase64salt(),
+                    userPwd.getPassword(), userPwd.getForceChangePassword(),
+                    userPwd.getFailedAttemps(), userPwd.getLockedSince(),
+                    userPwd.getRegistrationCode(), userPwd.getValidationCode(),
+                    userPwd.getCodeGeneration());
+            usersFromUsername.put(user.getUsername(), persistedUser);
+            usersFromId.put(user.getId(), persistedUser);
+            usersFromEmail.put(user.getEmail(), persistedUser);
+            userPwdsFormId.put(user.getId(), persistedUserPwd);
         }
 
         @Override
@@ -606,14 +667,6 @@ public class LoginServiceImplTest
         public User getUserFromEmail(String email)
         {
             return usersFromEmail.get(email);
-        }
-
-        public void reset()
-        {
-            usersFromUsername.clear();
-            usersFromId.clear();
-            usersFromEmail.clear();
-            userPwdsFormId.clear();
         }
 
         @Override
@@ -661,11 +714,6 @@ public class LoginServiceImplTest
         {
             String[] message = { recipients, title, text };
             messages.add(message);
-        }
-
-        public void reset()
-        {
-            messages.clear();
         }
     }
 }

@@ -52,8 +52,8 @@ class LoginBox implements AttachAware, DetachAware
       case LoginEvent.LOCKED_USER:
         errorMessage = "Your account has been locked";
         break;
-      case LoginEvent.NON_VALIDATED_USER:
-        errorMessage = "Your account is not validated. Please check your emails";
+      case LoginEvent.NON_ACTIVATED_USER:
+        errorMessage = "Your account is not activated. Please check your emails";
         break;
       case LoginEvent.SERVER_ERROR:
         errorMessage = "Some connectivity issues occured. Please try again later";

@@ -40,8 +40,8 @@ class LoginApiImpl implements LoginApi {
             return AuthRequestResult.WRONG_CREDENTIALS;
           case 'LOCKED_USER':
             return AuthRequestResult.LOCKED_USER;
-          case 'NON_VALIDATED_USER':
-            return AuthRequestResult.NON_VALIDATED_USER;
+          case 'NON_ACTIVATED_USER':
+            return AuthRequestResult.NON_ACTIVATED_USER;
           default:
             throw request;
         }

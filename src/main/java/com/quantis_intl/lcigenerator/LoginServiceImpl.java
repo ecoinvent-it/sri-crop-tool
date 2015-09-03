@@ -35,7 +35,7 @@ import com.quantis_intl.lcigenerator.dao.LoginDao;
 import com.quantis_intl.lcigenerator.mails.MailSender;
 import com.quantis_intl.lcigenerator.model.User;
 import com.quantis_intl.lcigenerator.model.UserPwd;
-import com.quantis_intl.stack.authentication.LoginService;
+import com.quantis_intl.login.authentication.LoginService;
 
 public class LoginServiceImpl implements LoginService
 {
@@ -92,7 +92,7 @@ public class LoginServiceImpl implements LoginService
     private void checkNotValidatedAccount(UserPwd userPwd)
     {
         if (userPwd.getRegistrationCode() != null)
-            failAttemptOfRegisteredUser(userPwd, LoginFailedReason.NON_VALIDATED_USER);
+            failAttemptOfRegisteredUser(userPwd, LoginFailedReason.NON_ACTIVATED_USER);
     }
 
     private void checkLockedAccount(UserPwd userPwd)
@@ -194,7 +194,8 @@ public class LoginServiceImpl implements LoginService
         byte[] randomSalt = new byte[33];
         new SecureRandom().nextBytes(randomSalt);
         String base64salt = BaseEncoding.base64().encode(randomSalt);
-        UserPwd userPwd = new UserPwd(0, base64salt, hashString(password, base64salt), false, 0, null, null, null, null);
+        UserPwd userPwd = new UserPwd(0, base64salt, hashString(password, base64salt), false, 0, null, null, null,
+                null);
 
         dao.get().createUser(user, userPwd);
         User savedUser = dao.get().getUserFromUsername(username);
@@ -468,8 +469,7 @@ public class LoginServiceImpl implements LoginService
 
     public static enum ChangePasswordFailedReason
     {
-        WRONG_CURRENT_PASSWORD,
-        INVALID_NEW_PASSWORD
+        WRONG_CURRENT_PASSWORD, INVALID_NEW_PASSWORD
     }
 
     public static class ChangePasswordFailed extends RuntimeException
@@ -506,9 +506,7 @@ public class LoginServiceImpl implements LoginService
 
     public static enum ResetPasswordFailedReason
     {
-        WRONG_VALIDATION_CODE,
-        EXPIRED_VALIDATION_CODE,
-        INVALID_NEW_PASSWORD
+        WRONG_VALIDATION_CODE, EXPIRED_VALIDATION_CODE, INVALID_NEW_PASSWORD
     }
 
     public static class ResetPasswordFailed extends RuntimeException

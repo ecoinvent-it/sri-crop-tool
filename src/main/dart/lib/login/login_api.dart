@@ -21,7 +21,7 @@ enum AuthRequestResult {
   OK,
   WRONG_CREDENTIALS,
   LOCKED_USER,
-  NON_VALIDATED_USER
+  NON_ACTIVATED_USER
 }
 
 enum ChangePasswordResult {

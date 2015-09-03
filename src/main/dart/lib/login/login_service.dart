@@ -57,8 +57,8 @@ class LoginService {
            case AuthRequestResult.LOCKED_USER:
              _dispatcher.add(LoginEvent.LOCKED_USER);
              break;
-           case AuthRequestResult.NON_VALIDATED_USER:
-             _dispatcher.add(LoginEvent.NON_VALIDATED_USER);
+           case AuthRequestResult.NON_ACTIVATED_USER:
+             _dispatcher.add(LoginEvent.NON_ACTIVATED_USER);
              break;
          }
       }
@@ -211,7 +211,7 @@ enum LoginEvent {
   AUTHENTICATED,
   WRONG_CREDENTIALS,
   LOCKED_USER,
-  NON_VALIDATED_USER,
+  NON_ACTIVATED_USER,
   SERVER_ERROR,
   LOGGING_OUT,
   LOGGED_OUT,

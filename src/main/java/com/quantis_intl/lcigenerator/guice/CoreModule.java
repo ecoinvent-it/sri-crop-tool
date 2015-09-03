@@ -26,7 +26,7 @@ import com.quantis_intl.lcigenerator.api.PublicApi;
 import com.quantis_intl.lcigenerator.api.PublicPrincipalApi;
 import com.quantis_intl.lcigenerator.dao.LoginDao;
 import com.quantis_intl.lcigenerator.dao.LoginDaoImpl;
-import com.quantis_intl.stack.authentication.LoginService;
+import com.quantis_intl.login.authentication.LoginService;
 
 public class CoreModule extends AbstractModule
 {
