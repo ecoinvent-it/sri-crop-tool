@@ -581,7 +581,7 @@ public class ExcelInputReader
                                 ImmutableMap.of("cell", extractExcelOriginalCellCoordinates(group.getTotalHolder()),
                                         "label",
                                         extractExcelOriginalLabel(group.getTotalHolder())),
-                                "No decomposition has been entered. The total will be considered as \"Other\"");
+                                "The total has not been detailed. The value will be entirely considered as \"Other\"");
                     });
         }
 

@@ -28,8 +28,7 @@ import com.quantis_intl.stack.features.MyBatisFeature;
 public class Bootstrap
 {
     private Bootstrap()
-    {
-    }
+    {}
 
     public static void main(String[] args) throws Exception
     {

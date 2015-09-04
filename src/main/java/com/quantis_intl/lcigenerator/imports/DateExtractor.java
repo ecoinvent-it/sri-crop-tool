@@ -39,7 +39,7 @@ public class DateExtractor
 
     // NOTE: Use fixed template as the cell format is specified by user in Excel
     // NOTE: Java considers 80 years in the past and 20 years in the future for 2-letter years
-    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.mm.yy");
+    private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yy");
 
     static
     {

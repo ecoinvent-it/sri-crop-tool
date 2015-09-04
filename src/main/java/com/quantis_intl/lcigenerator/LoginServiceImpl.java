@@ -21,7 +21,6 @@ package com.quantis_intl.lcigenerator;
 import java.security.SecureRandom;
 import java.util.Date;
 
-import javax.inject.Inject;
 import javax.inject.Provider;
 
 import org.slf4j.Logger;
@@ -31,6 +30,7 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.Hashing;
 import com.google.common.io.BaseEncoding;
 import com.google.common.net.UrlEscapers;
+import com.google.inject.Inject;
 import com.quantis_intl.lcigenerator.dao.LoginDao;
 import com.quantis_intl.lcigenerator.mails.MailSender;
 import com.quantis_intl.lcigenerator.model.User;

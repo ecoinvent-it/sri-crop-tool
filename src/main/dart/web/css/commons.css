@@ -124,7 +124,7 @@ table img
 
 .qts-icon-btn
 {
-	border: 0px;
+  border: 0px;
   margin: 5px 0px;
   padding: 8px;
   text-align: center;
@@ -176,6 +176,16 @@ table img
 .errors
 {
   background-color: #f2dede;
+}
+
+.errorsColor
+{
+  color: red;
+}
+
+.warningsColor
+{
+	color: orange;
 }
 
 .notVisible
