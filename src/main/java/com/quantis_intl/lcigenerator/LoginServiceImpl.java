@@ -19,7 +19,8 @@
 package com.quantis_intl.lcigenerator;
 
 import java.security.SecureRandom;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 
 import javax.inject.Provider;
 
@@ -42,7 +43,7 @@ public class LoginServiceImpl implements LoginService
     private static final Logger LOG = LoggerFactory.getLogger(LoginServiceImpl.class);
 
     private static final int MAX_ATTEMPS = 8;
-    private static final long LOCKED_DURATION_IN_MILLISECONDS = 20 * 60 * 1000; // 20 min
+    private static final long LOCKED_DURATION_IN_MINUTES = 20;
 
     // NOTE: Used to add a bit of security to avoid bruteforce without compromising the source code.
     // TODO: Using HMAC would be even better
@@ -116,8 +117,8 @@ public class LoginServiceImpl implements LoginService
     {
         if (userPwd.getLockedSince() != null)
         {
-            long diffInMilliSeconds = (new Date()).getTime() - userPwd.getLockedSince().getTime();
-            return diffInMilliSeconds <= LOCKED_DURATION_IN_MILLISECONDS;
+            return userPwd.getLockedSince().plusMinutes(LOCKED_DURATION_IN_MINUTES)
+                    .isAfter(LocalDateTime.now(ZoneOffset.UTC));
         }
         return false;
     }
@@ -131,7 +132,7 @@ public class LoginServiceImpl implements LoginService
         userPwd.setFailedAttemps(nbAttemps);
         if (nbAttemps >= MAX_ATTEMPS && !isUserLocked(userPwd))
         {
-            userPwd.setLockedSince(new Date());
+            userPwd.setLockedSince(LocalDateTime.now(ZoneOffset.UTC));
             accountHasBeenLocked = true;
         }
 
@@ -330,7 +331,7 @@ public class LoginServiceImpl implements LoginService
 
         String validationCode = generatePassword();
         userPwd.setValidationCode(hashString(validationCode, userPwd.getBase64salt()));
-        userPwd.setCodeGeneration(new Date());
+        userPwd.setCodeGeneration(LocalDateTime.now(ZoneOffset.UTC));
         dao.get().updateValidationCode(userPwd);
 
         mailSender.get().sendMail(email, "[ALCIG] Password reset request",
@@ -403,9 +404,9 @@ public class LoginServiceImpl implements LoginService
             throw new ResetPasswordFailed(ResetPasswordFailedReason.WRONG_VALIDATION_CODE);
         }
 
-        long diffInMilliSeconds = new Date().getTime() - userPwd.getCodeGeneration().getTime();
-        final long VALIDATION_CODE_VALIDITY_IN_MILLISECONDS = 15 * 60 * 1000; // 15 min
-        if (diffInMilliSeconds > VALIDATION_CODE_VALIDITY_IN_MILLISECONDS)
+        final long VALIDATION_CODE_VALIDITY_IN_MINUTES = 15;
+        if (userPwd.getCodeGeneration().plusMinutes(VALIDATION_CODE_VALIDITY_IN_MINUTES)
+                .isBefore(LocalDateTime.now(ZoneOffset.UTC)))
         {
             LOG.warn("Code validation timeout for user {}", user.getId());
             throw new ResetPasswordFailed(ResetPasswordFailedReason.EXPIRED_VALIDATION_CODE);

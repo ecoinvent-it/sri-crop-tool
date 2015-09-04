@@ -18,7 +18,7 @@
  */
 package com.quantis_intl.lcigenerator.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class UserPwd
 {
@@ -32,20 +32,19 @@ public class UserPwd
 
     private int failedAttemps;
 
-    private Date lockedSince;
+    private LocalDateTime lockedSince;
 
     private String registrationCode;
 
     private String validationCode;
 
-    private Date codeGeneration;
+    private LocalDateTime codeGeneration;
 
     public UserPwd()
-    {
-    }
+    {}
 
     public UserPwd(int userId, String base64salt, String password, boolean forceChangePassword, int failedAttemps,
-            Date lockedSince, String registrationCode, String validationCode, Date codeGeneration)
+            LocalDateTime lockedSince, String registrationCode, String validationCode, LocalDateTime codeGeneration)
     {
         super();
         this.userId = userId;
@@ -109,12 +108,12 @@ public class UserPwd
         this.failedAttemps = failedAttemps;
     }
 
-    public Date getLockedSince()
+    public LocalDateTime getLockedSince()
     {
         return lockedSince;
     }
 
-    public void setLockedSince(Date lockedSince)
+    public void setLockedSince(LocalDateTime lockedSince)
     {
         this.lockedSince = lockedSince;
     }
@@ -139,12 +138,12 @@ public class UserPwd
         this.validationCode = validationCode;
     }
 
-    public Date getCodeGeneration()
+    public LocalDateTime getCodeGeneration()
     {
         return codeGeneration;
     }
 
-    public void setCodeGeneration(Date codeGeneration)
+    public void setCodeGeneration(LocalDateTime codeGeneration)
     {
         this.codeGeneration = codeGeneration;
     }

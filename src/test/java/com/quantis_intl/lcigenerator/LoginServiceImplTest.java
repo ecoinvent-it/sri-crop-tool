@@ -25,10 +25,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,8 +66,6 @@ public class LoginServiceImplTest
     static private final String CORRECT_BASE64_SALT = "hQbHYPFuOxvlKDO1tIeN9IloV3Rtt8EHt1Z2SSGX1CV1";
     static private final String CORRECT_HASHED_PWD = "sha512:ef2c6b46d5d9de57feb791942de4b3f34cbc0a659aee2471abe1d145e9d521e6be37597c1a42d3b68d9c8cc3c3468c022e741d054983ff0a9eaf4129acab8f0a";
     static private final String DEFAULT_HASHED_VALIDATION_CODE = "sha512:da0bc1be2f537e217ab317153f47ed91390f37684952953ddb784cf9c001fbb2fae476bb3a572779a9edc590e3b56a0a58fbd0475dab8912f453680f6a0cf5db";
-
-    static private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd");
 
     @Before
     public void beforeEachTest()
@@ -536,30 +533,19 @@ public class LoginServiceImplTest
             createUser(new User(2, "withNoFailedAttemp", "withNoFailedAttemp@a.com"), buildDefaultUserPwd(2));
             createUser(new User(3, "userWithAlmostMaxAttemps", "userWithAlmostMaxAttemps@a.com"),
                     buildAlmostMaxAttempsPwd(3));
-            createUser(new User(4, "userNewlyLocked", "userNewlyLocked@a.com"), buildLockedPwd(4, new Date()));
+            createUser(new User(4, "userNewlyLocked", "userNewlyLocked@a.com"),
+                    buildLockedPwd(4, LocalDateTime.now(ZoneOffset.UTC).minusMinutes(5)));
             createUser(new User(5, "userLockedSinceALongTime", "userLockedSinceALongTime@a.com"),
-                    buildLockedPwd(5, buildDate("2014-01-01")));
+                    buildLockedPwd(5, LocalDateTime.now(ZoneOffset.UTC).minusMinutes(21)));
             createUser(new User(6, "notActivatedUser", "notActivatedUser@a.com"), buildNotActivatedPwd(6));
             createUser(new User(FORCE_PWD_USER_ID, "userWithForcePwd", "userWithForcePwd@a.com"),
                     buildForceChangePwd(FORCE_PWD_USER_ID));
             createUser(new User(8, "validationCodeTimeOut", "validationCodeTimeOut@c.com"),
-                    buildDefaultUserPwdToReset(8, buildDate("2014-05-12")));
+                    buildDefaultUserPwdToReset(8, LocalDateTime.now(ZoneOffset.UTC).minusMinutes(16)));
             createUser(new User(9, "userWithValidationCode", "userWithValidationCode@a.com"),
-                    buildDefaultUserPwdToReset(9, new Date()));
+                    buildDefaultUserPwdToReset(9, LocalDateTime.now(ZoneOffset.UTC)));
             createUser(new User(10, "lockedUserWithValidationCode", "lockedUserWithValidationCode@a.com"),
-                    buildDefaultUserPwdToReset(10, new Date()));
-        }
-
-        private Date buildDate(String date)
-        {
-            try
-            {
-                return DATE_FORMAT.parse(date);
-            }
-            catch (ParseException e)
-            {
-                throw new RuntimeException(e);
-            }
+                    buildDefaultUserPwdToReset(10, LocalDateTime.now(ZoneOffset.UTC)));
         }
 
         private UserPwd buildDefaultUserPwd(int id)
@@ -575,7 +561,7 @@ public class LoginServiceImplTest
             return userPwd;
         }
 
-        private UserPwd buildLockedPwd(int id, Date date)
+        private UserPwd buildLockedPwd(int id, LocalDateTime date)
         {
             UserPwd userPwd = buildDefaultUserPwd(id);
             userPwd.setFailedAttemps(8);
@@ -597,11 +583,11 @@ public class LoginServiceImplTest
             return userPwd;
         }
 
-        private UserPwd buildDefaultUserPwdToReset(int id, Date codeGenerationDate)
+        private UserPwd buildDefaultUserPwdToReset(int id, LocalDateTime codeGenerationDate)
         {
             UserPwd userPwd = buildDefaultUserPwd(id);
             userPwd.setFailedAttemps(9);
-            userPwd.setLockedSince(buildDate("2014-01-01"));
+            userPwd.setLockedSince(LocalDateTime.of(2014, 1, 1, 0, 0, 0));
             userPwd.setValidationCode(DEFAULT_HASHED_VALIDATION_CODE);
             userPwd.setCodeGeneration(codeGenerationDate);
             return userPwd;

@@ -8,6 +8,13 @@
 	<packaging>jar</packaging>
 
 	<name>LCI Generator</name>
+	
+	<repositories>
+			<repository>
+		  <id>jitpack.io</id>
+		  <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -208,7 +215,7 @@
 		<dependency>
 			<groupId>com.quantis_intl</groupId>
 			<artifactId>stack</artifactId>
-			<version>0.1.1</version>
+			<version>0.1.2-SNAPSHOT</version>
 		</dependency>
 		<dependency>
       <groupId>com.quantis_intl</groupId>
@@ -246,6 +253,11 @@
       <artifactId>mybatis</artifactId>
       <version>3.2.8</version>
     </dependency>
+    <dependency>
+		  <groupId>com.github.javaplugs</groupId>
+		  <artifactId>mybatis-java-time</artifactId>
+		  <version>0.2</version>
+		</dependency>
     <dependency>
       <groupId>com.google.inject.extensions</groupId>
       <artifactId>guice-multibindings</artifactId>
