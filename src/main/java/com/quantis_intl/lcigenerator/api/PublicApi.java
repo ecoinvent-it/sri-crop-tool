@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.escape.Escaper;
 import com.google.common.html.HtmlEscapers;
-import com.quantis_intl.lcigenerator.mails.MailSender;
+import com.quantis_intl.stack.mail.MailSender;
 
 @Path("pub/")
 public class PublicApi

@@ -27,16 +27,16 @@ import javax.ws.rs.core.Response;
 
 import org.apache.shiro.SecurityUtils;
 
-import com.quantis_intl.lcigenerator.LoginServiceImpl;
-import com.quantis_intl.lcigenerator.LoginServiceImpl.ChangePasswordFailed;
+import com.quantis_intl.login.business.LoginService;
+import com.quantis_intl.login.business.LoginService.ChangePasswordFailed;
 
 @Path("principal/")
 public class PrincipalApi
 {
-    private final LoginServiceImpl loginService;
+    private final LoginService loginService;
 
     @Inject
-    public PrincipalApi(LoginServiceImpl loginService)
+    public PrincipalApi(LoginService loginService)
     {
         this.loginService = loginService;
     }

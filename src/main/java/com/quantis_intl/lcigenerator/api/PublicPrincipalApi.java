@@ -26,19 +26,19 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
-import com.quantis_intl.lcigenerator.LoginServiceImpl;
-import com.quantis_intl.lcigenerator.LoginServiceImpl.EmailNotFound;
-import com.quantis_intl.lcigenerator.LoginServiceImpl.ResetPasswordFailed;
-import com.quantis_intl.lcigenerator.LoginServiceImpl.UserActivationPending;
-import com.quantis_intl.lcigenerator.LoginServiceImpl.UserAlreadyActivated;
+import com.quantis_intl.login.business.LoginService;
+import com.quantis_intl.login.business.LoginService.EmailNotFound;
+import com.quantis_intl.login.business.LoginService.ResetPasswordFailed;
+import com.quantis_intl.login.business.LoginService.UserActivationPending;
+import com.quantis_intl.login.business.LoginService.UserAlreadyActivated;
 
 @Path("pub/principal/")
 public class PublicPrincipalApi
 {
-    private final LoginServiceImpl loginService;
+    private final LoginService loginService;
 
     @Inject
-    public PublicPrincipalApi(LoginServiceImpl loginService)
+    public PublicPrincipalApi(LoginService loginService)
     {
         this.loginService = loginService;
     }
@@ -48,13 +48,13 @@ public class PublicPrincipalApi
     public Response activateUser(@FormParam("email") String email,
             @FormParam("registrationCode") String registrationCode,
             @FormParam("newPassword") String newPassword
-            /*@Context UriInfo uriInfo*/)
+    /*@Context UriInfo uriInfo*/)
     {
         try
         {
             // FIXME: Don't hardcode
             loginService.activateUser(email, registrationCode, newPassword
-                    /*uriInfo.getBaseUri().toString().replace("app/", "").replace("http:", "https:")*/);
+            /*uriInfo.getBaseUri().toString().replace("app/", "").replace("http:", "https:")*/);
 
             StringBuilder sb = new StringBuilder("Your access to ALCIG is now activated!");
 

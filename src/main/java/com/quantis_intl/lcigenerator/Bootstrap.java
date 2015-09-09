@@ -21,8 +21,9 @@ package com.quantis_intl.lcigenerator;
 import java.util.Properties;
 
 import com.quantis_intl.lcigenerator.guice.CoreModule;
-import com.quantis_intl.login.ShiroFeature;
+import com.quantis_intl.login.LoginFeature;
 import com.quantis_intl.stack.QtsStack;
+import com.quantis_intl.stack.features.MailFeature;
 import com.quantis_intl.stack.features.MyBatisFeature;
 
 public class Bootstrap
@@ -41,8 +42,9 @@ public class Bootstrap
             stack.withAdditionalProperties(getDefaultProperties());
         }
 
-        stack.withFeatures(ShiroFeature.defaultFilters(),
-                MyBatisFeature.withMapperPackages("com.quantis_intl.lcigenerator.mappers"))
+        stack.withFeatures(MailFeature.build(),
+                MyBatisFeature.withMapperPackages("com.quantis_intl.login.mappers"),
+                LoginFeature.defaultFilters_mysqlBackedUsers("Jo5xNFdSPUmc4ijk2euM"))
                 .withAdditionalModules(new CoreModule());
 
         stack.start();
