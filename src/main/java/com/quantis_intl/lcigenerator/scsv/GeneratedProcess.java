@@ -37,6 +37,7 @@ import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.CategoryType;
 import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Status;
 import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Type;
 import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
+import com.quantis_intl.commons.scsv.processes.WasteTreatmentUsage;
 import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
 import com.quantis_intl.lcigenerator.imports.SingleValue;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
@@ -274,9 +275,9 @@ public class GeneratedProcess implements ProductScsvProcess
     }
 
     @Override
-    public List<ProductUsage> getWasteToTreatment()
+    public List<WasteTreatmentUsage> getWasteToTreatment()
     {
-        return toProductUsage(templateProductUsages.getWastes());
+        return toWasteTreatmentUsage(templateProductUsages.getWastes());
     }
 
     // TODO: map modelOutputs to template then sort by category, instead of this?
@@ -295,6 +296,17 @@ public class GeneratedProcess implements ProductScsvProcess
                 .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
                 .collect(Collectors.toList());
         findRequiredDeps(res);
+        return res;
+    }
+
+    // TODO: map modelOutputs to template then sort by category, instead of this?
+    private List<WasteTreatmentUsage> toWasteTreatmentUsage(TemplateProductUsage[] templates)
+    {
+        List<WasteTreatmentUsage> res = Arrays.stream(templates)
+                .map(r -> new GeneratedProductUsage(r, modelOutputs, extractedInputs))
+                .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
+                .collect(Collectors.toList());
+        findWtRequiredDeps(res);
         return res;
     }
 
@@ -349,6 +361,16 @@ public class GeneratedProcess implements ProductScsvProcess
         for (ProductUsage pu : productUsages)
         {
             GeneratedProductUsage gpu = (GeneratedProductUsage) pu;
+            gpu.getRequiredDep().ifPresent(requiredAlcigProcesses::addAll);
+        }
+    }
+
+    // FIXME: Not the best way to do that
+    private void findWtRequiredDeps(List<WasteTreatmentUsage> wasteTreatmentUsages)
+    {
+        for (WasteTreatmentUsage wtu : wasteTreatmentUsages)
+        {
+            GeneratedProductUsage gpu = (GeneratedProductUsage) wtu;
             gpu.getRequiredDep().ifPresent(requiredAlcigProcesses::addAll);
         }
     }
