@@ -30,8 +30,7 @@ import com.google.common.base.CharMatcher;
 public class POIHelper
 {
     private POIHelper()
-    {
-    }
+    {}
 
     public static String getCellStringValue(Sheet sheet, int rowIndex, int index, String defaultValue)
     {
@@ -54,10 +53,12 @@ public class POIHelper
         {
             int cellType = cell.getCellType();
             if (cellType == Cell.CELL_TYPE_NUMERIC
-                    || (cellType == Cell.CELL_TYPE_FORMULA && cell.getCachedFormulaResultType() == Cell.CELL_TYPE_NUMERIC))
+                    || (cellType == Cell.CELL_TYPE_FORMULA
+                            && cell.getCachedFormulaResultType() == Cell.CELL_TYPE_NUMERIC))
                 return Double.toString(cell.getNumericCellValue());
             else if (cellType == Cell.CELL_TYPE_STRING
-                    || (cellType == Cell.CELL_TYPE_FORMULA && cell.getCachedFormulaResultType() == Cell.CELL_TYPE_STRING))
+                    || (cellType == Cell.CELL_TYPE_FORMULA
+                            && cell.getCachedFormulaResultType() == Cell.CELL_TYPE_STRING))
             {
                 String val = cell.getStringCellValue();
                 String trimedValue = CharMatcher.WHITESPACE.trimFrom(val);
@@ -98,7 +99,9 @@ public class POIHelper
     {
         if (cell == null)
             return defaultValue;
-        if (cell.getCellType() == Cell.CELL_TYPE_STRING)
+        if (cell.getCellType() == Cell.CELL_TYPE_STRING
+                || (cell.getCellType() == Cell.CELL_TYPE_FORMULA
+                        && cell.getCachedFormulaResultType() == Cell.CELL_TYPE_STRING))
             return defaultValue;
         return cell.getDateCellValue();
     }

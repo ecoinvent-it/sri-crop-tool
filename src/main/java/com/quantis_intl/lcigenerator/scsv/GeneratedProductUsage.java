@@ -26,11 +26,12 @@ import com.google.common.base.Strings;
 import com.quantis_intl.commons.scsv.Uncertainty;
 import com.quantis_intl.commons.scsv.beans.UncertaintyBean;
 import com.quantis_intl.commons.scsv.processes.ProductUsage;
+import com.quantis_intl.commons.scsv.processes.WasteTreatmentUsage;
 import com.quantis_intl.lcigenerator.imports.SingleValue;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.lcigenerator.scsv.TemplateProductUsages.TemplateProductUsage;
 
-public class GeneratedProductUsage implements ProductUsage
+public class GeneratedProductUsage implements ProductUsage, WasteTreatmentUsage
 {
     private final TemplateProductUsage template;
     private final Map<String, String> modelOutputs;
@@ -84,5 +85,11 @@ public class GeneratedProductUsage implements ProductUsage
         if (vg != null && !Strings.isNullOrEmpty(vg.getComment()))
             res += " - " + vg.getComment();
         return res;
+    }
+
+    @Override
+    public String[] asArray()
+    {
+        return ProductUsage.super.asArray();
     }
 }

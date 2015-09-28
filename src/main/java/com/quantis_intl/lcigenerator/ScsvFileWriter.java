@@ -70,7 +70,7 @@ public class ScsvFileWriter
 
     private void writeModelsOutputToScsvFile(Map<String, String> modelsOutput, ValueGroup extractedInputs,
             OutputTarget outputTarget, Writer writer)
-            throws IOException
+                    throws IOException
     {
         ScsvLinesWriter linesWriter = new ScsvLinesWriter(serializer, writer);
         GeneratedMetadata generatedMetadata = new GeneratedMetadata();
@@ -124,6 +124,25 @@ public class ScsvFileWriter
                     return "Take the heavy metal uptake into account? Yes = \"1\", No = \"0\"";
                 }
 
+            }, new InputParameter()
+            {
+                @Override
+                public String getName()
+                {
+                    return "LUC_crop_specific";
+                }
+
+                @Override
+                public String getValue()
+                {
+                    return "1";
+                }
+
+                @Override
+                public String getComment()
+                {
+                    return "Approach for LUC: If the approach is \"Crop specific\", put the value to \"1\". If the approach is \"Shared responsability\", put the value to \"0\"";
+                }
             }));
         }
 

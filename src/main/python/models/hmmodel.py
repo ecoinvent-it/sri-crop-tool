@@ -119,10 +119,10 @@ class HmModel(object):
             agro_input = self._compute_agro_input(sumPest, hmElement); #mg/ha
             allocation_factor = self._compute_allocation_factor_for_hm_element(agro_input,hmElement); #ratio
             leaching = self._compute_leaching_for_hm_element(allocation_factor,hmElement); #mg/ha
-            erosion_gw = self._compute_erosion_gw(allocation_factor, hmElement, hmIndex); #mg/ha
-            hm_to_soil[hmElement] = self._compute_soil(agro_input, allocation_factor, leaching, erosion_gw, hmElement)
+            erosion_sw = self._compute_erosion_sw(allocation_factor, hmElement, hmIndex); #mg/ha
+            hm_to_soil[hmElement] = self._compute_soil(agro_input, allocation_factor, leaching, erosion_sw, hmElement)
             hm_to_sw[hmElement], hm_to_gw[hmElement] = self._split_leaching_between_surface_and_ground_water(leaching)
-            hm_to_sw[hmElement] += erosion_gw
+            hm_to_sw[hmElement] += erosion_sw
             hm_to_soil[hmElement] /= 1000000.0
             hm_to_sw[hmElement] /= 1000000.0
             hm_to_gw[hmElement] /= 1000000.0
@@ -162,7 +162,7 @@ class HmModel(object):
         ground = total_leaching  * (1.0 - self.drained_part)
         return (surface,ground)
     
-    def _compute_erosion_gw(self, allocation_factor, hmElement, hmIndex): #mg/ha
+    def _compute_erosion_sw(self, allocation_factor, hmElement, hmIndex): #mg/ha
         return self._SOIL_HM_CONTENT[self.hm_land_use_category][hmIndex] \
                 * self.eroded_soil / self.crop_cycle_per_year * self._ACCUMULATION_FACTOR \
                 * self._EROSION_FACTOR * allocation_factor
