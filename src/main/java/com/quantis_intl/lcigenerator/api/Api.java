@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -45,15 +44,12 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.StreamingOutput;
 
-import mails.MailSender;
-
 import org.apache.shiro.SecurityUtils;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.base.CharMatcher;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.escape.Escaper;
 import com.google.common.html.HtmlEscapers;
@@ -67,6 +63,8 @@ import com.quantis_intl.lcigenerator.ScsvFileWriter;
 import com.quantis_intl.lcigenerator.imports.ExcelInputReader;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.lcigenerator.scsv.OutputTarget;
+
+import mails.MailSender;
 
 @Path("pub/")
 public class Api
@@ -101,10 +99,6 @@ public class Api
         this.uploadedFilesFolder = uploadedFilesFolder;
         this.formsMailTo = formsMailTo;
     }
-
-    // FIXME: TMP
-    private static final List<String> TMP_WRONG_CROPS = ImmutableList.of("asparagus", "mint", "onion", "strawberry",
-            "tomato");
 
     @POST
     @Path("computeLci")
@@ -144,11 +138,6 @@ public class Api
         if (!errorReporter.hasErrors())
         {
             Map<String, Object> validatedData = extractedInputs.flattenValues();
-            if (TMP_WRONG_CROPS.contains(validatedData.get("crop")))
-                errorReporter
-                        .warning("The generated files for the crop type '"
-                                + validatedData.get("crop")
-                                + "' are currently incomplete in this BETA version. The seedlings input from the technosphere is missing.");
 
             pyBridgeService.callComputeLci(validatedData,
                     result -> onResult(result, extractedInputs, idResult, errorReporter, response, startTime),
@@ -227,8 +216,8 @@ public class Api
 
         return Response
                 .ok(
-                        (StreamingOutput) outputStream ->
-                        scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput, extractedInputs,
+                        (StreamingOutput) outputStream -> scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput,
+                                extractedInputs,
                                 OutputTarget.valueOf(database), outputStream))
                 .header("Content-Disposition", "attachment; filename=\"" + filename + ".csv\"").build();
     }
