@@ -19,22 +19,21 @@
 package com.quantis_intl.lcigenerator.guice;
 
 import com.google.inject.AbstractModule;
+import com.quantis_intl.lcigenerator.api.AdminApi;
 import com.quantis_intl.lcigenerator.api.Api;
 import com.quantis_intl.lcigenerator.api.PrincipalApi;
 import com.quantis_intl.lcigenerator.api.PublicApi;
 import com.quantis_intl.lcigenerator.api.PublicPrincipalApi;
-import com.quantis_intl.login.business.LoginDao;
-import com.quantis_intl.login.dao.MybatisLoginDao;
 
 public class CoreModule extends AbstractModule
 {
     @Override
     protected void configure()
     {
-        bind(LoginDao.class).to(MybatisLoginDao.class);// FIXME: Not the right place, should be in login
         bind(Api.class);
         bind(PublicApi.class);
         bind(PrincipalApi.class);
         bind(PublicPrincipalApi.class);
+        bind(AdminApi.class);
     }
 }

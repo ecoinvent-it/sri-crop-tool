@@ -21,10 +21,11 @@ package com.quantis_intl.lcigenerator;
 import java.util.Properties;
 
 import com.quantis_intl.lcigenerator.guice.CoreModule;
-import com.quantis_intl.login.LoginFeature;
+import com.quantis_intl.login.LoginFeatureBuilder;
 import com.quantis_intl.stack.QtsStack;
 import com.quantis_intl.stack.features.MailFeature;
 import com.quantis_intl.stack.features.MyBatisFeature;
+import com.quantis_intl.stack.utils.StackProperties;
 
 public class Bootstrap
 {
@@ -42,9 +43,9 @@ public class Bootstrap
             stack.withAdditionalProperties(getDefaultProperties());
         }
 
-        stack.withFeatures(MailFeature.build(),
+        stack.withFeatures(MailFeature.withGmailSender(),
                 MyBatisFeature.withMapperPackages("com.quantis_intl.login.mappers"),
-                LoginFeature.defaultFilters_mysqlBackedUsers("Jo5xNFdSPUmc4ijk2euM"))
+                new LoginFeatureBuilder().build("Jo5xNFdSPUmc4ijk2euM"))
                 .withAdditionalModules(new CoreModule());
 
         stack.start();
@@ -53,20 +54,25 @@ public class Bootstrap
     private static Properties getDefaultProperties()
     {
         Properties p = new Properties();
-        p.setProperty("server.port", "7879");
-        p.setProperty("server.baseContext", "/");
-        p.setProperty("server.webFolder", "src/main/dart/web");
-        p.setProperty("sql.schema", "lcigenerator_test");
-        p.setProperty("sql.username", "root");
-        p.setProperty("sql.password", "root");
+        p.setProperty(StackProperties.SERVER_PORT_PROP, "7879");
+        p.setProperty(StackProperties.SERVER_BASE_CONTEXT_PROP, "/");
+        p.setProperty(StackProperties.SERVER_WEB_FOLDER_PROP, "src/main/dart/web");
+        p.setProperty(StackProperties.SERVER_APP_RESOURCES_FOLDER_PROP, "src/main/dart/web");
+        p.setProperty(StackProperties.SERVER_LOG_FOLDER_PROP, "");
+        p.setProperty(StackProperties.ROOT_URL_PROP, "");
+
         // FIXME: Should be optional
-        p.setProperty("server.appResourcesFolder", "src/main/dart/web");
-        p.setProperty("server.logFolder", "");
-        p.setProperty("server.uploadedFilesFolder", System.getenv("ALCIG_UPLOADED_FILES_FOLDER"));
-        p.setProperty("mail.from", "");
-        p.setProperty("mailer.username", "");
-        p.setProperty("mailer.password", "");
+        p.setProperty(StackProperties.MAIL_APP_PREFIX_PROP, "ALCIG");
+        p.setProperty(StackProperties.MAIL_FROM_PROP, "");
+        p.setProperty(StackProperties.MAILER_USERNAME_PROP, "");
+        p.setProperty(StackProperties.MAILER_PASSWORD_PROP, "");
         p.setProperty("forms.mail.to", "");
+
+        p.setProperty(StackProperties.SQL_SCHEMA_PROP, "lcigenerator_test");
+        p.setProperty(StackProperties.SQL_USERNAME_PROP, "root");
+        p.setProperty(StackProperties.SQL_PASSWORD_PROP, "root");
+
+        p.setProperty("server.uploadedFilesFolder", System.getenv("ALCIG_UPLOADED_FILES_FOLDER"));
         p.setProperty("pyBridge.url", "http://localhost:11001/computeLci");
         return p;
     }

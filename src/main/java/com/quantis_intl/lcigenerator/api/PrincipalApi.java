@@ -26,6 +26,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
 import org.apache.shiro.SecurityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.quantis_intl.login.business.LoginService;
 import com.quantis_intl.login.business.LoginService.ChangePasswordFailed;
@@ -33,6 +35,8 @@ import com.quantis_intl.login.business.LoginService.ChangePasswordFailed;
 @Path("principal/")
 public class PrincipalApi
 {
+    private static final Logger LOG = LoggerFactory.getLogger(PrincipalApi.class);
+
     private final LoginService loginService;
 
     @Inject
@@ -45,7 +49,9 @@ public class PrincipalApi
     @Path("getStatus")
     public Response getStatus()
     {
-        boolean status = !loginService.mustForcePasswordForUser(getUserId());
+        final Object userId = getUserId();
+        boolean status = !loginService.mustForcePasswordForUser(userId);
+        LOG.info("Get status for user: {}", userId);
         return Response.ok(Boolean.toString(status)).build();
     }
 
@@ -54,20 +60,22 @@ public class PrincipalApi
     public Response changePassword(@FormParam("oldPassword") String oldPassword,
             @FormParam("newPassword") String newPassword)
     {
-        final int userId = getUserId();
+        final Object userId = getUserId();
         try
         {
             loginService.changePassword(userId, oldPassword, newPassword);
+            LOG.info("Password changed for user {}", userId);
             return Response.ok().build();
         }
         catch (ChangePasswordFailed e)
         {
+            LOG.error("Change password failed for user {}, reason: {}", userId, e.reason.toString());
             return Response.status(Response.Status.BAD_REQUEST).entity(e.reason.toString()).build();
         }
     }
 
-    private int getUserId()
+    private Object getUserId()
     {
-        return (Integer) SecurityUtils.getSubject().getPrincipal();
+        return SecurityUtils.getSubject().getPrincipal();
     }
 }

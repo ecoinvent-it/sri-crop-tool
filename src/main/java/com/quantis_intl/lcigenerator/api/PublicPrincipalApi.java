@@ -22,19 +22,25 @@ import javax.inject.Inject;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.quantis_intl.login.business.LoginService;
+import com.quantis_intl.login.business.LoginService.ChangePasswordFailed;
 import com.quantis_intl.login.business.LoginService.EmailNotFound;
+import com.quantis_intl.login.business.LoginService.ExpiredRegistrationCode;
 import com.quantis_intl.login.business.LoginService.ResetPasswordFailed;
 import com.quantis_intl.login.business.LoginService.UserActivationPending;
 import com.quantis_intl.login.business.LoginService.UserAlreadyActivated;
+import com.quantis_intl.login.business.LoginService.WrongRegistrationCode;
 
 @Path("pub/principal/")
 public class PublicPrincipalApi
 {
+    private static final Logger LOG = LoggerFactory.getLogger(PublicPrincipalApi.class);
+
     private final LoginService loginService;
 
     @Inject
@@ -47,42 +53,63 @@ public class PublicPrincipalApi
     @Path("activateUser")
     public Response activateUser(@FormParam("email") String email,
             @FormParam("registrationCode") String registrationCode,
-            @FormParam("newPassword") String newPassword
-    /*@Context UriInfo uriInfo*/)
+            @FormParam("newPassword") String newPassword)
     {
         try
         {
-            // FIXME: Don't hardcode
-            loginService.activateUser(email, registrationCode, newPassword
-            /*uriInfo.getBaseUri().toString().replace("app/", "").replace("http:", "https:")*/);
+            Object userId = loginService.activateUser(email, registrationCode, newPassword);
+            LOG.info("User activated: {}", userId);
 
-            StringBuilder sb = new StringBuilder("Your access to ALCIG is now activated!");
-
-            return Response.ok(sb.toString()).build();
+        }
+        catch (EmailNotFound e)
+        {
+            LOG.error("Non existing user tries to activate his access: {}", email);
+            // NOTE: Don't throw BAD_REQUEST
+        }
+        catch (WrongRegistrationCode e)
+        {
+            LOG.error("User ({}) tries to activate with wrong registrationCode: {}", e.userId, registrationCode);
+            return Response.status(Response.Status.BAD_REQUEST).entity("WRONG_REGISTRATION_CODE").build();
+        }
+        catch (ExpiredRegistrationCode e)
+        {
+            LOG.warn("Registration code timeout for user {}", e.userId);
+            return Response.status(Response.Status.BAD_REQUEST).entity("EXPIRED_REGISTRATION_CODE").build();
+        }
+        catch (ChangePasswordFailed e)
+        {
+            LOG.error("User ({}) tries to activate with invalid new password", e.userId);
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.reason.toString()).build();
         }
         catch (UserAlreadyActivated e)
         {
-            return Response.status(Response.Status.BAD_REQUEST).entity("Your account is already activated.").build();
+            LOG.warn("User already activated tries to activate: {}", e.userId);
+            return Response.status(Response.Status.BAD_REQUEST).entity("USER_ALREADY_ACTIVATED").build();
         }
+        StringBuilder sb = new StringBuilder("Your access to ALCIG is now activated!");
+        return Response.ok(sb.toString()).build();
     }
 
     @POST
     @Path("forgotPassword")
-    public Response forgotPassword(@FormParam("email") String email, @Context UriInfo uriInfo)
+    public Response forgotPassword(@FormParam("email") String email)
     {
-        String activationUrl = uriInfo.getAbsolutePath().toString().replace("http:", "https:")
-                .replace("pub/principal/forgotPassword", "pub/principal/activateUser");
         try
         {
-            loginService.forgotPassword(email, activationUrl);
+            Object userId = loginService.forgotPassword(email);
+            LOG.info("Reset password request received for user: {}", userId);
         }
         catch (EmailNotFound e)
-        {}
+        {
+            LOG.error("User tries to request reset password of non existing user: {}", email);
+            // NOTE: Don't throw BAD_REQUEST
+        }
         catch (UserActivationPending e)
         {
+            LOG.info("Non activated user ({}) trying to reset password. Re-sending activation mail {}", e.userId,
+                    email);
             return Response.status(Response.Status.BAD_REQUEST).entity("USER_ACTIVATION_PENDING").build();
         }
-
         return Response.ok().build();
     }
 
@@ -94,14 +121,22 @@ public class PublicPrincipalApi
     {
         try
         {
-            loginService.resetPassword(email, validationCode, newPassword);
+            Object userId = loginService.resetPassword(email, validationCode, newPassword);
+            LOG.info("Password reset for user {}", userId);
         }
         catch (EmailNotFound e)
-        {}
+        {
+            LOG.error("User tries to reset password of non existing user: {}", email);
+            // NOTE: Don't throw BAD_REQUEST
+        }
         catch (UserActivationPending e)
-        {}
+        {
+            LOG.error("Non activated user trying to reset password: {}", e.userId);
+            return Response.status(Response.Status.BAD_REQUEST).entity("USER_ACTIVATION_PENDING").build();
+        }
         catch (ResetPasswordFailed e)
         {
+            LOG.error("Reset password failed for user {}, reason: {}", e.userId, e.reason.toString());
             return Response.status(Response.Status.BAD_REQUEST).entity(e.reason.toString()).build();
         }
 
