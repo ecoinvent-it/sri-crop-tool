@@ -91,6 +91,7 @@
 						</execution>
 					</executions>
 				</plugin>
+				<!-- TODO: Use process-resources for replacements -->
 				<plugin>
          <groupId>com.google.code.maven-replacer-plugin</groupId>
          <artifactId>replacer</artifactId>
@@ -111,10 +112,14 @@
             </includes>
              <regex>false</regex>
              <replacements>
-           <replacement>
-               <token>@@@GOOGLE_ANALYTICS_ACCOUNT@@@</token>
-               <value>${google.analytics.account}</value>
-           </replacement>         
+		           <replacement>
+		               <token>@@@GOOGLE_ANALYTICS_ACCOUNT@@@</token>
+		               <value>${google.analytics.account}</value>
+		           </replacement> 
+		           <replacement>
+                   <token>@@@PROJECT_VERSION_NUMBER@@@</token>
+                   <value>${project.version}</value>
+               </replacement>        
              </replacements>
          </configuration>
         </plugin>
