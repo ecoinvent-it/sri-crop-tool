@@ -123,10 +123,13 @@ class CropCyclePerYearDefaultGenerator(object):
             harvestDate = generators["harvesting_date_main_crop"];
             harvestDate = date(harvestDate[0], harvestDate[1], harvestDate[2]);
             dateDiff = relativedelta.relativedelta(harvestDate, previousHarvestDate);
-            #If remaining days are more than 4 weeks, consider a month, if more than 2 weeks, consider half a month 
-            return 1.0 / (dateDiff.years + dateDiff.months/12.0 + (dateDiff.days // 14.0) / 24.0);
+            if dateDiff.years < 0 or dateDiff.months < 0 or dateDiff.days < 0 or (dateDiff.years + dateDiff.months + dateDiff.days) == 0:
+                return 1.0
+            else:
+                #If remaining days are more than 4 weeks, consider a month, if more than 2 weeks, consider half a month 
+                return 1.0 / (dateDiff.years + dateDiff.months/12.0 + (dateDiff.days // 14.0) / 24.0);
         except KeyError:
-            return 1.0;
+            return 1.0
         
 class WaterUseDefaultGenerator(object):
     def generateDefault(self, field, generators):
