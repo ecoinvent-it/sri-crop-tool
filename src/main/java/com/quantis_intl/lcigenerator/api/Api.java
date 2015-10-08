@@ -61,8 +61,6 @@ import com.quantis_intl.lcigenerator.imports.ExcelInputReader;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.lcigenerator.scsv.OutputTarget;
 
-import mails.MailSender;
-
 @Path("/")
 public class Api
 {
