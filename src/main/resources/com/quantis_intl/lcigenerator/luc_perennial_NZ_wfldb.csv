@@ -61,7 +61,7 @@ Comment
 This dataset represents the interventions associated with the clear-cutting of grassland for the provision of arable land tenure. Adapted from ecoinvent 3 process, with parametrized NPP and VEG values.Production volume: 20820000 kgIncluded activities start: From the natural state of grassland.Included activities end: This activity ends with the provision of arable land tenure, measured in unit kg carbon Potential Net Primary Production (NPP0) per square meter.The dataset includes the carbon stored in Above-Ground Biomas (AGB), Below-Ground Biomass (BGB)  and Dead Organic Matter (DOM) pools. It includes the fluxes from these carbon pools in terms of CO2. The loss/gain of Soil Organic Carbon (SOC) usually associated with a land tranformation is accounted for in the downstream activity using the arable land tenure, given that it depends on the subsequent land use practice. Energy values: Gross valuesGeography: Colombian grasslandTechnology level: 2 ModernStart date: 1990-01-01End date: 2013-12-31Is data valid for entire period: trueTime period: Publication of dataMacro-economic scenario name: Business-as-Usual
 
 Products
-Land tenure, arable land, as carbon NPP, clear-cutting, grassland to arable land (ALCIG)/NZ U;kg;1.0;100;Wood;_ALCIG import\Land use change\Land tenure;The reference product of the clear-cutting activitiy is Potential Net Primary Production (NPP0) measured in unit of kg carbon per m2. It is up to the arable land-using activity to utilise the lands capacity to produce biomass.
+Land tenure, arable land, as carbon NPP, clear-cutting, grassland to arable land (ALCIG)/NZ U;kg;1.0;100;Wood;_ALCIG\Sub-datasets\Land use change\Land tenure;The reference product of the clear-cutting activitiy is Potential Net Primary Production (NPP0) measured in unit of kg carbon per m2. It is up to the arable land-using activity to utilise the lands capacity to produce biomass.
 
 Avoided products
 
@@ -149,7 +149,7 @@ Comment
 "These are the impacts for 1 ha of land use change, split between change from annual crop, perennial crop, primary forest, secondary forest and grass land according to the 2nd edition of the Quantis modified tool developed by Blonk Consultants ""WFLDB-adapted-Blonk 2014 direct-land-use-change-assessment-tool_2015-05-18a.xlsx"". This process is specific to the country and to the type of the crop (annual or perennial). The amount to take into account depends on the allocated LUC of the crop. This allocation is also calculated using the 2nd edition of the Quantis modified tool developed by Blonk Consultants based on FAO data. This land use change process includes land tenure processes and transformation processes (to balance with land tenure processes that only have arable land as outputs, whereas permanent crop soil is needed for perennial crops). It also includes C and N emissions due to soil degradation, when occuring, according to IPCC 2006. Peat soil degradation is included, but separately, based on Joosten (2010) and IPCC (2013) data."
 
 Products
-Land use change, perennial crop (ALCIG)/NZ U;ha;1;100;not defined;_ALCIG import\Land use change;
+Land use change, perennial crop (ALCIG)/NZ U;ha;1;100;not defined;_ALCIG\Sub-datasets\Land use change;
 
 Avoided products
 

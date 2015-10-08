@@ -75,7 +75,7 @@ System description
 ;
 
 Products
-Peat mix, at plant (ALCIG)/GLO S;kg;1;100;not defined;_ALCIG import;Dataset is aggregated (system process), based on a Quantis study for the European Peat and Growing Media Association (EPAGMA), 2012
+Peat mix, at plant (ALCIG)/GLO S;kg;1;100;not defined;_ALCIG\Sub-datasets\Plant production\Growing media;Dataset is aggregated (system process), based on a Quantis study for the European Peat and Growing Media Association (EPAGMA), 2012
 
 Avoided products
 
@@ -1486,7 +1486,7 @@ System description
 ;
 
 Products
-Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U;p;1;100;not defined;_ALCIG import;For vegetable productions overseas it is assumed that they are produced on the sites where the crops are grown (Stoessel et al. 2012)Including: peat production, use, end-of-life and distribution to seedling farm, and irrigation.Excluding: land occupation, greenhouse infrastructures, fertilizers and pesticides applicationFor the transport of seedlings from seedling nursery to crop farm, the weight to take into account is 100 g / seedling with moisture and container (Stoessel et al. 2012)
+Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U;p;1;100;not defined;_ALCIG\Sub-datasets\Plant production\Seeds and seedlings;For vegetable productions overseas it is assumed that they are produced on the sites where the crops are grown (Stoessel et al. 2012)Including: peat production, use, end-of-life and distribution to seedling farm, and irrigation.Excluding: land occupation, greenhouse infrastructures, fertilizers and pesticides applicationFor the transport of seedlings from seedling nursery to crop farm, the weight to take into account is 100 g / seedling with moisture and container (Stoessel et al. 2012)
 
 Avoided products
 
@@ -1506,8 +1506,8 @@ Emissions to air
 Water;low. pop.;kg;0.000675;Undefined;0;0;0;Total water use for irrigation = 25.5 m3/ha, for 34'000 seedlings of tomato/ha (Manfredi et al. 2012)Irrigation efficiency: 90%
 
 Emissions to water
-Water, GLO;river;m3;6.0E-5;Undefined;0;0;0;Water, to water, river = 0.8*((ETirr/EFirr) – ETirr), based on Lévová et al. (2012)
-Water, GLO;groundwater;m3;1.5E-5;Undefined;0;0;0;Water, to water, river = 0.2*((ETirr/EFirr) – ETirr), based on Lévová et al. (2012)
+Water, GLO;river;m3;6.0E-5;Undefined;0;0;0;Water, to water, river = 0.8*((ETirr/EFirr) ï¿½ ETirr), based on Lï¿½vovï¿½ et al. (2012)
+Water, GLO;groundwater;m3;1.5E-5;Undefined;0;0;0;Water, to water, river = 0.2*((ETirr/EFirr) ï¿½ ETirr), based on Lï¿½vovï¿½ et al. (2012)
 
 Emissions to soil
 
@@ -1602,7 +1602,7 @@ System description
 ;
 
 Products
-Irrigating, drip, electricity powered (ALCIG)/RER U;m3;1;100;not defined;_ALCIG import;"Infrastructure based on Torrellas et al. (2012)Land occupation and energy use based on ""Irrigating/US"""
+Irrigating, drip, electricity powered (ALCIG)/RER U;m3;1;100;not defined;_ALCIG\Sub-datasets\Plant production\Irrigation;"Infrastructure based on Torrellas et al. (2012)Land occupation and energy use based on ""Irrigating/US"""
 
 Avoided products
 

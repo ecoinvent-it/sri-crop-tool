@@ -64,7 +64,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, high voltage, production MX, at grid (ALCIG)/MX U;kWh;1;100;not defined;_ALCIG import;Based on UCTE mix, adapted to Mexico
+Electricity, high voltage, production MX, at grid (ALCIG)/MX U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;Based on UCTE mix, adapted to Mexico
 
 Avoided products
 
@@ -165,7 +165,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, low voltage, production MX, at grid (ALCIG)/MX U;kWh;1;100;not defined;_ALCIG import;
+Electricity, low voltage, production MX, at grid (ALCIG)/MX U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;
 
 Avoided products
 
@@ -265,7 +265,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, medium voltage, production MX, at grid (ALCIG)/MX U;kWh;1;100;not defined;_ALCIG import;Based on UCTE mix, adapted to Mexico
+Electricity, medium voltage, production MX, at grid (ALCIG)/MX U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;Based on UCTE mix, adapted to Mexico
 
 Avoided products
 
@@ -368,7 +368,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, production mix MX (ALCIG)/MX U;kWh;1;100;not defined;_ALCIG import;Based on www.iea.org
+Electricity, production mix MX (ALCIG)/MX U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;Based on www.iea.org
 
 Avoided products
 

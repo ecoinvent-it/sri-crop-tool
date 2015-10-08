@@ -52,7 +52,7 @@ Comment
 "These are the impacts for 1 ha of land use change, split between change from annual crop, perennial crop, primary forest, secondary forest and grass land according to the 2nd edition of the Quantis modified tool developed by Blonk Consultants ""WFLDB-adapted-Blonk 2014 direct-land-use-change-assessment-tool_2015-05-18a.xlsx"". This process is specific to the country and to the type of the crop (annual or perennial). The amount to take into account depends on the allocated LUC of the crop. This allocation is also calculated using the 2nd edition of the Quantis modified tool developed by Blonk Consultants based on FAO data. This land use change process includes land tenure processes and transformation processes (to balance with land tenure processes that only have arable land as outputs, whereas permanent crop soil is needed for perennial crops). It also includes C and N emissions due to soil degradation, when occuring, according to IPCC 2006. Peat soil degradation is included, but separately, based on Joosten (2010) and IPCC (2013) data."
 
 Products
-Land use change, perennial crop (ALCIG)/FR U;ha;1;100;not defined;_ALCIG import\Land use change;
+Land use change, perennial crop (ALCIG)/FR U;ha;1;100;not defined;_ALCIG\Sub-datasets\Land use change;
 
 Avoided products
 

@@ -61,7 +61,7 @@ Comment
 This dataset represents the interventions associated with the provision of 1 kg NPP0  by land that is already in use. Adapted from ecoinvent 3 process, with parametrized NPP value.Production volume: 21810000000000 kgIncluded activities start: Starts with the land already in use.Included activities end: This activity ends with the provision of arable land tenure, measured in unit kg carbon Potential Net Primary Production (NPP0) per square meterThe dataset includes all interventions associated with the provision of 1 kg NPP0 from land already in use.Energy values: Gross valuesGeography: Already used arable land Technology level: 4 OldStart date: 1990-01-01End date: 2013-12-31Is data valid for entire period: trueTime period: Publication of dataMacro-economic scenario name: Business-as-Usual
 
 Products
-Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (ALCIG)/PL U;kg;1.0;100;Wood;_ALCIG import\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
+Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (ALCIG)/PL U;kg;1.0;100;Wood;_ALCIG\Sub-datasets\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
 
 Avoided products
 
@@ -158,7 +158,7 @@ Comment
 This dataset represents the interventions associated with the provision of 1 kg NPP0  by land that is already in use. Adapted from ecoinvent 3 process, arable land already in use, with parametrized NPP and VEG values.Production volume: 21810000000000 kgIncluded activities start: Starts with the land already in use.Included activities end: This activity ends with the provision of arable land tenure, measured in unit kg carbon Potential Net Primary Production (NPP0) per square meterThe dataset includes all interventions associated with the provision of 1 kg NPP0 from land already in use.Energy values: Gross valuesGeography: Already used arable land Technology level: 4 OldStart date: 1990-01-01End date: 2013-12-31Is data valid for entire period: trueTime period: Publication of dataMacro-economic scenario name: Business-as-Usual
 
 Products
-Land tenure, arable land, as carbon NPP, perennial cropland already in use to arable land (ALCIG)/PL U;kg;1.0;100;Wood;_ALCIG import\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
+Land tenure, arable land, as carbon NPP, perennial cropland already in use to arable land (ALCIG)/PL U;kg;1.0;100;Wood;_ALCIG\Sub-datasets\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
 
 Avoided products
 
@@ -249,7 +249,7 @@ Comment
 "These are the impacts for 1 ha of land use change, split between change from annual crop, perennial crop, primary forest, secondary forest and grass land according to the 2nd edition of the Quantis modified tool developed by Blonk Consultants ""WFLDB-adapted-Blonk 2014 direct-land-use-change-assessment-tool_2015-05-18a.xlsx"". This process is specific to the country and to the type of the crop (annual or perennial). The amount to take into account depends on the allocated LUC of the crop. This allocation is also calculated using the 2nd edition of the Quantis modified tool developed by Blonk Consultants based on FAO data. This land use change process includes land tenure processes and transformation processes (to balance with land tenure processes that only have arable land as outputs, whereas permanent crop soil is needed for perennial crops). It also includes C and N emissions due to soil degradation, when occuring, according to IPCC 2006. Peat soil degradation is included, but separately, based on Joosten (2010) and IPCC (2013) data."
 
 Products
-Land use change, perennial crop (ALCIG)/PL U;ha;1;100;not defined;_ALCIG import\Land use change;
+Land use change, perennial crop (ALCIG)/PL U;ha;1;100;not defined;_ALCIG\Sub-datasets\Land use change;
 
 Avoided products
 

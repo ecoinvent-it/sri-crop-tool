@@ -52,7 +52,7 @@ Comment
 "This dataset covers the impacts associated to 1 ha of land use change (LUC), split between change from annual crop, perennial crop, primary forest, secondary forest and grassland according to the 2nd edition of the Quantis-modified tool developed by Blonk Consultants ""WFLDB-adapted-Blonk 2014 direct-land-use-change-assessment-tool_2015-05-18a.xlsx"". This process is specific to the country and to the type of the crop (annual, perennial or paddy rice). The amount of this process to take into account as input to the crop inventory depends on the LUC allocated to the specific crop. This allocation is also calculated using the 2nd edition of the Quantis-modified tool developed by Blonk Consultants, based on FAO data. This dataset includes land tenure processes in kg NPP0. It also includes C and N emissions due to soil degradation, when occuring, according to IPCC 2006. Peat soil degradation is included separately, based on Joosten (2010) and IPCC (2013) data."
 
 Products
-Land use change, annual crop (ALCIG)/AR U;ha;1;100;not defined;_ALCIG import\Land use change;
+Land use change, annual crop (ALCIG)/AR U;ha;1;100;not defined;_ALCIG\Sub-datasets\Land use change;
 
 Avoided products
 

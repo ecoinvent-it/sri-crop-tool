@@ -67,7 +67,7 @@ Comment
 "Process from AGRIBALYSE used for ALCIG excluding land occupation and transformation processes.Translated name: Tunnel plasticIncluded processes: The inventory includes : the production of the greenhouse as well as the permanent technical infrastructure, that is the plastic tunnel structure (bearing structure and covering materials), fertirrigation and stocking facilities.Remark: Refers to 1 m2 of plastic tunnel during 1 year.Status of LCI: AGRIBALYSE supporting LCI (based on data from Boulard et al, 2011) - V1.1 (february 2014).CAS number: 0; Formula: 0; Geography: FranceTechnology: Details see Rapport de stage - LAnalyse du Cycle de Vie appliquée à la culture de tomates sous serreTime period: Inventory data based on the period 2005-2009.Version: 1.10Energy values: UndefinedProduction volume: 0Local category: AgriculturalLocal subcategory: Agri-BALYSE\Others\Buildings + InfrastructureSource file: AGRIBALYSE_COMPLET_V1.1.xml"
 
 Products
-Plastic tunnel (ALCIG)/FR U;m2;1;100;not defined;_ALCIG import;FRANCE
+Plastic tunnel (ALCIG)/FR U;m2;1;100;not defined;_ALCIG\Sub-datasets\Plant production\Installations;FRANCE
 
 Avoided products
 

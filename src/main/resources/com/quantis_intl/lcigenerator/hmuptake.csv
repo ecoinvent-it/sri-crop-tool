@@ -52,7 +52,7 @@ Comment
 Included processes: Heavy metals withdrawn from agricultural soil by harvest of agricultural biomass. The withdrawal is modelled as a negative emission to agricultural soil.Remark: Refers to 1 kg of dry matter of argicultural biomass harvested. At the end of the life cycle of the product, the heavy metals will be released to the respective environmental compartment, which should be taken into account.
 
 Products
-Agricultural biomass, heavy metals uptake, per kg dry matter harvested (ALCIG)/GLO U;kg;1;100;not defined;_ALCIG import\Heavy metals uptake;
+Agricultural biomass, heavy metals uptake, per kg dry matter harvested (ALCIG)/GLO U;kg;1;100;not defined;_ALCIG\Sub-datasets\Plant production\Heavy metal uptake;
 
 Avoided products
 

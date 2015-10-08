@@ -64,7 +64,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, high voltage, production ID, at grid (ALCIG)/ID U;kWh;1;100;not defined;_ALCIG import;Based on UCTE mix, adapted to Indonesia
+Electricity, high voltage, production ID, at grid (ALCIG)/ID U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;Based on UCTE mix, adapted to Indonesia
 
 Avoided products
 
@@ -165,7 +165,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, low voltage, production ID, at grid (ALCIG)/ID U;kWh;1;100;not defined;_ALCIG import;
+Electricity, low voltage, production ID, at grid (ALCIG)/ID U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;
 
 Avoided products
 
@@ -265,7 +265,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, medium voltage, production ID, at grid (ALCIG)/ID U;kWh;1;100;not defined;_ALCIG import;Based on UCTE mix, adapted to Indonesia
+Electricity, medium voltage, production ID, at grid (ALCIG)/ID U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;Based on UCTE mix, adapted to Indonesia
 
 Avoided products
 
@@ -368,7 +368,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, production mix ID (ALCIG)/ID U;kWh;1;100;not defined;_ALCIG import;Based on www.iea.org
+Electricity, production mix ID (ALCIG)/ID U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;Based on www.iea.org
 
 Avoided products
 

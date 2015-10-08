@@ -215,7 +215,7 @@ public class GeneratedProcess implements ProductScsvProcess
             @Override
             public String getCategory()
             {
-                return "_ALCIG import";
+                return "_ALCIG\\Datasets";
             }
 
             @Override
@@ -229,7 +229,7 @@ public class GeneratedProcess implements ProductScsvProcess
     private String generateProcessAndProductName()
     {
         StringBuilder sb = new StringBuilder(PropertiesLoader.CROPS.getProperty(modelOutputs.get("crop")))
-                .append(", at farm/kg/")
+                .append(", at farm/")
                 .append(modelOutputs.get("country"));
         return sb.toString();
     }

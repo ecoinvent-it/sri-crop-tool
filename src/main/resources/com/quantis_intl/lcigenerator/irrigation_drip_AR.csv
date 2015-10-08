@@ -59,7 +59,7 @@ Comment
 "Drip irrigation (micro-irrigation) in ArgentinaOpenloop drip irrigation system, without recirculation of drainage water, used for tomato production in Spain (Torrellas et al. 2012).Included plastic components: beds, pipes, drippers, micro tubes and stakes.Included steel elements: injectors and pumps.Electricity use based on ecoinvent process ""Irrigating/US"".Water input is not included.Source data per hectare, with water consumption = 4748 m3/ha, including 25 % watering surplus to avoid build-up of salts."
 
 Products
-Irrigating, drip, electricity powered (ALCIG)/AR U;m3;1;100;not defined;_ALCIG import;"Infrastructure based on Torrellas et al. (2012)Land occupation and energy use based on ""Irrigating/US"""
+Irrigating, drip, electricity powered (ALCIG)/AR U;m3;1;100;not defined;_ALCIG\Sub-datasets\Plant production\Irrigation;"Infrastructure based on Torrellas et al. (2012)Land occupation and energy use based on ""Irrigating/US"""
 
 Avoided products
 
