@@ -55,7 +55,7 @@ Comment
 "Included processes: Diesel consumption and emissionsAdapted from ""Diesel, burned in diesel-electric generating set/GLO U""Remark: Generic module to estimate emissions due to the use of diesel pump for irrigation"
 
 Products
-Diesel, burned in water pump (ALCIG)/MJ/GLO U;MJ;1;100;not defined;_ALCIG import;"Adapted from ""Diesel, burned in diesel-electric generating set/GLO U"""
+Diesel, burned in water pump (ALCIG)/MJ/GLO U;MJ;1;100;not defined;_ALCIG\Sub-datasets\Plant production\Irrigation;"Adapted from ""Diesel, burned in diesel-electric generating set/GLO U"""
 
 Avoided products
 

@@ -1,13 +1,33 @@
+#faqPage
+{
+  padding-bottom: 20px;	
+}
+
+#faqPage h1
+{
+	margin-bottom: 0px;
+}
+
 .faqQuestion
 {
-	padding-top: 0px;
+	padding-top: 18px;
 	font-size: 14px;
 	color: #e87e05;
 }
 
+.faqQuestionSubSection
+{
+  padding-top: 10px;
+  font-size: 14px;
+  color: #e87e05;
+  font-style: italic;
+  display: list-item;
+  margin-left: 1.3em;
+  list-style-type: circle;
+}
+
 .faqAnswer
 {
-	padding-bottom: 18px;
   font-size: 14px;
   color: #445272;
 }

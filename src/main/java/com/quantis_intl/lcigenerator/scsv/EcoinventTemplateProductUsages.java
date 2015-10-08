@@ -306,6 +306,94 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
             ItemOfGroupedTemplate
                     .of("VN", "Electricity, low voltage, production VN, at grid (ALCIG)/VN U", "electricity_VN.csv"));
 
+    private static ItemOfGroupedTemplate SEEDLINGS_CH = ItemOfGroupedTemplate.of("CH",
+            "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv"));
+
+    private static List<ItemOfGroupedTemplate> SEEDLINGS_MAP = ImmutableList.of(
+            ItemOfGroupedTemplate
+                    .of("AR", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("AU", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("BE", "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+                            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv")),
+            ItemOfGroupedTemplate
+                    .of("BR", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("CA", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            SEEDLINGS_CH,
+            ItemOfGroupedTemplate
+                    .of("CI", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/RER U", "seedlings_RER.csv"),
+            ItemOfGroupedTemplate
+                    .of("CL", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("CN", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("CO", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("CR", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("DE", "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+                            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv")),
+            ItemOfGroupedTemplate
+                    .of("EC", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("ES", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/RER U", "seedlings_RER.csv"),
+            ItemOfGroupedTemplate
+                    .of("FI", "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+                            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv")),
+            ItemOfGroupedTemplate
+                    .of("FR", "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+                            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv")),
+            ItemOfGroupedTemplate
+                    .of("GH", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/RER U", "seedlings_RER.csv"),
+            ItemOfGroupedTemplate
+                    .of("HU", "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+                            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv")),
+            ItemOfGroupedTemplate
+                    .of("ID", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("IL", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/RER U", "seedlings_RER.csv"),
+            ItemOfGroupedTemplate
+                    .of("IN", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("IT", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/RER U", "seedlings_RER.csv"),
+            ItemOfGroupedTemplate
+                    .of("KE", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/RER U", "seedlings_RER.csv"),
+            ItemOfGroupedTemplate
+                    .of("LK", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("MX", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("NL", "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+                            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv")),
+            ItemOfGroupedTemplate
+                    .of("NZ", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("PE", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("PH", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("PL", "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+                            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv")),
+            ItemOfGroupedTemplate
+                    .of("RU", "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+                            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv")),
+            ItemOfGroupedTemplate
+                    .of("TH", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("TR", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/RER U", "seedlings_RER.csv"),
+            ItemOfGroupedTemplate
+                    .of("UA", "Seedling, greenhouse, heated, at nursery (ALCIG)/GLO U",
+                            ImmutableList.of("seedlings_heated.csv", "irrigation_drip_NL.csv")),
+            ItemOfGroupedTemplate
+                    .of("US", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("VN", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/GLO U", "seedlings_GLO.csv"),
+            ItemOfGroupedTemplate
+                    .of("ZA", "Seedling, greenhouse, non-heated, at nursery (ALCIG)/RER U", "seedlings_RER.csv"));
+
     static
     {
         ImmutableMap.Builder<String, String> photoBuilder = ImmutableMap.builder();
@@ -345,8 +433,8 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ",
                     "seeds_apricot",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees", 0.45 * 42.8),
-            /*FIXME new TemplateProductUsage("Asparagus seedling, at farm (WFLDB 3.0)/FR U", "p", "seeds_asparagus",
-                    StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),*/
+            new GroupedTemplateProductUsage("p", "seeds_asparagus",
+                    StandardUncertaintyMetadata.SEEDS, "nb_seedlings", "country", SEEDLINGS_CH, SEEDLINGS_MAP),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ",
                     "seeds_banana",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees", 0.45 * 42.8),
@@ -369,14 +457,14 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ", "seeds_mandarin",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees", 0.45 * 42.8),
-            /*FIXME new TemplateProductUsage("Mint seedling, at farm (WFLDB 3.0)/US U", "p", "seeds_mint",
-                    StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),*/
+            new GroupedTemplateProductUsage("p", "seeds_mint",
+                    StandardUncertaintyMetadata.SEEDS, "nb_seedlings", "country", SEEDLINGS_CH, SEEDLINGS_MAP),
             new TemplateProductUsage("Rye seed IP, at regional storehouse/CH U", "kg", "seeds_oat",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ", "seeds_olive",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees", 0.45 * 42.8),
-            /*FIXME new TemplateProductUsage("Onion seedling, at farm (WFLDB 3.0)/NZ U", "p", "seeds_onion",
-                    StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),*/
+            new GroupedTemplateProductUsage("p", "seeds_onion",
+                    StandardUncertaintyMetadata.SEEDS, "nb_seedlings", "country", SEEDLINGS_CH, SEEDLINGS_MAP),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ", "seeds_orange",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees", 0.45 * 42.8),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ", "seeds_palmtree",
@@ -398,8 +486,8 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Pea seed IP, at regional storehouse/CH U", "kg", "seeds_soybean",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
-            /*FIXME new TemplateProductUsage("Strawberry seedling, greenhouse, heated, at farm (WFLDB 3.0)/NL U", "p",
-                    "seeds_strawberry", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),*/
+            new GroupedTemplateProductUsage("p", "seeds_strawberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_seedlings", "country", SEEDLINGS_CH, SEEDLINGS_MAP),
             new TemplateProductUsage("Sugar beet seed IP, at regional storehouse/CH U", "kg",
                     "seeds_sugarbeet", StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ", "seeds_sugarcane",
@@ -410,8 +498,8 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ", "seeds_tea",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees", 0.45 * 42.8),
-            /*FIXME new TemplateProductUsage("Tomato seedling, greenhouse, heated, at farm (WFLDB 3.0)/NL U", "p",
-                    "seeds_tomato", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),*/
+            new GroupedTemplateProductUsage("p", "seeds_tomato",
+                    StandardUncertaintyMetadata.SEEDS, "nb_seedlings", "country", SEEDLINGS_CH, SEEDLINGS_MAP),
             new TemplateProductUsage("Wheat seed IP, at regional storehouse/CH U", "kg", "seeds_wheat",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
 
@@ -420,7 +508,8 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
                     IRR_SURFACE_MAP),
             new TemplateProductUsage("Irrigating, surface, diesel powered (ALCIG)/GLO U", "m3",
                     "surface_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                    "irr_surface_diesel", ImmutableList.of("irrigation_surface_diesel.csv", "irrigation_diesel_bg.csv")),
+                    "irr_surface_diesel",
+                    ImmutableList.of("irrigation_surface_diesel.csv", "irrigation_diesel_bg.csv")),
             new TemplateProductUsage("Irrigating, surface, gravity (ALCIG)/GLO U", "m3",
                     "surface_irrigation_no_energy", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "irr_surface_no_energy", ImmutableList.of("irrigation_surface_gravity.csv")),
@@ -547,16 +636,19 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
                     "soilcultivation_tillage_chisel"),
             new TemplateProductUsage("Tillage, currying, by weeder/CH U", "ha",
                     "soilcultivation_tillage_spring_tine_weeder",
-                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_spring_tine_weeder"),
+                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "soilcultivation_tillage_spring_tine_weeder"),
             new TemplateProductUsage("Tillage, harrowing, by rotary harrow/CH U", "ha",
                     "soilcultivation_tillage_rotary_harrow", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "soilcultivation_tillage_rotary_harrow"),
             new TemplateProductUsage("Tillage, harrowing, by spring tine harrow/CH U", "ha",
                     "soilcultivation_tillage_sprint_tine_harrow",
-                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_sprint_tine_harrow"),
+                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "soilcultivation_tillage_sprint_tine_harrow"),
             new TemplateProductUsage("Tillage, hoeing and earthing-up, potatoes/CH U", "ha",
                     "soilcultivation_tillage_hoeing_earthing_up",
-                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_hoeing_earthing_up"),
+                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "soilcultivation_tillage_hoeing_earthing_up"),
             new TemplateProductUsage("Tillage, ploughing/CH U", "ha", "soilcultivation_tillage_plough",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_plough"),
             new TemplateProductUsage("Tillage, rolling/CH U", "ha", "soilcultivation_tillage_roll",
@@ -621,7 +713,8 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
                     "harvesting_windrowing_rotary_swather",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_windrowing_rotary_swather"),
             new TemplateProductUsage("Diesel, burned in building machine/GLO U", "MJ",
-                    "harvesting_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_other", 42.8),
+                    "harvesting_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_other",
+                    42.8),
 
             new TemplateProductUsage("Baling/CH U", "unit", "otherworkprocesses_baling",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "otherworkprocesses_baling"),
@@ -782,7 +875,8 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
         private final ItemOfGroupedTemplate defaultItem;
 
         public GroupedTemplateProductUsage(String unit, String amountVariable, StandardUncertaintyMetadata uncertainty,
-                String commentVariable, String key, ItemOfGroupedTemplate defaultItem, List<ItemOfGroupedTemplate> items)
+                String commentVariable, String key, ItemOfGroupedTemplate defaultItem,
+                List<ItemOfGroupedTemplate> items)
         {
             super("", unit, amountVariable, uncertainty, commentVariable);
             this.key = key;
@@ -883,10 +977,11 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
 
     private static BiFunction<Map<String, String>, String, String> buildBiFun(Map<String, String> lookupMap)
     {
-        return (map, var) -> {
-            String res = map.get(var);
-            return lookupMap.getOrDefault(res, res);
-        };
+        return (map, var) ->
+            {
+                String res = map.get(var);
+                return lookupMap.getOrDefault(res, res);
+            };
     }
 
 }

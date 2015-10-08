@@ -64,7 +64,7 @@ Comment
 This dataset represents the interventions associated with the provision of 1 kg NPP0  by land that is already in use. Adapted from ecoinvent 3 process, with parametrized NPP value.Production volume: 21810000000000 kgIncluded activities start: Starts with the land already in use.Included activities end: This activity ends with the provision of arable land tenure, measured in unit kg carbon Potential Net Primary Production (NPP0) per square meterThe dataset includes all interventions associated with the provision of 1 kg NPP0 from land already in use.Energy values: Gross valuesGeography: Already used arable land Technology level: 4 OldStart date: 1990-01-01End date: 2013-12-31Is data valid for entire period: trueTime period: Publication of dataMacro-economic scenario name: Business-as-Usual
 
 Products
-Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (ALCIG)/TR U;kg;1.0;100;Wood;_ALCIG import\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
+Land tenure, arable land, as carbon NPP, annual cropland already in use to arable land (ALCIG)/TR U;kg;1.0;100;Wood;_ALCIG\Sub-datasets\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
 
 Avoided products
 
@@ -164,7 +164,7 @@ Comment
 This dataset represents the interventions associated with the provision of 1 kg NPP0  by land that is already in use. Adapted from ecoinvent 3 process, arable land already in use, with parametrized NPP and VEG values.Production volume: 21810000000000 kgIncluded activities start: Starts with the land already in use.Included activities end: This activity ends with the provision of arable land tenure, measured in unit kg carbon Potential Net Primary Production (NPP0) per square meterThe dataset includes all interventions associated with the provision of 1 kg NPP0 from land already in use.Energy values: Gross valuesGeography: Already used arable land Technology level: 4 OldStart date: 1990-01-01End date: 2013-12-31Is data valid for entire period: trueTime period: Publication of dataMacro-economic scenario name: Business-as-Usual
 
 Products
-Land tenure, arable land, as carbon NPP, perennial cropland already in use to arable land (ALCIG)/TR U;kg;1.0;100;Wood;_ALCIG import\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
+Land tenure, arable land, as carbon NPP, perennial cropland already in use to arable land (ALCIG)/TR U;kg;1.0;100;Wood;_ALCIG\Sub-datasets\Land use change\Land tenure;Literature value: Taken from Schmidt et al (2011), page 20. Refers to the amount of NPP0 measured in kg carbon extracted per m2 of existing arable land.
 
 Avoided products
 

@@ -64,7 +64,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, high voltage, production PH, at grid (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG import;Based on UCTE mix, adapted to the Philippines
+Electricity, high voltage, production PH, at grid (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;Based on UCTE mix, adapted to the Philippines
 
 Avoided products
 
@@ -165,7 +165,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, low voltage, production PH, at grid (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG import;
+Electricity, low voltage, production PH, at grid (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;
 
 Avoided products
 
@@ -265,7 +265,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, medium voltage, production PH, at grid (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG import;Based on UCTE mix, adapted to the Philippines
+Electricity, medium voltage, production PH, at grid (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;Based on UCTE mix, adapted to the Philippines
 
 Avoided products
 
@@ -368,7 +368,7 @@ System description
 Ecoinvent;
 
 Products
-Electricity, production mix PH (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG import;Based on www.iea.org
+Electricity, production mix PH (ALCIG)/PH U;kWh;1;100;not defined;_ALCIG\Sub-datasets\Other\Electricity mix;Based on www.iea.org
 
 Avoided products
 

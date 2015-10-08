@@ -20,9 +20,11 @@ package com.quantis_intl.lcigenerator.imports;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
@@ -132,6 +134,7 @@ public class ExcelInputReader
                 readOtherRows();
                 gatherBlocklessRatiosAndParts();
                 validateSumsAndRatios();
+                validateDates();
             }
         }
 
@@ -220,7 +223,8 @@ public class ExcelInputReader
                     }
                     default:
                         errorReporter
-                                .warning("The structure of the template has been changed, the imported data may not be accurate");
+                                .warning(
+                                        "The structure of the template has been changed, the imported data may not be accurate");
                 }
 
             }
@@ -348,16 +352,17 @@ public class ExcelInputReader
                             .extractNumeric(key, currentLabelCell, currentDataCell,
                                     currentCommentCell, currentSourceCell)
                             .ifPresent(
-                                    sv -> {
-                                        group.addValue(sv);
-                                        if (fKeyIsMissing)
+                                    sv ->
                                         {
-                                            errorReporter.warning(ImmutableMap.of("cell",
-                                                    POIHelper.getCellCoordinates(currentLabelCell), "label",
-                                                    POIHelper.getCellStringValue(currentLabelCell, fKey)),
-                                                    "Your type selection is not in the list. The value you entered will be considered as 'Other' if available, or ignored");
-                                        }
-                                    });
+                                            group.addValue(sv);
+                                            if (fKeyIsMissing)
+                                            {
+                                                errorReporter.warning(ImmutableMap.of("cell",
+                                                        POIHelper.getCellCoordinates(currentLabelCell), "label",
+                                                        POIHelper.getCellStringValue(currentLabelCell, fKey)),
+                                                        "Your type selection is not in the list. The value you entered will be considered as 'Other' if available, or ignored");
+                                            }
+                                        });
                 }
             }
 
@@ -404,17 +409,18 @@ public class ExcelInputReader
                             .extractRatio(key, currentLabelCell, currentDataCell,
                                     currentCommentCell, currentSourceCell)
                             .ifPresent(
-                                    sv -> {
-                                        group.addValue(sv);
-                                        if (fKeyIsMissing)
+                                    sv ->
                                         {
-                                            errorReporter.warning(
-                                                    ImmutableMap.of("cell",
-                                                            POIHelper.getCellCoordinates(currentLabelCell), "label",
-                                                            POIHelper.getCellStringValue(currentLabelCell, fKey)),
-                                                    "Your type selection is not in the list. The value you entered will be considered as \"Other\" if available, or ignored");
-                                        }
-                                    });
+                                            group.addValue(sv);
+                                            if (fKeyIsMissing)
+                                            {
+                                                errorReporter.warning(
+                                                        ImmutableMap.of("cell",
+                                                                POIHelper.getCellCoordinates(currentLabelCell), "label",
+                                                                POIHelper.getCellStringValue(currentLabelCell, fKey)),
+                                                        "Your type selection is not in the list. The value you entered will be considered as \"Other\" if available, or ignored");
+                                            }
+                                        });
                 }
 
                 previousRow = currentRow;
@@ -482,23 +488,19 @@ public class ExcelInputReader
                                                     extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()),
                                                     "label",
                                                     extractExcelOriginalLabel(dvgroup.getTotalHolder())),
-                                            "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally")
-                            ,
+                                            "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally"),
                             total -> errorReporter.warning(
                                     ImmutableMap.of("cell",
                                             extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()), "label",
                                             extractExcelOriginalLabel(dvgroup.getTotalHolder())),
-                                    "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally")
-                            ,
+                                    "The sum of the entered proportions is not equals to 1. Please check again your repartition. For now we will normalize the values proportionally"),
                             // TODO: For now, only warn, as the default ratio (including "all in other" for
                             // machineries) is handled by python. Watch out!
-                            z ->
-                            errorReporter.warning(
+                            z -> errorReporter.warning(
                                     ImmutableMap.of("cell",
                                             extractExcelOriginalCellCoordinates(dvgroup.getTotalHolder()), "label",
                                             extractExcelOriginalLabel(dvgroup.getTotalHolder())),
-                                    "No repartition has been entered. For now, the default repartition will be used")
-                            );
+                                    "No repartition has been entered. For now, the default repartition will be used"));
 
                 }
                 else if (group instanceof PartValueGroup)
@@ -511,12 +513,13 @@ public class ExcelInputReader
             DoubleSingleValue pestiTotal = (DoubleSingleValue) extractedInputs.getSingleValue(TOTAL_PESTICIDES);
             PartValueGroup pestiGroup = new PartValueGroup("", pestiTotal);
             Arrays.stream(PARTS_PESTICIDES).forEach(
-                    s -> {
-                        DoubleSingleValue dv = ((PartValueGroup) extractedInputs.getSubGroups().get(s))
-                                .getTotalHolder();
-                        if (dv != null)
-                            pestiGroup.addValue(dv);
-                    });
+                    s ->
+                        {
+                            DoubleSingleValue dv = ((PartValueGroup) extractedInputs.getSubGroups().get(s))
+                                    .getTotalHolder();
+                            if (dv != null)
+                                pestiGroup.addValue(dv);
+                        });
             validateGroupAggregation(pestiGroup);
             SingleValue<?> other = pestiGroup.getSingleValue("other");
             if (other != null)
@@ -524,18 +527,20 @@ public class ExcelInputReader
             else if (!Objects.equals(pestiGroup.getTotalHolder(), pestiTotal))
                 extractedInputs.replaceValue(new DoubleSingleValue(TOTAL_PESTICIDES, pestiGroup.getTotalHolder()
                         .getValue(), pestiTotal == null ? "" : pestiTotal.getComment(), pestiTotal == null ? ""
-                        : pestiTotal.getSource(), Origin.GENERATED_VALUE,
+                                : pestiTotal.getSource(),
+                        Origin.GENERATED_VALUE,
                         pestiTotal == null ? "" : pestiTotal.getUnit()));
 
             DoubleSingleValue machineriesTotal = (DoubleSingleValue) extractedInputs.getSingleValue(TOTAL_MACHINERIES);
             PartValueGroup machineriesGroup = new PartValueGroup("", machineriesTotal);
             Arrays.stream(PARTS_MACHINERIES).forEach(
-                    s -> {
-                        DoubleSingleValue dv = (DoubleSingleValue) ((RatioValueGroup) extractedInputs.getSubGroups()
-                                .get(s)).getTotalHolder();
-                        if (dv != null)
-                            machineriesGroup.addValue(dv);
-                    });
+                    s ->
+                        {
+                            DoubleSingleValue dv = (DoubleSingleValue) ((RatioValueGroup) extractedInputs.getSubGroups()
+                                    .get(s)).getTotalHolder();
+                            if (dv != null)
+                                machineriesGroup.addValue(dv);
+                        });
             validateGroupAggregation(machineriesGroup);
             SingleValue<?> otherMachineries = machineriesGroup.getSingleValue("other");
             if (otherMachineries != null)
@@ -552,37 +557,39 @@ public class ExcelInputReader
         {
             group.validateValues(
                     remains ->
-                    {
-                        group.addValue(new DoubleSingleValue("other", remains,
-                                "Unaffected portion of the total", "", Origin.GENERATED_VALUE,
-                                group.getTotalHolder().getUnit()));
-                        errorReporter
-                                .warning(
-                                        ImmutableMap.of("cell",
-                                                extractExcelOriginalCellCoordinates(group.getTotalHolder()),
-                                                "label",
-                                                extractExcelOriginalLabel(group.getTotalHolder())),
-                                        "The sum of the decomposition is lower than the entered total. The unaffected value will be considered as \"Other\"");
-                    },
+                        {
+                            group.addValue(new DoubleSingleValue("other", remains,
+                                    "Unaffected portion of the total", "", Origin.GENERATED_VALUE,
+                                    group.getTotalHolder().getUnit()));
+                            errorReporter
+                                    .warning(
+                                            ImmutableMap.of("cell",
+                                                    extractExcelOriginalCellCoordinates(group.getTotalHolder()),
+                                                    "label",
+                                                    extractExcelOriginalLabel(group.getTotalHolder())),
+                                            "The sum of the decomposition is lower than the entered total. The unaffected value will be considered as \"Other\"");
+                        } ,
                     total ->
-                    {
-                        errorReporter.warning(
-                                ImmutableMap.of("cell", extractExcelOriginalCellCoordinates(group.getTotalHolder()),
-                                        "label",
-                                        extractExcelOriginalLabel(group.getTotalHolder())),
-                                "The sum of the decomposition is higher than the entered total. Please check again your value. For now the higher total will be considered");
-                        group.replaceTotalValue(total);
-                    },
-                    z -> {
-                        group.addValue(new DoubleSingleValue("other", group.getTotalHolder().getValue(),
-                                "Unaffected portion of the total", "", Origin.GENERATED_VALUE, group.getTotalHolder()
-                                        .getUnit()));
-                        errorReporter.warning(
-                                ImmutableMap.of("cell", extractExcelOriginalCellCoordinates(group.getTotalHolder()),
-                                        "label",
-                                        extractExcelOriginalLabel(group.getTotalHolder())),
-                                "The total has not been detailed. The value will be entirely considered as \"Other\"");
-                    });
+                        {
+                            errorReporter.warning(
+                                    ImmutableMap.of("cell", extractExcelOriginalCellCoordinates(group.getTotalHolder()),
+                                            "label",
+                                            extractExcelOriginalLabel(group.getTotalHolder())),
+                                    "The sum of the decomposition is higher than the entered total. Please check again your value. For now the higher total will be considered");
+                            group.replaceTotalValue(total);
+                        } ,
+                    z ->
+                        {
+                            group.addValue(new DoubleSingleValue("other", group.getTotalHolder().getValue(),
+                                    "Unaffected portion of the total", "", Origin.GENERATED_VALUE,
+                                    group.getTotalHolder()
+                                            .getUnit()));
+                            errorReporter.warning(
+                                    ImmutableMap.of("cell", extractExcelOriginalCellCoordinates(group.getTotalHolder()),
+                                            "label",
+                                            extractExcelOriginalLabel(group.getTotalHolder())),
+                                    "The total has not been detailed. The value will be entirely considered as \"Other\"");
+                        });
         }
 
         private String extractExcelOriginalLabel(SingleValue<?> value)
@@ -603,6 +610,23 @@ public class ExcelInputReader
                 return (ExcelUserInput) value.getOrigin();
 
             return null;
+        }
+
+        private void validateDates()
+        {
+            LocalDate previous_harvest = (LocalDate) Optional
+                    .ofNullable(extractedInputs.getDeepSingleValue("harvest_date_previous_crop"))
+                    .map(SingleValue::getValue).orElse(null);
+            LocalDate harvest = (LocalDate) Optional
+                    .ofNullable(extractedInputs.getDeepSingleValue("harvesting_date_main_crop"))
+                    .map(SingleValue::getValue).orElse(null);
+
+            if (previous_harvest != null && harvest != null && previous_harvest.plusDays(15).isAfter(harvest))
+            {
+                errorReporter.warning(
+                        "The entered harvest dates are not coherents. The harvest date must be at least 15 days after the previous harvest date. We will consider a crop cycle of 1 year.");
+                // TODO: We should remove the two dates
+            }
         }
     }
 }

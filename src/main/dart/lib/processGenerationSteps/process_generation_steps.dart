@@ -79,6 +79,7 @@ class ProcessGeneratorSteps
       
       if ( request.status == 400 )
       {
+        reset();
         Map map = JSON.decode(request.responseText); 
         warnings = map['warnings']..sort(_errorsOrWarningsComparator);
         errors = map['errors']..sort(_errorsOrWarningsComparator);
@@ -94,7 +95,10 @@ class ProcessGeneratorSteps
       hideModal("#fileLoadingModal");
       displayModal('#process-generation-step3-modal');
     })
-    .catchError((_){ reset(); hideModal("#fileLoadingModal");});
+    .catchError((_)
+      { 
+        reset(); hideModal("#fileLoadingModal");
+      });
   }
 
   void hideModal(String id)

@@ -61,7 +61,7 @@ Comment
 "Process from AGRIBALYSE used for ALCIG, excluding land occupation and transformation processes.Translated name: Serre verre, NordIncluded processes: The inventory includes : the production of the greenhouse as well as the permanent technical infrastructure, that is greenhouse (bearing structure and covering materials), heating and cooling systems, fertirrigation, CO2 injection, stocking facilities and working equipement as far as it is installed permanentely (i.e. chariots on rails etc.) working equipement as far as it is installed permanentely (i.e. chariots on rails etc.).Remark: Refers to 1 m2 of greenhouse during 1 year.Status of LCI: AGRIBALYSE supporting LCI (based on data from Boulard et al, 2011) - V1.1 (february 2014).CAS number: 0; Formula: 0; Geography: North of France (Brittany)Technology: Details see Rapport de stage - L’Analyse du Cycle de Vie appliquée à la culture de tomates sous serreTime period: Inventory data based on the period 2005-2009.Version: 1.10Energy values: UndefinedProduction volume: 0Local category: AgriculturalLocal subcategory: Agri-BALYSE\Others\Buildings + InfrastructureSource file: AGRIBALYSE_COMPLET_V1.1.xml"
 
 Products
-Greenhouse, glass walls and roof, metal tubes (ALCIG)/FR U;m2;1;100;not defined;_ALCIG import\Greenhouses;FRANCE
+Greenhouse, glass walls and roof, metal tubes (ALCIG)/FR U;m2;1;100;not defined;_ALCIG\Sub-datasets\Plant production\Installations;FRANCE
 
 Avoided products
 
