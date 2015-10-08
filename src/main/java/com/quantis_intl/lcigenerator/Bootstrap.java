@@ -57,11 +57,9 @@ public class Bootstrap
         p.setProperty(StackProperties.SERVER_PORT_PROP, "7879");
         p.setProperty(StackProperties.SERVER_BASE_CONTEXT_PROP, "/");
         p.setProperty(StackProperties.SERVER_WEB_FOLDER_PROP, "src/main/dart/web");
-        p.setProperty(StackProperties.SERVER_APP_RESOURCES_FOLDER_PROP, "src/main/dart/web");
         p.setProperty(StackProperties.SERVER_LOG_FOLDER_PROP, "");
         p.setProperty(StackProperties.ROOT_URL_PROP, "");
 
-        // FIXME: Should be optional
         p.setProperty(StackProperties.MAIL_APP_PREFIX_PROP, "ALCIG");
         p.setProperty(StackProperties.MAIL_FROM_PROP, "");
         p.setProperty(StackProperties.MAILER_USERNAME_PROP, "");

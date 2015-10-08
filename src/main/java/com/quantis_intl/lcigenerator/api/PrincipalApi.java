@@ -31,6 +31,7 @@ import org.slf4j.LoggerFactory;
 
 import com.quantis_intl.login.business.LoginService;
 import com.quantis_intl.login.business.LoginService.ChangePasswordFailed;
+import com.quantis_intl.stack.utils.Qid;
 
 @Path("principal/")
 public class PrincipalApi
@@ -49,7 +50,7 @@ public class PrincipalApi
     @Path("getStatus")
     public Response getStatus()
     {
-        final Object userId = getUserId();
+        final Qid userId = getUserId();
         boolean status = !loginService.mustForcePasswordForUser(userId);
         LOG.info("Get status for user: {}", userId);
         return Response.ok(Boolean.toString(status)).build();
@@ -60,7 +61,7 @@ public class PrincipalApi
     public Response changePassword(@FormParam("oldPassword") String oldPassword,
             @FormParam("newPassword") String newPassword)
     {
-        final Object userId = getUserId();
+        final Qid userId = getUserId();
         try
         {
             loginService.changePassword(userId, oldPassword, newPassword);
@@ -74,8 +75,8 @@ public class PrincipalApi
         }
     }
 
-    private Object getUserId()
+    private Qid getUserId()
     {
-        return SecurityUtils.getSubject().getPrincipal();
+        return (Qid) SecurityUtils.getSubject().getPrincipal();
     }
 }

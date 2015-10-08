@@ -48,7 +48,6 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.CharMatcher;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
@@ -60,6 +59,7 @@ import com.quantis_intl.lcigenerator.ScsvFileWriter;
 import com.quantis_intl.lcigenerator.imports.ExcelInputReader;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.lcigenerator.scsv.OutputTarget;
+import com.quantis_intl.stack.utils.Qid;
 
 @Path("/")
 public class Api
@@ -97,16 +97,14 @@ public class Api
     {
         final long startTime = System.nanoTime();
         ErrorReporterImpl errorReporter = new ErrorReporterImpl();
-
         String idResult = UUID.randomUUID().toString();
-        LOGGER.info("BETA: user using this feature: name {}, email {}, other info: {}",
-                form.username, form.email, form.address);
+        final Qid userId = getUserId();
 
         String fileExtension = form.filename.substring(form.filename.lastIndexOf('.'));
         if (!UPLOADED_FILE_EXTENSIONS.contains(fileExtension))
         {
             errorReporter.error("Sorry, we cannot read this file. Please use the Excel formats (.xls or .xlsx)");
-            LOGGER.info("Uploaded file handled with errors: {}",
+            LOGGER.info("User {}: Uploaded file handled with errors: {}", userId,
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
@@ -114,12 +112,13 @@ public class Api
         if (uploadedFile.length >= UPLOADED_FILE_MAX_SIZE)
         {
             errorReporter.error("Sorry, we cannot read this file. Please use a smaller file (max 10Mo)");
-            LOGGER.error("File too big: name {}, size in octet: {}", form.filename, uploadedFile.length);
+            LOGGER.error("User {}: File too big: name {}, size in octet: {}", userId, form.filename,
+                    uploadedFile.length);
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
         ByteArrayInputStream bais = new ByteArrayInputStream(uploadedFile);
         if (form.canBeStored)
-            saveUploadedFile(uploadedFile, form.filename, fileExtension, form.email, idResult);
+            saveUploadedFile(uploadedFile, form.filename, fileExtension, userId, idResult);
 
         ValueGroup extractedInputs = inputReader.getInputDataFromFile(bais, errorReporter);
 
@@ -131,12 +130,12 @@ public class Api
                     result -> onResult(result, extractedInputs, idResult, errorReporter, response, startTime),
                     error -> onError(error, response));
 
-            LOGGER.info("Uploaded file handled with {} warnings", errorReporter.getWarnings().size());
+            LOGGER.info("User {}: Uploaded file handled with {} warnings", userId, errorReporter.getWarnings().size());
         }
         else
         {
             LOGGER.info(
-                    "Uploaded file handled with errors: {}",
+                    "User {}: Uploaded file handled with errors: {}", userId,
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
@@ -144,27 +143,25 @@ public class Api
     }
 
     private void saveUploadedFile(byte[] fileContent, String filename, String fileExtension,
-            String email, String idResult) throws IOException
+            Qid userId, String idResult) throws IOException
     {
-        // TODO Later: Use user id as folder name
-        String safeFolderName = CharMatcher.JAVA_LETTER_OR_DIGIT.negate().replaceFrom(email, " ")
-                .trim().replace(" ", "_");
-        String userFolderName = uploadedFilesFolder + safeFolderName;
+        String userFolderName = uploadedFilesFolder + userId;
         new File(userFolderName).mkdir();
 
         String uploadedFileLocation = userFolderName + "/" + idResult + fileExtension;
 
         Files.write(fileContent, new File(uploadedFileLocation));
 
-        LOGGER.info("BETA: file saved for user: {}, file id: {}, original name: {}", email, idResult, filename);
+        LOGGER.info("User {}: file saved file id: {}, original name: {}", userId, idResult, filename);
     }
 
     private void onResult(Map<String, String> modelsOutput, ValueGroup extractedInputs, String idResult,
             ErrorReporter errorReporter, AsyncResponse response, long startTime)
     {
+        final Qid userId = getUserId();
         SecurityUtils.getSubject().getSession().setAttribute(idResult, modelsOutput);
         SecurityUtils.getSubject().getSession().setAttribute(idResult + "_inputs", extractedInputs);
-        LOGGER.info("Computations done and stored in {} in {} ms", idResult,
+        LOGGER.info("User {}: Computations done and stored in {} in {} ms", userId, idResult,
                 (System.nanoTime() - startTime) / 1000000.d);
         response.resume(Response.ok(new ImportResult(errorReporter, idResult)).build());
     }
@@ -182,9 +179,11 @@ public class Api
             @FormParam("filename") final String importedFilename,
             @FormParam("dbOption") final String database)
     {
+        final Qid userId = getUserId();
         if (idResult == null || importedFilename == null)
         {
-            LOGGER.error("Bad request, idResult {} or filename {} is null", idResult, importedFilename);
+            LOGGER.error("User {}: Bad request, idResult {} or filename {} is null", userId, idResult,
+                    importedFilename);
             return Response.status(Status.BAD_REQUEST).entity("idResult or filename is missing").build();
         }
 
@@ -204,10 +203,12 @@ public class Api
             @FormParam("filename") final String importedFilename,
             @FormParam("dbOption") final String database)
     {
+        final Qid userId = getUserId();
         long startTime = System.nanoTime();
         if (idResult == null || importedFilename == null)
         {
-            LOGGER.error("Bad request, idResult {} or filename {} is null", idResult, importedFilename);
+            LOGGER.error("User {}: Bad request, idResult {} or filename {} is null", userId, idResult,
+                    importedFilename);
             return Response.status(Status.BAD_REQUEST).entity("idResult or filename is missing").build();
         }
 
@@ -220,7 +221,7 @@ public class Api
         Objects.requireNonNull(modelsOutput, "results not found");
         String filename = importedFilename.substring(0, importedFilename.lastIndexOf(".xls"));
 
-        LOGGER.info("Scsv file generated for results {} in {} ms", idResult,
+        LOGGER.info("User {}: Scsv file generated for results {} in {} ms", userId, idResult,
                 (System.nanoTime() - startTime) / 1000000.d);
 
         return Response
@@ -231,6 +232,11 @@ public class Api
                 .header("Content-Disposition", "attachment; filename=\"" + filename + ".csv\"").build();
     }
 
+    private Qid getUserId()
+    {
+        return (Qid) SecurityUtils.getSubject().getPrincipal();
+    }
+
     public static class ComputeLCiForm
     {
         @FormParam("uploadFile")
@@ -239,12 +245,6 @@ public class Api
         public boolean canBeStored;
         @FormParam("filename")
         public String filename;
-        @FormParam("username")
-        public String username;
-        @FormParam("email")
-        public String email;
-        @FormParam("address")
-        public String address;
     }
 
 }

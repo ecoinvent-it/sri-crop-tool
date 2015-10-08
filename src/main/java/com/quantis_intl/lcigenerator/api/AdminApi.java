@@ -31,18 +31,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.quantis_intl.login.business.AclUser;
-import com.quantis_intl.login.business.FullLoginService;
 import com.quantis_intl.login.business.LoginDao;
 import com.quantis_intl.login.business.LoginService;
 import com.quantis_intl.login.business.LoginService.EmailAlreadyExists;
 import com.quantis_intl.login.business.LoginService.InvalidEmail;
 import com.quantis_intl.login.business.LoginService.TooLongEmail;
 import com.quantis_intl.login.business.LoginService.UserAlreadyActivated;
+import com.quantis_intl.stack.utils.Qid;
 
 @Path("/admin")
 public class AdminApi
 {
-    private static final Logger LOG = LoggerFactory.getLogger(FullLoginService.class);
+    private static final Logger LOG = LoggerFactory.getLogger(AdminApi.class);
 
     private final LoginDao dao;
     private final LoginService loginService;
@@ -65,8 +65,9 @@ public class AdminApi
 
     @POST
     @Path("sendActivationRequest")
-    public Response sendActivationRequest(int userId)
+    public Response sendActivationRequest(String userIdRepresentation)
     {
+        Qid userId = Qid.fromRepresentation(userIdRepresentation);
         try
         {
             loginService.sendActivationRequest(userId);
@@ -83,8 +84,9 @@ public class AdminApi
 
     @POST
     @Path("changeUserEmail")
-    public Response changeUserEmail(int userId, String newEmail)
+    public Response changeUserEmail(String userIdRepresentation, String newEmail)
     {
+        Qid userId = Qid.fromRepresentation(userIdRepresentation);
         try
         {
             loginService.changeEmail(userId, newEmail);
@@ -108,8 +110,8 @@ public class AdminApi
         }
     }
 
-    private Object getAdminId()
+    private Qid getAdminId()
     {
-        return SecurityUtils.getSubject().getPrincipal();
+        return (Qid) SecurityUtils.getSubject().getPrincipal();
     }
 }
