@@ -364,16 +364,19 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                     "soilcultivation_tillage_chisel"),
             new TemplateProductUsage("Tillage, currying, by weeder (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_spring_tine_weeder",
-                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_spring_tine_weeder"),
+                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "soilcultivation_tillage_spring_tine_weeder"),
             new TemplateProductUsage("Tillage, harrowing, by rotary harrow (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_rotary_harrow", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "soilcultivation_tillage_rotary_harrow"),
             new TemplateProductUsage("Tillage, harrowing, by spring tine harrow (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_sprint_tine_harrow",
-                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_sprint_tine_harrow"),
+                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "soilcultivation_tillage_sprint_tine_harrow"),
             new TemplateProductUsage("Tillage, hoeing and earthing-up, potatoes (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_hoeing_earthing_up",
-                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_hoeing_earthing_up"),
+                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "soilcultivation_tillage_hoeing_earthing_up"),
             new TemplateProductUsage("Tillage, ploughing (WFLDB 3.0)/CH U", "ha",
                     "soilcultivation_tillage_plough",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "soilcultivation_tillage_plough"),
@@ -409,7 +412,8 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                     "fertilisation_solid_manure", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "fertilisation_solid_manure"),
             new TemplateProductUsage("Diesel, burned in agricultural machinery (WFLDB 3.0)/kg/GLO U", "kg",
-                    "fertilisation_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "fertilisation_other"),
+                    "fertilisation_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "fertilisation_other"),
             new TemplateProductUsage("Chopping, maize/CH U", "ha", "harvesting_chopping_maize",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "harvesting_chopping_maize"),
             new TemplateProductUsage("Combine harvesting/CH U", "ha", "harvesting_threshing_combine_harvester",
@@ -529,11 +533,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Transport, freight, rail, diesel/US U", "tkm",
                     "wfldb_transport_freight_rail_diesel_US", StandardUncertaintyMetadata.TRANSPORTS, ""),
 
-            new TemplateProductUsage("Packaging, per kg of dry fertilisers or pesticides (WFLDB 3.0)/GLO U",
-                    "kg",
+            new TemplateProductUsage("Packaging, dry fertilisers or pesticides (WFLDB 3.0)/GLO U", "kg",
                     "wfldb_packaging_solid", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
-            new TemplateProductUsage("Packaging, per kg of liquid fertilisers or pesticides (WFLDB 3.0)/GLO U",
-                    "kg",
+            new TemplateProductUsage("Packaging, liquid fertilisers or pesticides (WFLDB 3.0)/GLO U", "kg",
                     "wfldb_packaging_liquid", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
 
             new TemplateProductUsage("Lubricating oil, at plant/RER U", "kg", "pest_horticultural_oil",
@@ -678,10 +680,11 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
 
     private static BiFunction<Map<String, String>, String, String> buildBiFun(Map<String, String> lookupMap)
     {
-        return (map, var) -> {
-            String res = map.get(var);
-            return lookupMap.getOrDefault(res, res);
-        };
+        return (map, var) ->
+            {
+                String res = map.get(var);
+                return lookupMap.getOrDefault(res, res);
+            };
     }
 
 }
