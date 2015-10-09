@@ -69,10 +69,7 @@ class ProcessGeneratorSteps
   {
     var formData = new FormData(step3Form);
     formData.append("filename", filename);
-    // TODO: remove these args
-    formData.append("username", "");
-    formData.append("email", "");
-    formData.append("address", "");
+    formData.append("fileGenerationId", null);
     displayModal("#fileLoadingModal");
     _api.uploadInputs(formData)
     .then((HttpRequest request) {

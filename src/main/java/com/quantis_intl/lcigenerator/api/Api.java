@@ -245,6 +245,8 @@ public class Api
         public boolean canBeStored;
         @FormParam("filename")
         public String filename;
+        @FormParam("fileGenerationId")
+        public String fileGenerationId;
     }
 
 }

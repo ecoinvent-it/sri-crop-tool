@@ -24,6 +24,8 @@ import com.quantis_intl.lcigenerator.api.Api;
 import com.quantis_intl.lcigenerator.api.PrincipalApi;
 import com.quantis_intl.lcigenerator.api.PublicApi;
 import com.quantis_intl.lcigenerator.api.PublicPrincipalApi;
+import com.quantis_intl.lcigenerator.dao.FileGenerationDao;
+import com.quantis_intl.lcigenerator.dao.MybatisFileGenerationDao;
 
 public class CoreModule extends AbstractModule
 {
@@ -35,5 +37,6 @@ public class CoreModule extends AbstractModule
         bind(PrincipalApi.class);
         bind(PublicPrincipalApi.class);
         bind(AdminApi.class);
+        bind(FileGenerationDao.class).to(MybatisFileGenerationDao.class);
     }
 }
