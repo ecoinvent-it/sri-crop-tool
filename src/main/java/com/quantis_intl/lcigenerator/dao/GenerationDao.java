@@ -18,20 +18,20 @@
  */
 package com.quantis_intl.lcigenerator.dao;
 
-import java.util.Set;
+import java.util.List;
 
-import com.quantis_intl.lcigenerator.model.FileGeneration;
+import com.quantis_intl.lcigenerator.model.Generation;
 import com.quantis_intl.stack.utils.Qid;
 
-public interface FileGenerationDao
+public interface GenerationDao
 {
-    Set<FileGeneration> getAllUserFileGeneration(Qid userId);
+    List<Generation> getAllUserGeneration(Qid userId);
 
-    FileGeneration getFileGenerationFromId(Qid fileGenerationId);
-    // service: -> non null et lastdate < 30 min
+    Generation getGenerationFromId(Qid generationId);
 
-    void createFileGeneration(FileGeneration fileGeneration);
+    void createGeneration(Generation generation);
 
-    void updateFileGenerationTry(FileGeneration fileGeneration);
-    // -> nb try, date
+    void updateGenerationTry(Generation generation);
+
+    int countGenerationForLicense(Qid licenseId);
 }

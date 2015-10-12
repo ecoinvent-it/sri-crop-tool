@@ -1,6 +1,6 @@
-DROP TABLE IF EXISTS `file_generation`;
+DROP TABLE IF EXISTS `generation`;
 
-CREATE TABLE `file_generation` (
+CREATE TABLE `generation` (
   `id` CHAR(12) NOT NULL,
   `userId` CHAR(12) NOT NULL,
   `licenseId` CHAR(12) NOT NULL,
@@ -11,10 +11,10 @@ CREATE TABLE `file_generation` (
   `crop` VARCHAR(45) NOT NULL,
   `country` VARCHAR(45) NOT NULL,
   `filename` VARCHAR(255) NOT NULL,
-  `warningsErrors` MEDIUMTEXT NULL,
+  `warnings` MEDIUMTEXT NULL,
   PRIMARY KEY (`id`),
-  INDEX `fk_file_generation_1_idx` (`userId` ASC),
-  CONSTRAINT `fk_file_generation_1`
+  INDEX `fk_generation_1_idx` (`userId` ASC),
+  CONSTRAINT `fk_generation_1`
   FOREIGN KEY (`userId`)
   REFERENCES `user_std` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;

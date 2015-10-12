@@ -28,12 +28,13 @@ class ProcessGeneratorSteps
   
   List warnings;
   List errors;
-  String idResult;
+  String lastGenerationId;
   
   bool fileCanBeStored = true;
   
   bool get hasWarnings => (warnings != null && warnings.length > 0);
   bool get hasErrors => (errors != null && errors.length > 0);
+  bool get hasOnlyWarnings => hasWarnings && !hasErrors;
   
   bool get isLogged => _loginService.isLogged;
 
@@ -69,7 +70,7 @@ class ProcessGeneratorSteps
   {
     var formData = new FormData(step3Form);
     formData.append("filename", filename);
-    formData.append("fileGenerationId", null);
+    formData.append("generationId", lastGenerationId);
     displayModal("#fileLoadingModal");
     _api.uploadInputs(formData)
     .then((HttpRequest request) {
@@ -87,7 +88,7 @@ class ProcessGeneratorSteps
         Map map = JSON.decode(request.responseText); 
         warnings = map['message']['warnings']..sort(_errorsOrWarningsComparator);
         errors = map['message']['errors']..sort(_errorsOrWarningsComparator);
-        idResult = map['idResult'];
+        lastGenerationId = map['generationId'];
       }
       hideModal("#fileLoadingModal");
       displayModal('#process-generation-step3-modal');
@@ -113,7 +114,6 @@ class ProcessGeneratorSteps
   void reset()
   {
     step = 0;
-    idResult = null;
     warnings = null;
     errors = null;
     // NOTE: Needed to be able to send again the same file
@@ -149,7 +149,7 @@ class ProcessGeneratorSteps
       String dbOption = (form.querySelector('input[name=dbOption]:checked') as RadioButtonInputElement).value;
       Map data = new Map();
       data["dbOption"] = dbOption;
-      data["idResult"] = idResult;
+      data["generationId"] = lastGenerationId;
       data["filename"] = filename;
       await _api.checkScsvGeneration(data);
       isChecked = true;

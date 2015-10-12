@@ -18,52 +18,59 @@
  */
 package com.quantis_intl.lcigenerator.dao;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import org.mybatis.guice.transactional.Transactional;
 
-import com.quantis_intl.lcigenerator.mappers.MybatisFileGenerationMapper;
-import com.quantis_intl.lcigenerator.model.FileGeneration;
+import com.quantis_intl.lcigenerator.mappers.MybatisGenerationMapper;
+import com.quantis_intl.lcigenerator.model.Generation;
 import com.quantis_intl.stack.utils.Qid;
 
-public class MybatisFileGenerationDao implements FileGenerationDao
+public class MybatisGenerationDao implements GenerationDao
 {
-    private MybatisFileGenerationMapper mapper;
+    private MybatisGenerationMapper mapper;
 
     @Inject
-    public MybatisFileGenerationDao(MybatisFileGenerationMapper mapper)
+    public MybatisGenerationDao(MybatisGenerationMapper mapper)
     {
         this.mapper = mapper;
     }
 
     @Override
     @Transactional
-    public Set<FileGeneration> getAllUserFileGeneration(Qid userId)
+    public List<Generation> getAllUserGeneration(Qid userId)
     {
-        return mapper.getAllFileGenerationsFromUserId(userId);
+        return mapper.getAllGenerationsFromUserId(userId);
     }
 
     @Override
     @Transactional
-    public FileGeneration getFileGenerationFromId(Qid fileGenerationId)
+    public Generation getGenerationFromId(Qid generationId)
     {
-        return mapper.getFileGenerationFromId(fileGenerationId);
+        return mapper.getGenerationFromId(generationId);
     }
 
     @Override
     @Transactional
-    public void createFileGeneration(FileGeneration fileGeneration)
+    public void createGeneration(Generation generation)
     {
-        mapper.insertFileGeneration(fileGeneration);
+        mapper.insertGeneration(generation);
     }
 
     @Override
     @Transactional
-    public void updateFileGenerationTry(FileGeneration fileGeneration)
+    public void updateGenerationTry(Generation generation)
     {
-        mapper.updateFileGenerationTry(fileGeneration);
+        mapper.updateGenerationTry(generation);
+    }
+
+    @Override
+    @Transactional
+    public int countGenerationForLicense(Qid licenseId)
+    {
+        return mapper.countGenerationForLicense(licenseId);
     }
 
 }

@@ -22,12 +22,12 @@ public class ImportResult
 {
     public final ErrorReporter message;
 
-    public final String idResult;
+    public final String generationId;
 
-    public ImportResult(ErrorReporter message, String idResult)
+    public ImportResult(ErrorReporter message, String generationId)
     {
         this.message = message;
-        this.idResult = idResult;
+        this.generationId = generationId;
     }
 
     // TODO: add also impacts and other info

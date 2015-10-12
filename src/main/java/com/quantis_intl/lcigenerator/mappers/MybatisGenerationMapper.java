@@ -18,7 +18,7 @@
  */
 package com.quantis_intl.lcigenerator.mappers;
 
-import java.util.Set;
+import java.util.List;
 
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Param;
@@ -26,27 +26,30 @@ import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 
 import com.google.common.collect.ImmutableList;
-import com.quantis_intl.lcigenerator.model.FileGeneration;
+import com.quantis_intl.lcigenerator.model.Generation;
 import com.quantis_intl.stack.mybatis.QsSQL;
 import com.quantis_intl.stack.utils.Qid;
 
-public interface MybatisFileGenerationMapper
+public interface MybatisGenerationMapper
 {
-    @SelectProvider(type = FileGenerationQueryBuilder.class, method = "selectAllFromUserId")
-    Set<FileGeneration> getAllFileGenerationsFromUserId(@Param(FileGenerationQueryBuilder.FIELD_USER_ID) Qid userId);
+    @SelectProvider(type = GenerationQueryBuilder.class, method = "selectAllFromUserId")
+    List<Generation> getAllGenerationsFromUserId(@Param(GenerationQueryBuilder.FIELD_USER_ID) Qid userId);
 
-    @SelectProvider(type = FileGenerationQueryBuilder.class, method = "selectFromId")
-    FileGeneration getFileGenerationFromId(@Param(FileGenerationQueryBuilder.FIELD_ID) Qid id);
+    @SelectProvider(type = GenerationQueryBuilder.class, method = "selectFromId")
+    Generation getGenerationFromId(@Param(GenerationQueryBuilder.FIELD_ID) Qid id);
 
-    @InsertProvider(type = FileGenerationQueryBuilder.class, method = "insertFileGeneration")
-    void insertFileGeneration(FileGeneration fileGeneration);
+    @SelectProvider(type = GenerationQueryBuilder.class, method = "countFromLicense")
+    int countGenerationForLicense(@Param(GenerationQueryBuilder.FIELD_LICENSE_ID) Qid licenseId);
 
-    @UpdateProvider(type = FileGenerationQueryBuilder.class, method = "updateTry")
-    void updateFileGenerationTry(FileGeneration fileGeneration);
+    @InsertProvider(type = GenerationQueryBuilder.class, method = "insertGeneration")
+    void insertGeneration(Generation generation);
 
-    class FileGenerationQueryBuilder
+    @UpdateProvider(type = GenerationQueryBuilder.class, method = "updateTry")
+    void updateGenerationTry(Generation generation);
+
+    class GenerationQueryBuilder
     {
-        static final String TABLE_NAME = "file_generation";
+        static final String TABLE_NAME = "generation";
         static final String FIELD_ID = "id";
         static final String FIELD_USER_ID = "userId";
         static final String FIELD_LICENSE_ID = "licenseId";
@@ -57,20 +60,22 @@ public interface MybatisFileGenerationMapper
         static final String FIELD_CROP = "crop";
         static final String FIELD_COUNTRY = "country";
         static final String FIELD_FILENAME = "filename";
-        static final String FIELD_WARNINGS_ERRORS = "warningsErrors";
+        static final String FIELD_WARNINGS = "warnings";
 
         static final ImmutableList<String> ALL_FIELDS = ImmutableList.of(
                 FIELD_ID, FIELD_USER_ID, FIELD_LICENSE_ID,
                 FIELD_CAN_USE_FOR_TESTING,
                 FIELD_LAST_TRY_NUMBER, FIELD_LAST_TRY_DATE,
                 FIELD_APP_VERSION, FIELD_CROP, FIELD_COUNTRY,
-                FIELD_FILENAME, FIELD_WARNINGS_ERRORS);
+                FIELD_FILENAME, FIELD_WARNINGS);
 
         public String selectAllFromUserId()
         {
             return new QsSQL()
                     .SELECT(ALL_FIELDS)
+                    .FROM(TABLE_NAME)
                     .WHERE_PARAM(FIELD_USER_ID)
+                    .ORDER_BY(FIELD_LAST_TRY_DATE + " DESC")
                     .toString();
         }
 
@@ -78,11 +83,21 @@ public interface MybatisFileGenerationMapper
         {
             return new QsSQL()
                     .SELECT(ALL_FIELDS)
+                    .FROM(TABLE_NAME)
                     .WHERE_PARAM(FIELD_ID)
                     .toString();
         }
 
-        public String insertFileGeneration()
+        public String countFromLicense()
+        {
+            return new QsSQL()
+                    .SELECT("COUNT (*)")
+                    .FROM(TABLE_NAME)
+                    .WHERE_PARAM(FIELD_LICENSE_ID)
+                    .toString();
+        }
+
+        public String insertGeneration()
         {
             return new QsSQL()
                     .INSERT_INTO(TABLE_NAME)
@@ -94,7 +109,7 @@ public interface MybatisFileGenerationMapper
         {
             return new QsSQL()
                     .UPDATE(TABLE_NAME)
-                    .SET_PARAMS(FIELD_LAST_TRY_NUMBER, FIELD_LAST_TRY_DATE, FIELD_APP_VERSION, FIELD_WARNINGS_ERRORS)
+                    .SET_PARAMS(FIELD_LAST_TRY_NUMBER, FIELD_LAST_TRY_DATE, FIELD_APP_VERSION, FIELD_WARNINGS)
                     .WHERE_PARAM(FIELD_ID)
                     .toString();
         }

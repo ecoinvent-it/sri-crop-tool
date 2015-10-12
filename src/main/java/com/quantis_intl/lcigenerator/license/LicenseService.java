@@ -16,13 +16,13 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-package com.quantis_intl.lcigenerator.licence;
+package com.quantis_intl.lcigenerator.license;
 
 import java.util.OptionalInt;
 
 import javax.inject.Inject;
 
-import com.quantis_intl.lcigenerator.dao.FileGenerationDao;
+import com.quantis_intl.lcigenerator.dao.GenerationDao;
 import com.quantis_intl.login.business.LoginService;
 import com.quantis_intl.stack.utils.Qid;
 
@@ -30,10 +30,10 @@ public class LicenseService
 {
     private final LicenseDao dao;
     private final LoginService loginService;
-    private final FileGenerationDao generationDao;
+    private final GenerationDao generationDao;
 
     @Inject
-    public LicenseService(LicenseDao dao, LoginService loginService, FileGenerationDao generationDao)
+    public LicenseService(LicenseDao dao, LoginService loginService, GenerationDao generationDao)
     {
         this.dao = dao;
         this.loginService = loginService;

@@ -30,12 +30,12 @@ import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.quantis_intl.lcigenerator.licence.License;
-import com.quantis_intl.lcigenerator.licence.LicenseDao;
-import com.quantis_intl.lcigenerator.licence.LicenseService;
+import com.quantis_intl.lcigenerator.license.License;
+import com.quantis_intl.lcigenerator.license.LicenseDao;
+import com.quantis_intl.lcigenerator.license.LicenseService;
 import com.quantis_intl.stack.utils.Qid;
 
-@Path("/licence")
+@Path("/license")
 public class LicenseApi
 {
     private static final Logger LOG = LoggerFactory.getLogger(LicenseApi.class);

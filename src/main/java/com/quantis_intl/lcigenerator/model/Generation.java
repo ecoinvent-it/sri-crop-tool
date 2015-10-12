@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 
 import com.quantis_intl.stack.utils.Qid;
 
-public class FileGeneration
+public class Generation
 {
     private Qid id;
     private Qid userId;
@@ -34,9 +34,10 @@ public class FileGeneration
     private String crop;
     private String country;
     private String filename;
-    // TODO: add field for warnings
+    // TODO: which type for warnings?
+    private String warnings;
 
-    public FileGeneration()
+    public Generation()
     {}
 
     public Qid getId()
@@ -127,5 +128,25 @@ public class FileGeneration
     public void setLastTryDate(LocalDateTime lastTryDate)
     {
         this.lastTryDate = lastTryDate;
+    }
+
+    public String getAppVersion()
+    {
+        return appVersion;
+    }
+
+    public void setAppVersion(String appVersion)
+    {
+        this.appVersion = appVersion;
+    }
+
+    public String getWarnings()
+    {
+        return warnings;
+    }
+
+    public void setWarnings(String warnings)
+    {
+        this.warnings = warnings;
     }
 }

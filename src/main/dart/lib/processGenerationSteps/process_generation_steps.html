@@ -45,7 +45,7 @@
 				  <input type="submit" id="scsvDownloadBtn" ng-disabled="step != 1"/>
 				  <div class="stepText">Get a ready-to-import file for Simapro</div>
 			  </div>
-	 	    <input type="hidden" name="idResult" value="{{idResult}}"/>
+	 	    <input type="hidden" name="generationId" value="{{lastGenerationId}}"/>
         <input type="hidden" name="filename" value="{{filename}}"/>
 			  <div class="btn-group" data-toggle="buttons" ng-class="{'notVisible':step != 1}">
 				  <label class="btn btn-primary active dbOptionLabel">
@@ -82,7 +82,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">
-           <span class="glyphicon" ng-class="{'glyphicon-exclamation-sign':!hasErrors, 'warningsColor':!hasErrors, 'glyphicon-minus-sign':hasErrors, 'errorsColor':hasErrors}" aria-hidden="true"></span>
+           <span class="glyphicon" ng-class="{'glyphicon-exclamation-sign':hasOnlyWarnings, 'warningsColor':hasOnlyWarnings, 'glyphicon-minus-sign':hasErrors, 'errorsColor':hasErrors}" aria-hidden="true"></span>
           <span ng-if="step == 1">File successfully uploaded</span>
           <span ng-if="step == 0">Sorry, we didn't manage to compute your data</span>
         </h4>
