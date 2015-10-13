@@ -1,0 +1,9 @@
+<configuration>
+
+ <include resource="logback-stack.xml"/>
+ <include resource="logback-login.xml"/>
+
+  <root level="info">
+    <appender-ref ref="STDOUT" />
+  </root>
+</configuration>
