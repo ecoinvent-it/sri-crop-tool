@@ -21,7 +21,7 @@ package com.quantis_intl.lcigenerator;
 import java.util.Properties;
 
 import com.quantis_intl.lcigenerator.guice.CoreModule;
-import com.quantis_intl.login.LoginFeatureBuilder;
+import com.quantis_intl.login.LoginFeature;
 import com.quantis_intl.stack.QtsStack;
 import com.quantis_intl.stack.features.MailFeature;
 import com.quantis_intl.stack.features.MyBatisFeature;
@@ -46,7 +46,7 @@ public class Bootstrap
         stack.withFeatures(MailFeature.withGmailSender(),
                 MyBatisFeature.withMapperPackages("com.quantis_intl.login.mappers",
                         "com.quantis_intl.lcigenerator.mappers"),
-                new LoginFeatureBuilder().build("Jo5xNFdSPUmc4ijk2euM"))
+                new LoginFeature.Builder("Jo5xNFdSPUmc4ijk2euM").build())
                 .withAdditionalModules(new CoreModule());
 
         stack.start();
