@@ -4,7 +4,7 @@
 
 	<groupId>com.quantis_intl</groupId>
 	<artifactId>lci-generator</artifactId>
-	<version>1.1.6-SNAPSHOT</version>
+	<version>1.1.6</version>
 	<packaging>jar</packaging>
 
 	<name>LCI Generator</name>
