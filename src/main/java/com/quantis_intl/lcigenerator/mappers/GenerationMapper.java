@@ -18,24 +18,39 @@
  */
 package com.quantis_intl.lcigenerator.mappers;
 
+import java.util.Collection;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import org.apache.ibatis.annotations.InsertProvider;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.ResultMap;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
+import com.quantis_intl.lcigenerator.ErrorReporterImpl.ErrorReporterResult;
 import com.quantis_intl.lcigenerator.model.Generation;
+import com.quantis_intl.stack.mybatis.JsonTypeHandler;
 import com.quantis_intl.stack.mybatis.QsSQL;
 import com.quantis_intl.stack.utils.Qid;
 
-public interface MybatisGenerationMapper
+public interface GenerationMapper
 {
+    // TODO: use @Results id property instead of ugly methodname-argType when upgrading to mybatis 3.4
     @SelectProvider(type = GenerationQueryBuilder.class, method = "selectAllFromUserId")
+    @Results({
+            @Result(property = "warnings", column = "warnings", typeHandler = WarningJsonTypeHandler.class)
+    })
     List<Generation> getAllGenerationsFromUserId(@Param(GenerationQueryBuilder.FIELD_USER_ID) Qid userId);
 
     @SelectProvider(type = GenerationQueryBuilder.class, method = "selectFromId")
+    @ResultMap("getAllGenerationsFromUserId-Qid")
     Generation getGenerationFromId(@Param(GenerationQueryBuilder.FIELD_ID) Qid id);
 
     @SelectProvider(type = GenerationQueryBuilder.class, method = "countFromLicense")
@@ -46,6 +61,16 @@ public interface MybatisGenerationMapper
 
     @UpdateProvider(type = GenerationQueryBuilder.class, method = "updateTry")
     void updateGenerationTry(Generation generation);
+
+    class WarningJsonTypeHandler extends JsonTypeHandler<Collection<ErrorReporterResult>>
+    {
+        @Inject
+        public WarningJsonTypeHandler()
+        {
+            super(new TypeReference<Collection<ErrorReporterResult>>()
+            {});
+        }
+    }
 
     class GenerationQueryBuilder
     {
@@ -62,12 +87,15 @@ public interface MybatisGenerationMapper
         static final String FIELD_FILENAME = "filename";
         static final String FIELD_WARNINGS = "warnings";
 
-        static final ImmutableList<String> ALL_FIELDS = ImmutableList.of(
+        static final ImmutableList<String> ALL_FIELDS_EXCEPT_WARNINGS = ImmutableList.of(
                 FIELD_ID, FIELD_USER_ID, FIELD_LICENSE_ID,
                 FIELD_CAN_USE_FOR_TESTING,
                 FIELD_LAST_TRY_NUMBER, FIELD_LAST_TRY_DATE,
                 FIELD_APP_VERSION, FIELD_CROP, FIELD_COUNTRY,
-                FIELD_FILENAME, FIELD_WARNINGS);
+                FIELD_FILENAME);
+
+        static final ImmutableList<String> ALL_FIELDS = ImmutableList
+                .copyOf(Iterables.concat(ALL_FIELDS_EXCEPT_WARNINGS, ImmutableList.of(FIELD_WARNINGS)));
 
         public String selectAllFromUserId()
         {
@@ -101,7 +129,8 @@ public interface MybatisGenerationMapper
         {
             return new QsSQL()
                     .INSERT_INTO(TABLE_NAME)
-                    .VALUES_PARAMS(ALL_FIELDS)
+                    .VALUES_PARAMS(ALL_FIELDS_EXCEPT_WARNINGS)
+                    .VALUES_PARAM(FIELD_WARNINGS, WarningJsonTypeHandler.class.getName())
                     .toString();
         }
 
@@ -109,7 +138,8 @@ public interface MybatisGenerationMapper
         {
             return new QsSQL()
                     .UPDATE(TABLE_NAME)
-                    .SET_PARAMS(FIELD_LAST_TRY_NUMBER, FIELD_LAST_TRY_DATE, FIELD_APP_VERSION, FIELD_WARNINGS)
+                    .SET_PARAMS(FIELD_LAST_TRY_NUMBER, FIELD_LAST_TRY_DATE, FIELD_APP_VERSION)
+                    .SET_PARAM(FIELD_WARNINGS, WarningJsonTypeHandler.class.getName())
                     .WHERE_PARAM(FIELD_ID)
                     .toString();
         }

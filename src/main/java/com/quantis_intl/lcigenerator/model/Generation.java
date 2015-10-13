@@ -19,7 +19,9 @@
 package com.quantis_intl.lcigenerator.model;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 
+import com.quantis_intl.lcigenerator.ErrorReporterImpl.ErrorReporterResult;
 import com.quantis_intl.stack.utils.Qid;
 
 public class Generation
@@ -34,8 +36,7 @@ public class Generation
     private String crop;
     private String country;
     private String filename;
-    // TODO: which type for warnings?
-    private String warnings;
+    private Collection<ErrorReporterResult> warnings;
 
     public Generation()
     {}
@@ -140,12 +141,12 @@ public class Generation
         this.appVersion = appVersion;
     }
 
-    public String getWarnings()
+    public Collection<ErrorReporterResult> getWarnings()
     {
         return warnings;
     }
 
-    public void setWarnings(String warnings)
+    public void setWarnings(Collection<ErrorReporterResult> warnings)
     {
         this.warnings = warnings;
     }

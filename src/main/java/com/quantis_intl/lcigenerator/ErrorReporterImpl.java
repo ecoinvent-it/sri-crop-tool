@@ -80,16 +80,49 @@ public class ErrorReporterImpl implements ErrorReporter
 
     public static class ErrorReporterResult
     {
-        public final String type;
+        public String type;
 
-        public final Map<String, String> context;
+        public Map<String, String> context;
 
-        public final String message;
+        public String message;
+
+        private ErrorReporterResult()
+        {}
 
         private ErrorReporterResult(String type, Map<String, String> context, String message)
         {
             this.type = type;
             this.context = context;
+            this.message = message;
+        }
+
+        public String getType()
+        {
+            return type;
+        }
+
+        public void setType(String type)
+        {
+            this.type = type;
+        }
+
+        public Map<String, String> getContext()
+        {
+            return context;
+        }
+
+        public void setContext(Map<String, String> context)
+        {
+            this.context = context;
+        }
+
+        public String getMessage()
+        {
+            return message;
+        }
+
+        public void setMessage(String message)
+        {
             this.message = message;
         }
 

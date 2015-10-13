@@ -20,10 +20,9 @@ package com.quantis_intl.lcigenerator;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collection;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Inject;
 import com.quantis_intl.lcigenerator.ErrorReporterImpl.ErrorReporterResult;
 import com.quantis_intl.lcigenerator.dao.GenerationDao;
@@ -36,87 +35,89 @@ public class GenerationService
 
     private final GenerationDao generationDao;
 
-    private final ObjectMapper objectMapper;
+    private Qid presumedGenerationId;
+    private String filename;
+    private String crop;
+    private String country;
+    private Qid userId;
+    private Qid licenseId;
+    private String appVersion;
+    private boolean canUseForTesting;
+    private Collection<ErrorReporterResult> warnings;
+
+    private Generation generation;
 
     @Inject
-    public GenerationService(GenerationDao generationDao, ObjectMapper objectMapper)
+    public GenerationService(GenerationDao generationDao)
     {
         this.generationDao = generationDao;
-        this.objectMapper = objectMapper;
     }
 
-    public boolean couldBeTheSameGeneration(Qid generationId, String filename)
+    public Generation linkFileToGeneration(Qid presumedGenerationId, String filename, String crop,
+            String country, Qid userId, Qid licenseId, String appVersion, boolean canUseForTesting,
+            Collection<ErrorReporterResult> warnings)
     {
-        if (generationId == null)
-            return false;
+        this.presumedGenerationId = presumedGenerationId;
+        this.filename = filename;
+        this.crop = crop;
+        this.country = country;
+        this.userId = userId;
+        this.licenseId = licenseId;
+        this.appVersion = appVersion;
+        this.canUseForTesting = canUseForTesting;
+        this.warnings = warnings;
 
-        Generation persistedGeneration = generationDao.getGenerationFromId(generationId);
-        if (persistedGeneration == null)
-            return false;
+        generation = presumedGenerationId == null ? null : generationDao.getGenerationFromId(presumedGenerationId);
 
-        if (!persistedGeneration.getFilename().equals(filename))
-            return false;
+        if (isSameGeneration())
+            updateGeneration();
+        else
+            createNewGeneration();
 
-        if (LocalDateTime.now().minus(MAX_DURATION_BETWEEN_TWO_TRIES).isAfter(persistedGeneration.getLastTryDate()))
-            return false;
-
-        return true;
+        return generation;
     }
 
-    public boolean hasSameCropAndCountry(Qid generationId, String crop, String country)
+    private boolean isSameGeneration()
     {
-        if (generationId == null)
+        if (presumedGenerationId == null || generation == null)
             return false;
 
-        Generation persistedGeneration = generationDao.getGenerationFromId(generationId);
+        if (!generation.getFilename().equals(filename))
+            return false;
 
-        return persistedGeneration.getCrop().equals(crop) && persistedGeneration.getCountry().equals(country);
+        if (LocalDateTime.now(ZoneOffset.UTC).minus(MAX_DURATION_BETWEEN_TWO_TRIES)
+                .isAfter(generation.getLastTryDate()))
+            return false;
+
+        return generation.getCrop().equals(crop) && generation.getCountry().equals(country);
     }
 
-    public Generation updateGeneration(Qid generationId, Collection<ErrorReporterResult> warnings, String appVersion)
+    private Generation updateGeneration()
     {
-        Generation generation = generationDao.getGenerationFromId(generationId);
         generation.setLastTryNumber(generation.getLastTryNumber() + 1);
-        generation.setLastTryDate(LocalDateTime.now());
+        generation.setLastTryDate(LocalDateTime.now(ZoneOffset.UTC));
         generation.setAppVersion(appVersion);
-        try
-        {
-            generation.setWarnings(objectMapper.writeValueAsString(warnings));
-        }
-        catch (JsonProcessingException e)
-        {
-            throw new RuntimeException(e);
-        }
+        generation.setWarnings(warnings);
 
         generationDao.updateGenerationTry(generation);
 
         return generation;
     }
 
-    public Generation createNewGeneration(Qid userId, Qid licenseId, String appVersion, boolean canUseForTesting,
-            String filename,
-            String crop, String country,
-            Collection<ErrorReporterResult> warnings)
+    private Generation createNewGeneration()
     {
-        Generation generation = new Generation();
+        generation = new Generation();
         generation.setId(Qid.random());
         generation.setUserId(userId);
         generation.setLicenseId(licenseId);
         generation.setCanUseForTesting(canUseForTesting);
         generation.setLastTryNumber(1);
-        generation.setLastTryDate(LocalDateTime.now());
+        generation.setLastTryDate(LocalDateTime.now(ZoneOffset.UTC));
         generation.setAppVersion(appVersion);
         generation.setCrop(crop);
         generation.setCountry(country);
         generation.setFilename(filename);
-        try
-        {
-            generation.setWarnings(objectMapper.writeValueAsString(warnings));
-        }
-        catch (JsonProcessingException e)
-        {
-            throw new RuntimeException(e);
-        }
+        generation.setWarnings(warnings);
 
         generationDao.createGeneration(generation);
 

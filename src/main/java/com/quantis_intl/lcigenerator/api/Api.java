@@ -107,8 +107,6 @@ public class Api
         final long startTime = System.nanoTime();
         final ErrorReporterImpl errorReporter = new ErrorReporterImpl();
         final Qid presumedGenerationId = form.generationId.isEmpty() ? null : Qid.fromRepresentation(form.generationId);
-        final boolean couldBeTheSameGeneration = generationService.couldBeTheSameGeneration(presumedGenerationId,
-                form.filename);
 
         final Qid userId = getUserId();
         // FIXME: Use license Id
@@ -118,7 +116,7 @@ public class Api
         if (!UPLOADED_FILE_EXTENSIONS.contains(fileExtension))
         {
             errorReporter.error("Sorry, we cannot read this file. Please use the Excel formats (.xls or .xlsx)");
-            LOGGER.info("User {}: Uploaded file handled with errors: {}", userId,
+            LOGGER.info("Uploaded file handled with errors: {}",
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
@@ -126,8 +124,7 @@ public class Api
         if (uploadedFile.length >= UPLOADED_FILE_MAX_SIZE)
         {
             errorReporter.error("Sorry, we cannot read this file. Please use a smaller file (max 10Mo)");
-            LOGGER.error("User {}: File too big: name {}, size in octet: {}", userId, form.filename,
-                    uploadedFile.length);
+            LOGGER.error("File too big: name {}, size in octet: {}", form.filename, uploadedFile.length);
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
         }
         ByteArrayInputStream bais = new ByteArrayInputStream(uploadedFile);
@@ -141,18 +138,11 @@ public class Api
 
             final String crop = (String) validatedData.get("crop");
             final String country = (String) validatedData.get("country");
-            final boolean hasSameCropAndCountry = !couldBeTheSameGeneration ? false
-                    : generationService.hasSameCropAndCountry(presumedGenerationId, crop, country);
-
             // FIXME: Fill appVersion
             final String appVersion = "";
-            Generation generation;
-            if (couldBeTheSameGeneration && hasSameCropAndCountry)
-                generation = generationService.updateGeneration(presumedGenerationId, errorReporter.getWarnings(),
-                        appVersion);
-            else
-                generation = generationService.createNewGeneration(userId, licenseId, appVersion, form.canBeStored,
-                        form.filename, crop, country, errorReporter.getWarnings());
+
+            Generation generation = generationService.linkFileToGeneration(presumedGenerationId, form.filename, crop,
+                    country, userId, licenseId, appVersion, form.canBeStored, errorReporter.getWarnings());
 
             saveFileForGeneration(uploadedFile, fileExtension, generation);
 
@@ -162,12 +152,12 @@ public class Api
                             startTime),
                     error -> onError(error, response));
 
-            LOGGER.info("User {}: Uploaded file handled with {} warnings", userId, errorReporter.getWarnings().size());
+            LOGGER.info("Uploaded file handled with {} warnings", errorReporter.getWarnings().size());
         }
         else
         {
             LOGGER.info(
-                    "User {}: Uploaded file handled with errors: {}", userId,
+                    "Uploaded file handled with errors: {}",
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             saveOrphanFile(uploadedFile, form.filename, fileExtension, userId, Qid.random());
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
@@ -209,10 +199,9 @@ public class Api
     private void onResult(Map<String, String> modelsOutput, ValueGroup extractedInputs, String generationId,
             ErrorReporter errorReporter, AsyncResponse response, long startTime)
     {
-        final Qid userId = getUserId();
         SecurityUtils.getSubject().getSession().setAttribute(generationId, modelsOutput);
         SecurityUtils.getSubject().getSession().setAttribute(generationId + "_inputs", extractedInputs);
-        LOGGER.info("User {}: Computations done and stored in {} in {} ms", userId, generationId,
+        LOGGER.info("Computations done and stored in {} in {} ms", generationId,
                 (System.nanoTime() - startTime) / 1000000.d);
         response.resume(Response.ok(new ImportResult(errorReporter, generationId)).build());
     }
@@ -230,10 +219,9 @@ public class Api
             @FormParam("filename") final String importedFilename,
             @FormParam("dbOption") final String database)
     {
-        final Qid userId = getUserId();
         if (generationId == null || importedFilename == null)
         {
-            LOGGER.error("User {}: Bad request, generation {} or filename {} is null", userId, generationId,
+            LOGGER.error("Bad request, generation {} or filename {} is null", generationId,
                     importedFilename);
             return Response.status(Status.BAD_REQUEST).entity("generation or filename is missing").build();
         }
@@ -254,12 +242,10 @@ public class Api
             @FormParam("filename") final String importedFilename,
             @FormParam("dbOption") final String database)
     {
-        final Qid userId = getUserId();
         long startTime = System.nanoTime();
         if (generationId == null || importedFilename == null)
         {
-            LOGGER.error("User {}: Bad request, generation {} or filename {} is null", userId, generationId,
-                    importedFilename);
+            LOGGER.error("Bad request, generation {} or filename {} is null", generationId, importedFilename);
             return Response.status(Status.BAD_REQUEST).entity("generationId or filename is missing").build();
         }
 
@@ -272,7 +258,7 @@ public class Api
         Objects.requireNonNull(modelsOutput, "results not found");
         String filename = importedFilename.substring(0, importedFilename.lastIndexOf(".xls"));
 
-        LOGGER.info("User {}: Scsv file generated for generation {} in {} ms", userId, generationId,
+        LOGGER.info("Scsv file generated for generation {} in {} ms", generationId,
                 (System.nanoTime() - startTime) / 1000000.d);
 
         return Response

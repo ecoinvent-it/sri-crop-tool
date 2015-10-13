@@ -26,7 +26,6 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Response;
 
-import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,12 +70,11 @@ public class AdminApi
         try
         {
             loginService.sendActivationRequest(userId);
-            LOG.info("Admin user {} has successfully sent activation request for user: {}", getAdminId(), userId);
+            LOG.info("Admin user has successfully sent activation request for user: {}", userId);
         }
         catch (UserAlreadyActivated e)
         {
-            LOG.error("Admin user {}  can't send activation request to an already activated user: {}", getAdminId(),
-                    userId);
+            LOG.error("Admin user can't send activation request to an already activated user: {}", userId);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         return Response.ok().build();
@@ -90,28 +88,24 @@ public class AdminApi
         try
         {
             loginService.changeEmail(userId, newEmail);
-            LOG.info("Admin user {} has successfully changed email for user {}", getAdminId(), userId);
+            LOG.info("Admin user has successfully changed email for user {}", userId);
             return Response.ok().build();
         }
         catch (TooLongEmail e)
         {
-            LOG.error("Admin user {} tries to change email for user {} by a too long email", getAdminId(), userId);
+            LOG.error("Admin user tries to change email for user {} by a too long email", userId);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         catch (InvalidEmail e)
         {
-            LOG.error("Admin user {} tries to change email for user {} by an invalid email", getAdminId(), userId);
+            LOG.error("Admin user tries to change email for user {} by an invalid email", userId);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         catch (EmailAlreadyExists e)
         {
-            LOG.error("Admin user {} tries to change email for user {} by an existing email", getAdminId(), userId);
+            LOG.error("Admin user tries to change email for user {} by an existing email", userId);
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
     }
 
-    private Qid getAdminId()
-    {
-        return (Qid) SecurityUtils.getSubject().getPrincipal();
-    }
 }

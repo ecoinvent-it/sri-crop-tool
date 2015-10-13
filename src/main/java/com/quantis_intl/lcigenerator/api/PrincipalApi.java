@@ -52,7 +52,7 @@ public class PrincipalApi
     {
         final Qid userId = getUserId();
         boolean status = !loginService.mustForcePasswordForUser(userId);
-        LOG.info("Get status for user: {}", userId);
+        LOG.info("Get user status");
         return Response.ok(Boolean.toString(status)).build();
     }
 
@@ -65,12 +65,12 @@ public class PrincipalApi
         try
         {
             loginService.changePassword(userId, oldPassword, newPassword);
-            LOG.info("Password changed for user {}", userId);
+            LOG.info("Password changed");
             return Response.ok().build();
         }
         catch (ChangePasswordFailed e)
         {
-            LOG.error("Change password failed for user {}, reason: {}", userId, e.reason.toString());
+            LOG.error("Change password failed , reason: {}", e.reason.toString());
             return Response.status(Response.Status.BAD_REQUEST).entity(e.reason.toString()).build();
         }
     }

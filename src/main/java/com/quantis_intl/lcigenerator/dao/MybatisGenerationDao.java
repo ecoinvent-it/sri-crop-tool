@@ -24,16 +24,16 @@ import javax.inject.Inject;
 
 import org.mybatis.guice.transactional.Transactional;
 
-import com.quantis_intl.lcigenerator.mappers.MybatisGenerationMapper;
+import com.quantis_intl.lcigenerator.mappers.GenerationMapper;
 import com.quantis_intl.lcigenerator.model.Generation;
 import com.quantis_intl.stack.utils.Qid;
 
 public class MybatisGenerationDao implements GenerationDao
 {
-    private MybatisGenerationMapper mapper;
+    private GenerationMapper mapper;
 
     @Inject
-    public MybatisGenerationDao(MybatisGenerationMapper mapper)
+    public MybatisGenerationDao(GenerationMapper mapper)
     {
         this.mapper = mapper;
     }
