@@ -80,11 +80,11 @@ public class ErrorReporterImpl implements ErrorReporter
 
     public static class ErrorReporterResult
     {
-        public String type;
+        private String type;
 
-        public Map<String, String> context;
+        private Map<String, String> context;
 
-        public String message;
+        private String message;
 
         private ErrorReporterResult()
         {}

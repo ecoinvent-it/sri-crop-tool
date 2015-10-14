@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 import com.quantis_intl.lcigenerator.ErrorReporterImpl.ErrorReporterResult;
+import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.stack.utils.Qid;
 
 public class Generation
@@ -37,6 +38,9 @@ public class Generation
     private String country;
     private String filename;
     private Collection<ErrorReporterResult> warnings;
+
+    // Transient
+    private ValueGroup extractedInputs;
 
     public Generation()
     {}
@@ -81,7 +85,7 @@ public class Generation
         this.filename = filename;
     }
 
-    public boolean isCanUseForTesting()
+    public boolean getCanUseForTesting()
     {
         return canUseForTesting;
     }
@@ -149,5 +153,15 @@ public class Generation
     public void setWarnings(Collection<ErrorReporterResult> warnings)
     {
         this.warnings = warnings;
+    }
+
+    public ValueGroup getExtractedInputs()
+    {
+        return extractedInputs;
+    }
+
+    public void setExtractedInputs(ValueGroup extractedInputs)
+    {
+        this.extractedInputs = extractedInputs;
     }
 }

@@ -29,9 +29,7 @@ public interface GenerationDao
 
     Generation getGenerationFromId(Qid generationId);
 
-    void createGeneration(Generation generation);
-
-    void updateGenerationTry(Generation generation);
+    void createOrUpdateGeneration(Generation generation);
 
     int countGenerationForLicense(Qid licenseId);
 }

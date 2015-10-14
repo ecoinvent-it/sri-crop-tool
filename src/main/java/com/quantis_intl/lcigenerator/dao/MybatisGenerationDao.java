@@ -54,16 +54,12 @@ public class MybatisGenerationDao implements GenerationDao
 
     @Override
     @Transactional
-    public void createGeneration(Generation generation)
+    public void createOrUpdateGeneration(Generation generation)
     {
-        mapper.insertGeneration(generation);
-    }
-
-    @Override
-    @Transactional
-    public void updateGenerationTry(Generation generation)
-    {
-        mapper.updateGenerationTry(generation);
+        if (generation.getLastTryNumber() > 1)
+            mapper.updateGenerationTry(generation);
+        else
+            mapper.insertGeneration(generation);
     }
 
     @Override

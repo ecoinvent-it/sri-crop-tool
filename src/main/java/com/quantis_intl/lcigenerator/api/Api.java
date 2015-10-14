@@ -23,6 +23,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -50,9 +53,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
-import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.ErrorReporterImpl;
-import com.quantis_intl.lcigenerator.GenerationService;
 import com.quantis_intl.lcigenerator.ImportResult;
 import com.quantis_intl.lcigenerator.PyBridgeService;
 import com.quantis_intl.lcigenerator.ScsvFileWriter;
@@ -78,21 +79,20 @@ public class Api
 
     private final ScsvFileWriter scsvFileWriter;
 
-    private final GenerationService generationService;
-
     private final GenerationDao generationDao;
 
     private final String uploadedFilesFolder;
 
+    // FIXME: To fill
+    private final String appVersion = "";
+
     @Inject
     public Api(ExcelInputReader inputReader, PyBridgeService pyBridgeService, ScsvFileWriter scsvFileWriter,
-            GenerationService generationService, GenerationDao generationDao,
-            @Named("server.uploadedFilesFolder") String uploadedFilesFolder)
+            GenerationDao generationDao, @Named("server.uploadedFilesFolder") String uploadedFilesFolder)
     {
         this.inputReader = inputReader;
         this.pyBridgeService = pyBridgeService;
         this.scsvFileWriter = scsvFileWriter;
-        this.generationService = generationService;
         this.generationDao = generationDao;
         this.uploadedFilesFolder = uploadedFilesFolder;
     }
@@ -104,14 +104,11 @@ public class Api
     public void computeLci(@MultipartForm ComputeLCiForm form, @Suspended AsyncResponse response)
             throws URISyntaxException, IOException
     {
-        final long startTime = System.nanoTime();
+        Generation generation = createCurrentGeneration(form);
+        generation = checkGenerationFilenameAndDate(generation);
+        generation.setLicenseId(getLicense(generation));
+
         final ErrorReporterImpl errorReporter = new ErrorReporterImpl();
-        final Qid presumedGenerationId = form.generationId.isEmpty() ? null : Qid.fromRepresentation(form.generationId);
-
-        final Qid userId = getUserId();
-        // FIXME: Use license Id
-        final Qid licenseId = userId;
-
         final String fileExtension = form.filename.substring(form.filename.lastIndexOf('.'));
         if (!UPLOADED_FILE_EXTENSIONS.contains(fileExtension))
         {
@@ -119,51 +116,223 @@ public class Api
             LOGGER.info("Uploaded file handled with errors: {}",
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
+            return;
         }
         byte[] uploadedFile = ByteStreams.toByteArray(ByteStreams.limit(form.is, UPLOADED_FILE_MAX_SIZE));
+        form.is.close();
         if (uploadedFile.length >= UPLOADED_FILE_MAX_SIZE)
         {
             errorReporter.error("Sorry, we cannot read this file. Please use a smaller file (max 10Mo)");
             LOGGER.error("File too big: name {}, size in octet: {}", form.filename, uploadedFile.length);
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
+            return;
         }
-        ByteArrayInputStream bais = new ByteArrayInputStream(uploadedFile);
-
-        ValueGroup extractedInputs = inputReader.getInputDataFromFile(bais, errorReporter);
-
-        if (!errorReporter.hasErrors())
+        try
         {
-            // TODO: store that in the session
-            Map<String, Object> validatedData = extractedInputs.flattenValues();
+            generation = parse(generation, uploadedFile);
+            generation.setLicenseId(getLicense(generation));
 
-            final String crop = (String) validatedData.get("crop");
-            final String country = (String) validatedData.get("country");
-            // FIXME: Fill appVersion
-            final String appVersion = "";
+            SecurityUtils.getSubject().getSession().setAttribute(generation.getId().toString(), generation);
+            generationDao.createOrUpdateGeneration(generation);
 
-            Generation generation = generationService.linkFileToGeneration(presumedGenerationId, form.filename, crop,
-                    country, userId, licenseId, appVersion, form.canBeStored, errorReporter.getWarnings());
-
-            saveFileForGeneration(uploadedFile, fileExtension, generation);
-
-            // TODO: put that in second step (generateScsv)
-            pyBridgeService.callComputeLci(validatedData,
-                    result -> onResult(result, extractedInputs, generation.getId().toString(), errorReporter, response,
-                            startTime),
-                    error -> onError(error, response));
-
-            LOGGER.info("Uploaded file handled with {} warnings", errorReporter.getWarnings().size());
+            response.resume(Response.ok(new ImportResult(errorReporter, generation.getId().toString())).build());
         }
-        else
+        catch (ParsingErrorsFound e)
         {
             LOGGER.info(
                     "Uploaded file handled with errors: {}",
-                    errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
-            saveOrphanFile(uploadedFile, form.filename, fileExtension, userId, Qid.random());
-            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
+                    e.errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
+            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(e.errorReporter).build());
+            return;
+        }
+    }
+
+    private Generation createCurrentGeneration(ComputeLCiForm form)
+    {
+        Generation currentGeneration = new Generation();
+
+        if (!form.generationId.isEmpty())
+            currentGeneration.setId(Qid.fromRepresentation(form.generationId));
+        else
+            currentGeneration.setId(Qid.random());
+
+        currentGeneration.setUserId(getUserId());
+        currentGeneration.setFilename(form.filename);
+        currentGeneration.setAppVersion(appVersion);
+        currentGeneration.setCanUseForTesting(form.canBeStored);
+        currentGeneration.setLastTryNumber(1);
+        currentGeneration.setLastTryDate(LocalDateTime.now(ZoneOffset.UTC));
+
+        return currentGeneration;
+    }
+
+    private static final Duration MAX_DURATION_BETWEEN_TWO_TRIES = Duration.ofMinutes(30);
+
+    private Generation checkGenerationFilenameAndDate(Generation currentGeneration)
+    {
+        // FIXME: get from Id + userId? or check after
+        Generation persistedGeneration = generationDao.getGenerationFromId(currentGeneration.getId());
+        if (persistedGeneration == null)
+            return currentGeneration;
+        else
+        {
+            if (!persistedGeneration.getFilename().equals(currentGeneration.getFilename()))
+                return currentGeneration;
+            if (currentGeneration.getLastTryDate().minus(MAX_DURATION_BETWEEN_TWO_TRIES)
+                    .isAfter(persistedGeneration.getLastTryDate()))
+                return currentGeneration;
+            else
+            {
+                persistedGeneration.setLastTryDate(currentGeneration.getLastTryDate());
+                persistedGeneration.setLastTryNumber(persistedGeneration.getLastTryNumber() + 1);
+                return persistedGeneration;
+            }
+        }
+    }
+
+    private Qid getLicense(Generation currentGeneration)
+    {
+        if (currentGeneration.getLicenseId() != null)
+            return currentGeneration.getLicenseId();
+        else // FIXME: Use real licenseId
+            return currentGeneration.getUserId();
+    }
+
+    @POST
+    @Path("checkScsvGeneration")
+    public Response checkScsvGeneration(@FormParam("generationId") final String generationId,
+            @FormParam("filename") final String importedFilename,
+            @FormParam("dbOption") final String database)
+    {
+        if (generationId == null || importedFilename == null)
+        {
+            LOGGER.error("Bad request, generationId {} or filename {} is null", generationId,
+                    importedFilename);
+            return Response.status(Status.BAD_REQUEST).entity("generationId or filename is missing").build();
         }
 
-        form.is.close();
+        Generation generation = (Generation) SecurityUtils.getSubject().getSession().getAttribute(generationId);
+
+        Objects.requireNonNull(generation, "generation not found");
+
+        return Response.ok().build();
+    }
+
+    @POST
+    @Path("generateScsv")
+    @Produces(MediaType.APPLICATION_OCTET_STREAM)
+    public void generateScsv(@FormParam("generationId") final String generationId,
+            @FormParam("filename") final String importedFilename,
+            @FormParam("dbOption") final String database,
+            @Suspended AsyncResponse response)
+    {
+        long startTime = System.nanoTime();
+        if (generationId == null || importedFilename == null)
+        {
+            LOGGER.error("Bad request, generationId {} or filename {} is null", generationId, importedFilename);
+            response.resume(Response.status(Status.BAD_REQUEST).entity("generationId or filename is missing").build());
+            return;
+        }
+
+        Generation generation = (Generation) SecurityUtils.getSubject().getSession().getAttribute(generationId);
+
+        Objects.requireNonNull(generation, "generation not found");
+
+        Map<String, Object> validatedData = generation.getExtractedInputs().flattenValues();
+        pyBridgeService.callComputeLci(validatedData,
+                result -> onResult(result, generation, OutputTarget.valueOf(database), response, startTime),
+                error -> onError(error, response));
+    }
+
+    private void onResult(Map<String, String> modelsOutput, Generation generation,
+            OutputTarget outputTarget, AsyncResponse response, long startTime)
+    {
+        SecurityUtils.getSubject().getSession().setAttribute(generation.getId(), modelsOutput);
+        String filename = generation.getFilename().substring(0, generation.getFilename().lastIndexOf(".xls"));
+        LOGGER.info("Scsv file generated for generation {} in {} ms", generation.getId(),
+                (System.nanoTime() - startTime) / 1000000.d);
+        response.resume(
+                Response.ok((StreamingOutput) outputStream -> scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput,
+                        generation.getExtractedInputs(), outputTarget, outputStream))
+                        .header("Content-Disposition", "attachment; filename=\"" + filename + ".csv\"").build());
+    }
+
+    // TODO: Define standards in stack for error handling (e500 template, client code, etc)
+    private void onError(Throwable error, AsyncResponse response)
+    {
+        LOGGER.error("Error using pyBridge", error);
+        response.resume(error);
+    }
+
+    private Qid getUserId()
+    {
+        return (Qid) SecurityUtils.getSubject().getPrincipal();
+    }
+
+    public static class ComputeLCiForm
+    {
+        @FormParam("uploadFile")
+        public InputStream is;
+        @FormParam("canBeStored")
+        public boolean canBeStored;
+        @FormParam("filename")
+        public String filename;
+        @FormParam("generationId")
+        public String generationId;
+    }
+
+    // ----- PARSING
+
+    private Generation parse(Generation currentGeneration, byte[] uploadedFile) throws IOException
+    {
+        ByteArrayInputStream bais = new ByteArrayInputStream(uploadedFile);
+        final ErrorReporterImpl errorReporter = new ErrorReporterImpl();
+        ValueGroup extractedInputs = inputReader.getInputDataFromFile(bais, errorReporter);
+
+        final String fileExtension = currentGeneration.getFilename()
+                .substring(currentGeneration.getFilename().lastIndexOf('.'));
+        if (errorReporter.hasErrors())
+        {
+            saveOrphanFile(uploadedFile, currentGeneration.getFilename(), fileExtension,
+                    currentGeneration.getUserId(), Qid.random());
+            throw new ParsingErrorsFound(errorReporter);
+        }
+
+        final Map<String, Object> validatedData = extractedInputs.flattenValues();
+        final String crop = (String) validatedData.get("crop");
+        final String country = (String) validatedData.get("country");
+
+        if (currentGeneration.getCrop() == null && currentGeneration.getCountry() == null)
+        {
+            currentGeneration.setCrop(crop);
+            currentGeneration.setCountry(country);
+        }
+        else if (!crop.equals(currentGeneration.getCrop()) || !country.equals(currentGeneration.getCountry()))
+        {
+            currentGeneration = createNewGenerationUsingSomeInfo(currentGeneration);
+            currentGeneration.setCrop(crop);
+            currentGeneration.setCountry(country);
+        }
+
+        currentGeneration.setWarnings(errorReporter.getWarnings());
+        currentGeneration.setExtractedInputs(extractedInputs);
+        saveFileForGeneration(uploadedFile, fileExtension, currentGeneration);
+
+        return currentGeneration;
+    }
+
+    private Generation createNewGenerationUsingSomeInfo(Generation currentGeneration)
+    {
+        Generation newGeneration = new Generation();
+        newGeneration.setId(Qid.random());
+        newGeneration.setUserId(currentGeneration.getUserId());
+        newGeneration.setCanUseForTesting(currentGeneration.getCanUseForTesting());
+        newGeneration.setLastTryNumber(1);
+        newGeneration.setLastTryDate(currentGeneration.getLastTryDate());
+        newGeneration.setAppVersion(currentGeneration.getAppVersion());
+        newGeneration.setFilename(currentGeneration.getFilename());
+
+        return newGeneration;
     }
 
     private void saveFileForGeneration(byte[] fileContent, String fileExtension, Generation generation)
@@ -196,94 +365,15 @@ public class Api
         Files.write(fileContent, new File(uploadedFileLocation));
     }
 
-    private void onResult(Map<String, String> modelsOutput, ValueGroup extractedInputs, String generationId,
-            ErrorReporter errorReporter, AsyncResponse response, long startTime)
+    public static class ParsingErrorsFound extends RuntimeException
     {
-        SecurityUtils.getSubject().getSession().setAttribute(generationId, modelsOutput);
-        SecurityUtils.getSubject().getSession().setAttribute(generationId + "_inputs", extractedInputs);
-        LOGGER.info("Computations done and stored in {} in {} ms", generationId,
-                (System.nanoTime() - startTime) / 1000000.d);
-        response.resume(Response.ok(new ImportResult(errorReporter, generationId)).build());
-    }
+        private static final long serialVersionUID = 6576190302342716882L;
 
-    // TODO: Define standards in stack for error handling (e500 template, client code, etc)
-    private void onError(Throwable error, AsyncResponse response)
-    {
-        LOGGER.error("Error using pyBridge", error);
-        response.resume(error);
-    }
+        public final ErrorReporterImpl errorReporter;
 
-    @POST
-    @Path("checkScsvGeneration")
-    public Response checkScsvGeneration(@FormParam("generationId") final String generationId,
-            @FormParam("filename") final String importedFilename,
-            @FormParam("dbOption") final String database)
-    {
-        if (generationId == null || importedFilename == null)
+        public ParsingErrorsFound(ErrorReporterImpl errorReporter)
         {
-            LOGGER.error("Bad request, generation {} or filename {} is null", generationId,
-                    importedFilename);
-            return Response.status(Status.BAD_REQUEST).entity("generation or filename is missing").build();
+            this.errorReporter = errorReporter;
         }
-
-        @SuppressWarnings("unchecked")
-        Map<String, String> modelsOutput = (Map<String, String>) SecurityUtils.getSubject().getSession()
-                .getAttribute(generationId);
-
-        Objects.requireNonNull(modelsOutput, "results not found");
-
-        return Response.ok().build();
     }
-
-    @POST
-    @Path("generateScsv")
-    @Produces(MediaType.APPLICATION_OCTET_STREAM)
-    public Response generateScsv(@FormParam("generationId") final String generationId,
-            @FormParam("filename") final String importedFilename,
-            @FormParam("dbOption") final String database)
-    {
-        long startTime = System.nanoTime();
-        if (generationId == null || importedFilename == null)
-        {
-            LOGGER.error("Bad request, generation {} or filename {} is null", generationId, importedFilename);
-            return Response.status(Status.BAD_REQUEST).entity("generationId or filename is missing").build();
-        }
-
-        @SuppressWarnings("unchecked")
-        Map<String, String> modelsOutput = (Map<String, String>) SecurityUtils.getSubject().getSession()
-                .getAttribute(generationId);
-        ValueGroup extractedInputs = (ValueGroup) SecurityUtils.getSubject().getSession()
-                .getAttribute(generationId + "_inputs");
-
-        Objects.requireNonNull(modelsOutput, "results not found");
-        String filename = importedFilename.substring(0, importedFilename.lastIndexOf(".xls"));
-
-        LOGGER.info("Scsv file generated for generation {} in {} ms", generationId,
-                (System.nanoTime() - startTime) / 1000000.d);
-
-        return Response
-                .ok(
-                        (StreamingOutput) outputStream -> scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput,
-                                extractedInputs,
-                                OutputTarget.valueOf(database), outputStream))
-                .header("Content-Disposition", "attachment; filename=\"" + filename + ".csv\"").build();
-    }
-
-    private Qid getUserId()
-    {
-        return (Qid) SecurityUtils.getSubject().getPrincipal();
-    }
-
-    public static class ComputeLCiForm
-    {
-        @FormParam("uploadFile")
-        public InputStream is;
-        @FormParam("canBeStored")
-        public boolean canBeStored;
-        @FormParam("filename")
-        public String filename;
-        @FormParam("generationId")
-        public String generationId;
-    }
-
 }
