@@ -61,7 +61,7 @@ public class ExcelInputReader
         try
         {
             Workbook workbook = WorkbookFactory.create(is);
-            Sheet sheet = IntStream.range(2, workbook.getNumberOfSheets()).mapToObj(workbook::getSheetAt)
+            Sheet sheet = IntStream.range(0, workbook.getNumberOfSheets()).mapToObj(workbook::getSheetAt)
                     .filter(s -> s.getSheetName().startsWith("Template")).findFirst().orElse(null);
             if (sheet != null)
             {
