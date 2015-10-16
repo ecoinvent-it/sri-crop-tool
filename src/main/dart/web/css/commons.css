@@ -120,6 +120,20 @@ table img
   cursor: pointer;
   font-size: 14px;
   min-height: 20px;
+  position: relative;
+}
+
+.qts-small-btn
+{
+	border: 0px;
+  margin: 3px 0px 0px 0px;
+  padding: 3px 20px 3px 20px;
+  text-align: center;
+  min-width: 80px;
+  cursor: pointer;
+  font-size: 13px;
+  min-height: 20px;
+  position: relative;
 }
 
 .qts-icon-btn
@@ -161,6 +175,16 @@ table img
 
 .qts-btn-style3:HOVER {
   background-color: #283959;
+}
+
+.qts-btn-style4
+{
+  color: #e87e05;
+  background-color: transparent;
+}
+
+.qts-btn-style4:HOVER {
+  text-decoration: underline;
 }
 
 .successful

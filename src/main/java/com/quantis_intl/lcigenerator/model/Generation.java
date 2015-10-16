@@ -21,6 +21,7 @@ package com.quantis_intl.lcigenerator.model;
 import java.time.LocalDateTime;
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.quantis_intl.lcigenerator.ErrorReporterImpl.ErrorReporterResult;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.stack.utils.Qid;
@@ -39,7 +40,8 @@ public class Generation
     private String filename;
     private Collection<ErrorReporterResult> warnings;
 
-    // Transient
+    // TODO: Not good to use delivery annotation in business obj
+    @JsonIgnore
     private ValueGroup extractedInputs;
 
     public Generation()

@@ -80,6 +80,20 @@
     filter: alpha(opacity=0);
 }
 
+.generationRowUploadForm
+{
+	position: absolute;
+    top: 0;
+    bottom:0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+
 #step3 input.upload:disabled
 {
 	cursor: default;
@@ -148,6 +162,7 @@
 .dbOptionLabel
 {
 	min-height: 20px;
+	font-size: 13px;
 }
 
 .errors-and-warnings-table
@@ -174,6 +189,11 @@
   background-color: #ffffff;
 }
 
+.selectedGenerationRow
+{
+	background-color: #ABC8E2;
+}
+
 #fileLoadingModal img
 {
 	position: absolute;
@@ -185,4 +205,19 @@
 	padding: 0px;
 	max-height: 100%;
 	max-width: 100%;
+}
+
+#generationHistory
+{
+	font-size: 13px;
+}
+
+#generationHistory td
+{
+	padding: 5px 10px;
+}
+
+.getScsvFileRowBtn
+{
+	margin: 3px auto 0px auto;
 }

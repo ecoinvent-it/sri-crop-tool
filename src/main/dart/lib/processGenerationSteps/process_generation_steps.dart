@@ -1,8 +1,9 @@
 library process_generation_steps;
 
 import 'dart:async';
-import 'dart:html';
+import 'dart:collection';
 import 'dart:convert';
+import 'dart:html';
 import 'dart:js' as js;
 import 'package:angular/angular.dart';
 
@@ -14,11 +15,13 @@ import 'package:alcig/login/login_service.dart';
     selector: 'process-generation-steps',
     templateUrl: 'packages/alcig/processGenerationSteps/process_generation_steps.html',
     useShadowDom: false)
-class ProcessGeneratorSteps
+class ProcessGeneratorSteps implements AttachAware, DetachAware
 {
   Api _api;
   LocalNotificationService _notifService;
   LoginService _loginService;
+  
+  StreamSubscription _userSubscription;
   
   // FIXME: Use enum when angular dart 2? (not ok for binding with 1.9)
   int step = 0;
@@ -28,13 +31,16 @@ class ProcessGeneratorSteps
   
   List warnings;
   List errors;
-  String lastGenerationId;
+  Map lastGeneration;
+  String get lastGenerationId => lastGeneration == null ? null : lastGeneration['id']['representation'];
+  Queue generations = new Queue();
   
   bool fileCanBeStored = true;
   
-  bool get hasWarnings => (warnings != null && warnings.length > 0);
+  bool hasWarnings(Map generation) => generation == null ? warnings != null && warnings.length > 0 
+                                    : (generation['warnings'] != null && generation['warnings'].length > 0);
   bool get hasErrors => (errors != null && errors.length > 0);
-  bool get hasOnlyWarnings => hasWarnings && !hasErrors;
+  bool hasOnlyWarnings(Map generation) => hasWarnings(generation) && !hasErrors;
   
   bool get isLogged => _loginService.isLogged;
 
@@ -42,21 +48,86 @@ class ProcessGeneratorSteps
   
   ProcessGeneratorSteps(Api this._api, LoginService this._loginService, LocalNotificationService this._notifService);
   
+  void attach() 
+  {
+    _userSubscription = _loginService.stream.listen(_onUserData);
+  }
+    
+  void detach() 
+  {
+    _userSubscription.cancel();
+    _userSubscription = null;
+  }
+  
+  void _onUserData(LoginEvent event) 
+  {
+    switch ( event) 
+    {
+      case LoginEvent.AUTHENTICATED:
+        _loadGenerations();
+        break;
+      case LoginEvent.LOGGED_OUT:
+      case LoginEvent.LOG_OUT_UNSURE:
+      case LoginEvent.LOG_OUT_BY_SERVER:
+        _resetAll();
+        break;
+      default:
+        break;
+    }
+  }
+  
+  void changeSelectedGeneration(Map generation)
+  {
+    lastGeneration = generation;
+    if (lastGeneration != null)
+    {
+      errors = null;
+      warnings = lastGeneration['warnings']..sort(_errorsOrWarningsComparator);
+      filename = lastGeneration['filename'];
+      step = 1;
+    }
+    else
+      step = 0;
+  }
+  
+  String displayDate(List dateItems)
+  {
+    String day = dateItems[0].toString() + "-" 
+                + _get2DigitString(dateItems[1]) + "-" 
+                + _get2DigitString(dateItems[2]);
+    String time =  _get2DigitString(dateItems[3]) + ":" 
+                + _get2DigitString(dateItems[4]);
+    return day + " " + time;
+  }
+  
+  String _get2DigitString(int value)
+  {
+    String stringValue = value.toString();
+    if (stringValue.length == 1)
+      stringValue = "0" + stringValue;
+    return stringValue;
+  }
+  
   void disabledStep3Click()
   {// TODO: Have a more user friendly message
     if (step == 0 && !_loginService.isLogged)
       _notifService.manageWarning("You need to be authenticated to use this feature");
   }
   
-  void submitUploadForm(target)
+  Future _loadGenerations() async
   {
-    // TODO: dirty
-    step3Form = target.parent.parent as FormElement;
-    File file = (target as FileUploadInputElement).files[0];
+    generations.addAll(await _api.getUserGenerations());
+  }
+  
+  void submitUploadForm(FileUploadInputElement target, FormElement form, Map generation)
+  {
+    step3Form = form;
+    changeSelectedGeneration(generation);
+    File file = target.files[0];
     if (file.size > FILE_MAX_SIZE)
     {
       _notifService.manageError("Oh that's a too big file! Maximum authorized is 10Mo" );
-      reset();
+      resetToStep3();
     }
     else
     {
@@ -66,37 +137,46 @@ class ProcessGeneratorSteps
     
   }
   
-  void _upload()
+  Future _upload() async
   {
     var formData = new FormData(step3Form);
     formData.append("filename", filename);
     formData.append("generationId", lastGenerationId);
     displayModal("#fileLoadingModal");
-    _api.uploadInputs(formData)
-    .then((HttpRequest request) {
-      
+    try
+    {
+      HttpRequest request = await _api.uploadInputs(formData);
+    
       if ( request.status == 400 )
       {
-        reset();
+        resetToStep3();
         Map map = JSON.decode(request.responseText); 
         warnings = map['warnings']..sort(_errorsOrWarningsComparator);
         errors = map['errors']..sort(_errorsOrWarningsComparator);
+        changeSelectedGeneration(null); 
       }
       else
       {
         step = 1;
-        Map map = JSON.decode(request.responseText); 
-        warnings = map['message']['warnings']..sort(_errorsOrWarningsComparator);
-        errors = map['message']['errors']..sort(_errorsOrWarningsComparator);
-        lastGenerationId = map['generationId'];
+        Map newGeneration = JSON.decode(request.responseText);
+        if (lastGeneration != null)
+        {
+          _resetForm();
+          if (lastGeneration['id']['representation'] == newGeneration['id']['representation'])
+            generations.remove(lastGeneration);
+        }
+        generations.addFirst(newGeneration);
+        changeSelectedGeneration(newGeneration); 
+        warnings = lastGeneration['warnings']..sort(_errorsOrWarningsComparator);
       }
       hideModal("#fileLoadingModal");
       displayModal('#process-generation-step3-modal');
-    })
-    .catchError((_)
-      { 
-        reset(); hideModal("#fileLoadingModal");
-      });
+    }
+    catch(e)
+    { 
+      resetToStep3(); 
+      hideModal("#fileLoadingModal");
+    }
   }
 
   void hideModal(String id)
@@ -111,13 +191,32 @@ class ProcessGeneratorSteps
                   .callMethod('modal', [new js.JsObject.jsify({'show': 'true'})]);
   }
   
-  void reset()
+  void _resetAll()
   {
-    step = 0;
+    resetToStep3();
+    lastGeneration = null;
+    generations.clear();
+    filename = null;
     warnings = null;
     errors = null;
+  }
+  
+  void resetToStep3()
+  {
+    step = 0;
+    if (lastGeneration == null)
+    {
+      warnings = null;
+      errors = null;
+    }
+    _resetForm();
+  }
+  
+  void _resetForm()
+  {
     // NOTE: Needed to be able to send again the same file
-    step3Form.reset();
+     if (step3Form != null)
+       step3Form.reset();
   }
   
   int _errorsOrWarningsComparator(a,b)
@@ -140,17 +239,18 @@ class ProcessGeneratorSteps
   
   bool isChecked = false;
 
-  Future checkScsvGeneration(Event e) async
+  Future checkScsvGeneration(Event e, Map generation) async
   {
     if (!isChecked)
     {
       e.preventDefault();
+      changeSelectedGeneration(generation);
       FormElement form = e.target;
       String dbOption = (form.querySelector('input[name=dbOption]:checked') as RadioButtonInputElement).value;
       Map data = new Map();
       data["dbOption"] = dbOption;
-      data["generationId"] = lastGenerationId;
-      data["filename"] = filename;
+      data["generationId"] = generation['id']['representation'];
+      data["filename"] = generation['filename'];
       await _api.checkScsvGeneration(data);
       isChecked = true;
       form.submit();

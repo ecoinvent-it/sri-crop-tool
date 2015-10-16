@@ -40,7 +40,7 @@ public class MybatisGenerationDao implements GenerationDao
 
     @Override
     @Transactional
-    public List<Generation> getAllUserGeneration(Qid userId)
+    public List<Generation> getAllUserGenerations(Qid userId)
     {
         return mapper.getAllGenerationsFromUserId(userId);
     }

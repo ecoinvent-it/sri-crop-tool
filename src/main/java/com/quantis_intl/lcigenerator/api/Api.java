@@ -26,6 +26,7 @@ import java.net.URISyntaxException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
@@ -35,6 +36,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -54,7 +56,6 @@ import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
 import com.quantis_intl.lcigenerator.ErrorReporterImpl;
-import com.quantis_intl.lcigenerator.ImportResult;
 import com.quantis_intl.lcigenerator.PyBridgeService;
 import com.quantis_intl.lcigenerator.ScsvFileWriter;
 import com.quantis_intl.lcigenerator.dao.GenerationDao;
@@ -97,15 +98,32 @@ public class Api
         this.uploadedFilesFolder = uploadedFilesFolder;
     }
 
+    @GET
+    @Path("userGenerations")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Generation> getUserGenerations()
+    {
+        List<Generation> generations = generationDao.getAllUserGenerations(getUserId());
+        LOGGER.info("Get user generations");
+        return generations;
+    }
+
     @POST
     @Path("computeLci")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public void computeLci(@MultipartForm ComputeLCiForm form, @Suspended AsyncResponse response)
-            throws URISyntaxException, IOException
+    public Response computeLci(@MultipartForm ComputeLciForm form) throws URISyntaxException, IOException
     {
         Generation generation = createCurrentGeneration(form);
-        generation = checkGenerationFilenameAndDate(generation);
+        try
+        {
+            generation = checkGenerationFilenameAndDate(generation);
+        }
+        catch (GenerationNotOwned e)
+        {
+            LOGGER.error("Found generation is not owned by user: generation id {}", generation.getId());
+            return Response.status(Response.Status.BAD_REQUEST).build(); // TODO: Use UNAUTHORIZED instead?
+        }
         generation.setLicenseId(getLicense(generation));
 
         final ErrorReporterImpl errorReporter = new ErrorReporterImpl();
@@ -115,8 +133,7 @@ public class Api
             errorReporter.error("Sorry, we cannot read this file. Please use the Excel formats (.xls or .xlsx)");
             LOGGER.info("Uploaded file handled with errors: {}",
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
-            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
-            return;
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build();
         }
         byte[] uploadedFile = ByteStreams.toByteArray(ByteStreams.limit(form.is, UPLOADED_FILE_MAX_SIZE));
         form.is.close();
@@ -124,8 +141,7 @@ public class Api
         {
             errorReporter.error("Sorry, we cannot read this file. Please use a smaller file (max 10Mo)");
             LOGGER.error("File too big: name {}, size in octet: {}", form.filename, uploadedFile.length);
-            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
-            return;
+            return Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build();
         }
         try
         {
@@ -135,19 +151,18 @@ public class Api
             SecurityUtils.getSubject().getSession().setAttribute(generation.getId().toString(), generation);
             generationDao.createOrUpdateGeneration(generation);
 
-            response.resume(Response.ok(new ImportResult(errorReporter, generation.getId().toString())).build());
+            return Response.ok(generation).build();
         }
         catch (ParsingErrorsFound e)
         {
             LOGGER.info(
                     "Uploaded file handled with errors: {}",
                     e.errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
-            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(e.errorReporter).build());
-            return;
+            return Response.status(Response.Status.BAD_REQUEST).entity(e.errorReporter).build();
         }
     }
 
-    private Generation createCurrentGeneration(ComputeLCiForm form)
+    private Generation createCurrentGeneration(ComputeLciForm form)
     {
         Generation currentGeneration = new Generation();
 
@@ -170,12 +185,15 @@ public class Api
 
     private Generation checkGenerationFilenameAndDate(Generation currentGeneration)
     {
-        // FIXME: get from Id + userId? or check after
         Generation persistedGeneration = generationDao.getGenerationFromId(currentGeneration.getId());
         if (persistedGeneration == null)
             return currentGeneration;
         else
         {
+            if (!persistedGeneration.getUserId().equals(getUserId()))
+                throw new GenerationNotOwned();
+
+            currentGeneration.setId(Qid.random());
             if (!persistedGeneration.getFilename().equals(currentGeneration.getFilename()))
                 return currentGeneration;
             if (currentGeneration.getLastTryDate().minus(MAX_DURATION_BETWEEN_TWO_TRIES)
@@ -198,6 +216,7 @@ public class Api
             return currentGeneration.getUserId();
     }
 
+    // FIXME: Re-read Excel file if not in session map
     @POST
     @Path("checkScsvGeneration")
     public Response checkScsvGeneration(@FormParam("generationId") final String generationId,
@@ -269,7 +288,15 @@ public class Api
         return (Qid) SecurityUtils.getSubject().getPrincipal();
     }
 
-    public static class ComputeLCiForm
+    public static class GenerationNotOwned extends RuntimeException
+    {
+        private static final long serialVersionUID = 8658020993889992990L;
+
+        public GenerationNotOwned()
+        {}
+    }
+
+    public static class ComputeLciForm
     {
         @FormParam("uploadFile")
         public InputStream is;

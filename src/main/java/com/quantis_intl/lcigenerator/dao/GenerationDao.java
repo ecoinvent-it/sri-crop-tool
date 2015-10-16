@@ -25,7 +25,7 @@ import com.quantis_intl.stack.utils.Qid;
 
 public interface GenerationDao
 {
-    List<Generation> getAllUserGeneration(Qid userId);
+    List<Generation> getAllUserGenerations(Qid userId);
 
     Generation getGenerationFromId(Qid generationId);
 

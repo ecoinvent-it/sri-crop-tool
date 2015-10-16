@@ -7,6 +7,8 @@ abstract class Api {
 
   Stream<ServerEvent> get stream;
   
+  Future<List> getUserGenerations();
+  
   Future<HttpRequest> uploadInputs(dynamic data);
   
   Future<HttpRequest> checkScsvGeneration(Map data);

@@ -1,6 +1,7 @@
 library api.impl;
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:html';
 
 import 'api.dart';
@@ -20,6 +21,19 @@ class ApiImpl implements Api {
   Stream<ServerEvent> get stream => _dispatcher.stream;
   
   ApiImpl(ConnectivityState this._connectivityState);
+  
+  Future<List> getUserGenerations() async 
+  {
+    try
+    {
+      String result = await HttpRequest.getString(_baseApiUrl + "userGenerations");
+      return JSON.decode(result);
+    }
+    catch(e)
+    {
+      _manageError(e);
+    }
+  }
   
   Future<HttpRequest> uploadInputs(dynamic formData){
       return HttpRequest.request(_baseApiUrl + "computeLci", method: "POST", sendData: formData)
