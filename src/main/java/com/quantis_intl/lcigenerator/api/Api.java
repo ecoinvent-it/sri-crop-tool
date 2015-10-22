@@ -112,7 +112,8 @@ public class Api
     @Path("computeLci")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response computeLci(@MultipartForm ComputeLciForm form) throws URISyntaxException, IOException
+    public void computeLci(@MultipartForm ComputeLciForm form, @Suspended AsyncResponse response)
+            throws URISyntaxException, IOException
     {
         Generation generation = createCurrentGeneration(form);
         try
@@ -122,7 +123,8 @@ public class Api
         catch (GenerationNotOwned e)
         {
             LOGGER.error("Found generation is not owned by user: generation id {}", generation.getId());
-            return Response.status(Response.Status.BAD_REQUEST).build(); // TODO: Use UNAUTHORIZED instead?
+            response.resume(Response.status(Response.Status.BAD_REQUEST).build()); // TODO: Use UNAUTHORIZED instead?
+            return;
         }
         generation.setLicenseId(getLicense(generation));
 
@@ -133,7 +135,8 @@ public class Api
             errorReporter.error("Sorry, we cannot read this file. Please use the Excel formats (.xls or .xlsx)");
             LOGGER.info("Uploaded file handled with errors: {}",
                     errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build();
+            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
+            return;
         }
         byte[] uploadedFile = ByteStreams.toByteArray(ByteStreams.limit(form.is, UPLOADED_FILE_MAX_SIZE));
         form.is.close();
@@ -141,7 +144,8 @@ public class Api
         {
             errorReporter.error("Sorry, we cannot read this file. Please use a smaller file (max 10Mo)");
             LOGGER.error("File too big: name {}, size in octet: {}", form.filename, uploadedFile.length);
-            return Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build();
+            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
+            return;
         }
         try
         {
@@ -151,14 +155,16 @@ public class Api
             SecurityUtils.getSubject().getSession().setAttribute(generation.getId().toString(), generation);
             generationDao.createOrUpdateGeneration(generation);
 
-            return Response.ok(generation).build();
+            response.resume(Response.ok(generation).build());
+            return;
         }
         catch (ParsingErrorsFound e)
         {
             LOGGER.info(
                     "Uploaded file handled with errors: {}",
                     e.errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.errorReporter).build();
+            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(e.errorReporter).build());
+            return;
         }
     }
 

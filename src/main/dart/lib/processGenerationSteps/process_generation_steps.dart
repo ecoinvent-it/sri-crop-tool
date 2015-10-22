@@ -29,11 +29,12 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
   String filename = null;
   FormElement step3Form;
   
+  // FIXME: Put all these in a service
   List warnings;
   List errors;
   Map lastGeneration;
   String get lastGenerationId => lastGeneration == null ? null : lastGeneration['id']['representation'];
-  Queue generations = new Queue();
+  List generations = null;
   
   bool fileCanBeStored = true;
   
@@ -116,7 +117,7 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
   
   Future _loadGenerations() async
   {
-    generations.addAll(await _api.getUserGenerations());
+    generations = await _api.getUserGenerations();
   }
   
   void submitUploadForm(FileUploadInputElement target, FormElement form, Map generation)
@@ -165,9 +166,8 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
           if (lastGeneration['id']['representation'] == newGeneration['id']['representation'])
             generations.remove(lastGeneration);
         }
-        generations.addFirst(newGeneration);
+        generations.insert(0, newGeneration);
         changeSelectedGeneration(newGeneration); 
-        warnings = lastGeneration['warnings']..sort(_errorsOrWarningsComparator);
       }
       hideModal("#fileLoadingModal");
       displayModal('#process-generation-step3-modal');
@@ -195,7 +195,7 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
   {
     resetToStep3();
     lastGeneration = null;
-    generations.clear();
+    generations = null;
     filename = null;
     warnings = null;
     errors = null;
