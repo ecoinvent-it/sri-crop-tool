@@ -23,25 +23,22 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
   
   StreamSubscription _userSubscription;
   
-  // FIXME: Use enum when angular dart 2? (not ok for binding with 1.9)
-  int step = 0;
+  // FIXME: Put all these in a dedicated popup component
+  String popupFilename = null;
+  List popupWarnings;
+  List popupErrors;
+  bool get popupHasErrors => popupErrors != null && popupErrors.length > 0;
+  bool get popupHasWarnings => popupWarnings != null && popupWarnings.length > 0;
+  bool get popupHasOnlyWarnings => popupHasWarnings && !popupHasErrors;
   
-  String filename = null;
-  FormElement step3Form;
-  
-  // FIXME: Put all these in a service
-  List warnings;
-  List errors;
+  //FIXME: Put in a generation service
   Map lastGeneration;
   String get lastGenerationId => lastGeneration == null ? null : lastGeneration['id']['representation'];
   List generations = null;
   
   bool fileCanBeStored = true;
   
-  bool hasWarnings(Map generation) => generation == null ? warnings != null && warnings.length > 0 
-                                    : (generation['warnings'] != null && generation['warnings'].length > 0);
-  bool get hasErrors => (errors != null && errors.length > 0);
-  bool hasOnlyWarnings(Map generation) => hasWarnings(generation) && !hasErrors;
+  bool hasWarnings(Map generation) => generation['warnings'] != null && generation['warnings'].length > 0;
   
   bool get isLogged => _loginService.isLogged;
 
@@ -80,15 +77,6 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
   void changeSelectedGeneration(Map generation)
   {
     lastGeneration = generation;
-    if (lastGeneration != null)
-    {
-      errors = null;
-      warnings = lastGeneration['warnings']..sort(_errorsOrWarningsComparator);
-      filename = lastGeneration['filename'];
-      step = 1;
-    }
-    else
-      step = 0;
   }
   
   String displayDate(List dateItems)
@@ -111,7 +99,7 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
   
   void disabledStep3Click()
   {// TODO: Have a more user friendly message
-    if (step == 0 && !_loginService.isLogged)
+    if (!_loginService.isLogged)
       _notifService.manageWarning("You need to be authenticated to use this feature");
   }
   
@@ -120,63 +108,82 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
     generations = await _api.getUserGenerations();
   }
   
-  void submitUploadForm(FileUploadInputElement target, FormElement form, Map generation)
+  void submitUploadForm(FileUploadInputElement target, FormElement form)
   {
-    step3Form = form;
-    changeSelectedGeneration(generation);
     File file = target.files[0];
     if (file.size > FILE_MAX_SIZE)
     {
       _notifService.manageError("Oh that's a too big file! Maximum authorized is 10Mo" );
-      resetToStep3();
+      form.reset();
     }
     else
     {
-      filename = file.name;
-      _upload();
+      _upload(file.name, form);
     }
     
   }
   
-  Future _upload() async
+  void submitReuploadForm(FileUploadInputElement target, FormElement form, Map generation)
   {
-    var formData = new FormData(step3Form);
+    changeSelectedGeneration(generation);
+    submitUploadForm(target, form);
+  }
+  
+  Future _upload(String filename, FormElement form) async
+  {
+    var formData = new FormData(form);
     formData.append("filename", filename);
     formData.append("generationId", lastGenerationId);
+    
     displayModal("#fileLoadingModal");
+
+    Map uploadedGeneration = lastGeneration;
+    List warnings;
+    List errors;
     try
     {
+      form.reset();
       HttpRequest request = await _api.uploadInputs(formData);
     
       if ( request.status == 400 )
       {
-        resetToStep3();
         Map map = JSON.decode(request.responseText); 
         warnings = map['warnings']..sort(_errorsOrWarningsComparator);
         errors = map['errors']..sort(_errorsOrWarningsComparator);
-        changeSelectedGeneration(null); 
       }
       else
       {
-        step = 1;
         Map newGeneration = JSON.decode(request.responseText);
-        if (lastGeneration != null)
+        if (uploadedGeneration != null)
         {
-          _resetForm();
-          if (lastGeneration['id']['representation'] == newGeneration['id']['representation'])
-            generations.remove(lastGeneration);
+          if (uploadedGeneration['id']['representation'] == newGeneration['id']['representation'])
+            generations.remove(uploadedGeneration);
         }
         generations.insert(0, newGeneration);
-        changeSelectedGeneration(newGeneration); 
+        changeSelectedGeneration(newGeneration);
+        warnings = newGeneration['warnings'];
+        errors = [];
       }
-      hideModal("#fileLoadingModal");
-      displayModal('#process-generation-step3-modal');
     }
-    catch(e)
+    finally
     { 
-      resetToStep3(); 
       hideModal("#fileLoadingModal");
     }
+    displayStatusModal(filename, errors, warnings);
+  }
+  
+  void changeGenerationAndDisplayUpdateStatus(Map generation)
+  {
+    changeSelectedGeneration(generation);
+    displayStatusModal(generation['filename'], [], generation['warnings']);
+  }
+  
+  void displayStatusModal(String filename, List errors, List warnings)
+  {
+    popupFilename = filename;
+    popupErrors = errors;
+    popupWarnings = warnings;
+    displayModal('#process-generation-step3-modal');
   }
 
   void hideModal(String id)
@@ -193,30 +200,11 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
   
   void _resetAll()
   {
-    resetToStep3();
     lastGeneration = null;
     generations = null;
-    filename = null;
-    warnings = null;
-    errors = null;
-  }
-  
-  void resetToStep3()
-  {
-    step = 0;
-    if (lastGeneration == null)
-    {
-      warnings = null;
-      errors = null;
-    }
-    _resetForm();
-  }
-  
-  void _resetForm()
-  {
-    // NOTE: Needed to be able to send again the same file
-     if (step3Form != null)
-       step3Form.reset();
+    popupFilename = null;
+    popupErrors = null;
+    popupWarnings = null;
   }
   
   int _errorsOrWarningsComparator(a,b)

@@ -222,6 +222,11 @@ table img
   padding-top:5px;
 }
 
+.clickableText
+{
+	text-decoration: underline;
+}
+
 input[type="text"], input[type="password"], textarea
 {
 	background-color: #eaecf0;

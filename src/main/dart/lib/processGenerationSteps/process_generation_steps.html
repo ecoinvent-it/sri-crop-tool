@@ -3,16 +3,12 @@
   <col width="25%"/>
   <col width="25%"/>
   <col width="25%"/>
-  <tr ng-class="{'notVisible':filename == null || filename == '' || !hasErrors}">
-    <td colspan="2"></td>
-    <td colspan="2" class="color3 not-bold" id="filenameContainer"><div>Current uploaded file: {{filename}}</div></td>
-  </tr>
   <tr>
     <td>
         <a id="#step1Link" href="LCI-Database_Data-collection_Crop_v1.xlsx" target="_blank" onclick="documentLinkClick(event,'LCI-Database_Data-collection_Crop_v1.xlsx')">
             <div id="step1" class="stepBtn">
               <div class="stepTitle text-big text-uppercase">Step 1</div>
-              <div class="stepText">Download the template</div>
+              <div class="stepText"><span class="clickableText">Click</span> to download the template</div>
             </div>
         </a>
     </td>
@@ -20,53 +16,30 @@
         <div class="stepTitle text-big text-uppercase">Step 2</div>
         <div class="stepText">Fill in the template with your data</div>
     </td>
-    <td id="step3Container" ng-class="{disabledStep: step == 1 || !isLogged}">
+    <td id="step3Container" ng-class="{disabledStep: !isLogged}">
       <form id="processGeneratorUploadForm" method="post" enctype="multipart/form-data">
           <div id="step3" class="stepBtn">
 	          <div class="stepTitle text-big text-uppercase">Step 3</div>
 	          <input type="file" name="uploadFile" 
 	                      accept=".xls,.xlsx" required="required" 
 	                      class="upload"
-	                      ng-change="submitUploadForm($event.target, $event.target.parent.parent, null)"
-	                      ng-if="step == 0 && isLogged"/>
-	          <div class="stepText">Upload your template to ALCIG</div>
+	                      ng-change="submitUploadForm($event.target, $event.target.parent.parent)"
+	                      ng-if="isLogged"/>
+	          <div class="stepText"><span class="clickableText">Click</span> to upload your template to ALCIG</div>
           </div>
           <div>
-             <input type="checkbox" checked name="canBeStored" value="true" ng-disabled="step != 0"/> 
+             <input type="checkbox" checked name="canBeStored" value="true"/> 
             <span id="step3CheckboxText" class="text-very-small">I agree that Quantis stores this file for testing purposes</span>
           </div>
 			</form>
-			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" ng-if="step != 0 || !isLogged"></div>
+			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" ng-if="!isLogged"></div>
     </td>
     <td>
-      <form action="app/api/generateScsv" method="post" ng-disabled="step != 1" style="display: block;">
-        <div id="step4" class="stepBtn" ng-class="{disabledStep: step == 0}">
+        <div id="step4" class="stepBtn" ng-class="{disabledStep: !isLogged}">
 	        <div class="stepTitle text-big text-uppercase">Step 4</div>
-				  <input type="submit" id="scsvDownloadBtn" ng-disabled="step != 1"/>
 				  <div class="stepText">Get a ready-to-import file for Simapro</div>
 			  </div>
-	 	    <input type="hidden" name="generationId" value="{{lastGenerationId}}"/>
-			  <div class="btn-group" data-toggle="buttons" ng-class="{'notVisible':step != 1}">
-				  <label class="btn btn-primary active dbOptionLabel">
-				    <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
-				  </label>
-				  <label class="btn btn-primary dbOptionLabel">
-				    <input type="radio" name="dbOption" autocomplete="off" value="WFLDB">WFLDB
-				  </label>
-				</div>
-			</form>
 	  </td>
-  </tr>
-  
-  <tr>
-    <td colspan="2"></td>
-    <td>
-	    <button class="qts-btn qts-btn-style2" ng-class="{'notVisible':!hasErrors && !hasWarnings(lastGeneration)}" data-toggle="modal" data-target="#process-generation-step3-modal">
-	     <span class="glyphicon" ng-class="{'glyphicon-exclamation-sign':!hasErrors, 'warningsColor':!hasErrors, 'glyphicon-minus-sign':hasErrors, 'errorsColor':hasErrors}" aria-hidden="true"></span>
-	     Upload status
-	    </button>
-    </td>
-    <td><button class="qts-btn qts-btn-style1 stepNavBtn" ng-class="{'notVisible':step != 1}" ng-click="resetToStep3()">Back to step 3</button></td>
   </tr>
 </table>
 
@@ -77,7 +50,9 @@
   <col width="25%"/>
   <col width="25%"/>
   <col width="25%"/>
-  <tr ng-repeat="generation in generations" ng-class-odd="'odd'" ng-class-even="'even'" ng-class="{'selectedGenerationRow':generation == lastGeneration}">
+  <tr ng-repeat="generation in generations" ng-class-odd="'odd'" ng-class-even="'even'"
+          ng-class="{'selectedGenerationRow':generation == lastGeneration}"
+          ng-click="changeSelectedGeneration(generation)">
     <td>{{displayDate(generation.lastTryDate)}}</td>
     <td>{{generation.crop}}</td>
     <td>{{generation.country}}</td>
@@ -89,11 +64,11 @@
             <input type="file" name="uploadFile" 
                         accept=".xls,.xlsx" required="required" 
                         class="generationRowUploadForm"
-                        ng-change="submitUploadForm($event.target, $event.target.parent, generation)"
+                        ng-change="submitReuploadForm($event.target, $event.target.parent, generation)"
                         />
 	      </form>
       </div>
-      <button class="qts-small-btn qts-btn-style4" ng-class="{'notVisible':!hasWarnings(generation)}" data-toggle="modal" data-target="#process-generation-step3-modal" ng-click="changeSelectedGeneration(generation)">
+      <button class="qts-small-btn qts-btn-style4" ng-class="{'notVisible':!hasWarnings(generation)}" ng-click="changeGenerationAndDisplayUpdateStatus(generation)">
        <span class="glyphicon glyphicon-exclamation-sign warningsColor" aria-hidden="true"></span>
        Upload status
       </button>
@@ -122,51 +97,51 @@
 <!-- Modal -->
 <div class="modal topBottomAnimation" id="process-generation-step3-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content alert" ng-class="{'successful':step == 1 ,'errors': hasErrors, 'warnings':hasWarnings(lastGeneration)}">
+    <div class="modal-content alert" ng-class="{'successful': true, 'errors': popupHasErrors, 'warnings': popupHasWarnings}">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">
-           <span class="glyphicon" ng-class="{'glyphicon-exclamation-sign':hasOnlyWarnings(lastGeneration), 'warningsColor':hasOnlyWarnings(lastGeneration), 'glyphicon-minus-sign':hasErrors, 'errorsColor':hasErrors}" aria-hidden="true"></span>
-          <span ng-if="lastGeneration != null">File successfully uploaded</span>
-          <span ng-if="lastGeneration == null">Sorry, we didn't manage to compute your data</span>
+           <span class="glyphicon" ng-class="{'glyphicon-exclamation-sign': popupHasOnlyWarnings, 'warningsColor': popupHasOnlyWarnings, 'glyphicon-minus-sign': popupHasErrors, 'errorsColor': popupHasErrors}" aria-hidden="true"></span>
+          <span ng-if="!popupHasErrors">File successfully uploaded</span>
+          <span ng-if="popupHasErrors">Sorry, we didn't manage to compute your data</span>
         </h4>
       </div>
       <div class="modal-body">
-        <div ng-if="step == 1">You can now click on Step 4 to download the generated Simapro file</div>
+        <div ng-if="!popupHasErrors">You can now click on Step 4 to download the generated Simapro file</div>
         
-        <div ng-if="hasErrors || hasWarnings(lastGeneration)">Uploaded file: {{filename}}</div>
-        <div ng-if="hasErrors">Please check these points before trying again:</div>
-					<table ng-if="hasErrors" class="errors-and-warnings-table">
-					  <tr>
-					    <th class="tableCellColumn">Cell</th>
-					    <th class="tableLabelColumn">Label</th>
-					    <th>Message</th>
-					  </tr>
-					  <tr ng-repeat="error in errors" ng-class-odd="'odd'" ng-class-even="'even'">
-					    <td>{{error.context.cell}}</td>
-					    <td>{{error.context.label}}</td>
-					    <td>{{error.message}}</td>
-					  </tr>
-					</table>
+        <div>Uploaded file: {{popupFilename}}</div>
+        <div ng-if="popupHasErrors">Please check these points before trying again:</div>
+				<table ng-if="popupHasErrors" class="errors-and-warnings-table">
+				  <tr>
+				    <th class="tableCellColumn">Cell</th>
+				    <th class="tableLabelColumn">Label</th>
+				    <th>Message</th>
+				  </tr>
+				  <tr ng-repeat="error in popupErrors" ng-class-odd="'odd'" ng-class-even="'even'">
+				    <td>{{error.context.cell}}</td>
+				    <td>{{error.context.label}}</td>
+				    <td>{{error.message}}</td>
+				  </tr>
+				</table>
 					
-					<div ng-if="hasWarnings(lastGeneration)">
-				    <span ng-if="!hasErrors">Some data have been adapted for this computation:</span>
-				    <span ng-if="hasErrors">We also noticed a few other minor points that will be adapted if you keep them unchanged:</span>
+					<div ng-if="popupHasWarnings">
+				    <span ng-if="!popupHasErrors">Some data have been adapted for this computation:</span>
+				    <span ng-if="popupHasErrors">We also noticed a few other minor points that will be adapted if you keep them unchanged:</span>
 					</div>
-					<table ng-if="hasWarnings(lastGeneration)" class="errors-and-warnings-table">
+					<table ng-if="popupHasWarnings" class="errors-and-warnings-table">
 					  <tr>
 					    <th class="tableCellColumn">Cell</th>
               <th class="tableLabelColumn">Label</th>
               <th>Message</th>
 					  </tr>
-					  <tr ng-repeat="warning in warnings" ng-class-odd="'odd'" ng-class-even="'even'">
+					  <tr ng-repeat="warning in popupWarnings" ng-class-odd="'odd'" ng-class-even="'even'">
 					    <td>{{warning.context.cell}}</td>
 					    <td>{{warning.context.label}}</td>
 					    <td>{{warning.message}}</td>
 					  </tr>
 					</table>
       </div>
-      <div class="modal-footer" ng-if="hasWarnings(lastGeneration) || hasErrors">
+      <div class="modal-footer" ng-if="popupHasWarnings || popupHasErrors">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>
