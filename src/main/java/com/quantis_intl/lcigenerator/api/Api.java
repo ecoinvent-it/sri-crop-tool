@@ -20,15 +20,17 @@ package com.quantis_intl.lcigenerator.api;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -55,6 +57,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
+import com.quantis_intl.lcigenerator.ErrorReporter;
 import com.quantis_intl.lcigenerator.ErrorReporterImpl;
 import com.quantis_intl.lcigenerator.PyBridgeService;
 import com.quantis_intl.lcigenerator.ScsvFileWriter;
@@ -82,7 +85,7 @@ public class Api
 
     private final GenerationDao generationDao;
 
-    private final String uploadedFilesFolder;
+    private final java.nio.file.Path uploadedFilesFolder;
 
     // FIXME: To fill
     private final String appVersion = "";
@@ -95,7 +98,7 @@ public class Api
         this.pyBridgeService = pyBridgeService;
         this.scsvFileWriter = scsvFileWriter;
         this.generationDao = generationDao;
-        this.uploadedFilesFolder = uploadedFilesFolder;
+        this.uploadedFilesFolder = Paths.get(uploadedFilesFolder);
     }
 
     @GET
@@ -222,51 +225,63 @@ public class Api
             return currentGeneration.getUserId();
     }
 
-    // FIXME: Re-read Excel file if not in session map
-    @POST
-    @Path("checkScsvGeneration")
-    public Response checkScsvGeneration(@FormParam("generationId") final String generationId,
-            @FormParam("filename") final String importedFilename,
-            @FormParam("dbOption") final String database)
-    {
-        if (generationId == null || importedFilename == null)
-        {
-            LOGGER.error("Bad request, generationId {} or filename {} is null", generationId,
-                    importedFilename);
-            return Response.status(Status.BAD_REQUEST).entity("generationId or filename is missing").build();
-        }
-
-        Generation generation = (Generation) SecurityUtils.getSubject().getSession().getAttribute(generationId);
-
-        Objects.requireNonNull(generation, "generation not found");
-
-        return Response.ok().build();
-    }
-
     @POST
     @Path("generateScsv")
     @Produces(MediaType.APPLICATION_OCTET_STREAM)
     public void generateScsv(@FormParam("generationId") final String generationId,
-            @FormParam("filename") final String importedFilename,
             @FormParam("dbOption") final String database,
-            @Suspended AsyncResponse response)
+            @Suspended AsyncResponse response) throws FileNotFoundException, IOException
     {
         long startTime = System.nanoTime();
-        if (generationId == null || importedFilename == null)
+        if (generationId == null)
         {
-            LOGGER.error("Bad request, generationId {} or filename {} is null", generationId, importedFilename);
-            response.resume(Response.status(Status.BAD_REQUEST).entity("generationId or filename is missing").build());
+            LOGGER.error("Bad request, generationId {} is null", generationId);
+            response.resume(Response.status(Status.BAD_REQUEST).entity("generationId is missing").build());
             return;
         }
 
+        try
+        {
+            Generation generation = findExistingGeneration(generationId);
+            Map<String, Object> validatedData = generation.getExtractedInputs().flattenValues();
+            pyBridgeService.callComputeLci(validatedData,
+                    result -> onResult(result, generation, OutputTarget.valueOf(database), response, startTime),
+                    error -> onError(error, response));
+        }
+        catch (GenerationNotFound e)
+        {
+            response.resume(Response.status(Status.BAD_REQUEST).entity("Unknown generation").build());
+        }
+    }
+
+    private Generation findExistingGeneration(String generationId) throws FileNotFoundException, IOException
+    {
         Generation generation = (Generation) SecurityUtils.getSubject().getSession().getAttribute(generationId);
+        if (generation == null)
+        {
+            generation = generationDao.getGenerationFromId(Qid.fromRepresentation(generationId));
+            if (generation == null)
+            {
+                LOGGER.error("Unknown generation: {}", generationId);
+                throw new GenerationNotFound();
+            }
 
-        Objects.requireNonNull(generation, "generation not found");
-
-        Map<String, Object> validatedData = generation.getExtractedInputs().flattenValues();
-        pyBridgeService.callComputeLci(validatedData,
-                result -> onResult(result, generation, OutputTarget.valueOf(database), response, startTime),
-                error -> onError(error, response));
+            Qid userId = getUserId();
+            if (!generation.getUserId().equals(userId))
+            {
+                LOGGER.error("SECURITY ISSUE: Provided generationId {} is not owned by the logged user {}!",
+                        generationId, userId);
+                throw new GenerationNotFound();
+            }
+            java.nio.file.Path inputFilePath = uploadedFilesFolder
+                    .resolve(Paths.get(userId.toString(), getFileNameFromGeneration(generation)));
+            try (FileInputStream is = new FileInputStream(inputFilePath.toFile()))
+            {
+                generation.setExtractedInputs(inputReader.getInputDataFromFile(is, ErrorReporter.NO_OP));
+                SecurityUtils.getSubject().getSession().setAttribute(generation.getId().toString(), generation);
+            }
+        }
+        return generation;
     }
 
     private void onResult(Map<String, String> modelsOutput, Generation generation,
@@ -322,10 +337,10 @@ public class Api
         final ErrorReporterImpl errorReporter = new ErrorReporterImpl();
         ValueGroup extractedInputs = inputReader.getInputDataFromFile(bais, errorReporter);
 
-        final String fileExtension = currentGeneration.getFilename()
-                .substring(currentGeneration.getFilename().lastIndexOf('.'));
         if (errorReporter.hasErrors())
         {
+            final String fileExtension = currentGeneration.getFilename()
+                    .substring(currentGeneration.getFilename().lastIndexOf('.'));
             saveOrphanFile(uploadedFile, currentGeneration.getFilename(), fileExtension,
                     currentGeneration.getUserId(), Qid.random());
             throw new ParsingErrorsFound(errorReporter);
@@ -349,7 +364,7 @@ public class Api
 
         currentGeneration.setWarnings(errorReporter.getWarnings());
         currentGeneration.setExtractedInputs(extractedInputs);
-        saveFileForGeneration(uploadedFile, fileExtension, currentGeneration);
+        saveFileForGeneration(uploadedFile, currentGeneration);
 
         return currentGeneration;
     }
@@ -368,15 +383,12 @@ public class Api
         return newGeneration;
     }
 
-    private void saveFileForGeneration(byte[] fileContent, String fileExtension, Generation generation)
-            throws IOException
+    private void saveFileForGeneration(byte[] fileContent, Generation generation) throws IOException
     {
-        String userFolderName = uploadedFilesFolder + generation.getUserId();
+        java.nio.file.Path filePath = uploadedFilesFolder
+                .resolve(Paths.get(generation.getUserId().toString(), getFileNameFromGeneration(generation)));
 
-        String uploadedFileLocation = userFolderName + "/" + generation.getId() + "-" + generation.getLastTryNumber()
-                + fileExtension;
-
-        saveFile(fileContent, userFolderName, uploadedFileLocation);
+        saveFile(fileContent, filePath);
 
         LOGGER.info("File saved generation id: {}, original name: {}", generation.getId(), generation.getFilename());
     }
@@ -384,18 +396,25 @@ public class Api
     private void saveOrphanFile(byte[] fileContent, String originalFileName, String fileExtension,
             Qid userId, Qid newFileName) throws IOException
     {
-        String userFolderName = uploadedFilesFolder + userId;
-        String uploadedFileLocation = userFolderName + "/" + newFileName + fileExtension;
+        String fileName = newFileName.toString() + fileExtension;
+        java.nio.file.Path filePath = uploadedFilesFolder.resolve(Paths.get(userId.toString(), fileName));
 
-        saveFile(fileContent, userFolderName, uploadedFileLocation);
+        saveFile(fileContent, filePath);
 
         LOGGER.info("File saved file id: {}, original name: {}", userId, newFileName, originalFileName);
     }
 
-    private void saveFile(byte[] fileContent, String folderName, String uploadedFileLocation) throws IOException
+    private String getFileNameFromGeneration(Generation generation)
     {
-        new File(folderName).mkdir();
-        Files.write(fileContent, new File(uploadedFileLocation));
+        return generation.getId() + "-" + generation.getLastTryNumber()
+                + generation.getFilename().substring(generation.getFilename().lastIndexOf('.'));
+    }
+
+    private void saveFile(byte[] fileContent, java.nio.file.Path filePath) throws IOException
+    {
+        File file = filePath.toFile();
+        Files.createParentDirs(file);
+        Files.write(fileContent, file);
     }
 
     public static class ParsingErrorsFound extends RuntimeException
@@ -408,5 +427,10 @@ public class Api
         {
             this.errorReporter = errorReporter;
         }
+    }
+
+    public static class GenerationNotFound extends RuntimeException
+    {
+        private static final long serialVersionUID = -7696411072607309004L;
     }
 }

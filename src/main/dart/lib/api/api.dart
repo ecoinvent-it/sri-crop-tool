@@ -11,8 +11,6 @@ abstract class Api {
   
   Future<HttpRequest> uploadInputs(dynamic data);
   
-  Future<HttpRequest> checkScsvGeneration(Map data);
-  
   Future<HttpRequest> contactUs(dynamic data);
 }
 

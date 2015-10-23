@@ -39,14 +39,13 @@
 			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" ng-if="step != 0 || !isLogged"></div>
     </td>
     <td>
-      <form action="app/api/generateScsv" ng-submit="checkScsvGeneration($event,lastGeneration)" method="post" ng-disabled="step != 1" style="display: block;">
+      <form action="app/api/generateScsv" method="post" ng-disabled="step != 1" style="display: block;">
         <div id="step4" class="stepBtn" ng-class="{disabledStep: step == 0}">
 	        <div class="stepTitle text-big text-uppercase">Step 4</div>
 				  <input type="submit" id="scsvDownloadBtn" ng-disabled="step != 1"/>
 				  <div class="stepText">Get a ready-to-import file for Simapro</div>
 			  </div>
 	 	    <input type="hidden" name="generationId" value="{{lastGenerationId}}"/>
-        <input type="hidden" name="filename" value="{{filename}}"/>
 			  <div class="btn-group" data-toggle="buttons" ng-class="{'notVisible':step != 1}">
 				  <label class="btn btn-primary active dbOptionLabel">
 				    <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
@@ -100,9 +99,8 @@
       </button>
     </td>
     <td class="text-center">
-      <form action="app/api/generateScsv" ng-submit="checkScsvGeneration($event,generation)" method="post">
+      <form action="app/api/generateScsv" ng-submit="changeSelectedGeneration(generation)" method="post">
         <input type="hidden" name="generationId" value="{{generation.id.representation}}"/>
-        <input type="hidden" name="filename" value="{{generation.filename}}"/>
         <div class="btn-group" data-toggle="buttons">
           <label class="btn btn-primary active dbOptionLabel">
             <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
@@ -111,7 +109,7 @@
             <input type="radio" name="dbOption" autocomplete="off" value="WFLDB">WFLDB
           </label>
         </div>
-        <input type="submit" class="qts-small-btn qts-btn-style1 getScsvFileRowBtn" value="Get generated file" ng-click="changeSelectedGeneration(generation)"/>
+        <input type="submit" class="qts-small-btn qts-btn-style1 getScsvFileRowBtn" value="Get generated file"/>
       </form>
     </td>
   </tr>

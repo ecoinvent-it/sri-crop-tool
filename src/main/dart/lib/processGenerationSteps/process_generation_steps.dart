@@ -236,27 +236,4 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
     else
       return lineComparator;
   }
-  
-  bool isChecked = false;
-
-  Future checkScsvGeneration(Event e, Map generation) async
-  {
-    if (!isChecked)
-    {
-      e.preventDefault();
-      changeSelectedGeneration(generation);
-      FormElement form = e.target;
-      String dbOption = (form.querySelector('input[name=dbOption]:checked') as RadioButtonInputElement).value;
-      Map data = new Map();
-      data["dbOption"] = dbOption;
-      data["generationId"] = generation['id']['representation'];
-      data["filename"] = generation['filename'];
-      await _api.checkScsvGeneration(data);
-      isChecked = true;
-      form.submit();
-    }
-    else
-      isChecked = false;
-  }
-
 }

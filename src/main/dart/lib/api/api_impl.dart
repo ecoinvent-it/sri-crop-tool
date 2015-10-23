@@ -48,13 +48,6 @@ class ApiImpl implements Api {
           );
     }
   
-  Future<HttpRequest> checkScsvGeneration(Map data)
-  {
-    return HttpRequest.postFormData(_baseApiUrl + "checkScsvGeneration", data)
-                      .then((request) {return request;})
-                      .catchError( _manageError );
-  }
-  
   Future<HttpRequest> contactUs(dynamic formData)
   {
     return HttpRequest.request(_basePubApiUrl + "contactUs", method: "POST", sendData: formData)

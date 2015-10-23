@@ -127,8 +127,7 @@ public class ExcelInputReader
             this.dateExtractor = new DateExtractor(errorReporter);
             this.numericExtractor = new NumericExtractor(errorReporter);
 
-            readHiddenHeaderRow();
-            if (!errorReporter.hasErrors())
+            if (readHiddenHeaderRow())
             {
                 readCropAndCountry();
                 readOtherRows();
@@ -143,14 +142,14 @@ public class ExcelInputReader
             return extractedInputs;
         }
 
-        private void readHiddenHeaderRow()
+        private boolean readHiddenHeaderRow()
         {
             Row headerRow = sheet.getRow(METADATA_ROW_INDEX);
             currentRow = headerRow;
             if (headerRow == null)
             {
                 errorReporter.error("The structure of the template has been changed, please use the original template");
-                return;
+                return false;
             }
 
             this.fileVersion = POIHelper.getCellStringValue(headerRow, METADATA_COLUMN_INDEX, null);
@@ -230,7 +229,11 @@ public class ExcelInputReader
             }
 
             if (nbFilledColumns < 5 || haveDuplicates)
+            {
                 errorReporter.error("The structure of the template has been changed, please use the original template");
+                return false;
+            }
+            return true;
         }
 
         private void readCropAndCountry()

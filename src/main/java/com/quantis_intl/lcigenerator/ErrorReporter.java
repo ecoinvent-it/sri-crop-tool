@@ -24,6 +24,29 @@ import com.google.common.collect.ImmutableMap;
 
 public interface ErrorReporter
 {
+    public static final ErrorReporter NO_OP = new ErrorReporter()
+    {
+        @Override
+        public ErrorReporter withAdditionalContext(Map<String, String> additionalContext)
+        {
+            return this;
+        }
+
+        @Override
+        public void warning(Map<String, String> additionalContext, String message)
+        {}
+
+        @Override
+        public boolean hasErrors()
+        {
+            throw new IllegalStateException();
+        }
+
+        @Override
+        public void error(Map<String, String> additionalContext, String message)
+        {}
+    };
+
     void warning(Map<String, String> additionalContext, String message);
 
     default void warning(String message)
