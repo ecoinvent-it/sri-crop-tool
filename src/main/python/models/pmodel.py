@@ -23,6 +23,7 @@ class PModel(object):
       p2O5_from_mineral_fert: kg P2O5/(ha*crop cycle)
       p2o5_in_solid_manure: kg P2O5/(ha*crop cycle)
       p_content_in_soil: kg P/kg soil
+      slope: ratio
       
     Outputs:
       m_P_PO4_groundwater: kg PO4/(ha*crop cycle)
@@ -41,7 +42,8 @@ class PModel(object):
                         "p2o5_in_liquid_sludge",
                         "p2O5_from_mineral_fert",
                         "p2o5_in_solid_manure",
-                        "p_content_in_soil"
+                        "p_content_in_soil",
+                        "slope"
                        ]
     
     #Factors are per year
@@ -96,6 +98,8 @@ class PModel(object):
         return (ground, surface)
     
     def _compute_phosphate_runoff_to_rivers(self, p2o5_liquid_sources):
+        if self.slope < 0.03:
+            return 0.0;
         correction_factor = 1 + 0.2 / 80.0 * self.p2O5_from_mineral_fert \
                               + 0.7 / 80.0 * p2o5_liquid_sources           \
                               + 0.4 / 80.0 * self.p2o5_in_solid_manure
