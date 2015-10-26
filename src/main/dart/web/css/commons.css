@@ -222,6 +222,25 @@ table img
   padding-top:5px;
 }
 
+.page
+{
+  min-height: 450px;
+}
+
+.content
+{
+  width: 986px;
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+}
+
+.pagePart
+{
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
 .clickableText
 {
 	text-decoration: underline;

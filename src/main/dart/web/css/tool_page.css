@@ -13,12 +13,6 @@
   min-height: 220px;
 }
 
-.pagePart
-{
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-
 #contactSection > *
 {
   display: inline-block;

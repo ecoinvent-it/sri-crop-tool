@@ -63,7 +63,7 @@ class ChangePasswordBox implements AttachAware, DetachAware
     if ( newPassword != newPasswordConfirmation )
       errorMessage = "The new password and the confirmation are not the same";
     else if ( !_newPasswordIsValid() )
-      errorMessage = "Your password must have at least 8 characters";
+      errorMessage = "Your password must have between 8 and 160 characters";
     else
     {
       _loginService.changePassword(oldPassword, newPassword);
@@ -72,7 +72,7 @@ class ChangePasswordBox implements AttachAware, DetachAware
   
   bool _newPasswordIsValid() 
   {
-      return newPassword.length >= 8;
+      return newPassword.length >= 8 && newPassword.length <= 160;
   }
   
   void logout()

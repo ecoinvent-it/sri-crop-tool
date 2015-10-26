@@ -16,6 +16,7 @@ import 'package:alcig/login/loginBox/login_box.dart';
 import 'package:alcig/login/userBox/user_box.dart';
 import 'package:alcig/login/changePasswordBox/change_password_box.dart';
 import 'package:alcig/login/forgotPasswordBox/forgot_password_box.dart';
+import 'package:alcig/login/resetPasswordBox/reset_password_box.dart';
 //import 'package:alcig/custom_annotations.dart';
 import 'package:alcig/contactPage/contact_page.dart';
 import 'package:alcig/notificationModal/notification_modal.dart';
@@ -51,6 +52,7 @@ class MyAppModule extends Module {
     bind(UserBox);
     bind(ChangePasswordBox);
     bind(ForgotPasswordBox);
+    bind(ResetPasswordBox);
     // NOTE: This doesn't work, we had some issue with null value
     //bind(String, toValue: new Random().nextInt(1<<31).toString(), withAnnotation: const IdTab() );
   }
@@ -70,6 +72,9 @@ void alcigRouteInitializer(Router router, RouteViewFactory views) {
             viewHtml: '<faq-page></faq-page>'),
     'parameters': ngRoute(
                 path: 'parameters',
-                viewHtml: '<params-page></params-page>')
+                viewHtml: '<params-page></params-page>'),
+    'resetPassword' : ngRoute(
+                path:'resetPassword=:validationCode',
+                viewHtml: '<reset-password-box></reset-password-box>')
   });
 }

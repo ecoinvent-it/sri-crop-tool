@@ -24,7 +24,7 @@ CREATE TABLE `license` (
   `id` CHAR(12) NOT NULL,
   `userId` CHAR(12) DEFAULT NULL,
   `licenseType` VARCHAR(32) NOT NULL,
-  `startdate` DATE NOT NULL,
+  `startDate` DATE NOT NULL,
   `rentalItem` VARCHAR(32) NOT NULL,
   `price` VARCHAR(32) NOT NULL,
   `comment` VARCHAR(255) NOT NULL,

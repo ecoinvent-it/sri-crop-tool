@@ -115,19 +115,13 @@ public class PublicPrincipalApi
 
     @POST
     @Path("resetPassword")
-    public Response resetPassword(@FormParam("email") String email,
-            @FormParam("validationCode") String validationCode,
+    public Response resetPassword(@FormParam("validationCode") String validationCode,
             @FormParam("newPassword") String newPassword)
     {
         try
         {
-            Object userId = loginService.resetPassword(email, validationCode, newPassword);
+            Object userId = loginService.resetPassword(validationCode, newPassword);
             LOG.info("Password reset for user {}", userId);
-        }
-        catch (EmailNotFound e)
-        {
-            LOG.error("User tries to reset password of non existing user: {}", email);
-            // NOTE: Don't throw BAD_REQUEST
         }
         catch (UserActivationPending e)
         {

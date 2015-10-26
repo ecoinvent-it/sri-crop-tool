@@ -172,14 +172,14 @@ class LoginService {
     }
   }
   
-  Future resetPassword(String email, String validationCode, String newPassword) async
+  Future resetPassword(String validationCode, String newPassword) async
     {
       if ( ! isLoading ) 
       {
         _isLoading = true;
         try
         {
-          ResetPasswordResult result = await _loginApi.resetPassword(email, validationCode, newPassword);
+          ResetPasswordResult result = await _loginApi.resetPassword(validationCode, newPassword);
           switch(result)
           {
             case ResetPasswordResult.OK:

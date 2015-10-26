@@ -14,7 +14,7 @@ abstract class LoginApi {
   
   Future<ForgotPasswordResult> forgotPassword(String email);
   
-  Future<ResetPasswordResult> resetPassword(String email, String validationCode, String newPassword);
+  Future<ResetPasswordResult> resetPassword(String validationCode, String newPassword);
 }
 
 enum AuthRequestResult {

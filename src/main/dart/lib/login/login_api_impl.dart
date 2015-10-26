@@ -150,10 +150,9 @@ class LoginApiImpl implements LoginApi {
     }
   }
   
-  Future<ResetPasswordResult> resetPassword(String email, String validationCode, String newPassword) async
+  Future<ResetPasswordResult> resetPassword(String validationCode, String newPassword) async
   {
     Map params = new Map();
-    params["email"] = email;
     params["validationCode"] = validationCode;
     params["newPassword"] = newPassword;
     try

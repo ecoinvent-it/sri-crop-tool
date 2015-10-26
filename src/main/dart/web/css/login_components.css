@@ -4,6 +4,11 @@
 	font-size: 25px;
 }
 
+form
+{
+	display: block;
+}
+
 form > .loginInput
 {
 	width: 220px;
@@ -12,6 +17,18 @@ form > .loginInput
 form > .lastInput
 {
 	margin-bottom: 10px;
+}
+
+.centeredForm
+{
+	text-align: center;
+}
+.centeredForm > *
+{
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 300px;
+	text-align: left;
 }
 
 #loginSubmit
@@ -50,5 +67,12 @@ form > .lastInput
 #forceChangePwdModal .changePasswordBtns,
 .loginModal .msgContainer
 {
+	text-align: center;
+}
+
+#resetPwdMsgContainer
+{
+	margin-top: 5px;
+	height: 45px;
 	text-align: center;
 }
