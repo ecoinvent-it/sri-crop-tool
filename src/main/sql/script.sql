@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS `generation`;
+DROP TABLE IF EXISTS `license`;
 
 CREATE TABLE `generation` (
   `id` CHAR(12) NOT NULL,
@@ -15,6 +16,23 @@ CREATE TABLE `generation` (
   PRIMARY KEY (`id`),
   INDEX `fk_generation_1_idx` (`userId` ASC),
   CONSTRAINT `fk_generation_1`
+  FOREIGN KEY (`userId`)
+  REFERENCES `user_std` (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `license` (
+  `id` CHAR(12) NOT NULL,
+  `userId` CHAR(12) DEFAULT NULL,
+  `licenseType` VARCHAR(32) NOT NULL,
+  `startdate` DATE NOT NULL,
+  `rentalItem` VARCHAR(32) NOT NULL,
+  `price` VARCHAR(32) NOT NULL,
+  `comment` VARCHAR(255) NOT NULL,
+  `additionalGenerations` INT(11) NOT NULL,
+  `isDepleted` TINYINT(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_license_1_idx` (`userId` ASC),
+  CONSTRAINT `fk_license_1`
   FOREIGN KEY (`userId`)
   REFERENCES `user_std` (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET=utf8;

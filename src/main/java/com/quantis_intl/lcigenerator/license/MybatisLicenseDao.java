@@ -18,63 +18,74 @@
  */
 package com.quantis_intl.lcigenerator.license;
 
-import java.util.OptionalInt;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-import com.quantis_intl.lcigenerator.dao.GenerationDao;
-import com.quantis_intl.login.business.LoginService;
+import org.mybatis.guice.transactional.Transactional;
+
+import com.quantis_intl.lcigenerator.mappers.LicenseMapper;
 import com.quantis_intl.stack.utils.Qid;
 
-public class LicenseService
+public class MybatisLicenseDao implements LicenseDao
 {
-    private final LicenseDao dao;
-    private final LoginService loginService;
-    private final GenerationDao generationDao;
+    private LicenseMapper mapper;
 
     @Inject
-    public LicenseService(LicenseDao dao, LoginService loginService, GenerationDao generationDao)
+    public MybatisLicenseDao(LicenseMapper mapper)
     {
-        this.dao = dao;
-        this.loginService = loginService;
-        this.generationDao = generationDao;
+        this.mapper = mapper;
     }
 
-    public void createUserFromLicense(Qid licenseId, String email)
+    @Override
+    @Transactional
+    public License getExistingLicenseById(Qid licenseId)
     {
-        License license = dao.getExistingLicenseById(licenseId);
-        Qid userId = loginService.createUser(email, email);
-        license.setUserId(userId);
-        dao.updateUserId(license);
-    }
-
-    public OptionalInt checkLicenseDepletion(Qid licenseId)
-    {
-        License license = dao.getExistingLicenseById(licenseId);
-        OptionalInt availableNumber = license.getNumberOfGenerations();
-        if (!availableNumber.isPresent())
-            return availableNumber;
-
-        int generations = generationDao.countGenerationForLicense(licenseId);
-        int remaining = Math.max(0, availableNumber.getAsInt() - generations);
-
-        if (remaining == 0)
-            dao.setLicenseAsDepleted(licenseId);
-
-        return OptionalInt.of(remaining);
-    }
-
-    public License findActiveLicenseOrFail(Qid userId)
-    {
-        License res = dao.getCurrentActiveLicenseForUser(userId);
+        License res = mapper.getLicenseById(licenseId);
         if (res == null)
-            throw new NoActiveLicense();
+            throw new LicenseNotFound(licenseId);
 
         return res;
     }
 
-    public static class NoActiveLicense extends RuntimeException
+    // Get the first still active non depleted license, or null if none are found
+    @Override
+    @Transactional
+    public License getCurrentActiveLicenseForUser(Qid userId)
     {
-        private static final long serialVersionUID = 232728569032899181L;
+        List<License> licenses = mapper.getNonDepletedLicensesForUser(userId);
+        LocalDate now = LocalDate.now();
+        for (License l : licenses)
+        {
+            if (!l.isExpiredAt(now))
+                return l;
+        }
+        return null;
+    }
+
+    // Get the still active non depleted licenses
+    @Override
+    @Transactional
+    public List<License> getActiveLicensesForUser(Qid userId)
+    {
+        LocalDate now = LocalDate.now();
+        return mapper.getNonDepletedLicensesForUser(userId).stream().filter(l -> !l.isExpiredAt(now))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public void updateUserId(License license)
+    {
+        mapper.updateUserId(license);
+    }
+
+    @Override
+    @Transactional
+    public void setLicenseAsDepleted(Qid licenseId)
+    {
+        mapper.setLicenseAsDepleted(licenseId);
     }
 }

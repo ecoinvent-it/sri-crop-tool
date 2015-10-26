@@ -168,6 +168,11 @@ public class License
                 : OptionalInt.of(rentalItem.availableGenerations + additionalGenerations);
     }
 
+    public boolean isExpiredAt(LocalDate referenceDate)
+    {
+        return getStartDate().plus(getRentalItem().validityPeriod).isBefore(referenceDate);
+    }
+
     public static enum LicenseType
     {
         NORMAL,

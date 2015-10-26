@@ -119,7 +119,7 @@ public interface GenerationMapper
         public String countFromLicense()
         {
             return new QsSQL()
-                    .SELECT("COUNT (*)")
+                    .SELECT("COUNT(*)")
                     .FROM(TABLE_NAME)
                     .WHERE_PARAM(FIELD_LICENSE_ID)
                     .toString();

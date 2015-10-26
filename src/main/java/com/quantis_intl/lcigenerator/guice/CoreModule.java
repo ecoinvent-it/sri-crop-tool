@@ -26,6 +26,8 @@ import com.quantis_intl.lcigenerator.api.PublicApi;
 import com.quantis_intl.lcigenerator.api.PublicPrincipalApi;
 import com.quantis_intl.lcigenerator.dao.GenerationDao;
 import com.quantis_intl.lcigenerator.dao.MybatisGenerationDao;
+import com.quantis_intl.lcigenerator.license.LicenseDao;
+import com.quantis_intl.lcigenerator.license.MybatisLicenseDao;
 
 public class CoreModule extends AbstractModule
 {
@@ -38,5 +40,6 @@ public class CoreModule extends AbstractModule
         bind(PublicPrincipalApi.class);
         bind(AdminApi.class);
         bind(GenerationDao.class).to(MybatisGenerationDao.class);
+        bind(LicenseDao.class).to(MybatisLicenseDao.class);
     }
 }

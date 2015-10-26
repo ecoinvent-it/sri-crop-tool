@@ -64,6 +64,8 @@ import com.quantis_intl.lcigenerator.ScsvFileWriter;
 import com.quantis_intl.lcigenerator.dao.GenerationDao;
 import com.quantis_intl.lcigenerator.imports.ExcelInputReader;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
+import com.quantis_intl.lcigenerator.license.LicenseService;
+import com.quantis_intl.lcigenerator.license.LicenseService.NoActiveLicense;
 import com.quantis_intl.lcigenerator.model.Generation;
 import com.quantis_intl.lcigenerator.scsv.OutputTarget;
 import com.quantis_intl.stack.utils.Qid;
@@ -84,6 +86,7 @@ public class Api
     private final ScsvFileWriter scsvFileWriter;
 
     private final GenerationDao generationDao;
+    private final LicenseService licenseService;
 
     private final java.nio.file.Path uploadedFilesFolder;
 
@@ -92,12 +95,14 @@ public class Api
 
     @Inject
     public Api(ExcelInputReader inputReader, PyBridgeService pyBridgeService, ScsvFileWriter scsvFileWriter,
-            GenerationDao generationDao, @Named("server.uploadedFilesFolder") String uploadedFilesFolder)
+            GenerationDao generationDao, LicenseService licenseService,
+            @Named("server.uploadedFilesFolder") String uploadedFilesFolder)
     {
         this.inputReader = inputReader;
         this.pyBridgeService = pyBridgeService;
         this.scsvFileWriter = scsvFileWriter;
         this.generationDao = generationDao;
+        this.licenseService = licenseService;
         this.uploadedFilesFolder = Paths.get(uploadedFilesFolder);
     }
 
@@ -122,14 +127,20 @@ public class Api
         try
         {
             generation = checkGenerationFilenameAndDate(generation);
+            checkAndSetLicenseIfMissing(generation);
         }
         catch (GenerationNotOwned e)
         {
             LOGGER.error("Found generation is not owned by user: generation id {}", generation.getId());
-            response.resume(Response.status(Response.Status.BAD_REQUEST).build()); // TODO: Use UNAUTHORIZED instead?
+            response.resume(Response.status(Response.Status.BAD_REQUEST).build());
             return;
         }
-        generation.setLicenseId(getLicense(generation));
+        catch (NoActiveLicense e)
+        {
+            LOGGER.error("Depleted license has been used for user {}", getUserId());
+            response.resume(Response.status(Response.Status.BAD_REQUEST).build());
+            return;
+        }
 
         final ErrorReporterImpl errorReporter = new ErrorReporterImpl();
         final String fileExtension = form.filename.substring(form.filename.lastIndexOf('.'));
@@ -153,7 +164,8 @@ public class Api
         try
         {
             generation = parse(generation, uploadedFile);
-            generation.setLicenseId(getLicense(generation));
+            checkAndSetLicenseIfMissing(generation);
+            licenseService.checkLicenseDepletion(generation.getLicenseId());
 
             SecurityUtils.getSubject().getSession().setAttribute(generation.getId().toString(), generation);
             generationDao.createOrUpdateGeneration(generation);
@@ -167,6 +179,12 @@ public class Api
                     "Uploaded file handled with errors: {}",
                     e.errorReporter.getErrors().stream().map(Object::toString).collect(Collectors.joining(", ")));
             response.resume(Response.status(Response.Status.BAD_REQUEST).entity(e.errorReporter).build());
+            return;
+        }
+        catch (NoActiveLicense e)
+        {
+            LOGGER.error("Depleted license has been used for user {}", getUserId());
+            response.resume(Response.status(Response.Status.BAD_REQUEST).build());
             return;
         }
     }
@@ -217,12 +235,12 @@ public class Api
         }
     }
 
-    private Qid getLicense(Generation currentGeneration)
+    private void checkAndSetLicenseIfMissing(Generation currentGeneration)
     {
         if (currentGeneration.getLicenseId() != null)
-            return currentGeneration.getLicenseId();
-        else // FIXME: Use real licenseId
-            return currentGeneration.getUserId();
+            return;
+
+        currentGeneration.setLicenseId(licenseService.findActiveLicenseOrFail(currentGeneration.getUserId()).getId());
     }
 
     @POST
