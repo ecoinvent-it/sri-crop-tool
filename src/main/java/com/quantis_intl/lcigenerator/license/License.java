@@ -183,10 +183,11 @@ public class License
     public static enum AlcigRentalItem
     {
         DEMO_3_USES(Period.ofMonths(1), 3),
-        UNI_10_USES(Period.ofYears(3), 10),
-        UNI_25_USES(Period.ofYears(3), 25),
-        UNI_50_USES(Period.ofYears(3), 50),
-        UNI_UNLIMITED(Period.ofYears(1), null),
+        DEMO_UNLIMITED(Period.ofMonths(1), null),
+        ACADEMIC_10_USES(Period.ofYears(3), 10),
+        ACADEMIC_25_USES(Period.ofYears(3), 25),
+        ACADEMIC_50_USES(Period.ofYears(3), 50),
+        ACADEMIC_UNLIMITED(Period.ofYears(1), null),
         BUSINESS_10_USES(Period.ofYears(3), 10),
         BUSINESS_25_USES(Period.ofYears(3), 25),
         BUSINESS_50_USES(Period.ofYears(3), 50),
