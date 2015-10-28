@@ -7,6 +7,7 @@ import 'dart:html';
 import 'dart:js' as js;
 import 'package:angular/angular.dart';
 
+import 'package:intl/intl.dart';
 import 'package:alcig/api/api.dart';
 import 'package:alcig/api/local_notification_service.dart';
 import 'package:alcig/login/login_service.dart';
@@ -17,11 +18,16 @@ import 'package:alcig/login/login_service.dart';
     useShadowDom: false)
 class ProcessGeneratorSteps implements AttachAware, DetachAware
 {
+  static DateFormat dateReader = new DateFormat("yyyy-MM-dd'T'HH:mm:ss", "en_US");
+  static DateFormat _dateWriter;
+  static DateFormat get dateWriter => _dateWriter == null ? _dateWriter = new DateFormat("yMd", Intl.getCurrentLocale()).add_Hm() : _dateWriter;
+
   Api _api;
   LocalNotificationService _notifService;
   LoginService _loginService;
   
   StreamSubscription _userSubscription;
+  
   
   // FIXME: Put all these in a dedicated popup component
   String popupFilename = null;
@@ -79,22 +85,16 @@ class ProcessGeneratorSteps implements AttachAware, DetachAware
     lastGeneration = generation;
   }
   
-  String displayDate(List dateItems)
+  DateTime _lastTryDate(Map generation)
   {
-    String day = dateItems[0].toString() + "-" 
-                + _get2DigitString(dateItems[1]) + "-" 
-                + _get2DigitString(dateItems[2]);
-    String time =  _get2DigitString(dateItems[3]) + ":" 
-                + _get2DigitString(dateItems[4]);
-    return day + " " + time;
+    return dateReader.parse(generation['lastTryDate'], true).toLocal();
   }
   
-  String _get2DigitString(int value)
+  bool canRetry(Map generation) => _lastTryDate(generation).add(new Duration(minutes:30)).isAfter(new DateTime.now());
+  
+  String displayDate(Map generation)
   {
-    String stringValue = value.toString();
-    if (stringValue.length == 1)
-      stringValue = "0" + stringValue;
-    return stringValue;
+    return dateWriter.format(_lastTryDate(generation));
   }
   
   void disabledStep3Click()

@@ -165,10 +165,10 @@ public class Api
         {
             generation = parse(generation, uploadedFile);
             checkAndSetLicenseIfMissing(generation);
-            licenseService.checkLicenseDepletion(generation.getLicenseId());
 
             SecurityUtils.getSubject().getSession().setAttribute(generation.getId().toString(), generation);
             generationDao.createOrUpdateGeneration(generation);
+            licenseService.checkLicenseDepletion(generation.getLicenseId());
 
             response.resume(Response.ok(generation).build());
             return;

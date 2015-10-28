@@ -3,6 +3,7 @@ description: A sample web application
 dependencies:
   angular: ">=1.1.0 <2.0.0"
   browser: any
+  intl: any
   web_components: any
 dev_dependencies:
   unittest: any

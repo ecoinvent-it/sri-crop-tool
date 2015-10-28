@@ -53,12 +53,12 @@
   <tr ng-repeat="generation in generations" ng-class-odd="'odd'" ng-class-even="'even'"
           ng-class="{'selectedGenerationRow':generation == lastGeneration}"
           ng-click="changeSelectedGeneration(generation)">
-    <td>{{displayDate(generation.lastTryDate)}}</td>
+    <td>{{displayDate(generation)}}</td>
     <td>{{generation.crop}}</td>
     <td>{{generation.country}}</td>
     <td><div style="max-width: 100%;">{{generation.filename}}</div></td>
     <td>
-      <div class="qts-small-btn qts-btn-style1">
+      <div ng-class="{'notVisible':!canRetry(generation)}" class="qts-small-btn qts-btn-style1">
         <div >Retry upload</div>
 	      <form method="post" enctype="multipart/form-data">
             <input type="file" name="uploadFile" 

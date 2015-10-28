@@ -3,6 +3,10 @@ import 'dart:html';
 import 'package:angular/angular.dart';
 import 'package:angular/application_factory.dart';
 
+import 'package:intl/intl.dart';
+import 'package:intl/intl_browser.dart';
+import 'package:intl/date_symbol_data_local.dart';
+
 import 'package:alcig/connectivity_state.dart';
 import 'package:alcig/api/api.dart';
 import 'package:alcig/api/api_impl.dart';
@@ -26,10 +30,15 @@ import 'package:alcig/faqPage/faq_page.dart';
 import 'package:alcig/parametersPage/parameters_page.dart';
 
 void main() {
+  _init().then( (_) => window.postMessage('Dart is running', '*'));
+}
+
+_init() async {
+  await findSystemLocale();
+  await initializeDateFormatting(Intl.getCurrentLocale(), null);
   applicationFactory()
-      .addModule(new MyAppModule())
-      .run();
-  window.postMessage('Dart is running', '*');
+        .addModule(new MyAppModule())
+        .run();
 }
 
 class MyAppModule extends Module {
