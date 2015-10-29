@@ -10,6 +10,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:alcig/connectivity_state.dart';
 import 'package:alcig/api/api.dart';
 import 'package:alcig/api/api_impl.dart';
+import 'package:alcig/api/generation_service.dart';
 import 'package:alcig/api/local_notification_service.dart';
 
 import 'package:alcig/menu_with_selection.dart';
@@ -49,6 +50,7 @@ class MyAppModule extends Module {
     bind(MenuWithSelection);
     bind(ConnectivityState);
     bind(Api, toImplementation: ApiImpl);
+    bind(GenerationService);
     bind(LocalNotificationService);
     bind(ProcessGeneratorSteps);
     bind(NotificationModal);
