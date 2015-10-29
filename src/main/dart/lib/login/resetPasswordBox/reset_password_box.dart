@@ -1,4 +1,4 @@
-library login.forgot_password_box;
+library login.reset_password_box;
 
 import 'dart:async';
 import 'package:angular/angular.dart';

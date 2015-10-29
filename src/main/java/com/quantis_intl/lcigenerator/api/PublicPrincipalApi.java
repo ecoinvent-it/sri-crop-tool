@@ -35,6 +35,7 @@ import com.quantis_intl.login.business.LoginService.ResetPasswordFailed;
 import com.quantis_intl.login.business.LoginService.UserActivationPending;
 import com.quantis_intl.login.business.LoginService.UserAlreadyActivated;
 import com.quantis_intl.login.business.LoginService.WrongRegistrationCode;
+import com.quantis_intl.login.business.User;
 
 @Path("pub/principal/")
 public class PublicPrincipalApi
@@ -50,21 +51,44 @@ public class PublicPrincipalApi
     }
 
     @POST
+    @Path("checkRegistrationCode")
+    public Response checkRegistrationCode(@FormParam("registrationCode") String registrationCode)
+    {
+        try
+        {
+            User user = loginService.checkRegistrationCode(registrationCode);
+            LOG.info("User registration code checked: {}", user.getId());
+            return Response.ok().build();
+        }
+        catch (WrongRegistrationCode e)
+        {
+            LOG.error("User ({}) tries to activate with wrong registrationCode: {}", e.userId, registrationCode);
+            return Response.status(Response.Status.BAD_REQUEST).entity("WRONG_REGISTRATION_CODE").build();
+        }
+        catch (ExpiredRegistrationCode e)
+        {
+            LOG.warn("Registration code timeout for user {}", e.userId);
+            return Response.status(Response.Status.BAD_REQUEST).entity("EXPIRED_REGISTRATION_CODE").build();
+        }
+        catch (UserAlreadyActivated e)
+        {
+            LOG.warn("User already activated tries to activate: {}", e.userId);
+            return Response.status(Response.Status.BAD_REQUEST).entity("USER_ALREADY_ACTIVATED").build();
+        }
+    }
+
+    @POST
     @Path("activateUser")
-    public Response activateUser(@FormParam("email") String email,
-            @FormParam("registrationCode") String registrationCode,
+    public Response activateUser(@FormParam("registrationCode") String registrationCode,
+            @FormParam("acceptTermsAndConditions") boolean acceptTermsAndConditions,
             @FormParam("newPassword") String newPassword)
     {
         try
         {
-            Object userId = loginService.activateUser(email, registrationCode, newPassword);
-            LOG.info("User activated: {}", userId);
+            User user = loginService.activateUser(registrationCode, acceptTermsAndConditions, newPassword);
+            LOG.info("User activated: {}", user.getId());
+            return Response.ok(user.getUsername()).build();
 
-        }
-        catch (EmailNotFound e)
-        {
-            LOG.error("Non existing user tries to activate his access: {}", email);
-            // NOTE: Don't throw BAD_REQUEST
         }
         catch (WrongRegistrationCode e)
         {
@@ -86,8 +110,6 @@ public class PublicPrincipalApi
             LOG.warn("User already activated tries to activate: {}", e.userId);
             return Response.status(Response.Status.BAD_REQUEST).entity("USER_ALREADY_ACTIVATED").build();
         }
-        StringBuilder sb = new StringBuilder("Your access to ALCIG is now activated!");
-        return Response.ok(sb.toString()).build();
     }
 
     @POST

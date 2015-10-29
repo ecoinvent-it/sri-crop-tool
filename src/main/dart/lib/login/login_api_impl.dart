@@ -182,6 +182,46 @@ class LoginApiImpl implements LoginApi {
     }
   }
   
+  Future<String> checkRegistrationCode(String registrationCode) async
+  {
+    Map params = new Map();
+    params["registrationCode"] = registrationCode;
+    try
+    {
+      HttpRequest request = await  HttpRequest.postFormData(_basePubPrincipalUrl + "checkRegistrationCode", params);
+      return request.responseText;
+    }
+    catch(e)
+    {
+      HttpRequest request = e.target;
+      if ( request.status == 400 ) 
+        return request.responseText;
+      else
+        _manageError(e);
+    }
+  }
+
+  Future<String> activateUser(String registrationCode, bool acceptTermsAndConditions, String newPassword) async
+  {
+    Map params = new Map();
+    params["registrationCode"] = registrationCode;
+    params["acceptTermsAndConditions"] = acceptTermsAndConditions.toString();
+    params["newPassword"] = newPassword;
+    try
+    {
+      HttpRequest request = await  HttpRequest.postFormData(_basePubPrincipalUrl + "activateUser", params);
+      return request.responseText;
+    }
+    catch(e)
+    {
+      HttpRequest request = e.target;
+      if ( request.status == 400 ) 
+        return request.responseText;
+      else
+        _manageError(e);
+    }
+  }
+  
   void _manageError(ProgressEvent e)
   {
     _connectivityState.loggedOut();

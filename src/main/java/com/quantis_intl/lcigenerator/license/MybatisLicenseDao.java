@@ -19,6 +19,7 @@
 package com.quantis_intl.lcigenerator.license;
 
 import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,7 +57,7 @@ public class MybatisLicenseDao implements LicenseDao
     public License getCurrentActiveLicenseForUser(Qid userId)
     {
         List<License> licenses = mapper.getNonDepletedLicensesForUser(userId);
-        LocalDate now = LocalDate.now();
+        LocalDate now = LocalDate.now(ZoneOffset.UTC);
         for (License l : licenses)
         {
             if (!l.isExpiredAt(now))
@@ -70,7 +71,7 @@ public class MybatisLicenseDao implements LicenseDao
     @Transactional
     public List<License> getActiveLicensesForUser(Qid userId)
     {
-        LocalDate now = LocalDate.now();
+        LocalDate now = LocalDate.now(ZoneOffset.UTC);
         return mapper.getNonDepletedLicensesForUser(userId).stream().filter(l -> !l.isExpiredAt(now))
                 .collect(Collectors.toList());
     }
