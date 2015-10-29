@@ -191,7 +191,13 @@
 
 .selectedGenerationRow
 {
-	background-color: #ABC8E2;
+	background-color: #6d7fa1;
+	color: white;
+}
+
+.selectedGenerationRow .qts-btn-style4
+{
+	background-color: white;
 }
 
 #fileLoadingModal img
@@ -210,6 +216,12 @@
 #generationHistory
 {
 	font-size: 13px;
+}
+
+#generationHistory thead, #generationHistory th
+{
+	background-color: #adbdd3;
+	text-align: center;
 }
 
 #generationHistory td

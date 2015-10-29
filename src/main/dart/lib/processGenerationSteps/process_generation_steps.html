@@ -43,51 +43,63 @@
   </tr>
 </table>
 
-<table id="generationHistory" class="color1">
+<table id="generationHistory" class="color1" ng-if="generations != null">
   <col width="12%"/>
   <col width="9%"/>
-  <col width="4%"/>
+  <col width="5%"/>
+  <col width="24%"/>
   <col width="25%"/>
   <col width="25%"/>
-  <col width="25%"/>
-  <tr ng-repeat="generation in generations" ng-class-odd="'odd'" ng-class-even="'even'"
-          ng-class="{'selectedGenerationRow':generation == lastGeneration}"
-          ng-click="changeSelectedGeneration(generation)">
-    <td>{{displayDate(generation)}}</td>
-    <td>{{generation.crop}}</td>
-    <td>{{generation.country}}</td>
-    <td><div style="max-width: 100%;">{{generation.filename}}</div></td>
-    <td>
-      <div ng-class="{'notVisible':!canRetry(generation)}" class="qts-small-btn qts-btn-style1">
-        <div >Retry upload</div>
-	      <form method="post" enctype="multipart/form-data">
-            <input type="file" name="uploadFile" 
-                        accept=".xls,.xlsx" required="required" 
-                        class="generationRowUploadForm"
-                        ng-change="submitReuploadForm($event.target, $event.target.parent, generation)"
-                        />
+  <thead>
+    <tr>
+	    <th>Upload date</th>
+	    <th>Crop</th>
+	    <th>Country</th>
+	    <th>File name</th>
+	    <th></th>
+	    <th></th>
+    </tr>
+  </thead>
+  <tbody>
+	  <tr ng-repeat="generation in generations" ng-class-odd="'odd'" ng-class-even="'even'"
+	          ng-class="{'selectedGenerationRow':generation == lastGeneration}"
+	          ng-click="changeSelectedGeneration(generation)">
+	    <td>{{displayDate(generation)}}</td>
+	    <td>{{generation.crop}}</td>
+	    <td>{{generation.country}}</td>
+	    <td><div style="max-width: 100%;">{{generation.filename}}</div></td>
+	    <td>
+	      <div ng-class="{'notVisible':!canRetry(generation)}" class="qts-small-btn qts-btn-style1">
+	        <div >Retry upload</div>
+		      <form method="post" enctype="multipart/form-data">
+	            <input type="file" name="uploadFile" 
+	                        accept=".xls,.xlsx" required="required" 
+	                        class="generationRowUploadForm"
+	                        ng-change="submitReuploadForm($event.target, $event.target.parent, generation)"
+	                        />
+		      </form>
+	      </div>
+	      <button class="qts-small-btn qts-btn-style4" ng-class="{'notVisible':!hasWarnings(generation)}" ng-click="changeGenerationAndDisplayUpdateStatus(generation)">
+	       <span class="glyphicon glyphicon-exclamation-sign warningsColor" aria-hidden="true"></span>
+	       Upload status
+	      </button>
+	    </td>
+	    <td class="text-center">
+	      <form action="app/api/generateScsv" ng-submit="changeSelectedGeneration(generation)" method="post">
+	        <input type="hidden" name="generationId" value="{{generation.id.representation}}"/>
+	        <div class="btn-group" data-toggle="buttons">
+	          <label class="btn btn-primary active dbOptionLabel">
+	            <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
+	          </label>
+	          <label class="btn btn-primary dbOptionLabel">
+	            <input type="radio" name="dbOption" autocomplete="off" value="WFLDB">WFLDB
+	          </label>
+	        </div>
+	        <input type="submit" class="qts-small-btn qts-btn-style1 getScsvFileRowBtn" value="Get generated file"/>
 	      </form>
-      </div>
-      <button class="qts-small-btn qts-btn-style4" ng-class="{'notVisible':!hasWarnings(generation)}" ng-click="changeGenerationAndDisplayUpdateStatus(generation)">
-       <span class="glyphicon glyphicon-exclamation-sign warningsColor" aria-hidden="true"></span>
-       Upload status
-      </button>
-    </td>
-    <td class="text-center">
-      <form action="app/api/generateScsv" ng-submit="changeSelectedGeneration(generation)" method="post">
-        <input type="hidden" name="generationId" value="{{generation.id.representation}}"/>
-        <div class="btn-group" data-toggle="buttons">
-          <label class="btn btn-primary active dbOptionLabel">
-            <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
-          </label>
-          <label class="btn btn-primary dbOptionLabel">
-            <input type="radio" name="dbOption" autocomplete="off" value="WFLDB">WFLDB
-          </label>
-        </div>
-        <input type="submit" class="qts-small-btn qts-btn-style1 getScsvFileRowBtn" value="Get generated file"/>
-      </form>
-    </td>
-  </tr>
+	    </td>
+	  </tr>
+  </tbody>
 </table>
 
 <div id="fileLoadingModal" class="modal" data-backdrop="static" data-keyboard="false" style="width:100%; text-align: center" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
