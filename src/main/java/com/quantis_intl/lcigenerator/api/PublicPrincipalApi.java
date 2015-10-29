@@ -62,18 +62,18 @@ public class PublicPrincipalApi
         }
         catch (WrongRegistrationCode e)
         {
-            LOG.error("User ({}) tries to activate with wrong registrationCode: {}", e.userId, registrationCode);
+            LOG.warn("User tries to check wrong registrationCode: {}", registrationCode);
             return Response.status(Response.Status.BAD_REQUEST).entity("WRONG_REGISTRATION_CODE").build();
         }
         catch (ExpiredRegistrationCode e)
         {
-            LOG.warn("Registration code timeout for user {}", e.userId);
+            LOG.warn("User {} tries to check expired registration code", e.userId);
             return Response.status(Response.Status.BAD_REQUEST).entity("EXPIRED_REGISTRATION_CODE").build();
         }
         catch (UserAlreadyActivated e)
         {
-            LOG.warn("User already activated tries to activate: {}", e.userId);
-            return Response.status(Response.Status.BAD_REQUEST).entity("USER_ALREADY_ACTIVATED").build();
+            LOG.error("Already activated user {} tries to check registration code", e.userId);
+            return Response.status(Response.Status.BAD_REQUEST).entity("WRONG_REGISTRATION_CODE").build();
         }
     }
 
@@ -92,7 +92,7 @@ public class PublicPrincipalApi
         }
         catch (WrongRegistrationCode e)
         {
-            LOG.error("User ({}) tries to activate with wrong registrationCode: {}", e.userId, registrationCode);
+            LOG.error("User tries to activate with wrong registrationCode: {}", registrationCode);
             return Response.status(Response.Status.BAD_REQUEST).entity("WRONG_REGISTRATION_CODE").build();
         }
         catch (ExpiredRegistrationCode e)
@@ -107,8 +107,8 @@ public class PublicPrincipalApi
         }
         catch (UserAlreadyActivated e)
         {
-            LOG.warn("User already activated tries to activate: {}", e.userId);
-            return Response.status(Response.Status.BAD_REQUEST).entity("USER_ALREADY_ACTIVATED").build();
+            LOG.error("User already activated tries to activate: {}", e.userId);
+            return Response.status(Response.Status.BAD_REQUEST).entity("WRONG_REGISTRATION_CODE").build();
         }
     }
 

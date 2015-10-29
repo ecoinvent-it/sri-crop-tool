@@ -55,13 +55,10 @@ class ActivateUserBox implements AttachAware, DetachAware
     switch(responseText)
     {
       case 'EXPIRED_REGISTRATION_CODE':
-        checkCodeErrorMessage = "This link has expired. Please contact your Quantis seller to get a new valid link.";
+        checkCodeErrorMessage = "This link has expired. Please contact your reseller to get a new valid link.";
         break;
       case 'WRONG_REGISTRATION_CODE':
         checkCodeErrorMessage = "This link is not valid. Did you already activate your account?";
-        break;
-      case 'USER_ALREADY_ACTIVATED':
-        checkCodeErrorMessage = "Your access is already activated.";
         break;
       default:
         codeChecked = true;
@@ -123,9 +120,6 @@ class ActivateUserBox implements AttachAware, DetachAware
         break;
       case 'WRONG_REGISTRATION_CODE':
         errorMessage = "This link is not valid. Did you already activate your account?";
-        break;
-      case 'USER_ALREADY_ACTIVATED':
-        errorMessage = "Your access is already activated.";
         break;
       case 'INVALID_NEW_PASSWORD':
         errorMessage = "Invalid new password";
