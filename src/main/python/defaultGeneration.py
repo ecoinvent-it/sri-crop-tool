@@ -249,7 +249,7 @@ class SeedQuantitiesDefaultGenerator(object):
         elif (crop in ["asparagus", "mint", "onion", "strawberry", "tomato"]):
             value_field = "nb_seedlings"
         else:
-            value_field = "unsafe_seeds"
+            value_field = "seeds"
         try:
             return {crop: generators[value_field]}
         except KeyError:
