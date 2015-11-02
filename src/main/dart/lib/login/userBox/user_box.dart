@@ -14,7 +14,7 @@ class UserBox implements AttachAware, DetachAware
   bool isLoading = false;
   bool isLogged = false;
   bool forceChangePassword = false;
-  String username = "";
+  String get username => _loginService.username == null ? "" : _loginService.username;
   
   LoginService _loginService;
   StreamSubscription _userSubscription;
