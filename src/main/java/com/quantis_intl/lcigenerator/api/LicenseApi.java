@@ -22,11 +22,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
@@ -34,7 +32,6 @@ import org.slf4j.LoggerFactory;
 
 import com.quantis_intl.lcigenerator.license.License;
 import com.quantis_intl.lcigenerator.license.LicenseDao;
-import com.quantis_intl.lcigenerator.license.LicenseService;
 import com.quantis_intl.stack.utils.Qid;
 
 @Path("/license")
@@ -42,13 +39,11 @@ public class LicenseApi
 {
     private static final Logger LOG = LoggerFactory.getLogger(LicenseApi.class);
 
-    private final LicenseService licenseService;
     private final LicenseDao licenseDao;
 
     @Inject
-    public LicenseApi(LicenseService licenseService, LicenseDao licenseDao)
+    public LicenseApi(LicenseDao licenseDao)
     {
-        this.licenseService = licenseService;
         this.licenseDao = licenseDao;
     }
 
@@ -61,16 +56,6 @@ public class LicenseApi
         List<License> licenses = licenseDao.getLicensesForUser(getUserId());
         LOG.info("Get user licenses");
         return licenses;
-    }
-
-    @POST
-    @Path("createAccountForLicense")
-    // FIXME: Put it in public API?
-    public Response createAccountForLicense(String licenseIdRepresentation, String userEmail)
-    {
-        licenseService.createUserFromLicense(Qid.fromRepresentation(licenseIdRepresentation), userEmail);
-        LOG.info("Create account for license : {}", licenseIdRepresentation);
-        return Response.ok().build();
     }
 
     private Qid getUserId()

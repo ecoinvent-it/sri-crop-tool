@@ -40,12 +40,15 @@ public class LicenseService
         this.generationDao = generationDao;
     }
 
-    public void createUserFromLicense(Qid licenseId, String email)
+    public Qid createUserFromLicense(Qid licenseId, String username, String email)
     {
         License license = dao.getExistingLicenseById(licenseId);
-        Qid userId = loginService.createUser(email, email);
+        if (license.getUserId() != null)
+            throw new IllegalStateException();
+        Qid userId = loginService.createUser(username, email);
         license.setUserId(userId);
         dao.updateUserId(license);
+        return userId;
     }
 
     public OptionalInt checkLicenseDepletion(Qid licenseId)

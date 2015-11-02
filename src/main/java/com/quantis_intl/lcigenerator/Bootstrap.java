@@ -46,7 +46,7 @@ public class Bootstrap
         stack.withFeatures(MailFeature.withGmailSender(),
                 MyBatisFeature.withMapperPackages("com.quantis_intl.login.mappers",
                         "com.quantis_intl.lcigenerator.mappers"),
-                new LoginFeature.Builder("Jo5xNFdSPUmc4ijk2euM").build())
+                new LoginFeature.Builder("Jo5xNFdSPUmc4ijk2euM").userCanMultilog().build())
                 .withAdditionalModules(new CoreModule());
 
         stack.start();

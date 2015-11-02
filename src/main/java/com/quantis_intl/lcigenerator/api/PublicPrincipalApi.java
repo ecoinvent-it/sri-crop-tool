@@ -20,13 +20,16 @@ package com.quantis_intl.lcigenerator.api;
 
 import javax.inject.Inject;
 import javax.ws.rs.FormParam;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.quantis_intl.lcigenerator.license.LicenseService;
 import com.quantis_intl.login.business.LoginService;
 import com.quantis_intl.login.business.LoginService.ChangePasswordFailed;
 import com.quantis_intl.login.business.LoginService.EmailNotFound;
@@ -36,6 +39,7 @@ import com.quantis_intl.login.business.LoginService.UserActivationPending;
 import com.quantis_intl.login.business.LoginService.UserAlreadyActivated;
 import com.quantis_intl.login.business.LoginService.WrongRegistrationCode;
 import com.quantis_intl.login.business.User;
+import com.quantis_intl.stack.utils.Qid;
 
 @Path("pub/principal/")
 public class PublicPrincipalApi
@@ -43,11 +47,13 @@ public class PublicPrincipalApi
     private static final Logger LOG = LoggerFactory.getLogger(PublicPrincipalApi.class);
 
     private final LoginService loginService;
+    private final LicenseService licenseService;
 
     @Inject
-    public PublicPrincipalApi(LoginService loginService)
+    public PublicPrincipalApi(LoginService loginService, LicenseService licenseService)
     {
         this.loginService = loginService;
+        this.licenseService = licenseService;
     }
 
     @POST
@@ -156,6 +162,42 @@ public class PublicPrincipalApi
             return Response.status(Response.Status.BAD_REQUEST).entity(e.reason.toString()).build();
         }
 
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("createAccountForLicense")
+    // FIXME: Put it in license dedicated API, use POST
+    public Response createAccountForLicense(@QueryParam("licenseId") String licenseIdRepresentation,
+            @QueryParam("username") String username, @QueryParam("email") String userEmail)
+    {
+        try
+        {
+            Qid userId = licenseService.createUserFromLicense(Qid.fromRepresentation(licenseIdRepresentation),
+                    username, userEmail);
+            LOG.info("Create account {} for license : {}", userId, licenseIdRepresentation);
+        }
+        catch (RuntimeException e)
+        {
+            LOG.warn("createAccountForLicense call failed", e);
+        }
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("sendActivationLink")
+    // FIXME: Put it in license dedicated API, use POST
+    public Response sendActivationLink(@QueryParam("userId") String userIdRepresentation)
+    {
+        try
+        {
+            loginService.sendActivationRequest(Qid.fromRepresentation(userIdRepresentation));
+            LOG.info("Activation mail sent for user {}", userIdRepresentation);
+        }
+        catch (RuntimeException e)
+        {
+            LOG.warn("sendActivationLink call failed", e);
+        }
         return Response.ok().build();
     }
 }
