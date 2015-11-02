@@ -61,6 +61,8 @@ class ProcessGeneratorSteps
   int getNbRemainingGenerationsForLicense(List generations, Map license) => 
             _generationService.getNbRemainingGenerationsForLicense(generations,license);
   
+  bool hasUnlimitedUses(Map license) => _licenseService.hasUnlimitedUses(license);
+  
   bool canRetry(Map generation) => _parseDateTime(generation['lastTryDate']).add(new Duration(minutes:30)).isAfter(new DateTime.now());
   
   void disabledStep3Click()

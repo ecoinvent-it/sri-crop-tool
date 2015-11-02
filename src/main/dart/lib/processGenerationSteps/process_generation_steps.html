@@ -61,7 +61,10 @@
     <tr>
       <td><span>{{displayDate(currentLicense.endDate)}}</span></td>
       <td>{{displayRentalItem(currentLicense)}}</td>
-      <td><span ng-if="getNbRemainingGenerationsForLicense(generations,currentLicense) != null">{{getNbRemainingGenerationsForLicense(generations,currentLicense)}}</span></td>
+      <td>
+        <span ng-if="getNbRemainingGenerationsForLicense(generations,currentLicense) != null">{{getNbRemainingGenerationsForLicense(generations,currentLicense)}}</span>
+        <span ng-if="hasUnlimitedUses(currentLicense)">Unlimited</span>
+      </td>
       <td><span class="errorMsg" ng-if="currentLicense.isDepleted">Your license is depleted. Please contact your reseller to get a new license.</span></td>
     </tr>
   </tbody>

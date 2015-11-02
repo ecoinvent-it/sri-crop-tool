@@ -64,6 +64,21 @@ class LicenseService {
     return license == null ? null : license['numberOfGenerations'];
   }
   
+  bool hasUnlimitedUses(Map license)
+  {
+    if (license == null)
+          return false;
+    switch(license['rentalItem'])
+    {
+      case 'DEMO_UNLIMITED':
+      case 'ACADEMIC_UNLIMITED':
+      case 'BUSINESS_UNLIMITED':
+        return true;
+      default:
+        return false;
+    }
+  }
+  
   void updateLicenseDepletion(Map license)
   {
     license['isDepleted'] = true;
