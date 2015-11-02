@@ -78,6 +78,13 @@ public class MybatisLicenseDao implements LicenseDao
 
     @Override
     @Transactional
+    public List<License> getLicensesForUser(Qid userId)
+    {
+        return mapper.getAllLicensesForUser(userId);
+    }
+
+    @Override
+    @Transactional
     public void updateUserId(License license)
     {
         mapper.updateUserId(license);

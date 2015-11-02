@@ -32,6 +32,8 @@ public interface LicenseDao
     // Get the still active non depleted licenses
     List<License> getActiveLicensesForUser(Qid userId);
 
+    List<License> getLicensesForUser(Qid userId);
+
     void updateUserId(License license);
 
     void setLicenseAsDepleted(Qid licenseId);

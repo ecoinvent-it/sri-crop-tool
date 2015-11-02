@@ -1,16 +1,15 @@
 library process_generation_steps;
 
 import 'dart:async';
-import 'dart:collection';
-import 'dart:convert';
 import 'dart:html';
 import 'dart:js' as js;
 import 'package:angular/angular.dart';
 
-import 'package:intl/intl.dart';
 import 'package:alcig/api/generation_service.dart';
 import 'package:alcig/api/local_notification_service.dart';
+import 'package:alcig/license/license_service.dart';
 import 'package:alcig/login/login_service.dart';
+import 'package:alcig/date_utils.dart';
 
 @Component(
     selector: 'process-generation-steps',
@@ -18,13 +17,10 @@ import 'package:alcig/login/login_service.dart';
     useShadowDom: false)
 class ProcessGeneratorSteps
 {
-  static DateFormat dateReader = new DateFormat("yyyy-MM-dd'T'HH:mm", "en_US");
-  static DateFormat _dateWriter;
-  static DateFormat get dateWriter => _dateWriter == null ? _dateWriter = new DateFormat("yMd", Intl.getCurrentLocale()).add_Hm() : _dateWriter;
-
   LocalNotificationService _notifService;
   LoginService _loginService;
   GenerationService _generationService;
+  LicenseService _licenseService;
 
   // FIXME: Put all these in a dedicated popup component
   String popupFilename = null;
@@ -38,6 +34,8 @@ class ProcessGeneratorSteps
   String get lastGenerationId => _generationService.lastGenerationId;
   List get generations => _generationService.generations;
   
+  Map get currentLicense => _licenseService.currentLicense;
+  
   bool fileCanBeStored = true;
   
   bool hasWarnings(Map generation) => generation['warnings'] != null && generation['warnings'].length > 0;
@@ -47,29 +45,30 @@ class ProcessGeneratorSteps
   static const FILE_MAX_SIZE = 10 * 1024 * 1024;// 10 Mo
   
   ProcessGeneratorSteps(GenerationService this._generationService, LoginService this._loginService, 
-                        LocalNotificationService this._notifService);
+                        LicenseService this._licenseService, LocalNotificationService this._notifService);
   
   void changeSelectedGeneration(Map generation)
   {
     _generationService.changeSelectedGeneration(generation);
   }
   
-  DateTime _lastTryDate(Map generation)
-  {
-    return dateReader.parse(generation['lastTryDate'], true).toLocal();
-  }
+  DateTime _parseDateTime(String dateTime) => DateUtils.parseDateTime(dateTime);
+  String displayDateTime(String dateTime) => DateUtils.displayDateTime(dateTime);
+  String displayDate(String date) => DateUtils.displayDate(date);
   
-  bool canRetry(Map generation) => _lastTryDate(generation).add(new Duration(minutes:30)).isAfter(new DateTime.now());
+  String displayRentalItem(Map license) => _licenseService.displayRentalItem(license);
   
-  String displayDate(Map generation)
-  {
-    return dateWriter.format(_lastTryDate(generation));
-  }
+  int getNbRemainingGenerationsForLicense(List generations, Map license) => 
+            _generationService.getNbRemainingGenerationsForLicense(generations,license);
+  
+  bool canRetry(Map generation) => _parseDateTime(generation['lastTryDate']).add(new Duration(minutes:30)).isAfter(new DateTime.now());
   
   void disabledStep3Click()
   {// TODO: Have a more user friendly message
     if (!_loginService.isLogged)
-      _notifService.manageWarning("You need to be authenticated to use this feature");
+      _notifService.manageWarning("You need to be authenticated to use this feature.");
+    else if (currentLicense['isDepleted'])
+      _notifService.manageWarning("Your license is depleted. Please contact your reseller to get a new license.");
   }
   
   void submitUploadForm(FileUploadInputElement target, FormElement form)
@@ -84,7 +83,6 @@ class ProcessGeneratorSteps
     {
       _upload(file.name, form);
     }
-    
   }
   
   void submitReuploadForm(FileUploadInputElement target, FormElement form, Map generation)
@@ -106,7 +104,7 @@ class ProcessGeneratorSteps
     List errors;
     try
     {
-      Map results = await _generationService.upload(filename, formData);
+      Map results = await _generationService.upload(filename, formData, currentLicense);
       warnings = results['warnings'];
       if (results['errors'] != null)
         errors = results['errors'];

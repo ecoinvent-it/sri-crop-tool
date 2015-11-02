@@ -37,6 +37,9 @@ public interface LicenseMapper
     @SelectProvider(type = LicenseQueryBuilder.class, method = "selectNonDepletedLicensesFromUser")
     List<License> getNonDepletedLicensesForUser(@Param(LicenseQueryBuilder.FIELD_USER_ID) Qid userId);
 
+    @SelectProvider(type = LicenseQueryBuilder.class, method = "selectAllLicensesFromUser")
+    List<License> getAllLicensesForUser(@Param(LicenseQueryBuilder.FIELD_USER_ID) Qid userId);
+
     @UpdateProvider(type = LicenseQueryBuilder.class, method = "updateUserId")
     void updateUserId(License license);
 
@@ -78,6 +81,16 @@ public interface LicenseMapper
                     .WHERE_PARAM(FIELD_USER_ID)
                     .WHERE(FIELD_IS_DEPLETED + " = 0")
                     .ORDER_BY(FIELD_START_DATE)
+                    .toString();
+        }
+
+        public String selectAllLicensesFromUser()
+        {
+            return new QsSQL()
+                    .SELECT(ALL_FIELDS)
+                    .FROM(TABLE_NAME)
+                    .WHERE_PARAM(FIELD_USER_ID)
+                    .ORDER_BY(FIELD_START_DATE + " DESC")
                     .toString();
         }
 

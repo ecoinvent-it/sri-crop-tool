@@ -18,12 +18,14 @@
  */
 package com.quantis_intl.lcigenerator.api;
 
-import java.util.Collection;
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.shiro.SecurityUtils;
@@ -51,11 +53,14 @@ public class LicenseApi
     }
 
     @GET
-    @Path("activeLicenses")
-    // FIXME: Only send the usefull data, many things in the class shouldn't leave the server
-    public Collection<License> getActiveLicenses()
+    @Path("userLicenses")
+    @Produces(MediaType.APPLICATION_JSON)
+    // FIXME: Only send the useful data, many things in the class shouldn't leave the server
+    public List<License> getUserLicenses()
     {
-        return licenseDao.getActiveLicensesForUser(getUserId());
+        List<License> licenses = licenseDao.getLicensesForUser(getUserId());
+        LOG.info("Get user licenses");
+        return licenses;
     }
 
     @POST
@@ -64,6 +69,7 @@ public class LicenseApi
     public Response createAccountForLicense(String licenseIdRepresentation, String userEmail)
     {
         licenseService.createUserFromLicense(Qid.fromRepresentation(licenseIdRepresentation), userEmail);
+        LOG.info("Create account for license : {}", licenseIdRepresentation);
         return Response.ok().build();
     }
 

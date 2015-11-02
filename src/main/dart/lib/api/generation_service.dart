@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:html';
 import 'package:di/annotations.dart';
 import 'package:alcig/api/api.dart';
+import 'package:alcig/license/license_service.dart';
 import 'package:alcig/login/login_service.dart';
 
 @Injectable()
@@ -16,15 +17,16 @@ class GenerationService {
   List generations = null;
   
   LoginService _loginService;
+  LicenseService _licenseService;
   
-  GenerationService(Api this._api, LoginService this._loginService)
+  GenerationService(Api this._api, LoginService this._loginService, LicenseService this._licenseService)
   {
     _loginService.stream.listen(_onUserData);
   }
   
   void _onUserData(LoginEvent event) 
   {
-    switch ( event) 
+    switch (event) 
     {
       case LoginEvent.AUTHENTICATED:
         _loadGenerations();
@@ -44,7 +46,7 @@ class GenerationService {
     generations = await _api.getUserGenerations();
   }
   
-  Future<Map> upload(String filename, FormData formData) async
+  Future<Map> upload(String filename, FormData formData, Map license) async
   {
     Map uploadedGeneration = lastGeneration;
     HttpRequest request = await _api.uploadInputs(formData);
@@ -60,6 +62,8 @@ class GenerationService {
           generations.remove(uploadedGeneration);
       }
       generations.insert(0, newGeneration);
+      if (getNbRemainingGenerationsForLicense(generations, license) == 0)
+        _licenseService.updateLicenseDepletion(license);
       changeSelectedGeneration(newGeneration);
       return newGeneration;
     }
@@ -68,6 +72,24 @@ class GenerationService {
   void changeSelectedGeneration(Map generation)
   {
     lastGeneration = generation;
+  }
+  
+  int getNbRemainingGenerationsForLicense(List generations, Map license)
+  {
+    int total = _licenseService.getNbGenerationsForLicense(license);
+    if (total == null)
+      return null;
+    int nbUsed = _getNbUseGenerationsForLicense(generations, license);
+    return total - nbUsed;
+  }
+  
+  int _getNbUseGenerationsForLicense(List generations, Map license)
+  {
+    if (generations == null)
+      return 0;
+    int nb = 0;
+    generations.forEach((g) {if (g['licenseId']['representation'] == license['id']['representation']) nb++;});
+    return nb;
   }
   
   void _resetAll()

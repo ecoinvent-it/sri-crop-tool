@@ -44,9 +44,10 @@
   cursor: default;
 }
 
-#step2:hover
+#step2:hover, #step4:hover
 {
   color: white;
+  cursor: default;
 }
 
 #step3Container
@@ -124,11 +125,6 @@
 #step4
 {
   background-image: url('../img/btn_step4.png');
-}
-
-#step4:not(.disabledStep):hover
-{
-  background-image: url('../img/btn_step4_over.png');
 }
 
 .disabledStep
@@ -213,12 +209,23 @@
 	max-width: 100%;
 }
 
-#generationHistory
+#generationHistory, #currentLicenseTable
 {
 	font-size: 13px;
 }
 
-#generationHistory thead, #generationHistory th
+#currentLicenseTable
+{
+	margin: 10px 0;
+}
+
+#currentLicenseTable tbody tr
+{
+	background-color: white;
+}
+
+#generationHistory thead, #generationHistory th,
+#currentLicenseTable thead, #currentLicenseTable th
 {
 	background-color: #adbdd3;
 	text-align: center;

@@ -40,7 +40,7 @@ class ApiImpl implements Api {
                   .then((request) {return request;})
                   .catchError( (ProgressEvent e) {
                     HttpRequest request = e.target;
-                    if ( request.status == 400 )
+                    if ( request.status == 400 && request.responseText.isNotEmpty)
                       return request;
                     else
                       _manageError(e);

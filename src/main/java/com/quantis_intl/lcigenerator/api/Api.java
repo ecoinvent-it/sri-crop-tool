@@ -124,6 +124,7 @@ public class Api
             throws URISyntaxException, IOException
     {
         Generation generation = createCurrentGeneration(form);
+        final ErrorReporterImpl errorReporter = new ErrorReporterImpl();
         try
         {
             generation = checkGenerationFilenameAndDate(generation);
@@ -138,11 +139,11 @@ public class Api
         catch (NoActiveLicense e)
         {
             LOGGER.error("Depleted license has been used for user {}", getUserId());
-            response.resume(Response.status(Response.Status.BAD_REQUEST).build());
+            errorReporter.error("Your license is depleted. Please contact your reseller to get a new license.");
+            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
             return;
         }
 
-        final ErrorReporterImpl errorReporter = new ErrorReporterImpl();
         final String fileExtension = form.filename.substring(form.filename.lastIndexOf('.'));
         if (!UPLOADED_FILE_EXTENSIONS.contains(fileExtension))
         {
@@ -184,7 +185,8 @@ public class Api
         catch (NoActiveLicense e)
         {
             LOGGER.error("Depleted license has been used for user {}", getUserId());
-            response.resume(Response.status(Response.Status.BAD_REQUEST).build());
+            errorReporter.error("Your license is depleted. Please contact your reseller to get a new license.");
+            response.resume(Response.status(Response.Status.BAD_REQUEST).entity(errorReporter).build());
             return;
         }
     }

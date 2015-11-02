@@ -13,6 +13,10 @@ import 'package:alcig/api/api_impl.dart';
 import 'package:alcig/api/generation_service.dart';
 import 'package:alcig/api/local_notification_service.dart';
 
+import 'package:alcig/license/license_api.dart';
+import 'package:alcig/license/license_api_impl.dart';
+import 'package:alcig/license/license_service.dart';
+
 import 'package:alcig/menu_with_selection.dart';
 import 'package:alcig/login/login_api.dart';
 import 'package:alcig/login/login_api_impl.dart';
@@ -52,6 +56,8 @@ class MyAppModule extends Module {
     bind(Api, toImplementation: ApiImpl);
     bind(GenerationService);
     bind(LocalNotificationService);
+    bind(LicenseApi, toImplementation: LicenseApiImpl);
+    bind(LicenseService);
     bind(ProcessGeneratorSteps);
     bind(NotificationModal);
     bind(ToolPage);

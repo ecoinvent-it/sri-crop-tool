@@ -16,7 +16,7 @@
         <div class="stepTitle text-big text-uppercase">Step 2</div>
         <div class="stepText">Fill in the template with your data</div>
     </td>
-    <td id="step3Container" ng-class="{disabledStep: !isLogged}">
+    <td id="step3Container" ng-class="{disabledStep: !isLogged || currentLicense.isDepleted}">
       <form id="processGeneratorUploadForm" method="post" enctype="multipart/form-data">
           <div id="step3" class="stepBtn">
 	          <div class="stepTitle text-big text-uppercase">Step 3</div>
@@ -24,7 +24,7 @@
 	                      accept=".xls,.xlsx" required="required" 
 	                      class="upload"
 	                      ng-change="submitUploadForm($event.target, $event.target.parent.parent)"
-	                      ng-if="isLogged"/>
+	                      ng-if="isLogged || !currentLicense.isDepleted"/>
 	          <div class="stepText"><span class="clickableText">Click</span> to upload your template to ALCIG</div>
           </div>
           <div>
@@ -32,7 +32,8 @@
             <span id="step3CheckboxText" class="text-very-small">I agree that Quantis stores this file for testing purposes</span>
           </div>
 			</form>
-			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" ng-if="!isLogged"></div>
+			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()" 
+			     ng-if="!isLogged || currentLicense.isDepleted"></div>
     </td>
     <td>
         <div id="step4" class="stepBtn" ng-class="{disabledStep: !isLogged}">
@@ -41,6 +42,29 @@
 			  </div>
 	  </td>
   </tr>
+</table>
+
+<table id="currentLicenseTable" class="color1" ng-if="currentLicense != null">
+  <col width="25%"/>
+  <col width="25%"/>
+  <col width="22%"/>
+  <col width="28%"/>
+  <thead>
+    <tr>
+      <th>License end date</th>
+      <th>License type</th>
+      <th>Remaining generations</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span>{{displayDate(currentLicense.endDate)}}</span></td>
+      <td>{{displayRentalItem(currentLicense)}}</td>
+      <td><span ng-if="getNbRemainingGenerationsForLicense(generations,currentLicense) != null">{{getNbRemainingGenerationsForLicense(generations,currentLicense)}}</span></td>
+      <td><span class="errorMsg" ng-if="currentLicense.isDepleted">Your license is depleted. Please contact your reseller to get a new license.</span></td>
+    </tr>
+  </tbody>
 </table>
 
 <table id="generationHistory" class="color1" ng-if="generations != null">
@@ -64,7 +88,7 @@
 	  <tr ng-repeat="generation in generations" ng-class-odd="'odd'" ng-class-even="'even'"
 	          ng-class="{'selectedGenerationRow':generation == lastGeneration}"
 	          ng-click="changeSelectedGeneration(generation)">
-	    <td>{{displayDate(generation)}}</td>
+	    <td>{{displayDateTime(generation.lastTryDate)}}</td>
 	    <td>{{generation.crop}}</td>
 	    <td>{{generation.country}}</td>
 	    <td><div style="max-width: 100%;">{{generation.filename}}</div></td>
