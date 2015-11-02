@@ -9,4 +9,6 @@ import 'package:angular/angular.dart';
 class FaqPage
 {
   FaqPage();
+  
+  String quantisEmail = 'software-support@quantis-intl.com';
 }

@@ -8,6 +8,12 @@
 	margin-bottom: 0px;
 }
 
+#faqPage a
+{
+	color: #6d7fa1;
+	text-decoration: underline;
+}
+
 .faqQuestion
 {
 	padding-top: 18px;
