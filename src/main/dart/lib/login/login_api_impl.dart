@@ -57,17 +57,13 @@ class LoginApiImpl implements LoginApi {
     try
     {
       await HttpRequest.postFormData(_baseUrl + "logout", {});
-      _connectivityState.loggedOut();
       return AuthRequestResult.OK;
     }
     catch(e)
     {
       HttpRequest request = e.target;
       if ( request.status == 401 )
-      {
-        _connectivityState.loggedOut();
         return AuthRequestResult.OK;
-      }
       else
         throw request;
     }

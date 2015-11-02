@@ -9,6 +9,7 @@ import 'package:alcig/connectivity_state.dart';
 class LoginService {
   
   LoginApi _loginApi;
+  ConnectivityState _connectivityState;
   
   StreamController<LoginEvent> _dispatcher = new StreamController.broadcast();
   Stream<LoginEvent> get stream => _dispatcher.stream;
@@ -25,8 +26,8 @@ class LoginService {
   
   bool get isLoading => _isLoading;
   
-  LoginService(LoginApi this._loginApi, ConnectivityState connectivityState){
-    connectivityState.stream.listen( (StateEvent event) {
+  LoginService(LoginApi this._loginApi, ConnectivityState this._connectivityState){
+    _connectivityState.stream.listen( (StateEvent event) {
       if (event == StateEvent.NOT_AUTHED && isLogged) {
         _username = null;
         _dispatcher.add(LoginEvent.LOG_OUT_BY_SERVER);
@@ -82,6 +83,7 @@ class LoginService {
       {
         await _loginApi.logout();
         _dispatcher.add(LoginEvent.LOGGED_OUT);
+        _connectivityState.loggedOut();
       }
       catch(e)
       {
