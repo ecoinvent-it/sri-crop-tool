@@ -21,6 +21,8 @@ class GenerationService {
   
   GenerationService(Api this._api, LoginService this._loginService, LicenseService this._licenseService)
   {
+    if (_loginService.isLogged)
+      _loadGenerations();
     _loginService.stream.listen(_onUserData);
   }
   

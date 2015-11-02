@@ -17,6 +17,8 @@ class LicenseService {
     
   LicenseService(LicenseApi this._api, LoginService this._loginService)
   {
+    if (_loginService.isLogged)
+      _loadLicenses();
     _loginService.stream.listen(_onUserData);
   }
   

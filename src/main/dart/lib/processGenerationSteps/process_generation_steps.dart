@@ -97,7 +97,7 @@ class ProcessGeneratorSteps
   {
     var formData = new FormData(form);
     formData.append("filename", filename);
-    formData.append("generationId", lastGenerationId);
+    formData.append("generationId", lastGenerationId == null ? "" : lastGenerationId);
     
     displayModal("#fileLoadingModal");
     form.reset();
