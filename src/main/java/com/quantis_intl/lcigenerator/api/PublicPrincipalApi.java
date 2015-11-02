@@ -62,7 +62,7 @@ public class PublicPrincipalApi
         }
         catch (WrongRegistrationCode e)
         {
-            LOG.warn("User tries to check wrong registrationCode: {}", registrationCode);
+            LOG.warn("No user found for registrationCode: {}", registrationCode);
             return Response.status(Response.Status.BAD_REQUEST).entity("WRONG_REGISTRATION_CODE").build();
         }
         catch (ExpiredRegistrationCode e)
@@ -72,7 +72,7 @@ public class PublicPrincipalApi
         }
         catch (UserAlreadyActivated e)
         {
-            LOG.error("Already activated user {} tries to check registration code", e.userId);
+            LOG.error("Already activated user {} tries to use registration code", e.userId);
             return Response.status(Response.Status.BAD_REQUEST).entity("WRONG_REGISTRATION_CODE").build();
         }
     }
@@ -107,7 +107,7 @@ public class PublicPrincipalApi
         }
         catch (UserAlreadyActivated e)
         {
-            LOG.error("User already activated tries to activate: {}", e.userId);
+            LOG.error("Security issue: user already activated tries to activate: {}", e.userId);
             return Response.status(Response.Status.BAD_REQUEST).entity("WRONG_REGISTRATION_CODE").build();
         }
     }

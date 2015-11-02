@@ -76,17 +76,17 @@ class LicenseService {
     switch(license['rentalItem'])
     {
       case 'DEMO_3_USES':
-        return "Demo - 3 generations";
+        return "Demo - 3 uses";
       case 'DEMO_UNLIMITED':
-        return "Demo - unlimited generations";
+        return "Demo - unlimited uses";
       case 'ACADEMIC_10_USES':
-        return "Academic - 10 generations";
+        return "Academic - 10 uses";
       case 'ACADEMIC_25_USES':
-        return "Academic - 25 generations";
+        return "Academic - 25 uses";
       case 'ACADEMIC_50_USES':
-        return "Academic - 50 generations";
+        return "Academic - 50 uses";
       case 'ACADEMIC_UNLIMITED':
-        return "Academic - unlimited generations";
+        return "Academic - unlimited uses";
       case 'BUSINESS_10_USES':
         return "Business - 10 uses";
       case 'BUSINESS_25_USES':
