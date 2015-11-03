@@ -3,9 +3,9 @@
   <div class="color1 uppercase loginTitle">Login</div>
   <form id="loginForm" ng-submit="loginSubmit()">
     <div class="color1 text-small formFieldTitle">Username</div>
-    <input class="text-small loginInput" name="login" ng-model="username" ng-disabled="isLoading">
+    <input class="text-small loginInput" name="login" ng-model="username" ng-disabled="isLoading" required>
     <div class="color1 text-small">Password</div>
-    <input class="text-small loginInput lastInput" name="password" type="password" ng-model="password" ng-disabled="isLoading"/>
+    <input class="text-small loginInput lastInput" name="password" type="password" ng-model="password" ng-disabled="isLoading" required/>
     <div>
        <button id="loginSubmit" type="submit" class="qts-btn qts-btn-style3" ng-disabled="isLoading">Sign in</button>
        <img ng-class="{'notVisible':!isLoading}" class="loginLoaderImg" src="img/ajax-loader.gif"/>

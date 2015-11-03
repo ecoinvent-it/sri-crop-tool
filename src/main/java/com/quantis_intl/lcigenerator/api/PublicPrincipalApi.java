@@ -18,6 +18,8 @@
  */
 package com.quantis_intl.lcigenerator.api;
 
+import java.util.Arrays;
+
 import javax.inject.Inject;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -87,11 +89,12 @@ public class PublicPrincipalApi
     @Path("activateUser")
     public Response activateUser(@FormParam("registrationCode") String registrationCode,
             @FormParam("acceptTermsAndConditions") boolean acceptTermsAndConditions,
-            @FormParam("newPassword") String newPassword)
+            @FormParam("newPassword") char[] newPassword)
     {
         try
         {
             User user = loginService.activateUser(registrationCode, acceptTermsAndConditions, newPassword);
+            Arrays.fill(newPassword, (char) 0x00);
             LOG.info("User activated: {}", user.getId());
             return Response.ok(user.getUsername()).build();
 
@@ -144,11 +147,12 @@ public class PublicPrincipalApi
     @POST
     @Path("resetPassword")
     public Response resetPassword(@FormParam("validationCode") String validationCode,
-            @FormParam("newPassword") String newPassword)
+            @FormParam("newPassword") char[] newPassword)
     {
         try
         {
             Object userId = loginService.resetPassword(validationCode, newPassword);
+            Arrays.fill(newPassword, (char) 0x00);
             LOG.info("Password reset for user {}", userId);
         }
         catch (UserActivationPending e)

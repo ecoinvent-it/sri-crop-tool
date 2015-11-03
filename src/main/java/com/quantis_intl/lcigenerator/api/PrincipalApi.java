@@ -18,6 +18,8 @@
  */
 package com.quantis_intl.lcigenerator.api;
 
+import java.util.Arrays;
+
 import javax.inject.Inject;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -58,13 +60,15 @@ public class PrincipalApi
 
     @POST
     @Path("changePassword")
-    public Response changePassword(@FormParam("oldPassword") String oldPassword,
-            @FormParam("newPassword") String newPassword)
+    public Response changePassword(@FormParam("oldPassword") char[] oldPassword,
+            @FormParam("newPassword") char[] newPassword)
     {
         final Qid userId = getUserId();
         try
         {
             loginService.changePassword(userId, oldPassword, newPassword);
+            Arrays.fill(oldPassword, (char) 0x00);
+            Arrays.fill(newPassword, (char) 0x00);
             LOG.info("Password changed");
             return Response.ok().build();
         }

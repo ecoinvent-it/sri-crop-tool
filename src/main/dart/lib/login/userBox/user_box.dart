@@ -39,7 +39,6 @@ class UserBox implements AttachAware, DetachAware
     forceChangePassword = _loginService.forceChangePassword;
     switch ( event) {
       case LoginEvent.AUTHENTICATED:
-        username = _loginService.username;
         break;
       case LoginEvent.FORCE_PASSWORD_CHANGE:
         _displayModal("#forceChangePwdModal");
