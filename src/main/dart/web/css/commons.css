@@ -147,44 +147,44 @@ table img
   min-height: 20px;
 }
 
-.qts-btn-style1
-{
-  color: white;
-  background-color: #f9b233;
-}
-
 .qts-btn-style1:HOVER {
   background-color: #e87e05;
 }
 
-.qts-btn-style2
+.qts-btn-style1, .qts-btn-style1:disabled
 {
-  color: #445272;
-  background-color: rgb(255,255,255);
+  color: white;
+  background-color: #f9b233;
 }
 
 .qts-btn-style2:HOVER {
   background-color: rgba(255,255,255,0.9);
 }
 
-.qts-btn-style3
+.qts-btn-style2, .qts-btn-style2:disabled
 {
-  color: white;
-  background-color: #445272;
+  color: #445272;
+  background-color: rgb(255,255,255);
 }
 
 .qts-btn-style3:HOVER {
   background-color: #283959;
 }
 
-.qts-btn-style4
+.qts-btn-style3, .qts-btn-style3:disabled
 {
-  color: #e87e05;
-  background-color: transparent;
+  color: white;
+  background-color: #445272;
 }
 
 .qts-btn-style4:HOVER {
   text-decoration: underline;
+}
+
+.qts-btn-style4, .qts-btn-style4:disabled
+{
+  color: #e87e05;
+  background-color: transparent;
 }
 
 .successful
@@ -252,6 +252,12 @@ input[type="text"], input[type="password"], textarea
 	border: solid 1px #eaecf0;
 	width: 300px;
 	color: #445272;
+}
+
+input[type="text"]:disabled, input[type="password"]:disabled, 
+textarea:disabled, input[type="submit"]:disabled, button:disabled
+{
+  opacity: 0.5;
 }
 
 input[type="submit"]

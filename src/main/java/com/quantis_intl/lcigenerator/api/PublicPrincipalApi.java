@@ -64,7 +64,7 @@ public class PublicPrincipalApi
         {
             User user = loginService.checkRegistrationCode(registrationCode);
             LOG.info("User registration code checked: {}", user.getId());
-            return Response.ok().build();
+            return Response.ok(user.getUsername()).build();
         }
         catch (WrongRegistrationCode e)
         {

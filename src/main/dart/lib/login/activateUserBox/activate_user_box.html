@@ -9,6 +9,8 @@
     <div class="color1 loginTitle text-center">Please choose your password to activate your access</div>
 		<form ng-submit="submit()" class="centeredForm">
 		  <div>
+		    <div class="color1 text-small formFieldTitle">Username</div>
+        <input type="text" class="text-small loginInput" ng-model="username" disabled/>
 			  <div class="color1 text-small formFieldTitle">Password</div>
 			  <input type="password" class="text-small loginInput" 
 			         ng-model="newPassword" ng-disabled="activationDone" required/>

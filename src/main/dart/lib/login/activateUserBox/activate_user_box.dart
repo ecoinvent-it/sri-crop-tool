@@ -16,6 +16,7 @@ class ActivateUserBox implements AttachAware, DetachAware
   bool codeChecked = false;
   String checkCodeErrorMessage = "";
 
+  String username = "";
   bool acceptTermsAndConditions = false;
   String newPassword = "";
   String newPasswordConfirmation = "";
@@ -62,6 +63,7 @@ class ActivateUserBox implements AttachAware, DetachAware
         break;
       default:
         codeChecked = true;
+        username = responseText;
         break;
     }
   }
