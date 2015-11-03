@@ -18,8 +18,6 @@
  */
 package com.quantis_intl.lcigenerator.api;
 
-import java.util.Arrays;
-
 import javax.inject.Inject;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -87,14 +85,17 @@ public class PublicPrincipalApi
 
     @POST
     @Path("activateUser")
+    // FIXME: String stays in memory, so passwords are in memory until the next GC. Use char[] and find a way to avoid
+    // JAX-RS to store them as strings (use multi-part form with inputstream?)
     public Response activateUser(@FormParam("registrationCode") String registrationCode,
             @FormParam("acceptTermsAndConditions") boolean acceptTermsAndConditions,
-            @FormParam("newPassword") char[] newPassword)
+            @FormParam("newPassword") String newPassword)
     {
         try
         {
-            User user = loginService.activateUser(registrationCode, acceptTermsAndConditions, newPassword);
-            Arrays.fill(newPassword, (char) 0x00);
+            User user = loginService.activateUser(registrationCode, acceptTermsAndConditions,
+                    newPassword.toCharArray());
+            // Arrays.fill(newPassword, (char) 0x00);
             LOG.info("User activated: {}", user.getId());
             return Response.ok(user.getUsername()).build();
 
@@ -146,13 +147,15 @@ public class PublicPrincipalApi
 
     @POST
     @Path("resetPassword")
+    // FIXME: String stays in memory, so passwords are in memory until the next GC. Use char[] and find a way to avoid
+    // JAX-RS to store them as strings (use multi-part form with inputstream?)
     public Response resetPassword(@FormParam("validationCode") String validationCode,
-            @FormParam("newPassword") char[] newPassword)
+            @FormParam("newPassword") String newPassword)
     {
         try
         {
-            Object userId = loginService.resetPassword(validationCode, newPassword);
-            Arrays.fill(newPassword, (char) 0x00);
+            Object userId = loginService.resetPassword(validationCode, newPassword.toCharArray());
+            // Arrays.fill(newPassword, (char) 0x00);
             LOG.info("Password reset for user {}", userId);
         }
         catch (UserActivationPending e)

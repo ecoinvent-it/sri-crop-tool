@@ -18,8 +18,6 @@
  */
 package com.quantis_intl.lcigenerator.api;
 
-import java.util.Arrays;
-
 import javax.inject.Inject;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
@@ -60,15 +58,17 @@ public class PrincipalApi
 
     @POST
     @Path("changePassword")
-    public Response changePassword(@FormParam("oldPassword") char[] oldPassword,
-            @FormParam("newPassword") char[] newPassword)
+    // FIXME: String stays in memory, so passwords are in memory until the next GC. Use char[] and find a way to avoid
+    // JAX-RS to store them as strings (use multi-part form with inputstream?)
+    public Response changePassword(@FormParam("oldPassword") String oldPassword,
+            @FormParam("newPassword") String newPassword)
     {
         final Qid userId = getUserId();
         try
         {
-            loginService.changePassword(userId, oldPassword, newPassword);
-            Arrays.fill(oldPassword, (char) 0x00);
-            Arrays.fill(newPassword, (char) 0x00);
+            loginService.changePassword(userId, oldPassword.toCharArray(), newPassword.toCharArray());
+            // Arrays.fill(oldPassword, (char) 0x00);
+            // Arrays.fill(newPassword, (char) 0x00);
             LOG.info("Password changed");
             return Response.ok().build();
         }
