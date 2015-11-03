@@ -123,6 +123,7 @@ public class Api
     public void computeLci(@MultipartForm ComputeLciForm form, @Suspended AsyncResponse response)
             throws URISyntaxException, IOException
     {
+        long startTime = System.nanoTime();
         Generation generation = createCurrentGeneration(form);
         final ErrorReporterImpl errorReporter = new ErrorReporterImpl();
         try
@@ -172,6 +173,7 @@ public class Api
             licenseService.checkLicenseDepletion(generation.getLicenseId());
 
             response.resume(Response.ok(generation).build());
+            LOGGER.info("Parsing and storing done in {} ms", (System.nanoTime() - startTime) / 1000000.d);
             return;
         }
         catch (ParsingErrorsFound e)
@@ -309,7 +311,7 @@ public class Api
     {
         SecurityUtils.getSubject().getSession().setAttribute(generation.getId(), modelsOutput);
         String filename = generation.getFilename().substring(0, generation.getFilename().lastIndexOf(".xls"));
-        LOGGER.info("Scsv file generated for generation {} in {} ms", generation.getId(),
+        LOGGER.info("Scsv file {} generated for generation {} in {} ms", outputTarget, generation.getId(),
                 (System.nanoTime() - startTime) / 1000000.d);
         response.resume(
                 Response.ok((StreamingOutput) outputStream -> scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput,
