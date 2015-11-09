@@ -133,7 +133,7 @@ public class Api
         }
         catch (GenerationNotOwned e)
         {
-            LOGGER.error("Found generation is not owned by user: generation id {}", generation.getId());
+            LOGGER.error("SECURITY ISSUE: Found generation is not owned by user: generation id {}", generation.getId());
             response.resume(Response.status(Response.Status.BAD_REQUEST).build());
             return;
         }
