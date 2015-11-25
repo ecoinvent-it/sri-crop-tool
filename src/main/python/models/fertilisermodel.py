@@ -31,7 +31,7 @@ class KFertiliserType(Enum):
     
 class OtherMineralFertiliserType(Enum):
     ca_limestone="fert_ca_limestone"
-    ca_carbonation_linestone="fert_ca_carbonation_linestone"
+    ca_carbonation_limestone="fert_ca_carbonation_limestone"
     ca_seaweed_limestone="fert_ca_seaweed_limestone"
 
 
@@ -125,7 +125,7 @@ class FertModel(object):
     # mg/kg nutrient
     #NOTE: no value for Hg
     _HM_OTHER_MINERAL_FERT_VALUES = {OtherMineralFertiliserType.ca_limestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00], #Lime kg CaO
-                                OtherMineralFertiliserType.ca_carbonation_linestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00], #Lime kg CaO
+                                OtherMineralFertiliserType.ca_carbonation_limestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00], #Lime kg CaO
                                 OtherMineralFertiliserType.ca_seaweed_limestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00] #Lime kg CaO
                                 }
     

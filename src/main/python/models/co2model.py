@@ -48,7 +48,7 @@ class Co2Model(object):
     def _compute_CO2_from_lime(self):
         return self._CA_TO_CO2_FACTOR * \
                   (self.other_mineral_fertiliser_quantities[OtherMineralFertiliserType.ca_limestone] + \
-                   self.other_mineral_fertiliser_quantities[OtherMineralFertiliserType.ca_carbonation_linestone] + \
+                   self.other_mineral_fertiliser_quantities[OtherMineralFertiliserType.ca_carbonation_limestone] + \
                    self.other_mineral_fertiliser_quantities[OtherMineralFertiliserType.ca_seaweed_limestone]) \
                + self._compute_CO2_from_magnesium();
 

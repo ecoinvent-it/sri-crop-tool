@@ -41,7 +41,7 @@ _K_ENUM_TO_FIELD = {
 
 _OTHERMIN_ENUM_TO_FIELD = {
                 OtherMineralFertiliserType.ca_limestone:"ratio_fertotherca_limestone",
-                OtherMineralFertiliserType.ca_carbonation_linestone:"ratio_fertotherca_carbonation_limestone",
+                OtherMineralFertiliserType.ca_carbonation_limestone:"ratio_fertotherca_carbonation_limestone",
                 OtherMineralFertiliserType.ca_seaweed_limestone:"ratio_fertotherca_seaweed_limestone"
                  }
 

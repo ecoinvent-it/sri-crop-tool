@@ -2477,7 +2477,7 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "olive": 0.748,
         "onion": 0.886,
         "orange": 0.842,
-        "palmtree": 0.87,
+        "palmtree": 0.47,
         "peach": 0.873,
         "peanut": 0.05968,
         "pear": 0.829,

@@ -9,7 +9,7 @@ class Test(unittest.TestCase):
                   "part_of_urea_in_UAN": 0.5,
                   "other_mineral_fertiliser_quantities": {
                       OtherMineralFertiliserType.ca_limestone: 4.0,
-                      OtherMineralFertiliserType.ca_carbonation_linestone: 5.0,
+                      OtherMineralFertiliserType.ca_carbonation_limestone: 5.0,
                       OtherMineralFertiliserType.ca_seaweed_limestone: 5.0},
                   "magnesium_from_fertilizer": 4.0,
                   "magnesium_as_dolomite": 1.0

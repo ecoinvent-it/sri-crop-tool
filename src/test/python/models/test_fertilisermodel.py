@@ -36,7 +36,7 @@ class Test(unittest.TestCase):
                     },
               "other_mineral_fertiliser_quantities":
                     {   OtherMineralFertiliserType.ca_limestone: 0.1,
-                        OtherMineralFertiliserType.ca_carbonation_linestone: 0.2,
+                        OtherMineralFertiliserType.ca_carbonation_limestone: 0.2,
                         OtherMineralFertiliserType.ca_seaweed_limestone: 0.3
                     },
               "soil_with_ph_under_or_7":0.45
