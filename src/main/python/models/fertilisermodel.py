@@ -85,48 +85,44 @@ class FertModel(object):
                                NFertiliserType.ammonia_liquid: 0.0091 #Anhydrous ammonia
                                }
 
-    #src: WLFDB Guidelines, tab. 23
+    #src: WLFDB Guidelines, tab. 23; Agribalyse methodology report v1.1 Table 80 for Hg
     # mg/kg nutrient
-    #NOTE: no value for Hg
-    _HM_N_FERT_VALUES = {NFertiliserType.ammonium_nitrate: [0.18, 25.45, 181.82, 6.91, 47.27, 14.55],
-                         NFertiliserType.urea: [0.11, 13.04, 95.65, 2.39, 4.35, 4.35],
-                         NFertiliserType.ureaAN: [0.11, 13.04, 95.65, 2.39, 4.35, 4.35], #urea
-                         NFertiliserType.mono_ammonium_phosphate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81],  #generic
-                         NFertiliserType.di_ammonium_phosphate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81],  #generic
-                         NFertiliserType.an_phosphate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81],  #generic
-                         NFertiliserType.lime_ammonium_nitrate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81],  #generic
-                         NFertiliserType.ammonium_sulphate: [0.24, 19.05, 142.86, 5.24, 8.57, 9.52],
-                         NFertiliserType.potassium_nitrate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81],  #generic
-                         NFertiliserType.ammonia_liquid: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81]  #generic
+    _HM_N_FERT_VALUES = {NFertiliserType.ammonium_nitrate: [0.18, 25.45, 181.82, 6.91, 47.27, 14.55, 0.36],
+                         NFertiliserType.urea: [0.11, 13.04, 95.65, 2.39, 4.35, 4.35, 0.43],
+                         NFertiliserType.ureaAN: [0.11, 13.04, 95.65, 2.39, 4.35, 4.35, 0.43], #urea
+                         NFertiliserType.mono_ammonium_phosphate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81, 0.4],  #generic
+                         NFertiliserType.di_ammonium_phosphate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81, 0.4],  #generic
+                         NFertiliserType.an_phosphate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81, 0.4],  #generic
+                         NFertiliserType.lime_ammonium_nitrate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81, 0.4],  #generic
+                         NFertiliserType.ammonium_sulphate: [0.24, 19.05, 142.86, 5.24, 8.57, 9.52, 0.0],
+                         NFertiliserType.potassium_nitrate: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81, 0.4],  #generic
+                         NFertiliserType.ammonia_liquid: [0.21, 22.25, 121.43, 5.37, 17.17, 7.81, 0.4]  #generic
                         }
 
-    #src: WLFDB Guidelines, tab. 23
+    #src: WLFDB Guidelines, tab. 23; Agribalyse methodology report v1.1 Table 80 for Hg
     # mg/kg nutrient
-    #NOTE: no value for Hg
-    _HM_P_FERT_VALUES = {PFertiliserType.triple_superphosphate: [113.04, 97.83, 650.00, 7.61, 95.65, 567.39],
-                         PFertiliserType.superphosphate: [52.63, 121.05, 852.63, 578.95, 105.26, 342.11],
-                         PFertiliserType.mono_ammonium_phosphate: [51.32, 118.22, 751.32, 49.42, 100.46, 589.46],  #generic
-                         PFertiliserType.di_ammonium_phosphate: [51.32, 118.22, 751.32, 49.42, 100.46, 589.46],  #generic
-                         PFertiliserType.an_phosphate: [51.32, 118.22, 751.32, 49.42, 100.46, 589.46],  #generic
-                         PFertiliserType.hypophosphate_raw_phosphate: [50.00, 115.38, 915.38, 23.85, 76.92, 611.54], #P hyperphosphate (raw phosphate, kg P2O5)
-                         PFertiliserType.ground_basic_slag: [1.56, 250.00, 425.00, 75.00, 125.00, 12212.50] # thomas Meal
+    _HM_P_FERT_VALUES = {PFertiliserType.triple_superphosphate: [113.04, 97.83, 650.00, 7.61, 95.65, 567.39, 0.26],
+                         PFertiliserType.superphosphate: [52.63, 121.05, 852.63, 578.95, 105.26, 342.11, 0.58],
+                         PFertiliserType.mono_ammonium_phosphate: [51.32, 118.22, 751.32, 49.42, 100.46, 589.46, 0.46],  #generic
+                         PFertiliserType.di_ammonium_phosphate: [51.32, 118.22, 751.32, 49.42, 100.46, 589.46, 0.46],  #generic
+                         PFertiliserType.an_phosphate: [51.32, 118.22, 751.32, 49.42, 100.46, 589.46, 0.46],  #generic
+                         PFertiliserType.hypophosphate_raw_phosphate: [50.00, 115.38, 915.38, 23.85, 76.92, 611.54, 0.5], #P hyperphosphate (raw phosphate, kg P2O5)
+                         PFertiliserType.ground_basic_slag: [1.56, 250.00, 425.00, 75.00, 125.00, 12212.50, 0.42] # thomas Meal
                         }
     
-    #src: WLFDB Guidelines, tab. 23
+    #src: WLFDB Guidelines, tab. 23; Agribalyse methodology report v1.1 Table 80 for Hg
     # mg/kg nutrient
-    #NOTE: no value for Hg
-    _HM_K_FERT_VALUES = {KFertiliserType.potassium_salt: [0.10, 8.33, 76.67, 9.17, 3.50, 3.33], #Potassium chloride
-                        KFertiliserType.potassium_sulphate: [0.10, 4.00, 64.00, 6.60, 1.60, 4.00],
-                        KFertiliserType.potassium_nitrate: [0.11, 6.17, 70.33, 7.88, 7.52, 88.54], #generic
-                        KFertiliserType.patent_potassium: [0.19, 173.08, 153.85, 11.54, 11.54, 173.08] #Raw potassium
+    _HM_K_FERT_VALUES = {KFertiliserType.potassium_salt: [0.10, 8.33, 76.67, 9.17, 3.50, 3.33, 0.08], #Potassium chloride
+                        KFertiliserType.potassium_sulphate: [0.10, 4.00, 64.00, 6.60, 1.60, 4.00, 0.14],
+                        KFertiliserType.potassium_nitrate: [0.11, 6.17, 70.33, 7.88, 7.52, 88.54, 0.11], #generic
+                        KFertiliserType.patent_potassium: [0.19, 173.08, 153.85, 11.54, 11.54, 173.08, 0.11] #Raw potassium
                         }
     
-    #src: WLFDB Guidelines, tab. 23
+    #src: WLFDB Guidelines, tab. 23; Agribalyse methodology report v1.1 Table 80 for Hg
     # mg/kg nutrient
-    #NOTE: no value for Hg
-    _HM_OTHER_MINERAL_FERT_VALUES = {OtherMineralFertiliserType.ca_limestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00], #Lime kg CaO
-                                OtherMineralFertiliserType.ca_carbonation_limestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00], #Lime kg CaO
-                                OtherMineralFertiliserType.ca_seaweed_limestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00] #Lime kg CaO
+    _HM_OTHER_MINERAL_FERT_VALUES = {OtherMineralFertiliserType.ca_limestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00, 0.45], #Lime kg CaO
+                                OtherMineralFertiliserType.ca_carbonation_limestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00, 0.45], #Lime kg CaO
+                                OtherMineralFertiliserType.ca_seaweed_limestone: [0.12, 4.00, 8.00, 3.60, 12.20, 314.00, 0.45] #Lime kg CaO
                                 }
     
     def __init__(self, inputs):

@@ -55,7 +55,7 @@ class Test(unittest.TestCase):
                             HeavyMetalType.pb: 282.137,
                             HeavyMetalType.ni: 383.838,
                             HeavyMetalType.cr: 10076.781,
-                            HeavyMetalType.hg: 0.0}
+                            HeavyMetalType.hg: 3.562}
 
         results = FertModel(self.inputs).computeHeavyMetal();
         for key, value in expectedResults.items():
