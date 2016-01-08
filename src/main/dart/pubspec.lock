@@ -8,7 +8,7 @@ packages:
   angular:
     description: angular
     source: hosted
-    version: "1.1.2"
+    version: "1.1.2+2"
   args:
     description: args
     source: hosted
@@ -76,7 +76,7 @@ packages:
   http_parser:
     description: http_parser
     source: hosted
-    version: "1.0.0"
+    version: "0.0.2+8"
   initialize:
     description: initialize
     source: hosted
@@ -164,11 +164,11 @@ packages:
   test:
     description: test
     source: hosted
-    version: "0.12.4+9"
+    version: "0.12.3+9"
   unittest:
     description: unittest
     source: hosted
-    version: "0.12.4"
+    version: "0.12.3"
   utf:
     description: utf
     source: hosted
