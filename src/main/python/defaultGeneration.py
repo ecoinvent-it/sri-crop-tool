@@ -135,7 +135,7 @@ class WaterUseDefaultGenerator(object):
     def generateDefault(self, field, generators):
         default_evapo_transpiration = CropCountryMatrixLookupDefaultGenerator(EVAPO_TRANSPI_PER_CROP_PER_COUNTRY).generateDefault("", generators);
         irrigation_efficiency_ratio = self._compute_irrigation_efficiency_ratio(generators["irrigation_types_proportions"])
-        return default_evapo_transpiration / irrigation_efficiency_ratio;
+        return default_evapo_transpiration / irrigation_efficiency_ratio * generators["yield_main_product_per_crop_cycle"] / 1000.0;
     
     _IRRIGATION_EFFICIENCY_FACTOR_SURFACE = 0.45
     _IRRIGATION_EFFICIENCY_FACTOR_SPRINKLER = 0.75
