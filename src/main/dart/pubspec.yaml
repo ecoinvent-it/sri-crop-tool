@@ -7,5 +7,7 @@ dependencies:
   web_components: any
 dev_dependencies:
   unittest: any
+  dart_to_js_script_rewriter: ^1.0.2
 transformers:
 - angular
+- dart_to_js_script_rewriter
