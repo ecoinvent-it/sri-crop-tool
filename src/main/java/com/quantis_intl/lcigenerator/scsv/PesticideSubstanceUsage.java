@@ -45,7 +45,7 @@ public class PesticideSubstanceUsage implements SubstanceUsage
     }
 
     @Override
-    public String getName()
+    public String getSubstanceName()
     {
         return Objects.requireNonNull(MAPPING.get(variable));
     }

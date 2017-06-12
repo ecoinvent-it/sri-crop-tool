@@ -20,12 +20,7 @@ package com.quantis_intl.lcigenerator.scsv;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
@@ -82,7 +77,7 @@ public class GeneratedProcess implements ProductScsvProcess
     }
 
     @Override
-    public Optional<String> getName()
+    public Optional<String> getSimaproName()
     {
         return Optional.of(generateProcessAndProductName());
     }
@@ -144,7 +139,6 @@ public class GeneratedProcess implements ProductScsvProcess
         return Optional.of(sb.toString());
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Optional<String> getComment()
     {
@@ -173,8 +167,8 @@ public class GeneratedProcess implements ProductScsvProcess
             resBuilder.append("\nDQR: ");
             try
             {
-                resBuilder.append(Arrays.stream(new SingleValue[] { sTeR, sGR, sTiR, sP, sC, sM })
-                        .mapToDouble(sv -> (Double) sv.getValue()).average().getAsDouble());
+                resBuilder.append(Arrays.stream(new SingleValue[]{sTeR, sGR, sTiR, sP, sC, sM})
+                                        .mapToDouble(sv -> (Double) sv.getValue()).average().getAsDouble());
             }
             catch (NullPointerException e)
             {
@@ -284,17 +278,17 @@ public class GeneratedProcess implements ProductScsvProcess
     private List<SubstanceUsage> toSubstanceUsage(TemplateSubstanceUsage[] templates)
     {
         return Arrays.stream(templates).map(r -> new GeneratedSubstanceUsage(r, modelOutputs, extractedInputs))
-                .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
-                .collect(Collectors.toList());
+                     .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
+                     .collect(Collectors.toList());
     }
 
     // TODO: map modelOutputs to template then sort by category, instead of this?
     private List<ProductUsage> toProductUsage(TemplateProductUsage[] templates)
     {
         List<ProductUsage> res = Arrays.stream(templates)
-                .map(r -> new GeneratedProductUsage(r, modelOutputs, extractedInputs))
-                .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
-                .collect(Collectors.toList());
+                                       .map(r -> new GeneratedProductUsage(r, modelOutputs, extractedInputs))
+                                       .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
+                                       .collect(Collectors.toList());
         findRequiredDeps(res);
         return res;
     }
@@ -303,9 +297,9 @@ public class GeneratedProcess implements ProductScsvProcess
     private List<WasteTreatmentUsage> toWasteTreatmentUsage(TemplateProductUsage[] templates)
     {
         List<WasteTreatmentUsage> res = Arrays.stream(templates)
-                .map(r -> new GeneratedProductUsage(r, modelOutputs, extractedInputs))
-                .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
-                .collect(Collectors.toList());
+                                              .map(r -> new GeneratedProductUsage(r, modelOutputs, extractedInputs))
+                                              .filter(s -> !"0.0".equals(s.getAmount()) && !"0".equals(s.getAmount()))
+                                              .collect(Collectors.toList());
         findWtRequiredDeps(res);
         return res;
     }
@@ -313,24 +307,26 @@ public class GeneratedProcess implements ProductScsvProcess
     private List<SubstanceUsage> buildPesticidesSubstanceUsages()
     {
         return modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
-                .filter(e -> !e.getKey().endsWith("_other"))
-                .filter(e -> !e.getKey().endsWith("_unspecified"))
-                .map(e -> new PesticideSubstanceUsage(e.getKey(), e.getValue(), findComment(e.getKey().substring(6))))
-                .collect(Collectors.toList());
+                           .filter(e -> !e.getKey().endsWith("_other"))
+                           .filter(e -> !e.getKey().endsWith("_unspecified"))
+                           .map(e -> new PesticideSubstanceUsage(e.getKey(), e.getValue(),
+                                                                 findComment(e.getKey().substring(6))))
+                           .collect(Collectors.toList());
     }
 
     private List<ProductUsage> buildPesticidesProductUsages()
     {
         List<ProductUsage> res = modelOutputs.entrySet().stream().filter(e -> e.getKey().startsWith("pesti_"))
-                .map(e -> new PesticideProductUsage(e.getKey(), e.getValue(), findComment(e.getKey().substring(6))))
-                .collect(Collectors.toList());
+                                             .map(e -> new PesticideProductUsage(e.getKey(), e.getValue(),
+                                                                                 findComment(e.getKey().substring(6))))
+                                             .collect(Collectors.toList());
         List<ProductUsage> undefined = modelOutputs
                 .entrySet()
                 .stream()
                 .filter(e -> e.getKey().startsWith("pesti_"))
                 .filter(e -> e.getKey().endsWith("_other") || e.getKey().endsWith("_unspecified"))
                 .map(e -> new PesticideEmissions(e.getKey(), e.getValue(), findComment(e.getKey().substring(6)),
-                        outputTarget))
+                                                 outputTarget))
                 .collect(Collectors.toList());
         res.addAll(undefined);
         // FIXME: Ugly

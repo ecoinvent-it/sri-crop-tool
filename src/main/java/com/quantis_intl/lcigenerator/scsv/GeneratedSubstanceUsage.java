@@ -46,7 +46,7 @@ public class GeneratedSubstanceUsage implements SubstanceUsage
     }
 
     @Override
-    public String getName()
+    public String getSubstanceName()
     {
         String templateName = template.name;
         Pattern pattern = Pattern.compile("\\{(.+?)\\}");
