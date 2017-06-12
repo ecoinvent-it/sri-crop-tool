@@ -92,44 +92,12 @@
 								<pubCommand>build</pubCommand>
 								<pubOptions>
 									<pubOption>--all</pubOption>
-									<pubOption>--output=${project.build.directory}/classes</pubOption>
+									<pubOption>--output=${project.build.directory}/dart</pubOption>
 								</pubOptions>
 							</configuration>
 						</execution>
 					</executions>
 				</plugin>
-				<!-- TODO: Use process-resources for replacements -->
-				<plugin>
-         <groupId>com.google.code.maven-replacer-plugin</groupId>
-         <artifactId>replacer</artifactId>
-         <version>1.5.3</version>
-         <executions>
-             <execution>
-           <phase>process-resources</phase>
-           <goals>
-               <goal>replace</goal>
-		   </goals>
-             </execution>
-         </executions>
-         <configuration>
-            <includes>
-              <include>${project.build.directory}/classes/web/**.html</include>
-              <include>${project.build.directory}/classes/web/**.dart</include>
-              <include>${project.build.directory}/classes/web/**.js</include>
-            </includes>
-             <regex>false</regex>
-             <replacements>
-		           <replacement>
-		               <token>@@@GOOGLE_ANALYTICS_ACCOUNT@@@</token>
-		               <value>${google.analytics.account}</value>
-				   </replacement>
-		           <replacement>
-                   <token>@@@PROJECT_VERSION_NUMBER@@@</token>
-                   <value>${project.version}</value>
-				   </replacement>
-             </replacements>
-         </configuration>
-        </plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-shade-plugin</artifactId>
@@ -160,6 +128,29 @@
 					</executions>
 				</plugin>
 			</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>${project.build.directory}/dart</directory>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<filtering>true</filtering>
+				<includes>
+					<include>web/index.dart.js</include>
+					<include>web/index.html</include>
+				</includes>
+			</resource>
+			<resource>
+				<directory>${project.build.directory}/dart</directory>
+				<targetPath>${project.build.directory}/classes</targetPath>
+				<filtering>false</filtering>
+				<excludes>
+					<exclude>web/index.dart.js</exclude>
+					<exclude>web/index.html</exclude>
+				</excludes>
+			</resource>
+		</resources>
 	</build>
 
 	<dependencies>
