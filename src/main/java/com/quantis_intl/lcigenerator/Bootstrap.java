@@ -20,11 +20,13 @@ package com.quantis_intl.lcigenerator;
 
 import java.util.Properties;
 
+import com.quantis_intl.lcigenerator.dao.MybatisAlcigUserDao;
 import com.quantis_intl.lcigenerator.guice.CoreModule;
 import com.quantis_intl.login.LoginFeature;
 import com.quantis_intl.stack.QtsStack;
 import com.quantis_intl.stack.features.MailFeature;
 import com.quantis_intl.stack.features.MyBatisFeature;
+import com.quantis_intl.stack.mybatis.QidTypeHandler;
 import com.quantis_intl.stack.utils.StackProperties;
 
 public class Bootstrap
@@ -44,9 +46,11 @@ public class Bootstrap
         }
 
         stack.withFeatures(MailFeature.withGmailSender(),
-                MyBatisFeature.withMapperPackages("com.quantis_intl.login.mappers",
-                        "com.quantis_intl.lcigenerator.mappers"),
-                new LoginFeature.Builder("Jo5xNFdSPUmc4ijk2euM").userCanMultilog().build())
+                           MyBatisFeature.withMapperPackages("com.quantis_intl.login.mappers",
+                                                             "com.quantis_intl.lcigenerator.mappers")
+                                         .withTypeHandler(QidTypeHandler.class),
+                           new LoginFeature.Builder("Jo5xNFdSPUmc4ijk2euM", MybatisAlcigUserDao.class)
+                                   .userCanMultilog().build())
                 .withAdditionalModules(new CoreModule());
 
         stack.start();
@@ -71,7 +75,7 @@ public class Bootstrap
         p.setProperty(StackProperties.SQL_USERNAME_PROP, "root");
         p.setProperty(StackProperties.SQL_PASSWORD_PROP, "root");
 
-        p.setProperty("server.uploadedFilesFolder", System.getenv("ALCIG_UPLOADED_FILES_FOLDER"));
+        p.setProperty(StackProperties.SERVER_UPLOADED_FILE_FOLDER, System.getenv("ALCIG_UPLOADED_FILES_FOLDER"));
         p.setProperty("pyBridge.url", "http://localhost:11001/computeLci");
         return p;
     }

@@ -23,20 +23,20 @@ import java.util.OptionalInt;
 import javax.inject.Inject;
 
 import com.quantis_intl.lcigenerator.dao.GenerationDao;
-import com.quantis_intl.login.business.LoginService;
+import com.quantis_intl.login.business.AdminService;
 import com.quantis_intl.stack.utils.Qid;
 
 public class LicenseService
 {
     private final LicenseDao dao;
-    private final LoginService loginService;
+    private final AdminService adminService;
     private final GenerationDao generationDao;
 
     @Inject
-    public LicenseService(LicenseDao dao, LoginService loginService, GenerationDao generationDao)
+    public LicenseService(LicenseDao dao, AdminService adminService, GenerationDao generationDao)
     {
         this.dao = dao;
-        this.loginService = loginService;
+        this.adminService = adminService;
         this.generationDao = generationDao;
     }
 
@@ -45,7 +45,7 @@ public class LicenseService
         License license = dao.getExistingLicenseById(licenseId);
         if (license.getUserId() != null)
             throw new IllegalStateException();
-        Qid userId = loginService.createUser(username, email);
+        Qid userId = adminService.createNonActivatedUser(username, email);
         license.setUserId(userId);
         dao.updateUserId(license);
         return userId;

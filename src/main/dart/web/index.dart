@@ -1,39 +1,36 @@
 import 'dart:html';
 
-import 'package:angular/angular.dart';
-import 'package:angular/application_factory.dart';
-
-import 'package:intl/intl.dart';
-import 'package:intl/intl_browser.dart';
-import 'package:intl/date_symbol_data_local.dart';
-
-import 'package:alcig/connectivity_state.dart';
 import 'package:alcig/api/api.dart';
 import 'package:alcig/api/api_impl.dart';
 import 'package:alcig/api/generation_service.dart';
 import 'package:alcig/api/local_notification_service.dart';
-
+import 'package:alcig/connectivity_state.dart';
+import 'package:alcig/contactPage/contact_page.dart';
+import 'package:alcig/faqPage/faq_page.dart';
 import 'package:alcig/license/license_api.dart';
 import 'package:alcig/license/license_api_impl.dart';
 import 'package:alcig/license/license_service.dart';
-
-import 'package:alcig/menu_with_selection.dart';
+import 'package:alcig/login/activateUserBox/activate_user_box.dart';
+import 'package:alcig/login/changePasswordBox/change_password_box.dart';
+import 'package:alcig/login/forgotPasswordBox/forgot_password_box.dart';
+import 'package:alcig/login/loginBox/login_box.dart';
 import 'package:alcig/login/login_api.dart';
 import 'package:alcig/login/login_api_impl.dart';
 import 'package:alcig/login/login_service.dart';
-import 'package:alcig/login/loginBox/login_box.dart';
-import 'package:alcig/login/userBox/user_box.dart';
-import 'package:alcig/login/changePasswordBox/change_password_box.dart';
-import 'package:alcig/login/forgotPasswordBox/forgot_password_box.dart';
 import 'package:alcig/login/resetPasswordBox/reset_password_box.dart';
-import 'package:alcig/login/activateUserBox/activate_user_box.dart';
-//import 'package:alcig/custom_annotations.dart';
-import 'package:alcig/contactPage/contact_page.dart';
+import 'package:alcig/login/userBox/user_box.dart';
+import 'package:alcig/menu_with_selection.dart';
 import 'package:alcig/notificationModal/notification_modal.dart';
+import 'package:alcig/parametersPage/parameters_page.dart';
 import 'package:alcig/processGenerationSteps/process_generation_steps.dart';
 import 'package:alcig/toolPage/tool_page.dart';
-import 'package:alcig/faqPage/faq_page.dart';
-import 'package:alcig/parametersPage/parameters_page.dart';
+import 'package:angular/angular.dart';
+import 'package:angular/application_factory.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_browser.dart';
+//import 'package:alcig/custom_annotations.dart';
+
 
 void main() {
   _init().then( (_) => window.postMessage('Dart is running', '*'));
@@ -49,14 +46,17 @@ _init() async {
 
 class MyAppModule extends Module {
   MyAppModule() {
+    String serverUrl = Uri.base.port == 63342 ? "http://localhost:7879/" : "";
+
     bind(RouteInitializerFn, toValue: alcigRouteInitializer);
     bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false));
     bind(MenuWithSelection);
-    bind(ConnectivityState);
-    bind(Api, toImplementation: ApiImpl);
+    ConnectivityState connectivityState = new ConnectivityState();
+    bind(ConnectivityState, toValue: connectivityState);
+    bind(Api, toValue: new ApiImpl(connectivityState, serverUrl));
     bind(GenerationService);
     bind(LocalNotificationService);
-    bind(LicenseApi, toImplementation: LicenseApiImpl);
+    bind(LicenseApi, toValue: new LicenseApiImpl(connectivityState, serverUrl));
     bind(LicenseService);
     bind(ProcessGeneratorSteps);
     bind(NotificationModal);
@@ -64,7 +64,7 @@ class MyAppModule extends Module {
     bind(ContactPage);
     bind(FaqPage);
     bind(ParametersPage);
-    bind(LoginApi, toImplementation: LoginApiImpl);
+    bind(LoginApi, toValue: new LoginApiImpl(connectivityState, serverUrl));
     bind(LoginService);
     bind(LoginBox);
     bind(UserBox);

@@ -19,12 +19,10 @@
 package com.quantis_intl.lcigenerator.guice;
 
 import com.google.inject.AbstractModule;
-import com.quantis_intl.lcigenerator.api.AdminApi;
 import com.quantis_intl.lcigenerator.api.Api;
 import com.quantis_intl.lcigenerator.api.LicenseApi;
-import com.quantis_intl.lcigenerator.api.PrincipalApi;
+import com.quantis_intl.lcigenerator.api.PublicAlcigApi;
 import com.quantis_intl.lcigenerator.api.PublicApi;
-import com.quantis_intl.lcigenerator.api.PublicPrincipalApi;
 import com.quantis_intl.lcigenerator.dao.GenerationDao;
 import com.quantis_intl.lcigenerator.dao.MybatisGenerationDao;
 import com.quantis_intl.lcigenerator.license.LicenseDao;
@@ -37,9 +35,7 @@ public class CoreModule extends AbstractModule
     {
         bind(Api.class);
         bind(PublicApi.class);
-        bind(PrincipalApi.class);
-        bind(PublicPrincipalApi.class);
-        bind(AdminApi.class);
+        bind(PublicAlcigApi.class);
         bind(LicenseApi.class);
         bind(GenerationDao.class).to(MybatisGenerationDao.class);
         bind(LicenseDao.class).to(MybatisLicenseDao.class);
