@@ -33,11 +33,26 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "IN":4216.18370420795,
       "GLO":17136.224968
    },
+   "bellpepper": {
+      "GLO": 0.0
+   },
+   "cabbage": {
+      "GLO": 0.0
+   },
    "carrot":{
       "CN":4304.7,
       "IL":6845.5,
       "NL":6031.8,
       "GLO":5727.33
+   },
+   "cashew": {
+      "GLO": 0.0
+   },
+   "cassava": {
+      "GLO": 0.0
+   },
+   "chilli": {
+      "GLO": 0.0
    },
    "cocoa":{
       "CI":2159.5798386,
@@ -54,11 +69,32 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "VN":9631.63156411632,
       "GLO":7819.908871
    },
+   "cotton": {
+      "GLO": 0.0
+   },
+   "eggplant": {
+      "GLO": 0.0
+   },
+   "flax": {
+      "GLO": 0.0
+   },
+   "grape": {
+      "GLO": 0.0
+   },
+   "guar": {
+      "GLO": 0.0
+   },
+   "hemp": {
+      "GLO": 0.0
+   },
    "lemonlime":{
       "MX":28578.0,
       "ES":13860.0,
       "TR":10800.0,
       "GLO":17746.0
+   },
+   "lentil": {
+      "GLO": 0.0
    },
    "linseed":{
       "CA":783.402449198899,
@@ -73,10 +109,16 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "ES":5698.7015263555,
       "GLO":5972.293615
    },
+   "mango": {
+      "GLO": 0.0
+   },
    "mint":{
       "IN":735.0,
       "US":2000.0,
       "GLO":1367.5
+   },
+   "mulberry": {
+      "GLO": 0.0
    },
    "oat":{
       "CA":730.0,

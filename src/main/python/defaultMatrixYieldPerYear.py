@@ -135,6 +135,12 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "VN":15028.64375,
       "GLO":29831.28993
    },
+   "bellpepper": {
+      "GLO": 0.0
+   },
+   "cabbage": {
+      "GLO": 0.0
+   },
    "carrot":{
       "AR":24914.4825,
       "AU":51448.05675,
@@ -169,6 +175,15 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "UA":17380.01175,
       "US":40129.0645,
       "GLO":33842.75845
+   },
+   "cashew": {
+      "GLO": 0.0
+   },
+   "cassava": {
+      "GLO": 0.0
+   },
+   "chilli": {
+      "GLO": 0.0
    },
    "cocoa":{
       "BR":358.76025,
@@ -225,6 +240,24 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "VN":2210.61625,
       "GLO":863.47178
    },
+   "cotton": {
+      "GLO": 0.0
+   },
+   "eggplant": {
+      "GLO": 0.0
+   },
+   "flax": {
+      "GLO": 0.0
+   },
+   "grape": {
+      "GLO": 0.0
+   },
+   "guar": {
+      "GLO": 0.0
+   },
+   "hemp": {
+      "GLO": 0.0
+   },
    "lemonlime":{
       "AR":27753.51625,
       "AU":23405.0855,
@@ -251,6 +284,9 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "TR":37074.46525,
       "US":35285.871,
       "GLO":16813.25676
+   },
+   "lentil": {
+      "GLO": 0.0
    },
    "linseed":{
       "AR":1259.40575,
@@ -341,9 +377,15 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "US":27437.24725,
       "GLO":16777.53995
    },
+   "mango": {
+      "GLO": 0.0
+   },
    "mint":{
       "ES":5359.90725,
       "GLO":5359.90725
+   },
+   "mulberry": {
+      "GLO": 0.0
    },
    "oat":{
       "AR":2055.3385,

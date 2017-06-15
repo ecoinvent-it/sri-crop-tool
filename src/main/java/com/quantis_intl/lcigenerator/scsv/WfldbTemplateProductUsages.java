@@ -159,6 +159,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Carrot seed, at regional storehouse (WFLDB 3.0)/CH U", "kg",
                     "seeds_carrot",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                                     "seeds_cashew",
+                                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_cocoa",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
@@ -167,6 +170,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
                     "seeds_coffee",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                                     "seeds_grape",
+                                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
                     "seeds_lemonlime",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
@@ -179,8 +185,14 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
                     "seeds_mandarin",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                                     "seeds_mango",
+                                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Mint seedling, at farm (WFLDB 3.0)/US U", "p", "seeds_mint",
                     StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
+            new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p",
+                                     "seeds_mulberry",
+                                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Oat seed, at regional storehouse (WFLDB 3.0)/CH U", "kg", "seeds_oat",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Planting and establishing of orchard (WFLDB 3.0)/CH U", "p", "seeds_olive",
@@ -604,6 +616,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             this.variableResolver = variableResolver;
         }
 
+        @Override
         protected String lookupVariable(Map<String, String> modelOutputs, String variable)
         {
             return variableResolver.apply(modelOutputs, variable);
@@ -618,6 +631,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             super("{name}", unit, amountVariable, uncertainty, commentVariable);
         }
 
+        @Override
         protected String lookupVariable(Map<String, String> modelOutputs, String variable)
         {
             String country = modelOutputs.get("country");
@@ -637,6 +651,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             super("", unit, amountVariable, uncertainty, commentVariable);
         }
 
+        @Override
         public String provideName(Map<String, String> modelOutputs)
         {
             String cropType = modelOutputs.get("luc_crop_type");
@@ -646,6 +661,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             return "Land use change, " + cropType + " crop (" + db + ")/" + country + " U";
         }
 
+        @Override
         public Optional<List<String>> provideRequiredDep(Map<String, String> modelOutputs)
         {
             String cropType = modelOutputs.get("luc_crop_type");

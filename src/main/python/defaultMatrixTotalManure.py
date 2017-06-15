@@ -35,11 +35,26 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
       "IN":1.8434549332737,
       "GLO":3.23690276511145
    },
+   "bellpepper": {
+      "GLO": 0.0
+   },
+   "cabbage": {
+      "GLO": 0.0
+   },
    "carrot":{
       "CN":4.7734022413912,
       "IL":5.8451418597097,
       "NL":11.1201567395712,
       "GLO":7.24623361355737
+   },
+   "cashew": {
+      "GLO": 0.0
+   },
+   "cassava": {
+      "GLO": 0.0
+   },
+   "chilli": {
+      "GLO": 0.0
    },
    "cocoa":{
       "CI":1.19156329859455,
@@ -59,11 +74,32 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
       "VN":1.87047519808932,
       "GLO":1.48301197729934
    },
+   "cotton": {
+      "GLO": 0.0
+   },
+   "eggplant": {
+      "GLO": 0.0
+   },
+   "flax": {
+      "GLO": 0.0
+   },
+   "grape": {
+      "GLO": 0.0
+   },
+   "guar": {
+      "GLO": 0.0
+   },
+   "hemp": {
+      "GLO": 0.0
+   },
    "lemonlime":{
       "MX":1.67142636694462,
       "ES":2.28572855457969,
       "TR":3.48666752690866,
       "GLO":2.48127414947766
+   },
+   "lentil": {
+      "GLO": 0.0
    },
    "linseed":{
       "CA":3.69464708487945,
@@ -79,8 +115,14 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
       "ES":2.3321907050988,
       "GLO":1.76300389419428
    },
+   "mango": {
+      "GLO": 0.0
+   },
    "mint":{
       "GLO":0.0 #NOTE: Used as default as we don't have the value
+   },
+   "mulberry": {
+      "GLO": 0.0
    },
    "oat":{
       "CA":2.74319434970925,
@@ -239,11 +281,26 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
       "IN":2484.78449042543,
       "GLO":2789.84333513034
    },
+   "bellpepper": {
+      "GLO": 0.0
+   },
+   "cabbage": {
+      "GLO": 0.0
+   },
    "carrot":{
       "CN":3779.52463281704,
       "IL":4289.98322128546,
       "NL":7295.31036584343,
       "GLO":5121.60607331531
+   },
+   "cashew": {
+      "GLO": 0.0
+   },
+   "cassava": {
+      "GLO": 0.0
+   },
+   "chilli": {
+      "GLO": 0.0
    },
    "cocoa":{
       "CI":754.085872236016,
@@ -263,11 +320,32 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
       "VN":1426.01176025921,
       "GLO":1163.0683931622
    },
+   "cotton": {
+      "GLO": 0.0
+   },
+   "eggplant": {
+      "GLO": 0.0
+   },
+   "flax": {
+      "GLO": 0.0
+   },
+   "grape": {
+      "GLO": 0.0
+   },
+   "guar": {
+      "GLO": 0.0
+   },
+   "hemp": {
+      "GLO": 0.0
+   },
    "lemonlime":{
       "MX":1070.47990068315,
       "ES":1553.14109466831,
       "TR":3430.01190000136,
       "GLO":2017.87763178427
+   },
+   "lentil": {
+      "GLO": 0.0
    },
    "linseed":{
       "CA":2632.77728965003,
@@ -283,8 +361,14 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
       "ES":1584.71189303512,
       "GLO":1264.98121935193
    },
+   "mango": {
+      "GLO": 0.0
+   },
    "mint":{
       "GLO": 0.0 #NOTE: Used as default as we don't have the value
+   },
+   "mulberry": {
+      "GLO": 0.0
    },
    "oat":{
       "CA":1954.77933861887,

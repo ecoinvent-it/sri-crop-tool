@@ -1,40 +1,42 @@
-from defaultTables import CLAY_CONTENT_PER_COUNTRY, SOIL_CARBON_CONTENT_PER_COUNTRY,\
-    ROOTING_DEPTH_PER_CROP, FERT_N_RATIO_PER_COUNTRY, FERT_P_RATIO_PER_COUNTRY, FERT_K_RATIO_PER_COUNTRY,\
-    MANURE_LIQUID_RATIO_PER_COUNTRY, MANURE_SOLID_RATIO_PER_COUNTRY,\
-    ANNUAL_PRECIPITATION_PER_COUNTRY, YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY,\
-    WATER_CONTENT_FM_RATIO_PER_CROP, IRR_TECH_RATIO_PER_COUNTRY,\
-    LAND_USE_CATEGORY_PER_CROP, CROP_FACTOR_PER_CROP, SAND_CONTENT_PER_COUNTRY,\
-    SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE,\
-    ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL,\
+import dateutil.relativedelta as relativedelta
+from datetime import date
+
+from defaultMatrixEvapoTranspiration import EVAPO_TRANSPI_PER_CROP_PER_COUNTRY
+from defaultMatrixNUptake import NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY
+from defaultMatrixSeed import NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY, \
+    NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY, \
+    NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY
+from defaultMatrixTotalManure import TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY, \
+    TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY
+from defaultMatrixTotalMineralFert import NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY
+from defaultMatrixTotalPesticides import TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY
+from defaultMatrixYieldPerYear import YIELD_PER_YEAR_PER_CROP_PER_COUNTRY
+from defaultTables import CLAY_CONTENT_PER_COUNTRY, SOIL_CARBON_CONTENT_PER_COUNTRY, \
+    ROOTING_DEPTH_PER_CROP, FERT_N_RATIO_PER_COUNTRY, FERT_P_RATIO_PER_COUNTRY, FERT_K_RATIO_PER_COUNTRY, \
+    MANURE_LIQUID_RATIO_PER_COUNTRY, MANURE_SOLID_RATIO_PER_COUNTRY, \
+    ANNUAL_PRECIPITATION_PER_COUNTRY, YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY, \
+    WATER_CONTENT_FM_RATIO_PER_CROP, IRR_TECH_RATIO_PER_COUNTRY, \
+    LAND_USE_CATEGORY_PER_CROP, CROP_FACTOR_PER_CROP, SAND_CONTENT_PER_COUNTRY, \
+    SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE, \
+    ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL, \
     SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, CARBON_CONTENT_PER_CROP, IRR_WATERUSE_RATIO_PER_COUNTRY
+from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation, \
+    Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
+from models.atomicmass import MA_CO2, MA_C
+from models.erosionmodel import TillageMethod, AntiErosionPractice
+from models.fertilisermodel import OtherMineralFertiliserType
 from models.hmmodel import LandUseCategoryForHM, PesticideType
+from models.irrigationmodel import IrrigationType
+from models.modelEnums import SoilTexture
 from models.otherorganicfertilisermodel import CompostType, SludgeType
 from models.pmodel import LandUseCategory
-from models.fertilisermodel import OtherMineralFertiliserType
-from models.erosionmodel import TillageMethod, AntiErosionPractice
-from models.modelEnums import SoilTexture
-from models.atomicmass import MA_CO2, MA_C
-from defaultMatrixYieldPerYear import YIELD_PER_YEAR_PER_CROP_PER_COUNTRY
-from defaultMatrixTotalMineralFert import NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY
-from defaultMatrixNUptake import NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY
-from defaultMatrixTotalManure import TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY,\
-    TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY
-from defaultMatrixSeed import NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY,\
-    NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY,\
-    NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY
-from datetime import date
-import dateutil.relativedelta as relativedelta
-from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation,\
-    Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
-from defaultMatrixTotalPesticides import TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY
-from defaultMatrixEvapoTranspiration import EVAPO_TRANSPI_PER_CROP_PER_COUNTRY
-from models.irrigationmodel import IrrigationType
+
 
 class DefaultValuesWrapper(object):
     def __init__(self, inputMapping, generatorMap):
         self.inputMapping = inputMapping
         self._generatorMap = generatorMap
-        
+
     #TODO: Cache the generated values
     def __getattr__(self, name):
         try:
@@ -42,10 +44,10 @@ class DefaultValuesWrapper(object):
         except KeyError:
             res = self._generatorMap[name].generateDefault(name, self)
         return res;
-    
+
     def __getitem__(self, name):
         return self.__getattr__(name)
-    
+
     def __contains__(self, name):
         return name in self.inputMapping or name in self._generatorMap
 
@@ -57,34 +59,35 @@ class NotFoundGenerator(object):
 class SimpleValueDefaultGenerator(object):
     def __init__(self, value):
         self._value = value
-        
+
     def generateDefault(self, field, generators):
         return self._value
-    
+
 class TableLookupDefaultGenerator(object):
     def __init__(self, keyField, table):
         self._keyField = keyField
         self._table = table
-        
+
     def generateDefault(self, field, generators):
         return self._table[generators[self._keyField]]
-    
+
 class CountryMatrixLookupDefaultGenerator(object):
     def __init__(self, keyField, table):
         self._keyField = keyField
         self._table = table
-        
+
     def generateDefault(self, field, generators):
         if (generators["country"] in self._table):
             currentCountryTable = self._table[generators["country"]]
         else:
             currentCountryTable = self._table["GLO"]
         return currentCountryTable[self._keyField];
-    
+
+
 class ZeroMapDefaultGenerator(object):
     def __init__(self, enumClass):
         self._enumClass = enumClass
-    
+
     def generateDefault(self, attrName, mapping):
         return {k: 0.0 for k in self._enumClass}
 
@@ -93,28 +96,31 @@ class ConvertRatioToValueDefaultGenerator(object):
         self._tableKeyField = tableKeyField
         self._ratioTable = ratioTable
         self._totalField = totalField
-        
+
     def generateDefault(self, field, generators):
         total = generators[self._totalField]
         return {k:v * total for k,v in self._ratioTable[generators[self._tableKeyField]].items()}
-    
+
+
 class RatiosToValuesConvertor(object):
     def __init__(self, ratiosField, totalField):
         self._ratiosField = ratiosField
         self._totalField = totalField
-        
+
     def generateDefault(self, field, generators):
         total = generators[self._totalField]
         return {k:v * total for k,v in generators[self._ratiosField].items()}
-    
+
+
 class OneRatioToValueConvertor(object):
     def __init__(self, ratioField, totalField):
         self._ratioField = ratioField
         self._totalField = totalField
-        
+
     def generateDefault(self, field, generators):
         return generators[self._ratioField] *generators[self._totalField]
-    
+
+
 class CropCyclePerYearDefaultGenerator(object):
     def generateDefault(self, field, generators):
         try:
@@ -126,46 +132,49 @@ class CropCyclePerYearDefaultGenerator(object):
             if dateDiff.years < 0 or dateDiff.months < 0 or dateDiff.days < 0 or (dateDiff.years + dateDiff.months + dateDiff.days) == 0:
                 return 1.0
             else:
-                #If remaining days are more than 4 weeks, consider a month, if more than 2 weeks, consider half a month 
+                # If remaining days are more than 4 weeks, consider a month, if more than 2 weeks, consider half a month
                 return 1.0 / (dateDiff.years + dateDiff.months/12.0 + (dateDiff.days // 14.0) / 24.0);
         except KeyError:
             return 1.0
-        
+
+
 class WaterUseDefaultGenerator(object):
     def generateDefault(self, field, generators):
         default_evapo_transpiration = CropCountryMatrixLookupDefaultGenerator(EVAPO_TRANSPI_PER_CROP_PER_COUNTRY).generateDefault("", generators);
         irrigation_efficiency_ratio = self._compute_irrigation_efficiency_ratio(generators["irrigation_types_proportions"])
         return default_evapo_transpiration / irrigation_efficiency_ratio * generators["yield_main_product_per_crop_cycle"] / 1000.0;
-    
+
     _IRRIGATION_EFFICIENCY_FACTOR_SURFACE = 0.45
     _IRRIGATION_EFFICIENCY_FACTOR_SPRINKLER = 0.75
     _IRRIGATION_EFFICIENCY_FACTOR_DRIP = 0.9
-    
+
     def _compute_irrigation_efficiency_ratio(self, irrigation_types_proportions):
         return self._compute_surface_irrigation_ratio(irrigation_types_proportions) \
              + self._compute_sprinkler_irrigation_ratio(irrigation_types_proportions)\
              + self._compute_drip_irrigation_ratio(irrigation_types_proportions);
-    
+
     def _compute_surface_irrigation_ratio(self, irrigation_types_proportions):
-        return (irrigation_types_proportions[IrrigationType.surface_irrigation_diesel] 
-                + irrigation_types_proportions[IrrigationType.surface_irrigation_electricity] 
-                + irrigation_types_proportions[IrrigationType.surface_irrigation_no_energy])\
-                 * self._IRRIGATION_EFFICIENCY_FACTOR_SURFACE
-    
+        return (irrigation_types_proportions[IrrigationType.surface_irrigation_diesel]
+                + irrigation_types_proportions[IrrigationType.surface_irrigation_electricity]
+                + irrigation_types_proportions[IrrigationType.surface_irrigation_no_energy]) \
+               * self._IRRIGATION_EFFICIENCY_FACTOR_SURFACE
+
     def _compute_sprinkler_irrigation_ratio(self, irrigation_types_proportions):
-        return (irrigation_types_proportions[IrrigationType.sprinkler_irrigation_electricity] 
-                + irrigation_types_proportions[IrrigationType.sprinkler_irrigation_diesel])\
-                 * self._IRRIGATION_EFFICIENCY_FACTOR_SPRINKLER
-    
+        return (irrigation_types_proportions[IrrigationType.sprinkler_irrigation_electricity]
+                + irrigation_types_proportions[IrrigationType.sprinkler_irrigation_diesel]) \
+               * self._IRRIGATION_EFFICIENCY_FACTOR_SPRINKLER
+
     def _compute_drip_irrigation_ratio(self, irrigation_types_proportions):
-        return (irrigation_types_proportions[IrrigationType.drip_irrigation_electricity] 
-                + irrigation_types_proportions[IrrigationType.drip_irrigation_diesel])\
-                 * self._IRRIGATION_EFFICIENCY_FACTOR_DRIP
-    
+        return (irrigation_types_proportions[IrrigationType.drip_irrigation_electricity]
+                + irrigation_types_proportions[IrrigationType.drip_irrigation_diesel]) \
+               * self._IRRIGATION_EFFICIENCY_FACTOR_DRIP
+
+
 class AnnualizedIrrigationDefaultGenerator(object):
     def generateDefault(self, field, generators): #m3/(ha*crop cycle) -> mm/year
         return generators["water_use_total"] * 0.1 * generators["crop_cycle_per_year"]
-    
+
+
 class LandUseCategoryForHMDefaultGenerator(object):
     def generateDefault(self, field, generators):
         if (generators["land_use_category"] == LandUseCategory.arable_land):
@@ -176,7 +185,8 @@ class LandUseCategoryForHMDefaultGenerator(object):
             return LandUseCategoryForHM.permanent_grassland
         else:
             return LandUseCategoryForHM.horticultural_crops
-        
+
+
 class SoilTextureDefaultGenerator(object):
     def generateDefault(self, field, generators):
         clay_content = generators["clay_content"]
@@ -198,25 +208,30 @@ class SoilTextureDefaultGenerator(object):
 class PerCropCyclePrecipitationDefaultGenerator(object):
     def generateDefault(self, field, generators): #mm/year -> m3/(ha*crop cycle)
         return generators["average_annual_precipitation"] * 10.0 / generators["crop_cycle_per_year"]
-    
+
+
 class PerCropCycleYieldDefaultGenerator(object):
     def generateDefault(self, field, generators):
         return generators["yield_main_product_per_year"] / generators["crop_cycle_per_year"]
-        
+
+
 class SlopePerCropGenerator(object):
     def generateDefault(self, field, generators):
         if (generators["crop"] == "rice"):
             return 0.00
         else: return 0.03
-        
+
+
 class DryContentGenerator(object):
     def generateDefault(self, field, generators):
         return 1 - generators["yield_main_product_water_content"]
-    
+
+
 class DryYieldGenerator(object):
     def generateDefault(self, field, generators):
         return generators["yield_main_product_dry_content"] * generators["yield_main_product_per_crop_cycle"]
-    
+
+
 class CO2FromYieldGenerator(object):
     def generateDefault(self, field, generators):
         return generators["yield_main_product_carbon_content"] * MA_CO2/MA_C * generators["yield_main_product_dry_per_crop_cycle"]
@@ -227,20 +242,23 @@ class EnergyGrossCalorificValueGenerator(object):
             return ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL[generators["crop"]] * generators["yield_main_product_dry_per_crop_cycle"]
         else:
             return generators["CO2_from_yield"] * 11.5
-        
+
+
 class EolPlasticDisposalGenerator(object):
     def generateDefault(self, field, generators):
         return generators["materials_fleece"] \
              + generators["materials_silage_foil"] \
              + generators["materials_covering_sheet"]\
              + generators["materials_bird_net"];
-             
+
+
 class EolWaterWasteGenerator(object):
     def generateDefault(self, field, generators):
         return generators["utilities_wateruse_ground"] \
              + generators["utilities_wateruse_surface"] \
              + generators["utilities_wateruse_non_conventional_sources"];
-        
+
+
 class SeedQuantitiesDefaultGenerator(object):
     def generateDefault(self, field, generators):
         crop = generators["crop"]
@@ -254,18 +272,20 @@ class SeedQuantitiesDefaultGenerator(object):
             return {crop: generators[value_field]}
         except KeyError:
             return {crop: 0.0}
-        
+
+
 class CropCountryMatrixLookupDefaultGenerator(object):
     def __init__(self, table):
         self._table = table
-        
+
     def generateDefault(self, field, generators):
         currentCropTable = self._table[generators["crop"]]
         if (generators["country"] in currentCropTable):
             return currentCropTable[generators["country"]]
         else:
             return currentCropTable["GLO"]
-        
+
+
 class NitrogenUptakeGenerator(object):
     def generateDefault(self, field, generators):
         if (generators["crop"] == "pineapple"):
@@ -275,25 +295,28 @@ class NitrogenUptakeGenerator(object):
             return currentCropTable[generators["country"]]
         else:
             return currentCropTable["GLO"]
-        
+
+
 class FlatRatioRepartitionGenerator(object):
     def __init__(self, enumClass):
         self._enumClass = enumClass
-    
+
     def generateDefault(self, field, generators):
         return {k: 1.0 / len(self._enumClass) for k in self._enumClass}
-    
+
+
 class SafeDefaultGenerator(object):
     def __init__(self, field, defaultValue):
         self._field = field
         self._defaultValue = defaultValue
-    
+
     def generateDefault(self, field, generators):
         try:
             return generators[self._field]
         except KeyError:
             return self._defaultValue
-    
+
+
 class NitrogenFromCropResiduesDefaultGenerator(object):
     def generateDefault(self, field, generators):
         crop = generators["crop"]
@@ -323,9 +346,21 @@ class NitrogenFromCropResiduesDefaultGenerator(object):
         elif (crop == "sugarbeet"):
             return generators["yield_main_product_dry_per_crop_cycle"] * (0.5*0.016 + 0.2*0.014)
         elif (crop == "sugarcane"):
-            return generators["yield_main_product_dry_per_crop_cycle"] / 6.0 * 0.43 * 0.004 
+            return generators["yield_main_product_dry_per_crop_cycle"] / 6.0 * 0.43 * 0.004
+        elif (crop == "bellpepper"):
+            return 52.33
+        elif (crop == "cabbage"):
+            return 180.0
+        elif (crop == "chilli"):
+            return 37.20
         elif (crop == "coconut"):
             return 44.0
+        elif (crop == "eggplant"):
+            return 81.20
+        elif (crop == "guar"):
+            return 35.0
+        elif (crop == "lentil"):
+            return 76.87
         elif (crop == "palmtree"):
             return 159.0
         else:
@@ -385,7 +420,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "tillage_method": SimpleValueDefaultGenerator(TillageMethod.unknown),
                    "anti_erosion_practice": SimpleValueDefaultGenerator(AntiErosionPractice.unknown),
                    "sand_content": TableLookupDefaultGenerator("country", SAND_CONTENT_PER_COUNTRY),
-                   "soil_texture": SoilTextureDefaultGenerator(), 
+    "soil_texture": SoilTextureDefaultGenerator(),
                    "soil_erodibility_factor": TableLookupDefaultGenerator("soil_texture", SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE),
                    "crop_factor": TableLookupDefaultGenerator("crop", CROP_FACTOR_PER_CROP),
                    #CO2 model defaults
@@ -457,4 +492,3 @@ DEFAULTS_VALUES_GENERATORS = {
                    "eol_waste_water_to_nature": EolWaterWasteGenerator(),
                    "cod_in_waste_water": SimpleValueDefaultGenerator(0.0)
                    }
-                                

@@ -35,11 +35,26 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "IN":56.672304912384,
       "GLO":58.56421398096
    },
+   "bellpepper": {
+      "GLO": 0.0
+   },
+   "cabbage": {
+      "GLO": 0.0
+   },
    "carrot":{
       "CN":101.999945092522,
       "IL":188.231716973096,
       "NL":166.405693339702,
       "GLO":152.212451801773
+   },
+   "cashew": {
+      "GLO": 0.0
+   },
+   "cassava": {
+      "GLO": 0.0
+   },
+   "chilli": {
+      "GLO": 0.0
    },
    "cocoa":{
       "CI":23.6399721759264,
@@ -59,11 +74,32 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "VN":41.8053855779247,
       "GLO":31.2474491895554
    },
+   "cotton": {
+      "GLO": 0.0
+   },
+   "eggplant": {
+      "GLO": 0.0
+   },
+   "flax": {
+      "GLO": 0.0
+   },
+   "grape": {
+      "GLO": 0.0
+   },
+   "guar": {
+      "GLO": 0.0
+   },
+   "hemp": {
+      "GLO": 0.0
+   },
    "lemonlime":{
       "MX":32.99832808448,
       "ES":36.57672308128,
       "TR":63.61660903904,
       "GLO":44.3972200682667
+   },
+   "lentil": {
+      "GLO": 0.0
    },
    "linseed":{
       "CA":66.9095568,
@@ -79,7 +115,13 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "ES":37.32022047072,
       "GLO":31.4150877952
    },
+   "mango": {
+      "GLO": 0.0
+   },
    "mint":{
+      "GLO": 0.0
+   },
+   "mulberry": {
       "GLO": 0.0
    },
    "oat":{

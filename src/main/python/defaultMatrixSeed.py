@@ -5,8 +5,26 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "carrot":{
       "GLO":4.2
    },
-   "linseed":{
-      "GLO":40.0
+   "cassava": {
+      "GLO": 0.0
+   },
+   "cotton": {
+      "GLO": 0.0
+   },
+   "flax": {
+      "GLO": 0.0
+   },
+   "guar": {
+      "GLO": 0.0
+   },
+   "hemp": {
+      "GLO": 0.0
+   },
+   "lentil": {
+      "GLO": 0.0
+   },
+   "linseed": {
+      "GLO": 40.0
    },
    "maizegrain":{
       "GLO":25.0
@@ -46,6 +64,18 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
 NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "asparagus":{
    },
+   "bellpepper": {
+      "GLO": 0.0
+   },
+   "cabbage": {
+      "GLO": 0.0
+   },
+   "chilli": {
+      "GLO": 0.0
+   },
+   "eggplant": {
+      "GLO": 0.0
+   },
    "mint":{
    },
    "onion":{
@@ -69,15 +99,23 @@ NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY = {
    },
    "banana":{
    },
+   "cashew": {
+   },
    "cocoa":{
    },
    "coconut":{
    },
    "coffee":{
    },
+   "grape": {
+   },
    "lemonlime":{
    },
    "mandarin":{
+   },
+   "mango": {
+   },
+   "mulberry": {
    },
    "olive":{
    },

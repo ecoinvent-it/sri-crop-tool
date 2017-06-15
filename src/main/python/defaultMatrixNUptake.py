@@ -36,11 +36,31 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "IN":70.84038114048,
       "GLO":73.2052674762
    },
+   "bellpepper": {
+      "IN": 150.0,
+      "GLO": 150.0
+   },
+   "cabbage": {
+      "IN": 247.0,
+      "GLO": 247.0
+   },
    "carrot":{
       "CN":127.499931365653,
       "IL":235.28964621637,
       "NL":208.007116674627,
       "GLO":190.265564752217
+   },
+   "cashew": {
+      "IN": 100.0,
+      "GLO": 100.0
+   },
+   "cassava": {
+      "IN": 100.0,
+      "GLO": 100.0
+   },
+   "chilli": {
+      "IN": 150.0,
+      "GLO": 150.0
    },
    "cocoa":{
       "CI":29.549965219908,
@@ -60,11 +80,40 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "VN":52.2567319724059,
       "GLO":39.0593114869442
    },
+   "cotton": {
+      "IN": 41.04,
+      "GLO": 41.04
+   },
+   "eggplant": {
+      "IN": 180.0,
+      "GLO": 180.0
+   },
+   "flax": {
+      "CN": 25.0,
+      "FR": 20.0,
+      "GLO": 25.0
+   },
+   "grape": {
+      "IN": 30.0,
+      "GLO": 30.0
+   },
+   "guar": {
+      "IN": 45.0,
+      "GLO": 45.0
+   },
+   "hemp": {
+      "CN": 100.0,
+      "GLO": 100.0
+   },
    "lemonlime":{
       "MX":41.2479101056,
       "ES":45.7209038516,
       "TR":79.5207612988,
       "GLO":55.4965250853333
+   },
+   "lentil": {
+      "IN": 0.0,
+      "GLO": 0.0
    },
    "linseed":{
       "CA":83.636946,
@@ -80,10 +129,19 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "ES":46.6502755884,
       "GLO":39.268859744
    },
+   "mango": {
+      "IN": 120.0,
+      "GLO": 120.0
+   },
    "mint":{#NOTE: IT assumption based on WFLDB 3 applied N
       "IN": 160.0,
       "US": 294.0,
       "GLO": 227.0
+   },
+   "mulberry": {
+      "CN": 400.0,
+      "IN": 400.0,
+      "GLO": 400.0
    },
    "oat":{
       "CA":62.0985962727273,

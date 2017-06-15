@@ -45,13 +45,14 @@ public class Bootstrap
             stack.withAdditionalProperties(getDefaultProperties());
         }
 
-        stack.withFeatures(MailFeature.withGmailSender(),
+        stack.withDefaultObjectMapper()
+             .withFeatures(MailFeature.withGmailSender(),
                            MyBatisFeature.withMapperPackages("com.quantis_intl.login.mappers",
                                                              "com.quantis_intl.lcigenerator.mappers")
                                          .withTypeHandler(QidTypeHandler.class),
                            new LoginFeature.Builder("Jo5xNFdSPUmc4ijk2euM", MybatisAlcigUserDao.class)
                                    .userCanMultilog().build())
-                .withAdditionalModules(new CoreModule());
+             .withAdditionalModules(new CoreModule());
 
         stack.start();
     }

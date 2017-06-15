@@ -8,25 +8,39 @@ class SeedModel(object):
       computeHeavyMetal:
         hm_total_seed : map HeavyMetalType -> mg i/ha (i: hm type)
     """
-    
+
     _input_variables = ["seed_quantities"
                        ]
-    
+
     _SEED_DM = {
                 "almond": 0.73, #tree_seedlings
                 "apple": 0.73, #tree_seedlings
                 "apricot": 0.73, #tree_seedlings
                 "asparagus": 0.73, #vegetable
                 "banana": 0.73, #tree_seedlings
+        "bellpepper": 0.9,
+        "cabbage": 0.73,
                 "carrot": 0.73, #vegetable
+        "cashew": 0.9,
+        "cassava": 0.9,
+        "chilli": 0.9,
                 "cocoa": 0.73, #other
                 "coconut": 0.73, #tree_seedlings
-                "coffee": 0.73, #other
+        "coffee": 0.73,  # other
+        "cotton": 0.9,
+        "eggplant": 0.955,
+        "flax": 0.9,
+        "grape": 0.9,
+        "guar": 0.9,
+        "hemp": 0.9504,
                 "lemonlime": 0.73, #tree_seedlings
+        "lentil": 0.92,
                 "linseed": 0.85, #pea
                 "maizegrain": 0.85,
                 "mandarin": 0.73, #tree_seedlings
+        "mango": 0.55,
                 "mint": 0.73, #vegetable
+        "mulberry": 0.9,
                 "oat": 0.73, #other
                 "olive": 0.73, #tree_seedlings
                 "onion": 0.73, #vegetable
@@ -49,24 +63,38 @@ class SeedModel(object):
                 "tomato": 0.73, #other
                 "wheat": 0.85
                     }
-                                                                
+
     #src: Table 7 Freiermuth 2006
     # mg/kg TS
-    _HM_SEED_VALUES = { 
+    _HM_SEED_VALUES = {
                 "almond": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
                 "apple": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
                 "apricot": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
                 "asparagus": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
                 "banana": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+        "bellpepper": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "cabbage": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
                 "carrot": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
+        "cashew": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "cassava": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "chilli": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
                 "cocoa": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
                 "coconut": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
                 "coffee": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
+        "cotton": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "eggplant": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "flax": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "grape": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "guar": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "hemp": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
                 "lemonlime": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+        "lentil": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
                 "linseed": [0.09, 10.0, 73.0, 0.16, 0.83, 0.32, 0.01], #pea
                 "maizegrain": [0.03, 2.5, 21.5, 0.3, 1.16, 0.32, 0],
                 "mandarin": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+        "mango": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
                 "mint": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
+        "mulberry": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
                 "oat": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
                 "olive": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
                 "onion": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
@@ -89,20 +117,19 @@ class SeedModel(object):
                 "tomato": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
                 "wheat": [0.15, 5.0, 45.0, 0.16, 0.3, 0.3, 0.01]
         }
-    
+
     def __init__(self, inputs):
         #TODO: Should we log usage of default value?
         for key in SeedModel._input_variables:
             setattr(self, key, inputs[key])
-    
+
     def computeHeavyMetal(self):
         total_hm_values = dict.fromkeys(HeavyMetalType,0.0)
         self._add_hm_values_for_seed_type(total_hm_values, self.seed_quantities, self._HM_SEED_VALUES);
         return total_hm_values
-    
+
     def _add_hm_values_for_seed_type(self,total_hm_values, seed_quantities,seed_hm_map):
         for seedKey,seedQuantity in seed_quantities.items():
             for hm_element_index,hm_element_value in enumerate(seed_hm_map[seedKey]):
                 total_hm_values[HeavyMetalType(hm_element_index)] += hm_element_value * self._SEED_DM[seedKey] * seedQuantity
 
-    

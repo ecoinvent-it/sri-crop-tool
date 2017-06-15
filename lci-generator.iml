@@ -2,7 +2,7 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Python" name="Python">
-      <configuration sdkName="" />
+      <configuration sdkName="Python 3.5.2 (/usr/bin/python3.5)" />
     </facet>
   </component>
   <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8">
@@ -12,6 +12,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/main/python" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/src/test/python" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/dart/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/dart/build" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/dart/packages" />
@@ -24,6 +26,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Dart SDK" level="project" />
     <orderEntry type="library" name="Dart Packages" level="project" />
+    <orderEntry type="library" name="Python 3.5.2 (/usr/bin/python3.5) interpreter library" level="application" />
     <orderEntry type="library" name="Maven: com.quantis_intl:stack:0.2.2" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:21.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.inject:guice:3.0" level="project" />
