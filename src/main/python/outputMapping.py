@@ -1,15 +1,16 @@
-from models.atomicmass import MA_NH3, MA_N, MG_TO_MGSULFATE_FACTOR,\
-    MG_TO_DOLOMITE_FACTOR, Ca_TO_LIMESTONE_FACTOR, Ca_TO_LIMEALGAE_FACTOR
-from directMappingEnums import Plantprotection, Soilcultivation, Sowingplanting,\
+from directMappingEnums import Plantprotection, Soilcultivation, Sowingplanting, \
     Fertilisation, Harvesting, OtherWorkProcesses
+from models.atomicmass import MA_NH3, MA_N, MG_TO_MGSULFATE_FACTOR, \
+    MG_TO_DOLOMITE_FACTOR, Ca_TO_LIMESTONE_FACTOR, Ca_TO_LIMEALGAE_FACTOR
+
 
 def identity(x): return x
 
 class OutputMapping(object):
-    
+
     def __init__(self):
         self.output = {}
-        
+
     def mapAsIsOutput(self, allInputs):
         self.output["country"] = allInputs["country"]
         self.output["crop"] = allInputs["crop"]
@@ -18,40 +19,40 @@ class OutputMapping(object):
         for k,f in self._DIRECT_OUTPUT_MAPPING.items():
             if (k in allInputs):
                 self.output[k] = f(allInputs[k])
-       
+
     def mapDictsToOutput(self, allInputs):
         self._mapEnumMap(allInputs["plastic_disposal_quantities"])
-        
+
     def mapSeeds(self, allInputs):
         for key, value in allInputs["seed_quantities"].items():
             self.output["seeds_" + key] = value
-    
+
     def mapIrrigationModel(self, irrOutput):
         for key, value in irrOutput.items():
             self.output[key.replace("m_Irr_", "")] = value
-        
+
     def mapIrrigationQuantities(self, allInputs):
         self._mapEnumMap(allInputs["irrigation_types_quantities"])
         self._mapEnumMap(allInputs["irrigation_water_use_quantities"])
-            
+
     def mapCo2Model(self, co2Output):
         for key, value in co2Output.items():
             self.output[key.replace("m_co2_", "")] = value
-            
+
     def mapNModel(self, no3Output):
         for key, value in no3Output.items():
             self.output[key.replace("m_N_", "")] = value
-            
+
     def mapErosionModel(self, erosionOutput):
         for key, value in erosionOutput.items():
             self.output[key.replace("m_Erosion_", "")] = value
-            
+
     def mapPModel(self, pOutput):
         for key, value in pOutput.items():
             self.output[key.replace("m_P_", "")] = value
         #TODO: Is this the best place for that?
         self.output["PO4_surfacewater"] = self.output["PO4_surfacewater_drained"] + self.output["PO4_surfacewater_ro"]
-    
+
     def mapFertilizers(self, allInputs):
         self._mapEnumMap(allInputs["n_fertiliser_quantities"])
         self._mapEnumMap(allInputs["p_fertiliser_quantities"])
@@ -65,21 +66,21 @@ class OutputMapping(object):
         self.output["fert_ca_seaweed_limestone_as_seaweed_lime"] = self.output["fert_ca_seaweed_limestone"] * Ca_TO_LIMEALGAE_FACTOR
         self.output["magnesium_from_fertilizer_as_mgso4"] = self.output["magnesium_from_fertilizer"] * (1-allInputs["magnesium_as_dolomite"]) * MG_TO_MGSULFATE_FACTOR
         self.output["magnesium_from_fertilizer_as_dolomite"] = self.output["magnesium_from_fertilizer"] * allInputs["magnesium_as_dolomite"] * MG_TO_DOLOMITE_FACTOR
-        
+
     def mapOtherOrganicFertilizers(self, allInputs):
         self._mapEnumMap(allInputs["compost_quantities"])
         self._mapEnumMap(allInputs["sludge_quantities"])
-       
+
     def mapHMModel(self,hmOutput):
         for key, hmMap in hmOutput.items():
             prefix = key.replace("m_hm_", "") + "_"
             for k, v in hmMap.items():
                 self.output[prefix + k.name] = v
-                        
+
     def mapPackModel(self, packOutput):
         for key, value in packOutput.items():
             self.output[key.replace("m_Pack_", "")] = value
-            
+
     def mapLucModel(self, lucOuput, allInputs):
         for key, value in lucOuput.items():
             self.output[key.replace("m_LUC_", "")] = value
@@ -92,14 +93,11 @@ class OutputMapping(object):
             self.output["occupation_permanent"] = 10027.0 / allInputs["crop_cycle_per_year"]
             self.output["transformation_from_permanent"] = 500
             self.output["transformation_to_permanent"] = 500
-        #else TODO: Rice 
-            
-    def mapTransportModel(self, transportOutput):
-        self._mapEnumMap(transportOutput)
-        
+            # else TODO: Rice
+
     def mapCODWasteWater(self, allInputs): #m3 * mg/L(==g/m3) -> g
         self.output["cod_in_waste_water"] = allInputs["eol_waste_water_to_nature"] * allInputs["cod_in_waste_water"]
-        
+
     def mapPesticides(self, allInputs):
         for k,v in allInputs["specified_pesticides"].items():
             self.output[k.replace("part_", "pesti_")] = v
@@ -121,24 +119,24 @@ class OutputMapping(object):
         self._convertEnumMap(allInputs["fertilisation_quantities"], self._FERTILISATION_FACTORS)
         self._convertEnumMap(allInputs["harvesting_quantities"], self._HARVESTING_FACTORS)
         self._convertEnumMap(allInputs["otherworkprocesses_quantities"], self._OTHERWORK_FACTORS)
-            
+
     def _mapEnumMap(self, enumdict):
         for k,v in enumdict.items():
             self.output[k.value] = v
-    
+
     def _convertEnumMap(self, enumdict, factors):
         for k,v in enumdict.items():
             self.output[k.value] = v * factors[k]
-            
+
     _DIRECT_OUTPUT_MAPPING = {
         # FIXME: No system_boundary input anymore, use ecospold name metadata instead?
-        #"system_boundary":identity,      
+        # "system_boundary":identity,
         "record_entry_by":identity,
         "collection_method":identity,
         "data_treatment_extrapolations":identity,
         "data_treatment_uncertainty":identity,
         "comment":identity,
-        
+
         "CO2_from_yield": identity,
         "energy_gross_calorific_value": identity,
         "pest_horticultural_oil": identity,
@@ -158,26 +156,26 @@ class OutputMapping(object):
         "energy_wood_logs": lambda x: x / 0.0643,
         "energy_heat_district_heating": identity,
         "energy_heat_solar_collector": identity,
-        
+
         "utilities_wateruse_ground": identity,
         "utilities_wateruse_surface": identity,
         "utilities_wateruse_non_conventional_sources": lambda x: x * 1000.0, #m3 -> kg
-        
+
         "materials_fleece": identity,
         "materials_silage_foil": identity,
         "materials_covering_sheet": identity,
         "materials_bird_net": identity,
-        
+
         "greenhouse_plastic_tunnel": identity,
         "greenhouse_glass_roof_metal_tubes": identity,
         "greenhouse_glass_roof_plastic_tubes": identity,
         "greenhouse_plastic_roof_metal_tubes": identity,
         "greenhouse_plastic_roof_plastic_tubes": identity,
-    
+
         "eol_waste_water_to_treatment_facility": identity,
         "eol_waste_water_to_nature": identity
     }
-    
+
     _PLANTPROTECTION_FACTORS = {
                                  Plantprotection.spraying: 1.0 / 1.76,
                                  Plantprotection.flaming: 46.35,

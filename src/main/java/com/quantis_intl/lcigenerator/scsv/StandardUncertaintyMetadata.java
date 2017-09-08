@@ -28,7 +28,6 @@ public enum StandardUncertaintyMetadata
     LAND_TRANSFORMATION("1.2077", "(2,1,1,1,1,na)"),
     ENERGY_CARRIERS_FUEL_WORK("1.0714", "(2,1,1,1,1,na)"),
     ELECTRICITY("1.0714", "(2,1,1,1,1,na)"),
-    TRANSPORTS("2.0477", "(4,1,1,1,1,na)"),
     IRRIGATION_WATER("1.0714", "(2,1,1,1,1,na)"),
     CO2_ENERGY_BIOMASS("1.0744", "(2,2,1,1,1,na)"),
     CO2_EMISSIONS("1.0714", "(2,2,1,1,1,na)"),

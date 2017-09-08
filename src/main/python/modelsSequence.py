@@ -1,30 +1,30 @@
-from models.co2model import Co2Model
-from outputMapping import OutputMapping
-from models.nmodel import NModel
-from inputMappings import NonStrictInputMapping
-from excelInputMappingRules import EXCEL_INPUT_MAPPING_RULES
-from defaultGeneration import DefaultValuesWrapper, DEFAULTS_VALUES_GENERATORS
 from collections import ChainMap
-from models.irrigationmodel import IrrigationModel
-from models.fertilisermodel import FertModel
-from models.manuremodel import ManureModel
-from models.pmodel import PModel
-from models.otherorganicfertilisermodel import OtherOrganicFertModel
+
+from defaultGeneration import DefaultValuesWrapper, DEFAULTS_VALUES_GENERATORS
+from excelInputMappingRules import EXCEL_INPUT_MAPPING_RULES
+from inputMappings import NonStrictInputMapping
+from models.co2model import Co2Model
 from models.erosionmodel import ErosionModel
+from models.fertilisermodel import FertModel
 from models.hmmodel import HmModel
-from models.seedmodel import SeedModel
-from models.packmodel import PackModel
+from models.irrigationmodel import IrrigationModel
 from models.lucmodel import LUCModel
-from models.transportmodel import TransportModel
+from models.manuremodel import ManureModel
+from models.nmodel import NModel
+from models.otherorganicfertilisermodel import OtherOrganicFertModel
+from models.packmodel import PackModel
+from models.pmodel import PModel
+from models.seedmodel import SeedModel
+from outputMapping import OutputMapping
+
 
 class ModelsSequence(object):
-    
     def __init__(self, validatedInputs):
         self._intermediateValues = {}
         self.outputMapping = OutputMapping()
         self.allInputs = DefaultValuesWrapper(ChainMap(NonStrictInputMapping(validatedInputs, EXCEL_INPUT_MAPPING_RULES),
                                               self._intermediateValues, self.outputMapping.output), DEFAULTS_VALUES_GENERATORS)
-        
+
     def executeSequence(self):
         self.outputMapping.mapAsIsOutput(self.allInputs)
         self.outputMapping.mapDictsToOutput(self.allInputs)
@@ -44,18 +44,17 @@ class ModelsSequence(object):
         self.outputMapping.mapHMModel(HmModel(self.allInputs).compute())
         self.outputMapping.mapPackModel(PackModel(self.allInputs).compute())
         self.outputMapping.mapLucModel(LUCModel(self.allInputs).compute(), self.allInputs)
-        self.outputMapping.mapTransportModel(TransportModel(self.allInputs).compute())
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)
         self.outputMapping.mapMachineries(self.allInputs)
         self.outputMapping.mapCODWasteWater(self.allInputs)
         self.outputMapping.mapPesticides(self.allInputs)
         return self.outputMapping.output;
-    
+
     def _computeFertiliser(self):
         fertM = FertModel(self.allInputs)
         self._intermediateValues["ammonia_due_to_mineral_fert"] = fertM.computeNH3()
         self._intermediateValues["hm_from_mineral_fert"] = fertM.computeHeavyMetal()
-        
+
     def _computeManure(self):
         manureM = ManureModel(self.allInputs)
         self._intermediateValues["nitrogen_from_all_manure"] = manureM.computeN()
@@ -71,8 +70,7 @@ class ModelsSequence(object):
         self._intermediateValues["p2o5_in_liquid_sludge"] = otherfertM.computeP2O5()
         self._intermediateValues["hm_from_other_organic_fert"] = otherfertM.computeHeavyMetal()
         self._intermediateValues["ammonia_due_to_other_orga_fert"] = otherfertM.computeNH3()
-        
+
     def _computeSeed(self):
         seedM = SeedModel(self.allInputs)
         self._intermediateValues["hm_from_seed"] = seedM.computeHeavyMetal()
-        

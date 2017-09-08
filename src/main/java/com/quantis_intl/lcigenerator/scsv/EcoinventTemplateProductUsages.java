@@ -835,15 +835,6 @@ public class EcoinventTemplateProductUsages implements TemplateProductUsages
 
             new LucTemplateProductUsage("ha", "luc_formula", StandardUncertaintyMetadata.LAND_TRANSFORMATION, ""),
 
-            new TemplateProductUsage("Transport, van <3.5t/CH U", "tkm", "ecoinvent_transport_van_inf_3_5t",
-                    StandardUncertaintyMetadata.TRANSPORTS, ""),
-            new TemplateProductUsage("Transport, lorry >16t, fleet average/RER U", "tkm",
-                    "ecoinvent_transport_lorry_sup_16t", StandardUncertaintyMetadata.TRANSPORTS, ""),
-            new TemplateProductUsage("Transport, barge/RER U", "tkm",
-                    "ecoinvent_transport_barge", StandardUncertaintyMetadata.TRANSPORTS, ""),
-            new TemplateProductUsage("Transport, freight, rail/CH U", "tkm", "ecoinvent_transport_freight_rail",
-                    StandardUncertaintyMetadata.TRANSPORTS, ""),
-
             new TemplateProductUsage("Packaging, per kg dry fertilisers or pesticides (ALCIG)/GLO U", "kg",
                     "ecoinvent_packaging_solid", StandardUncertaintyMetadata.OTHER_MATERIALS, "",
                     ImmutableList.of("packaging_solid.csv")),

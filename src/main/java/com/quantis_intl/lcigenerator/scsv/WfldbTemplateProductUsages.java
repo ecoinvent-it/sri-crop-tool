@@ -538,15 +538,6 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
 
             new LucTemplateProductUsage("ha", "luc_formula", StandardUncertaintyMetadata.LAND_TRANSFORMATION, ""),
 
-            new TemplateProductUsage("Transport, lorry >16t, fleet average/RER U", "tkm",
-                    "wfldb_transport_lorry_sup_16t", StandardUncertaintyMetadata.TRANSPORTS, ""),
-            new TemplateProductUsage("Transport, transoceanic freight ship/OCE U", "tkm",
-                    "wfldb_transport_transoceanic", StandardUncertaintyMetadata.TRANSPORTS, ""),
-            new TemplateProductUsage("Transport, freight, rail/RER U", "tkm", "wfldb_transport_freight_rail_RER",
-                    StandardUncertaintyMetadata.TRANSPORTS, ""),
-            new TemplateProductUsage("Transport, freight, rail, diesel/US U", "tkm",
-                    "wfldb_transport_freight_rail_diesel_US", StandardUncertaintyMetadata.TRANSPORTS, ""),
-
             new TemplateProductUsage("Packaging, dry fertilisers or pesticides (WFLDB 3.0)/GLO U", "kg",
                     "wfldb_packaging_solid", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
             new TemplateProductUsage("Packaging, liquid fertilisers or pesticides (WFLDB 3.0)/GLO U", "kg",
