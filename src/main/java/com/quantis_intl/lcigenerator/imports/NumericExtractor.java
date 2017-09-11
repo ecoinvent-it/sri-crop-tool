@@ -84,10 +84,8 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("materials_covering_sheet");
         TAGS_FOR_NUMERIC.add("materials_bird_net");
         TAGS_FOR_NUMERIC.add("greenhouse_plastic_tunnel");
-        TAGS_FOR_NUMERIC.add("greenhouse_glass_roof_metal_tubes");
-        TAGS_FOR_NUMERIC.add("greenhouse_glass_roof_plastic_tubes");
-        TAGS_FOR_NUMERIC.add("greenhouse_plastic_roof_metal_tubes");
-        TAGS_FOR_NUMERIC.add("greenhouse_plastic_roof_plastic_tubes");
+        TAGS_FOR_NUMERIC.add("greenhouse_glass_roof");
+        TAGS_FOR_NUMERIC.add("greenhouse_plastic_roof");
         TAGS_FOR_NUMERIC.add("total_eol_plastic_disposal_fleece_and_other");
         TAGS_FOR_NUMERIC.add("eol_waste_water_to_treatment_facility");
         TAGS_FOR_NUMERIC.add("eol_waste_water_to_nature");

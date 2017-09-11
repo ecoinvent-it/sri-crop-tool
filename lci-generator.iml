@@ -16,10 +16,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/python" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/dart/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/src/main/dart/build" />
-      <excludeFolder url="file://$MODULE_DIR$/src/main/dart/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/src/main/dart/web/css/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/src/main/dart/web/img/packages" />
-      <excludeFolder url="file://$MODULE_DIR$/src/main/dart/web/packages" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
     <orderEntry type="inheritedJdk" />

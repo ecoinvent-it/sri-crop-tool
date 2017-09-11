@@ -167,10 +167,8 @@ class OutputMapping(object):
         "materials_bird_net": identity,
 
         "greenhouse_plastic_tunnel": identity,
-        "greenhouse_glass_roof_metal_tubes": identity,
-        "greenhouse_glass_roof_plastic_tubes": identity,
-        "greenhouse_plastic_roof_metal_tubes": identity,
-        "greenhouse_plastic_roof_plastic_tubes": identity,
+        "greenhouse_glass_roof": identity,
+        "greenhouse_plastic_roof": identity,
 
         "eol_waste_water_to_treatment_facility": identity,
         "eol_waste_water_to_nature": identity
