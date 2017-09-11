@@ -587,19 +587,13 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Greenhouse, glass walls and roof {GLO}| market for greenhouse, glass walls and roof | Alloc Rec," +
                             " U",
-                    "m2", "greenhouse_glass_roof_metal_tubes", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
-                    "greenhouse_glass_roof_metal_tubes"),
-            new TemplateProductUsage("Greenhouse, glass walls and roof, plastic tubes (WFLDB 3.0)/FR U", "m2",
-                    "greenhouse_glass_roof_plastic_tubes", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
-                    "greenhouse_glass_roof_plastic_tubes"),
+                    "m2", "greenhouse_glass_roof", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
+                    "greenhouse_glass_roof"),
             new TemplateProductUsage(
                     "Greenhouse, plastic walls and roof {GLO}| market for greenhouse, plastic walls and roof | Alloc " +
                             "Rec, U",
-                    "m2", "greenhouse_plastic_roof_metal_tubes", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
-                    "greenhouse_plastic_roof_metal_tubes"),
-            new TemplateProductUsage("Greenhouse, plastic walls and roof, plastic tubes (WFLDB 3.0)/FR U", "m2",
-                    "greenhouse_plastic_roof_plastic_tubes", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
-                    "greenhouse_plastic_roof_plastic_tubes"),
+                    "m2", "greenhouse_plastic_roof", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
+                    "greenhouse_plastic_roof"),
 
             new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.0)/GLO U", "kg",
                     "hm_uptake_formula", StandardUncertaintyMetadata.HM_TO_SOIL, ""),
