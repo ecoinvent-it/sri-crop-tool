@@ -18,12 +18,7 @@
  */
 package com.quantis_intl.lcigenerator.api;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.time.Duration;
@@ -36,12 +31,7 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
@@ -57,10 +47,7 @@ import org.slf4j.LoggerFactory;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.io.ByteStreams;
 import com.google.common.io.Files;
-import com.quantis_intl.lcigenerator.ErrorReporter;
-import com.quantis_intl.lcigenerator.ErrorReporterImpl;
-import com.quantis_intl.lcigenerator.PyBridgeService;
-import com.quantis_intl.lcigenerator.ScsvFileWriter;
+import com.quantis_intl.lcigenerator.*;
 import com.quantis_intl.lcigenerator.dao.GenerationDao;
 import com.quantis_intl.lcigenerator.imports.ExcelInputReader;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
@@ -84,6 +71,7 @@ public class Api
     private final PyBridgeService pyBridgeService;
 
     private final ScsvFileWriter scsvFileWriter;
+    private final EcospoldFileWriter ecospoldFileWriter;
 
     private final GenerationDao generationDao;
     private final LicenseService licenseService;
@@ -95,12 +83,13 @@ public class Api
 
     @Inject
     public Api(ExcelInputReader inputReader, PyBridgeService pyBridgeService, ScsvFileWriter scsvFileWriter,
-            GenerationDao generationDao, LicenseService licenseService,
-            @Named("server.uploadedFilesFolder") String uploadedFilesFolder)
+               EcospoldFileWriter ecospoldFileWriter, GenerationDao generationDao, LicenseService licenseService,
+               @Named("server.uploadedFilesFolder") String uploadedFilesFolder)
     {
         this.inputReader = inputReader;
         this.pyBridgeService = pyBridgeService;
         this.scsvFileWriter = scsvFileWriter;
+        this.ecospoldFileWriter = ecospoldFileWriter;
         this.generationDao = generationDao;
         this.licenseService = licenseService;
         this.uploadedFilesFolder = Paths.get(uploadedFilesFolder);
@@ -311,12 +300,28 @@ public class Api
     {
         SecurityUtils.getSubject().getSession().setAttribute(generation.getId(), modelsOutput);
         String filename = generation.getFilename().substring(0, generation.getFilename().lastIndexOf(".xls"));
-        LOGGER.info("Scsv file {} generated for generation {} in {} ms", outputTarget, generation.getId(),
-                (System.nanoTime() - startTime) / 1000000.d);
-        response.resume(
-                Response.ok((StreamingOutput) outputStream -> scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput,
-                        generation.getExtractedInputs(), outputTarget, outputStream))
-                        .header("Content-Disposition", "attachment; filename=\"" + filename + ".csv\"").build());
+
+        if (outputTarget == OutputTarget.ECOINVENT)
+        {
+            response.resume(Response.ok((StreamingOutput) outputStream ->
+                    ecospoldFileWriter.writeModelsOutputToEcospoldFile(modelsOutput, generation.getExtractedInputs(),
+                                                                       outputTarget, outputStream))
+                                    .header("Content-Disposition", "attachement; filename=\"" + filename + ".spold")
+                                    .build());
+        }
+        else
+        {
+            LOGGER.info("Scsv file {} generated for generation {} in {} ms", outputTarget, generation.getId(),
+                        (System.nanoTime() - startTime) / 1000000.d);
+            response.resume(
+                    Response.ok(
+                            (StreamingOutput)
+                                    outputStream ->
+                                            scsvFileWriter.writeModelsOutputToScsvFile(modelsOutput,
+                                                                                       generation.getExtractedInputs(),
+                                                                                       outputTarget, outputStream))
+                            .header("Content-Disposition", "attachment; filename=\"" + filename + ".csv\"").build());
+        }
     }
 
     // TODO: Define standards in stack for error handling (e500 template, client code, etc)

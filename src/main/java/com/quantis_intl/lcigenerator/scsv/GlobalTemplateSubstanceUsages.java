@@ -158,7 +158,7 @@ public class GlobalTemplateSubstanceUsages implements TemplateSubstanceUsages
                     StandardUncertaintyMetadata.HM_TO_SOIL, ""),
             new TemplateSubstanceUsage("Zinc", SubCompartment.SOIL_AGRICULTURAL, "kg", "heavymetal_to_soil_zn",
                     StandardUncertaintyMetadata.HM_TO_SOIL, ""),
-            new TemplateSubstanceUsage("Oils, unspecified", SubCompartment.SOIL_AGRICULTURAL, "kg",
+            new TemplateSubstanceUsage("Mineral oil", SubCompartment.SOIL_AGRICULTURAL, "kg",
                     "pest_horticultural_oil", StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL,
                     "pest_horticultural_oil"),
     };
