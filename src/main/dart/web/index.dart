@@ -46,7 +46,7 @@ _init() async {
 
 class MyAppModule extends Module {
   MyAppModule() {
-    String serverUrl = Uri.base.port == 63342 ? "http://localhost:7879/" : "";
+    String serverUrl = Uri.base.port == 36123 ? "http://localhost:7879/" : "";
 
     bind(RouteInitializerFn, toValue: alcigRouteInitializer);
     bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false));

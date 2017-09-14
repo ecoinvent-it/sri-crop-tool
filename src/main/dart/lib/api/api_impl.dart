@@ -12,9 +12,9 @@ import 'api.dart';
 @Injectable()
 class ApiImpl implements Api {
 
-  String _serverUrl;
+  String serverUrl;
 
-  String get _baseUrl => _serverUrl + "app/";
+  String get _baseUrl => serverUrl + "app/";
 
   String get _baseApiUrl => _baseUrl + "api/";
 
@@ -26,7 +26,7 @@ class ApiImpl implements Api {
   StreamController<ServerEvent> _dispatcher = new StreamController.broadcast();
   Stream<ServerEvent> get stream => _dispatcher.stream;
 
-  ApiImpl(ConnectivityState this._connectivityState, String this._serverUrl);
+  ApiImpl(ConnectivityState this._connectivityState, String this.serverUrl);
 
   Future<List> getUserGenerations() async
   {
