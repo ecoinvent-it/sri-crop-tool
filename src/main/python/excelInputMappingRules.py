@@ -1,13 +1,13 @@
-from inputMappings import SimpleInputMappingRule, MapMappingRule,\
-    InputAsEnumMappingRule, InputMappingRule
-from models.fertilisermodel import NFertiliserType, PFertiliserType, KFertiliserType, OtherMineralFertiliserType
-from models.manuremodel import LiquidManureType, SolidManureType
-from models.irrigationmodel import IrrigationType, WaterUseType
-from models.otherorganicfertilisermodel import CompostType, SludgeType
-from models.erosionmodel import TillageMethod, AntiErosionPractice
-from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation,\
+from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation, \
     Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
+from inputMappings import SimpleInputMappingRule, MapMappingRule, \
+    InputAsEnumMappingRule, InputMappingRule
+from models.erosionmodel import TillageMethod, AntiErosionPractice
+from models.fertilisermodel import NFertiliserType, PFertiliserType, KFertiliserType, CaFertiliserType, ZnFertiliserType
 from models.hmmodel import PesticideType
+from models.irrigationmodel import IrrigationType, WaterUseType
+from models.manuremodel import LiquidManureType, SolidManureType
+from models.otherorganicfertilisermodel import CompostType, SludgeType
 
 _N_ENUM_TO_FIELD = {
                 NFertiliserType.ammonium_nitrate:"ratio_fertnmin_ammonium_nitrate",
@@ -39,11 +39,17 @@ _K_ENUM_TO_FIELD = {
                 KFertiliserType.patent_potassium:"ratio_fertkmin_patent_potassium"
                  }
 
-_OTHERMIN_ENUM_TO_FIELD = {
-                OtherMineralFertiliserType.ca_limestone:"ratio_fertotherca_limestone",
-                OtherMineralFertiliserType.ca_carbonation_limestone:"ratio_fertotherca_carbonation_limestone",
-                OtherMineralFertiliserType.ca_seaweed_limestone:"ratio_fertotherca_seaweed_limestone"
-                 }
+_CA_ENUM_TO_FIELD = {
+    CaFertiliserType.ca_limestone: "ratio_fertotherca_limestone",
+    CaFertiliserType.ca_carbonation_limestone: "ratio_fertotherca_carbonation_limestone",
+    CaFertiliserType.ca_seaweed_limestone: "ratio_fertotherca_seaweed_limestone"
+}
+
+_ZN_ENUM_TO_FIELD = {
+    ZnFertiliserType.zn_zinc_sulfate: "ratio_fertotherzn_zinc_sulfate",
+    ZnFertiliserType.zn_zinc_oxide: "ratio_fertotherzn_zinc_oxide",
+    ZnFertiliserType.zn_other: "ratio_fertotherzn_other"
+}
 
 _LIQUID_MANURE_ENUM_TO_FIELD = {
                 LiquidManureType.cattle:"ratio_manureliquid_cattle",
@@ -172,7 +178,8 @@ class RegroupPesticides(InputMappingRule):
             if (k.startswith("part_herbicides") or k.startswith("part_fungicides") or k.startswith("part_insecticides")):
                 res[k] = v
         return res
-        
+
+
 EXCEL_INPUT_MAPPING_RULES = {
                     #Cross-models rules
                     "nitrogen_from_mineral_fert": SimpleInputMappingRule("total_fertnmin"),
@@ -185,7 +192,9 @@ EXCEL_INPUT_MAPPING_RULES = {
                     "k2O_from_mineral_fert": SimpleInputMappingRule("total_fertkmin"),
                     "k_fertiliser_proportions": MapMappingRule(_K_ENUM_TO_FIELD),
                     "ca_from_mineral_fert": SimpleInputMappingRule("total_fertotherca"),
-                    "other_mineral_fertiliser_proportions": MapMappingRule(_OTHERMIN_ENUM_TO_FIELD),
+    "ca_fertiliser_proportions": MapMappingRule(_CA_ENUM_TO_FIELD),
+    "zn_from_mineral_fert": SimpleInputMappingRule("total_fertotherzn"),
+    "zn_fertiliser_proportions": MapMappingRule(_ZN_ENUM_TO_FIELD),
                     #Manure rules
                     "liquid_manure_proportions": MapMappingRule(_LIQUID_MANURE_ENUM_TO_FIELD),
                     "solid_manure_proportions": MapMappingRule(_SOLID_MANURE_ENUM_TO_FIELD),

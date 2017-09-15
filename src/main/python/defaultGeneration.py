@@ -1,5 +1,6 @@
-import dateutil.relativedelta as relativedelta
 from datetime import date
+
+import dateutil.relativedelta as relativedelta
 
 from defaultMatrixEvapoTranspiration import EVAPO_TRANSPI_PER_CROP_PER_COUNTRY
 from defaultMatrixNUptake import NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY
@@ -24,13 +25,19 @@ from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation
     Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
 from models.atomicmass import MA_CO2, MA_C
 from models.erosionmodel import TillageMethod, AntiErosionPractice
-from models.fertilisermodel import OtherMineralFertiliserType
+from models.fertilisermodel import CaFertiliserType, ZnFertiliserType
 from models.hmmodel import LandUseCategoryForHM, PesticideType
 from models.irrigationmodel import IrrigationType
 from models.modelEnums import SoilTexture
 from models.otherorganicfertilisermodel import CompostType, SludgeType
 from models.pmodel import LandUseCategory
 
+TREE_BASED_CROPS = ["almond", "apple", "apricot", "banana", "cashew", "cocoa", "coconut", "coffee", "grape",
+                    "lemonlime", "mandarin", "mango", "mulberry", "olive", "orange", "palmtree", "peach", "pear",
+                    "pineapple", "sugarcane", "tea"]
+
+SEEDLINGS_BASED_CROPS = ["asparagus", "bellpepper", "cabbage", "chilli", "eggplant", "mint", "onion", "strawberry",
+                         "tomato"]
 
 class DefaultValuesWrapper(object):
     def __init__(self, inputMapping, generatorMap):
@@ -259,12 +266,20 @@ class EolWaterWasteGenerator(object):
              + generators["utilities_wateruse_non_conventional_sources"];
 
 
+class OrchardLifetimeDefaultGenerator(object):
+    def generateDefault(self, field, generators):
+        crop = generators["crop"]
+        if crop in ["sugarcane"]:
+            return 3;
+        return 20;
+
+
 class SeedQuantitiesDefaultGenerator(object):
     def generateDefault(self, field, generators):
         crop = generators["crop"]
-        if ( crop in ["almond", "apple", "apricot", "banana", "cocoa", "coconut", "coffee", "lemonlime", "mandarin", "olive", "orange", "palmtree", "peach", "pear", "pineapple", "sugarcane", "tea"]):
+        if crop in TREE_BASED_CROPS:
             value_field = "nb_planted_trees"
-        elif (crop in ["asparagus", "mint", "onion", "strawberry", "tomato"]):
+        elif crop in SEEDLINGS_BASED_CROPS:
             value_field = "nb_seedlings"
         else:
             value_field = "seeds"
@@ -388,8 +403,11 @@ DEFAULTS_VALUES_GENERATORS = {
                    "p_fertiliser_quantities": RatiosToValuesConvertor("p_fertiliser_proportions", "p2O5_from_mineral_fert"),
                    "k_fertiliser_quantities": RatiosToValuesConvertor("k_fertiliser_proportions", "k2O_from_mineral_fert"),
                    "ca_from_mineral_fert": SimpleValueDefaultGenerator(0.0),
-                   "other_mineral_fertiliser_proportions": FlatRatioRepartitionGenerator(OtherMineralFertiliserType),
-                   "other_mineral_fertiliser_quantities": RatiosToValuesConvertor("other_mineral_fertiliser_proportions", "ca_from_mineral_fert"),
+    "ca_fertiliser_proportions": FlatRatioRepartitionGenerator(CaFertiliserType),
+    "ca_fertiliser_quantities": RatiosToValuesConvertor("ca_fertiliser_proportions", "ca_from_mineral_fert"),
+    "zn_from_mineral_fert": SimpleValueDefaultGenerator(0.0),
+    "zn_fertiliser_proportions": FlatRatioRepartitionGenerator(ZnFertiliserType),
+    "zn_fertiliser_quantities": RatiosToValuesConvertor("zn_fertiliser_proportions", "zn_from_mineral_fert"),
                    "soil_with_ph_under_or_7": TableLookupDefaultGenerator("country", SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY),
                    #Manure defaults
                    "liquid_manure_part_before_dilution": SimpleValueDefaultGenerator(0.5),
@@ -411,6 +429,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "seeds": SafeDefaultGenerator("unsafe_seeds", 0.0),
                    "nb_seedlings": CropCountryMatrixLookupDefaultGenerator(NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY),
                    "nb_planted_trees": CropCountryMatrixLookupDefaultGenerator(NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY),
+    "orchard_lifetime": OrchardLifetimeDefaultGenerator(),
                    "seed_quantities": SeedQuantitiesDefaultGenerator(),
                    #Erosion defaults
                    "yearly_precipitation_as_snow": TableLookupDefaultGenerator("country", YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY),

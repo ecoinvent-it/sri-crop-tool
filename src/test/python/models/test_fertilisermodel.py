@@ -1,10 +1,12 @@
 import unittest
+
 from models.fertilisermodel import FertModel, \
-                                    NFertiliserType, \
-                                    PFertiliserType, \
-                                    KFertiliserType, \
-                                    OtherMineralFertiliserType
+    NFertiliserType, \
+    PFertiliserType, \
+    KFertiliserType, \
+    CaFertiliserType
 from models.modelEnums import HeavyMetalType
+
 
 class Test(unittest.TestCase):
     inputs = {"n_fertiliser_quantities":
@@ -34,19 +36,19 @@ class Test(unittest.TestCase):
                         KFertiliserType.potassium_nitrate: 0.3,
                         KFertiliserType.patent_potassium: 0.4
                     },
-              "other_mineral_fertiliser_quantities":
-                    {   OtherMineralFertiliserType.ca_limestone: 0.1,
-                        OtherMineralFertiliserType.ca_carbonation_limestone: 0.2,
-                        OtherMineralFertiliserType.ca_seaweed_limestone: 0.3
-                    },
+              "ca_fertiliser_quantities":
+                  {CaFertiliserType.ca_limestone: 0.1,
+                   CaFertiliserType.ca_carbonation_limestone: 0.2,
+                   CaFertiliserType.ca_seaweed_limestone: 0.3
+                   },
               "soil_with_ph_under_or_7":0.45
-             }
-        
+              }
+
     def testNH3(self):
         expectedResults = 0.48673871
         results = FertModel(self.inputs).computeNH3()
         self.assertAlmostEqual(results, expectedResults)
-        
+
     def testHeavyMetal(self):
         expectedResults = {
                             HeavyMetalType.cd: 115.843,
@@ -61,6 +63,6 @@ class Test(unittest.TestCase):
         for key, value in expectedResults.items():
                 self.assertAlmostEqual(results[key], value)
 
-    
+
 if __name__ == "__main__":
     unittest.main()

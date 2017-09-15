@@ -39,6 +39,7 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("seeds");
         TAGS_FOR_NUMERIC.add("nb_seedlings");
         TAGS_FOR_NUMERIC.add("nb_planted_trees");
+        TAGS_FOR_NUMERIC.add("orchard_lifetime");
         TAGS_FOR_NUMERIC.add("total_wateruse");
         TAGS_FOR_NUMERIC.add("yield_main_product_per_crop_cycle");
         TAGS_FOR_NUMERIC.add("total_manureliquid");
@@ -50,6 +51,7 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("total_fertkmin");
         TAGS_FOR_NUMERIC.add("fert_other_total_mg");
         TAGS_FOR_NUMERIC.add("total_fertotherca");
+        TAGS_FOR_NUMERIC.add("total_fertotherzn");
         TAGS_FOR_NUMERIC.add("pest_total");
         TAGS_FOR_NUMERIC.add("total_herbicides");
         TAGS_FOR_NUMERIC.add("total_fungicides");
@@ -144,6 +146,9 @@ public class NumericExtractor
         TAGS_FOR_RATIO.add("ratio_fertotherca_limestone");
         TAGS_FOR_RATIO.add("ratio_fertotherca_carbonation_limestone");
         TAGS_FOR_RATIO.add("ratio_fertotherca_seaweed_limestone");
+        TAGS_FOR_RATIO.add("ratio_fertotherzn_zinc_sulfate");
+        TAGS_FOR_RATIO.add("ratio_fertotherzn_zinc_oxide");
+        TAGS_FOR_RATIO.add("ratio_fertotherzn_other");
         TAGS_FOR_RATIO.add("fert_other_dolomite_in_mg");
         TAGS_FOR_RATIO.add("drying_yield_to_be_dryied");
         TAGS_FOR_RATIO.add("drying_humidity_before_drying");
