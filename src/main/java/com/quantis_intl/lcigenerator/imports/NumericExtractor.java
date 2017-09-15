@@ -52,6 +52,12 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("fert_other_total_mg");
         TAGS_FOR_NUMERIC.add("total_fertotherca");
         TAGS_FOR_NUMERIC.add("total_fertotherzn");
+        TAGS_FOR_NUMERIC.add("fert_other_kaolin");
+        TAGS_FOR_NUMERIC.add("fert_other_manganese_sulfate");
+        TAGS_FOR_NUMERIC.add("fert_other_gypsum");
+        TAGS_FOR_NUMERIC.add("fert_other_sulfite");
+        TAGS_FOR_NUMERIC.add("fert_other_portafer");
+        TAGS_FOR_NUMERIC.add("fert_other_borax");
         TAGS_FOR_NUMERIC.add("pest_total");
         TAGS_FOR_NUMERIC.add("total_herbicides");
         TAGS_FOR_NUMERIC.add("total_fungicides");

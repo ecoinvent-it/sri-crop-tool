@@ -2,7 +2,8 @@ from defaultGeneration import TREE_BASED_CROPS
 from directMappingEnums import Plantprotection, Soilcultivation, Sowingplanting, \
     Fertilisation, Harvesting, OtherWorkProcesses
 from models.atomicmass import MA_NH3, MA_N, MG_TO_MGSULFATE_FACTOR, \
-    MG_TO_DOLOMITE_FACTOR, Ca_TO_LIMESTONE_FACTOR, Ca_TO_LIMEALGAE_FACTOR
+    MG_TO_DOLOMITE_FACTOR, Ca_TO_LIMESTONE_FACTOR, Ca_TO_LIMEALGAE_FACTOR, Zn_TO_ZINCSULFATE_FACTOR, \
+    Zn_TO_ZINCOXIDE_FACTOR
 
 
 def identity(x): return x
@@ -148,6 +149,13 @@ class OutputMapping(object):
         "CO2_from_yield": identity,
         "energy_gross_calorific_value": identity,
         "pest_horticultural_oil": identity,
+
+        "fert_other_kaolin": identity,
+        "fert_other_manganese_sulfate": identity,
+        "fert_other_gypsum": identity,
+        "fert_other_sulfite": identity,
+        "fert_other_portafer": identity,
+        "fert_other_borax": identity,
 
         "energy_electricity_low_voltage_at_grid": identity,
         "energy_electricity_photovoltaic_produced_locally": identity,
