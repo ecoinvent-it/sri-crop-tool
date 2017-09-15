@@ -122,7 +122,6 @@ _SOILCULTIVATION_RATIOS_ENUM_TO_FIELD = {
 _SOWINGPLANTING_RATIOS_ENUM_TO_FIELD = {
                                         Sowingplanting.sowing:"ratio_sowingplanting_sowing",
                                         Sowingplanting.planting_seedlings:"ratio_sowingplanting_planting_seedlings",
-                                        Sowingplanting.planting_trees:"ratio_sowingplanting_planting_trees",
                                         Sowingplanting.planting_potatoes:"ratio_sowingplanting_planting_potatoes",
                                         Sowingplanting.other:"ratio_sowingplanting_other",
                                          }

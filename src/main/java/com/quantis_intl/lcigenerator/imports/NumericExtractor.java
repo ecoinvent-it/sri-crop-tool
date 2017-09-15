@@ -70,6 +70,7 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("total_fertilisation");
         TAGS_FOR_NUMERIC.add("total_harvesting");
         TAGS_FOR_NUMERIC.add("total_otherworkprocesses");
+        TAGS_FOR_NUMERIC.add("total_machinery_gazoline");
         TAGS_FOR_NUMERIC.add("energy_electricity_low_voltage_at_grid");
         TAGS_FOR_NUMERIC.add("energy_electricity_photovoltaic_produced_locally");
         TAGS_FOR_NUMERIC.add("energy_electricity_wind_power_produced_locally");

@@ -7,7 +7,7 @@ class Plantprotection(Enum):
     spraying="plantprotection_spraying"
     flaming="plantprotection_flaming"
     other="plantprotection_other"
-    
+
 class Soilcultivation(Enum):
     decompactation="soilcultivation_decompactation"
     tillage_chisel="soilcultivation_tillage_chisel"
@@ -19,20 +19,19 @@ class Soilcultivation(Enum):
     tillage_roll="soilcultivation_tillage_roll"
     tillage_rotary_cultivator="soilcultivation_tillage_rotary_cultivator"
     other="soilcultivation_other"
-        
+
 class Sowingplanting(Enum):
     sowing="sowingplanting_sowing"
     planting_seedlings="sowingplanting_planting_seedlings"
-    planting_trees="sowingplanting_planting_trees"
     planting_potatoes="sowingplanting_planting_potatoes"
     other="sowingplanting_other"
-            
+
 class Fertilisation(Enum):
     fertilizing_broadcaster="fertilisation_fertilizing_broadcaster"
     liquid_manure_vacuum_tanker="fertilisation_liquid_manure_vacuum_tanker"
     solid_manure="fertilisation_solid_manure"
     other="fertilisation_other"
-                
+
 class Harvesting(Enum):
     chopping_maize="harvesting_chopping_maize"
     threshing_combine_harvester="harvesting_threshing_combine_harvester"
@@ -57,4 +56,3 @@ class OtherWorkProcesses(Enum):
 class PlasticDisposal(Enum):
     landfill="eol_plastic_landfill"
     incineration="eol_plastic_incineration"
-    

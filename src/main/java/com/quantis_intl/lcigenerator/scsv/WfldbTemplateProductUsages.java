@@ -777,10 +777,6 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Planting {GLO}| market for | Alloc Rec, U", "ha",
                                      "sowingplanting_planting_seedlings",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_planting_seedlings"),
-            new TemplateProductUsage("Plantation of trees (WFLDB 3.0)/p/CH U", "p",
-                    "sowingplanting_planting_trees",
-                    StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_planting_trees",
-                    1.0d / 0.18333d),
             new TemplateProductUsage("Potato planting {GLO}| market for | Alloc Rec, U", "ha",
                                      "sowingplanting_planting_potatoes",
                                      StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
@@ -870,6 +866,11 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                             " Rec, U",
                     "kg", "otherworkprocesses_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "otherworkprocesses_other"),
+            new TemplateProductUsage(
+                    "Petrol, unleaded, burned in machinery {GLO}| market for petrol, unleaded, burned in machinery | " +
+                            "Alloc Rec, U",
+                    "kg", "total_machinery_gazoline", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "total_machinery_gazoline"),
 
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +

@@ -485,6 +485,7 @@ DEFAULTS_VALUES_GENERATORS = {
                    "total_fertilisation": SimpleValueDefaultGenerator(0.0),
                    "total_harvesting": SimpleValueDefaultGenerator(0.0),
                    "total_otherworkprocesses": SimpleValueDefaultGenerator(0.0),
+    "total_machinery_gazoline": SimpleValueDefaultGenerator(0.0),
                    "plantprotection_proportions": SimpleValueDefaultGenerator({Plantprotection.other: 1.0}),
                    "soilcultivation_proportions": SimpleValueDefaultGenerator({Soilcultivation.other: 1.0}),
                    "sowingplanting_proportions": SimpleValueDefaultGenerator({Sowingplanting.other: 1.0}),

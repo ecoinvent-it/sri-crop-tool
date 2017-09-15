@@ -157,6 +157,8 @@ class OutputMapping(object):
         "fert_other_portafer": identity,
         "fert_other_borax": identity,
 
+        "total_machinery_gazoline": identity,
+
         "energy_electricity_low_voltage_at_grid": identity,
         "energy_electricity_photovoltaic_produced_locally": identity,
         "energy_electricity_wind_power_produced_locally": identity,
@@ -212,7 +214,6 @@ class OutputMapping(object):
     _SOWINGPLANTING_FACTORS = {
                                 Sowingplanting.sowing: 1.0 / 3.82,
                                 Sowingplanting.planting_seedlings: 1.0 / 16.8,
-                                Sowingplanting.planting_trees: 1.0,
                                 Sowingplanting.planting_potatoes: 1.0 / 8.9,
                                 Sowingplanting.other: 1.0,
                                  }
@@ -228,7 +229,7 @@ class OutputMapping(object):
                         Harvesting.chopping_maize: 1.0 / 52.8,
                         Harvesting.threshing_combine_harvester: 1.0 / 33.3,
                         Harvesting.picking_up_forage_self_propelled_loader: 1.0 / 0.106,
-                        Harvesting.beets_complete_havester: 1.0 / 103.0,
+        Harvesting.beets_complete_havester: 1.0 / 28.1,
                         Harvesting.potatoes_complete_havester: 1.0 / 28.1,
                         Harvesting.making_hay_rotary_tedder: 1.0 / 1.92,
                         Harvesting.loading_bales: 1.0 / 0.0811,

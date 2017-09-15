@@ -86,7 +86,6 @@ public class LabelForBlockTags
 
         SOWING_PLANTING.put("Sowing", "sowing");
         SOWING_PLANTING.put("Planting seedlings", "planting_seedlings");
-        SOWING_PLANTING.put("Planting trees", "planting_trees");
         SOWING_PLANTING.put("Planting potatoes", "planting_potatoes");
         SOWING_PLANTING.put("Other", "other");
         LABELS_FOR_RATIO.put("total_sowingplanting", SOWING_PLANTING);
