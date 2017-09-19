@@ -431,6 +431,9 @@ DEFAULTS_VALUES_GENERATORS = {
                    "nb_planted_trees": CropCountryMatrixLookupDefaultGenerator(NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY),
     "orchard_lifetime": OrchardLifetimeDefaultGenerator(),
                    "seed_quantities": SeedQuantitiesDefaultGenerator(),
+    # lu_defaults
+    "organic_certified": SimpleValueDefaultGenerator("no"),
+    "cultivation_type": SimpleValueDefaultGenerator("open_ground"),
                    #Erosion defaults
                    "yearly_precipitation_as_snow": TableLookupDefaultGenerator("country", YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY),
                    "annualized_irrigation": AnnualizedIrrigationDefaultGenerator(),

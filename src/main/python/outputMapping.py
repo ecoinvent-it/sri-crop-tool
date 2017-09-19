@@ -94,14 +94,29 @@ class OutputMapping(object):
         for key, value in lucOuput.items():
             self.output[key.replace("m_LUC_", "")] = value
         #FIXME: Probably not the right place
-        if (self.output["luc_crop_type"]=="annual"):
-            self.output["occupation_arable"] = 10027.0 / allInputs["crop_cycle_per_year"]
-            self.output["transformation_from_arable"] = 10000
-            self.output["transformation_to_arable"] = 10000
-        elif (self.output["luc_crop_type"]=="perennial"):
-            self.output["occupation_permanent"] = 10027.0 / allInputs["crop_cycle_per_year"]
-            self.output["transformation_from_permanent"] = 500
-            self.output["transformation_to_permanent"] = 500
+        lu_value = 10027.0 / allInputs["crop_cycle_per_year"]
+
+        if allInputs["water_use_total"] > 0:
+            lu_type = "irr";
+        else:
+            lu_type = "non-irr"
+
+        if self.output["luc_crop_type"] == "annual":
+            if allInputs["cultivation_type"] != "open_ground":
+                lu_type = "greenhouse"
+                self.output["occupation_annual_greenhouse"] = lu_value
+            elif allInputs["organic_certified"] == "yes":
+                self.output["occupation_annual_organic"] = lu_value
+            else:
+                self.output["occupation_annual_" + lu_type] = lu_value
+
+            self.output["transformation_from_annual_" + lu_type] = lu_value
+            self.output["transformation_to_annual_" + lu_type] = lu_value
+
+        elif self.output["luc_crop_type"] == "perennial":
+            self.output["occupation_peren_" + lu_type] = lu_value
+            self.output["transformation_from_peren_" + lu_type] = lu_value / allInputs["orchard_lifetime"]
+            self.output["transformation_to_peren_" + lu_type] = lu_value / allInputs["orchard_lifetime"]
             # else TODO: Rice
 
     def mapCODWasteWater(self, allInputs): #m3 * mg/L(==g/m3) -> g

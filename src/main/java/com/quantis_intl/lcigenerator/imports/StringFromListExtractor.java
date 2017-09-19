@@ -32,8 +32,10 @@ public class StringFromListExtractor
 {
     private static final Map<String, String> CROPS = PropertiesLoader.reverse(PropertiesLoader.CROPS);
     private static final Map<String, String> COUNTRIES = PropertiesLoader.reverseProperties("/countries.properties");
-    private static final Map<String, String> TILLAGE_METHOD = new HashMap<String, String>();
-    private static final Map<String, String> ANTI_EROSION_PRACTICE = new HashMap<String, String>();
+    private static final Map<String, String> YES_NO = ImmutableMap.of("yes", "yes", "no", "no");
+    private static final Map<String, String> CULTIVATION_TYPE = new HashMap<>();
+    private static final Map<String, String> TILLAGE_METHOD = new HashMap<>();
+    private static final Map<String, String> ANTI_EROSION_PRACTICE = new HashMap<>();
 
     public static final Map<String, Map<String, String>> TAGS_TO_MAP = new HashMap<>();
     public static final Map<String, Map<String, String>> MANDATORY_TAGS_TO_MAP = new HashMap<>();
@@ -42,6 +44,13 @@ public class StringFromListExtractor
     {
         MANDATORY_TAGS_TO_MAP.put("crop", CROPS);
         MANDATORY_TAGS_TO_MAP.put("country", COUNTRIES);
+
+        TAGS_TO_MAP.put("organic_certified", YES_NO);
+
+        CULTIVATION_TYPE.put("open ground", "open_ground");
+        CULTIVATION_TYPE.put("greenhouse, open ground", "greenhouse_open_ground");
+        CULTIVATION_TYPE.put("greenhouse, hydroponic system", "greenhouse_hydroponic");
+        TAGS_TO_MAP.put("cultivation_type", CULTIVATION_TYPE);
 
         TILLAGE_METHOD.put("Fall plow", "fall_plaw");
         TILLAGE_METHOD.put("Spring plow", "spring_plow");
