@@ -1,5 +1,5 @@
 from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation, \
-    Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
+    Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses, Biowaste
 from inputMappings import SimpleInputMappingRule, MapMappingRule, \
     InputAsEnumMappingRule, InputMappingRule
 from models.erosionmodel import TillageMethod, AntiErosionPractice
@@ -170,6 +170,14 @@ _WASTE_PLASTIC_RATIOS_ENUM_TO_FIELD = {
                                    PlasticDisposal.incineration:"ratio_eol_incineration"
                                     }
 
+_BIOWASTE_ENUM_TO_FIELD = {
+    Biowaste.incineration: "ratio_biowaste_incineration",
+    Biowaste.anae_digestion: "ratio_biowaste_anae_digestion",
+    Biowaste.composting: "ratio_biowaste_composting",
+    Biowaste.other: "ratio_biowaste_other"
+}
+
+
 class RegroupPesticides(InputMappingRule):
     def mapField(self, attrName, mapping):
         res = {}
@@ -224,5 +232,6 @@ EXCEL_INPUT_MAPPING_RULES = {
                     "harvesting_proportions": MapMappingRule(_HARVESTING_RATIOS_ENUM_TO_FIELD),
                     "otherworkprocesses_proportions": MapMappingRule(_OTHERWORK_RATIOS_ENUM_TO_FIELD),
                     #Waste rules
-                    "plastic_disposal_proportions": MapMappingRule(_WASTE_PLASTIC_RATIOS_ENUM_TO_FIELD)
+    "plastic_disposal_proportions": MapMappingRule(_WASTE_PLASTIC_RATIOS_ENUM_TO_FIELD),
+    "biowaste_proportions": MapMappingRule(_BIOWASTE_ENUM_TO_FIELD)
                    }

@@ -24,6 +24,7 @@ class OutputMapping(object):
 
     def mapDictsToOutput(self, allInputs):
         self._mapEnumMap(allInputs["plastic_disposal_quantities"])
+        self._mapEnumMap(allInputs["biowaste_quantities"])
 
     def mapSeeds(self, allInputs):
         for key, value in allInputs["seed_quantities"].items():
@@ -194,7 +195,7 @@ class OutputMapping(object):
         "utilities_wateruse_surface": identity,
         "utilities_wateruse_non_conventional_sources": lambda x: x * 1000.0, #m3 -> kg
 
-        "materials_fleece": identity,
+        "materials_fleece": lambda x: x / 0.017,
         "materials_silage_foil": identity,
         "materials_covering_sheet": identity,
         "materials_bird_net": identity,

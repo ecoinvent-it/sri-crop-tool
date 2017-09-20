@@ -22,7 +22,7 @@ from defaultTables import CLAY_CONTENT_PER_COUNTRY, SOIL_CARBON_CONTENT_PER_COUN
     ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL, \
     SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, CARBON_CONTENT_PER_CROP, IRR_WATERUSE_RATIO_PER_COUNTRY
 from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation, \
-    Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses
+    Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses, Biowaste
 from models.atomicmass import MA_CO2, MA_C
 from models.erosionmodel import TillageMethod, AntiErosionPractice
 from models.fertilisermodel import CaFertiliserType, ZnFertiliserType
@@ -511,6 +511,9 @@ DEFAULTS_VALUES_GENERATORS = {
                    "total_eol_plastic_disposal_fleece_and_other": EolPlasticDisposalGenerator(),
                    "plastic_disposal_proportions":SimpleValueDefaultGenerator({PlasticDisposal.landfill: 0.5, PlasticDisposal.incineration:0.5}),
                    "plastic_disposal_quantities":RatiosToValuesConvertor("plastic_disposal_proportions", "total_eol_plastic_disposal_fleece_and_other"),
+    "total_biowaste": SimpleValueDefaultGenerator(0.0),
+    "biowaste_proportions": SimpleValueDefaultGenerator({Biowaste.other: 1.0}),
+    "biowaste_quantities": RatiosToValuesConvertor("biowaste_proportions", "total_biowaste"),
                    "eol_waste_water_to_treatment_facility": SimpleValueDefaultGenerator(0.0),
                    "eol_waste_water_to_nature": EolWaterWasteGenerator(),
                    "cod_in_waste_water": SimpleValueDefaultGenerator(0.0)

@@ -56,3 +56,10 @@ class OtherWorkProcesses(Enum):
 class PlasticDisposal(Enum):
     landfill="eol_plastic_landfill"
     incineration="eol_plastic_incineration"
+
+
+class Biowaste(Enum):
+    incineration = "eol_biowaste_incineration"
+    anae_digestion = "eol_biowaste_anae_digestion"
+    composting = "eol_biowaste_composting"
+    other = "eol_biowaste_other"

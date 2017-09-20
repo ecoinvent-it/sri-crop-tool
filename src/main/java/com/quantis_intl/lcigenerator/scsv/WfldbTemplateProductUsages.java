@@ -911,8 +911,8 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                     "m2", "greenhouse_plastic_roof", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
                     "greenhouse_plastic_roof"),
 
-            new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.0)/GLO U", "kg",
-                    "hm_uptake_formula", StandardUncertaintyMetadata.HM_TO_SOIL, ""),
+            new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.3)/GLO U", "kg",
+                                     "hm_uptake_formula", StandardUncertaintyMetadata.HM_TO_SOIL, ""),
 
             new LucTemplateProductUsage("ha", "luc_formula", StandardUncertaintyMetadata.LAND_TRANSFORMATION, ""),
 
@@ -1019,6 +1019,18 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Waste polyethylene {CH}| treatment of, municipal incineration | Alloc Rec, U",
                                      "kg", "eol_plastic_incineration", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
                     "eol_incineration"),
+            new TemplateProductUsage("Biowaste{GLO} | treatment of biowaste, municipal incineration | Alloc Rec, U",
+                                     "kg", "eol_biowaste_incineration", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
+                                     "biowaste_incineration"),
+            new TemplateProductUsage("Biowaste{GLO} | treatment of biowaste by anaerobic digestion | Alloc Rec, U",
+                                     "kg", "eol_biowaste_anae_digestion", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
+                                     "biowaste_anae_digestion"),
+            new TemplateProductUsage("Biowaste{GLO} | treatment of, composting | Alloc Rec, U",
+                                     "kg", "eol_biowaste_composting", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
+                                     "biowaste_composting"),
+            new TemplateProductUsage("Biowaste {GLO}| market for | Alloc Rec, U",
+                                     "kg", "eol_biowaste_other", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
+                                     "biowaste_other"),
             new TemplateProductUsage("Wastewater, average {CH}| treatment of, capacity 1E9l/year | Alloc Rec, U", "m3",
                                      "eol_waste_water_to_treatment_facility",
                                      StandardUncertaintyMetadata.WASTE_MANAGEMENT,
@@ -1113,7 +1125,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             if (alcigLucCountry.contains(country))
                 return "ALCIG";
 
-            return "WFLDB 3.0";
+            return "WFLDB 3.3";
         }
     }
 
