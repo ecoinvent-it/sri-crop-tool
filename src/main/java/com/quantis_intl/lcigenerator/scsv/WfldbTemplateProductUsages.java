@@ -910,6 +910,10 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                             "Rec, U",
                     "m2", "greenhouse_plastic_roof", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
                     "greenhouse_plastic_roof"),
+            new TemplateProductUsage(
+                    "Trellis system, wooden poles, soft wood, tar impregnated {GLO}| market for trellis system, " +
+                            "wooden poles, soft wood, tar impregnated | Alloc Rec, U",
+                    "ha", "need_trellis", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
 
             new TemplateProductUsage("Crop, default, heavy metals uptake (WFLDB 3.3)/GLO U", "kg",
                                      "hm_uptake_formula", StandardUncertaintyMetadata.HM_TO_SOIL, ""),

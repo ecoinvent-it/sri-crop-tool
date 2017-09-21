@@ -27,9 +27,12 @@ class OutputMapping(object):
         self._mapEnumMap(allInputs["biowaste_quantities"])
 
     def mapSeeds(self, allInputs):
+        self.output["need_trellis"] = 0.0
         for key, value in allInputs["seed_quantities"].items():
             if allInputs["crop"] in TREE_BASED_CROPS:
                 self.output["seeds_" + key] = value / allInputs["orchard_lifetime"]
+                if value >= 500:
+                    self.output["need_trellis"] = 1.0
             else:
                 self.output["seeds_" + key] = value
 
