@@ -33,15 +33,18 @@ class ModelsSequence(object):
         self._computeOtherOrganicFertiliser()
         self._computeSeed()
         self.outputMapping.mapSeeds(self.allInputs)
-        self._intermediateValues["eroded_soil"] = ErosionModel(self.allInputs).compute()["m_Erosion_eroded_soil"]
+        if self.allInputs["cultivation_type"] != "open_ground":
+            self._intermediateValues["eroded_soil"]
+        else:
+            self._intermediateValues["eroded_soil"] = ErosionModel(self.allInputs).compute()["m_Erosion_eroded_soil"]
         self.outputMapping.mapIrrigationModel(IrrigationModel(self.allInputs).compute())
         self.outputMapping.mapIrrigationQuantities(self.allInputs)
         self.outputMapping.mapFertilizers(self.allInputs)
         self.outputMapping.mapOtherOrganicFertilizers(self.allInputs)
         self.outputMapping.mapCo2Model(Co2Model(self.allInputs).compute())
-        self.outputMapping.mapNModel(NModel(self.allInputs).compute())
-        self.outputMapping.mapPModel(PModel(self.allInputs).compute())
-        self.outputMapping.mapHMModel(HmModel(self.allInputs).compute())
+        self.outputMapping.mapNModel(NModel(self.allInputs).compute(), self.allInputs)
+        self.outputMapping.mapPModel(PModel(self.allInputs).compute(), self.allInputs)
+        self.outputMapping.mapHMModel(HmModel(self.allInputs).compute(), self.allInputs)
         self.outputMapping.mapPackModel(PackModel(self.allInputs).compute())
         self.outputMapping.mapLucModel(LUCModel(self.allInputs).compute(), self.allInputs)
         #self.outputMapping.mapUsedIntermidiateValues(self._intermediateValues)

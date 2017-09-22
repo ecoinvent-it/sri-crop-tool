@@ -15,12 +15,13 @@ from defaultMatrixYieldPerYear import YIELD_PER_YEAR_PER_CROP_PER_COUNTRY
 from defaultTables import CLAY_CONTENT_PER_COUNTRY, SOIL_CARBON_CONTENT_PER_COUNTRY, \
     ROOTING_DEPTH_PER_CROP, FERT_N_RATIO_PER_COUNTRY, FERT_P_RATIO_PER_COUNTRY, FERT_K_RATIO_PER_COUNTRY, \
     MANURE_LIQUID_RATIO_PER_COUNTRY, MANURE_SOLID_RATIO_PER_COUNTRY, \
-    ANNUAL_PRECIPITATION_PER_COUNTRY, YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY, \
+    YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY, \
     WATER_CONTENT_FM_RATIO_PER_CROP, IRR_TECH_RATIO_PER_COUNTRY, \
     LAND_USE_CATEGORY_PER_CROP, CROP_FACTOR_PER_CROP, SAND_CONTENT_PER_COUNTRY, \
     SOIL_ERODIBILITY_FACTOR_PER_SOIL_TEXTURE, \
     ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL, \
-    SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, CARBON_CONTENT_PER_CROP, IRR_WATERUSE_RATIO_PER_COUNTRY
+    SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY, CARBON_CONTENT_PER_CROP, IRR_WATERUSE_RATIO_PER_COUNTRY, \
+    ANNUAL_PRECIPITATION_PER_COUNTRY
 from directMappingEnums import PlasticDisposal, Plantprotection, Soilcultivation, \
     Sowingplanting, Fertilisation, Harvesting, OtherWorkProcesses, Biowaste
 from models.atomicmass import MA_CO2, MA_C
@@ -127,6 +128,26 @@ class OneRatioToValueConvertor(object):
     def generateDefault(self, field, generators):
         return generators[self._ratioField] *generators[self._totalField]
 
+
+class ClimateDefaultGenerator(object):
+    def generateDefault(self, field, generators):
+        if generators["climate_zone_1"] == "cool_climate":
+            return "snow_dry_winter"
+        elif generators["climate_zone_1"] == "temperate_climate":
+            return "warm_summer_dry_warm"
+        else:
+            return "equatorial_summer_dry"
+
+
+class AnnualPrecipitationDefaultGenerator(TableLookupDefaultGenerator):
+    def __init__(self):
+        super().__init__("country", ANNUAL_PRECIPITATION_PER_COUNTRY)
+
+    def generateDefault(self, field, generators):
+        if generators["cultivation_type"] != "open_ground":
+            return 0.0
+        else:
+            return TableLookupDefaultGenerator.generateDefault(self, field, generators)
 
 class CropCyclePerYearDefaultGenerator(object):
     def generateDefault(self, field, generators):
@@ -383,7 +404,9 @@ class NitrogenFromCropResiduesDefaultGenerator(object):
 
 DEFAULTS_VALUES_GENERATORS = {
                    #Cross-models defaults
-                   "average_annual_precipitation": TableLookupDefaultGenerator("country", ANNUAL_PRECIPITATION_PER_COUNTRY),
+    "average_annual_precipitation": AnnualPrecipitationDefaultGenerator(),
+    "climate_zone_1": SimpleValueDefaultGenerator("temperate_climate"),
+    "climate_zone_specific": ClimateDefaultGenerator(),
                    "clay_content": TableLookupDefaultGenerator("country", CLAY_CONTENT_PER_COUNTRY),
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
                    "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),

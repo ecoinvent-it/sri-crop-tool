@@ -48,16 +48,16 @@ class OutputMapping(object):
         for key, value in co2Output.items():
             self.output[key.replace("m_co2_", "")] = value
 
-    def mapNModel(self, no3Output):
+    def mapNModel(self, no3Output, allInputs):
         for key, value in no3Output.items():
+            if allInputs["cultivation_type"] == "greenhouse_hydroponic" and key != "m_N_ammonia_total":
+                value = 0.0
             self.output[key.replace("m_N_", "")] = value
 
-    def mapErosionModel(self, erosionOutput):
-        for key, value in erosionOutput.items():
-            self.output[key.replace("m_Erosion_", "")] = value
-
-    def mapPModel(self, pOutput):
+    def mapPModel(self, pOutput, allInputs):
         for key, value in pOutput.items():
+            if allInputs["cultivation_type"] == "greenhouse_hydroponic":
+                value = 0.0
             self.output[key.replace("m_P_", "")] = value
         #TODO: Is this the best place for that?
         self.output["PO4_surfacewater"] = self.output["PO4_surfacewater_drained"] + self.output["PO4_surfacewater_ro"]
@@ -84,10 +84,12 @@ class OutputMapping(object):
         self._mapEnumMap(allInputs["compost_quantities"])
         self._mapEnumMap(allInputs["sludge_quantities"])
 
-    def mapHMModel(self,hmOutput):
+    def mapHMModel(self, hmOutput, allInputs):
         for key, hmMap in hmOutput.items():
             prefix = key.replace("m_hm_", "") + "_"
             for k, v in hmMap.items():
+                if allInputs["cultivation_type"] == "greenhouse_hydroponic":
+                    v = 0.0
                 self.output[prefix + k.name] = v
 
     def mapPackModel(self, packOutput):

@@ -52,6 +52,8 @@ class FertModel(object):
       ca_fertiliser_quantities: map CaFertiliserType -> kg Ca/ha
       zn_fertiliser_quantities: map ZnFertiliserType -> kg Zn/ha
       soil_with_ph_under_or_7: ratio
+      climate_zone_1: text
+      cultivation_type: text
 
     Outputs:
       computeNH3:
@@ -65,36 +67,80 @@ class FertModel(object):
                         "k_fertiliser_quantities",
                         "ca_fertiliser_quantities",
                         "zn_fertiliser_quantities",
-                        "soil_with_ph_under_or_7"
+                        "soil_with_ph_under_or_7",
+                        "climate_zone_1",
+                        "cultivation_type"
                         ]
 
-    #src: (EEA 2013, 3D, Table 3-2) time factor 14/17 (Conversion from kg NH3 into kg N)
-    _EF_NH3N_MIN_N_FERT_PH_UNDER_OR_SEVEN = {
-                               NFertiliserType.ammonium_nitrate: 0.0305,
-                               NFertiliserType.urea: 0.2001,
-                               NFertiliserType.ureaAN: 0.1029,
-                               NFertiliserType.mono_ammonium_phosphate: 0.0931,
-                               NFertiliserType.di_ammonium_phosphate: 0.0931,
-                               NFertiliserType.an_phosphate: 0.0305, #Other complex NK, NPK fertilizers
-                               NFertiliserType.lime_ammonium_nitrate: 0.0181, #Calcium ammonium nitrate (CAN)
-                               NFertiliserType.ammonium_sulphate: 0.0107,
-                               NFertiliserType.potassium_nitrate: 0.0305, #Other complex NK, NPK fertilizers
-                               NFertiliserType.ammonia_liquid:0.0091 #Anhydrous ammonia
-                               }
+    _EF_NH3N_MIN_N_FERT_PH_UNDER_OR_SEVEN = {"cool_climate": {
+        NFertiliserType.ammonium_nitrate: 0.01,
+        NFertiliserType.urea: 0.13,
+        NFertiliserType.ureaAN: 0.08,
+        NFertiliserType.mono_ammonium_phosphate: 0.04,
+        NFertiliserType.di_ammonium_phosphate: 0.04,
+        NFertiliserType.an_phosphate: 0.04,  # Other complex NK, NPK fertilizers
+        NFertiliserType.lime_ammonium_nitrate: 0.01,  # Calcium ammonium nitrate (CAN)
+        NFertiliserType.ammonium_sulphate: 0.07,
+        NFertiliserType.potassium_nitrate: 0.04,  # Other complex NK, NPK fertilizers
+        NFertiliserType.ammonia_liquid: 0.02  # Anhydrous ammonia
+    }, "temperate_climate": {
+        NFertiliserType.ammonium_nitrate: 0.01,
+        NFertiliserType.urea: 0.13,
+        NFertiliserType.ureaAN: 0.08,
+        NFertiliserType.mono_ammonium_phosphate: 0.04,
+        NFertiliserType.di_ammonium_phosphate: 0.04,
+        NFertiliserType.an_phosphate: 0.06,  # Other complex NK, NPK fertilizers
+        NFertiliserType.lime_ammonium_nitrate: 0.01,  # Calcium ammonium nitrate (CAN)
+        NFertiliserType.ammonium_sulphate: 0.08,
+        NFertiliserType.potassium_nitrate: 0.06,  # Other complex NK, NPK fertilizers
+        NFertiliserType.ammonia_liquid: 0.02  # Anhydrous ammonia
+    }, "warm_climate": {
+        NFertiliserType.ammonium_nitrate: 0.02,
+        NFertiliserType.urea: 0.16,
+        NFertiliserType.ureaAN: 0.10,
+        NFertiliserType.mono_ammonium_phosphate: 0.05,
+        NFertiliserType.di_ammonium_phosphate: 0.05,
+        NFertiliserType.an_phosphate: 0.05,  # Other complex NK, NPK fertilizers
+        NFertiliserType.lime_ammonium_nitrate: 0.01,  # Calcium ammonium nitrate (CAN)
+        NFertiliserType.ammonium_sulphate: 0.09,
+        NFertiliserType.potassium_nitrate: 0.05,  # Other complex NK, NPK fertilizers
+        NFertiliserType.ammonia_liquid: 0.02  # Anhydrous ammonia
+    }}
 
-    #src: (EEA 2013, 3D, Table 3-2) time factor 14/17 (Conversion from kg NH3 into kg N)
-    _EF_NH3N_MIN_N_FERT_PH_OVER_SEVEN = {
-                               NFertiliserType.ammonium_nitrate: 0.0305,
-                               NFertiliserType.urea: 0.2001,
-                               NFertiliserType.ureaAN: 0.1029,
-                               NFertiliserType.mono_ammonium_phosphate: 0.2413,
-                               NFertiliserType.di_ammonium_phosphate: 0.2413,
-                               NFertiliserType.an_phosphate: 0.0305, #Other complex NK, NPK fertilizers
-                               NFertiliserType.lime_ammonium_nitrate: 0.0181, #Calcium ammonium nitrate (CAN)
-                               NFertiliserType.ammonium_sulphate: 0.2224,
-                               NFertiliserType.potassium_nitrate: 0.0305, #Other complex NK, NPK fertilizers
-                               NFertiliserType.ammonia_liquid: 0.0091 #Anhydrous ammonia
-                               }
+    _EF_NH3N_MIN_N_FERT_PH_OVER_SEVEN = {"cool_climate": {
+        NFertiliserType.ammonium_nitrate: 0.03,
+        NFertiliserType.urea: 0.14,
+        NFertiliserType.ureaAN: 0.08,
+        NFertiliserType.mono_ammonium_phosphate: 0.07,
+        NFertiliserType.di_ammonium_phosphate: 0.07,
+        NFertiliserType.an_phosphate: 0.07,  # Other complex NK, NPK fertilizers
+        NFertiliserType.lime_ammonium_nitrate: 0.01,  # Calcium ammonium nitrate (CAN)
+        NFertiliserType.ammonium_sulphate: 0.14,
+        NFertiliserType.potassium_nitrate: 0.07,  # Other complex NK, NPK fertilizers
+        NFertiliserType.ammonia_liquid: 0.03  # Anhydrous ammonia
+    }, "temperate_climate": {
+        NFertiliserType.ammonium_nitrate: 0.03,
+        NFertiliserType.urea: 0.14,
+        NFertiliserType.ureaAN: 0.08,
+        NFertiliserType.mono_ammonium_phosphate: 0.08,
+        NFertiliserType.di_ammonium_phosphate: 0.08,
+        NFertiliserType.an_phosphate: 0.08,  # Other complex NK, NPK fertilizers
+        NFertiliserType.lime_ammonium_nitrate: 0.01,  # Calcium ammonium nitrate (CAN)
+        NFertiliserType.ammonium_sulphate: 0.14,
+        NFertiliserType.potassium_nitrate: 0.08,  # Other complex NK, NPK fertilizers
+        NFertiliserType.ammonia_liquid: 0.03  # Anhydrous ammonia
+    }, "warm_climate": {
+        NFertiliserType.ammonium_nitrate: 0.03,
+        NFertiliserType.urea: 0.17,
+        NFertiliserType.ureaAN: 0.10,
+        NFertiliserType.mono_ammonium_phosphate: 0.10,
+        NFertiliserType.di_ammonium_phosphate: 0.10,
+        NFertiliserType.an_phosphate: 0.10,  # Other complex NK, NPK fertilizers
+        NFertiliserType.lime_ammonium_nitrate: 0.02,  # Calcium ammonium nitrate (CAN)
+        NFertiliserType.ammonium_sulphate: 0.17,
+        NFertiliserType.potassium_nitrate: 0.10,  # Other complex NK, NPK fertilizers
+        NFertiliserType.ammonia_liquid: 0.04  # Anhydrous ammonia
+    }}
 
     #src: WLFDB Guidelines, tab. 23; Agribalyse methodology report v1.1 Table 80 for Hg
     # mg/kg nutrient
@@ -156,9 +202,14 @@ class FertModel(object):
                 self.n_fertiliser_quantities.items()}
 
     def _compute_nh3_as_n_for_fert(self,fert):
-        Ef_low_ph = self._EF_NH3N_MIN_N_FERT_PH_UNDER_OR_SEVEN[fert];
-        Ef_high_ph = self._EF_NH3N_MIN_N_FERT_PH_OVER_SEVEN[fert];
-        return self.soil_with_ph_under_or_7 * Ef_low_ph + (1.0 - self.soil_with_ph_under_or_7) * Ef_high_ph
+        climate = self.climaze_zone_1
+        soil_ph_under_or_7 = self.soil_with_ph_under_or_7
+        if self.cultivation_type == "greenhouse_hydroponic":
+            climate = "temperate_climate"
+            soil_ph_under_or_7 = 1.0
+        Ef_low_ph = self._EF_NH3N_MIN_N_FERT_PH_UNDER_OR_SEVEN[climate][fert]
+        Ef_high_ph = self._EF_NH3N_MIN_N_FERT_PH_OVER_SEVEN[climate][fert]
+        return soil_ph_under_or_7 * Ef_low_ph + (1.0 - soil_ph_under_or_7) * Ef_high_ph
 
     def computeHeavyMetal(self):
         total_hm_values = dict.fromkeys(HeavyMetalType,0.0)

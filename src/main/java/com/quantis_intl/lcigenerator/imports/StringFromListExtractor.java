@@ -33,6 +33,8 @@ public class StringFromListExtractor
     private static final Map<String, String> CROPS = PropertiesLoader.reverse(PropertiesLoader.CROPS);
     private static final Map<String, String> COUNTRIES = PropertiesLoader.reverseProperties("/countries.properties");
     private static final Map<String, String> YES_NO = ImmutableMap.of("yes", "yes", "no", "no");
+    private static final Map<String, String> CLIMATE_ZONES = new HashMap<>();
+    private static final Map<String, String> CLIMATE_SPECIFIC_ZONES = new HashMap<>();
     private static final Map<String, String> CULTIVATION_TYPE = new HashMap<>();
     private static final Map<String, String> TILLAGE_METHOD = new HashMap<>();
     private static final Map<String, String> ANTI_EROSION_PRACTICE = new HashMap<>();
@@ -46,6 +48,39 @@ public class StringFromListExtractor
         MANDATORY_TAGS_TO_MAP.put("country", COUNTRIES);
 
         TAGS_TO_MAP.put("organic_certified", YES_NO);
+
+        CLIMATE_ZONES.put("Cool climate", "cool_climate");
+        CLIMATE_ZONES.put("Temperate climate", "temperate_climate");
+        CLIMATE_ZONES.put("Warm climate", "warm_climate");
+        TAGS_TO_MAP.put("climate_zone_1", CLIMATE_ZONES);
+
+        CLIMATE_SPECIFIC_ZONES.put("Polar polar frost", "polar_frost");
+        CLIMATE_SPECIFIC_ZONES.put("Polar polar tundra", "polar_tundra");
+        CLIMATE_SPECIFIC_ZONES.put("Snow dry winter extremely continental", "snow_dry_winter");
+        CLIMATE_SPECIFIC_ZONES.put("Snow fully humid extremely continental", "snow_humid_continental");
+        CLIMATE_SPECIFIC_ZONES.put("Arid desert cold arid", "arid_desert_cold");
+        CLIMATE_SPECIFIC_ZONES.put("Warm temperate fully humid hot summer", "warm_humid_hot");
+        CLIMATE_SPECIFIC_ZONES.put("Warm temperate fully humid warm summer", "warm_humid_warm");
+        CLIMATE_SPECIFIC_ZONES.put("Warm temperate fully humid cold summer", "warm_humid_cold");
+        CLIMATE_SPECIFIC_ZONES.put("Warm temperate summer dry hot summer", "warm_summer_dry_hot");
+        CLIMATE_SPECIFIC_ZONES.put("Warm temperate summer dry warm summer", "warm_summer_dry_warm");
+        CLIMATE_SPECIFIC_ZONES.put("Warm temperate summer dry cold summer", "warm_summer_dry_cold");
+        CLIMATE_SPECIFIC_ZONES.put("Warm temperate winter dry hot summer", "warm_winter_dry_hot");
+        CLIMATE_SPECIFIC_ZONES.put("Warm temperate winter dry cool summer", "warm_winter_dry_cool");
+        CLIMATE_SPECIFIC_ZONES.put("Snow Fully humid hot summer", "snow_humid_hot");
+        CLIMATE_SPECIFIC_ZONES.put("Snow Fully humid warm summer", "snow_humid_warm");
+        CLIMATE_SPECIFIC_ZONES.put("Snow Fully humid cold summer", "snow_humid_cold");
+        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry hot summer", "snow_dry_hot");
+        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry warm summer", "snow_dry_warm");
+        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry cold summer", "snow_dry_cold");
+        CLIMATE_SPECIFIC_ZONES.put("Arid steppe cold arid", "arid_steppe_cold");
+        CLIMATE_SPECIFIC_ZONES.put("Equatorial fully humid", "equatorial_humid");
+        CLIMATE_SPECIFIC_ZONES.put("Equatorial monsoonal", "equatorial_monsonnal");
+        CLIMATE_SPECIFIC_ZONES.put("Equatorial Summer Dry", "equatorial_summer_dry");
+        CLIMATE_SPECIFIC_ZONES.put("Equatorial winter dry", "equatorial_winter_dry");
+        CLIMATE_SPECIFIC_ZONES.put("Arid steppe hot arid", "arid_steppe_hot");
+        CLIMATE_SPECIFIC_ZONES.put("Arid desert hot arid", "arid_desert_hot");
+        TAGS_TO_MAP.put("climate_zone_specific", CLIMATE_SPECIFIC_ZONES);
 
         CULTIVATION_TYPE.put("open ground", "open_ground");
         CULTIVATION_TYPE.put("greenhouse, open ground", "greenhouse_open_ground");
