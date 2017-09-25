@@ -36,6 +36,8 @@ public class NumericExtractor
     static
     {
         TAGS_FOR_NUMERIC.add("average_annual_precipitation");
+        TAGS_FOR_NUMERIC.add("nb_wet_days_per_year");
+        TAGS_FOR_NUMERIC.add("mean_elevation_m");
         TAGS_FOR_NUMERIC.add("seeds");
         TAGS_FOR_NUMERIC.add("nb_seedlings");
         TAGS_FOR_NUMERIC.add("nb_planted_trees");

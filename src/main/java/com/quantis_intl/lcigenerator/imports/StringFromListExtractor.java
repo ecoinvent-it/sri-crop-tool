@@ -56,8 +56,9 @@ public class StringFromListExtractor
 
         CLIMATE_SPECIFIC_ZONES.put("Polar polar frost", "polar_frost");
         CLIMATE_SPECIFIC_ZONES.put("Polar polar tundra", "polar_tundra");
-        CLIMATE_SPECIFIC_ZONES.put("Snow dry winter extremely continental", "snow_dry_winter");
+        CLIMATE_SPECIFIC_ZONES.put("Snow dry winter extremely continental", "snow_winter_continental");
         CLIMATE_SPECIFIC_ZONES.put("Snow fully humid extremely continental", "snow_humid_continental");
+        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry extremely continental", "snow_summer_continental");
         CLIMATE_SPECIFIC_ZONES.put("Arid desert cold arid", "arid_desert_cold");
         CLIMATE_SPECIFIC_ZONES.put("Warm temperate fully humid hot summer", "warm_humid_hot");
         CLIMATE_SPECIFIC_ZONES.put("Warm temperate fully humid warm summer", "warm_humid_warm");
@@ -67,12 +68,16 @@ public class StringFromListExtractor
         CLIMATE_SPECIFIC_ZONES.put("Warm temperate summer dry cold summer", "warm_summer_dry_cold");
         CLIMATE_SPECIFIC_ZONES.put("Warm temperate winter dry hot summer", "warm_winter_dry_hot");
         CLIMATE_SPECIFIC_ZONES.put("Warm temperate winter dry cool summer", "warm_winter_dry_cool");
+        CLIMATE_SPECIFIC_ZONES.put("Warm temperate winter dry cold summer", "warm_winter_dry_cold");
         CLIMATE_SPECIFIC_ZONES.put("Snow Fully humid hot summer", "snow_humid_hot");
         CLIMATE_SPECIFIC_ZONES.put("Snow Fully humid warm summer", "snow_humid_warm");
         CLIMATE_SPECIFIC_ZONES.put("Snow Fully humid cold summer", "snow_humid_cold");
-        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry hot summer", "snow_dry_hot");
-        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry warm summer", "snow_dry_warm");
-        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry cold summer", "snow_dry_cold");
+        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry hot summer", "snow_summer_dry_hot");
+        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry warm summer", "snow_summer_dry_warm");
+        CLIMATE_SPECIFIC_ZONES.put("Snow summer dry cold summer", "snow_summer_dry_cold");
+        CLIMATE_SPECIFIC_ZONES.put("Snow winter dry hot summer", "snow_winter_dry_hot");
+        CLIMATE_SPECIFIC_ZONES.put("Snow winter dry warm summer", "snow_winter_dry_warm");
+        CLIMATE_SPECIFIC_ZONES.put("Snow winter dry cold summer", "snow_winter_dry_cold");
         CLIMATE_SPECIFIC_ZONES.put("Arid steppe cold arid", "arid_steppe_cold");
         CLIMATE_SPECIFIC_ZONES.put("Equatorial fully humid", "equatorial_humid");
         CLIMATE_SPECIFIC_ZONES.put("Equatorial monsoonal", "equatorial_monsonnal");

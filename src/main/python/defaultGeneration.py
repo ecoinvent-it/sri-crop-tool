@@ -198,11 +198,6 @@ class WaterUseDefaultGenerator(object):
                * self._IRRIGATION_EFFICIENCY_FACTOR_DRIP
 
 
-class AnnualizedIrrigationDefaultGenerator(object):
-    def generateDefault(self, field, generators): #m3/(ha*crop cycle) -> mm/year
-        return generators["water_use_total"] * 0.1 * generators["crop_cycle_per_year"]
-
-
 class LandUseCategoryForHMDefaultGenerator(object):
     def generateDefault(self, field, generators):
         if (generators["land_use_category"] == LandUseCategory.arable_land):
@@ -407,6 +402,8 @@ DEFAULTS_VALUES_GENERATORS = {
     "average_annual_precipitation": AnnualPrecipitationDefaultGenerator(),
     "climate_zone_1": SimpleValueDefaultGenerator("temperate_climate"),
     "climate_zone_specific": ClimateDefaultGenerator(),
+    "nb_wet_days_per_year": SimpleValueDefaultGenerator(180),
+    "mean_elevation_m": SimpleValueDefaultGenerator(700),
                    "clay_content": TableLookupDefaultGenerator("country", CLAY_CONTENT_PER_COUNTRY),
                    "crop_cycle_per_year": CropCyclePerYearDefaultGenerator(),
                    "precipitation_per_crop_cycle": PerCropCyclePrecipitationDefaultGenerator(),
@@ -459,7 +456,6 @@ DEFAULTS_VALUES_GENERATORS = {
     "cultivation_type": SimpleValueDefaultGenerator("open_ground"),
                    #Erosion defaults
                    "yearly_precipitation_as_snow": TableLookupDefaultGenerator("country", YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY),
-                   "annualized_irrigation": AnnualizedIrrigationDefaultGenerator(),
                    "slope": SlopePerCropGenerator(),
                    "slope_length": SimpleValueDefaultGenerator(50.0),
                    "tillage_method": SimpleValueDefaultGenerator(TillageMethod.unknown),
