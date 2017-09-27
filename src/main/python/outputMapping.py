@@ -77,6 +77,7 @@ class OutputMapping(object):
         self.output["fert_zn_zinc_sulfate_as_zincsulfate"] = \
             self.output["fert_zn_zinc_sulfate"] * Zn_TO_ZINCSULFATE_FACTOR
         self.output["fert_zn_zinc_oxide_as_zincoxide"] = self.output["fert_zn_zinc_oxide"] * Zn_TO_ZINCOXIDE_FACTOR
+        self.output["fert_zn_other_as_zincsulfate"] = self.output["fert_zn_other"] * Zn_TO_ZINCSULFATE_FACTOR
         self.output["magnesium_from_fertilizer_as_mgso4"] = self.output["magnesium_from_fertilizer"] * (1-allInputs["magnesium_as_dolomite"]) * MG_TO_MGSULFATE_FACTOR
         self.output["magnesium_from_fertilizer_as_dolomite"] = self.output["magnesium_from_fertilizer"] * allInputs["magnesium_as_dolomite"] * MG_TO_DOLOMITE_FACTOR
 
@@ -103,7 +104,7 @@ class OutputMapping(object):
         lu_value = 10027.0 / allInputs["crop_cycle_per_year"]
 
         if allInputs["water_use_total"] > 0:
-            lu_type = "irr";
+            lu_type = "irr"
         else:
             lu_type = "non-irr"
 
@@ -205,7 +206,7 @@ class OutputMapping(object):
         "materials_covering_sheet": identity,
         "materials_bird_net": identity,
 
-        "greenhouse_plastic_tunnel": identity,
+        "greenhouse_plastic_tunnel": lambda x: x / 25.0,
         "greenhouse_glass_roof": identity,
         "greenhouse_plastic_roof": identity,
 

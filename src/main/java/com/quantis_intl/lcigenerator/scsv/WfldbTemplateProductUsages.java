@@ -676,6 +676,10 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Zinc oxide {GLO}| market for | Alloc Rec, U", "kg",
                                      "fert_zn_zinc_oxide_as_zincoxide",
                                      StandardUncertaintyMetadata.FERTILISERS, "fertotherzn_zinc_oxide"),
+            new TemplateProductUsage("Zinc monosulfate {GLO}| market for | Alloc Rec, U", "kg",
+                                     "fert_zn_other_as_zincsulfate",
+                                     StandardUncertaintyMetadata.FERTILISERS,
+                                     "fertotherzn_other"),
 
             new TemplateProductUsage("Kaolin {GLO}| market for | Alloc Rec, U", "kg",
                                      "fert_other_kaolin",
@@ -903,12 +907,12 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Greenhouse, glass walls and roof {GLO}| market for greenhouse, glass walls and roof | Alloc Rec," +
                             " U",
-                    "m2", "greenhouse_glass_roof", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
+                    "m2a", "greenhouse_glass_roof", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
                     "greenhouse_glass_roof"),
             new TemplateProductUsage(
                     "Greenhouse, plastic walls and roof {GLO}| market for greenhouse, plastic walls and roof | Alloc " +
                             "Rec, U",
-                    "m2", "greenhouse_plastic_roof", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
+                    "m2a", "greenhouse_plastic_roof", StandardUncertaintyMetadata.OTHER_GREENHOUSES,
                     "greenhouse_plastic_roof"),
             new TemplateProductUsage(
                     "Trellis system, wooden poles, soft wood, tar impregnated {GLO}| market for trellis system, " +
