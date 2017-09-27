@@ -131,10 +131,13 @@ public class EcospoldFileWriter
         activity.setActivityName(TString120.ofEn("TODO"));
         activity.setActivityNameId(UUID.randomUUID());//TODO
         activity.setIncludedActivitiesEnd(TString32000.ofEn("TODO"));
+        //Mettre le Yield + le fait que c'est généré par ALCIG + somme N P K en kg/ha
         activity.setGeneralComment(TTextAndImage.ofEnTexts("TODO", "TODO"));
         activity.setType(1);
         //activity.tags?
         //desc.classification?
+
+        //// !!!!!!!!!!!!!! Output par kg, pas par ha
 
 
         TFlowData flowData = new TFlowData();
