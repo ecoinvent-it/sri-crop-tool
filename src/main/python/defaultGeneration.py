@@ -455,7 +455,9 @@ DEFAULTS_VALUES_GENERATORS = {
     "organic_certified": SimpleValueDefaultGenerator("no"),
     "cultivation_type": SimpleValueDefaultGenerator("open_ground"),
                    #Erosion defaults
-                   "yearly_precipitation_as_snow": TableLookupDefaultGenerator("country", YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY),
+    # DEPRECATED
+    "yearly_precipitation_as_snow": TableLookupDefaultGenerator("country", YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY),
+    
                    "slope": SlopePerCropGenerator(),
                    "slope_length": SimpleValueDefaultGenerator(50.0),
                    "tillage_method": SimpleValueDefaultGenerator(TillageMethod.unknown),

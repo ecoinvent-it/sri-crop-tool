@@ -2,9 +2,8 @@ from defaultGeneration import TREE_BASED_CROPS
 from directMappingEnums import Plantprotection, Soilcultivation, Sowingplanting, \
     Fertilisation, Harvesting, OtherWorkProcesses
 from models.atomicmass import MA_NH3, MA_N, MG_TO_MGSULFATE_FACTOR, \
-    MG_TO_DOLOMITE_FACTOR, Ca_TO_LIMESTONE_FACTOR, Ca_TO_LIMEALGAE_FACTOR, Zn_TO_ZINCSULFATE_FACTOR, \
-    Zn_TO_ZINCOXIDE_FACTOR
-
+    MG_TO_DOLOMITE_FACTOR, Ca_TO_LIMESTONE_FACTOR, Ca_TO_LIMEALGAE_FACTOR, Zn_TO_ZINCOXIDE_FACTOR
+from models.manuremodel import LiquidManureType
 
 def identity(x): return x
 
@@ -69,15 +68,18 @@ class OutputMapping(object):
         self.output["magnesium_from_fertilizer"] = allInputs["magnesium_from_fertilizer"]
         self._mapEnumMap(allInputs["ca_fertiliser_quantities"])
         self._mapEnumMap(allInputs["zn_fertiliser_quantities"])
+        self._convertEnumMap(allInputs["liquid_manure_quantities"], self._LIQUID_MANURE_FACTORS)
+        self._mapEnumMap(allInputs["solid_manure_quantities"])
         #TODO: Is this the best place for that?
         self.output["fert_n_ammonia_liquid_as_nh3"] = self.output["fert_n_ammonia_liquid"] * MA_NH3/MA_N
         self.output["fert_ca_limestone_as_limestone"] = self.output["fert_ca_limestone"] * Ca_TO_LIMESTONE_FACTOR
         self.output["fert_ca_carbonation_limestone_as_limestone"] = self.output["fert_ca_carbonation_limestone"] * Ca_TO_LIMESTONE_FACTOR
         self.output["fert_ca_seaweed_limestone_as_seaweed_lime"] = self.output["fert_ca_seaweed_limestone"] * Ca_TO_LIMEALGAE_FACTOR
         self.output["fert_zn_zinc_sulfate_as_zincsulfate"] = \
-            self.output["fert_zn_zinc_sulfate"] * Zn_TO_ZINCSULFATE_FACTOR
+            self.output["fert_zn_zinc_sulfate"] * Zn_TO_ZINCOXIDE_FACTOR / (0.478 - 0.00478 * Zn_TO_ZINCOXIDE_FACTOR)
         self.output["fert_zn_zinc_oxide_as_zincoxide"] = self.output["fert_zn_zinc_oxide"] * Zn_TO_ZINCOXIDE_FACTOR
-        self.output["fert_zn_other_as_zincsulfate"] = self.output["fert_zn_other"] * Zn_TO_ZINCSULFATE_FACTOR
+        self.output["fert_zn_other_as_zincsulfate"] = \
+            self.output["fert_zn_other"] * Zn_TO_ZINCOXIDE_FACTOR / (0.478 - 0.00478 * Zn_TO_ZINCOXIDE_FACTOR)
         self.output["magnesium_from_fertilizer_as_mgso4"] = self.output["magnesium_from_fertilizer"] * (1-allInputs["magnesium_as_dolomite"]) * MG_TO_MGSULFATE_FACTOR
         self.output["magnesium_from_fertilizer_as_dolomite"] = self.output["magnesium_from_fertilizer"] * allInputs["magnesium_as_dolomite"] * MG_TO_DOLOMITE_FACTOR
 
@@ -212,6 +214,13 @@ class OutputMapping(object):
 
         "eol_waste_water_to_treatment_facility": identity,
         "eol_waste_water_to_nature": identity
+    }
+
+    _LIQUID_MANURE_FACTORS = {
+        LiquidManureType.cattle: 1006.0,
+        LiquidManureType.pig: 1006.0,
+        LiquidManureType.laying_hens: 1006.0,
+        LiquidManureType.other: 1006.0
     }
 
     _PLANTPROTECTION_FACTORS = {
