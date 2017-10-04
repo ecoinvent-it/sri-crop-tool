@@ -17,8 +17,13 @@ class OutputMapping(object):
         self.output["crop"] = allInputs["crop"]
         self.output["yield_main_product_per_crop_cycle"] = allInputs["yield_main_product_per_crop_cycle"]
         self.output["hm_uptake_formula"] = str(allInputs["yield_main_product_dry_per_crop_cycle"]) + " * Heavy_metal_uptake"
+        self.output["greenhouse_plastic_tunnel"] = \
+            allInputs["greenhouse_plastic_tunnel"] / 25.0 / allInputs["orchard_lifetime"]
+        self.output["greenhouse_glass_roof"] = allInputs["greenhouse_glass_roof"] / allInputs["orchard_lifetime"]
+        self.output["greenhouse_plastic_roof"] = allInputs["greenhouse_plastic_roof"] / allInputs["orchard_lifetime"]
+
         for k,f in self._DIRECT_OUTPUT_MAPPING.items():
-            if (k in allInputs):
+            if k in allInputs:
                 self.output[k] = f(allInputs[k])
 
     def mapDictsToOutput(self, allInputs):
@@ -30,6 +35,7 @@ class OutputMapping(object):
         for key, value in allInputs["seed_quantities"].items():
             if allInputs["crop"] in TREE_BASED_CROPS:
                 self.output["seeds_" + key] = value / allInputs["orchard_lifetime"]
+                self.output["rooting_up_trees"] = 1 / allInputs["orchard_lifetime"]
                 if value >= 500:
                     self.output["need_trellis"] = 1.0
             else:
@@ -103,7 +109,7 @@ class OutputMapping(object):
         for key, value in lucOuput.items():
             self.output[key.replace("m_LUC_", "")] = value
         #FIXME: Probably not the right place
-        lu_value = 10027.0 / allInputs["crop_cycle_per_year"]
+        lu_value = 10000.0 / allInputs["crop_cycle_per_year"]
 
         if allInputs["water_use_total"] > 0:
             lu_type = "irr"
@@ -130,6 +136,9 @@ class OutputMapping(object):
 
     def mapCODWasteWater(self, allInputs): #m3 * mg/L(==g/m3) -> g
         self.output["cod_in_waste_water"] = allInputs["eol_waste_water_to_nature"] * allInputs["cod_in_waste_water"]
+        self.output["doc_in_waste_water"] = self.output["cod_in_waste_water"] / 2.7
+        self.output["toc_in_waste_water"] = self.output["cod_in_waste_water"] / 2.7
+        self.output["bod5_in_waste_water"] = self.output["cod_in_waste_water"] * 0.5
 
     def mapPesticides(self, allInputs):
         for k,v in allInputs["specified_pesticides"].items():
@@ -207,10 +216,6 @@ class OutputMapping(object):
         "materials_silage_foil": identity,
         "materials_covering_sheet": identity,
         "materials_bird_net": identity,
-
-        "greenhouse_plastic_tunnel": lambda x: x / 25.0,
-        "greenhouse_glass_roof": identity,
-        "greenhouse_plastic_roof": identity,
 
         "eol_waste_water_to_treatment_facility": identity,
         "eol_waste_water_to_nature": identity

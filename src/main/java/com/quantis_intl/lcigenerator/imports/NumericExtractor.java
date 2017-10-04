@@ -110,7 +110,7 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("data_quality_completeness");
         TAGS_FOR_NUMERIC.add("data_quality_methodo_appropriateness_consistency");
 
-        TAGS_FOR_RATIO.add("yearly_precipitation_as_snow");
+        TAGS_FOR_RATIO.add("yearly_precipitation_as_snow"); //DEPRECATED
         TAGS_FOR_RATIO.add("drainage");
         TAGS_FOR_RATIO.add("ratio_irr_surface_no_energy");
         TAGS_FOR_RATIO.add("ratio_irr_surface_electricity");

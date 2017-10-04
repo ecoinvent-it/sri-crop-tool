@@ -49,8 +49,8 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
 
     private static Map<String, String> PHOTOVOLTAIC_REMAP;
     private static Map<String, String> LOW_VOLTAGE_REMAP;
-    private static List<String> LOW_VOLTAGE_WFLDB = Lists.newArrayList("AR", "CA", "CL", "CO", "CR", "CI", "EC", "GH",
-            "IN", "ID", "MX", "PH", "RU", "TR", "VN");
+    private static List<String> LOW_VOLTAGE_WFLDB = ImmutableList.of("AR", "CO", "CR", "CI", "EC", "GH", "PH", "VN");
+    private static List<String> LOW_VOLTAGE_GROUP = ImmutableList.of("CA", "CN", "US");
     private static Map<String, String> DRIP_REMAP;
     private static Map<String, String> SURFACE_REMAP;
     private static Map<String, String> SPRINKLER_REMAP;
@@ -58,41 +58,33 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
     static
     {
         ImmutableMap.Builder<String, String> photoBuilder = ImmutableMap.builder();
-        photoBuilder.put("AR", "US");
-        photoBuilder.put("BR", "US");
-        photoBuilder.put("CL", "US");
-        photoBuilder.put("CN", "TR");
-        photoBuilder.put("CO", "US");
-        photoBuilder.put("CR", "US");
-        photoBuilder.put("CI", "TR");
-        photoBuilder.put("EC", "US");
-        photoBuilder.put("GH", "TR");
-        photoBuilder.put("IN", "TR");
-        photoBuilder.put("ID", "TR");
-        photoBuilder.put("IL", "TR");
-        photoBuilder.put("KE", "TR");
-        photoBuilder.put("MX", "US");
-        photoBuilder.put("PE", "US");
+        photoBuilder.put("AR", "MX");
+        photoBuilder.put("BR", "MX");
+        photoBuilder.put("CA", "CA-ON");
+        photoBuilder.put("CL", "MX");
+        photoBuilder.put("CN", "CN-SH");
+        photoBuilder.put("CO", "MX");
+        photoBuilder.put("CR", "MX");
+        photoBuilder.put("CI", "IN");
+        photoBuilder.put("EC", "MX");
+        photoBuilder.put("GH", "IN");
+        photoBuilder.put("IL", "IN");
+        photoBuilder.put("KE", "IN");
+        photoBuilder.put("PE", "MX");
         photoBuilder.put("PH", "AU");
-        photoBuilder.put("PL", "DE");
-        photoBuilder.put("RU", "DE");
-        photoBuilder.put("ZA", "AU");
-        photoBuilder.put("LK", "TR");
-        photoBuilder.put("TH", "TR");
-        photoBuilder.put("UA", "DE");
-        photoBuilder.put("VN", "TR");
+        photoBuilder.put("RU", "PL");
+        photoBuilder.put("NZ", "AU");
+        photoBuilder.put("LK", "IN");
+        photoBuilder.put("TR", "IN");
+        photoBuilder.put("VN", "IN");
+        photoBuilder.put("US", "WECC, US only");
         PHOTOVOLTAIC_REMAP = photoBuilder.build();
 
         ImmutableMap.Builder<String, String> lowBuilder = ImmutableMap.builder();
-        lowBuilder.put("AU", "CH");
         lowBuilder.put("IL", "CH");
         lowBuilder.put("KE", "CH");
         lowBuilder.put("NZ", "CH");
-        lowBuilder.put("PE", "CH");
-        lowBuilder.put("ZA", "CH");
         lowBuilder.put("LK", "CH");
-        lowBuilder.put("TH", "CH");
-        lowBuilder.put("UA", "CH");
         LOW_VOLTAGE_REMAP = lowBuilder.build();
 
         ImmutableMap.Builder<String, String> dripBuilder = ImmutableMap.builder();
@@ -102,7 +94,6 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
         dripBuilder.put("KE", "CH");
         dripBuilder.put("NZ", "CH");
         dripBuilder.put("PE", "CH");
-        dripBuilder.put("RU", "CH");
         dripBuilder.put("ZA", "CH");
         dripBuilder.put("LK", "CH");
         dripBuilder.put("TH", "CH");
@@ -555,28 +546,33 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                     "seeds_tomato", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateProductUsage("Wheat seed, for sowing {GLO}| market for | Alloc Rec, U", "kg", "seeds_wheat",
                                      StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateProductUsage("Orchard, rooting up trees (WFLDB 3.3)/GLO U", "ha", "rooting_up_trees",
+                                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
 
-            new WithLookupTemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 3.0)/{country} U",
-                    "m3", "surface_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
-                    "irr_surface_electricity", buildBiFun(SURFACE_REMAP)),
-            new TemplateProductUsage("Irrigating, surface, diesel powered (WFLDB 3.0)/GLO U", "m3",
-                    "surface_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                    "irr_surface_diesel"),
-            new TemplateProductUsage("Irrigating, surface, gravity (ALCIG)/GLO U", "m3",
-                    "surface_irrigation_no_energy", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                    "irr_surface_no_energy", ImmutableList.of("irrigation_surface_gravity.csv")),
-            new WithLookupTemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.0)/{country} U",
-                    "m3", "sprinkler_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
-                    "irr_sprinkler_electricity", buildBiFun(SPRINKLER_REMAP)),
-            new TemplateProductUsage("Irrigating, sprinkler, diesel powered (WFLDB 3.0)/GLO U", "m3",
+            new WithLookupTemplateProductUsage("Irrigating, surface, electricity powered (WFLDB 3.3)/{country} U",
+                                               "m3", "surface_irrigation_electricity",
+                                               StandardUncertaintyMetadata.ELECTRICITY,
+                                               "irr_surface_electricity", buildBiFun(SURFACE_REMAP)),
+            new TemplateProductUsage("Irrigating, surface, diesel powered (WFLDB 3.3)/GLO U", "m3",
+                                     "surface_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                                     "irr_surface_diesel"),
+            new TemplateProductUsage("Irrigating, surface, gravity (WFLDB 3.3)/GLO U", "m3",
+                                     "surface_irrigation_no_energy",
+                                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                                     "irr_surface_no_energy"),
+            new WithLookupTemplateProductUsage("Irrigating, sprinkler, electricity powered (WFLDB 3.3)/{country} U",
+                                               "m3", "sprinkler_irrigation_electricity",
+                                               StandardUncertaintyMetadata.ELECTRICITY,
+                                               "irr_sprinkler_electricity", buildBiFun(SPRINKLER_REMAP)),
+            new TemplateProductUsage("Irrigating, sprinkler, diesel powered (WFLDB 3.3)/GLO U", "m3",
                     "sprinkler_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "irr_sprinkler_diesel"),
-            new WithLookupTemplateProductUsage("Irrigating, drip, electricity powered (WFLDB 3.0)/{country} U", "m3",
-                    "drip_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
-                    "irr_drip_electricity", buildBiFun(DRIP_REMAP)),
-            new TemplateProductUsage("Irrigating, drip, diesel powered (WFLDB 3.0)/GLO U", "m3",
-                    "drip_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                    "irr_drip_diesel"),
+            new WithLookupTemplateProductUsage("Irrigating, drip, electricity powered (WFLDB 3.3)/{country} U", "m3",
+                                               "drip_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
+                                               "irr_drip_electricity", buildBiFun(DRIP_REMAP)),
+            new TemplateProductUsage("Irrigating, drip, diesel powered (WFLDB 3.3)/GLO U", "m3",
+                                     "drip_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                                     "irr_drip_diesel"),
 
             new TemplateProductUsage("Tap water {GLO}| market group for | Alloc Rec, U", "ton",
                                      "wateruse_non_conventional_sources",
@@ -722,7 +718,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Manure, solid, cattle {GLO}| market for | Alloc Rec, U", "kg",
                                      "solid_manure_sheep_goat", StandardUncertaintyMetadata.FERTILISERS,
                                      "ratio_manuresolid_sheep_goat"),
-            new TemplateProductUsage("Poultry manure, fresh {GLO}| market for | Alloc Rec, U", "kg",
+            new TemplateProductUsage("Poultry manure, dried {GLO}| market for | Alloc Rec, U", "kg",
                                      "solid_manure_laying_hen", StandardUncertaintyMetadata.FERTILISERS,
                                      "ratio_manuresolid_laying_hen"),
             new TemplateProductUsage("Manure, solid, cattle {GLO}| market for | Alloc Rec, U", "kg",
@@ -994,10 +990,16 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new LowVoltageTemplateProductUsage("kWh",
                     "energy_electricity_low_voltage_at_grid", StandardUncertaintyMetadata.ELECTRICITY,
                     "energy_electricity_low_voltage_at_grid"),
-            new WithLookupTemplateProductUsage("Electricity, production mix photovoltaic, at plant/{country} U", "kWh",
+            new WithLookupTemplateProductUsage(
+                    "Electricity, low voltage {{country}}| electricity production, photovoltaic, 3kWp slanted-roof " +
+                            "installation, multi-Si, panel, mounted | Alloc Rec, U",
+                    "kWh",
                     "energy_electricity_photovoltaic_produced_locally", StandardUncertaintyMetadata.ELECTRICITY,
                     "energy_electricity_photovoltaic_produced_locally", buildBiFun(PHOTOVOLTAIC_REMAP)),
-            new TemplateProductUsage("Electricity, at wind power plant/RER U", "kWh",
+            new TemplateProductUsage(
+                    "Electricity, high voltage {DE}| electricity production, wind, <1MW turbine, onshore | Alloc Rec," +
+                            " U",
+                    "kWh",
                     "energy_electricity_wind_power_produced_locally", StandardUncertaintyMetadata.ELECTRICITY,
                     "energy_electricity_wind_power_produced_locally"),
             new TemplateProductUsage(
@@ -1059,13 +1061,13 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Waste polyethylene {CH}| treatment of, municipal incineration | Alloc Rec, U",
                                      "kg", "eol_plastic_incineration", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
                     "eol_incineration"),
-            new TemplateProductUsage("Biowaste{GLO} | treatment of biowaste, municipal incineration | Alloc Rec, U",
+            new TemplateProductUsage("Biowaste {GLO} | treatment of biowaste, municipal incineration | Alloc Rec, U",
                                      "kg", "eol_biowaste_incineration", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
                                      "biowaste_incineration"),
-            new TemplateProductUsage("Biowaste{GLO} | treatment of biowaste by anaerobic digestion | Alloc Rec, U",
+            new TemplateProductUsage("Biowaste {GLO} | treatment of biowaste by anaerobic digestion | Alloc Rec, U",
                                      "kg", "eol_biowaste_anae_digestion", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
                                      "biowaste_anae_digestion"),
-            new TemplateProductUsage("Biowaste{GLO} | treatment of, composting | Alloc Rec, U",
+            new TemplateProductUsage("Biowaste {GLO} | treatment of, composting | Alloc Rec, U",
                                      "kg", "eol_biowaste_composting", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
                                      "biowaste_composting"),
             new TemplateProductUsage("Biowaste {GLO}| market for | Alloc Rec, U",
@@ -1110,9 +1112,11 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             String country = modelOutputs.get("country");
             country = LOW_VOLTAGE_REMAP.getOrDefault(country, country);
             if (LOW_VOLTAGE_WFLDB.contains(country))
-                return "Electricity, low voltage, production " + country + ", at grid (WFLDB 3.0)/" + country + " U";
+                return "Electricity, low voltage, production " + country + ", at grid (WFLDB 3.3)/" + country + " U";
+            else if (LOW_VOLTAGE_GROUP.contains(country))
+                return "Electricity, low voltage {" + country + "}| market group for | Alloc Rec, U";
             else
-                return "Electricity, low voltage, at grid/" + country + " U";
+                return "Electricity, low voltage {" + country + "}| market for | Alloc Rec, U";
         }
     }
 

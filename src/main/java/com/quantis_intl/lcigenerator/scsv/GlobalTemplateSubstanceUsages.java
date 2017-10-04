@@ -170,8 +170,18 @@ public class GlobalTemplateSubstanceUsages implements TemplateSubstanceUsages
             new TemplateSubstanceUsage("Water, {country}", SubCompartment.WATER_RIVER, "m3",
                     "eol_waste_water_to_nature", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
                     "eol_waste_water_to_nature"),
-            new TemplateSubstanceUsage("COD, Chemical Oxygen Demand", SubCompartment.WATER_RIVER, "g",
-                    "cod_in_waste_water", StandardUncertaintyMetadata.COD_IN_WASTEWATER, "cod_in_waste_water")
+            new TemplateSubstanceUsage("COD, Chemical Oxygen Demand", SubCompartment.WATER_GROUNDWATER, "g",
+                                       "cod_in_waste_water", StandardUncertaintyMetadata.COD_IN_WASTEWATER,
+                                       "cod_in_waste_water"),
+            new TemplateSubstanceUsage("DOC, Dissolved Organic Carbon", SubCompartment.WATER_GROUNDWATER, "g",
+                                       "cod_in_waste_water", StandardUncertaintyMetadata.COD_IN_WASTEWATER,
+                                       "cod_in_waste_water"),
+            new TemplateSubstanceUsage("TOC, Total Organic Carbon", SubCompartment.WATER_GROUNDWATER, "g",
+                                       "cod_in_waste_water", StandardUncertaintyMetadata.COD_IN_WASTEWATER,
+                                       "cod_in_waste_water"),
+            new TemplateSubstanceUsage("BOD5, Biological Oxygen Demand", SubCompartment.WATER_GROUNDWATER, "g",
+                                       "cod_in_waste_water", StandardUncertaintyMetadata.COD_IN_WASTEWATER,
+                                       "cod_in_waste_water")
     };
 
     private static final TemplateSubstanceUsage[] toSoil = {
