@@ -154,7 +154,7 @@ class OutputMapping(object):
 
     def mapMachineries(self, allInputs):
         if ("remains_machinery_diesel" in allInputs):
-            self.output["remains_machinery_diesel"] = allInputs["remains_machinery_diesel"]
+            self.output["remains_machinery_diesel"] = allInputs["remains_machinery_diesel"] * 45.00450045
         self._convertEnumMap(allInputs["plantprotection_quantities"], self._PLANTPROTECTION_FACTORS)
         self._convertEnumMap(allInputs["soilcultivation_quantities"], self._SOILCULTIVATION_FACTORS)
         self._convertEnumMap(allInputs["sowingplanting_quantities"], self._SOWINGPLANTING_FACTORS)
@@ -195,7 +195,7 @@ class OutputMapping(object):
         "energy_electricity_low_voltage_at_grid": identity,
         "energy_electricity_photovoltaic_produced_locally": identity,
         "energy_electricity_wind_power_produced_locally": identity,
-        "energy_diesel_excluding_diesel_used_in_tractor": identity,
+        "energy_diesel_excluding_diesel_used_in_tractor": lambda x: x * 45.00450045,
         # kg -> MJ
         "energy_lignite_briquette": lambda x: x / 0.111,
         "energy_hard_coal_briquette": lambda x: x / 0.0318,
@@ -231,11 +231,11 @@ class OutputMapping(object):
     _PLANTPROTECTION_FACTORS = {
                                  Plantprotection.spraying: 1.0 / 1.76,
                                  Plantprotection.flaming: 46.35,
-                                 Plantprotection.other: 1.0
+        Plantprotection.other: 45.00450045
                                  }
 
     _SOILCULTIVATION_FACTORS = {
-                                 Soilcultivation.decompactation: 1.0, #If soil decompactation in hr, use: 1.0 / 22.5,
+        Soilcultivation.decompactation: 45.00450045,
                                  Soilcultivation.tillage_chisel: 1.0 / 15.5,
                                  Soilcultivation.tillage_spring_tine_weeder: 1.0 / 1.6,
                                  Soilcultivation.tillage_rotary_harrow: 1.0 / 11.5,
@@ -244,21 +244,21 @@ class OutputMapping(object):
                                  Soilcultivation.tillage_plough: 1.0 / 26.1,
                                  Soilcultivation.tillage_roll: 1.0 / 3.18,
                                  Soilcultivation.tillage_rotary_cultivator: 1.0 / 14.1,
-                                 Soilcultivation.other: 1.0,
+        Soilcultivation.other: 45.00450045,
                                  }
 
     _SOWINGPLANTING_FACTORS = {
                                 Sowingplanting.sowing: 1.0 / 3.82,
                                 Sowingplanting.planting_seedlings: 1.0 / 16.8,
                                 Sowingplanting.planting_potatoes: 1.0 / 8.9,
-                                Sowingplanting.other: 1.0,
+        Sowingplanting.other: 45.00450045,
                                  }
 
     _FERTILISATION_FACTORS = {
                            Fertilisation.fertilizing_broadcaster: 1.0 / 5.29,
                            Fertilisation.liquid_manure_vacuum_tanker: 1.0 / 0.217,
-                           Fertilisation.solid_manure: 1.0 / 0.000531,
-                           Fertilisation.other: 1.0,
+        Fertilisation.solid_manure: 1.0 / 0.531,
+        Fertilisation.other: 45.00450045,
                              }
 
     _HARVESTING_FACTORS = {
@@ -273,7 +273,7 @@ class OutputMapping(object):
                         Harvesting.mowing_rotary_mower: 1.0 / 4.31,
                         Harvesting.removing_potatoes_haulms: 1.0 / 4.79,
                         Harvesting.windrowing_rotary_swather: 1.0 / 2.94,
-                        Harvesting.other: 1.0,
+        Harvesting.other: 45.00450045,
                              }
 
     _OTHERWORK_FACTORS = {
@@ -281,5 +281,5 @@ class OutputMapping(object):
                        OtherWorkProcesses.chopping: 1.0 / 52.8,
                        OtherWorkProcesses.mulching: 1.0 / 3.51,
                        OtherWorkProcesses.transport_tractor_trailer: 1.0 / 0.0436,
-                       OtherWorkProcesses.other: 1.0,
+        OtherWorkProcesses.other: 45.00450045,
                              }

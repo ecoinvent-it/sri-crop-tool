@@ -21,7 +21,7 @@ package com.quantis_intl.lcigenerator.ecospold;
 
 import java.util.UUID;
 
-public enum AvailableUnits
+public enum AvailableUnit
 {
     KG_PER_MJ("c182d036-038d-4c66-86ba-280c8a624ddf", "kg/MJ"),
     KG_PER_HOUR("a309a95f-0ed9-4672-8749-2dc7a190c82c", "kg/hour"),
@@ -93,7 +93,7 @@ public enum AvailableUnits
     public final UUID uuid;
     public final String symbol;
 
-    AvailableUnits(String uuid, String symbol)
+    AvailableUnit(String uuid, String symbol)
     {
         this.uuid = UUID.fromString(uuid);
         this.symbol = symbol;

@@ -748,7 +748,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +
                             " Rec, U",
-                    "kg", "remains_machinery_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
+                    "MJ", "remains_machinery_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, ""),
             new TemplateProductUsage(
                     "Application of plant protection product, by field sprayer {CH}| processing | Alloc Rec, U", "ha",
                     "plantprotection_spraying", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
@@ -762,12 +762,12 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +
                             " Rec, U",
-                    "kg", "plantprotection_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "MJ", "plantprotection_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "plantprotection_other"),
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +
                             " Rec, U",
-                    "kg", "soilcultivation_decompactation", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "MJ", "soilcultivation_decompactation", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "soilcultivation_decompactation"),
             new TemplateProductUsage("Tillage, cultivating, chiselling {GLO}| market for | Alloc Rec, U", "ha",
                                      "soilcultivation_tillage_chisel",
@@ -802,7 +802,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +
                             " Rec, U",
-                    "kg", "soilcultivation_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "MJ", "soilcultivation_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "soilcultivation_other"),
             new TemplateProductUsage("Sowing {GLO}| market for | Alloc Rec, U", "ha", "sowingplanting_sowing",
                                      StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "sowingplanting_sowing"),
@@ -816,7 +816,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +
                             " Rec, U",
-                    "kg", "sowingplanting_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "MJ", "sowingplanting_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "sowingplanting_other"),
             new TemplateProductUsage("Fertilising, by broadcaster {GLO}| market for | Alloc Rec, U", "ha",
                                      "fertilisation_fertilizing_broadcaster",
@@ -828,12 +828,12 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Solid manure loading and spreading, by hydraulic loader and spreader {GLO}| market for | Alloc " +
                             "Rec, U",
-                    "ton", "fertilisation_solid_manure", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "kg", "fertilisation_solid_manure", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "fertilisation_solid_manure"),
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +
                             " Rec, U",
-                    "kg", "fertilisation_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "MJ", "fertilisation_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "fertilisation_other"),
             new TemplateProductUsage("Chopping, maize {GLO}| market for | Alloc Rec, U", "ha",
                                      "harvesting_chopping_maize",
@@ -879,7 +879,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +
                             " Rec, U",
-                    "kg", "harvesting_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "MJ", "harvesting_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "harvesting_other"),
             new TemplateProductUsage("Baling {GLO}| market for | Alloc Rec, U", "unit", "otherworkprocesses_baling",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK, "otherworkprocesses_baling"),
@@ -896,18 +896,18 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +
                             " Rec, U",
-                    "kg", "otherworkprocesses_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "MJ", "otherworkprocesses_other", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "otherworkprocesses_other"),
             new TemplateProductUsage(
                     "Petrol, unleaded, burned in machinery {GLO}| market for petrol, unleaded, burned in machinery | " +
                             "Alloc Rec, U",
-                    "kg", "total_machinery_gazoline", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
+                    "MJ", "total_machinery_gazoline", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "total_machinery_gazoline"),
 
             new TemplateProductUsage(
                     "Diesel, burned in agricultural machinery {GLO}| diesel, burned in agricultural machinery | Alloc" +
                             " Rec, U",
-                    "kg", "energy_diesel_excluding_diesel_used_in_tractor",
+                    "MJ", "energy_diesel_excluding_diesel_used_in_tractor",
                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
                     "energy_diesel_excluding_diesel_used_in_tractor"),
 
@@ -916,9 +916,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                                      StandardUncertaintyMetadata.UTILITIES_WATER,
                                      "utilities_wateruse_non_conventional_sources"),
 
-            new TemplateProductUsage("Horticultural fleece {GLO}| market for horticultural fleece | Alloc Rec, U", "kg",
-                                     "materials_fleece",
-                    StandardUncertaintyMetadata.OTHER_MATERIALS, "materials_fleece"),
+            new TemplateProductUsage("Horticultural fleece {GLO}| market for horticultural fleece | Alloc Rec, U",
+                                     "m2", "materials_fleece",
+                                     StandardUncertaintyMetadata.OTHER_MATERIALS, "materials_fleece"),
             new TemplateProductUsage("Polyethylene, high density, granulate {GLO}| market for | Alloc Rec, U", "kg",
                                      "materials_silage_foil",
                                      StandardUncertaintyMetadata.OTHER_MATERIALS, "materials_silage_foil"),

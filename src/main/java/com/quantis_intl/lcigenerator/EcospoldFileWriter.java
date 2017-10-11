@@ -19,11 +19,11 @@
 package com.quantis_intl.lcigenerator;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -31,9 +31,14 @@ import javax.validation.Validator;
 import javax.xml.bind.JAXB;
 
 import com.google.common.base.Charsets;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.io.Resources;
 import com.quantis_intl.commons.ecospold2.ecospold02.*;
+import com.quantis_intl.lcigenerator.ecospold.AvailableUnit;
+import com.quantis_intl.lcigenerator.ecospold.EcospoldTemplateIntermediaryExchanges;
+import com.quantis_intl.lcigenerator.ecospold.PossibleIntermediateExchangesCache;
+import com.quantis_intl.lcigenerator.ecospold.TemplateIntermediaryExchanges;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.lcigenerator.scsv.OutputTarget;
 
@@ -91,12 +96,17 @@ public class EcospoldFileWriter
         FILE_ATTRIBUTES = new TFileAttributes();
         FILE_ATTRIBUTES.setMajorRelease(3);
         FILE_ATTRIBUTES.setMinorRelease(4);
+        FILE_ATTRIBUTES.setMajorRevision(BigInteger.ONE);
+        FILE_ATTRIBUTES.setMinorRevision(BigInteger.ONE);
         FILE_ATTRIBUTES.setContextId(UUID.fromString("de659012-50c4-4e96-b54a-fc781bf987ab"));
         FILE_ATTRIBUTES.setContextName(TString80.ofEn("ecoinvent"));
     }
 
-    public EcospoldFileWriter()
+    private final PossibleIntermediateExchangesCache possibleExchanges;
+
+    public EcospoldFileWriter(PossibleIntermediateExchangesCache possibleExchanges)
     {
+        this.possibleExchanges = possibleExchanges;
     }
 
     public void writeModelsOutputToEcospoldFile(Map<String, String> modelsOutput, ValueGroup extractedInputs,
@@ -118,7 +128,11 @@ public class EcospoldFileWriter
                                                  OutputTarget outputTarget, Writer writer)
             throws IOException
     {
+        EcoSpold res = new EcoSpold();
+        UsedUserMasterData md = new UsedUserMasterData();
+        res.setUsedUserMasterData(md);
         TActivityDataset dataset = new TActivityDataset();
+        res.setActivityDataset(dataset);
         TActivityDescription desc = new TActivityDescription();
         dataset.setActivityDescription(desc);
         desc.setGeography(GEOGRAPHY_MAPPING.get(modelsOutput.get("country")));
@@ -129,6 +143,7 @@ public class EcospoldFileWriter
         desc.setActivity(activity);
         activity.setId(UUID.randomUUID());//TODO
         activity.setActivityName(TString120.ofEn("TODO"));
+        md.setActivityName(ImmutableList.of(TValidActivityName.ofEn(activity.getId(), "TODO")));
         activity.setActivityNameId(UUID.randomUUID());//TODO
         activity.setIncludedActivitiesEnd(TString32000.ofEn("TODO"));
         //Mettre le Yield + le fait que c'est généré par ALCIG + somme N P K en kg/ha
@@ -142,7 +157,32 @@ public class EcospoldFileWriter
 
         TFlowData flowData = new TFlowData();
         dataset.setFlowData(flowData);
-        //TODO: Intermediary flows
+
+        TIntermediateExchange refOutput = new TIntermediateExchange();
+        refOutput.setId(UUID.randomUUID()); //FIXME
+        refOutput.setUnitId(AvailableUnit.KG.uuid);
+        refOutput.setAmount(1.d);
+        refOutput.setMathematicalRelation("");
+        refOutput.setIntermediateExchangeId(UUID.randomUUID());//FIXME
+        refOutput.setName(TString120.ofEn("TODO"));
+        refOutput.setUnitName(TString40.ofEn(AvailableUnit.KG.symbol));
+        refOutput.setComment(TString32000.ofEn("TODO"));
+        //refOutput.getClassification().addAll(tex.getClassification()); FIXME
+        refOutput.setOutputGroup((short) 0);
+        flowData.getIntermediateExchange().add(refOutput);
+
+
+        EcospoldTemplateIntermediaryExchanges usages = new EcospoldTemplateIntermediaryExchanges();
+        flowData.getIntermediateExchange().addAll(
+                Stream.concat(Stream.concat(
+                        Arrays.stream(usages.getMaterialsFuels())
+                              .map(tu -> buildIntermediateExchange(modelsOutput, tu)),
+                        Arrays.stream(usages.getElectricityHeat())
+                              .map(tu -> buildIntermediateExchange(modelsOutput, tu))),
+                              Arrays.stream(usages.getWastes())
+                                    .map(tu -> buildIntermediateExchange(modelsOutput, tu)))
+                      .collect(Collectors.toList()));
+
         //TODO: Elementary flows
 
         TModellingAndValidation modAndValid = new TModellingAndValidation();
@@ -158,13 +198,41 @@ public class EcospoldFileWriter
         Set<ConstraintViolation<TActivityDataset>> violations = validator.validate(dataset);
         violations.forEach(System.out::println);
 
-        JAXB.marshal(dataset, writer);
+        JAXB.marshal(res, writer);
         writer.flush();
+    }
+
+    private TIntermediateExchange buildIntermediateExchange(
+            Map<String, String> modelsOutput, TemplateIntermediaryExchanges.TemplateIntermediaryExchange tu)
+    {
+        TIntermediateExchange ex = new TIntermediateExchange();
+        ex.setId(UUID.randomUUID());
+        ex.setUnitId(tu.unit.uuid);
+        ex.setAmount(Double.parseDouble(tu.provideValue(modelsOutput)));
+        ex.setMathematicalRelation("");
+        TValidIntermediateExchange tex = possibleExchanges.getExchange(tu.provideName(modelsOutput));
+        if (tex == null)
+        {
+            System.out.println("Exchange not found: " + tu.provideName(modelsOutput));
+            return null;
+        }
+        ex.setIntermediateExchangeId(tex.getId());
+        ex.setName(tex.getName());
+        if (!tex.getUnitName().getValue().equals(tu.unit.symbol))
+            System.out.println("Unit is not the same for " + tex.getName().getValue() + ". " +
+                                       tex.getUnitName().getValue() + ". " + tu.unit.symbol);
+        ex.setUnitName(tex.getUnitName());
+        ex.setComment(TString32000.ofEn("TODO"));
+        ex.getClassification().addAll(tex.getClassification());
+        ex.setInputGroup((short) 5);//FIXME
+        return ex;
     }
 
     public static final void main(String[] args) throws IOException
     {
-        EcospoldFileWriter w = new EcospoldFileWriter();
+        EcospoldFileWriter w = new EcospoldFileWriter(new PossibleIntermediateExchangesCache
+                                                              ("/home/cporte/notbackedup/dbmt_data/MasterData" +
+                                                                       "/Production"));
         w.writeModelsOutputToEcospoldFile(ImmutableMap.of("country", "FR"), new ValueGroup("empty"),
                                           OutputTarget.ECOINVENT, new PrintWriter(new OutputStreamWriter(System.out)));
     }

@@ -19,9 +19,10 @@
 package com.quantis_intl.lcigenerator.ecospold;
 
 import java.util.Map;
-import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import com.quantis_intl.lcigenerator.scsv.StandardUncertaintyMetadata;
 
 public interface TemplateIntermediaryExchanges
 {
@@ -35,30 +36,28 @@ public interface TemplateIntermediaryExchanges
     {
         private static final Pattern VARIABLE_PATTERN = Pattern.compile("\\{(.+?)\\}");
 
-        public final UUID id;
         private final String name;
-        public final AvailableUnits unit;
+        public final AvailableUnit unit;
         private final String amountVariable;
-        //public final StandardUncertaintyMetadata uncertainty;
+        public final StandardUncertaintyMetadata uncertainty;
         public final String commentVariable;
         //private final Optional<List<String>> requiredDep;
         private final double factor;
 
-        public TemplateIntermediaryExchange(String uuid, String name, AvailableUnits unit, String amountVariable,
-                                            /*StandardUncertaintyMetadata uncertainty, */String commentVariable)
+        public TemplateIntermediaryExchange(String name, AvailableUnit unit, String amountVariable,
+                                            StandardUncertaintyMetadata uncertainty, String commentVariable)
         {
-            this(uuid, name, unit, amountVariable, /*uncertainty, */commentVariable, /*null,*/ 1.0d);
+            this(name, unit, amountVariable, uncertainty, commentVariable, /*null,*/ 1.0d);
         }
 
-        public TemplateIntermediaryExchange(String uuid, String name, AvailableUnits unit, String amountVariable,
-                                    /*StandardUncertaintyMetadata uncertainty,*/ String commentVariable,
+        public TemplateIntermediaryExchange(String name, AvailableUnit unit, String amountVariable,
+                                            StandardUncertaintyMetadata uncertainty, String commentVariable,
                                     /*List<String> requiredDep,*/ double factor)
         {
-            this.id = UUID.fromString(uuid);
             this.name = name;
             this.unit = unit;
             this.amountVariable = amountVariable;
-            //this.uncertainty = uncertainty;
+            this.uncertainty = uncertainty;
             this.commentVariable = commentVariable;
             //this.requiredDep = Optional.ofNullable(requiredDep);
             this.factor = factor;
