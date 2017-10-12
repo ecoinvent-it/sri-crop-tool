@@ -1,6 +1,6 @@
-/*
+/***************************************************************************
  * Quantis Sàrl CONFIDENTIAL
- * Unpublished Copyright (c) 2009-2017 Quantis SARL, All Rights Reserved.
+ * Unpublished Copyright (c) 2009-2014 Quantis SARL, All Rights Reserved.
  * NOTICE: All information contained herein is, and remains the property of Quantis Sàrl. The intellectual and
  * technical concepts contained herein are proprietary to Quantis Sàrl and may be covered by U.S. and Foreign Patents,
  * patents in process, and are protected by trade secret or copyright law.
@@ -16,43 +16,40 @@
  * OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT
  * IT MAY DESCRIBE, IN WHOLE OR IN PART.
  */
-
 package com.quantis_intl.lcigenerator.ecospold;
 
-import java.nio.file.Paths;
-import java.util.Map;
+import java.util.UUID;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
-import javax.xml.bind.JAXB;
+import com.quantis_intl.lcigenerator.scsv.StandardUncertaintyMetadata;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Maps;
-import com.quantis_intl.commons.ecospold2.ecospold02.TValidIntermediateExchange;
-import com.quantis_intl.commons.ecospold2.ecospold02.TValidIntermediateExchanges;
-import com.quantis_intl.stack.utils.StackProperties;
-
-@Singleton
-public class PossibleIntermediateExchangesCache
+public interface TemplateSubstanceUsages
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PossibleIntermediateExchangesCache.class);
+    TemplateSubstanceUsage[] getResources();
 
-    private final Map<String, TValidIntermediateExchange> possibleExchanges;
+    TemplateSubstanceUsage[] getToAir();
 
-    public PossibleIntermediateExchangesCache(@Named(StackProperties.SERVER_UPLOADED_FILE_FOLDER) String path)
+    TemplateSubstanceUsage[] getToWater();
+
+    TemplateSubstanceUsage[] getToSoil();
+
+    public static class TemplateSubstanceUsage
     {
-        LOGGER.info("Initializing Intermediate exchanges cache");
+        public final String name;
+        public final UUID subCompartment;
+        public final AvailableUnit unit;
+        public final String amountVariable;
+        public final StandardUncertaintyMetadata uncertainty;
+        public final String commentVariable;
 
-        possibleExchanges = Maps.uniqueIndex(JAXB.unmarshal(Paths.get(path, "IntermediateExchanges.xml").toFile(),
-                                                            TValidIntermediateExchanges.class)
-                                                 .getIntermediateExchange(), ve -> ve.getName().getValue());
-
-    }
-
-    public TValidIntermediateExchange getExchange(String name)
-    {
-        return possibleExchanges.get(name);
+        public TemplateSubstanceUsage(String name, UUID subCompartment, AvailableUnit unit, String amountVariable,
+                                      StandardUncertaintyMetadata uncertainty, String commentVariable)
+        {
+            this.name = name;
+            this.subCompartment = subCompartment;
+            this.unit = unit;
+            this.amountVariable = amountVariable;
+            this.uncertainty = uncertainty;
+            this.commentVariable = commentVariable;
+        }
     }
 }

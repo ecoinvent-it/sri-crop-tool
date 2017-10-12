@@ -20,7 +20,8 @@
 package com.quantis_intl.lcigenerator.ecospold;
 
 import java.nio.file.Paths;
-import java.util.Map;
+import java.util.UUID;
+import java.util.function.Function;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -29,30 +30,35 @@ import javax.xml.bind.JAXB;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Maps;
-import com.quantis_intl.commons.ecospold2.ecospold02.TValidIntermediateExchange;
-import com.quantis_intl.commons.ecospold2.ecospold02.TValidIntermediateExchanges;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
+import com.google.common.collect.Tables;
+import com.quantis_intl.commons.ecospold2.ecospold02.TValidElementaryExchange;
+import com.quantis_intl.commons.ecospold2.ecospold02.TValidElementaryExchanges;
 import com.quantis_intl.stack.utils.StackProperties;
 
 @Singleton
-public class PossibleIntermediateExchangesCache
+public class PossibleElementaryExchangesCache
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PossibleIntermediateExchangesCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PossibleElementaryExchangesCache.class);
 
-    private final Map<String, TValidIntermediateExchange> possibleExchanges;
+    private final Table<UUID, String, TValidElementaryExchange> possibleExchanges;
 
-    public PossibleIntermediateExchangesCache(@Named(StackProperties.SERVER_UPLOADED_FILE_FOLDER) String path)
+    public PossibleElementaryExchangesCache(@Named(StackProperties.SERVER_UPLOADED_FILE_FOLDER)
+                                                    String path)
     {
-        LOGGER.info("Initializing Intermediate exchanges cache");
-
-        possibleExchanges = Maps.uniqueIndex(JAXB.unmarshal(Paths.get(path, "IntermediateExchanges.xml").toFile(),
-                                                            TValidIntermediateExchanges.class)
-                                                 .getIntermediateExchange(), ve -> ve.getName().getValue());
+        LOGGER.info("Initializing Elementary exchanges cache");
+        possibleExchanges = JAXB.unmarshal(Paths.get(path, "ElementaryExchanges.xml").toFile(),
+                                           TValidElementaryExchanges.class)
+                                .getElementaryExchange().stream().collect(Tables.toTable
+                        ((TValidElementaryExchange e) -> e.getCompartment().getSubcompartmentId(),
+                         (TValidElementaryExchange e) -> e.getName().getValue(),
+                         Function.identity(), HashBasedTable::create));
 
     }
 
-    public TValidIntermediateExchange getExchange(String name)
+    public TValidElementaryExchange getExchange(UUID subcompartmentId, String name)
     {
-        return possibleExchanges.get(name);
+        return possibleExchanges.get(subcompartmentId, name);
     }
 }

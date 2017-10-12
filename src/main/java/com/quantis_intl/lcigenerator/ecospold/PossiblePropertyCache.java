@@ -21,6 +21,7 @@ package com.quantis_intl.lcigenerator.ecospold;
 
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -30,29 +31,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.quantis_intl.commons.ecospold2.ecospold02.TValidIntermediateExchange;
-import com.quantis_intl.commons.ecospold2.ecospold02.TValidIntermediateExchanges;
+import com.quantis_intl.commons.ecospold2.ecospold02.TValidProperties;
+import com.quantis_intl.commons.ecospold2.ecospold02.TValidProperty;
 import com.quantis_intl.stack.utils.StackProperties;
 
 @Singleton
-public class PossibleIntermediateExchangesCache
+public class PossiblePropertyCache
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PossibleIntermediateExchangesCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PossiblePropertyCache.class);
 
-    private final Map<String, TValidIntermediateExchange> possibleExchanges;
+    private final Map<UUID, TValidProperty> possibleProperties;
 
-    public PossibleIntermediateExchangesCache(@Named(StackProperties.SERVER_UPLOADED_FILE_FOLDER) String path)
+    public PossiblePropertyCache(@Named(StackProperties.SERVER_UPLOADED_FILE_FOLDER) String path)
     {
-        LOGGER.info("Initializing Intermediate exchanges cache");
-
-        possibleExchanges = Maps.uniqueIndex(JAXB.unmarshal(Paths.get(path, "IntermediateExchanges.xml").toFile(),
-                                                            TValidIntermediateExchanges.class)
-                                                 .getIntermediateExchange(), ve -> ve.getName().getValue());
+        LOGGER.info("Initializing Property cache");
+        possibleProperties = Maps.uniqueIndex(JAXB.unmarshal(Paths.get(path, "Properties.xml").toFile(),
+                                                             TValidProperties.class)
+                                                  .getProperty(), TValidProperty::getId);
 
     }
 
-    public TValidIntermediateExchange getExchange(String name)
+    public TValidProperty getProperty(UUID id)
     {
-        return possibleExchanges.get(name);
+        return possibleProperties.get(id);
     }
 }

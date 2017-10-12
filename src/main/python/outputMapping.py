@@ -134,8 +134,9 @@ class OutputMapping(object):
             self.output["transformation_to_peren_" + lu_type] = lu_value / allInputs["orchard_lifetime"]
             # else TODO: Rice
 
-    def mapCODWasteWater(self, allInputs): #m3 * mg/L(==g/m3) -> g
-        self.output["cod_in_waste_water"] = allInputs["eol_waste_water_to_nature"] * allInputs["cod_in_waste_water"]
+    def mapCODWasteWater(self, allInputs):  # m3 * mg/L(==g/m3) * 0.001 -> kg
+        self.output["cod_in_waste_water"] = allInputs["eol_waste_water_to_nature"] * allInputs["cod_in_waste_water"] \
+                                            * 0.001
         self.output["doc_in_waste_water"] = self.output["cod_in_waste_water"] / 2.7
         self.output["toc_in_waste_water"] = self.output["cod_in_waste_water"] / 2.7
         self.output["bod5_in_waste_water"] = self.output["cod_in_waste_water"] * 0.5
