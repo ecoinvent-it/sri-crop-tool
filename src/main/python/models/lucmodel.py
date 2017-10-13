@@ -8,6 +8,7 @@ class LUCModel(object):
     Outputs:
       m_LUC_luc_crop_type: crop type
       m_LUC_luc_formula: formula /ha
+      m_LUC_luc_crop_specific:
     """
     _input_variables = ["crop",
                         "country",
@@ -21,8 +22,9 @@ class LUCModel(object):
 
     def compute(self):
         crop_type = self._compute_crop_type()
-        formula = self._compute_formula()
-        return {'m_LUC_luc_crop_type': crop_type, 'm_LUC_luc_formula': formula}
+        formula, crop_specific = self._compute_formula()
+        return {'m_LUC_luc_crop_type': crop_type, 'm_LUC_luc_formula': formula,
+                'm_LUC_luc_crop_specific': crop_specific}
 
     def _compute_crop_type(self):
         return self._CROP_TO_CROP_TYPE[self.crop]
@@ -30,11 +32,13 @@ class LUCModel(object):
     def _compute_formula(self):
         sharedResponsability = self._compute_shared_responsability()
         try:
-            cropSpecific = self._compute_crop_specific()
-            formula = str(cropSpecific) + " * LUC_crop_specific + " + str(sharedResponsability) + " * (1-LUC_crop_specific)"
+            crop_specific = self._compute_crop_specific()
+            formula = str(crop_specific) + " * LUC_crop_specific + " + str(
+                sharedResponsability) + " * (1-LUC_crop_specific)"
         except KeyError:
             formula = sharedResponsability
-        return formula;
+            crop_specific = formula
+        return formula, crop_specific
 
     def _compute_crop_specific(self):
         return self._RELATIVE_AREAS_EXPANSION_PER_CROP_PER_COUNTRY[self.crop][self.country] / self.crop_cycle_per_year
