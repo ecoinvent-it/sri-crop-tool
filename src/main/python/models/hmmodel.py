@@ -1,6 +1,8 @@
 from enum import Enum
+
 from models.modelEnums import HeavyMetalType
-      
+
+
 class PesticideType(Enum):
         cu="copper_cu" #fungicide
         mancozeb="mancozeb" #fungicide
@@ -8,14 +10,13 @@ class PesticideType(Enum):
         propineb="propineb" #fungicide
         zineb="zineb" #fungicide
         ziram="ziram" #fungicide
-        
+
 class LandUseCategoryForHM(Enum):
         permanent_grassland=1
         arable_land=2
         horticultural_crops=3
 
 class HmModel(object):
-    
     """Inputs:
       crop_cycle_per_year: ratio
       hm_from_manure : map HeavyMetalType -> mg i/(ha*crop cycle) (i:hm type)
@@ -26,13 +27,13 @@ class HmModel(object):
       drained_part: ratio
       eroded_soil: kg/(ha*year)
       hm_land_use_category: LandUseCategoryForHM
-      
+
     Outputs:
         m_hm_heavymetal_to_soil: map HeavyMetalType -> kg i/(ha*crop cycle) (i:hm type)
         m_hm_heavymetal_to_ground_water: map HeavyMetalType -> kg i/(ha*crop cycle) (i:hm type)
         m_hm_heavymetal_to_surface_water: map HeavyMetalType -> kg i/(ha*crop cycle) (i:hm type)
-        
-    elements:    
+
+    elements:
         Cd: Cadmium
         Cu: Copper
         Zn: Zinc
@@ -42,7 +43,7 @@ class HmModel(object):
         Hg: Mercury
 
     """
-    
+
     _input_variables = ['crop_cycle_per_year',
                         'hm_from_manure',
                         'hm_from_mineral_fert',
@@ -53,7 +54,7 @@ class HmModel(object):
                         'eroded_soil',
                         'hm_land_use_category'
                        ]
-    
+
     #mg/ha/y
     _HM_DEPOSITIONS = {
                         HeavyMetalType.cd: 700.0,
@@ -64,10 +65,10 @@ class HmModel(object):
                         HeavyMetalType.cr: 3650.0,
                         HeavyMetalType.hg: 50.0
                         }
-    
+
     _PEST_TO_SOIL_RATIO = 0.95
     _ZINC_MW = 65.39
-    
+
     _PEST_NB_ZN_ATOMS = {
                          PesticideType.propineb: 1,
                          PesticideType.mancozeb: 1,
@@ -75,7 +76,7 @@ class HmModel(object):
                          PesticideType.zineb: 1,
                          PesticideType.ziram: 1
                         }
-    
+
     _PEST_MW = {
                     PesticideType.propineb: 289.79,     #C5H8N2S4Zn
                     PesticideType.mancozeb: 541.07,     #(C4H6MnN2S4)x·(C4H6N2S4Zn)y with x:y=94:6
@@ -83,7 +84,7 @@ class HmModel(object):
                     PesticideType.zineb: 275.76,        #C4H6N2S4Zn
                     PesticideType.ziram: 305.83         #C6H12N2S4Zn
                     }
-    
+
     #mg/ha/y
     _LEACHING_TO_GW= {
                         HeavyMetalType.cd: 50.0,
@@ -94,27 +95,27 @@ class HmModel(object):
                         HeavyMetalType.cr: 21200.0,
                         HeavyMetalType.hg: 1.3
                         }
-    
+
     _ACCUMULATION_FACTOR = 0.86
     _EROSION_FACTOR = 0.2
-    
+
     #mg/kg
     _SOIL_HM_CONTENT = {LandUseCategoryForHM.permanent_grassland: [0.309, 18.3, 64.6, 24.6, 22.3, 24.0, 0.088],
                         LandUseCategoryForHM.arable_land: [0.24, 20.1, 49.6, 19.5, 23.0, 24.1, 0.073],
                         LandUseCategoryForHM.horticultural_crops: [0.307, 39.2, 70.1, 24.9, 24.8, 27.0, 0.077]
                         }
-    
+
     def __init__(self, inputs):
         #TODO: Should we log usage of default value?
         for key in HmModel._input_variables:
             setattr(self, key, inputs[key])
-            
+
     def compute(self):
         sumPest = self._compute_pesticides() #mg/ha
         hm_to_gw = dict.fromkeys(HeavyMetalType,0.0)
         hm_to_sw = dict.fromkeys(HeavyMetalType,0.0)
         hm_to_soil = dict.fromkeys(HeavyMetalType,0.0)
-        
+
         for hmIndex, hmElement in enumerate(HeavyMetalType):
             agro_input = self._compute_agro_input(sumPest, hmElement); #mg/ha
             allocation_factor = self._compute_allocation_factor_for_hm_element(agro_input,hmElement); #ratio
@@ -126,21 +127,38 @@ class HmModel(object):
             hm_to_soil[hmElement] /= 1000000.0
             hm_to_sw[hmElement] /= 1000000.0
             hm_to_gw[hmElement] /= 1000000.0
-            
+
         return {'m_hm_heavymetal_to_soil':hm_to_soil,
                 'm_hm_heavymetal_to_ground_water':hm_to_gw,
-                'm_hm_heavymetal_to_surface_water':hm_to_sw}
-        
+                'm_hm_heavymetal_to_surface_water': hm_to_sw,
+                'm_hm_heavymetal_to_soil_minus_uptake':
+                    {
+                        HeavyMetalType.cd:
+                            hm_to_soil[HeavyMetalType.cd] - self.yield_main_product_dry_per_crop_cycle * 1.0154e-7,
+                        HeavyMetalType.cu:
+                            hm_to_soil[HeavyMetalType.cu] - self.yield_main_product_dry_per_crop_cycle * 6.6269e-6,
+                        HeavyMetalType.zn:
+                            hm_to_soil[HeavyMetalType.zn] - self.yield_main_product_dry_per_crop_cycle * 3.2023e-5,
+                        HeavyMetalType.pb:
+                            hm_to_soil[HeavyMetalType.pb] - self.yield_main_product_dry_per_crop_cycle * 5.4077e-7,
+                        HeavyMetalType.ni:
+                            hm_to_soil[HeavyMetalType.ni] - self.yield_main_product_dry_per_crop_cycle * 1.0446e-6,
+                        HeavyMetalType.cr:
+                            hm_to_soil[HeavyMetalType.cr] - self.yield_main_product_dry_per_crop_cycle * 5.45e-7,
+                        HeavyMetalType.hg:
+                            hm_to_soil[HeavyMetalType.hg] - self.yield_main_product_dry_per_crop_cycle * 4.0556e-8
+                    }}
+
     def _compute_agro_input(self, sumPest, hmElement):
         return    self.hm_from_manure[hmElement] \
                 + self.hm_from_mineral_fert[hmElement]\
                 + self.hm_from_other_organic_fert[hmElement]\
                 + self.hm_from_seed[hmElement] \
                 + sumPest[hmElement]
-    
+
     def _compute_allocation_factor_for_hm_element(self, agro_input, hmElement):
         return agro_input / (agro_input + self._HM_DEPOSITIONS[hmElement] / self.crop_cycle_per_year)
-        
+
     def _compute_pesticides(self): #mg/ha
         hm_values = dict.fromkeys(HeavyMetalType,0.0)
         #g/ha -> mg/ha
@@ -150,18 +168,18 @@ class HmModel(object):
                                             * self.hm_pesticides_quantities[pest] \
                                             * self._PEST_TO_SOIL_RATIO * 1000.0
         return hm_values
-            
+
     def _compute_pesticides_ratio_to_zn(self,pest): #ratio
         return self._ZINC_MW / self._PEST_MW[pest] * self._PEST_NB_ZN_ATOMS[pest]
-    
+
     def _compute_leaching_for_hm_element(self, allocation_factor, hmElement): # mg/ha/y > mg/ha/crop cycle
         return self._LEACHING_TO_GW[hmElement] / self.crop_cycle_per_year * allocation_factor;
-  
+
     def _split_leaching_between_surface_and_ground_water(self, total_leaching): #mg/ha
         surface = total_leaching * self.drained_part
         ground = total_leaching  * (1.0 - self.drained_part)
         return (surface,ground)
-    
+
     def _compute_erosion_sw(self, allocation_factor, hmElement, hmIndex): #mg/ha
         return self._SOIL_HM_CONTENT[self.hm_land_use_category][hmIndex] \
                 * self.eroded_soil / self.crop_cycle_per_year * self._ACCUMULATION_FACTOR \
