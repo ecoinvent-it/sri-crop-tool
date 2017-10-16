@@ -16,6 +16,9 @@ class OutputMapping(object):
         self.output["country"] = allInputs["country"]
         self.output["crop"] = allInputs["crop"]
         self.output["yield_main_product_per_crop_cycle"] = allInputs["yield_main_product_per_crop_cycle"]
+        self.output["yield_BP1_per_crop_cycle"] = allInputs["yield_BP1_per_crop_cycle"]
+        self.output["yield_BP2_per_crop_cycle"] = allInputs["yield_BP2_per_crop_cycle"]
+        self.output["yield_BP3_per_crop_cycle"] = allInputs["yield_BP3_per_crop_cycle"]
         self.output["hm_uptake_formula"] = str(allInputs["yield_main_product_dry_per_crop_cycle"]) + " * Heavy_metal_uptake"
         self.output["greenhouse_plastic_tunnel"] = \
             allInputs["greenhouse_plastic_tunnel"] / 25.0 / allInputs["orchard_lifetime"]

@@ -44,6 +44,9 @@ public class NumericExtractor
         TAGS_FOR_NUMERIC.add("orchard_lifetime");
         TAGS_FOR_NUMERIC.add("total_wateruse");
         TAGS_FOR_NUMERIC.add("yield_main_product_per_crop_cycle");
+        TAGS_FOR_NUMERIC.add("yield_BP1_per_crop_cycle");
+        TAGS_FOR_NUMERIC.add("yield_BP2_per_crop_cycle");
+        TAGS_FOR_NUMERIC.add("yield_BP3_per_crop_cycle");
         TAGS_FOR_NUMERIC.add("total_manureliquid");
         TAGS_FOR_NUMERIC.add("total_manuresolid");
         TAGS_FOR_NUMERIC.add("total_composttype");

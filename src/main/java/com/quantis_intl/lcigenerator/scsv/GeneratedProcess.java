@@ -24,7 +24,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableList;
 import com.quantis_intl.commons.scsv.processes.Product;
 import com.quantis_intl.commons.scsv.processes.ProductUsage;
 import com.quantis_intl.commons.scsv.processes.ScsvProcess.ProductScsvProcess;
@@ -33,6 +32,7 @@ import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Status;
 import com.quantis_intl.commons.scsv.processes.ScsvProcessEnums.Type;
 import com.quantis_intl.commons.scsv.processes.SubstanceUsage;
 import com.quantis_intl.commons.scsv.processes.WasteTreatmentUsage;
+import com.quantis_intl.lcigenerator.imports.Origin;
 import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
 import com.quantis_intl.lcigenerator.imports.SingleValue;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
@@ -79,7 +79,7 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public Optional<String> getSimaproName()
     {
-        return Optional.of(generateProcessAndProductName());
+        return Optional.of(generateProcessAndProductName(PropertiesLoader.CROPS.getProperty(modelOutputs.get("crop"))));
     }
 
     @Override
@@ -186,12 +186,14 @@ public class GeneratedProcess implements ProductScsvProcess
     @Override
     public List<Product> getProducts()
     {
-        return ImmutableList.of(new Product()
+        String cropName = PropertiesLoader.CROPS.getProperty(modelOutputs.get("crop"));
+        List<Product> res = new ArrayList<>();
+        res.add(new Product()
         {
             @Override
             public String getName()
             {
-                return generateProcessAndProductName() + " U";
+                return generateProcessAndProductName(cropName) + " U";
             }
 
             @Override
@@ -218,11 +220,69 @@ public class GeneratedProcess implements ProductScsvProcess
                 return findComment("yield_main_product_per_crop_cycle");
             }
         });
+
+        String label = findLabel("yield_BP1_per_crop_cycle");
+        if (!Strings.isNullOrEmpty(label) && !Strings.isNullOrEmpty(modelOutputs.get("yield_BP1_per_crop_cycle")))
+            res.add(generateCoProduct(cropName, label, "yield_BP1_per_crop_cycle"));
+
+        label = findLabel("yield_BP2_per_crop_cycle");
+        if (!Strings.isNullOrEmpty(label) && !Strings.isNullOrEmpty(modelOutputs.get("yield_BP2_per_crop_cycle")))
+            res.add(generateCoProduct(cropName, label, "yield_BP2_per_crop_cycle"));
+
+        label = findLabel("yield_BP3_per_crop_cycle");
+        if (!Strings.isNullOrEmpty(label) && !Strings.isNullOrEmpty(modelOutputs.get("yield_BP3_per_crop_cycle")))
+            res.add(generateCoProduct(cropName, label, "yield_BP3_per_crop_cycle"));
+
+        return res;
     }
 
-    private String generateProcessAndProductName()
+    private String findLabel(String key)
     {
-        StringBuilder sb = new StringBuilder(PropertiesLoader.CROPS.getProperty(modelOutputs.get("crop")))
+        SingleValue<?> val = extractedInputs.getSingleValue(key);
+        if (val == null)
+            return "";
+        return ((Origin.ExcelUserInput) val.getOrigin()).label;
+    }
+
+    private Product generateCoProduct(String crop, String label, String key)
+    {
+        return new Product()
+        {
+            @Override
+            public String getName()
+            {
+                return generateProcessAndProductName(crop + ", " + label) + " U";
+            }
+
+            @Override
+            public String getUnit()
+            {
+                return "kg";
+            }
+
+            @Override
+            public String getAmount()
+            {
+                return modelOutputs.get(key);
+            }
+
+            @Override
+            public String getCategory()
+            {
+                return "_ALCIG\\Datasets";
+            }
+
+            @Override
+            public String getComment()
+            {
+                return findComment(key);
+            }
+        };
+    }
+
+    private String generateProcessAndProductName(String cropAndExtensions)
+    {
+        StringBuilder sb = new StringBuilder(cropAndExtensions)
                 .append(", at farm/")
                 .append(modelOutputs.get("country"));
         return sb.toString();
