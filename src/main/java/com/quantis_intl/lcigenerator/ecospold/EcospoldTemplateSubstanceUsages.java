@@ -96,8 +96,12 @@ public class EcospoldTemplateSubstanceUsages implements TemplateSubstanceUsages
                                        StandardUncertaintyMetadata.UTILITIES_WATER,
                                        "utilities_wateruse_surface"),
 
-            /*new TemplateSubstanceUsage("Occupation, annual crop, organic", RESOURCE_LAND, AvailableUnit.M2_YEAR,
-                                       "occupation_annual_organic", StandardUncertaintyMetadata.LAND_OCCUPATION, ""),*/
+            new TemplateSubstanceUsage("Occupation, annual crop, non-irrigated", RESOURCE_LAND, AvailableUnit.M2_YEAR,
+                                       "occupation_annual_organic_non-irr", StandardUncertaintyMetadata.LAND_OCCUPATION,
+                                       ""),
+            new TemplateSubstanceUsage("Occupation, annual crop, irrigated", RESOURCE_LAND, AvailableUnit.M2_YEAR,
+                                       "occupation_annual_organic_irr", StandardUncertaintyMetadata.LAND_OCCUPATION,
+                                       ""),
             new TemplateSubstanceUsage("Occupation, annual crop, non-irrigated", RESOURCE_LAND, AvailableUnit.M2_YEAR,
                                        "occupation_annual_non-irr", StandardUncertaintyMetadata.LAND_OCCUPATION, ""),
             new TemplateSubstanceUsage("Occupation, annual crop, irrigated", RESOURCE_LAND, AvailableUnit.M2_YEAR,

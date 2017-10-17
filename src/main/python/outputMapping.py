@@ -124,7 +124,7 @@ class OutputMapping(object):
                 lu_type = "greenhouse"
                 self.output["occupation_annual_greenhouse"] = lu_value
             elif allInputs["organic_certified"] == "yes":
-                self.output["occupation_annual_organic"] = lu_value
+                self.output["occupation_annual_organic_" + lu_type] = lu_value
             else:
                 self.output["occupation_annual_" + lu_type] = lu_value
 
@@ -194,7 +194,7 @@ class OutputMapping(object):
         "fert_other_portafer": identity,
         "fert_other_borax": identity,
 
-        "total_machinery_gazoline": identity,
+        "total_machinery_gazoline": lambda x: x / 0.022075,
 
         "energy_electricity_low_voltage_at_grid": identity,
         "energy_electricity_photovoltaic_produced_locally": identity,

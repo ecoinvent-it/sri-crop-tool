@@ -66,7 +66,11 @@ public class GlobalTemplateSubstanceUsages implements TemplateSubstanceUsages
                     "utilities_wateruse_surface"),
 
             new TemplateSubstanceUsage("Occupation, annual crop, organic", SubCompartment.RAW_LAND, "m2a",
-                                       "occupation_annual_organic", StandardUncertaintyMetadata.LAND_OCCUPATION, ""),
+                                       "occupation_annual_organic_non-irr", StandardUncertaintyMetadata.LAND_OCCUPATION,
+                                       ""),
+            new TemplateSubstanceUsage("Occupation, annual crop, organic", SubCompartment.RAW_LAND, "m2a",
+                                       "occupation_annual_organic_irr", StandardUncertaintyMetadata.LAND_OCCUPATION,
+                                       ""),
             new TemplateSubstanceUsage("Occupation, annual crop, non-irrigated", SubCompartment.RAW_LAND, "m2a",
                                        "occupation_annual_non-irr", StandardUncertaintyMetadata.LAND_OCCUPATION, ""),
             new TemplateSubstanceUsage("Occupation, annual crop, irrigated", SubCompartment.RAW_LAND, "m2a",
