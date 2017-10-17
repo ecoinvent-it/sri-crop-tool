@@ -43,7 +43,7 @@ public class POIHelper
 
     public static String getCellStringValue(Row row, int index, String defaultValue)
     {
-        Cell cell = row.getCell(index, Row.RETURN_BLANK_AS_NULL);
+        Cell cell = row.getCell(index, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
         return getCellStringValue(cell, defaultValue);
     }
 
@@ -81,7 +81,7 @@ public class POIHelper
 
     public static Double getCellDoubleValue(Row row, int index, Double defaultValue)
     {
-        return getCellDoubleValue(row.getCell(index, Row.RETURN_BLANK_AS_NULL), defaultValue);
+        return getCellDoubleValue(row.getCell(index, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL), defaultValue);
     }
 
     public static Double getCellDoubleValue(Cell cell, Double defaultValue)

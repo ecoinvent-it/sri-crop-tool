@@ -28,11 +28,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -246,7 +242,8 @@ public class ExcelInputReader
         {
             loadNextMeaningfulRow(countryColumnIndex);
             Cell cell = currentRow.getCell(countryColumnIndex);
-            Cell labelCell = currentRow.getCell(labelColumnIndex, Row.RETURN_BLANK_AS_NULL);
+            Cell labelCell =
+                    currentRow.getCell(labelColumnIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
             if (expectedTag.equals(POIHelper.getCellStringValue(currentRow, METADATA_COLUMN_INDEX, null)))
             {
                 String value = stringFromListExtractor.extractMandatory(expectedTag, labelCell, cell);
@@ -447,8 +444,8 @@ public class ExcelInputReader
                 if (tmpRow == null)
                     continue;
 
-                keyCell = tmpRow.getCell(METADATA_COLUMN_INDEX, Row.RETURN_BLANK_AS_NULL);
-                dataCell = tmpRow.getCell(meaningFulColumn, Row.RETURN_BLANK_AS_NULL);
+                keyCell = tmpRow.getCell(METADATA_COLUMN_INDEX, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                dataCell = tmpRow.getCell(meaningFulColumn, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
             }
 
             if (dataCell != null || keyCell != null)
@@ -463,10 +460,10 @@ public class ExcelInputReader
             if (currentRow != null)
             {
                 currentTag = POIHelper.getCellStringValue(currentRow, METADATA_COLUMN_INDEX, "");
-                currentDataCell = currentRow.getCell(dataColumnIndex, Row.RETURN_BLANK_AS_NULL);
-                currentLabelCell = currentRow.getCell(labelColumnIndex, Row.RETURN_BLANK_AS_NULL);
-                currentCommentCell = currentRow.getCell(commentColumnIndex, Row.RETURN_BLANK_AS_NULL);
-                currentSourceCell = currentRow.getCell(sourceColumnIndex, Row.RETURN_BLANK_AS_NULL);
+                currentDataCell = currentRow.getCell(dataColumnIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                currentLabelCell = currentRow.getCell(labelColumnIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                currentCommentCell = currentRow.getCell(commentColumnIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                currentSourceCell = currentRow.getCell(sourceColumnIndex, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
                 return true;
             }
             return false;
