@@ -20,12 +20,10 @@ package com.quantis_intl.lcigenerator.scsv;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.BiFunction;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
 
 public class WfldbTemplateProductUsages implements TemplateProductUsages
 {
@@ -1133,43 +1131,8 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
         {
             String cropType = modelOutputs.get("luc_crop_type");
             String country = modelOutputs.get("country");
-            String db = findDb(cropType, country);
 
-            return "Land use change, " + cropType + " crop (" + db + ")/" + country + " U";
-        }
-
-        @Override
-        public Optional<List<String>> provideRequiredDep(Map<String, String> modelOutputs)
-        {
-            String cropType = modelOutputs.get("luc_crop_type");
-            String country = modelOutputs.get("country");
-            String db = findDb(cropType, country);
-
-            if ("ALCIG".equals(db))
-                return Optional.of(ImmutableList.of("luc_" + cropType + "_" + country + "_wfldb.csv"));
-
-            return Optional.empty();
-        }
-
-        private static final List<String> ANNUAL_ALCIG_LUC_COUNTRY = Lists.newArrayList("BE", "CI", "CL", "CO", "CR",
-                "EC", "GH", "ID", "KE", "LK", "PH", "PL", "TR", "VN", "ZA");
-        private static final List<String> PERENNIAL_ALCIG_LUC_COUNTRY = Lists.newArrayList("AU", "CA", "CH", "DE",
-                "FI", "HU", "IL", "NL", "NZ", "PL", "RU", "TH", "UA");
-
-        private String findDb(String cropType, String country)
-        {
-            List<String> alcigLucCountry;
-            if ("annual".equals(cropType))
-                alcigLucCountry = ANNUAL_ALCIG_LUC_COUNTRY;
-            else if ("perennial".equals(cropType))
-                alcigLucCountry = PERENNIAL_ALCIG_LUC_COUNTRY;
-            else
-                throw new IllegalStateException(cropType);
-
-            if (alcigLucCountry.contains(country))
-                return "ALCIG";
-
-            return "WFLDB 3.3";
+            return "Land use change, " + cropType + " crop (WFLDB 3.3)/" + country + " U";
         }
     }
 

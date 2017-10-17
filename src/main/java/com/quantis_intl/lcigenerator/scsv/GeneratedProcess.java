@@ -53,8 +53,8 @@ public class GeneratedProcess implements ProductScsvProcess
     {
         this.modelOutputs = modelOutputs;
         this.extractedInputs = extractedInputs;
-        this.templateProductUsages = outputTarget.templateProductUsages;
-        this.templateSubstanceUsages = outputTarget.templateSubstanceUsages;
+        this.templateProductUsages = new WfldbTemplateProductUsages();
+        this.templateSubstanceUsages = new GlobalTemplateSubstanceUsages();
         this.outputTarget = outputTarget;
         this.requiredAlcigProcesses = new HashSet<>();
     }
@@ -389,19 +389,7 @@ public class GeneratedProcess implements ProductScsvProcess
                                                  outputTarget))
                 .collect(Collectors.toList());
         res.addAll(undefined);
-        // FIXME: Ugly
-        if (outputTarget == OutputTarget.ECOINVENT)
-        {
-            for (ProductUsage u : undefined)
-            {
-                if (u.getName().contains("herbicides"))
-                    requiredAlcigProcesses.add("herbicides_undefined_to_soil.csv");
-                else if (u.getName().contains("fungicides"))
-                    requiredAlcigProcesses.add("fungicides_undefined_to_soil.csv");
-                else if (u.getName().contains("insecticides"))
-                    requiredAlcigProcesses.add("insecticides_undefined_to_soil.csv");
-            }
-        }
+
         return res;
     }
 

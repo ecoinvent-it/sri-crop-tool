@@ -20,16 +20,6 @@ package com.quantis_intl.lcigenerator.scsv;
 
 public enum OutputTarget
 {
-    WFLDB(new WfldbTemplateProductUsages(), new GlobalTemplateSubstanceUsages()),
-    ECOINVENT(new EcoinventTemplateProductUsages(), new GlobalTemplateSubstanceUsages());
-
-    public final TemplateProductUsages templateProductUsages;
-    public final TemplateSubstanceUsages templateSubstanceUsages;
-
-    private OutputTarget(TemplateProductUsages templateProductUsages, TemplateSubstanceUsages templateSubstanceUsages)
-    {
-        this.templateProductUsages = templateProductUsages;
-        this.templateSubstanceUsages = templateSubstanceUsages;
-    }
-
+    WFLDB,
+    ECOINVENT
 }
