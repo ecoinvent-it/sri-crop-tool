@@ -88,8 +88,10 @@ public class StringFromListExtractor
         TAGS_TO_MAP.put("climate_zone_specific", CLIMATE_SPECIFIC_ZONES);
 
         CULTIVATION_TYPE.put("open ground", "open_ground");
-        CULTIVATION_TYPE.put("greenhouse, open ground", "greenhouse_open_ground");
-        CULTIVATION_TYPE.put("greenhouse, hydroponic system", "greenhouse_hydroponic");
+        CULTIVATION_TYPE.put("greenhouse, open ground, unheated", "greenhouse_open_ground_unheated");
+        CULTIVATION_TYPE.put("greenhouse, open ground, heated", "greenhouse_open_ground_heated");
+        CULTIVATION_TYPE.put("greenhouse, hydroponic system, unheated", "greenhouse_hydroponic_unheated");
+        CULTIVATION_TYPE.put("greenhouse, hydroponic system, heated", "greenhouse_hydroponic_heated");
         TAGS_TO_MAP.put("cultivation_type", CULTIVATION_TYPE);
 
         TILLAGE_METHOD.put("Fall plow", "fall_plaw");

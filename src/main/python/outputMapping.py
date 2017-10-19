@@ -58,13 +58,13 @@ class OutputMapping(object):
 
     def mapNModel(self, no3Output, allInputs):
         for key, value in no3Output.items():
-            if allInputs["cultivation_type"] == "greenhouse_hydroponic" and key != "m_N_ammonia_total":
+            if allInputs["cultivation_type"].startswith("greenhouse_hydroponic") and key != "m_N_ammonia_total":
                 value = 0.0
             self.output[key.replace("m_N_", "")] = value
 
     def mapPModel(self, pOutput, allInputs):
         for key, value in pOutput.items():
-            if allInputs["cultivation_type"] == "greenhouse_hydroponic":
+            if allInputs["cultivation_type"].startswith("greenhouse_hydroponic"):
                 value = 0.0
             self.output[key.replace("m_P_", "")] = value
         #TODO: Is this the best place for that?
@@ -100,7 +100,7 @@ class OutputMapping(object):
         for key, hmMap in hmOutput.items():
             prefix = key.replace("m_hm_", "") + "_"
             for k, v in hmMap.items():
-                if allInputs["cultivation_type"] == "greenhouse_hydroponic":
+                if allInputs["cultivation_type"].startswith("greenhouse_hydroponic"):
                     v = 0.0
                 self.output[prefix + k.name] = v
 
