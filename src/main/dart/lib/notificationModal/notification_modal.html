@@ -2,15 +2,15 @@
 <!-- Modal -->
 <div class="modal fade" id="notificationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
-    <div class="modal-content" ng-class="{'errors': isError, 'warnings':isWarning}">
+    <div class="modal-content" [class.errors]="isError" [class.warnings]="isWarning">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">Oups...</h4>
       </div>
       <div class="modal-body">{{displayedText}}
       </div>
-    <!--  <div class="modal-footer"> 
-     </div> -->
+      <!--  <div class="modal-footer">
+       </div> -->
     </div>
   </div>
 </div>

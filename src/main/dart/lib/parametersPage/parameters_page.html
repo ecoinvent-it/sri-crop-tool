@@ -1,9 +1,9 @@
 <div class="content page" id="paramPage">
-  
+
   <a href="#tool"><button class="qts-btn qts-btn-style3">&lt;&nbsp; Back to Home</button></a>
 
-  <div ng-if="!isLogged">You must be authenticated to see this screen</div>
-  <div ng-if="isLogged">
+  <div *ngIf="!isLogged">You must be authenticated to see this screen</div>
+  <div *ngIf="isLogged">
     <div class="color1 loginTitle">Change password</div>
     <change-password-box></change-password-box>
   </div>

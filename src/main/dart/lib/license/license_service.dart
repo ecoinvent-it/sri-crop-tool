@@ -1,30 +1,31 @@
 library license.service;
 
 import 'dart:async';
-import 'package:di/annotations.dart';
+
 import 'package:alcig/date_utils.dart';
 import 'package:alcig/license/license_api.dart';
 import 'package:alcig/login/login_service.dart';
+import 'package:angular/di.dart';
 
 @Injectable()
 class LicenseService {
-  
+
   List licenses = null;
   Map currentLicense = null;
-  
+
   LicenseApi _api;
   LoginService _loginService;
-    
+
   LicenseService(LicenseApi this._api, LoginService this._loginService)
   {
     if (_loginService.isLogged)
       _loadLicenses();
     _loginService.stream.listen(_onUserData);
   }
-  
-  void _onUserData(LoginEvent event) 
+
+  void _onUserData(LoginEvent event)
   {
-    switch (event) 
+    switch (event)
     {
       case LoginEvent.AUTHENTICATED:
         _loadLicenses();
@@ -38,7 +39,7 @@ class LicenseService {
         break;
     }
   }
-  
+
   Future _loadLicenses() async
   {
     List tempLicenses = await _api.getUserLicenses();
@@ -46,7 +47,7 @@ class LicenseService {
     licenses = tempLicenses;
     currentLicense = _findActiveLicense();
   }
-  
+
   Map _findActiveLicense()
   {
     if (licenses.isEmpty)
@@ -60,12 +61,12 @@ class LicenseService {
       return licenses.first;
     }
   }
-  
+
   int getNbGenerationsForLicense(Map license)
   {
     return license == null ? null : license['numberOfGenerations'];
   }
-  
+
   bool hasUnlimitedUses(Map license)
   {
     if (license == null)
@@ -80,12 +81,12 @@ class LicenseService {
         return false;
     }
   }
-  
+
   void updateLicenseDepletion(Map license)
   {
     license['isDepleted'] = true;
   }
-  
+
   String displayRentalItem(Map license)
   {
     if (license == null)
@@ -116,7 +117,7 @@ class LicenseService {
         throw new Error();
     }
   }
-  
+
   void _resetAll()
   {
     licenses = null;

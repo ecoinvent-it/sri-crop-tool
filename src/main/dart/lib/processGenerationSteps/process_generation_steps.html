@@ -1,11 +1,14 @@
 <table class="color4 bold">
-  <col width="25%"/>
-  <col width="25%"/>
-  <col width="25%"/>
-  <col width="25%"/>
+    <colgroup>
+        <col width="25%"/>
+        <col width="25%"/>
+        <col width="25%"/>
+        <col width="25%"/>
+    </colgroup>
   <tr>
     <td>
-        <a id="#step1Link" href="LCI-Database_Data-collection_Crop_v2.xlsx" target="_blank" onclick="documentLinkClick(event,'LCI-Database_Data-collection_Crop_v1.xlsx')">
+        <a id="#step1Link" href="LCI-Database_Data-collection_Crop_v2.xlsx" target="_blank"
+           (click)="documentLinkClick(event,'LCI-Database_Data-collection_Crop_v1.xlsx')">
             <div id="step1" class="stepBtn">
               <div class="stepTitle text-big text-uppercase">Step 1</div>
               <div class="stepText"><span class="clickableText">Click</span> to download the template</div>
@@ -16,15 +19,16 @@
         <div class="stepTitle text-big text-uppercase">Step 2</div>
         <div class="stepText">Fill in the template with your data</div>
     </td>
-    <td id="step3Container" ng-class="{disabledStep: !isLogged || currentLicense.isDepleted}">
-      <form id="processGeneratorUploadForm" method="post" enctype="multipart/form-data">
+      <td id="step3Container"
+          [class.disabledStep]="!isLogged || currentLicense == null || currentLicense['isDepleted']">
+          <form id="processGeneratorUploadForm" #uploadeForm method="post" enctype="multipart/form-data">
           <div id="step3" class="stepBtn">
 	          <div class="stepTitle text-big text-uppercase">Step 3</div>
-	          <input type="file" name="uploadFile"
-	                      accept=".xls,.xlsx" required="required"
-	                      class="upload"
-	                      ng-change="submitUploadForm($event.target, $event.target.parent.parent)"
-	                      ng-if="isLogged || !currentLicense.isDepleted"/>
+              <input type="file" #fileInput name="uploadFile"
+                     accept=".xls,.xlsx" required="required"
+                     class="upload"
+                     (ngChange)="submitUploadForm(fileInput, uploadeForm)"
+                     *ngIf="isLogged && currentLicense != null && !currentLicense['isDepleted']"/>
 	          <div class="stepText"><span class="clickableText">Click</span> to upload your template to ALCIG</div>
           </div>
           <div>
@@ -32,11 +36,11 @@
             <span id="step3CheckboxText" class="text-very-small">I agree that Quantis stores this file for testing purposes</span>
           </div>
 			</form>
-			<div id="step3ContainerWhenDisabled" ng-click="disabledStep3Click()"
-			     ng-if="!isLogged || currentLicense.isDepleted"></div>
+          <div id="step3ContainerWhenDisabled" (click)="disabledStep3Click()"
+               *ngIf="!isLogged || currentLicense == null || currentLicense['isDepleted']"></div>
     </td>
     <td>
-        <div id="step4" class="stepBtn" ng-class="{disabledStep: !isLogged}">
+        <div id="step4" class="stepBtn" [class.disabledStep]="!isLogged">
 	        <div class="stepTitle text-big text-uppercase">Step 4</div>
 				  <div class="stepText">Get a ready-to-import file for your LCA software</div>
 			  </div>
@@ -44,11 +48,13 @@
   </tr>
 </table>
 
-<table id="currentLicenseTable" class="color1" ng-if="currentLicense != null">
+<table id="currentLicenseTable" class="color1" *ngIf="currentLicense != null">
+    <colgroup>
   <col width="25%"/>
   <col width="25%"/>
   <col width="22%"/>
   <col width="28%"/>
+    </colgroup>
   <thead>
     <tr>
       <th>License end date</th>
@@ -59,24 +65,28 @@
   </thead>
   <tbody>
     <tr>
-      <td><span>{{displayDate(currentLicense.endDate)}}</span></td>
+        <td><span>{{displayDate(currentLicense['endDate'])}}</span></td>
       <td>{{displayRentalItem(currentLicense)}}</td>
       <td>
-        <span ng-if="getNbRemainingGenerationsForLicense(generations,currentLicense) != null">{{getNbRemainingGenerationsForLicense(generations,currentLicense)}}</span>
-        <span ng-if="hasUnlimitedUses(currentLicense)">Unlimited</span>
+          <span *ngIf="getNbRemainingGenerationsForLicense(generations,currentLicense) != null">{{getNbRemainingGenerationsForLicense(generations,currentLicense)}}</span>
+          <span *ngIf="hasUnlimitedUses(currentLicense)">Unlimited</span>
       </td>
-      <td><span class="errorMsg" ng-if="currentLicense.isDepleted">Your license is depleted. Please contact your reseller to get a new license.</span></td>
+        <td><span class="errorMsg" *ngIf="currentLicense['isDepleted']">Your license is depleted. Please contact
+            your reseller to get a new license.</span>
+        </td>
     </tr>
   </tbody>
 </table>
 
-<table id="generationHistory" class="color1" ng-if="generations != null && generations.length > 0">
+<table id="generationHistory" class="color1" *ngIf="generations != null && generations.length > 0">
+    <colgroup>
   <col width="12%"/>
   <col width="9%"/>
   <col width="5%"/>
   <col width="24%"/>
   <col width="25%"/>
   <col width="25%"/>
+    </colgroup>
   <thead>
     <tr>
 	    <th>Upload date</th>
@@ -88,32 +98,36 @@
     </tr>
   </thead>
   <tbody>
-	  <tr ng-repeat="generation in generations" ng-class-odd="'odd'" ng-class-even="'even'"
-	          ng-class="{'selectedGenerationRow':generation == lastGeneration}"
-	          ng-click="changeSelectedGeneration(generation)">
-	    <td>{{displayDateTime(generation.lastTryDate)}}</td>
-	    <td>{{generation.crop}}</td>
-	    <td>{{generation.country}}</td>
-	    <td><div style="max-width: 100%;">{{generation.filename}}</div></td>
-	    <td>
-	      <div ng-class="{'notVisible':!canRetry(generation)}" class="qts-small-btn qts-btn-style1">
+  <tr *ngFor="let generation of generations; let odd = odd; let even = even" [class.odd]="odd" [class.even]="even"
+      [class.selectedGenerationRow]="generation == lastGeneration"
+      (click)="changeSelectedGeneration(generation)">
+      <td>{{displayDateTime(generation['lastTryDate'])}}</td>
+      <td>{{generation['crop']}}</td>
+      <td>{{generation['country']}}</td>
+      <td>
+          <div style="max-width: 100%;">{{generation['filename']}}</div>
+      </td>
+      <td>
+          <div [class.notVisible]="!canRetry(generation)" class="qts-small-btn qts-btn-style1">
 	        <div >Retry upload</div>
-		      <form method="post" enctype="multipart/form-data">
-	            <input type="file" name="uploadFile"
-	                        accept=".xls,.xlsx" required="required"
-	                        class="generationRowUploadForm"
-	                        ng-change="submitReuploadForm($event.target, $event.target.parent, generation)"
+              <form method="post" #uploadForm enctype="multipart/form-data">
+                  <input type="file" #fileInput name="uploadFile"
+                         accept=".xls,.xlsx" required="required"
+                         class="generationRowUploadForm"
+                         (ngChange)="submitReuploadForm(fileInput, uploadForm, generation)"
 	                        />
 		      </form>
 	      </div>
-	      <button class="qts-small-btn qts-btn-style4" ng-class="{'notVisible':!hasWarnings(generation)}" ng-click="changeGenerationAndDisplayUpdateStatus(generation)">
+          <button class="qts-small-btn qts-btn-style4" [class.notVisible]="!hasWarnings(generation)"
+                  (click)="changeGenerationAndDisplayUpdateStatus(generation)">
 	       <span class="glyphicon glyphicon-exclamation-sign warningsColor" aria-hidden="true"></span>
 	       Upload status
 	      </button>
 	    </td>
 	    <td class="text-center">
-	      <form action="{{serverUrl}}app/api/generateScsv" ng-submit="changeSelectedGeneration(generation)" method="post">
-	        <input type="hidden" name="generationId" value="{{generation.id.representation}}"/>
+            <form action="{{serverUrl}}app/api/generateScsv" (submit)="changeSelectedGeneration(generation)"
+                  method="post">
+                <input type="hidden" name="generationId" value="{{generation['id']['representation']}}"/>
 	        <div class="btn-group" data-toggle="buttons">
 	          <label class="btn btn-primary active dbOptionLabel">
 	            <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
@@ -136,51 +150,58 @@
 <!-- Modal -->
 <div class="modal topBottomAnimation" id="process-generation-step3-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg">
-    <div class="modal-content alert" ng-class="{'successful': true, 'errors': popupHasErrors, 'warnings': popupHasWarnings}">
+      <div class="modal-content alert"
+           [ngClass]="{successful: true, errors: popupHasErrors, warnings: popupHasWarnings}">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="myModalLabel">
-           <span class="glyphicon" ng-class="{'glyphicon-exclamation-sign': popupHasOnlyWarnings, 'warningsColor': popupHasOnlyWarnings, 'glyphicon-minus-sign': popupHasErrors, 'errorsColor': popupHasErrors}" aria-hidden="true"></span>
-          <span ng-if="!popupHasErrors">File successfully uploaded</span>
-          <span ng-if="popupHasErrors">Sorry, we didn't manage to compute your data</span>
+           <span class="glyphicon"
+                 [ngClass]="{'glyphicon-exclamation-sign': popupHasOnlyWarnings, warningsColor: popupHasOnlyWarnings, 'glyphicon-minus-sign': popupHasErrors, errorsColor: popupHasErrors}"
+                 aria-hidden="true"></span>
+            <span *ngIf="!popupHasErrors">File successfully uploaded</span>
+            <span *ngIf="popupHasErrors">Sorry, we didn't manage to compute your data</span>
         </h4>
       </div>
       <div class="modal-body">
-        <div ng-if="!popupHasErrors">You can now click on Step 4 to download the generated file for your LCA software</div>
+          <div *ngIf="!popupHasErrors">You can now click on Step 4 to download the generated file for your LCA
+              software
+          </div>
 
         <div>Uploaded file: {{popupFilename}}</div>
-        <div ng-if="popupHasErrors">Please check these points before trying again:</div>
-				<table ng-if="popupHasErrors" class="errors-and-warnings-table">
+          <div *ngIf="popupHasErrors">Please check these points before trying again:</div>
+          <table *ngIf="popupHasErrors" class="errors-and-warnings-table">
 				  <tr>
 				    <th class="tableCellColumn">Cell</th>
 				    <th class="tableLabelColumn">Label</th>
 				    <th>Message</th>
 				  </tr>
-				  <tr ng-repeat="error in popupErrors" ng-class-odd="'odd'" ng-class-even="'even'">
-				    <td>{{error.context.cell}}</td>
-				    <td>{{error.context.label}}</td>
-				    <td>{{error.message}}</td>
+              <tr *ngFor="let error of popupErrors; let odd = odd; let even = even" [class.odd]="odd"
+                  [class.even]="even">
+                  <td>{{error['context']['cell']}}</td>
+                  <td>{{error['context']['label']}}</td>
+                  <td>{{error['message']}}</td>
 				  </tr>
 				</table>
 
-					<div ng-if="popupHasWarnings">
-				    <span ng-if="!popupHasErrors">Some data have been adapted for this computation:</span>
-				    <span ng-if="popupHasErrors">We also noticed a few other minor points that will be adapted if you keep them unchanged:</span>
+          <div *ngIf="popupHasWarnings">
+              <span *ngIf="!popupHasErrors">Some data have been adapted for this computation:</span>
+              <span *ngIf="popupHasErrors">We also noticed a few other minor points that will be adapted if you keep them unchanged:</span>
 					</div>
-					<table ng-if="popupHasWarnings" class="errors-and-warnings-table">
+          <table *ngIf="popupHasWarnings" class="errors-and-warnings-table">
 					  <tr>
 					    <th class="tableCellColumn">Cell</th>
               <th class="tableLabelColumn">Label</th>
               <th>Message</th>
 					  </tr>
-					  <tr ng-repeat="warning in popupWarnings" ng-class-odd="'odd'" ng-class-even="'even'">
-					    <td>{{warning.context.cell}}</td>
-					    <td>{{warning.context.label}}</td>
-					    <td>{{warning.message}}</td>
+              <tr *ngFor="let warning of popupWarnings; let odd = odd; let even = even" [class.odd]="odd"
+                  [class.even]="even">
+                  <td>{{warning['context']['cell']}}</td>
+                  <td>{{warning['context']['label']}}</td>
+                  <td>{{warning['message']}}</td>
 					  </tr>
 					</table>
       </div>
-      <div class="modal-footer" ng-if="popupHasWarnings || popupHasErrors">
+          <div class="modal-footer" *ngIf="popupHasWarnings || popupHasErrors">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
     </div>

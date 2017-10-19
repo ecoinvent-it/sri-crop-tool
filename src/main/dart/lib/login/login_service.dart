@@ -1,31 +1,31 @@
 library login.service;
 
 import 'dart:async';
-import 'package:di/annotations.dart';
+import 'package:angular/di.dart';
 import 'package:alcig/login/login_api.dart';
 import 'package:alcig/connectivity_state.dart';
 
 @Injectable()
 class LoginService {
-  
+
   LoginApi _loginApi;
   ConnectivityState _connectivityState;
-  
+
   StreamController<LoginEvent> _dispatcher = new StreamController.broadcast();
   Stream<LoginEvent> get stream => _dispatcher.stream;
-  
+
   String _username;
-    
+
   bool _isLoading = false;
-  
+
   bool forceChangePassword = false;
 
   String get username => _username;
-      
+
   bool get isLogged => _username != null;
-  
+
   bool get isLoading => _isLoading;
-  
+
   LoginService(LoginApi this._loginApi, ConnectivityState this._connectivityState){
     _connectivityState.stream.listen( (StateEvent event) {
       if (event == StateEvent.NOT_AUTHED && isLogged) {
@@ -34,18 +34,18 @@ class LoginService {
       }
     });
   }
-  
-  Future login(String username, String password) async 
+
+  Future login(String username, String password) async
   {
-    if ( !isLoading ) 
+    if (!isLoading)
     {
       _isLoading = true;
       _dispatcher.add(LoginEvent.AUTHENTICATING);
-    
+
       try
       {
         AuthRequestResult res = await _loginApi.login(username, password);
-        switch ( res ) 
+        switch (res)
         {
            case AuthRequestResult.OK:
              _dispatcher.add(LoginEvent.AUTHENTICATED);
@@ -71,10 +71,10 @@ class LoginService {
       _isLoading = false;
     }
   }
-  
-  Future logout() async 
+
+  Future logout() async
   {
-    if ( ! isLoading ) 
+    if (!isLoading)
     {
       _isLoading = true;
       _dispatcher.add(LoginEvent.LOGGING_OUT);
@@ -94,7 +94,7 @@ class LoginService {
       _username = null;
     }
   }
-  
+
   Future _getStatus() async
   {
     try
@@ -115,10 +115,10 @@ class LoginService {
       _dispatcher.add(LoginEvent.LOG_OUT_UNSURE);
     }
   }
-  
+
   Future changePassword(String oldPassword, String newPassword) async
   {
-    if ( ! isLoading ) 
+    if (!isLoading)
     {
       _isLoading = true;
       try
@@ -146,10 +146,10 @@ class LoginService {
       _isLoading = false;
     }
   }
-  
+
   Future forgotPassword(String email) async
   {
-    if ( ! isLoading ) 
+    if (!isLoading)
     {
       _isLoading = true;
       try
@@ -173,10 +173,10 @@ class LoginService {
       _isLoading = false;
     }
   }
-  
+
   Future resetPassword(String validationCode, String newPassword) async
     {
-      if ( ! isLoading ) 
+      if (!isLoading)
       {
         _isLoading = true;
         try

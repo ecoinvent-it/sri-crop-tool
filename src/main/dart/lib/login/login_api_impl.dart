@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:html';
 
 import 'package:alcig/connectivity_state.dart';
-import 'package:di/annotations.dart';
+import 'package:angular/di.dart';
 
 import 'login_api.dart';
 

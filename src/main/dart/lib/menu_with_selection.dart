@@ -2,15 +2,15 @@ import 'package:angular/angular.dart';
 
 import 'dart:html';
 
-@Decorator(selector: '[menuWithSelection]')
+/*@Decorator(selector: '[menuWithSelection]')
 class MenuWithSelection {
-  
+
   final Element element;
-  
+
   String selectedPage;
-  
+
   Router _router;
-  
+
   MenuWithSelection(Element this.element, Router this._router) {
     String initialFragment = window.location.hash;
     if (initialFragment.isNotEmpty)
@@ -26,9 +26,9 @@ class MenuWithSelection {
             }
             _manageMenuItemStyle();
           });
-        }); 
+        });
   }
-  
+
   void _manageMenuItemStyle()
   {
     element.querySelectorAll(".menuItem").classes.remove("selectedmenuItem");
@@ -38,11 +38,11 @@ class MenuWithSelection {
       case 'contactUs':
         currentSelectedItemMenu = "#contactUsMenuItem";
         break;
-        
+
       case 'faq':
         currentSelectedItemMenu = "#faqMenuItem";
         break;
-        
+
       case 'tool':
       default:
         currentSelectedItemMenu = "#homeMenuItem";
@@ -50,4 +50,4 @@ class MenuWithSelection {
     }
     element.querySelector(currentSelectedItemMenu).classes.add("selectedmenuItem");
   }
-}
+}*/

@@ -19,10 +19,12 @@
 
 package com.quantis_intl.lcigenerator.ecospold;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.UUID;
 import java.util.function.Function;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.xml.bind.JAXB;
@@ -44,12 +46,18 @@ public class PossibleElementaryExchangesCache
 
     private final Table<UUID, String, TValidElementaryExchange> possibleExchanges;
 
+    @Inject
     public PossibleElementaryExchangesCache(@Named(StackProperties.SERVER_UPLOADED_FILE_FOLDER)
                                                     String path)
     {
         LOGGER.info("Initializing Elementary exchanges cache");
-        possibleExchanges = JAXB.unmarshal(Paths.get(path, "ElementaryExchanges.xml").toFile(),
-                                           TValidElementaryExchanges.class)
+        File f = Paths.get(path, "ElementaryExchanges.xml").toFile();
+        if (!f.exists())
+        {
+            LOGGER.error("File not found: {}", f.getAbsolutePath());
+            throw new IllegalStateException("File not found: " + f.getAbsolutePath());
+        }
+        possibleExchanges = JAXB.unmarshal(f, TValidElementaryExchanges.class)
                                 .getElementaryExchange().stream().collect(Tables.toTable
                         ((TValidElementaryExchange e) -> e.getCompartment().getSubcompartmentId(),
                          (TValidElementaryExchange e) -> e.getName().getValue(),

@@ -25,6 +25,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.inject.Inject;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
@@ -107,6 +108,7 @@ public class EcospoldFileWriter
     private final PossibleElementaryExchangesCache possibleSubstances;
     private final PossiblePropertyCache possibleProperties;
 
+    @Inject
     public EcospoldFileWriter(PossibleIntermediateExchangesCache possibleExchanges,
                               PossibleElementaryExchangesCache possibleSubstances,
                               PossiblePropertyCache possibleProperties)

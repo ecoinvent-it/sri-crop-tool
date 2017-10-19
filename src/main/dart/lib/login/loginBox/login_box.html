@@ -1,16 +1,17 @@
-<div ng-if="!isLogged">
+<div *ngIf="!isLogged">
 
   <div class="color1 uppercase loginTitle">Login</div>
-  <form id="loginForm" ng-submit="loginSubmit()">
+    <form id="loginForm" (submit)="loginSubmit()">
     <div class="color1 text-small formFieldTitle">Username</div>
-    <input class="text-small loginInput" name="login" ng-model="username" ng-disabled="isLoading" required>
+        <input class="text-small loginInput" name="login" [(ngModel)]="username" [disabled]="isLoading" required>
     <div class="color1 text-small">Password</div>
-    <input class="text-small loginInput lastInput" name="password" type="password" ng-model="password" ng-disabled="isLoading" required/>
+        <input class="text-small loginInput lastInput" name="password" type="password" [(ngModel)]="password"
+               [disabled]="isLoading" required/>
     <div>
-       <button id="loginSubmit" type="submit" class="qts-btn qts-btn-style3" ng-disabled="isLoading">Sign in</button>
-       <img ng-class="{'notVisible':!isLoading}" class="loginLoaderImg" src="img/ajax-loader.gif"/>
+        <button id="loginSubmit" type="submit" class="qts-btn qts-btn-style3" [disabled]="isLoading">Sign in</button>
+        <img [class.notVisible]="!isLoading" class="loginLoaderImg" src="img/ajax-loader.gif"/>
     </div>
-    <span class="color1 text-very-small loginLink" ng-click="openForgotPwdPopUp()">Forgot password?</span>
+        <span class="color1 text-very-small loginLink" (click)="openForgotPwdPopUp()">Forgot password?</span>
     <div class="msgContainer errorMsg">{{errorMessage}}</div>
   </form>
 </div>
@@ -24,7 +25,7 @@
         <div class="color1 loginTitle">Forgot password</div>
       </div>
       <div class="modal-body">
-        <forgot-password-box ng-if="isForgotPwdModalOpened"></forgot-password-box>
+          <forgot-password-box *ngIf="isForgotPwdModalOpened"></forgot-password-box>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

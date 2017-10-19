@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'dart:html';
 
 import 'package:alcig/connectivity_state.dart';
-import 'package:di/annotations.dart';
+import 'package:angular/di.dart';
 
 import 'api.dart';
 

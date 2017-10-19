@@ -1,33 +1,35 @@
 <div class="page content pagePart">
 
-  <div ng-if="!codeChecked" class="text-center">
+    <div *ngIf="!codeChecked" class="text-center">
     <div class="msgContainer errorMsg">{{checkCodeErrorMessage}}</div>
     <a href="#tool">Back to home page</a>
   </div>
 
-  <div ng-if="codeChecked">
+    <div *ngIf="codeChecked">
     <div class="color1 loginTitle text-center">Please choose your password to activate your access</div>
-		<form ng-submit="submit()" class="centeredForm">
+        <form (submit)="submit()" class="centeredForm">
 		  <div>
 		    <div class="color1 text-small formFieldTitle">Username</div>
-        <input type="text" class="text-small loginInput" ng-model="username" disabled/>
+              <input type="text" class="text-small loginInput" [(ngModel)]="username" disabled/>
 			  <div class="color1 text-small formFieldTitle">Password</div>
-			  <input type="password" class="text-small loginInput" 
-			         ng-model="newPassword" ng-disabled="activationDone" required/>
+              <input type="password" class="text-small loginInput"
+                     [(ngModel)]="newPassword" [disabled]="activationDone" required/>
 			  <div class="color1 text-small formFieldTitle">Password confirmation</div>
 			  <input type="password" class="text-small loginInput lastInput"
-			         ng-model="newPasswordConfirmation" ng-disabled="activationDone" required/>
+                     [(ngModel)]="newPasswordConfirmation" [disabled]="activationDone" required/>
         <div class="lastInput">
-          <input type="checkbox" name="acceptTermsAndConditions" ng-model="acceptTermsAndConditions" ng-disabled="activationDone"/> 
+            <input type="checkbox" name="acceptTermsAndConditions" [(ngModel)]="acceptTermsAndConditions"
+                   [disabled]="activationDone"/>
           <span class="color1">I have read and accept the privacy policy, terms and conditions</span>
         </div>
 		  </div>
-		  <button type="submit" class="qts-btn qts-btn-style3" 
-		          ng-disabled="isLoading || activationDone">Activate</button>
-		  <img ng-class="{'notVisible':!isLoading}" class="loginLoaderImg" src="img/ajax-loader.gif"/>
+            <button type="submit" class="qts-btn qts-btn-style3"
+                    [disabled]="isLoading || activationDone">Activate
+            </button>
+            <img [class.notVisible]="!isLoading" class="loginLoaderImg" src="img/ajax-loader.gif"/>
 		</form>
-		
-		<div id="resetPwdMsgContainer">
+
+        <div id="resetPwdMsgContainer">
 		  <div class="errorMsg">{{errorMessage}}</div>
 		  <div class="successMessage color2">{{successMessage}}</div>
 		</div>

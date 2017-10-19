@@ -19,9 +19,11 @@
 
 package com.quantis_intl.lcigenerator.ecospold;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.xml.bind.JAXB;
@@ -41,12 +43,18 @@ public class PossibleIntermediateExchangesCache
 
     private final Map<String, TValidIntermediateExchange> possibleExchanges;
 
+    @Inject
     public PossibleIntermediateExchangesCache(@Named(StackProperties.SERVER_UPLOADED_FILE_FOLDER) String path)
     {
         LOGGER.info("Initializing Intermediate exchanges cache");
+        File f = Paths.get(path, "IntermediateExchanges.xml").toFile();
+        if (!f.exists())
+        {
+            LOGGER.error("File not found: {}", f.getAbsolutePath());
+            throw new IllegalStateException("File not found: " + f.getAbsolutePath());
+        }
 
-        possibleExchanges = Maps.uniqueIndex(JAXB.unmarshal(Paths.get(path, "IntermediateExchanges.xml").toFile(),
-                                                            TValidIntermediateExchanges.class)
+        possibleExchanges = Maps.uniqueIndex(JAXB.unmarshal(f, TValidIntermediateExchanges.class)
                                                  .getIntermediateExchange(), ve -> ve.getName().getValue());
 
     }

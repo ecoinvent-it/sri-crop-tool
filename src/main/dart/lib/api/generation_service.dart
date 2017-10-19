@@ -7,7 +7,7 @@ import 'dart:html';
 import 'package:alcig/api/api.dart';
 import 'package:alcig/license/license_service.dart';
 import 'package:alcig/login/login_service.dart';
-import 'package:di/annotations.dart';
+import 'package:angular/di.dart';
 
 @Injectable()
 class GenerationService {

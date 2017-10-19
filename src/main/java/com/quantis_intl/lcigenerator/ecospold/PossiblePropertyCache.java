@@ -19,10 +19,12 @@
 
 package com.quantis_intl.lcigenerator.ecospold;
 
+import java.io.File;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.xml.bind.JAXB;
@@ -42,11 +44,17 @@ public class PossiblePropertyCache
 
     private final Map<UUID, TValidProperty> possibleProperties;
 
+    @Inject
     public PossiblePropertyCache(@Named(StackProperties.SERVER_UPLOADED_FILE_FOLDER) String path)
     {
         LOGGER.info("Initializing Property cache");
-        possibleProperties = Maps.uniqueIndex(JAXB.unmarshal(Paths.get(path, "Properties.xml").toFile(),
-                                                             TValidProperties.class)
+        File f = Paths.get(path, "Properties.xml").toFile();
+        if (!f.exists())
+        {
+            LOGGER.error("File not found: {}", f.getAbsolutePath());
+            throw new IllegalStateException("File not found: " + f.getAbsolutePath());
+        }
+        possibleProperties = Maps.uniqueIndex(JAXB.unmarshal(f, TValidProperties.class)
                                                   .getProperty(), TValidProperty::getId);
 
     }

@@ -1,6 +1,6 @@
-<div ng-if="isLogged">
+<div *ngIf="isLogged">
  <div>Welcome {{username}}!</div>
- <button type="button" class="qts-btn qts-btn-style3" ng-click="logout()">Logout</button>
+    <button type="button" class="qts-btn qts-btn-style3" (click)="logout()">Logout</button>
  <a href="#parameters">
   <button class="qts-icon-btn qts-btn-style3" aria-label="Parameters">
    <span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>

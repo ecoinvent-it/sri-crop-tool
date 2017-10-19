@@ -3,12 +3,11 @@ library faq;
 import 'package:angular/angular.dart';
 
 @Component(
-    selector: 'faq-page',
-    templateUrl: 'packages/alcig/faqPage/faq_page.html',
-    useShadowDom: false)
+        selector: 'faq-page',
+        templateUrl: 'faq_page.html')
 class FaqPage
 {
   FaqPage();
-  
+
   String quantisEmail = 'software-support@quantis-intl.com';
 }
