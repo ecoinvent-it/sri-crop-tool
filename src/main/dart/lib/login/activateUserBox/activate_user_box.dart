@@ -11,6 +11,7 @@ import 'package:angular_router/angular_router.dart';
 @Component(
         selector: 'activate-user-box',
         directives: const [NgIf, formDirectives],
+        styleUrls: const ['activate_user_box.css'],
         templateUrl: 'activate_user_box.html')
 class ActivateUserBox
         implements OnInit, OnDestroy

@@ -9,6 +9,7 @@ import 'package:angular_forms/angular_forms.dart';
 @Component(
         selector: 'change-password-box',
         directives: const [NgIf, formDirectives],
+        styleUrls: const ['change_password_box.css'],
         templateUrl: 'change_password_box.html')
 class ChangePasswordBox
         implements OnInit, OnDestroy

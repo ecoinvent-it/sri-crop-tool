@@ -10,6 +10,7 @@ import 'package:angular_forms/angular_forms.dart';
 @Component(
         selector: 'contact-page',
         directives: const [formDirectives],
+        styleUrls: const ["contact_page.css"],
         templateUrl: 'contact_page.html')
 class ContactPage
 {

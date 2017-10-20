@@ -10,6 +10,7 @@ import 'package:angular/angular.dart';
 @Component(
         selector: 'user-box',
         directives: const [NgIf, ChangePasswordBox],
+        styleUrls: const ['user_box.css'],
         templateUrl: 'user_box.html')
 class UserBox
         implements OnInit, OnDestroy

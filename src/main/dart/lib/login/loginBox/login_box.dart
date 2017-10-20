@@ -11,6 +11,7 @@ import 'package:angular_forms/angular_forms.dart';
 @Component(
         selector: 'login-box',
         directives: const [formDirectives, NgIf, ForgotPasswordBox],
+        styleUrls: const ['login_box.css'],
         templateUrl: 'login_box.html')
 class LoginBox
         implements OnInit, OnDestroy

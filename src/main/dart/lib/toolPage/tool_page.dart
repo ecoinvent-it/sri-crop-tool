@@ -9,6 +9,7 @@ import 'package:angular/angular.dart';
 @Component(
         selector: 'tool-page',
         directives: const [LoginBox, UserBox, NotificationModal, ProcessGeneratorSteps],
+        styleUrls: const ['tool_page.css'],
         templateUrl: 'tool_page.html')
 class ToolPage
 {

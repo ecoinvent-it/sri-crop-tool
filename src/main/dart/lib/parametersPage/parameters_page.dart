@@ -7,6 +7,7 @@ import 'package:angular/angular.dart';
 @Component(
         selector: 'params-page',
         directives: const [NgIf, ChangePasswordBox],
+        styleUrls: const ['parameters_page.css'],
         templateUrl: 'parameters_page.html')
 class ParametersPage
 {

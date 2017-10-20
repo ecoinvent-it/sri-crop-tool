@@ -31,20 +31,9 @@ form > .lastInput
 	text-align: left;
 }
 
-#loginSubmit
-{
-	display: inline;
-}
-
 .loginLoaderImg
 {
 	margin-left: 10px;
-}
-
-.loginLink
-{
-	text-decoration: underline;
-	cursor: pointer;
 }
 
 .msgContainer
@@ -64,15 +53,7 @@ form > .lastInput
 	padding-right: 75px;
 }
 
-#forceChangePwdModal .changePasswordBtns,
 .loginModal .msgContainer
 {
-	text-align: center;
-}
-
-#resetPwdMsgContainer
-{
-	margin-top: 5px;
-	height: 45px;
 	text-align: center;
 }

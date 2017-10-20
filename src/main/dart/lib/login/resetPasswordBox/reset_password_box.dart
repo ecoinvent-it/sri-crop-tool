@@ -10,6 +10,7 @@ import 'package:angular_router/angular_router.dart';
 @Component(
         selector: 'reset-password-box',
         directives: const [NgIf, formDirectives],
+        styleUrls: const ['reset_password_box.css'],
         templateUrl: 'reset_password_box.html')
 class ResetPasswordBox
         implements OnInit, OnDestroy

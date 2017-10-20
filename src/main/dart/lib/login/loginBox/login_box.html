@@ -3,7 +3,8 @@
   <div class="color1 uppercase loginTitle">Login</div>
     <form id="loginForm" (submit)="loginSubmit()">
     <div class="color1 text-small formFieldTitle">Username</div>
-        <input class="text-small loginInput" name="login" [(ngModel)]="username" [disabled]="isLoading" required>
+        <input class="text-small loginInput" name="login" type="text"
+               [(ngModel)]="username" [disabled]="isLoading" required>
     <div class="color1 text-small">Password</div>
         <input class="text-small loginInput lastInput" name="password" type="password" [(ngModel)]="password"
                [disabled]="isLoading" required/>

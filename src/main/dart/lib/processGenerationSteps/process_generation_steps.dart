@@ -15,6 +15,7 @@ import 'package:angular_forms/angular_forms.dart';
 @Component(
         selector: 'process-generation-steps',
         directives: const [NgIf, NgFor, NgClass, formDirectives],
+        styleUrls: const ['process_generation_steps.css'],
         templateUrl: 'process_generation_steps.html')
 class ProcessGeneratorSteps
 {

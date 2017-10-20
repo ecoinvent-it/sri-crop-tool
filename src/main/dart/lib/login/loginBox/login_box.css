@@ -1,0 +1,10 @@
+#loginSubmit
+{
+	display: inline;
+}
+
+.loginLink
+{
+	text-decoration: underline;
+	cursor: pointer;
+}
