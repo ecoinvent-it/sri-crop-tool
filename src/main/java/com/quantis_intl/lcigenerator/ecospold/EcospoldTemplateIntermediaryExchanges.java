@@ -444,36 +444,6 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
             new TemplateIntermediaryExchange("irrigation", AvailableUnit.M3, "water_use_total",
                                              StandardUncertaintyMetadata.IRRIGATION_WATER, "total_wateruse"),
 
-            /*new WithLookupTemplateIntermediaryExchange("Irrigating, surface, electricity powered (WFLDB 3.0)
-            /{country} U",
-                                               AvailableUnit.M3, "surface_irrigation_electricity",
-                                               StandardUncertaintyMetadata.ELECTRICITY,
-                                               "irr_surface_electricity", buildBiFun(SURFACE_REMAP)),
-            new TemplateIntermediaryExchange("Irrigating, surface, diesel powered (WFLDB 3.0)/GLO U", AvailableUnit.M3,
-                                     "surface_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                                     "irr_surface_diesel"),
-            new TemplateIntermediaryExchange("Irrigating, surface, gravity (ALCIG)/GLO U", AvailableUnit.M3,
-                                     "surface_irrigation_no_energy",
-                                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                                     "irr_surface_no_energy", ImmutableList.of("irrigation_surface_gravity.csv")),
-            new WithLookupTemplateIntermediaryExchange("Irrigating, sprinkler, electricity powered (WFLDB 3.0)
-            /{country} U",
-                                               AvailableUnit.M3, "sprinkler_irrigation_electricity",
-                                               StandardUncertaintyMetadata.ELECTRICITY,
-                                               "irr_sprinkler_electricity", buildBiFun(SPRINKLER_REMAP)),
-            new TemplateIntermediaryExchange("Irrigating, sprinkler, diesel powered (WFLDB 3.0)/GLO U", AvailableUnit
-            .M3,
-                                     "sprinkler_irrigation_diesel",
-                                     StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                                     "irr_sprinkler_diesel"),
-            new WithLookupTemplateIntermediaryExchange("Irrigating, drip, electricity powered (WFLDB 3.0)/{country}
-            U", AvailableUnit.M3,
-                                               "drip_irrigation_electricity", StandardUncertaintyMetadata.ELECTRICITY,
-                                               "irr_drip_electricity", buildBiFun(DRIP_REMAP)),
-            new TemplateIntermediaryExchange("Irrigating, drip, diesel powered (WFLDB 3.0)/GLO U", AvailableUnit.M3,
-                                     "drip_irrigation_diesel", StandardUncertaintyMetadata.ENERGY_CARRIERS_FUEL_WORK,
-                                     "irr_drip_diesel"),*/
-
             new TemplateIntermediaryExchange("ammonium nitrate, as N", AvailableUnit.KG,
                                              "fert_n_ammonium_nitrate", StandardUncertaintyMetadata.FERTILISERS,
                                              "fertnmin_ammonium_nitrate"),

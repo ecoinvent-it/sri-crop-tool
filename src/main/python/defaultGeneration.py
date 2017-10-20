@@ -413,6 +413,9 @@ class NitrogenFromCropResiduesDefaultGenerator(object):
 
 
 DEFAULTS_VALUES_GENERATORS = {
+    "yield_BP1_per_crop_cycle": SimpleValueDefaultGenerator(""),
+    "yield_BP2_per_crop_cycle": SimpleValueDefaultGenerator(""),
+    "yield_BP3_per_crop_cycle": SimpleValueDefaultGenerator(""),
     # Cross-models defaults
     "average_annual_precipitation": AnnualPrecipitationDefaultGenerator(),
     "climate_zone_1": SimpleValueDefaultGenerator("temperate_climate"),
@@ -475,7 +478,6 @@ DEFAULTS_VALUES_GENERATORS = {
     # Erosion defaults
     # DEPRECATED
     "yearly_precipitation_as_snow": TableLookupDefaultGenerator("country", YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY),
-
     "slope": SlopePerCropGenerator(),
     "slope_length": SimpleValueDefaultGenerator(50.0),
     "tillage_method": SimpleValueDefaultGenerator(TillageMethod.unknown),
@@ -551,6 +553,9 @@ DEFAULTS_VALUES_GENERATORS = {
     "materials_silage_foil": SimpleValueDefaultGenerator(0.0),
     "materials_covering_sheet": SimpleValueDefaultGenerator(0.0),
     "materials_bird_net": SimpleValueDefaultGenerator(0.0),
+    "greenhouse_plastic_tunnel": SimpleValueDefaultGenerator(0.0),
+    "greenhouse_glass_roof": SimpleValueDefaultGenerator(0.0),
+    "greenhouse_plastic_roof": SimpleValueDefaultGenerator(0.0),
     "total_eol_plastic_disposal_fleece_and_other": EolPlasticDisposalGenerator(),
     "plastic_disposal_proportions": SimpleValueDefaultGenerator(
         {PlasticDisposal.landfill: 0.5, PlasticDisposal.incineration: 0.5}),

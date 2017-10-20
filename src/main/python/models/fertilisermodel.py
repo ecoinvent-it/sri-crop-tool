@@ -202,7 +202,7 @@ class FertModel(object):
                 self.n_fertiliser_quantities.items()}
 
     def _compute_nh3_as_n_for_fert(self,fert):
-        climate = self.climaze_zone_1
+        climate = self.climate_zone_1
         soil_ph_under_or_7 = self.soil_with_ph_under_or_7
         if self.cultivation_type.startswith("greenhouse_hydroponic"):
             climate = "temperate_climate"
