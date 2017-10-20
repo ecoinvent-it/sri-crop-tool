@@ -27,7 +27,7 @@
               <input type="file" #fileInput name="uploadFile"
                      accept=".xls,.xlsx" required="required"
                      class="upload"
-                     (ngChange)="submitUploadForm(fileInput, uploadeForm)"
+                     (change)="submitUploadForm(fileInput, uploadeForm)"
                      *ngIf="isLogged && currentLicense != null && !currentLicense['isDepleted']"/>
 	          <div class="stepText"><span class="clickableText">Click</span> to upload your template to ALCIG</div>
           </div>
@@ -114,7 +114,7 @@
                   <input type="file" #fileInput name="uploadFile"
                          accept=".xls,.xlsx" required="required"
                          class="generationRowUploadForm"
-                         (ngChange)="submitReuploadForm(fileInput, uploadForm, generation)"
+                         (change)="submitReuploadForm(fileInput, uploadForm, generation)"
 	                        />
 		      </form>
 	      </div>
@@ -125,8 +125,9 @@
 	      </button>
 	    </td>
 	    <td class="text-center">
-            <form action="{{serverUrl}}app/api/generateScsv" (submit)="changeSelectedGeneration(generation)"
-                  method="post">
+            <form [action]="serverUrl + 'app/api/generateScsv'" (submit)="changeSelectedGeneration(generation)"
+                  method="post"
+                  #generateScsvForm>
                 <input type="hidden" name="generationId" value="{{generation['id']['representation']}}"/>
 	        <div class="btn-group" data-toggle="buttons">
 	          <label class="btn btn-primary active dbOptionLabel">
@@ -135,8 +136,9 @@
 	          <label class="btn btn-primary dbOptionLabel">
 	            <input type="radio" name="dbOption" autocomplete="off" value="WFLDB">WFLDB
 	          </label>
-	        </div>
-	        <input type="submit" class="qts-small-btn qts-btn-style1 getScsvFileRowBtn" value="Get generated file"/>
+            </div>
+                <input type="submit" class="qts-small-btn qts-btn-style1 getScsvFileRowBtn"
+                       value="Get generated file" (click)="generateScsvForm.submit()"/>
 	      </form>
 	    </td>
 	  </tr>
