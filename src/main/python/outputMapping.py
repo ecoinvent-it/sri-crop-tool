@@ -38,7 +38,7 @@ class OutputMapping(object):
         for key, value in allInputs["seed_quantities"].items():
             if allInputs["crop"] in TREE_BASED_CROPS:
                 self.output["seeds_" + key] = value / allInputs["orchard_lifetime"]
-                self.output["rooting_up_trees"] = 1 / allInputs["orchard_lifetime"]
+                self.output["rooting_up_trees"] = 1.0 / allInputs["orchard_lifetime"]
                 if value >= 500:
                     self.output["need_trellis"] = 1.0
             else:
@@ -51,6 +51,12 @@ class OutputMapping(object):
     def mapIrrigationQuantities(self, allInputs):
         self._mapEnumMap(allInputs["irrigation_types_quantities"])
         self._mapEnumMap(allInputs["irrigation_water_use_quantities"])
+        wateruse = allInputs["water_use_total"]
+        self.output["water_use_total"] = wateruse
+        self.output["ecoinvent_water_to_air"] = wateruse * allInputs["ecoinvent_water_ratio_to_air"]
+        self.output["ecoinvent_water_to_water_river"] = wateruse * allInputs["ecoinvent_water_ratio_to_water_river"]
+        self.output["ecoinvent_water_to_water_groundwater"] = \
+            wateruse * allInputs["ecoinvent_water_ratio_to_water_groundwater"]
 
     def mapCo2Model(self, co2Output):
         for key, value in co2Output.items():
@@ -233,57 +239,57 @@ class OutputMapping(object):
     }
 
     _PLANTPROTECTION_FACTORS = {
-                                 Plantprotection.spraying: 1.0 / 1.76,
-                                 Plantprotection.flaming: 46.35,
+        Plantprotection.spraying: 1.0 / 1.76,
+        Plantprotection.flaming: 46.35,
         Plantprotection.other: 45.00450045
-                                 }
+    }
 
     _SOILCULTIVATION_FACTORS = {
         Soilcultivation.decompactation: 45.00450045,
-                                 Soilcultivation.tillage_chisel: 1.0 / 15.5,
-                                 Soilcultivation.tillage_spring_tine_weeder: 1.0 / 1.6,
-                                 Soilcultivation.tillage_rotary_harrow: 1.0 / 11.5,
-                                 Soilcultivation.tillage_sprint_tine_harrow: 1.0 / 4.4,
-                                 Soilcultivation.tillage_hoeing_earthing_up: 1.0 / 3.6,
-                                 Soilcultivation.tillage_plough: 1.0 / 26.1,
-                                 Soilcultivation.tillage_roll: 1.0 / 3.18,
-                                 Soilcultivation.tillage_rotary_cultivator: 1.0 / 14.1,
+        Soilcultivation.tillage_chisel: 1.0 / 15.5,
+        Soilcultivation.tillage_spring_tine_weeder: 1.0 / 1.6,
+        Soilcultivation.tillage_rotary_harrow: 1.0 / 11.5,
+        Soilcultivation.tillage_sprint_tine_harrow: 1.0 / 4.4,
+        Soilcultivation.tillage_hoeing_earthing_up: 1.0 / 3.6,
+        Soilcultivation.tillage_plough: 1.0 / 26.1,
+        Soilcultivation.tillage_roll: 1.0 / 3.18,
+        Soilcultivation.tillage_rotary_cultivator: 1.0 / 14.1,
         Soilcultivation.other: 45.00450045,
-                                 }
+    }
 
     _SOWINGPLANTING_FACTORS = {
-                                Sowingplanting.sowing: 1.0 / 3.82,
-                                Sowingplanting.planting_seedlings: 1.0 / 16.8,
-                                Sowingplanting.planting_potatoes: 1.0 / 8.9,
+        Sowingplanting.sowing: 1.0 / 3.82,
+        Sowingplanting.planting_seedlings: 1.0 / 16.8,
+        Sowingplanting.planting_potatoes: 1.0 / 8.9,
         Sowingplanting.other: 45.00450045,
-                                 }
+    }
 
     _FERTILISATION_FACTORS = {
-                           Fertilisation.fertilizing_broadcaster: 1.0 / 5.29,
-                           Fertilisation.liquid_manure_vacuum_tanker: 1.0 / 0.217,
+        Fertilisation.fertilizing_broadcaster: 1.0 / 5.29,
+        Fertilisation.liquid_manure_vacuum_tanker: 1.0 / 0.217,
         Fertilisation.solid_manure: 1.0 / 0.531,
         Fertilisation.other: 45.00450045,
-                             }
+    }
 
     _HARVESTING_FACTORS = {
-                        Harvesting.chopping_maize: 1.0 / 52.8,
-                        Harvesting.threshing_combine_harvester: 1.0 / 33.3,
-                        Harvesting.picking_up_forage_self_propelled_loader: 1.0 / 0.106,
+        Harvesting.chopping_maize: 1.0 / 52.8,
+        Harvesting.threshing_combine_harvester: 1.0 / 33.3,
+        Harvesting.picking_up_forage_self_propelled_loader: 1.0 / 0.106,
         Harvesting.beets_complete_havester: 1.0 / 28.1,
-                        Harvesting.potatoes_complete_havester: 1.0 / 28.1,
-                        Harvesting.making_hay_rotary_tedder: 1.0 / 1.92,
-                        Harvesting.loading_bales: 1.0 / 0.0811,
-                        Harvesting.mowing_motor_mower: 1.0 / 3.0,
-                        Harvesting.mowing_rotary_mower: 1.0 / 4.31,
-                        Harvesting.removing_potatoes_haulms: 1.0 / 4.79,
-                        Harvesting.windrowing_rotary_swather: 1.0 / 2.94,
+        Harvesting.potatoes_complete_havester: 1.0 / 28.1,
+        Harvesting.making_hay_rotary_tedder: 1.0 / 1.92,
+        Harvesting.loading_bales: 1.0 / 0.0811,
+        Harvesting.mowing_motor_mower: 1.0 / 3.0,
+        Harvesting.mowing_rotary_mower: 1.0 / 4.31,
+        Harvesting.removing_potatoes_haulms: 1.0 / 4.79,
+        Harvesting.windrowing_rotary_swather: 1.0 / 2.94,
         Harvesting.other: 45.00450045,
-                             }
+    }
 
     _OTHERWORK_FACTORS = {
-                       OtherWorkProcesses.baling: 1.0 / 0.743,
-                       OtherWorkProcesses.chopping: 1.0 / 52.8,
-                       OtherWorkProcesses.mulching: 1.0 / 3.51,
-                       OtherWorkProcesses.transport_tractor_trailer: 1.0 / 0.0436,
+        OtherWorkProcesses.baling: 1.0 / 0.743,
+        OtherWorkProcesses.chopping: 1.0 / 52.8,
+        OtherWorkProcesses.mulching: 1.0 / 3.51,
+        OtherWorkProcesses.transport_tractor_trailer: 1.0 / 0.0436,
         OtherWorkProcesses.other: 45.00450045,
-                             }
+    }

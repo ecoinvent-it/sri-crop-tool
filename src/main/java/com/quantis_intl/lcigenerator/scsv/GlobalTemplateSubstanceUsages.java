@@ -124,7 +124,7 @@ public class GlobalTemplateSubstanceUsages implements TemplateSubstanceUsages
             new TemplateSubstanceUsage("Dinitrogen monoxide", SubCompartment.AIR_LOW_POP, "kg", "N2o_air",
                     StandardUncertaintyMetadata.N2O_NOX_TO_AIR, ""),
             // FIXME: Not the right StandardUncertaintyMetadata
-            new TemplateSubstanceUsage("Water, {country}", SubCompartment.AIR_LOW_POP, "ton", "water_to_air",
+            new TemplateSubstanceUsage("Water, {country}", SubCompartment.AIR_LOW_POP, "ton", "wfldb_water_to_air",
                                        StandardUncertaintyMetadata.CH4_NH3_TO_AIR, "")
     };
 
@@ -167,10 +167,12 @@ public class GlobalTemplateSubstanceUsages implements TemplateSubstanceUsages
                     StandardUncertaintyMetadata.HM_TO_WATER, ""),
             new TemplateSubstanceUsage("Zinc", SubCompartment.WATER_GROUNDWATER, "kg",
                     "heavymetal_to_ground_water_zn", StandardUncertaintyMetadata.HM_TO_WATER, ""),
-            new TemplateSubstanceUsage("Water, {country}", SubCompartment.WATER_RIVER, "m3", "water_to_water_river",
-                    StandardUncertaintyMetadata.WATER_EMISSIONS, ""),
+            new TemplateSubstanceUsage("Water, {country}", SubCompartment.WATER_RIVER, "m3",
+                                       "wfldb_water_to_water_river",
+                                       StandardUncertaintyMetadata.WATER_EMISSIONS, ""),
             new TemplateSubstanceUsage("Water, {country}", SubCompartment.WATER_GROUNDWATER, "m3",
-                    "water_to_water_groundwater", StandardUncertaintyMetadata.WATER_EMISSIONS, ""),
+                                       "wfldb_water_to_water_groundwater", StandardUncertaintyMetadata.WATER_EMISSIONS,
+                                       ""),
             new TemplateSubstanceUsage("Water, {country}", SubCompartment.WATER_RIVER, "m3",
                     "eol_waste_water_to_nature", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
                     "eol_waste_water_to_nature"),

@@ -441,6 +441,9 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
             new TemplateIntermediaryExchange("wheat seed, for sowing", AvailableUnit.KG, "seeds_wheat",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
 
+            new TemplateIntermediaryExchange("irrigation", AvailableUnit.M3, "water_use_total",
+                                             StandardUncertaintyMetadata.IRRIGATION_WATER, "total_wateruse"),
+
             /*new WithLookupTemplateIntermediaryExchange("Irrigating, surface, electricity powered (WFLDB 3.0)
             /{country} U",
                                                AvailableUnit.M3, "surface_irrigation_electricity",
@@ -850,10 +853,10 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
 
             new TemplateIntermediaryExchange(
                     "packaging, for fertilisers or pesticides",
-                    AvailableUnit.KG, "wfldb_packaging_solid", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
+                    AvailableUnit.KG, "ecoinvent_packaging_solid", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
             new TemplateIntermediaryExchange(
                     "packaging, for fertilisers or pesticides",
-                    AvailableUnit.KG, "wfldb_packaging_liquid", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
+                    AvailableUnit.KG, "ecoinvent_packaging_liquid", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
 
             new TemplateIntermediaryExchange("naphtha", AvailableUnit.KG, "pest_horticultural_oil",
                                              StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING,

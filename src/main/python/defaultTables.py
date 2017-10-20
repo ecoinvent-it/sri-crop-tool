@@ -1762,6 +1762,54 @@ IRR_WATERUSE_RATIO_PER_COUNTRY = {
    }
 }
 
+EI_IRR_RATIO_TO_AIR = {
+    "BR": 0.62,
+    "CA": 0.75,
+    "CN": 0.51,
+    "CO": 0.52,
+    "FR": 0.75,
+    "DE": 0.78,
+    "IN": 0.51,
+    "PE": 0.52,
+    "PH": 0.50,
+    "ZA": 0.71,
+    "ES": 0.70,
+    "US": 0.66,
+    "GLO": 0.55
+}
+
+EI_IRR_RATIO_TO_RIVER = {
+    "BR": 0.08,
+    "CA": 0.05,
+    "CN": 0.10,
+    "CO": 0.10,
+    "FR": 0.05,
+    "DE": 0.04,
+    "IN": 0.10,
+    "PE": 0.10,
+    "PH": 0.10,
+    "ZA": 0.06,
+    "ES": 0.06,
+    "US": 0.07,
+    "GLO": 0.09
+}
+
+EI_IRR_RATIO_TO_GROUNDWATER = {
+    "BR": 0.30,
+    "CA": 0.20,
+    "CN": 0.39,
+    "CO": 0.38,
+    "FR": 0.20,
+    "DE": 0.18,
+    "IN": 0.39,
+    "PE": 0.38,
+    "PH": 0.40,
+    "ZA": 0.23,
+    "ES": 0.24,
+    "US": 0.27,
+    "GLO": 0.36
+}
+
 LAND_USE_CATEGORY_PER_CROP = {
         "almond":LandUseCategory.fruit_trees,
         "apple":LandUseCategory.fruit_trees,

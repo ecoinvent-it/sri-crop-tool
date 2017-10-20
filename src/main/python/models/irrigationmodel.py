@@ -20,9 +20,9 @@ class IrrigationModel(object):
         irrigation_types_proportions: map IrrigationType -> ratio. Sum should be 1
 
     Outputs:
-      m_Irr_water_to_air:m3/ha
-      m_Irr_water_to_water_river: m3/ha
-      m_Irr_water_to_water_groundwater: m3/ha
+      m_Irr_wfldb_water_to_air:m3/ha
+      m_Irr_wfldb_water_to_water_river: m3/ha
+      m_Irr_wfldb_water_to_water_groundwater: m3/ha
     """
 
     _input_variables = ["water_use_total",
@@ -44,9 +44,9 @@ class IrrigationModel(object):
         total_remaining_water = self._compute_remaining_water_after_evapotranspiration(evapotranspiration);
         water_to_water_river,water_to_water_groundwater = self._split_water_between_river_and_ground(total_remaining_water)
 
-        return {"m_Irr_water_to_air":evapotranspiration,
-                "m_Irr_water_to_water_river":water_to_water_river,
-                "m_Irr_water_to_water_groundwater":water_to_water_groundwater
+        return {"m_Irr_wfldb_water_to_air": evapotranspiration,
+                "m_Irr_wfldb_water_to_water_river": water_to_water_river,
+                "m_Irr_wfldb_water_to_water_groundwater": water_to_water_groundwater
                 }
 
     def _compute_irrigation_efficiency_ratio(self):

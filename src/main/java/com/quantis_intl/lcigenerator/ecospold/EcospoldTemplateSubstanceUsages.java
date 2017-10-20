@@ -158,7 +158,7 @@ public class EcospoldTemplateSubstanceUsages implements TemplateSubstanceUsages
             new TemplateSubstanceUsage("Dinitrogen monoxide", AIR_NON_URBAN, AvailableUnit.KG, "N2o_air",
                                        StandardUncertaintyMetadata.N2O_NOX_TO_AIR, ""),
             // FIXME: Not the right StandardUncertaintyMetadata
-            new TemplateSubstanceUsage("Water", AIR_NON_URBAN, AvailableUnit.M3, "water_to_air",
+            new TemplateSubstanceUsage("Water", AIR_NON_URBAN, AvailableUnit.M3, "ecoinvent_water_to_air",
                                        StandardUncertaintyMetadata.CH4_NH3_TO_AIR, "")
     };
 
@@ -201,10 +201,11 @@ public class EcospoldTemplateSubstanceUsages implements TemplateSubstanceUsages
                                        StandardUncertaintyMetadata.HM_TO_WATER, ""),
             new TemplateSubstanceUsage("Zinc, ion", WATER_GROUND, AvailableUnit.KG,
                                        "heavymetal_to_ground_water_zn", StandardUncertaintyMetadata.HM_TO_WATER, ""),
-            new TemplateSubstanceUsage("Water", WATER_SURFACE, AvailableUnit.M3, "water_to_water_river",
+            new TemplateSubstanceUsage("Water", WATER_SURFACE, AvailableUnit.M3, "ecoinvent_water_to_water_river",
                                        StandardUncertaintyMetadata.WATER_EMISSIONS, ""),
             new TemplateSubstanceUsage("Water", WATER_GROUND, AvailableUnit.M3,
-                                       "water_to_water_groundwater", StandardUncertaintyMetadata.WATER_EMISSIONS, ""),
+                                       "ecoinvent_water_to_water_groundwater",
+                                       StandardUncertaintyMetadata.WATER_EMISSIONS, ""),
             new TemplateSubstanceUsage("Water", WATER_SURFACE, AvailableUnit.M3,
                                        "eol_waste_water_to_nature", StandardUncertaintyMetadata.WASTE_MANAGEMENT,
                                        "eol_waste_water_to_nature"),
