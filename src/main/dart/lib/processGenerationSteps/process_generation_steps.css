@@ -27,20 +27,20 @@
 
 #step1
 {
-  background-image: url('../img/btn_step1.png');
+  background-image: url('img/btn_step1.png');
   color: white;
 }
 
 #step1:not(.disabledStep):hover
 {
 	text-decoration: none;
-  background-image: url('../img/btn_step1_over.png');
+  background-image: url('img/btn_step1_over.png');
   color: #f9b233;
 }
 
 #step2
 {
-  background-image: url('../img/btn_step2.png');
+  background-image: url('img/btn_step2.png');
   cursor: default;
 }
 
@@ -57,7 +57,7 @@
 
 #step3
 {
-  background-image: url('../img/btn_step3.png');
+  background-image: url('img/btn_step3.png');
   position: relative;
   overflow: hidden;
   cursor: default;
@@ -65,7 +65,7 @@
 
 #step3:not(.disabledStep):hover
 {
-  background-image: url('../img/btn_step3_over.png');
+  background-image: url('img/btn_step3_over.png');
 }
 
 #step3 input.upload {
@@ -124,7 +124,7 @@
 
 #step4
 {
-  background-image: url('../img/btn_step4.png');
+  background-image: url('img/btn_step4.png');
 }
 
 .disabledStep

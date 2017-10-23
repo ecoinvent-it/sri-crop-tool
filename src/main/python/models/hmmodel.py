@@ -27,7 +27,7 @@ class HmModel(object):
       drained_part: ratio
       eroded_soil: kg/(ha*year)
       hm_land_use_category: LandUseCategoryForHM
-      yield_main_product_dry_per_crop_cycle: t
+      yield_main_product_dry_per_crop_cycle: kg
 
     Outputs:
         m_hm_heavymetal_to_soil: map HeavyMetalType -> kg i/(ha*crop cycle) (i:hm type)
