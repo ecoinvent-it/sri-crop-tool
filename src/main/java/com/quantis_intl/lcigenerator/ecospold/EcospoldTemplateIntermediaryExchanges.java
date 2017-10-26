@@ -19,6 +19,7 @@
 package com.quantis_intl.lcigenerator.ecospold;
 
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.BiFunction;
 
 import com.quantis_intl.lcigenerator.scsv.StandardUncertaintyMetadata;
@@ -859,20 +860,23 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
     };
 
     private static final TemplateIntermediaryExchange[] electricityHeat = {
-            /*new LowVoltageTemplateIntermediaryExchange("kWh",
-                                               "energy_electricity_low_voltage_at_grid",
-                                               StandardUncertaintyMetadata.ELECTRICITY,
-                                               "energy_electricity_low_voltage_at_grid"),
-            new WithLookupTemplateIntermediaryExchange("Electricity, production mix photovoltaic, at plant/{country}
-            U", "kWh",
-                                               "energy_electricity_photovoltaic_produced_locally",
-                                               StandardUncertaintyMetadata.ELECTRICITY,
-                                               "energy_electricity_photovoltaic_produced_locally",
-                                               buildBiFun(PHOTOVOLTAIC_REMAP)),
-            new TemplateIntermediaryExchange("Electricity, at wind power plant/RER U", "kWh",
-                                     "energy_electricity_wind_power_produced_locally",
-                                     StandardUncertaintyMetadata.ELECTRICITY,
-                                     "energy_electricity_wind_power_produced_locally"),*/
+            new TemplateIntermediaryExchange("electricity, low voltage", AvailableUnit.KWH,
+                                             "energy_electricity_low_voltage_at_grid",
+                                             StandardUncertaintyMetadata.ELECTRICITY,
+                                             "energy_electricity_low_voltage_at_grid"),
+            //electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, laminated, integrated
+            new WithActivityIdTemplateIntermediaryExchange(UUID.fromString("6ddf5188-4367-4d78-844a-dcffb678dd2b"),
+                                                           "electricity, low voltage", AvailableUnit.KWH,
+                                                           "energy_electricity_photovoltaic_produced_locally",
+                                                           StandardUncertaintyMetadata.ELECTRICITY,
+                                                           "energy_electricity_photovoltaic_produced_locally"),
+            // electricity production, wind, <1MW turbine, onshore
+            new WithActivityIdTemplateIntermediaryExchange(UUID.fromString("2d9e8e52-e8ba-4770-a636-fe5003e31ad3"),
+                                                           "electricity, high voltage",
+                                                           AvailableUnit.KWH,
+                                                           "energy_electricity_wind_power_produced_locally",
+                                                           StandardUncertaintyMetadata.ELECTRICITY,
+                                                           "energy_electricity_wind_power_produced_locally"),
             new TemplateIntermediaryExchange(
                     "heat, central or small-scale, other than natural gas",
                     AvailableUnit.MJ, "energy_lignite_briquette", StandardUncertaintyMetadata
@@ -950,25 +954,17 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
             };
 
 
-    /*private static class LowVoltageTemplateIntermediaryExchange extends TemplateIntermediaryExchange
+    public static class WithActivityIdTemplateIntermediaryExchange extends TemplateIntermediaryExchange
     {
-        public LowVoltageTemplateIntermediaryExchange(String unit, String amountVariable,
-                                              StandardUncertaintyMetadata uncertainty, String commentVariable)
-        {
-            super("{name}", unit, amountVariable, uncertainty, commentVariable);
-        }
+        public final UUID activityNameId;
 
-        @Override
-        protected String lookupVariable(Map<String, String> modelOutputs, String variable)
+        public WithActivityIdTemplateIntermediaryExchange(UUID activityNameId, String name, AvailableUnit unit, String
+                amountVariable, StandardUncertaintyMetadata uncertainty, String commentVariable)
         {
-            String country = modelOutputs.get("country");
-            country = LOW_VOLTAGE_REMAP.getOrDefault(country, country);
-            if (LOW_VOLTAGE_WFLDB.contains(country))
-                return "Electricity, low voltage, production " + country + ", at grid (WFLDB 3.0)/" + country + " U";
-            else
-                return "Electricity, low voltage, at grid/" + country + " U";
+            super(name, unit, amountVariable, uncertainty, commentVariable);
+            this.activityNameId = activityNameId;
         }
-    }*/
+    }
 
     private static class LucTemplateIntermediaryExchange extends TemplateIntermediaryExchange
     {

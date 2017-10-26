@@ -21,7 +21,10 @@ package com.quantis_intl.lcigenerator;
 import java.io.*;
 import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -35,8 +38,6 @@ import com.google.common.base.Charsets;
 import com.google.common.base.Predicates;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.io.Resources;
 import com.quantis_intl.commons.ecospold2.ecospold02.*;
 import com.quantis_intl.lcigenerator.ecospold.*;
 import com.quantis_intl.lcigenerator.imports.Origin;
@@ -46,9 +47,6 @@ import com.quantis_intl.lcigenerator.scsv.OutputTarget;
 
 public class EcospoldFileWriter
 {
-    //FIXME: Validate
-    private static final Map<String, TGeography> GEOGRAPHY_MAPPING;
-
     private static final TMacroEconomicScenario MACRO_ECONOMIC_SCENARIO;
 
     private static final TTimePeriod TIME_PERIOD;
@@ -59,21 +57,6 @@ public class EcospoldFileWriter
 
     static
     {
-        try
-        {
-            GEOGRAPHY_MAPPING = new HashMap<>(1024);
-            for (String l : Resources
-                    .readLines(EcospoldFileWriter.class.getResource("ecospold_geo_mapping.txt"), Charsets.UTF_8))
-            {
-                String[] split = l.split("=");
-                GEOGRAPHY_MAPPING.put(split[1], TGeography.ofEn(split[0].substring(0, 36), split[0].substring(37)));
-            }
-        }
-        catch (IOException e)
-        {
-            throw new UncheckedIOException(e);
-        }
-
         MACRO_ECONOMIC_SCENARIO = new TMacroEconomicScenario();
         MACRO_ECONOMIC_SCENARIO.setMacroEconomicScenarioId(UUID.fromString("d9f57f0a-a01f-42eb-a57b-8f18d6635801"));
         MACRO_ECONOMIC_SCENARIO.setName(TString80.ofEn("Business-as-Usual"));
@@ -104,18 +87,24 @@ public class EcospoldFileWriter
         FILE_ATTRIBUTES.setContextName(TString80.ofEn("ecoinvent"));
     }
 
+    private final GeographyMappingCache geographyMappingCache;
     private final PossibleIntermediateExchangesCache possibleExchanges;
     private final PossibleElementaryExchangesCache possibleSubstances;
     private final PossiblePropertyCache possibleProperties;
+    private final PossibleActivityLinkCache possibleActivityLinks;
 
     @Inject
-    public EcospoldFileWriter(PossibleIntermediateExchangesCache possibleExchanges,
+    public EcospoldFileWriter(GeographyMappingCache geographyMappingCache,
+                              PossibleIntermediateExchangesCache possibleExchanges,
                               PossibleElementaryExchangesCache possibleSubstances,
-                              PossiblePropertyCache possibleProperties)
+                              PossiblePropertyCache possibleProperties,
+                              PossibleActivityLinkCache possibleActivityLinks)
     {
+        this.geographyMappingCache = geographyMappingCache;
         this.possibleExchanges = possibleExchanges;
         this.possibleSubstances = possibleSubstances;
         this.possibleProperties = possibleProperties;
+        this.possibleActivityLinks = possibleActivityLinks;
     }
 
     public void writeModelsOutputToEcospoldFile(Map<String, String> modelsOutput, ValueGroup extractedInputs,
@@ -146,7 +135,7 @@ public class EcospoldFileWriter
         res.setActivityDataset(dataset);
         TActivityDescription desc = new TActivityDescription();
         dataset.setActivityDescription(desc);
-        desc.setGeography(GEOGRAPHY_MAPPING.get(modelsOutput.get("country")));
+        desc.setGeography(geographyMappingCache.getGeography(modelsOutput.get("country")));
         desc.setTechnology(new TTechnology());
         desc.setMacroEconomicScenario(MACRO_ECONOMIC_SCENARIO);
         desc.setTimePeriod(TIME_PERIOD);
@@ -315,6 +304,14 @@ public class EcospoldFileWriter
             p.setUnitName(vp.getUnitName());
         });
         ex.setInputGroup((short) 5);
+
+        if (tu instanceof EcospoldTemplateIntermediaryExchanges.WithActivityIdTemplateIntermediaryExchange)
+        {
+            ex.setActivityLinkId(possibleActivityLinks.getActivityLink(
+                    ((EcospoldTemplateIntermediaryExchanges.WithActivityIdTemplateIntermediaryExchange)
+                            tu).activityNameId, modelsOutput.get("country")));
+        }
+
         return ex;
     }
 
@@ -358,15 +355,4 @@ public class EcospoldFileWriter
         return ex;
     }
 
-    public static final void main(String[] args) throws IOException
-    {
-        EcospoldFileWriter w = new EcospoldFileWriter(
-                new PossibleIntermediateExchangesCache("/home/cporte/notbackedup/dbmt_data/MasterData/Production"),
-                new PossibleElementaryExchangesCache("/home/cporte/notbackedup/dbmt_data/MasterData/Production"),
-                new PossiblePropertyCache("/home/cporte/notbackedup/dbmt_data/MasterData/Production"));
-        w.writeModelsOutputToEcospoldFile(
-                ImmutableMap.of("country", "FR", "yield_main_product_per_crop_cycle", "1000.0"),
-                new ValueGroup("empty"),
-                OutputTarget.ECOINVENT, new PrintWriter(new OutputStreamWriter(System.out)));
-    }
 }
