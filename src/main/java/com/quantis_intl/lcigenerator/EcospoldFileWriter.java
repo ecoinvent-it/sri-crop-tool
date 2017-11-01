@@ -21,6 +21,8 @@ package com.quantis_intl.lcigenerator;
 import java.io.*;
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.time.Year;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -49,8 +51,6 @@ public class EcospoldFileWriter
 {
     private static final TMacroEconomicScenario MACRO_ECONOMIC_SCENARIO;
 
-    private static final TTimePeriod TIME_PERIOD;
-
     private static final TDataEntryBy NOBODY;
     private static final TDataGeneratorAndPublication NOGENERATOR;
     private static final TFileAttributes FILE_ATTRIBUTES;
@@ -60,11 +60,6 @@ public class EcospoldFileWriter
         MACRO_ECONOMIC_SCENARIO = new TMacroEconomicScenario();
         MACRO_ECONOMIC_SCENARIO.setMacroEconomicScenarioId(UUID.fromString("d9f57f0a-a01f-42eb-a57b-8f18d6635801"));
         MACRO_ECONOMIC_SCENARIO.setName(TString80.ofEn("Business-as-Usual"));
-
-        TIME_PERIOD = new TTimePeriod();
-        TIME_PERIOD.setStartDate(LocalDate.of(2014, 1, 1));
-        TIME_PERIOD.setEndDate(LocalDate.of(2015, 12, 31));
-        TIME_PERIOD.setIsDataValidForEntirePeriod(true);
 
         NOBODY = new TDataEntryBy();
         NOBODY.setPersonId(UUID.fromString("788d0176-a69c-4de0-a5d3-259866b6b100"));
@@ -138,13 +133,23 @@ public class EcospoldFileWriter
         desc.setGeography(geographyMappingCache.getGeography(modelsOutput.get("country")));
         desc.setTechnology(new TTechnology());
         desc.setMacroEconomicScenario(MACRO_ECONOMIC_SCENARIO);
-        desc.setTimePeriod(TIME_PERIOD);
+        TTimePeriod timePeriod = new TTimePeriod();
+        int year = Year.now(ZoneOffset.UTC).getValue();
+        timePeriod.setStartDate(LocalDate.of(year - 3, 1, 1));
+        timePeriod.setEndDate(LocalDate.of(year, 12, 31));
+        timePeriod.setIsDataValidForEntirePeriod(true);
+        desc.setTimePeriod(timePeriod);
         TActivity activity = new TActivity();
         desc.setActivity(activity);
-        activity.setId(UUID.randomUUID());//TODO
+        activity.setId(UUIDType5.nameUUIDFromNamespaceAndString(
+                UUIDType5.NAMESPACE_DNS,
+                "activityName" + modelsOutput.get("country")
+                        + timePeriod.getStartDate().getYear() + "-01-01"
+                        + timePeriod.getEndDate().getYear() + "-12-31"));
         activity.setActivityName(TString120.ofEn("TODO"));
         md.setActivityName(ImmutableList.of(TValidActivityName.ofEn(activity.getId(), "TODO")));
-        activity.setActivityNameId(UUID.randomUUID());//TODO
+        activity.setActivityNameId(
+                UUIDType5.nameUUIDFromNamespaceAndString(UUIDType5.NAMESPACE_DNS, "TODO activity name"));
         activity.setIncludedActivitiesEnd(TString32000.ofEn("TODO"));
         //Mettre le Yield + le fait que c'est généré par ALCIG + somme N P K en kg/ha
         activity.setGeneralComment(TTextAndImage.ofEnTexts("TODO", "TODO"));
@@ -156,7 +161,7 @@ public class EcospoldFileWriter
         dataset.setFlowData(flowData);
 
         TIntermediateExchange refOutput = new TIntermediateExchange();
-        refOutput.setId(UUID.randomUUID()); //FIXME
+        refOutput.setId(UUID.randomUUID());
         refOutput.setUnitId(AvailableUnit.KG.uuid);
         refOutput.setAmount(1.d);
         refOutput.setMathematicalRelation("");
