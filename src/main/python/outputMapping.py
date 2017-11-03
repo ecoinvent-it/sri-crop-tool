@@ -134,13 +134,13 @@ class OutputMapping(object):
             else:
                 self.output["occupation_annual_" + lu_type] = lu_value
 
-            self.output["transformation_from_annual_" + lu_type] = lu_value
-            self.output["transformation_to_annual_" + lu_type] = lu_value
+            self.output["transformation_from_annual_" + lu_type] = 10000.0
+            self.output["transformation_to_annual_" + lu_type] = 10000.0
 
         elif self.output["luc_crop_type"] == "perennial":
             self.output["occupation_peren_" + lu_type] = lu_value
-            self.output["transformation_from_peren_" + lu_type] = lu_value / allInputs["orchard_lifetime"]
-            self.output["transformation_to_peren_" + lu_type] = lu_value / allInputs["orchard_lifetime"]
+            self.output["transformation_from_peren_" + lu_type] = 10000.0 / allInputs["orchard_lifetime"]
+            self.output["transformation_to_peren_" + lu_type] = 10000.0 / allInputs["orchard_lifetime"]
             # else TODO: Rice
 
     def mapCODWasteWater(self, allInputs):  # m3 * mg/L(==g/m3) * 0.001 -> kg
