@@ -38,6 +38,11 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
    "bellpepper": {
       "GLO": 0.0
    },
+    "blueberry": {
+        "CA": 2.8099213174,
+        "US": 2.8099213174,
+        "GLO": 2.8099213174
+    },
    "cabbage": {
       "GLO": 0.0
    },
@@ -77,6 +82,11 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
    "cotton": {
       "GLO": 0.0
    },
+    "cranberry": {
+        "CL": 2.8099213174,
+        "US": 2.8099213174,
+        "GLO": 2.8099213174
+    },
    "eggplant": {
       "GLO": 0.0
    },
@@ -184,6 +194,12 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
       "CA":3.2725939377395,
       "GLO":3.2725939377395
    },
+    "raspberry": {
+        "CS": 0.0,
+        "RU": 2.8099213174,
+        "US": 2.8099213174,
+        "GLO": 1.873280878
+    },
    "rice":{
       "CN":4.65718699128349,
       "IN":1.67929495742945,
@@ -196,6 +212,8 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
    "strawberry":{
       "ES":2.97586308761341,
       "CH":1.63727336036847,
+       "MX": 2.8099213174,
+       "MA": 0.0,
       "US":2.80992131737753,
       "GLO":2.47435258845314
    },
@@ -284,6 +302,11 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
    "bellpepper": {
       "GLO": 0.0
    },
+    "blueberry": {
+        "CA": 2360.7574680625,
+        "US": 2360.7574680625,
+        "GLO": 2360.7574680625
+    },
    "cabbage": {
       "GLO": 0.0
    },
@@ -323,6 +346,11 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
    "cotton": {
       "GLO": 0.0
    },
+    "cranberry": {
+        "CL": 2360.7574680625,
+        "US": 2360.7574680625,
+        "GLO": 2360.7574680625
+    },
    "eggplant": {
       "GLO": 0.0
    },
@@ -430,6 +458,12 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
       "CA":2332.02544101936,
       "GLO":2332.02544101936
    },
+    "raspberry": {
+        "CS": 20000.0,
+        "RU": 3055.0,
+        "US": 3055.0,
+        "GLO": 8703.33
+    },
    "rice":{
       "CN":3687.50674321152,
       "IN":2263.51400826505,
@@ -442,6 +476,8 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
    "strawberry":{
       "ES":2022.08405027728,
       "CH":1303.86598267999,
+       "MX": 2360.75746806248,
+       "MA": 10000.0,
       "US":2360.75746806248,
       "GLO":1895.56916700658
    },

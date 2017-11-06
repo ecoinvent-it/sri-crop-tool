@@ -33,12 +33,13 @@ from models.modelEnums import SoilTexture
 from models.otherorganicfertilisermodel import CompostType, SludgeType
 from models.pmodel import LandUseCategory
 
-TREE_BASED_CROPS = ["almond", "apple", "apricot", "banana", "cashew", "cocoa", "coconut", "coffee", "grape",
+TREE_BASED_CROPS = ["almond", "apple", "apricot", "banana", "blueberry", "cashew", "cocoa", "coconut", "coffee",
+                    "cranberry", "grape",
                     "lemonlime", "mandarin", "mango", "mulberry", "olive", "orange", "palmtree", "peach", "pear",
                     "pineapple", "sugarcane", "tea"]
 
 SEEDLINGS_BASED_CROPS = ["asparagus", "bellpepper", "cabbage", "chilli", "eggplant", "mint", "onion", "strawberry",
-                         "tomato"]
+                         "raspberry", "tomato"]
 
 
 class DefaultValuesWrapper(object):

@@ -36,6 +36,11 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
    "bellpepper": {
       "GLO": 0.0
    },
+    "blueberry": {
+        "CA": 97373.0,
+        "US": 97373.0,
+        "GLO": 97373.0
+    },
    "cabbage": {
       "GLO": 0.0
    },
@@ -72,6 +77,11 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
    "cotton": {
       "GLO": 0.0
    },
+    "cranberry": {
+        "CL": 97373.0,
+        "US": 97373.0,
+        "GLO": 97373.0
+    },
    "eggplant": {
       "GLO": 0.0
    },
@@ -178,6 +188,12 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
    "rapeseed":{
       "GLO":671.334755682
    },
+    "raspberry": {
+        "CS": 33947.2,
+        "RU": 33947.2,
+        "US": 33947.2,
+        "GLO": 33947.2
+    },
    "rice":{
       "CN":4140.71232251745,
       "IN":1498.05714219752,
@@ -189,6 +205,8 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
    "strawberry":{
       "ES":217792.35,
       "CH":45774.0,
+       "MX": 119082.133,
+       "MA": 119082.133,
       "US":93710.05,
       "GLO":119082.133
    },

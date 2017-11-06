@@ -138,6 +138,11 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
    "bellpepper": {
       "GLO": 0.0
    },
+    "blueberry": {
+        "CA": 3333.24,
+        "US": 7201.74,
+        "GLO": 5267.49
+    },
    "cabbage": {
       "GLO": 0.0
    },
@@ -243,6 +248,11 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
    "cotton": {
       "GLO": 0.0
    },
+    "cranberry": {
+        "CL": 7069.92,
+        "US": 22808.48,
+        "GLO": 14939.2
+    },
    "eggplant": {
       "GLO": 0.0
    },
@@ -676,6 +686,12 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "US":1797.769,
       "GLO":2414.65151
    },
+    "raspberry": {
+        "CS": 5701.76,
+        "RU": 6489.3,
+        "US": 11138.78,
+        "GLO": 7776.61
+    },
    "rice":{
       "AR":6525.146,
       "AU":9252.8325,
@@ -757,7 +773,8 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "IL":38038.8145,
       "IT":24598.202,
       "KE":6833.42375,
-      "MX":36345.181,
+       "MX": 40240.3,
+       "MA": 42694.76,
       "NL":27123.68475,
       "NZ":25488.22075,
       "PE":18498.48675,

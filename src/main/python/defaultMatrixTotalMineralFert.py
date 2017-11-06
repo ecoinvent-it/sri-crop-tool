@@ -38,6 +38,11 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
    "bellpepper": {
       "GLO": 0.0
    },
+    "blueberry": {
+        "CA": 87.0,
+        "US": 87.0,
+        "GLO": 87.0
+    },
    "cabbage": {
       "GLO": 0.0
    },
@@ -77,6 +82,11 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
    "cotton": {
       "GLO": 0.0
    },
+    "cranberry": {
+        "CL": 22.5,
+        "US": 22.5,
+        "GLO": 22.5
+    },
    "eggplant": {
       "GLO": 0.0
    },
@@ -184,6 +194,12 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "CA":59.26623164,
       "GLO":59.26623164
    },
+    "raspberry": {
+        "CS": 132.0,
+        "RU": 60.0,
+        "US": 107.0,
+        "GLO": 99.7
+    },
    "rice":{
       "CN":99.516611710912,
       "IN":51.625626505696,
@@ -196,6 +212,8 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
    "strawberry":{
       "ES":47.62040526,
       "CH":22.146500392,
+       "MX": 84.0,
+       "MA": 80.0,
       "US":71.289077968,
       "GLO":47.0186612066667
    },

@@ -13,6 +13,7 @@ CARBON_CONTENT_PER_CROP = {
                 "asparagus":0.475,
                 "banana":0.429522,
     "bellpepper": 0.73,
+    "blueberry": 0.4494,
     "cabbage": 0.64,
                 "carrot":0.475,
     "cashew": 0.9,
@@ -22,6 +23,7 @@ CARBON_CONTENT_PER_CROP = {
                 "coconut":0.645262412752311,
                 "coffee":0.475,
     "cotton": 0.45,
+    "cranberry": 0.4451,
     "eggplant": 0.54,
     "flax": 0.46,
     "grape": 0.8,
@@ -46,6 +48,7 @@ CARBON_CONTENT_PER_CROP = {
                 "pineapple":0.5, #no src
                 "potato":0.423959628,
                 "rapeseed":0.47088,
+    "raspberry": 0.4553,
                 "rice":0.475,
                 "soybean":0.681929577464789,
                 "strawberry":0.475,
@@ -83,12 +86,14 @@ ANNUAL_PRECIPITATION_PER_COUNTRY = {
    "IT":930.193617321,
    "KE":678.112942292,
    "MX":738.139128273,
+    "MA": 311.100000000,
    "NL":766.068878174,
    "NZ":1790.94567393,
    "PE":1513.24211891,
    "PH":2317.59269526,
    "PL":600.659095624,
    "RU":434.795213565,
+    "CS": 784.400000000,
    "ZA":474.776152751,
    "ES":622.987063842,
    "LK":1699.40728205,
@@ -124,12 +129,14 @@ CLAY_CONTENT_PER_COUNTRY = {
                             "IT":0.301079680414597,
                             "KE":0.343026018950218,
                             "MX":0.305421469017309,
+    "MA": 0.3947,
                             "NL":0.327041742286751,
                             "NZ":0.328650578675203,
                             "PE":0.338214661753093,
                             "PH":0.456787439613527,
                             "PL":0.300541961210803,
                             "RU":0.323891074146178,
+    "CS": 0.458,
                             "ZA":0.291097108969607,
                             "ES":0.300886342684051,
                             "LK":0.357411764705882,
@@ -150,6 +157,7 @@ CROP_FACTOR_PER_CROP = {
         "asparagus":0.5,
         "banana":0.33,
     "bellpepper": 0.3,
+    "blueberry": 0.3,
     "cabbage": 0.3,
         "carrot":0.5,
     "cashew": 0.25,
@@ -159,6 +167,7 @@ CROP_FACTOR_PER_CROP = {
         "coconut":0.3,
         "coffee":0.26,
     "cotton": 0.6,
+    "cranberry": 0.3,
     "eggplant": 0.48,
     "flax": 0.18,
     "grape": 0.15,
@@ -183,6 +192,7 @@ CROP_FACTOR_PER_CROP = {
         "pineapple":0.48,
         "potato":0.44,
         "rapeseed":0.33,
+    "raspberry": 0.3,
         "rice":0.17,
         "soybean":0.28,
         "strawberry":0.47,
@@ -199,11 +209,13 @@ CROP_FACTOR_PER_CROP = {
 #MJ/kgDM
 ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
     "bellpepper": 30.92,
+    "blueberry": 13.28,
     "cabbage": 27.17,
     "cashew": 37.95,
     "cassava": 36.9,
     "chilli": 30.92,
     "cotton": 19.06,
+    "cranberry": 11.91,
     "eggplant": 22.79,
     "flax": 19.19,
     "grape": 33.91,
@@ -215,7 +227,9 @@ ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
     "mulberry": 18.98,
             "potato": 17.59,
             "rapeseed": 26.48,
+    "raspberry": 10.72,
             "rice": 18.11,#Wheat grains
+    "strawberry": 12.57,
             "soybean": 22.98,
             "sugarbeet": 16.43,
             "sunflower": 30.25,#sunflower grains
@@ -357,6 +371,12 @@ FERT_K_RATIO_PER_COUNTRY={
       KFertiliserType.potassium_nitrate:0.276909815752613,
       KFertiliserType.patent_potassium:0.0352332722766943
    },
+    "MA": {
+        KFertiliserType.potassium_salt: 0.0,
+        KFertiliserType.potassium_sulphate: 0.357143,
+        KFertiliserType.potassium_nitrate: 0.642857,
+        KFertiliserType.patent_potassium: 0.0
+    },
    "NL":{
       KFertiliserType.potassium_salt:0.492537313432836,
       KFertiliserType.potassium_sulphate:0.119402985074627,
@@ -393,6 +413,12 @@ FERT_K_RATIO_PER_COUNTRY={
       KFertiliserType.potassium_nitrate:0.590779535413995,
       KFertiliserType.patent_potassium:0.0242268775830127
    },
+    "CS": {
+        KFertiliserType.potassium_salt: 0.0,
+        KFertiliserType.potassium_sulphate: 0.0,
+        KFertiliserType.potassium_nitrate: 1.0,
+        KFertiliserType.patent_potassium: 0.0
+    },
    "ZA":{
       KFertiliserType.potassium_salt:0.149092480553155,
       KFertiliserType.potassium_sulphate:0.0280898876404494,
@@ -703,6 +729,18 @@ FERT_N_RATIO_PER_COUNTRY = {
       NFertiliserType.potassium_nitrate:0.151854617874035,
       NFertiliserType.ammonia_liquid:0
     },
+    "MA": {
+        NFertiliserType.ammonium_nitrate: 0.350671,
+        NFertiliserType.urea: 0.139681,
+        NFertiliserType.ureaAN: 0.0,
+        NFertiliserType.mono_ammonium_phosphate: 0.079069,
+        NFertiliserType.di_ammonium_phosphate: 0.079069,
+        NFertiliserType.an_phosphate: 0.150168,
+        NFertiliserType.lime_ammonium_nitrate: 0.0,
+        NFertiliserType.ammonium_sulphate: 0.051174,
+        NFertiliserType.potassium_nitrate: 0.150168,
+        NFertiliserType.ammonia_liquid: 0.0
+    },
     "MX":{
       NFertiliserType.ammonium_nitrate:0.00473321858864028,
       NFertiliserType.urea:0.283993115318417,
@@ -786,6 +824,18 @@ FERT_N_RATIO_PER_COUNTRY = {
       NFertiliserType.ammonium_sulphate:0.0436924080567561,
       NFertiliserType.potassium_nitrate:0.085411400146783,
       NFertiliserType.ammonia_liquid:0.0124276278235342
+    },
+    "CS": {
+        NFertiliserType.ammonium_nitrate: 0.263744773,
+        NFertiliserType.urea: 0.424345671,
+        NFertiliserType.ureaAN: 0.0,
+        NFertiliserType.mono_ammonium_phosphate: 0.013422126,
+        NFertiliserType.di_ammonium_phosphate: 0.013422126,
+        NFertiliserType.an_phosphate: 0.051365443,
+        NFertiliserType.lime_ammonium_nitrate: 0.182334417,
+        NFertiliserType.ammonium_sulphate: 0.0,
+        NFertiliserType.potassium_nitrate: 0.051365443,
+        NFertiliserType.ammonia_liquid: 0.0
     },
     "ZA":{
       NFertiliserType.ammonium_nitrate:0,
@@ -1097,6 +1147,15 @@ FERT_P_RATIO_PER_COUNTRY = {
       PFertiliserType.hypophosphate_raw_phosphate:0,
       PFertiliserType.ground_basic_slag:0
    },
+    "MA": {
+        PFertiliserType.triple_superphosphate: 0.029907,
+        PFertiliserType.superphosphate: 0.0,
+        PFertiliserType.mono_ammonium_phosphate: 0.291033,
+        PFertiliserType.di_ammonium_phosphate: 0.291033,
+        PFertiliserType.an_phosphate: 0.388027,
+        PFertiliserType.hypophosphate_raw_phosphate: 0,
+        PFertiliserType.ground_basic_slag: 0
+    },
    "NL":{
       PFertiliserType.triple_superphosphate:0.0253164556962025,
       PFertiliserType.superphosphate:0,
@@ -1151,6 +1210,15 @@ FERT_P_RATIO_PER_COUNTRY = {
       PFertiliserType.hypophosphate_raw_phosphate:0.00679772184457101,
       PFertiliserType.ground_basic_slag:0
    },
+    "CS": {
+        PFertiliserType.triple_superphosphate: 0.0,
+        PFertiliserType.superphosphate: 0.0,
+        PFertiliserType.mono_ammonium_phosphate: 0.331671,
+        PFertiliserType.di_ammonium_phosphate: 0.331671,
+        PFertiliserType.an_phosphate: 0.336658,
+        PFertiliserType.hypophosphate_raw_phosphate: 0,
+        PFertiliserType.ground_basic_slag: 0
+    },
    "ZA":{
       PFertiliserType.triple_superphosphate:0,
       PFertiliserType.superphosphate:0,
@@ -1462,6 +1530,15 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.032258064516129,
       IrrigationType.drip_irrigation_diesel:0
    },
+    "MA": {
+        IrrigationType.surface_irrigation_no_energy: 0.0,
+        IrrigationType.surface_irrigation_electricity: 0.0715,
+        IrrigationType.surface_irrigation_diesel: 0.6435,
+        IrrigationType.sprinkler_irrigation_electricity: 0.0085,
+        IrrigationType.sprinkler_irrigation_diesel: 0.0765,
+        IrrigationType.drip_irrigation_electricity: 0.02,
+        IrrigationType.drip_irrigation_diesel: 0.18
+    },
    "NL":{
       IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.0185185185185185,
@@ -1516,6 +1593,15 @@ IRR_TECH_RATIO_PER_COUNTRY = {
       IrrigationType.drip_irrigation_electricity:0.00775862068965517,
       IrrigationType.drip_irrigation_diesel:0.0232758620689655
    },
+    "CS": {
+        IrrigationType.surface_irrigation_no_energy: 0.0,
+        IrrigationType.surface_irrigation_electricity: 0.0251,
+        IrrigationType.surface_irrigation_diesel: 0.0251,
+        IrrigationType.sprinkler_irrigation_electricity: 0.44655,
+        IrrigationType.sprinkler_irrigation_diesel: 0.44655,
+        IrrigationType.drip_irrigation_electricity: 0.02835,
+        IrrigationType.drip_irrigation_diesel: 0.02835
+    },
    "TH":{
       IrrigationType.surface_irrigation_no_energy:0.0,
       IrrigationType.surface_irrigation_electricity:0.245394736842105,
@@ -1685,6 +1771,11 @@ IRR_WATERUSE_RATIO_PER_COUNTRY = {
       WaterUseType.surfacewater:0.612110751088137,
       WaterUseType.nonconventional:0.0
    },
+    "MA": {
+        WaterUseType.groundwater: 0.5419,
+        WaterUseType.surfacewater: 0.4563,
+        WaterUseType.nonconventional: 0.0018
+    },
    "NL":{
       WaterUseType.groundwater:0.58029522431259,
       WaterUseType.surfacewater:0.41970477568741,
@@ -1715,6 +1806,11 @@ IRR_WATERUSE_RATIO_PER_COUNTRY = {
       WaterUseType.surfacewater:0.64,
       WaterUseType.nonconventional:0.0
    },
+    "CS": {
+        WaterUseType.groundwater: 0.9466,
+        WaterUseType.surfacewater: 0.0534,
+        WaterUseType.nonconventional: 0.0
+    },
    "ZA":{
       WaterUseType.groundwater:0.085,
       WaterUseType.surfacewater:0.915,
@@ -1770,8 +1866,10 @@ EI_IRR_RATIO_TO_AIR = {
     "FR": 0.75,
     "DE": 0.78,
     "IN": 0.51,
+    "MA": 0.56,
     "PE": 0.52,
     "PH": 0.50,
+    "CS": 0.74,
     "ZA": 0.71,
     "ES": 0.70,
     "US": 0.66,
@@ -1786,8 +1884,10 @@ EI_IRR_RATIO_TO_RIVER = {
     "FR": 0.05,
     "DE": 0.04,
     "IN": 0.10,
+    "MA": 0.09,
     "PE": 0.10,
     "PH": 0.10,
+    "CS": 0.05,
     "ZA": 0.06,
     "ES": 0.06,
     "US": 0.07,
@@ -1802,8 +1902,10 @@ EI_IRR_RATIO_TO_GROUNDWATER = {
     "FR": 0.20,
     "DE": 0.18,
     "IN": 0.39,
+    "MA": 0.35,
     "PE": 0.38,
     "PH": 0.40,
+    "CS": 0.21,
     "ZA": 0.23,
     "ES": 0.24,
     "US": 0.27,
@@ -1817,6 +1919,7 @@ LAND_USE_CATEGORY_PER_CROP = {
         "asparagus":LandUseCategory.vegetables,
         "banana":LandUseCategory.fruit_trees,
     "bellpepper": LandUseCategory.vegetables,
+    "blueberry": LandUseCategory.fruit_trees,
     "cabbage": LandUseCategory.vegetables,
         "carrot":LandUseCategory.vegetables,
     "cashew": LandUseCategory.fruit_trees,
@@ -1826,6 +1929,7 @@ LAND_USE_CATEGORY_PER_CROP = {
         "coconut":LandUseCategory.fruit_trees,
         "coffee":LandUseCategory.fruit_trees,
     "cotton": LandUseCategory.arable_land,
+    "cranberry": LandUseCategory.fruit_trees,
     "eggplant": LandUseCategory.vegetables,
     "flax": LandUseCategory.arable_land,
     "grape": LandUseCategory.fruit_trees,
@@ -1850,6 +1954,7 @@ LAND_USE_CATEGORY_PER_CROP = {
         "pineapple":LandUseCategory.arable_land,
         "potato":LandUseCategory.arable_land,
         "rapeseed":LandUseCategory.arable_land,
+    "raspberry": LandUseCategory.fruit_trees,
         "rice":LandUseCategory.arable_land,
         "soybean":LandUseCategory.arable_land,
         "strawberry":LandUseCategory.vegetables,
@@ -1996,6 +2101,12 @@ MANURE_LIQUID_RATIO_PER_COUNTRY={
       LiquidManureType.laying_hens:0.0631459824063886,
       LiquidManureType.other:0
    },
+    "MA": {
+        LiquidManureType.cattle: 0.6615,
+        LiquidManureType.pig: 0.0079,
+        LiquidManureType.laying_hens: 0.3306,
+        LiquidManureType.other: 0
+    },
    "NL":{
       LiquidManureType.cattle:0.63220650185421,
       LiquidManureType.pig:0.342018951568641,
@@ -2032,6 +2143,12 @@ MANURE_LIQUID_RATIO_PER_COUNTRY={
       LiquidManureType.laying_hens:0.0240005811740389,
       LiquidManureType.other:0
    },
+    "CS": {
+        LiquidManureType.cattle: 0.5391,
+        LiquidManureType.pig: 0.3769,
+        LiquidManureType.laying_hens: 0.0840,
+        LiquidManureType.other: 0
+    },
    "ZA":{
       LiquidManureType.cattle:0.41919169262082,
       LiquidManureType.pig:0.549851812411446,
@@ -2266,6 +2383,14 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.horses:0,
       SolidManureType.other:0.0139241223195238
    },
+    "MA": {
+        SolidManureType.cattle: 0.1740,
+        SolidManureType.pigs: 0.0021,
+        SolidManureType.sheep_goats: 0.7369,
+        SolidManureType.laying_hen_litter: 0.087,
+        SolidManureType.horses: 0.0,
+        SolidManureType.other: 0.0
+    },
    "NL":{
       SolidManureType.cattle:0.650340967131297,
       SolidManureType.pigs:0.279493306740428,
@@ -2314,6 +2439,14 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
       SolidManureType.horses:0,
       SolidManureType.other:0.0206964990993778
    },
+    "CS": {
+        SolidManureType.cattle: 0.4517,
+        SolidManureType.pigs: 0.3157,
+        SolidManureType.sheep_goats: 0.1623,
+        SolidManureType.laying_hen_litter: 0.0703,
+        SolidManureType.horses: 0.0,
+        SolidManureType.other: 0.0
+    },
    "ZA":{
       SolidManureType.cattle:0.356625251567831,
       SolidManureType.pigs:0.394853891860788,
@@ -2397,6 +2530,7 @@ ROOTING_DEPTH_PER_CROP = {
                         "asparagus": 0.5,
                         "banana": 1.5,
     "bellpepper": 0.6,
+    "blueberry": 0.45,
     "cabbage": 0.25,
                         "carrot": 0.5,
     "cashew": 0.5,
@@ -2406,6 +2540,7 @@ ROOTING_DEPTH_PER_CROP = {
                         "coconut": 1.5,
     "coffee": 1.2,
     "cotton": 0.3,
+    "cranberry": 0.9,
     "eggplant": 0.8,
     "flax": 0.5,
     "grape": 1.5,
@@ -2430,6 +2565,7 @@ ROOTING_DEPTH_PER_CROP = {
                         "pineapple": 0.5,
     "potato": 0.3,
                         "rapeseed": 0.9,
+    "raspberry": 0.9,
                         "rice": 0.6,
                         "soybean": 0.95,
     "strawberry": 0.45,
@@ -2466,12 +2602,14 @@ SAND_CONTENT_PER_COUNTRY = {
                        "IT":0,
                        "KE":0.0551962701158069,
                        "MX":0,
+    "MA": 0.1237,
                        "NL":0,
                        "NZ":0.00861856685545432,
                        "PE":0.0285601474072124,
                        "PH":0.0111714975845411,
                        "PL":0.0572775058908827,
                        "RU":0.00505958625598585,
+    "CS": 0.296,
                        "ZA":0.146219421793921,
                        "ES":0.00948241801659423,
                        "LK":0.0235294117647059,
@@ -2507,12 +2645,14 @@ SOIL_CARBON_CONTENT_PER_COUNTRY = {
                             "IT":0.011,
                             "KE":0.009,
                             "MX":0.0301,
+    "MA": 0.0229,  # mean of other values
                             "NL":0.0637,
                             "NZ":0.0185,
                             "PE":0.0163,
                             "PH":0.0128,
                             "PL":0.034,
                             "RU":0.0389,
+    "CS": 0.0229,  # mean of other values
                             "ZA":0.0058,
                             "ES":0.0125,
                             "LK":0.0088,
@@ -2558,12 +2698,14 @@ SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY = {
                        "IT":0.8,
                        "KE":0.5,
                        "MX":0.33,
+    "MA": 0.0,
                        "NL":0.8,
                        "NZ":0.95,
                        "PE":0.8,
                        "PH":1,
                        "PL":0.8,
                        "RU":0.9,
+    "CS": 0.0,
                        "ZA":0.2,
                        "ES":0.6,
                        "LK":0.8,
@@ -2583,6 +2725,7 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "asparagus": 0.92,
         "banana": 0.781,
     "bellpepper": 0.88,
+    "blueberry": 0.8421,
     "cabbage": 0.9,
         "carrot": 0.882,
     "cashew": 0.05,
@@ -2592,6 +2735,7 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "coconut": 0.446,
         "coffee": 0.102,
     "cotton": 0.09,
+    "cranberry": 0.8732,
     "eggplant": 0.93,
     "flax": 0.11,
     "grape": 0.81,
@@ -2616,6 +2760,7 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "pineapple": 0.87,#src: web
         "potato": 0.78,
         "rapeseed": 0.12,
+    "raspberry": 0.8575,
         "rice": 0.131,
         "soybean": 0.11,
         "strawberry": 0.895,
@@ -2652,12 +2797,14 @@ YEARLY_PRECIPITATION_AS_SNOW_PER_COUNTRY = {
    "IT":0,
    "KE":0,
    "MX":0,
+    "MA": 0,
    "NL":0,
    "NZ":0,
    "PE":0,
    "PH":0,
    "PL":0.168512374426543,
    "RU":0.399109339441838,
+    "CS": 0.073,
    "ZA":0,
    "ES":0,
    "LK":0,

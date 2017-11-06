@@ -112,6 +112,21 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
                     AvailableUnit.UNIT,
                     "seeds_bellpepper", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateIntermediaryExchange(
+                    "fruit tree seedling, for planting",
+                    AvailableUnit.UNIT,
+                    "seeds_blueberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange(
+                    "planting tree",
+                    AvailableUnit.UNIT,
+                    "seeds_blueberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange(
+                    "establishing orchard",
+                    AvailableUnit.UNIT,
+                    "seeds_blueberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange(
                     "onion seedling, for planting",
                     AvailableUnit.UNIT,
                     "seeds_cabbage", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
@@ -187,6 +202,21 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
             new TemplateIntermediaryExchange("cotton seed", AvailableUnit.KG,
                                              "seeds_cotton",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateIntermediaryExchange(
+                    "fruit tree seedling, for planting",
+                    AvailableUnit.UNIT,
+                    "seeds_cranberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange(
+                    "planting tree",
+                    AvailableUnit.UNIT,
+                    "seeds_cranberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange(
+                    "establishing orchard",
+                    AvailableUnit.UNIT,
+                    "seeds_cranberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateIntermediaryExchange(
                     "onion seedling, for planting",
                     AvailableUnit.UNIT,
@@ -390,6 +420,10 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
             new TemplateIntermediaryExchange("rape seed, for sowing", AvailableUnit.KG,
                                              "seeds_rapeseed",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateIntermediaryExchange(
+                    "strawberry seedling, for planting",
+                    AvailableUnit.UNIT,
+                    "seeds_raspberry", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateIntermediaryExchange("rice seed, for sowing", AvailableUnit.KG, "seeds_rice",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateIntermediaryExchange("soybean seed, for sowing", AvailableUnit.KG, "seeds_soybean",

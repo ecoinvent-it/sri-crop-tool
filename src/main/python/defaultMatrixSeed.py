@@ -81,7 +81,9 @@ NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "onion":{
       "GLO":3.301886792
    },
-   "strawberry":{
+   "raspberry": {
+   },
+   "strawberry": {
    },
    "tomato":{
       "GLO":3.125
@@ -99,6 +101,8 @@ NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY = {
    },
    "banana":{
    },
+   "blueberry": {
+   },
    "cashew": {
    },
    "cocoa":{
@@ -106,6 +110,8 @@ NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY = {
    "coconut":{
    },
    "coffee":{
+   },
+   "cranberry": {
    },
    "grape": {
    },

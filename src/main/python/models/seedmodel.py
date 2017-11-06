@@ -19,6 +19,7 @@ class SeedModel(object):
                 "asparagus": 0.73, #vegetable
                 "banana": 0.73, #tree_seedlings
         "bellpepper": 0.9,
+        "blueberry": 0.73,  # tree_seedlings
         "cabbage": 0.73,
                 "carrot": 0.73, #vegetable
         "cashew": 0.9,
@@ -28,6 +29,7 @@ class SeedModel(object):
                 "coconut": 0.73, #tree_seedlings
         "coffee": 0.73,  # other
         "cotton": 0.9,
+        "cranberry": 0.73,  # tree_seedlings
         "eggplant": 0.955,
         "flax": 0.9,
         "grape": 0.9,
@@ -52,6 +54,7 @@ class SeedModel(object):
                 "pineapple": 0.73, #tree_seedlings
                 "potato": 0.18,
                 "rapeseed": 0.90,
+        "raspberry": 0.73,  # other
                 "rice":0.85, #wheat
                 "soybean": 0.85,
                 "strawberry": 0.73, #other
@@ -73,6 +76,7 @@ class SeedModel(object):
                 "asparagus": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
                 "banana": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
         "bellpepper": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "blueberry": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # tree_seedlings
         "cabbage": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
                 "carrot": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
         "cashew": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
@@ -82,6 +86,7 @@ class SeedModel(object):
                 "coconut": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
                 "coffee": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
         "cotton": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "cranberry": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # tree_seedlings
         "eggplant": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
         "flax": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
         "grape": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
@@ -106,6 +111,7 @@ class SeedModel(object):
                 "pineapple": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
                 "potato": [0.04, 6.45, 15.0, 0.55, 0.33, 0.57, 0.09],
                 "rapeseed": [1.6, 3.3, 48.0, 5.25, 2.6, 0.5, 0.1],
+        "raspberry": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
                 "rice": [0.15, 5.0, 45.0, 0.16, 0.3, 0.3, 0.01], #wheat
                 "soybean": [0.06, 15.1, 47.7, 0.08, 5.32, 0.52, 0],
                 "strawberry": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other

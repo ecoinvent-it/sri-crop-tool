@@ -40,6 +40,11 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "IN": 150.0,
       "GLO": 150.0
    },
+    "blueberry": {
+        "CA": 5.26649866,
+        "US": 11.3787048,
+        "GLO": 8.32260173
+    },
    "cabbage": {
       "IN": 247.0,
       "GLO": 247.0
@@ -84,6 +89,11 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "IN": 41.04,
       "GLO": 41.04
    },
+    "cranberry": {
+        "CL": 11.17043,
+        "US": 36.0372579,
+        "GLO": 23.60384395
+    },
    "eggplant": {
       "IN": 180.0,
       "GLO": 180.0
@@ -202,6 +212,12 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "CA":74.08278955,
       "GLO":74.08278955
    },
+    "raspberry": {
+        "CS": 9.008745673,
+        "RU": 10.25305402,
+        "US": 17.59920378,
+        "GLO": 12.287001158
+    },
    "rice":{
       "CN":124.39576463864,
       "IN":64.53203313212,
@@ -215,6 +231,8 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "ES":59.525506575,
       "CH":27.68312549,
       "US":89.11134746,
+       "MA": 67.45745777,
+       "MX": 63.57942609,
       "GLO":58.7733265083333
    },
    "sugarbeet":{

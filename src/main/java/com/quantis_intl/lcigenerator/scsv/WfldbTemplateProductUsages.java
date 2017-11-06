@@ -62,12 +62,14 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
         photoBuilder.put("CL", "MX");
         photoBuilder.put("CN", "CN-SH");
         photoBuilder.put("CO", "MX");
+        photoBuilder.put("CS", "PL");
         photoBuilder.put("CR", "MX");
         photoBuilder.put("CI", "IN");
         photoBuilder.put("EC", "MX");
         photoBuilder.put("GH", "IN");
         photoBuilder.put("IL", "IN");
         photoBuilder.put("KE", "IN");
+        photoBuilder.put("MA", "ES");
         photoBuilder.put("PE", "MX");
         photoBuilder.put("PH", "AU");
         photoBuilder.put("RU", "PL");
@@ -79,8 +81,10 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
         PHOTOVOLTAIC_REMAP = photoBuilder.build();
 
         ImmutableMap.Builder<String, String> lowBuilder = ImmutableMap.builder();
+        lowBuilder.put("CS", "CH");
         lowBuilder.put("IL", "CH");
         lowBuilder.put("KE", "CH");
+        lowBuilder.put("MA", "CH");
         lowBuilder.put("NZ", "CH");
         lowBuilder.put("LK", "CH");
         LOW_VOLTAGE_REMAP = lowBuilder.build();
@@ -90,8 +94,10 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
         dripBuilder.put("CO", "CH");
         dripBuilder.put("IL", "CH");
         dripBuilder.put("KE", "CH");
+        dripBuilder.put("MA", "CH");
         dripBuilder.put("NZ", "CH");
         dripBuilder.put("PE", "CH");
+        dripBuilder.put("CS", "CH");
         dripBuilder.put("ZA", "CH");
         dripBuilder.put("LK", "CH");
         dripBuilder.put("TH", "CH");
@@ -105,11 +111,13 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
         surfaceBuilder.put("DE", "CH");
         surfaceBuilder.put("IL", "CH");
         surfaceBuilder.put("KE", "CH");
+        surfaceBuilder.put("MA", "CH");
         surfaceBuilder.put("NL", "CH");
         surfaceBuilder.put("NZ", "CH");
         surfaceBuilder.put("PE", "CH");
         surfaceBuilder.put("PL", "CH");
         surfaceBuilder.put("RU", "CH");
+        surfaceBuilder.put("CS", "CH");
         surfaceBuilder.put("ZA", "CH");
         surfaceBuilder.put("LK", "CH");
         surfaceBuilder.put("TH", "CH");
@@ -120,7 +128,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
         sprinklerBuilder.put("AU", "CH");
         sprinklerBuilder.put("IL", "CH");
         sprinklerBuilder.put("KE", "CH");
+        sprinklerBuilder.put("MA", "CH");
         sprinklerBuilder.put("NZ", "CH");
+        sprinklerBuilder.put("CS", "CH");
         sprinklerBuilder.put("PE", "CH");
         sprinklerBuilder.put("ZA", "CH");
         sprinklerBuilder.put("LK", "CH");
@@ -202,6 +212,22 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                     "Onion seedling, for planting {GLO}| market for onion seedling, for planting | Alloc Rec, U", "p",
                     "seeds_bellpepper", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateProductUsage(
+                    "Fruit tree seedling, for planting {GLO}| market for fruit tree seedling, for planting | Alloc " +
+                            "Rec, U",
+                    "p",
+                    "seeds_blueberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage(
+                    "Planting tree {GLO}| market for planting tree | Alloc Rec, U",
+                    "p",
+                    "seeds_blueberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage(
+                    "Establishing orchard {GLO}| market for establishing orchard | Alloc Rec, U",
+                    "p",
+                    "seeds_blueberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage(
                     "Onion seedling, for planting {GLO}| market for onion seedling, for planting | Alloc Rec, U", "p",
                     "seeds_cabbage", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateProductUsage("Carrot seed, for sowing {GLO}| market for carrot seed, for sowing | Alloc Rec, U",
@@ -279,6 +305,22 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Cotton seed {GLO}| market for | Alloc Rec, U", "kg",
                                      "seeds_cotton",
                                      StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateProductUsage(
+                    "Fruit tree seedling, for planting {GLO}| market for fruit tree seedling, for planting | Alloc " +
+                            "Rec, U",
+                    "p",
+                    "seeds_cranberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage(
+                    "Planting tree {GLO}| market for planting tree | Alloc Rec, U",
+                    "p",
+                    "seeds_cranberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage(
+                    "Establishing orchard {GLO}| market for establishing orchard | Alloc Rec, U",
+                    "p",
+                    "seeds_cranberry",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage(
                     "Onion seedling, for planting {GLO}| market for onion seedling, for planting | Alloc Rec, U", "p",
                     "seeds_eggplant", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
@@ -491,6 +533,11 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Rape seed, for sowing {GLO}| market for | Alloc Rec, U", "kg",
                     "seeds_rapeseed",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateProductUsage(
+                    "Strawberry seedling, for planting {GLO}| market for strawberry seedling, for planting | Alloc " +
+                            "Rec, U",
+                    "p",
+                    "seeds_raspberry", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateProductUsage("Rice seed, for sowing {GLO}| market for | Alloc Rec, U", "kg", "seeds_rice",
                                      StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Soybean seed, for sowing {GLO}| market for | Alloc Rec, U", "kg", "seeds_soybean",
