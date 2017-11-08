@@ -2705,7 +2705,7 @@ SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY = {
                        "PH":1,
                        "PL":0.8,
                        "RU":0.9,
-    "CS": 0.0,
+    "CS": 0.8,
                        "ZA":0.2,
                        "ES":0.6,
                        "LK":0.8,
