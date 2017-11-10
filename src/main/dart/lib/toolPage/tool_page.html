@@ -1,71 +1,70 @@
 <div class="page">
 
-   <div class="content pagePart">
+    <div id="firstPart" class="content pagePart">
      <div id="welcomeTextContainer">
-       <div class="color1 text-medium bold">Easily and quickly generate reliable, precise and specific LCI data for agricultural production</div>
-       <div class="color1 text-normal">ALCIG is a web-based tool that generates LCI data or crops to be directly imported in LCA software. The tool focuses on inventory data for agricultural production. Models used are all publicly available and described in the methodological report.</div>
+         <div class="color3 text-normal">
+             Saepissime igitur mihi de amicitia cogitanti maxime illud considerandum videri solet, utrum propter
+             imbecillitatem atque inopiam desiderata sit amicitia, ut dandis recipiendisque meritis quod quisque minus
+             per se ipse posset, id acciperet ab alio vicissimque redderet, an esset hoc quidem proprium amicitiae, sed
+             antiquior et pulchrior et magis a natura ipsa profecta alia causa. Amor enim, ex quo amicitia nominata est,
+             princeps est ad benevolentiam coniungendam. Nam utilitates quidem etiam ab iis percipiuntur saepe qui
+             simulatione amicitiae coluntur et observantur temporis causa, in amicitia autem nihil fictum est, nihil
+             simulatum et, quidquid est, id est verum et voluntarium.
+         </div>
      </div>
-     <div id="loginContainer">
+        <div id="loginContainer" class="bgColor2">
         <login-box></login-box>
         <user-box></user-box>
      </div>
    </div>
 
-    <div class="bgColor1 pagePart">
+    <div class="bgColor2 pagePart">
      <div class="content">
-        <h1 id="howToTitle" class="color4 bold">How does it work?</h1>
+         <h1 id="howToTitle" class="color3 bold">How does it work?</h1>
         <notification-modal></notification-modal>
         <process-generation-steps></process-generation-steps>
 
          <div id="contactSection">
-          <img src="img/contact_icon.png"/>
           <div id="contactText">
-            <span class="color3 bold text-big">Contact us</span>
-            <span class="color4 bold text-big">for more information <br/>and the pricing</span>
+              <span class="color3 text-big">Contact us for more information</span>
           </div>
-          <a href="#contactUs"><button id="contactBtn" class="qts-btn qts-btn-style2">contact us</button></a>
+             <a href="#contactUs">
+                 <button id="contactBtn" class="qts-btn qts-btn-style2">Contact Us</button>
+             </a>
          </div>
       </div>
     </div>
 
-    <div class="bgColor2 pagePart">
-      <div class="content">
-         <table class="color4">
-             <colgroup>
-                 <col width="25%"/>
-                 <col width="25%"/>
-                 <col width="25%"/>
-                 <col width="25%"/>
-             </colgroup>
-             <tr class="bold text-big">
-                 <td>High<br/>quality data</td>
-                 <td>Easy<br/>to use</td>
-                 <td>Save time<br/>and money</td>
-                 <td>The best<br/>science inside</td>
-             </tr>
-             <tr>
-                 <td><img src="img/feature1.png"/></td>
-                 <td><img src="img/feature2.png"/></td>
-                 <td><img src="img/feature3.png"/></td>
-                 <td><img src="img/feature4.png"/></td>
-             </tr>
-             <tr id="featuresTextTr" class="bold text-small text-left">
-                 <td>ALCIG produces inventory data for crops with very high reliability: precise and specific, coherent
-                     and transparent.
-                 </td>
-                 <td>ALCIG is easy to use: LCI are generated in 4 steps and can directly be integrated and used in LCA
-                     software
-                 </td>
-                 <td>ALCIG increases the reliability and lower your budget: very precised data are quickly generated
-                     based on non LCA specific primary data
-                 </td>
-                 <td>ALCIG uses the most up-to-date science: the most recent and reliable agriculture models are
-                     integrated and used. In addition, it helps you being up-to-date in terms of
-                     scientific development
-                 </td>
-             </tr>
-         </table>
-      </div>
+    <div class="bgColor4 pagePart">
+        <div class="content">
+
+            <ul id="linkButtonsNav" class="nav nav-pills">
+                <li><a data-toggle="pill"
+                       class="qts-btn qts-btn-style2 linkBtn" (click)="goToFaq()">FAQ</a></li>
+                <li><a href="#documentation" data-toggle="pill"
+                       class="qts-btn qts-btn-style2 linkBtn">Documentation</a></li>
+                <li><a data-toggle="pill"
+                       class="qts-btn qts-btn-style2 linkBtn" (click)="goToEcoinvent()">Ecoinvent</a></li>
+            </ul>
+
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane" id="documentation">
+                    <div class="docPart">
+                        <div class="docLabel">Description of the modelling</div>
+                        <a class="docLink">Download PDF</a>
+                    </div>
+                    <div class="docPart">
+                        <div class="docLabel">guidelines agricultural processes</div>
+                        <a class="docLink">Download PDF</a>
+                    </div>
+                    <div class="docPart">
+                        <div class="docLabel">Some other link</div>
+                        <a class="docLink">Download PDF</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
 

@@ -10,30 +10,33 @@
         <a id="#step1Link" href="LCI-Database_Data-collection_Crop_v2.xlsx" target="_blank"
            (click)="documentLinkClick(event,'LCI-Database_Data-collection_Crop_v1.xlsx')">
             <div id="step1" class="stepBtn">
-              <div class="stepTitle text-big text-uppercase">Step 1</div>
-              <div class="stepText"><span class="clickableText">Click</span> to download the template</div>
+                <div class="stepTitle color1 text-big text-uppercase">Step 1</div>
+                <div class="stepText color3"><span class="clickableText color1">Download</span> the template</div>
             </div>
         </a>
     </td>
     <td id="step2" class="stepBtn">
-        <div class="stepTitle text-big text-uppercase">Step 2</div>
-        <div class="stepText">Fill in the template with your data</div>
+        <div class="stepTitle color1 text-big text-uppercase">Step 2</div>
+        <div class="stepText color3"><span class="color1">Fill in</span> the template with your data</div>
     </td>
       <td id="step3Container"
           [class.disabledStep]="!isLogged || currentLicense == null || currentLicense['isDepleted']">
           <form id="processGeneratorUploadForm" #uploadeForm method="post" enctype="multipart/form-data">
           <div id="step3" class="stepBtn">
-	          <div class="stepTitle text-big text-uppercase">Step 3</div>
+              <div class="stepTitle color1 text-big text-uppercase">Step 3</div>
               <input type="file" #fileInput name="uploadFile"
                      accept=".xls,.xlsx" required="required"
                      class="upload"
                      (change)="submitUploadForm(fileInput, uploadeForm)"
                      *ngIf="isLogged && currentLicense != null && !currentLicense['isDepleted']"/>
-	          <div class="stepText"><span class="clickableText">Click</span> to upload your template to ALCIG</div>
+              <div class="stepText color3"><span class="clickableText color1">Click</span> to upload your template to
+                  ALCIG
+              </div>
           </div>
           <div>
              <input type="checkbox" checked name="canBeStored" value="true"/>
-            <span id="step3CheckboxText" class="text-very-small">I agree that Quantis stores this file for testing purposes</span>
+              <span id="step3CheckboxText" class="text-very-small color3">I agree that Quantis stores this file for
+                testing purposes</span>
           </div>
 			</form>
           <div id="step3ContainerWhenDisabled" (click)="disabledStep3Click()"
@@ -41,8 +44,10 @@
     </td>
     <td>
         <div id="step4" class="stepBtn" [class.disabledStep]="!isLogged">
-	        <div class="stepTitle text-big text-uppercase">Step 4</div>
-				  <div class="stepText">Get a ready-to-import file for your LCA software</div>
+            <div class="stepTitle color1 text-big text-uppercase">Step 4</div>
+            <div class="stepText color3">
+                <span class="color1">Get a ready-to-import file</span> for your LCA software in ecoSpold2 format
+            </div>
 			  </div>
 	  </td>
   </tr>
@@ -56,7 +61,7 @@
   <col width="22%"/>
   <col width="28%"/>
     </colgroup>
-  <thead>
+    <thead class="bgColor1 color4">
     <tr>
       <th>License end date</th>
       <th>License type</th>
@@ -64,8 +69,8 @@
       <th></th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
+    <tbody>
+    <tr class="bgColor4">
         <td><span>{{displayDate(currentLicense['endDate'])}}</span></td>
       <td>{{displayRentalItem(currentLicense)}}</td>
       <td>
@@ -88,7 +93,7 @@
   <col width="25%"/>
   <col width="25%"/>
     </colgroup>
-  <thead>
+    <thead class="bgColor1 color4">
     <tr>
 	    <th>Upload date</th>
 	    <th>Crop</th>
@@ -101,6 +106,7 @@
   <tbody>
   <tr *ngFor="let generation of generations; let odd = odd; let even = even" [class.odd]="odd" [class.even]="even"
       [class.selectedGenerationRow]="generation == lastGeneration"
+      class="color3"
       (click)="changeSelectedGeneration(generation)">
       <td>{{displayDateTime(generation['lastTryDate'])}}</td>
       <td>{{generation['crop']}}</td>
@@ -109,7 +115,7 @@
           <div style="max-width: 100%;">{{generation['filename']}}</div>
       </td>
       <td>
-          <div [class.notVisible]="!canRetry(generation)" class="qts-small-btn qts-btn-style1">
+          <div [class.notVisible]="!canRetry(generation)" class="qts-small-btn qts-btn-style2">
 	        <div >Retry upload</div>
               <form method="post" #uploadForm enctype="multipart/form-data">
                   <input type="file" #fileInput name="uploadFile"
@@ -123,22 +129,23 @@
                   (click)="changeGenerationAndDisplayUpdateStatus(generation)">
 	       <span class="glyphicon glyphicon-exclamation-sign warningsColor" aria-hidden="true"></span>
 	       Upload status
-	      </button>
-	    </td>
+          </button>
+      </td>
 	    <td class="text-center">
             <form [action]="serverUrl + 'app/api/generateScsv'" (submit)="changeSelectedGeneration(generation)"
                   method="post"
                   #generateScsvForm>
                 <input type="hidden" name="generationId" value="{{generation['id']['representation']}}"/>
-	        <div class="btn-group" data-toggle="buttons">
-	          <label class="btn btn-primary active dbOptionLabel">
-	            <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
-	          </label>
-	          <label class="btn btn-primary dbOptionLabel">
-	            <input type="radio" name="dbOption" autocomplete="off" value="WFLDB">WFLDB
-	          </label>
-            </div>
-                <input type="submit" class="qts-small-btn qts-btn-style1 getScsvFileRowBtn"
+                <input type="hidden" name="dbOption" value="ECOINVENT"/>
+                <!--<div class="btn-group" data-toggle="buttons" class="hide">
+                    <label class="btn btn-primary active dbOptionLabel">
+                        <input type="radio" name="dbOption" autocomplete="off" checked value="ECOINVENT">Ecoinvent
+                    </label>
+                    <label class="btn btn-primary dbOptionLabel">
+                        <input type="radio" name="dbOption" autocomplete="off" value="WFLDB">WFLDB
+                    </label>
+                </div>-->
+                <input type="submit" class="qts-btn qts-btn-style2 getScsvFileRowBtn"
                        value="Get generated file" (click)="generateScsvForm.submit()"/>
 	      </form>
 	    </td>

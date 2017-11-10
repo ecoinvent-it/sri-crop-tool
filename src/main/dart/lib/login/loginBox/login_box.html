@@ -1,20 +1,25 @@
 <div *ngIf="!isLogged">
 
-  <div class="color1 uppercase loginTitle">Login</div>
+    <div class="bgColor5 color4 loginTitle">Login</div>
     <form id="loginForm" (submit)="loginSubmit()">
-    <div class="color1 text-small formFieldTitle">Username</div>
-        <input class="text-small loginInput" name="login" type="text"
-               [(ngModel)]="username" [disabled]="isLoading" required>
-    <div class="color1 text-small">Password</div>
-        <input class="text-small loginInput lastInput" name="password" type="password" [(ngModel)]="password"
-               [disabled]="isLoading" required/>
-    <div>
-        <button id="loginSubmit" type="submit" class="qts-btn qts-btn-style3" [disabled]="isLoading">Sign in</button>
-        <img [class.notVisible]="!isLoading" class="loginLoaderImg" src="img/ajax-loader.gif"/>
-    </div>
-        <span class="color1 text-very-small loginLink" (click)="openForgotPwdPopUp()">Forgot password?</span>
-    <div class="msgContainer errorMsg">{{errorMessage}}</div>
-  </form>
+        <div id="leftFormPart">
+            <div class="color3 text-small formFieldTitle">Username</div>
+            <input class="text-small loginInput" name="login" type="text"
+                   [(ngModel)]="username" [disabled]="isLoading" required>
+            <div class="color3 text-small">Password</div>
+            <input class="text-small loginInput lastInput" name="password" type="password" [(ngModel)]="password"
+                   [disabled]="isLoading" required/>
+        </div>
+        <div id="rightFormPart">
+            <div>
+                <button id="loginSubmit" type="submit" class="qts-btn qts-btn-style2" [disabled]="isLoading">Sign in
+                </button>
+                <img [class.notVisible]="!isLoading" class="loginLoaderImg" src="img/ajax-loader.gif"/>
+            </div>
+            <span class="color3 text-very-small loginLink" (click)="openForgotPwdPopUp()">Forgot password?</span>
+        </div>
+        <div class="msgContainer errorMsg">{{errorMessage}}</div>
+    </form>
 </div>
 
 <!-- Modal -->
@@ -23,7 +28,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <div class="color1 loginTitle">Forgot password</div>
+          <div class="color3 loginTitle">Forgot password</div>
       </div>
       <div class="modal-body">
           <forgot-password-box *ngIf="isForgotPwdModalOpened"></forgot-password-box>

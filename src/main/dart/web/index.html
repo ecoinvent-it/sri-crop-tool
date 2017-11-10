@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>ALCIG</title>
-    <link rel="stylesheet" href="packages/alcig/qts_bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="packages/alcig/qts_bootstrap/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="css/commons.css"/>
-    <link rel="stylesheet" href="css/index.css"/>
-    <link rel="stylesheet" href="css/login_components.css"/>
-    <script src="packages/alcig/qts_bootstrap/js/jquery-1.11.1.min.js"></script>
-    <script src="packages/alcig/qts_bootstrap/js/bootstrap.js"></script>
+<meta charset="UTF-8">
+<title>ALCIG</title>
+<link rel="stylesheet" href="packages/alcig/qts_bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="packages/alcig/qts_bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="css/commons.css" />
+<link rel="stylesheet" href="css/index.css" />
+<link rel="stylesheet" href="css/login_components.css" />
+<script src="packages/alcig/qts_bootstrap/js/jquery-1.11.1.min.js"></script>
+<script src="packages/alcig/qts_bootstrap/js/bootstrap.js"></script>
 </head>
 <body>
-<header class="bgColor1">
+  <header class="bgColor1">
     <div class="content">
-        <div id="logoContainer">
-            <img id="logo" class="bgColor4" src="img/ALCIG_logo.png"/>
-        </div>
-        <div id="title">
-            <span class="color3">ALCIG - </span>
-            <span class="color4">Agricultural Life Cycle Inventory Generator</span>
-        </div>
+      <div id="logoContainer">
+        <img id="logo" class="bgColor1" src="img/ecoinvent_logo.png"/>
+      </div>
+      <div id="title">
+        <span class="color4">the world's mostconsistent and transparent life cycle inventory database</span>
+      </div>
     </div>
-</header>
+  </header>
 
 <div id="incompatible" style="display: none; width:100%; text-align: center">Your browser is not compatible with this
     software. Please use Firefox 30 and up, Chrome recent versions, Safari 8 and up, Internet explorer 11, or Microsoft
@@ -36,31 +35,32 @@
     </div>
 </div>
 
-<div id="mainContentContainer" style="display: none;">
+  <div id="mainContentContainer" style="display: none;">
     <tool-main-page></tool-main-page>
-</div>
+  </div>
 
-<footer class="bgColor1">
-    <div id="content" class="content">
-        <img id="quantisLogo" src="img/quantis_logo.png?v=${project.version}"/>
-        <div id="toolVersion">v${project.version}</div>
-        <a id="quantisLink" href="http://www.quantis-intl.com" target="_blank">www.quantis-intl.com</a>
-        <ul id="mainMenu" menuWithSelection>
-            <li><a href="#tool" id="homeMenuItem" class="menuItem">Home</a></li>
-            <li><a href="#contactUs" id="contactUsMenuItem" class="menuItem">Contact</a></li>
-            <li><a href="#faq" id="faqMenuItem" class="menuItem">FAQ</a></li>
-            <li><a href="ALCIG_methodology.pdf?v=${project.version}" target="_blank" class="menuItem"
-                   onclick="documentLinkClick(event,'ALCIG_methodology.pdf')">Methodology</a></li>
-            <li><a href="ALCIG_Privacy policy.pdf?v=${project.version}" target="_blank" class="menuItem"
-                   onclick="documentLinkClick(event,'ALCIG_Privacy policy.pdf')">Privacy</a></li>
-            <li><a href="terms.pdf?v=${project.version}" target="_blank" class="menuItem"
-                   onclick="documentLinkClick(event,'terms.pdf')">Terms</a></li>
-        </ul>
+  <footer class="color4 bgColor3">
+    <div id="content" class="content footerContent">
+      <a id="quantisLink" href="http://www.quantis-intl.com" target="_blank">Powered by Quantis</a>
+      <!--<img id="quantisLogo" src="img/quantis_logo.png?v=${project.version}"/>
+      <div id="toolVersion">v${project.version}</div>
+      <a id="quantisLink" href="http://www.quantis-intl.com" target="_blank">www.quantis-intl.com</a>
+      <ul id="mainMenu" menuWithSelection>
+        <li><a href="#tool" id="homeMenuItem" class="menuItem">Home</a></li>
+	      <li><a href="#contactUs" id="contactUsMenuItem" class="menuItem">Contact</a></li>
+	      <li><a href="#faq" id="faqMenuItem" class="menuItem">FAQ</a></li>
+        <li><a href="ALCIG_methodology.pdf?v=${project.version}" target="_blank" class="menuItem"
+               onclick="documentLinkClick(event,'ALCIG_methodology.pdf')">Methodology</a></li>
+        <li><a href="ALCIG_Privacy policy.pdf?v=${project.version}" target="_blank" class="menuItem"
+               onclick="documentLinkClick(event,'ALCIG_Privacy policy.pdf')">Privacy</a></li>
+        <li><a href="terms.pdf?v=${project.version}" target="_blank" class="menuItem"
+               onclick="documentLinkClick(event,'terms.pdf')">Terms</a></li>
+	    </ul>-->
 
     </div>
-</footer>
+  </footer>
 
-<script>
+  <script>
       (function() {
 	    "use strict";
 	    self.onerror = function(message, url, line) {
@@ -81,10 +81,9 @@
 	    self.addEventListener("message", onMessage);
 
 	  })()
+  </script>
 
-</script>
-
-<script type="application/dart" src="index.dart?v=${project.version}"></script>
-<script type="text/javascript" src="packages/browser/dart.js"></script>
+  <script type="application/dart" src="index.dart?v=${project.version}"></script>
+  <script type="text/javascript" src="packages/browser/dart.js"></script>
 </body>
 </html>

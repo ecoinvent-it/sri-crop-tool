@@ -1,22 +1,34 @@
+#firstPart
+{
+    background-image: url('img/strawberries.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 #welcomeTextContainer
 {
-  width: 45%;
+  width: 50%;
   float: left;
+  margin-left: 2%;
+  background-color: rgba(255,255,255,0.8);
+  padding: 20px;
 }
 
 #loginContainer
 {
-  width: 45%;
+  width: 42%;
   float: right;
-  margin-left: 80px;
   min-height: 220px;
+  margin-right: 2%;
+}
+
+#contactSection
+{
+text-align: center;
 }
 
 #contactSection > *
 {
-  display: inline-block;
-  vertical-align: middle;
   margin-top: 30px;
 }
 
@@ -26,7 +38,7 @@
   padding-right: 30px;
 }
 
-#contactBtn
+#contactBtn,.linkBtn
 {
   font-size: 22px;
   font-weight: bold;
@@ -34,5 +46,51 @@
 
 #howToTitle
 {
-  margin-top: 20px;
+  margin-top: 0px;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#linkButtonsNav > li
+{
+    float:none;
+    display:inline-block;
+}
+
+#linkButtonsNav {
+    text-align:center;
+}
+
+#linkButtonsNav>li.active>a, #linkButtonsNav>li.active>a:hover, #linkButtonsNav>li.active>a:focus
+{
+    color: #DD0000;
+    background-color: white;
+}
+
+#documentation
+{
+    margin-top: 20px;
+    text-align:center;
+}
+
+.docPart
+{
+    display: inline-block;
+    margin: 0px 30px;
+}
+
+.docLabel
+{
+    font-weight: bold;
+}
+
+a.docLink
+{
+    color: #DD0000;
+}
+
+a.docLink:before {
+    content: url('img/download.png');
+    margin-right: 5px;
+    vertical-align: -50%;
 }

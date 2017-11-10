@@ -2,37 +2,38 @@
 
 	  <div id="contactFormContainer">
 
-			<h1 class="color1">Contact us</h1>
+          <h1 class="color3">Contact us</h1>
 
-			<div class="color2 text-medium">We will be happy to get any feedback from you</div>
-			<div class="color1">Just send us a message using the form below</div>
+          <div class="color3 bold text-medium">We will be happy to get any feedback from you</div>
+          <div class="color3">Just send us a message using the form below</div>
 
 		  <form id="contactForm" (submit)="sendMessage($event)" enctype="multipart/form-data">
-				<div class="color1 formFieldTitle">Name</div>
+              <div class="color3 formFieldTitle">Name</div>
 			  <input name="contactName" type="text" [(ngModel)]="contactName"/>
-				<div class="color1 formFieldTitle">Company</div>
+              <div class="color3 formFieldTitle">Company</div>
 			  <input name="contactCompany" type="text" [(ngModel)]="contactCompany"/>
-				<div class="color1 formFieldTitle">Email</div>
+              <div class="color3 formFieldTitle">Email</div>
 			  <input name="contactEmail" type="text" [(ngModel)]="contactEmail"/>
-				<div class="color1 formFieldTitle">Message</div>
+              <div class="color3 formFieldTitle">Message</div>
 				<textarea id="contactMessage" name="contactMessage" required placeholder="Share with us any information that might help us to improve the tool"></textarea>
-				<div class="color1 formFieldTitle"></div>
-				<input type="checkbox" name="accept" value="true" /><span class="color1"> I accept that this feedback can be made public</span>
-				<input id="contactSubmitBtn" type="submit" class="qts-btn qts-btn-style1" value="Send"/>
+              <div class="color3 formFieldTitle"></div>
+              <input type="checkbox" name="accept" value="true"/><span class="color3"> I accept that this feedback
+			  can be made public</span>
+              <input id="contactSubmitBtn" type="submit" class="qts-btn qts-btn-style2" value="Send"/>
 				<div id="contactConfirmationMsgContainer" class="color2">{{confirmationMessage}}</div>
 			</form>
 
 	  </div>
 
 	<div id="contactInfoContainer">
-		  <div class="color1 contactInfoTitle">EMAIL</div>
+        <div class="color3 contactInfoTitle">EMAIL</div>
 		  <div><a href="mailto:{{quantisEmail}}">{{quantisEmail}}</a></div>
 
-		<div class="color1 contactInfoTitle">WEBSITE</div>
+        <div class="color3 contactInfoTitle">WEBSITE</div>
 		<div><a href="https://www.quantis-intl.com">www.quantis-intl.com</a></div>
 
-		<div class="color1 contactInfoTitle">ADDRESS</div>
-      <div class="color1">
+        <div class="color3 contactInfoTitle">ADDRESS</div>
+        <div class="color3">
           Quantis Lausanne<br/>
 					EPFL Innovation Park, Bât. D<br/>
 					1015 Lausanne<br/>

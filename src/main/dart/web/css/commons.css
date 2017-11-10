@@ -31,37 +31,37 @@ table img
   margin: 20px 0px;
 }
 
-/*dark blue*/
+/*red*/
 .bgColor1
 {
-	background-color: #445272;
+	background-color: #DD0000;
 }
 
 .color1
 {
-	color: #445272;
+	color: #DD0000;
 }
 
-/* dark orange */
+/* light grey */
 .bgColor2
 {
-  background-color: #e87e05;
+  background-color: #F0F0F0;
 }
 
 .color2
 {
-  color: #e87e05;
+  color: #F0F0F0;
 }
 
-/* light orange */
+/* dark grey */
 .bgColor3
 {
-  background-color: #f9b233;
+  background-color: #4A4A4A;
 }
 
 .color3
 {
-  color: #f9b233;
+  color: #4A4A4A;
 }
 
 /* white */
@@ -73,6 +73,17 @@ table img
 .color4
 {
   color: #ffffff;
+}
+
+/* medium grey */
+.bgColor5
+{
+  background-color: #B3B3B3;
+}
+
+.color5
+{
+  color: #B3B3B3;
 }
 
 .bold
@@ -87,17 +98,17 @@ table img
 
 .text-big
 {
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .text-medium
 {
-	font-size: 19px;
+	font-size: 16px;
 }
 
 .text-normal
 {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .text-small
@@ -112,11 +123,11 @@ table img
 
 .qts-btn
 {
-	border: 0px;
+border: 2px solid;
+  border-radius: 3px;
   margin: 5px 0px;
-  padding: 8px 40px 8px 40px;
+  padding: 10px 20px;
   text-align: center;
-  min-width: 80px;
   cursor: pointer;
   font-size: 14px;
   min-height: 20px;
@@ -138,7 +149,8 @@ table img
 
 .qts-icon-btn
 {
-  border: 0px;
+  border: 2px solid;
+  border-radius: 3px;
   margin: 5px 0px;
   padding: 8px;
   text-align: center;
@@ -158,13 +170,15 @@ table img
 }
 
 .qts-btn-style2:HOVER {
-  background-color: rgba(255,255,255,0.9);
+  color: #DD0000;
+  background-color: white;
 }
 
 .qts-btn-style2, .qts-btn-style2:disabled
 {
-  color: #445272;
-  background-color: rgb(255,255,255);
+  color: white;
+  background-color: #DD0000;
+  border-color: #DD0000;
 }
 
 .qts-btn-style3:HOVER {
@@ -254,7 +268,7 @@ input[type="text"], input[type="password"], textarea
 	color: #445272;
 }
 
-input[type="text"]:disabled, input[type="password"]:disabled, 
+input[type="text"]:disabled, input[type="password"]:disabled,
 textarea:disabled, input[type="submit"]:disabled, button:disabled
 {
   opacity: 0.5;

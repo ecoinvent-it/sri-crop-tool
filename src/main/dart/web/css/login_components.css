@@ -1,11 +1,12 @@
 .loginTitle
 {
 	font-weight: bold;
-	font-size: 25px;
+	padding: 10px 10px 10px 20px;
 }
 
 form
 {
+    padding: 10px;
 	display: block;
 }
 

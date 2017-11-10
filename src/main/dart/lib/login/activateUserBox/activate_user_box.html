@@ -9,18 +9,18 @@
     <div class="color1 loginTitle text-center">Please choose your password to activate your access</div>
         <form (submit)="submit()" class="centeredForm">
 		  <div>
-		    <div class="color1 text-small formFieldTitle">Username</div>
+              <div class="color3 text-small formFieldTitle">Username</div>
               <input type="text" class="text-small loginInput" [(ngModel)]="username" disabled/>
-			  <div class="color1 text-small formFieldTitle">Password</div>
+              <div class="color3 text-small formFieldTitle">Password</div>
               <input type="password" class="text-small loginInput"
                      [(ngModel)]="newPassword" [disabled]="activationDone" required/>
-			  <div class="color1 text-small formFieldTitle">Password confirmation</div>
+              <div class="color3 text-small formFieldTitle">Password confirmation</div>
 			  <input type="password" class="text-small loginInput lastInput"
                      [(ngModel)]="newPasswordConfirmation" [disabled]="activationDone" required/>
         <div class="lastInput">
             <input type="checkbox" name="acceptTermsAndConditions" [(ngModel)]="acceptTermsAndConditions"
                    [disabled]="activationDone"/>
-          <span class="color1">I have read and accept the privacy policy, terms and conditions</span>
+            <span class="color3">I have read and accept the privacy policy, terms and conditions</span>
         </div>
 		  </div>
             <button type="submit" class="qts-btn qts-btn-style3"

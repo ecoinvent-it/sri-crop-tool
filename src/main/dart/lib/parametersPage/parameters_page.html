@@ -1,10 +1,12 @@
 <div class="content page" id="paramPage">
 
-  <a href="#tool"><button class="qts-btn qts-btn-style3">&lt;&nbsp; Back to Home</button></a>
+  <a href="#tool">
+    <button class="qts-btn qts-btn-style2">&lt;&nbsp; Back to Home</button>
+  </a>
 
   <div *ngIf="!isLogged">You must be authenticated to see this screen</div>
   <div *ngIf="isLogged">
-    <div class="color1 loginTitle">Change password</div>
+    <div class="color3 loginTitle">Change password</div>
     <change-password-box></change-password-box>
   </div>
 </div>

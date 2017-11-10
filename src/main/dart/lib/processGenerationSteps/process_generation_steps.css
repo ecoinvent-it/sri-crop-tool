@@ -28,7 +28,7 @@
 #step1
 {
   background-image: url('img/btn_step1.png');
-  color: white;
+  color: #DD0000;
 }
 
 #step1:not(.disabledStep):hover
@@ -46,8 +46,13 @@
 
 #step2:hover, #step4:hover
 {
-  color: white;
+  color:  #DD0000;
   cursor: default;
+}
+
+#processGeneratorUploadForm
+{
+    padding-top: 0;
 }
 
 #step3Container
@@ -65,7 +70,7 @@
 
 #step3:not(.disabledStep):hover
 {
-  background-image: url('img/btn_step3_over.png');
+  background-image: url('img/btn_step3.png');
 }
 
 #step3 input.upload {
@@ -113,7 +118,6 @@
 
 #step3CheckboxText
 {
-  color: white;
   font-weight: normal;
 }
 
@@ -179,7 +183,7 @@
 }
 
 .odd {
-  background-color: #eeeeee;
+  background-color: #dedede;
 }
 .even {
   background-color: #ffffff;
@@ -187,7 +191,7 @@
 
 .selectedGenerationRow
 {
-	background-color: #6d7fa1;
+	background-color: #4A4A4A;
 	color: white;
 }
 
@@ -219,15 +223,9 @@
 	margin: 10px 0;
 }
 
-#currentLicenseTable tbody tr
-{
-	background-color: white;
-}
-
 #generationHistory thead, #generationHistory th,
 #currentLicenseTable thead, #currentLicenseTable th
 {
-	background-color: #adbdd3;
 	text-align: center;
 }
 
