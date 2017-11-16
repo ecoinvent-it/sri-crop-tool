@@ -137,7 +137,7 @@ class OneRatioToValueConvertor(object):
 class ClimateDefaultGenerator(object):
     def generateDefault(self, field, generators):
         if generators["climate_zone_1"] == "cool_climate":
-            return "snow_dry_winter"
+            return "snow_winter_continental"
         elif generators["climate_zone_1"] == "temperate_climate":
             return "warm_summer_dry_warm"
         else:
