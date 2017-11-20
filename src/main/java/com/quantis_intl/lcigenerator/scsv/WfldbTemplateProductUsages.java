@@ -1179,7 +1179,8 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             String cropType = modelOutputs.get("luc_crop_type");
             String country = modelOutputs.get("country");
 
-            return "Land use change, " + cropType + " crop (WFLDB 3.3)/" + country + " U";
+            return "Land use change, " + cropType + " crop {" + country + "}| land use change, "
+                    + cropType + " crop (WFLDB 3.3)";
         }
     }
 
