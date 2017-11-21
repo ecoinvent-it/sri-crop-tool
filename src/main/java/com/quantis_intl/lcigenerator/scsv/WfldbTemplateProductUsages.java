@@ -20,10 +20,12 @@ package com.quantis_intl.lcigenerator.scsv;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiFunction;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 
 public class WfldbTemplateProductUsages implements TemplateProductUsages
 {
@@ -1178,9 +1180,35 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
         {
             String cropType = modelOutputs.get("luc_crop_type");
             String country = modelOutputs.get("country");
+            String db = findDb(cropType, country);
 
             return "Land use change, " + cropType + " crop {" + country + "}| land use change, "
-                    + cropType + " crop (WFLDB 3.3)";
+                    + cropType + " crop " + db;
+        }
+
+        private static final Set<String> ANNUAL_EI_LUC_COUNTRY =
+                Sets.newHashSet("AR", "AU", "BR", "CA", "CH", "CN", "DE", "ES", "FI", "FR",
+                                "HU", "IL", "IN", "IT", "MX", "NL", "NZ", "PE", "RU", "TH",
+                                "UA", "US");
+        private static final Set<String> PERENNIAL_EI_LUC_COUNTRY
+                = Sets.newHashSet("AR", "BE", "BR", "CI", "CL", "CN", "CO", "CR", "EC", "ES",
+                                  "FR", "GH", "ID", "IN", "IT", "KE", "LK", "MX", "PE", "PH",
+                                  "TR", "US", "VN", "ZA");
+
+        private String findDb(String cropType, String country)
+        {
+            Set<String> ecoinventLucCountry;
+            if ("annual".equals(cropType))
+                ecoinventLucCountry = ANNUAL_EI_LUC_COUNTRY;
+            else if ("perennial".equals(cropType))
+                ecoinventLucCountry = PERENNIAL_EI_LUC_COUNTRY;
+            else
+                throw new IllegalStateException(cropType);
+
+            if (ecoinventLucCountry.contains(country))
+                return "| Alloc Rec, U";
+
+            return "(WFLDB 3.3)";
         }
     }
 
