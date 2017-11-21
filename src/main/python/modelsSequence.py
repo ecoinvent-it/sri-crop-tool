@@ -34,7 +34,7 @@ class ModelsSequence(object):
         self._computeSeed()
         self.outputMapping.mapSeeds(self.allInputs)
         if self.allInputs["cultivation_type"] != "open_ground":
-            self._intermediateValues["eroded_soil"]
+            self._intermediateValues["eroded_soil"] = 0.0
         else:
             self._intermediateValues["eroded_soil"] = ErosionModel(self.allInputs).compute()["m_Erosion_eroded_soil"]
         self.outputMapping.mapIrrigationModel(IrrigationModel(self.allInputs).compute())
