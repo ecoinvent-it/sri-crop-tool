@@ -651,7 +651,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                                      "fert_n_ammonium_sulphate", StandardUncertaintyMetadata.FERTILISERS,
                                      "fertnmin_ammonium_sulphate"),
             new TemplateProductUsage(
-                    "Nitrogen fertiliser, as N {GLO}| field application of potassium nitrate | Alloc Rec, U", "kg",
+                    "Nitrogen fertiliser, as N {GLO}| nutrient supply from potassium nitrate | Alloc Rec, U", "kg",
                     "fert_n_potassium_nitrate", StandardUncertaintyMetadata.FERTILISERS,
                     "fertnmin_potassium_nitrate"),
             new TemplateProductUsage("Ammonia, liquid {RER}| market for | Alloc Rec, U", "kg",
@@ -690,7 +690,7 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                     "fert_k_potassium_sulphate", StandardUncertaintyMetadata.FERTILISERS,
                     "fertkmin_potassium_sulphate_k2so4"),
             new TemplateProductUsage(
-                    "Potassium fertiliser, as K2O {GLO}| field application of potassium nitrate | Alloc Rec, U", "kg",
+                    "Potassium fertiliser, as K2O {GLO}| nutrient supply from potassium nitrate | Alloc Rec, U", "kg",
                     "fert_k_potassium_nitrate", StandardUncertaintyMetadata.FERTILISERS,
                     "fertkmin_potassium_nitrate"),
             new TemplateProductUsage("Potassium chloride, as K2O {GLO}| market for | Alloc Rec, U", "kg",
