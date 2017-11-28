@@ -867,26 +867,25 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
                                              StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING,
                                              "pest_horticultural_oil"),
 
-            //FIXME: Should be g for all the 4 below
-            new TemplateIntermediaryExchange("pesticide, unspecified", AvailableUnit.KG, "pest_remains",
+            new TemplateIntermediaryExchange("pesticide, unspecified", AvailableUnit.KG, "pest_remains_kg",
                                              StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING, ""),
             /*new TemplateIntermediaryExchange("Emissions from pesticides, unspecified (WFLDB 3.3)/GLO S", "g",
                                      "pest_remains",
                                      StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL, ""),*/
             new TemplateIntermediaryExchange("pesticide, unspecified", AvailableUnit.KG,
-                                             "remains_herbicides",
+                                             "remains_herbicides_kg",
                                              StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING, ""),
             /*new TemplateIntermediaryExchange("Emissions from herbicides, unspecified (WFLDB 3.3)/GLO S", "g",
                                      "remains_herbicides", StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL,
                                      ""),*/
             new TemplateIntermediaryExchange("pesticide, unspecified", AvailableUnit.KG,
-                                             "remains_fungicides",
+                                             "remains_fungicides_kg",
                                              StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING, ""),
             /*new TemplateIntermediaryExchange("Emissions from fungicides, unspecified (WFLDB 3.3)/GLO S", "g",
                                      "remains_fungicides", StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL,
                                      ""),*/
             new TemplateIntermediaryExchange("pesticide, unspecified", AvailableUnit.KG,
-                                             "remains_insecticides",
+                                             "remains_insecticides_kg",
                                              StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING, ""),
             /*new TemplateIntermediaryExchange("Emissions from insecticides, unspecified (WFLDB 3.3)/GLO S", "g",
                                      "remains_insecticides", StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL,

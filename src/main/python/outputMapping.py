@@ -153,14 +153,19 @@ class OutputMapping(object):
     def mapPesticides(self, allInputs):
         for k,v in allInputs["specified_pesticides"].items():
             self.output[k.replace("part_", "pesti_")] = v
+            self.output[k.replace("part_", "pestikg_")] = v / 1000.0
         if ("pest_remains" in allInputs):
             self.output["pest_remains"] = allInputs["pest_remains"]
+            self.output["pest_remains_kg"] = allInputs["pest_remains"] / 1000.0
         if ("remains_herbicides" in allInputs):
             self.output["remains_herbicides"] = allInputs["remains_herbicides"]
+            self.output["remains_herbicides_kg"] = allInputs["remains_herbicides"] / 1000.0
         if ("remains_fungicides" in allInputs):
             self.output["remains_fungicides"] = allInputs["remains_fungicides"]
+            self.output["remains_fungicides_kg"] = allInputs["remains_fungicides"] / 1000.0
         if ("remains_insecticides" in allInputs):
             self.output["remains_insecticides"] = allInputs["remains_insecticides"]
+            self.output["remains_insecticides_kg"] = allInputs["remains_insecticides"] / 1000.0
 
     def mapMachineries(self, allInputs):
         if ("remains_machinery_diesel" in allInputs):

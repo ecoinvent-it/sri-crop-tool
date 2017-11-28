@@ -34,7 +34,7 @@ public class PesticideEmissions extends PesticideProductUsage
     @Override
     public String getName()
     {
-        String dbName = target == OutputTarget.WFLDB ? "WFLDB 3.0" : "ALCIG";
+        String dbName = target == OutputTarget.WFLDB ? "WFLDB 3.3" : "ALCIG";
         if (variable.startsWith("pesti_herbicides"))
             return "Emissions from herbicides, unspecified (" + dbName + ")/GLO S";
         else if (variable.startsWith("pesti_fungicides"))

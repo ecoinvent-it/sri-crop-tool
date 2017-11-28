@@ -39,9 +39,11 @@ import javax.xml.bind.JAXB;
 import com.google.common.base.Charsets;
 import com.google.common.base.Predicates;
 import com.google.common.base.Strings;
+import com.google.common.collect.Maps;
 import com.quantis_intl.commons.ecospold2.ecospold02.*;
 import com.quantis_intl.lcigenerator.ecospold.*;
 import com.quantis_intl.lcigenerator.imports.Origin;
+import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
 import com.quantis_intl.lcigenerator.imports.SingleValue;
 import com.quantis_intl.lcigenerator.imports.ValueGroup;
 import com.quantis_intl.lcigenerator.scsv.OutputTarget;
@@ -53,6 +55,10 @@ public class EcospoldFileWriter
     private static final TDataEntryBy NOBODY;
     private static final TDataGeneratorAndPublication NOGENERATOR;
     private static final TFileAttributes FILE_ATTRIBUTES;
+    private static final Map<String, String> PESTICIDE_PRODUCT_MAPPING =
+            Maps.fromProperties(PropertiesLoader.loadProperties("/ecospold_pesticides_product_mapping.properties"));
+    private static final Map<String, String> PESTICIDE_SUBS_MAPPING =
+            Maps.fromProperties(PropertiesLoader.loadProperties("/ecospold_pesticides_substance_mapping.properties"));
 
     static
     {
@@ -244,6 +250,24 @@ public class EcospoldFileWriter
                       .filter(Predicates.notNull())
                       .collect(Collectors.toList()));
 
+        modelsOutput.entrySet().stream().filter(e -> e.getKey().startsWith("pestikg_"))
+                    .forEach(e ->
+                             {
+                                 TIntermediateExchange ex = buildPesticideExchange(e.getKey(), e.getValue(),
+                                                                                   extractedInputs, dividingValue);
+                                 if (ex != null)
+                                     flowData.getIntermediateExchange().add(ex);
+
+                                 if (!e.getKey().endsWith("_other") && !e.getKey().endsWith("_unspecified"))
+                                 {
+                                     TElementaryExchange ee = buildPesticideSubstance(e.getKey(), e.getValue(),
+                                                                                      extractedInputs, dividingValue);
+                                     if (ex != null)
+                                         flowData.getElementaryExchange().add(ee);
+                                 }
+                             }
+                            );
+
         TModellingAndValidation modAndValid = new TModellingAndValidation();
         dataset.setModellingAndValidation(modAndValid);
         TAdministrativeInformation adminInfo = new TAdministrativeInformation();
@@ -348,6 +372,73 @@ public class EcospoldFileWriter
                             tu).activityNameId, modelsOutput.get("country")));
         }
 
+        return ex;
+    }
+
+    private TIntermediateExchange buildPesticideExchange(String key, String value, ValueGroup extractedInputs,
+                                                         double dividingValue)
+    {
+        key = key.replaceFirst("pestikg_", "pesti");
+        TIntermediateExchange ex = new TIntermediateExchange();
+        ex.setId(UUID.randomUUID());
+        ex.setUnitId(AvailableUnit.KG.uuid);
+        ex.setAmount(Double.parseDouble(value) / dividingValue);
+        if (ex.getAmount() == 0.d)
+            return null;
+        ex.setMathematicalRelation("");
+        TValidIntermediateExchange tex = possibleExchanges.getExchange(PESTICIDE_PRODUCT_MAPPING.get(key));
+        if (tex == null)
+        {
+            System.out.println("ERROR: exchange not found: " + PESTICIDE_PRODUCT_MAPPING.get(key));
+            return null;
+        }
+        ex.setIntermediateExchangeId(tex.getId());
+        ex.setName(tex.getName());
+        ex.setUnitName(tex.getUnitName());
+        ex.setComment(TString32000.ofEn(findComment(extractedInputs, key.substring(6))));
+        ex.getClassification().addAll(tex.getClassification());
+        ex.getProperty().addAll(tex.getProperty());
+        ex.getProperty().forEach(p -> {
+            TValidProperty vp = possibleProperties.getProperty(p.getPropertyId());
+            p.setName(vp.getName());
+            p.setUnitId(vp.getUnitId());
+            p.setUnitName(vp.getUnitName());
+        });
+        ex.setInputGroup((short) 5);
+
+        return ex;
+    }
+
+    private TElementaryExchange buildPesticideSubstance(String key, String value, ValueGroup extractedInputs,
+                                                        double dividingValue)
+    {
+        key = key.replaceFirst("pestikg_", "pesti_");
+        TElementaryExchange ex = new TElementaryExchange();
+        ex.setId(UUID.randomUUID());
+        ex.setUnitId(AvailableUnit.KG.uuid);
+        ex.setAmount(Double.parseDouble(value) / dividingValue);
+        ex.setMathematicalRelation("");
+        TValidElementaryExchange tex =
+                possibleSubstances.getExchange(UUID.fromString("e1bc9a16-5b6a-494f-98ef-49f461b1a11e"),
+                                               PESTICIDE_SUBS_MAPPING.get(key));
+        if (tex == null)
+        {
+            System.out.println("ERROR: substance not found: " + PESTICIDE_SUBS_MAPPING.get(key));
+            return null;
+        }
+        ex.setElementaryExchangeId(tex.getId());
+        ex.setName(tex.getName());
+        ex.setCompartment(tex.getCompartment());
+        ex.setUnitName(tex.getUnitName());
+        ex.setComment(TString32000.ofEn(findComment(extractedInputs, key.substring(6))));
+        ex.getProperty().addAll(tex.getProperty());
+        ex.getProperty().forEach(p -> {
+            TValidProperty vp = possibleProperties.getProperty(p.getPropertyId());
+            p.setName(vp.getName());
+            p.setUnitId(vp.getUnitId());
+            p.setUnitName(vp.getUnitName());
+        });
+        ex.setOutputGroup((short) 4);
         return ex;
     }
 
