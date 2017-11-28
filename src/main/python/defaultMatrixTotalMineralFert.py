@@ -22,11 +22,17 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "TR":27.24957932,
       "GLO":26.40436446
    },
-   "asparagus":{
-      "CN":26.173737269344,
-      "FR":20.549121957728,
-      "PE":55.197111178496,
-      "GLO":33.9733234685227
+    "asparagus_green": {
+        "CN": 26.173737269344,
+        "FR": 20.549121957728,
+        "PE": 55.197111178496,
+        "GLO": 33.9733234685227
+    },
+    "asparagus_white": {
+        "CN": 26.173737269344,
+        "FR": 20.549121957728,
+        "PE": 55.197111178496,
+        "GLO": 33.9733234685227
    },
    "banana":{
       "CO":42.266031793152,
@@ -43,9 +49,12 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
         "US": 87.0,
         "GLO": 87.0
     },
-   "cabbage": {
+    "cabbage_red": {
       "GLO": 0.0
    },
+    "cabbage_white": {
+        "GLO": 0.0
+    },
    "carrot":{
       "CN":101.999945092522,
       "IL":188.231716973096,
@@ -73,12 +82,18 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "PH":43.550829836016,
       "GLO":49.2252536628213
    },
-   "coffee":{
+    "coffee_arabica": {
       "BR":30.6476108350635,
       "ID":21.289351155678,
       "VN":41.8053855779247,
       "GLO":31.2474491895554
    },
+    "coffee_robusta": {
+        "BR": 30.6476108350635,
+        "ID": 21.289351155678,
+        "VN": 41.8053855779247,
+        "GLO": 31.2474491895554
+    },
    "cotton": {
       "GLO": 0.0
    },
@@ -102,12 +117,18 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
    "hemp": {
       "GLO": 0.0
    },
-   "lemonlime":{
+    "lemon": {
       "MX":32.99832808448,
       "ES":36.57672308128,
       "TR":63.61660903904,
       "GLO":44.3972200682667
    },
+    "citruslime": {
+        "MX": 32.99832808448,
+        "ES": 36.57672308128,
+        "TR": 63.61660903904,
+        "GLO": 44.3972200682667
+    },
    "lentil": {
       "GLO": 0.0
    },
@@ -150,13 +171,20 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "NZ":77.624400576,
       "GLO":60.53690396
    },
-   "orange":{
+    "orange_fresh": {
       "BR":45.98539017664,
       "ZA":60.49950793504,
       "ES":39.59207099712,
       "US":55.71729180128,
       "GLO":50.44856522752
    },
+    "orange_processing": {
+        "BR": 45.98539017664,
+        "ZA": 60.49950793504,
+        "ES": 39.59207099712,
+        "US": 55.71729180128,
+        "GLO": 50.44856522752
+    },
    "palmtree":{
       "ID":80.753172,
       "GLO":80.753172
@@ -209,7 +237,7 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "AR":183.201686,
       "GLO":183.201686
    },
-   "strawberry":{
+    "strawberry_fresh": {
       "ES":47.62040526,
       "CH":22.146500392,
        "MX": 84.0,
@@ -217,6 +245,14 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "US":71.289077968,
       "GLO":47.0186612066667
    },
+    "strawberry_processing": {
+        "ES": 47.62040526,
+        "CH": 22.146500392,
+        "MX": 84.0,
+        "MA": 80.0,
+        "US": 71.289077968,
+        "GLO": 47.0186612066667
+    },
    "sugarbeet":{
       "FR":245.17328056,
       "DE":187.05101768,
@@ -247,7 +283,7 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "LK":61.7795461,
       "GLO":64.55971426
    },
-   "tomato":{
+    "tomato_fresh": {
       "IT":93.165986442832,
       "MX":51.674104083312,
       "NL":820.24685490576,
@@ -255,6 +291,14 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "CH":318.710089237552,
       "GLO":282.692468592301
    },
+    "tomato_processing": {
+        "IT": 93.165986442832,
+        "MX": 51.674104083312,
+        "NL": 820.24685490576,
+        "ES": 129.665308292048,
+        "CH": 318.710089237552,
+        "GLO": 282.692468592301
+    },
    "wheat":{
       "AU":35.2051250366667,
       "CA":54.4548077333334,

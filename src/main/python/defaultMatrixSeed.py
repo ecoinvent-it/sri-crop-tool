@@ -62,14 +62,19 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
 
 #GD_crop Seedlings_L0
 NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY = {
-   "asparagus":{
-   },
+    "asparagus_green": {
+    },
+    "asparagus_white": {
+    },
    "bellpepper": {
       "GLO": 0.0
    },
-   "cabbage": {
-      "GLO": 0.0
-   },
+    "cabbage_red": {
+        "GLO": 0.0
+    },
+    "cabbage_white": {
+        "GLO": 0.0
+    },
    "chilli": {
       "GLO": 0.0
    },
@@ -83,10 +88,15 @@ NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY = {
    },
    "raspberry": {
    },
-   "strawberry": {
+    "strawberry_fresh": {
    },
-   "tomato":{
-      "GLO":3.125
+    "strawberry_processing": {
+    },
+    "tomato_fresh": {
+        "GLO": 3.125
+    },
+    "tomato_processing": {
+        "GLO": 3.125
    }
 }
 
@@ -109,14 +119,18 @@ NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY = {
    },
    "coconut":{
    },
-   "coffee":{
+    "coffee_arabica": {
+    },
+    "coffee_robusta": {
    },
    "cranberry": {
    },
    "grape": {
    },
-   "lemonlime":{
-   },
+    "lemon": {
+    },
+    "citruslime": {
+    },
    "mandarin":{
    },
    "mango": {
@@ -125,8 +139,10 @@ NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY = {
    },
    "olive":{
    },
-   "orange":{
-   },
+    "orange_fresh": {
+    },
+    "orange_processing": {
+    },
    "palmtree":{
    },
    "peach":{

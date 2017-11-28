@@ -20,12 +20,18 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "TR":31740.0,
       "GLO":13929.091
    },
-   "asparagus":{
-      "CN":3600.0,
-      "FR":5659.41,
-      "PE":2565.64,
-      "GLO":3941.6833
-   },
+    "asparagus_green": {
+        "CN": 3600.0,
+        "FR": 5659.41,
+        "PE": 2565.64,
+        "GLO": 3941.6833
+    },
+    "asparagus_white": {
+        "CN": 3600.0,
+        "FR": 5659.41,
+        "PE": 2565.64,
+        "GLO": 3941.6833
+    },
    "banana":{
       "CO":29125.2554309561,
       "CR":21924.1552618813,
@@ -41,9 +47,12 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
         "US": 97373.0,
         "GLO": 97373.0
     },
-   "cabbage": {
+    "cabbage_red": {
       "GLO": 0.0
    },
+    "cabbage_white": {
+        "GLO": 0.0
+    },
    "carrot":{
       "CN":4304.7,
       "IL":6845.5,
@@ -68,12 +77,18 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
    "coconut":{
       "GLO":5700.0
    },
-   "coffee":{
+    "coffee_arabica": {
       "BR":5756.0008,
       "ID":8072.094249876,
       "VN":9631.63156411632,
       "GLO":7819.908871
    },
+    "coffee_robusta": {
+        "BR": 5756.0008,
+        "ID": 8072.094249876,
+        "VN": 9631.63156411632,
+        "GLO": 7819.908871
+    },
    "cotton": {
       "GLO": 0.0
    },
@@ -97,12 +112,18 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
    "hemp": {
       "GLO": 0.0
    },
-   "lemonlime":{
+    "lemon": {
       "MX":28578.0,
       "ES":13860.0,
       "TR":10800.0,
       "GLO":17746.0
    },
+    "citruslime": {
+        "MX": 28578.0,
+        "ES": 13860.0,
+        "TR": 10800.0,
+        "GLO": 17746.0
+    },
    "lentil": {
       "GLO": 0.0
    },
@@ -146,13 +167,20 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "NZ":23325.0,
       "GLO":16256.7
    },
-   "orange":{
+    "orange_fresh": {
       "BR":4287.44541214954,
       "ZA":5309.05093671634,
       "ES":5698.7015263555,
       "US":6147.0,
       "GLO":5360.549469
    },
+    "orange_processing": {
+        "BR": 4287.44541214954,
+        "ZA": 5309.05093671634,
+        "ES": 5698.7015263555,
+        "US": 6147.0,
+        "GLO": 5360.549469
+    },
    "palmtree":{
       "GLO":1743.4644
    },
@@ -202,7 +230,7 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
    "soybean":{
       "GLO":1395.57819759211
    },
-   "strawberry":{
+    "strawberry_fresh": {
       "ES":217792.35,
       "CH":45774.0,
        "MX": 119082.133,
@@ -210,6 +238,14 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "US":93710.05,
       "GLO":119082.133
    },
+    "strawberry_processing": {
+        "ES": 217792.35,
+        "CH": 45774.0,
+        "MX": 119082.133,
+        "MA": 119082.133,
+        "US": 93710.05,
+        "GLO": 119082.133
+    },
    "sugarbeet":{
       "FR":4076.44610913109,
       "US":2552.09343402969,
@@ -237,7 +273,7 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "LK":6921.0,
       "GLO":7680.267
    },
-   "tomato":{
+    "tomato_fresh": {
       "IT":37894.9398295496,
       "MX":39729.8579152116,
       "NL":45689.0810714346,
@@ -245,6 +281,14 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "CH":27206.5388274181,
       "GLO":33957.733117
    },
+    "tomato_processing": {
+        "IT": 37894.9398295496,
+        "MX": 39729.8579152116,
+        "NL": 45689.0810714346,
+        "ES": 19268.2479399323,
+        "CH": 27206.5388274181,
+        "GLO": 33957.733117
+    },
    "wheat":{
       "AU":1450.54134726683,
       "CA":2152.6644260637,

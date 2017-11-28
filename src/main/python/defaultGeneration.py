@@ -33,13 +33,14 @@ from models.modelEnums import SoilTexture
 from models.otherorganicfertilisermodel import CompostType, SludgeType
 from models.pmodel import LandUseCategory
 
-TREE_BASED_CROPS = ["almond", "apple", "apricot", "banana", "blueberry", "cashew", "cocoa", "coconut", "coffee",
-                    "cranberry", "grape",
-                    "lemonlime", "mandarin", "mango", "mulberry", "olive", "orange", "palmtree", "peach", "pear",
-                    "pineapple", "sugarcane", "tea"]
+TREE_BASED_CROPS = ["almond", "apple", "apricot", "banana", "blueberry", "cashew", "cocoa", "coconut", "coffee_arabica",
+                    "coffee_robusta", "cranberry", "grape", "lemon", "citruslime", "mandarin", "mango", "mulberry",
+                    "olive", "orange_fresh", "orange_processing", "palmtree", "peach", "pear", "pineapple", "sugarcane",
+                    "tea"]
 
-SEEDLINGS_BASED_CROPS = ["asparagus", "bellpepper", "cabbage", "chilli", "eggplant", "mint", "onion", "strawberry",
-                         "raspberry", "tomato"]
+SEEDLINGS_BASED_CROPS = ["asparagus_green", "asparagus_white", "bellpepper", "cabbage_red", "cabbage_white", "chilli",
+                         "eggplant", "mint", "onion", "strawberry_fresh", "strawberry_processing", "raspberry",
+                         "tomato_fresh", "tomato_processing"]
 
 
 class DefaultValuesWrapper(object):
@@ -395,7 +396,9 @@ class NitrogenFromCropResiduesDefaultGenerator(object):
             return generators["yield_main_product_dry_per_crop_cycle"] / 6.0 * 0.43 * 0.004
         elif (crop == "bellpepper"):
             return 52.33
-        elif (crop == "cabbage"):
+        elif (crop == "cabbage_red"):
+            return 180.0
+        elif (crop == "cabbage_white"):
             return 180.0
         elif (crop == "chilli"):
             return 37.20
