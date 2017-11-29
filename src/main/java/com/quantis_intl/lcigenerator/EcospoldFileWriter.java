@@ -23,17 +23,11 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.ZoneOffset;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.inject.Inject;
-import javax.validation.ConstraintViolation;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import javax.xml.bind.JAXB;
 
 import com.google.common.base.Charsets;
@@ -215,7 +209,7 @@ public class EcospoldFileWriter
         {
             refOutput.setIntermediateExchangeId(UUID.randomUUID());
             refOutput.setName(TString120.ofEn(cropsEcospoldRefsCache.exchangeNameOfCrop(modelsOutput.get("crop"))));
-            System.out.println("ERROR: exchange not found: " +
+            System.out.println("ERROR: exchange not found for crop " + modelsOutput.get("crop") + ": " +
                                        cropsEcospoldRefsCache.exchangeNameOfCrop(modelsOutput.get("crop")));
         }
 
@@ -291,6 +285,9 @@ public class EcospoldFileWriter
                              }
                             );
 
+        squashIntermediateExchanges(flowData.getIntermediateExchange());
+        squashElementaryExchanges(flowData.getElementaryExchange());
+
         dataset.setModellingAndValidation(MODELLING_AND_VALIDATION);
         TAdministrativeInformation adminInfo = new TAdministrativeInformation();
         dataset.setAdministrativeInformation(adminInfo);
@@ -298,10 +295,10 @@ public class EcospoldFileWriter
         adminInfo.setDataGeneratorAndPublication(NOGENERATOR);
         adminInfo.setFileAttributes(FILE_ATTRIBUTES);
 
-        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        /*Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
         Set<ConstraintViolation<TActivityDataset>> violations = validator.validate(dataset);
-        violations.forEach(System.out::println);
+        violations.forEach(System.out::println);*/
 
         JAXB.marshal(res, writer);
         writer.flush();
@@ -400,7 +397,7 @@ public class EcospoldFileWriter
     private TIntermediateExchange buildPesticideExchange(String key, String value, ValueGroup extractedInputs,
                                                          double dividingValue)
     {
-        key = key.replaceFirst("pestikg_", "pesti");
+        key = key.replaceFirst("pestikg_", "pesti_");
         TIntermediateExchange ex = new TIntermediateExchange();
         ex.setId(UUID.randomUUID());
         ex.setUnitId(AvailableUnit.KG.uuid);
@@ -411,7 +408,8 @@ public class EcospoldFileWriter
         TValidIntermediateExchange tex = possibleExchanges.getExchange(PESTICIDE_PRODUCT_MAPPING.get(key));
         if (tex == null)
         {
-            System.out.println("ERROR: exchange not found: " + PESTICIDE_PRODUCT_MAPPING.get(key));
+            System.out.println(
+                    "ERROR: exchange not found for pesticide " + key + ": " + PESTICIDE_PRODUCT_MAPPING.get(key));
             return null;
         }
         ex.setIntermediateExchangeId(tex.getId());
@@ -502,6 +500,55 @@ public class EcospoldFileWriter
         else
             ex.setOutputGroup((short) 4);
         return ex;
+    }
+
+    private void squashIntermediateExchanges(List<TIntermediateExchange> exchanges)
+    {
+        Set<UUID> alreadyMergedIds = new HashSet<>();
+        Map<UUID, TIntermediateExchange> existingExchanges = new HashMap<>();
+        Iterator<TIntermediateExchange> it = exchanges.iterator();
+        while (it.hasNext())
+        {
+            TIntermediateExchange ex = it.next();
+            TIntermediateExchange other;
+            if (null != (other = existingExchanges.putIfAbsent(ex.getIntermediateExchangeId(), ex)) &&
+                    ex.getActivityLinkId() == null)
+            {
+                if (alreadyMergedIds.add(ex.getIntermediateExchangeId()))
+                    other.setComment(TString32000.ofEn(
+                            "This exchange is an aggregation of amounts: \n" + other.getAmount() + ". " + "Comment: " +
+                                    other.getComment().getValue()));
+
+                other.setComment(TString32000.ofEn(other.getComment().getValue() + "\n" + ex.getAmount() + ". " +
+                                                           "Comment: " + ex.getComment().getValue()));
+                other.setAmount(other.getAmount() + ex.getAmount());
+                it.remove();
+            }
+        }
+    }
+
+    private void squashElementaryExchanges(List<TElementaryExchange> exchanges)
+    {
+        Set<UUID> alreadyMergedIds = new HashSet<>();
+        Map<UUID, TElementaryExchange> existingExchanges = new HashMap<>();
+        Iterator<TElementaryExchange> it = exchanges.iterator();
+        while (it.hasNext())
+        {
+            TElementaryExchange ex = it.next();
+            TElementaryExchange other;
+            if (null != (other = existingExchanges.putIfAbsent(ex.getElementaryExchangeId(), ex)))
+            {
+                if (alreadyMergedIds.add(ex.getElementaryExchangeId()))
+                    other.setComment(TString32000.ofEn(
+                            "This exchange is an aggregation of amounts: \n" + other.getAmount() + ". " + "Comment: " +
+                                    other.getComment().getValue()));
+
+                other.setComment(TString32000.ofEn(other.getComment().getValue() + "\n" + ex.getAmount() + ". " +
+                                                           "Comment: " + ex.getComment().getValue()));
+                other.setAmount(other.getAmount() + ex.getAmount());
+                it.remove();
+            }
+        }
     }
 
 }

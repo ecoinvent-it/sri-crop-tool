@@ -1012,7 +1012,7 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
         {
             String cropType = modelOutputs.get("luc_crop_type");
 
-            return "Land use change, " + cropType + " crop";
+            return "land use change, " + cropType + " crop";
         }
     }
 
