@@ -19,41 +19,52 @@
 
 package com.quantis_intl.lcigenerator.ecospold;
 
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.xml.bind.JAXB;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
-import com.quantis_intl.lcigenerator.imports.PropertiesLoader;
+import com.quantis_intl.commons.ecospold2.ecospold02.TValidActivityName;
+import com.quantis_intl.commons.ecospold2.ecospold02.TValidActivityNames;
+import com.quantis_intl.stack.utils.StackProperties;
 
 @Singleton
-public class CropsEcospoldRefsCache
+public class PossibleActivityNamesCache
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CropsEcospoldRefsCache.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PossibleActivityNamesCache.class);
 
-    private final Map<String, String> cropActivityNames;
-    private final Map<String, String> cropExchangeNames;
+    private final Map<String, TValidActivityName> possibleActivityNames;
 
     @Inject
-    public CropsEcospoldRefsCache()
+    public PossibleActivityNamesCache(@Named(StackProperties.SERVER_UPLOADED_FILE_FOLDER) String path)
     {
-        this.cropActivityNames = Maps.fromProperties(
-                PropertiesLoader.loadProperties("/ecospold_activity_name_mapping.properties"));
-        this.cropExchangeNames = Maps.fromProperties(
-                PropertiesLoader.loadProperties("/ecospold_main_output_mapping.properties"));
+        LOGGER.info("Initializing activity name cache");
+        File f = Paths.get(path, "ActivityNames.xml").toFile();
+        if (!f.exists())
+        {
+            LOGGER.error("File not found: {}", f.getAbsolutePath());
+            throw new IllegalStateException("File not found: " + f.getAbsolutePath());
+        }
+
+        possibleActivityNames = Maps.uniqueIndex(JAXB.unmarshal(f, TValidActivityNames.class)
+                                                     .getActivityName(), ve -> ve.getName().getValue());
+
     }
 
-    public String activityNameOfCrop(String crop)
+    public UUID getActivityUUID(String name)
     {
-        return cropActivityNames.get(crop);
-    }
-
-    public String exchangeNameOfCrop(String crop)
-    {
-        return cropExchangeNames.get(crop);
+        TValidActivityName n = possibleActivityNames.get(name);
+        if (n == null)
+            return null;
+        return n.getId();
     }
 }
