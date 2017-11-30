@@ -43,9 +43,9 @@ class PackModel(object):
         fert_solid,fert_liquid = self._computeFertilisers(totalFert)
         pest_solid,pest_liquid = self._computePesticides()
 
-        #Values are divided by 100.0, because there are too many packaging otherwise, according to WFLDB. This should be cleaned up
-        return {"m_Pack_wfldb_packaging_liquid": ((pest_liquid + fert_liquid)*self._DILUTION_FACTOR + self.pest_horticultural_oil) / 100.0,
-                "m_Pack_wfldb_packaging_solid": (pest_solid + fert_solid)*self._DILUTION_FACTOR / 100.0,
+        return {"m_Pack_wfldb_packaging_liquid": (
+            (pest_liquid + fert_liquid) * self._DILUTION_FACTOR + self.pest_horticultural_oil),
+            "m_Pack_wfldb_packaging_solid": (pest_solid + fert_solid) * self._DILUTION_FACTOR,
                 "m_Pack_ecoinvent_packaging_liquid": pest_liquid * self._ECOINVENT_PEST_DILUTION_FACTOR
                                                      + fert_liquid * self._ECOINVENT_FERT_DILUTION_FACTOR
                                                      + self.pest_horticultural_oil,
