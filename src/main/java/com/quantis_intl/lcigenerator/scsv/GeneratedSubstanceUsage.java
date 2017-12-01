@@ -64,7 +64,7 @@ public class GeneratedSubstanceUsage implements SubstanceUsage
                 builder.append(replacement);
             i = matcher.end();
         }
-        builder.append(templateName.substring(i, templateName.length()));
+        builder.append(templateName.substring(i));
         return builder.toString();
     }
 
@@ -101,12 +101,26 @@ public class GeneratedSubstanceUsage implements SubstanceUsage
     public String getComment()
     {
         String res = template.uncertainty.pedigreeMatrix;
-        if (template.commentVariable.isEmpty())
+        if (template.commentString.isEmpty())
             return res;
 
-        SingleValue<?> vg = extractedInputs.getDeepSingleValue(template.commentVariable);
-        if (vg != null && !Strings.isNullOrEmpty(vg.getComment()))
-            res += " - " + vg.getComment();
+        Pattern pattern = Pattern.compile("\\{(.+?)\\}");
+        Matcher matcher = pattern.matcher(template.commentString);
+        StringBuilder builder = new StringBuilder();
+        int i = 0;
+        while (matcher.find())
+        {
+            builder.append(template.commentString.substring(i, matcher.start()));
+            SingleValue<?> vg = extractedInputs.getDeepSingleValue(matcher.group(1));
+            if (vg != null && !Strings.isNullOrEmpty(vg.getComment()))
+                builder.append(vg.getComment());
+            i = matcher.end();
+        }
+        builder.append(template.commentString.substring(i));
+        String buildedString = builder.toString();
+        if (!buildedString.isEmpty())
+            res += " - " + buildedString;
+
         return res;
     }
 }

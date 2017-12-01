@@ -79,6 +79,7 @@ public class PesticideSubstanceUsage implements SubstanceUsage
     public String getComment()
     {
         String res = StandardUncertaintyMetadata.PESTICIDES_EMISSION_TO_SOIL.pedigreeMatrix;
+        res += " - Assumption - 100% of applied pesticides emitted to soil";
         if (!comment.isEmpty())
             res += " - " + comment;
         return res;

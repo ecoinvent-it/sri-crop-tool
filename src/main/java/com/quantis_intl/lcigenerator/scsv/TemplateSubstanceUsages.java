@@ -37,17 +37,17 @@ public interface TemplateSubstanceUsages
         public final String unit;
         public final String amountVariable;
         public final StandardUncertaintyMetadata uncertainty;
-        public final String commentVariable;
+        public final String commentString;
 
         public TemplateSubstanceUsage(String name, SubCompartment subCompartment, String unit, String amountVariable,
-                StandardUncertaintyMetadata uncertainty, String commentVariable)
+                                      StandardUncertaintyMetadata uncertainty, String commentString)
         {
             this.name = name;
             this.subCompartment = subCompartment;
             this.unit = unit;
             this.amountVariable = amountVariable;
             this.uncertainty = uncertainty;
-            this.commentVariable = commentVariable;
+            this.commentString = commentString;
         }
     }
 }
