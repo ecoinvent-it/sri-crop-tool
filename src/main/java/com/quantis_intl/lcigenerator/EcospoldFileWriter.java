@@ -437,6 +437,8 @@ public class EcospoldFileWriter
         ex.setId(UUID.randomUUID());
         ex.setUnitId(AvailableUnit.KG.uuid);
         ex.setAmount(Double.parseDouble(value) / dividingValue);
+        if (ex.getAmount() == 0.d)
+            return null;
         ex.setMathematicalRelation("");
         TValidElementaryExchange tex =
                 possibleSubstances.getExchange(UUID.fromString("e1bc9a16-5b6a-494f-98ef-49f461b1a11e"),
@@ -473,6 +475,8 @@ public class EcospoldFileWriter
         if (amount == null)
             return null;
         ex.setAmount(Double.parseDouble(amount) / dividingValue);
+        if (ex.getAmount() == 0.d)
+            return null;
         ex.setMathematicalRelation("");
         TValidElementaryExchange tex = possibleSubstances.getExchange(su.subCompartment, su.name);
         if (tex == null)
@@ -511,18 +515,31 @@ public class EcospoldFileWriter
         {
             TIntermediateExchange ex = it.next();
             TIntermediateExchange other;
-            if (null != (other = existingExchanges.putIfAbsent(ex.getIntermediateExchangeId(), ex)) &&
-                    ex.getActivityLinkId() == null)
+            if (ex.getActivityLinkId() == null)
             {
-                if (alreadyMergedIds.add(ex.getIntermediateExchangeId()))
-                    other.setComment(TString32000.ofEn(
-                            "This exchange is an aggregation of amounts: \n" + other.getAmount() + ". " + "Comment: " +
-                                    other.getComment().getValue()));
+                if (null != (other = existingExchanges.putIfAbsent(ex.getIntermediateExchangeId(), ex)))
+                {
+                    if (!Objects.equals(ex.getInputGroup(), other.getInputGroup()) ||
+                            !Objects.equals(ex.getOutputGroup(), other.getInputGroup()))
+                    {
+                        existingExchanges.put(ex.getIntermediateExchangeId(), ex);
+                        alreadyMergedIds.remove(ex.getIntermediateExchangeId());
+                    }
+                    else
+                    {
+                        if (alreadyMergedIds.add(ex.getIntermediateExchangeId()))
+                            other.setComment(TString32000.ofEn(
+                                    "This exchange is an aggregation of amounts: \n" + other.getAmount() + ". " +
+                                            "Comment: " +
+                                            other.getComment().getValue()));
 
-                other.setComment(TString32000.ofEn(other.getComment().getValue() + "\n" + ex.getAmount() + ". " +
-                                                           "Comment: " + ex.getComment().getValue()));
-                other.setAmount(other.getAmount() + ex.getAmount());
-                it.remove();
+                        other.setComment(
+                                TString32000.ofEn(other.getComment().getValue() + "\n" + ex.getAmount() + ". " +
+                                                          "Comment: " + ex.getComment().getValue()));
+                        other.setAmount(other.getAmount() + ex.getAmount());
+                        it.remove();
+                    }
+                }
             }
         }
     }
