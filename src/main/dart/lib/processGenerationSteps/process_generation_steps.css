@@ -70,7 +70,7 @@
 
 #step3:not(.disabledStep):hover
 {
-  background-image: url('img/btn_step3.png');
+  background-image: url('img/btn_step3_over.png');
 }
 
 #step3 input.upload {
