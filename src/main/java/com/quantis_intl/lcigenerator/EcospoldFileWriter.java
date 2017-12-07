@@ -520,7 +520,7 @@ public class EcospoldFileWriter
                 if (null != (other = existingExchanges.putIfAbsent(ex.getIntermediateExchangeId(), ex)))
                 {
                     if (!Objects.equals(ex.getInputGroup(), other.getInputGroup()) ||
-                            !Objects.equals(ex.getOutputGroup(), other.getInputGroup()))
+                            !Objects.equals(ex.getOutputGroup(), other.getOutputGroup()))
                     {
                         existingExchanges.put(ex.getIntermediateExchangeId(), ex);
                         alreadyMergedIds.remove(ex.getIntermediateExchangeId());
