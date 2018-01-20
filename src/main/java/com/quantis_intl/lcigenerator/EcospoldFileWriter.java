@@ -56,6 +56,7 @@ public class EcospoldFileWriter
             Maps.fromProperties(PropertiesLoader.loadProperties("/ecospold_pesticides_product_mapping.properties"));
     private static final Map<String, String> PESTICIDE_SUBS_MAPPING =
             Maps.fromProperties(PropertiesLoader.loadProperties("/ecospold_pesticides_substance_mapping.properties"));
+    private static final String ORGANIC_SUFFIX = ", organic";
 
     static
     {
@@ -158,7 +159,11 @@ public class EcospoldFileWriter
         TActivity activity = new TActivity();
         desc.setActivity(activity);
         String activityName = cropsEcospoldRefsCache.activityNameOfCrop(modelsOutput.get("crop"));
+
         //FIXME: add suffixes on activityName depending on greenhouse and stuff?
+        if (isOrganic(extractedInputs))
+            activityName += ORGANIC_SUFFIX;
+
         activity.setId(UUIDType5.nameUUIDFromNamespaceAndString(
                 UUIDType5.NAMESPACE_DNS,
                 activityName + modelsOutput.get("country")
@@ -187,8 +192,12 @@ public class EcospoldFileWriter
         TFlowData flowData = new TFlowData();
         dataset.setFlowData(flowData);
 
-        TValidIntermediateExchange tex =
-                possibleExchanges.getExchange(cropsEcospoldRefsCache.exchangeNameOfCrop(modelsOutput.get("crop")));
+        String outputName = cropsEcospoldRefsCache.exchangeNameOfCrop(modelsOutput.get("crop"));
+        if (isOrganic(extractedInputs))
+            outputName += ORGANIC_SUFFIX;
+
+        TValidIntermediateExchange tex = possibleExchanges.getExchange(outputName);
+
 
         TIntermediateExchange refOutput = new TIntermediateExchange();
         refOutput.setId(UUID.randomUUID());
@@ -207,29 +216,32 @@ public class EcospoldFileWriter
         }
         else
         {
-            refOutput.setIntermediateExchangeId(UUID.randomUUID());
-            refOutput.setName(TString120.ofEn(cropsEcospoldRefsCache.exchangeNameOfCrop(modelsOutput.get("crop"))));
-            System.out.println("ERROR: exchange not found for crop " + modelsOutput.get("crop") + ": " +
-                                       cropsEcospoldRefsCache.exchangeNameOfCrop(modelsOutput.get("crop")));
+            refOutput.setIntermediateExchangeId(UUIDType5.nameUUIDFromNamespaceAndString(
+                    UUIDType5.NAMESPACE_DNS, outputName));
+            refOutput.setName(TString120.ofEn(outputName));
+            md.getIntermediateExchange().add(TValidIntermediateExchange.ofEn(refOutput.getIntermediateExchangeId(),
+                                                                             outputName,
+                                                                             AvailableUnit.KG.uuid,
+                                                                             AvailableUnit.KG.symbol));
         }
 
         String label = findLabel(extractedInputs, "yield_BP1_per_crop_cycle");
         if (!Strings.isNullOrEmpty(label) && !Strings.isNullOrEmpty(modelsOutput.get("yield_BP1_per_crop_cycle")))
             flowData.getIntermediateExchange()
                     .add(generateCoProduct(modelsOutput, extractedInputs, label, "yield_BP1_per_crop_cycle",
-                                           dividingValue));
+                                           dividingValue, md));
 
         label = findLabel(extractedInputs, "yield_BP2_per_crop_cycle");
         if (!Strings.isNullOrEmpty(label) && !Strings.isNullOrEmpty(modelsOutput.get("yield_BP2_per_crop_cycle")))
             flowData.getIntermediateExchange()
                     .add(generateCoProduct(modelsOutput, extractedInputs, label, "yield_BP2_per_crop_cycle",
-                                           dividingValue));
+                                           dividingValue, md));
 
         label = findLabel(extractedInputs, "yield_BP3_per_crop_cycle");
         if (!Strings.isNullOrEmpty(label) && !Strings.isNullOrEmpty(modelsOutput.get("yield_BP3_per_crop_cycle")))
             flowData.getIntermediateExchange()
                     .add(generateCoProduct(modelsOutput, extractedInputs, label, "yield_BP3_per_crop_cycle",
-                                           dividingValue));
+                                           dividingValue, md));
 
 
         EcospoldTemplateIntermediaryExchanges usages = new EcospoldTemplateIntermediaryExchanges();
@@ -313,7 +325,8 @@ public class EcospoldFileWriter
     }
 
     private TIntermediateExchange generateCoProduct(Map<String, String> modelsOutput, ValueGroup extractedInputs,
-                                                    String label, String key, double dividingValue)
+                                                    String label, String key, double dividingValue,
+                                                    UsedUserMasterData md)
     {
         TValidIntermediateExchange tex = possibleExchanges.getExchange(label);
 
@@ -322,7 +335,11 @@ public class EcospoldFileWriter
         refOutput.setUnitId(AvailableUnit.KG.uuid);
         refOutput.setAmount(Double.parseDouble(modelsOutput.get(key)) / dividingValue);
         refOutput.setMathematicalRelation("");
+
+        if (isOrganic(extractedInputs))
+            label += ORGANIC_SUFFIX;
         refOutput.setName(TString120.ofEn(label));
+
         refOutput.setUnitName(TString40.ofEn(AvailableUnit.KG.symbol));
         refOutput.setComment(TString32000.ofEn(findComment(extractedInputs, key)));
         refOutput.setOutputGroup((short) 2);
@@ -335,9 +352,13 @@ public class EcospoldFileWriter
         }
         else
         {
-            refOutput.setIntermediateExchangeId(UUID.randomUUID());
+            refOutput.setIntermediateExchangeId(UUIDType5.nameUUIDFromNamespaceAndString(
+                    UUIDType5.NAMESPACE_DNS, label));
             refOutput.setName(TString120.ofEn(label));
-            System.out.println("ERROR: exchange not found: " + label);
+            md.getIntermediateExchange().add(TValidIntermediateExchange.ofEn(refOutput.getIntermediateExchangeId(),
+                                                                             label,
+                                                                             AvailableUnit.KG.uuid,
+                                                                             AvailableUnit.KG.symbol));
         }
 
         return refOutput;
@@ -542,6 +563,11 @@ public class EcospoldFileWriter
                 }
             }
         }
+    }
+
+    private boolean isOrganic(ValueGroup extractedInputs)
+    {
+        return "yes".equals(extractedInputs.getDeepSingleValue("organic_certified").getValue());
     }
 
     private void squashElementaryExchanges(List<TElementaryExchange> exchanges)
