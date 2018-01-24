@@ -188,6 +188,16 @@ EVAPO_TRANSPI_PER_CROP_PER_COUNTRY = {
       "IN": 25.53,
       "GLO": 25.53
    },
+    "castor_beans": {  # src: Pfister file
+        "IN": 6930.85,
+        "BR": 225.98,
+        "ZA": 3523.83,
+        "GLO": 1125.258432
+    },
+    "chick_pea": {  # src: Pfister file
+        "IN": 389.19,
+        "GLO": 843.0
+    },
    "chilli": {
       "IN": 165.06,
       "GLO": 165.06
@@ -271,6 +281,11 @@ EVAPO_TRANSPI_PER_CROP_PER_COUNTRY = {
         "VN": 1088.05459857925,
         "GLO": 2390.771
     },
+    "coriander": {
+        # src: ET in mm: http://akademiai.com/doi/pdf/10.1556/AAgr.56.2008.1.7#
+        # Yield in in average 1 t/ha: https://www.indiaagronet.com/horticulture/CONTENTS/Coriander.htm
+        "IN": 3302.0
+    },
    "cotton": {
       "IN": 1526.45,
       "GLO": 1526.45
@@ -289,6 +304,10 @@ EVAPO_TRANSPI_PER_CROP_PER_COUNTRY = {
       "FR": 7.8,
       "GLO": 229.87
    },
+    "ginger": {  # Pfister file
+        "IN": 285.52,
+        "GLO": 204.0
+    },
    "grape": {
       "IN": 20.55,
       "GLO": 20.55
@@ -691,6 +710,11 @@ EVAPO_TRANSPI_PER_CROP_PER_COUNTRY = {
       "VN":18.349967,
       "GLO":161.73759
    },
+    "pearl_millet": {  # Pfister file
+        "IN": 718.15,
+        "ZA": 1057.3507,
+        "GLO": 786.304934534711
+    },
    "pineapple":{
       "AU":1.12408169570905,
       "BR":8.62012702192873,
@@ -712,6 +736,11 @@ EVAPO_TRANSPI_PER_CROP_PER_COUNTRY = {
       "VN":56.1712625478217,
       "GLO":20.15529
    },
+    "pomegranate": {
+        # src: ET in mm: http://ucanr.edu/sites/kaclysimeter/files/142998.pdf
+        # Yield=6 t/ha: https://www.researchgate.net/publication/283514605_Water_Management_in_Pomegranate
+        "GLO": 415.0
+    },
    "potato":{
       "AR":45.4135857834974,
       "AU":41.4087887783714,
@@ -812,6 +841,11 @@ EVAPO_TRANSPI_PER_CROP_PER_COUNTRY = {
       "VN":37.259272027323,
       "GLO":305.76199
    },
+    "sesame_seed": {  # src: Pfister file
+        "IN": 1189.33,
+        "BR": 4.07,
+        "GLO": 1273.0
+    },
    "soybean":{
       "AR":172.76733080864,
       "AU":583.243203787826,
@@ -1091,6 +1125,10 @@ EVAPO_TRANSPI_PER_CROP_PER_COUNTRY = {
         "US": 46.8210910600596,
         "VN": 7.88300148487966,
         "GLO": 46.98662
+    },
+    "turmeric": {  # src: Pfister file *Ginger as proxy
+        "IN": 285.52,
+        "GLO": 204.0
     },
    "wheat":{
       "AR":361.717584619136,

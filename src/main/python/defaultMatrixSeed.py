@@ -8,6 +8,15 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "cassava": {
       "GLO": 0.0
    },
+    "castor_beans": {
+        "GLO": 0.0
+    },
+    "chick_pea": {
+        "GLO": 0.0
+    },
+    "coriander": {
+        "GLO": 0.0
+    },
    "cotton": {
       "GLO": 0.0
    },
@@ -35,6 +44,9 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "peanut":{
       "GLO":100.0
    },
+    "pearl_millet": {
+        "GLO": 100.0
+    },
    "potato":{
       "GLO":2500.0
    },
@@ -44,7 +56,10 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "rice":{
       "GLO":141.0
    },
-   "soybean":{
+    "pearl_millet": {
+        "GLO": 100.0
+    },
+    "sesame_seed": {
       "GLO":110.0
    },
    "sugarbeet":{
@@ -56,6 +71,9 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "sweetcorn":{
       "GLO":25.0
    },
+    "turmeric": {
+        "GLO": 100.0
+    },
    "wheat":{
    }
 }
@@ -81,6 +99,9 @@ NB_SEEDLINGS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "eggplant": {
       "GLO": 0.0
    },
+    "ginger": {
+        "GLO": 0.0
+    },
    "mint":{
    },
    "onion":{
@@ -151,6 +172,8 @@ NB_PLANTED_TREES_PER_PARTIAL_CROP_PER_COUNTRY = {
    },
    "pineapple":{
    },
+    "pomegranate": {
+    },
    "tea":{
    }
 }

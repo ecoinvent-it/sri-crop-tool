@@ -133,9 +133,6 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
             new TemplateIntermediaryExchange("carrot seed, for sowing",
                                              AvailableUnit.KG, "seeds_carrot",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
-            new TemplateIntermediaryExchange("potato seed, at farm",
-                                             AvailableUnit.KG, "seeds_cassava",
-                                             StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateIntermediaryExchange(
                     "fruit tree seedling, for planting",
                     AvailableUnit.UNIT,
@@ -151,6 +148,16 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
                     AvailableUnit.UNIT,
                     "seeds_cashew",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange("potato seed, at farm",
+                                             AvailableUnit.KG, "seeds_cassava",
+                                             StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateIntermediaryExchange("linseed seed, at farm",
+                                             AvailableUnit.KG, "seeds_castor_beans",
+                                             StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateIntermediaryExchange("pea seed, for sowing",
+                                             AvailableUnit.KG, "seeds_chick_pea",
+                                             StandardUncertaintyMetadata.SEEDS, "seeds"),
+
             new TemplateIntermediaryExchange(
                     "onion seedling, for planting",
                     AvailableUnit.UNIT,
@@ -202,6 +209,9 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
             new TemplateIntermediaryExchange("cotton seed", AvailableUnit.KG,
                                              "seeds_cotton",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateIntermediaryExchange("linseed seed, at farm",
+                                             AvailableUnit.KG, "seeds_coriander",
+                                             StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateIntermediaryExchange(
                     "fruit tree seedling, for planting",
                     AvailableUnit.UNIT,
@@ -224,6 +234,10 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
             new TemplateIntermediaryExchange("linseed seed, at farm",
                                              AvailableUnit.KG, "seeds_flax",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateIntermediaryExchange(
+                    "onion seedling, for planting",
+                    AvailableUnit.UNIT,
+                    "seeds_ginger", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateIntermediaryExchange(
                     "fruit tree seedling, for planting",
                     AvailableUnit.UNIT,
@@ -399,6 +413,9 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
                     AvailableUnit.UNIT,
                     "seeds_pear",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange("wheat seed, for sowing",
+                                             AvailableUnit.KG, "seeds_pearl_millet",
+                                             StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateIntermediaryExchange(
                     "fruit tree seedling, for planting",
                     AvailableUnit.UNIT,
@@ -414,6 +431,21 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
                     AvailableUnit.UNIT,
                     "seeds_pineapple",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange(
+                    "fruit tree seedling, for planting",
+                    AvailableUnit.UNIT,
+                    "seeds_pomegranate",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange(
+                    "planting tree",
+                    AvailableUnit.UNIT,
+                    "seeds_pomegranate",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateIntermediaryExchange(
+                    "establishing orchard",
+                    AvailableUnit.UNIT,
+                    "seeds_pomegranate",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateIntermediaryExchange("potato seed, at farm", AvailableUnit.KG,
                                              "seeds_potato",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
@@ -425,6 +457,8 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
                     AvailableUnit.UNIT,
                     "seeds_raspberry", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateIntermediaryExchange("rice seed, for sowing", AvailableUnit.KG, "seeds_rice",
+                                             StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateIntermediaryExchange("linseed seed, at farm", AvailableUnit.KG, "sesame_seed",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateIntermediaryExchange("soybean seed, for sowing", AvailableUnit.KG, "seeds_soybean",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
@@ -473,6 +507,8 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
                     "tomato seedling, for planting",
                     AvailableUnit.UNIT,
                     "seeds_tomato", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
+            new TemplateIntermediaryExchange("potato seed, at farm", AvailableUnit.KG, "seeds_turmeric",
+                                             StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateIntermediaryExchange("wheat seed, for sowing", AvailableUnit.KG, "seeds_wheat",
                                              StandardUncertaintyMetadata.SEEDS, "seeds"),
 

@@ -220,6 +220,12 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
    "cassava": {
       "GLO": 0.0
    },
+    "castor_beans": {
+        "GLO": 0.0
+    },
+    "chick_pea": {
+        "GLO": 0.0
+    },
    "chilli": {
       "GLO": 0.0
    },
@@ -298,6 +304,9 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
         "VN": 2210.61625,
         "GLO": 863.47178
     },
+    "coriander": {
+        "GLO": 0.0
+    },
    "cotton": {
       "GLO": 0.0
    },
@@ -312,6 +321,9 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
    "flax": {
       "GLO": 0.0
    },
+    "ginger": {
+        "GLO": 0.0
+    },
    "grape": {
       "GLO": 0.0
    },
@@ -708,6 +720,9 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "US":36343.8015,
       "GLO":19784.71284
    },
+    "pearl_millet": {
+        "GLO": 0.0
+    },
    "pineapple":{
       "AR":16975.6505,
       "AU":33947.92375,
@@ -732,6 +747,9 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "VN":13351.9835,
       "GLO":31464.91958
    },
+    "pomegranate": {
+        "GLO": 0.0
+    },
    "potato":{
       "AR":29293.0575,
       "AU":36163.98675,
@@ -834,6 +852,9 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
       "VN":5437.15625,
       "GLO":5080.58147
    },
+    "sesame_seed": {
+        "GLO": 0.0
+    },
    "soybean":{
       "AR":2410.5485,
       "AU":1942.51525,
@@ -1141,6 +1162,9 @@ YIELD_PER_YEAR_PER_CROP_PER_COUNTRY = {
         "UA": 24324.3595,
         "US": 83705.24825,
         "GLO": 87758.02061
+    },
+    "turmeric": {
+        "GLO": 0.0
     },
    "wheat":{
       "AR":3070.70775,

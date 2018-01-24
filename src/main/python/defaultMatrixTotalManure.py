@@ -67,6 +67,12 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
    "cassava": {
       "GLO": 0.0
    },
+    "castor_beans": {
+        "GLO": 0.0
+    },
+    "chick_pea": {
+        "GLO": 0.0
+    },
    "chilli": {
       "GLO": 0.0
    },
@@ -94,6 +100,9 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
         "VN": 1.87047519808932,
         "GLO": 1.48301197729934
     },
+    "coriander": {
+        "GLO": 0.0
+    },
    "cotton": {
       "GLO": 0.0
    },
@@ -108,6 +117,9 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
    "flax": {
       "GLO": 0.0
    },
+    "ginger": {
+        "GLO": 0.0
+    },
    "grape": {
       "GLO": 0.0
    },
@@ -207,9 +219,15 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
       "CN":1.11366882736282,
       "GLO":1.88859691786775
    },
+    "pearl_millet": {
+        "GLO": 0.0
+    },
    "pineapple":{
       "GLO":0.0 #NOTE: Used as default as we don't have the value
    },
+    "pomegranate": {
+        "GLO": 0.0
+    },
    "potato":{
       "CN":2.10777848289342,
       "IN":2.0065193593405,
@@ -233,6 +251,9 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
       "IN":1.67929495742945,
       "GLO":3.16824097435647
    },
+    "sesame_seed": {
+        "GLO": 0.0
+    },
    "soybean":{
       "AR":11.5505724361378,
       "GLO":11.5505724361378
@@ -298,6 +319,9 @@ TOTAL_MANURE_LIQUID_PER_CROP_PER_COUNTRY = {
         "ES": 8.10295927940028,
         "CH": 23.5619862981963,
         "GLO": 18.8577196952207
+    },
+    "turmeric": {
+        "GLO": 0.0
     },
    "wheat":{
       "AU":2.11558767879785,
@@ -375,6 +399,12 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
    "cassava": {
       "GLO": 0.0
    },
+    "castor_beans": {
+        "GLO": 0.0
+    },
+    "chick_pea": {
+        "GLO": 0.0
+    },
    "chilli": {
       "GLO": 0.0
    },
@@ -402,6 +432,9 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
         "VN": 1426.01176025921,
         "GLO": 1163.0683931622
     },
+    "coriander": {
+        "GLO": 0.0
+    },
    "cotton": {
       "GLO": 0.0
    },
@@ -416,6 +449,9 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
    "flax": {
       "GLO": 0.0
    },
+    "ginger": {
+        "GLO": 0.0
+    },
    "grape": {
       "GLO": 0.0
    },
@@ -515,9 +551,15 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
       "CN":881.790084506163,
       "GLO":1425.66168205149
    },
+    "pearl_millet": {
+        "GLO": 0.0
+    },
    "pineapple":{
       "GLO": 0.0 #NOTE: Used as default as we don't have the value
    },
+    "pomegranate": {
+        "GLO": 0.0
+    },
    "potato":{
       "CN":1668.91460089809,
       "IN":2704.57828604123,
@@ -541,6 +583,9 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
       "IN":2263.51400826505,
       "GLO":2975.51037573828
    },
+    "sesame_seed": {
+        "GLO": 0.0
+    },
    "soybean":{
       "AR":9736.148290755,
       "GLO":9736.148290755
@@ -606,6 +651,9 @@ TOTAL_MANURE_SOLID_PER_CROP_PER_COUNTRY = {
         "ES": 5505.92021088642,
         "CH": 18763.9237052487,
         "GLO": 13163.4801293693
+    },
+    "turmeric": {
+        "GLO": 0.0
     },
    "wheat":{
       "AU":1675.24803289151,

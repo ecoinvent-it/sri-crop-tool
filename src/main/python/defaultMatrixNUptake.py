@@ -73,6 +73,14 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "IN": 100.0,
       "GLO": 100.0
    },
+    "castor_beans": {  # src: http://ecocrop.fao.org/ecocrop/srv/en/cropView?id=1866
+        "GLO": 30.0
+    },
+    "chick_pea": {  # src: http://www.phytojournal.com/archives/2017/vol6issue1/PartF/6-1-71-853.pdf
+        # Pae 395, table 2, line "control"
+        "IN": 36.95,
+        "GLO": 36.95,
+    },
    "chilli": {
       "IN": 150.0,
       "GLO": 150.0
@@ -101,6 +109,10 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
         "VN": 52.2567319724059,
         "GLO": 39.0593114869442
     },
+    "coriander": {  # src: Pdf : Coriander_1 in Documentation file
+        "IN": 54.9,
+        "GLO": 54.9
+    },
    "cotton": {
       "IN": 41.04,
       "GLO": 41.04
@@ -119,7 +131,11 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "FR": 20.0,
       "GLO": 25.0
    },
-   "grape": {
+    "ginger": {  # src: http://www.researchjournal.co.in/upload/assignments/6_28-30-7.pdf
+        "IN": 92.26,
+        "GLO": 92.26
+    },
+    "grape": {
       "IN": 30.0,
       "GLO": 30.0
    },
@@ -225,10 +241,20 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "AR":39.5896568,
       "BE":45.3603098,
       "CN":29.7466444,
-      "GLO":38.2322036666667
+       "GLO": 38.2322036666667
    },
-   "pineapple":{
-   },
+    "pearl_millet": {
+        # Canada: pdf Millet_1 in Documentation file
+        # India: http://krishikosh.egranth.ac.in/bitstream/1/35296/1/agronomy%202.pdf
+        # Nigeria: pdf Millet_2 in Documentation file
+        "IN": 84.315,
+        "GLO": 59.6575
+    },
+    "pineapple": {
+    },
+    "pomegranate": {  # src: Pomegranate_1 pdf in Documentation file
+        "GLO": 87.0
+    },
    "potato":{
       "CN":56.2998042722222,
       "IN":77.1066293055555,
@@ -252,6 +278,11 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
       "IN":64.53203313212,
       "GLO":94.46389888538
    },
+    "sesame_seed": {
+        # src: https://www.researchgate.net/publication/265976147_RESPONSE_OF_NITROGEN_LEVELS_ON_YIELD_OF_SESAME_Sesamum_indicum_L
+        "IN": 35.0,
+        "GLO": 35.0
+    },
    "soybean":{
       "AR":229.0021075,
       "GLO":229.0021075
@@ -317,6 +348,11 @@ NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY = {
         "ES": 162.08163536506,
         "CH": 398.38761154694,
         "GLO": 353.365585740376
+    },
+    "turmeric": {
+        # src: https://www.researchgate.net/profile/Bijan_Majumdar/publication/236969066_Effect_of_nitrogen_and_farmyard_manure_on_yield_and_nutrient_uptake_of_turmeric_and_different_forms_of_inorganic_N_build_up_in_an_acidic_Alfisol_of_Meghalaya/links/0c96051a83ee37dd9e000000.pdf
+        "IN": 42.5,
+        "GLO": 42.5
     },
    "wheat":{
       "AU":44.0064062958333,

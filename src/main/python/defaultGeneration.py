@@ -1,7 +1,5 @@
-from datetime import date
-
 import dateutil.relativedelta as relativedelta
-
+from datetime import date
 from defaultMatrixEvapoTranspiration import EVAPO_TRANSPI_PER_CROP_PER_COUNTRY
 from defaultMatrixNUptake import NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY
 from defaultMatrixSeed import NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY, \
@@ -35,12 +33,12 @@ from models.pmodel import LandUseCategory
 
 TREE_BASED_CROPS = ["almond", "apple", "apricot", "banana", "blueberry", "cashew", "cocoa", "coconut", "coffee_arabica",
                     "coffee_robusta", "cranberry", "grape", "lemon", "citruslime", "mandarin", "mango", "mulberry",
-                    "olive", "orange_fresh", "orange_processing", "palmtree", "peach", "pear", "pineapple", "sugarcane",
-                    "tea"]
+                    "olive", "orange_fresh", "orange_processing", "palmtree", "peach", "pear", "pomegranate",
+                    "pineapple", "sugarcane", "tea"]
 
 SEEDLINGS_BASED_CROPS = ["asparagus_green", "asparagus_white", "bellpepper", "cabbage_red", "cabbage_white", "chilli",
-                         "eggplant", "mint", "onion", "strawberry_fresh", "strawberry_processing", "raspberry",
-                         "tomato_fresh", "tomato_processing"]
+                         "eggplant", "ginger", "mint", "onion", "strawberry_fresh", "strawberry_processing",
+                         "raspberry", "tomato_fresh", "tomato_processing"]
 
 
 class DefaultValuesWrapper(object):
@@ -404,6 +402,8 @@ class NitrogenFromCropResiduesDefaultGenerator(object):
             return 37.20
         elif (crop == "coconut"):
             return 44.0
+        elif (crop == "coriander"):
+            return 18.732
         elif (crop == "eggplant"):
             return 81.20
         elif (crop == "guar"):
@@ -412,6 +412,10 @@ class NitrogenFromCropResiduesDefaultGenerator(object):
             return 76.87
         elif (crop == "palmtree"):
             return 159.0
+        elif (crop == "pearl_millet"):
+            return 18.0
+        elif (crop == "sesame_seed"):
+            return 12.6
         else:
             return 0.0
 

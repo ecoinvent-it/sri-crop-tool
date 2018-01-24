@@ -245,6 +245,12 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Potato seed, at farm {GLO}| market for | Alloc Rec, U",
                                      "kg", "seeds_cassava",
                                      StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateProductUsage("Linseed seed, at farm {GLO}| market for linseed seed, at farm | Alloc Rec, U",
+                                     "kg", "seeds_castor_beans",
+                                     StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateProductUsage("Pea seed, for sowing {GLO}| market for | Alloc Rec, U",
+                                     "kg", "seeds_chick_pea",
+                                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage(
                     "Fruit tree seedling, for planting {GLO}| market for fruit tree seedling, for planting | Alloc " +
                             "Rec, U",
@@ -330,6 +336,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Cotton seed {GLO}| market for | Alloc Rec, U", "kg",
                                      "seeds_cotton",
                                      StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateProductUsage("Linseed seed, at farm {GLO}| market for linseed seed, at farm | Alloc Rec, U",
+                                     "kg", "seeds_coriander",
+                                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage(
                     "Fruit tree seedling, for planting {GLO}| market for fruit tree seedling, for planting | Alloc " +
                             "Rec, U",
@@ -352,6 +361,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage("Linseed seed, at farm {GLO}| market for linseed seed, at farm | Alloc Rec, U",
                                      "kg", "seeds_flax",
                                      StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateProductUsage(
+                    "Onion seedling, for planting {GLO}| market for onion seedling, for planting | Alloc Rec, U", "p",
+                    "seeds_ginger", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateProductUsage(
                     "Fruit tree seedling, for planting {GLO}| market for fruit tree seedling, for planting | Alloc " +
                             "Rec, U",
@@ -568,6 +580,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                     "p",
                     "seeds_pear",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage("Wheat seed, for sowing {GLO}| market for | Alloc Rec, U", "kg",
+                                     "seeds_pearl_millet",
+                                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage(
                     "Fruit tree seedling, for planting {GLO}| market for fruit tree seedling, for planting | Alloc " +
                             "Rec, U",
@@ -584,6 +599,21 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                     "p",
                     "seeds_pineapple",
                     StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage(
+                    "Fruit tree seedling, for planting {GLO}| market for fruit tree seedling, for planting | Alloc " +
+                            "Rec, U",
+                    "p", "seeds_pomegranate",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage(
+                    "Planting tree {GLO}| market for planting tree | Alloc Rec, U",
+                    "p",
+                    "seeds_pomegranate",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
+            new TemplateProductUsage(
+                    "Establishing orchard {GLO}| market for establishing orchard | Alloc Rec, U",
+                    "p",
+                    "seeds_pomegranate",
+                    StandardUncertaintyMetadata.SEEDS, "nb_planted_trees"),
             new TemplateProductUsage("Potato seed, at farm {GLO}| market for | Alloc Rec, U", "kg",
                                      "seeds_potato",
                                      StandardUncertaintyMetadata.SEEDS, "seeds"),
@@ -596,6 +626,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
                     "p",
                     "seeds_raspberry", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
             new TemplateProductUsage("Rice seed, for sowing {GLO}| market for | Alloc Rec, U", "kg", "seeds_rice",
+                                     StandardUncertaintyMetadata.SEEDS, "seeds"),
+            new TemplateProductUsage("Linseed seed, at farm {GLO}| market for linseed seed, at farm | Alloc Rec, U",
+                                     "kg", "seeds_sesame_seed",
                                      StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Soybean seed, for sowing {GLO}| market for | Alloc Rec, U", "kg", "seeds_soybean",
                     StandardUncertaintyMetadata.SEEDS, "seeds"),
@@ -654,6 +687,9 @@ public class WfldbTemplateProductUsages implements TemplateProductUsages
             new TemplateProductUsage(
                     "Tomato seedling, for planting {GLO}| market for tomato seedling, for planting | Alloc Rec, U", "p",
                     "seeds_tomato_processing", StandardUncertaintyMetadata.SEEDS, "nb_seedlings"),
+            new TemplateProductUsage("Potato seed, at farm {GLO}| market for | Alloc Rec, U", "kg",
+                                     "seeds_turmeric",
+                                     StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Wheat seed, for sowing {GLO}| market for | Alloc Rec, U", "kg", "seeds_wheat",
                                      StandardUncertaintyMetadata.SEEDS, "seeds"),
             new TemplateProductUsage("Orchard, rooting up trees (WFLDB 3.3)/GLO U", "ha", "rooting_up_trees",

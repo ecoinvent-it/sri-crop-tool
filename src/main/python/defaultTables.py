@@ -6,6 +6,7 @@ from models.modelEnums import SoilTexture
 from models.pmodel import LandUseCategory
 
 #Generated from GD_crop GrossEnergy_C_L1 column D, kgC/kgDM
+# Mireille&Raphaël for Bell pepper, cabbage, cashew, cassava, chilli, cotton, eggplant, flax, grape, guar, hemp, lentil, mango, mulberry
 CARBON_CONTENT_PER_CROP = {
                 "almond":0.62655914,
                 "apple":0.431788079,
@@ -20,15 +21,19 @@ CARBON_CONTENT_PER_CROP = {
                 "carrot":0.475,
     "cashew": 0.9,
     "cassava": 0.875,
+    "castor_beans": 0.52,
+    "chick_pea": 0.399,
     "chilli": 0.73,
                 "cocoa":0.535987,
                 "coconut":0.645262412752311,
     "coffee_arabica": 0.475,
     "coffee_robusta": 0.475,
+    "coriander": 0.43,
     "cotton": 0.45,
     "cranberry": 0.4451,
     "eggplant": 0.54,
     "flax": 0.46,
+    "ginger": 0.43,
     "grape": 0.8,
     "guar": 0.45,
     "hemp": 0.44,
@@ -50,11 +55,14 @@ CARBON_CONTENT_PER_CROP = {
                 "peach":0.412732283,
                 "peanut":0.58063,
                 "pear":0.475,
+    "pearl_millet": 0.413,
                 "pineapple":0.5, #no src
+    "pomegranate": 0.471,
                 "potato":0.423959628,
                 "rapeseed":0.47088,
     "raspberry": 0.4553,
                 "rice":0.475,
+    "sesame_seed": 0.43,
                 "soybean":0.681929577464789,
     "strawberry_fresh": 0.475,
     "strawberry_processing": 0.475,
@@ -65,6 +73,7 @@ CARBON_CONTENT_PER_CROP = {
                 "tea":0.475,
     "tomato_fresh": 0.383275862,
     "tomato_processing": 0.383275862,
+    "turmeric": 0.43,
                 "wheat":0.42410592
     }
 
@@ -157,6 +166,7 @@ CLAY_CONTENT_PER_COUNTRY = {
 
 
 #from GD_crop Cfactor_L1
+# Mireille&Raphaël for Bell pepper, cabbage, cashew, cassava, chilli, cotton, eggplant, flax, grape, guar, hemp, lentil, mango, mulberry
 CROP_FACTOR_PER_CROP = {
         "almond":0.1,
         "apple":0.1,
@@ -171,15 +181,19 @@ CROP_FACTOR_PER_CROP = {
     "carrot": 0.5,
     "cashew": 0.25,
     "cassava": 0.5,
+    "castor_beans": 0.23,
+    "chick_pea": 0.32,
     "chilli": 0.3,
         "cocoa":0.21,
         "coconut":0.3,
     "coffee_arabica": 0.26,
     "coffee_robusta": 0.26,
+    "coriander": 0.18,
     "cotton": 0.6,
     "cranberry": 0.3,
     "eggplant": 0.48,
     "flax": 0.18,
+    "ginger": 0.34,
     "grape": 0.15,
     "guar": 0.3,
     "hemp": 0.45,
@@ -201,11 +215,14 @@ CROP_FACTOR_PER_CROP = {
         "peach":0.1,
         "peanut":0.51,
         "pear":0.1,
-        "pineapple":0.48,
+    "pearl_millet": 0.18,
+    "pineapple": 0.48,
+    "pomegranate": 0.1,
         "potato":0.44,
         "rapeseed":0.33,
     "raspberry": 0.3,
         "rice":0.17,
+    "sesame_seed": 0.28,
         "soybean":0.28,
     "strawberry_fresh": 0.47,
     "strawberry_processing": 0.47,
@@ -216,10 +233,12 @@ CROP_FACTOR_PER_CROP = {
         "tea":0.3,
     "tomato_fresh": 0.47,
     "tomato_processing": 0.47,
+    "turmeric": 0.34,
     "wheat": 0.22
         }
 
 #src: ecoinvent report no. 15a
+# Mireille&Raphaël for Bell pepper, cabbage, cashew, cassava, chilli, cotton, eggplant, flax, grape, guar, hemp, lentil, mango, mulberry
 #MJ/kgDM
 ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
     "bellpepper": 30.92,
@@ -228,11 +247,15 @@ ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
     "cabbage_white": 27.17,
     "cashew": 37.95,
     "cassava": 36.9,
+    "castor_beans": 21.87,
+    "chick_pea": 16.81,
     "chilli": 30.92,
+    "coriander": 18.15,
     "cotton": 19.06,
     "cranberry": 11.91,
     "eggplant": 22.79,
     "flax": 19.19,
+    "ginger": 18.15,
     "grape": 33.91,
     "guar": 18.98,
     "hemp": 18.75,
@@ -240,16 +263,20 @@ ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
             "maizegrain": 18.52,
     "mango": 31.75,
     "mulberry": 18.98,
+    "pearl_millet": 17.41,
+    "pomegranate": 19.85,
             "potato": 17.59,
             "rapeseed": 26.48,
     "raspberry": 10.72,
             "rice": 18.11,#Wheat grains
+    "sesame_seed": 18.15,
     "strawberry_fresh": 12.57,
     "strawberry_processing": 12.57,
             "soybean": 22.98,
             "sugarbeet": 16.43,
             "sunflower": 30.25,#sunflower grains
             "sweetcorn": 18.52,#grain maize
+    "turmeric": 18.15,
             "wheat": 18.11#Wheat grains
             }
 
@@ -1942,15 +1969,19 @@ LAND_USE_CATEGORY_PER_CROP = {
         "carrot":LandUseCategory.vegetables,
     "cashew": LandUseCategory.fruit_trees,
     "cassava": LandUseCategory.arable_land,
+    "castor_beans": LandUseCategory.fruit_trees,
+    "chick_pea": LandUseCategory.arable_land,
     "chilli": LandUseCategory.vegetables,
         "cocoa":LandUseCategory.fruit_trees,
         "coconut":LandUseCategory.fruit_trees,
     "coffee_arabica": LandUseCategory.fruit_trees,
     "coffee_robusta": LandUseCategory.fruit_trees,
+    "coriander": LandUseCategory.vegetables,
     "cotton": LandUseCategory.arable_land,
     "cranberry": LandUseCategory.fruit_trees,
     "eggplant": LandUseCategory.vegetables,
     "flax": LandUseCategory.arable_land,
+    "ginger": LandUseCategory.vegetables,
     "grape": LandUseCategory.fruit_trees,
     "guar": LandUseCategory.arable_land,
     "hemp": LandUseCategory.arable_land,
@@ -1972,11 +2003,14 @@ LAND_USE_CATEGORY_PER_CROP = {
         "peach":LandUseCategory.fruit_trees,
         "peanut":LandUseCategory.arable_land,
         "pear":LandUseCategory.fruit_trees,
+    "pearl_millet": LandUseCategory.arable_land,
         "pineapple":LandUseCategory.arable_land,
+    "pomegranate": LandUseCategory.fruit_trees,
         "potato":LandUseCategory.arable_land,
         "rapeseed":LandUseCategory.arable_land,
     "raspberry": LandUseCategory.fruit_trees,
         "rice":LandUseCategory.arable_land,
+    "sesame_seed": LandUseCategory.arable_land,
         "soybean":LandUseCategory.arable_land,
     "strawberry_fresh": LandUseCategory.vegetables,
     "strawberry_processing": LandUseCategory.vegetables,
@@ -1987,6 +2021,7 @@ LAND_USE_CATEGORY_PER_CROP = {
         "tea":LandUseCategory.vegetables,
     "tomato_fresh": LandUseCategory.vegetables,
     "tomato_processing": LandUseCategory.vegetables,
+    "turmeric": LandUseCategory.vegetables,
         "wheat":LandUseCategory.arable_land
         }
 
@@ -2545,6 +2580,9 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
 }
 
 #from GD_crop RootingDepth_L0 and RootingDepth_L1
+# Mireille&Raphaël for Bell pepper, cabbage, cassava, cotton, eggplant, flax, guar, hemp, lentil, mango, mulberry
+# Chloé's file for cashew, chilli, coffee, grape, peanut, potato, pineapple, strawberry, sugar beet, sugar cane,
+# tea, tomato, wheat
 #in m
 ROOTING_DEPTH_PER_CROP = {
                         "almond": 1.5,
@@ -2560,15 +2598,19 @@ ROOTING_DEPTH_PER_CROP = {
                         "carrot": 0.5,
     "cashew": 0.5,
     "cassava": 1.5,
+    "castor_beans": 1.5,
+    "chick_pea": 1.5,
     "chilli": 0.8,
                         "cocoa": 2.0,
                         "coconut": 1.5,
     "coffee_arabica": 1.2,
     "coffee_robusta": 1.2,
+    "coriander": 0.33,
     "cotton": 0.3,
     "cranberry": 0.9,
     "eggplant": 0.8,
     "flax": 0.5,
+    "ginger": 0.275,
     "grape": 1.5,
     "guar": 0.5,
     "hemp": 0.5,
@@ -2590,11 +2632,14 @@ ROOTING_DEPTH_PER_CROP = {
                         "peach": 1.5,
     "peanut": 0.5,
                         "pear": 1.5,
+    "pearl_millet": 1.5,
                         "pineapple": 0.5,
+    "pomegranate": 1.0,
     "potato": 0.3,
                         "rapeseed": 0.9,
     "raspberry": 0.9,
                         "rice": 0.6,
+    "sesame_seed": 0.6,
                         "soybean": 0.95,
     "strawberry_fresh": 0.45,
     "strawberry_processing": 0.45,
@@ -2605,6 +2650,7 @@ ROOTING_DEPTH_PER_CROP = {
     "tea": 1.2,
     "tomato_fresh": 1.0,
     "tomato_processing": 1.0,
+    "turmeric": 0.45,
     "wheat": 0.7
 }
 
@@ -2748,6 +2794,7 @@ SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY = {
                     }
 
 #From GD_crop WaterNutrient_L1 column C
+#  Mireille&Raphaël for Bell pepper, cabbage, cashew, cassava, chilli, cotton, eggplant, flax, grape, guar, hemp, lentil, mango, mulberry
 WATER_CONTENT_FM_RATIO_PER_CROP = {
         "almond": 0.0565,
         "apple": 0.849,
@@ -2762,15 +2809,19 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "carrot": 0.882,
     "cashew": 0.05,
     "cassava": 0.6,
+    "castor_beans": 0.094,
+    "chick_pea": 0.09,
     "chilli": 0.88,
         "cocoa": 0.056,
         "coconut": 0.446,
     "coffee_arabica": 0.102,
     "coffee_robusta": 0.102,
+    "coriander": 0.0808,
     "cotton": 0.09,
     "cranberry": 0.8732,
     "eggplant": 0.93,
     "flax": 0.11,
+    "ginger": 0.12,
     "grape": 0.81,
     "guar": 0.1,
     "hemp": 0.4,
@@ -2792,11 +2843,14 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "peach": 0.873,
         "peanut": 0.05968,
         "pear": 0.829,
+    "pearl_millet": 0.2,
         "pineapple": 0.87,#src: web
+    "pomegranate": 0.78,
         "potato": 0.78,
         "rapeseed": 0.12,
     "raspberry": 0.8575,
         "rice": 0.131,
+    "sesame_seed": 0.057,
         "soybean": 0.11,
     "strawberry_fresh": 0.895,
     "strawberry_processing": 0.895,
@@ -2807,6 +2861,7 @@ WATER_CONTENT_FM_RATIO_PER_CROP = {
         "tea": 0.0764,
     "tomato_fresh": 0.942,
     "tomato_processing": 0.942,
+    "turmeric": 0.12,
         "wheat": 0.15
         }
 

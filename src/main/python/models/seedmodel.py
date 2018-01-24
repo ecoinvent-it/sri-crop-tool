@@ -26,15 +26,19 @@ class SeedModel(object):
                 "carrot": 0.73, #vegetable
         "cashew": 0.9,
         "cassava": 0.9,
+        "castor_beans": 0.9,  # cashew
+        "chick_pea": 0.73,  # other
         "chilli": 0.9,
                 "cocoa": 0.73, #other
                 "coconut": 0.73, #tree_seedlings
         "coffee_arabica": 0.73,  # other
         "coffee_robusta": 0.73,  # other
+        "coriander": 0.73,  # other
         "cotton": 0.9,
         "cranberry": 0.73,  # tree_seedlings
         "eggplant": 0.955,
         "flax": 0.9,
+        "ginger": 0.73,  # other
         "grape": 0.9,
         "guar": 0.9,
         "hemp": 0.9504,
@@ -56,11 +60,14 @@ class SeedModel(object):
                 "peach": 0.73, #tree_seedlings
                 "peanut": 0.73, #other
                 "pear": 0.73, #tree_seedlings
+        "pearl_millet": 0.73,  # other
                 "pineapple": 0.73, #tree_seedlings
+        "pomegranate": 0.73,  # tree_seedlings
                 "potato": 0.18,
                 "rapeseed": 0.90,
         "raspberry": 0.73,  # other
                 "rice":0.85, #wheat
+        "sesame_seed": 0.9,  # cashew
                 "soybean": 0.85,
         "strawberry_fresh": 0.73,  # other
         "strawberry_processing": 0.73,  # other
@@ -71,6 +78,7 @@ class SeedModel(object):
                 "tea": 0.73, #other
         "tomato_fresh": 0.73,  # other
         "tomato_processing": 0.73,  # other
+        "turmeric": 0.73,  # other
                 "wheat": 0.85
                     }
 
@@ -90,15 +98,19 @@ class SeedModel(object):
                 "carrot": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #vegetable
         "cashew": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
         "cassava": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "castor_beans": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
+        "chick_pea": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
         "chilli": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
                 "cocoa": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
                 "coconut": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
         "coffee_arabica": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
         "coffee_robusta": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
+        "coriander": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # vegetable
         "cotton": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
         "cranberry": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # tree_seedlings
         "eggplant": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
         "flax": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
+        "ginger": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
         "grape": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
         "guar": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
         "hemp": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],
@@ -120,11 +132,14 @@ class SeedModel(object):
                 "peach": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
                 "peanut": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
                 "pear": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+        "pearl_millet": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
                 "pineapple": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #tree_seedlings
+        "pomegranate": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # tree_seedlings
                 "potato": [0.04, 6.45, 15.0, 0.55, 0.33, 0.57, 0.09],
                 "rapeseed": [1.6, 3.3, 48.0, 5.25, 2.6, 0.5, 0.1],
         "raspberry": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
                 "rice": [0.15, 5.0, 45.0, 0.16, 0.3, 0.3, 0.01], #wheat
+        "sesame_seed": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
                 "soybean": [0.06, 15.1, 47.7, 0.08, 5.32, 0.52, 0],
         "strawberry_fresh": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
         "strawberry_processing": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
@@ -135,6 +150,7 @@ class SeedModel(object):
                 "tea": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04], #Other
         "tomato_fresh": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
         "tomato_processing": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
+        "turmeric": [0.1, 6.6, 32.0, 0.54, 1.04, 0.55, 0.04],  # Other
                 "wheat": [0.15, 5.0, 45.0, 0.16, 0.3, 0.3, 0.01]
         }
 

@@ -65,7 +65,13 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
    "cassava": {
       "GLO": 0.0
    },
-   "chilli": {
+    "castor_beans": {
+        "GLO": 0.0
+    },
+    "chick_pea": {
+        "GLO": 0.0
+    },
+    "chilli": {
       "GLO": 0.0
    },
    "cocoa":{
@@ -89,6 +95,9 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
         "VN": 9631.63156411632,
         "GLO": 7819.908871
     },
+    "coriander": {
+        "GLO": 0.0
+    },
    "cotton": {
       "GLO": 0.0
    },
@@ -103,6 +112,9 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
    "flax": {
       "GLO": 0.0
    },
+    "ginger": {
+        "GLO": 0.0
+    },
    "grape": {
       "GLO": 0.0
    },
@@ -202,9 +214,15 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "CN":11820.0,
       "GLO":12946.133
    },
+    "pearl_millet": {
+        "GLO": 0.0
+    },
    "pineapple":{
       "GLO":0.0 #NOTE: Used as default as we don't have the value
    },
+    "pomegranate": {
+        "GLO": 0.0
+    },
    "potato":{
       "CN":75226.1685116408,
       "IN":27215.8725942358,
@@ -227,6 +245,9 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
       "IN":1498.05714219752,
       "GLO":2819.384732
    },
+    "sesame_seed": {
+        "GLO": 0.0
+    },
    "soybean":{
       "GLO":1395.57819759211
    },
@@ -288,6 +309,9 @@ TOTAL_PESTICIDES_PER_CROP_PER_COUNTRY = {
         "ES": 19268.2479399323,
         "CH": 27206.5388274181,
         "GLO": 33957.733117
+    },
+    "turmeric": {
+        "GLO": 0.0
     },
    "wheat":{
       "AU":1450.54134726683,

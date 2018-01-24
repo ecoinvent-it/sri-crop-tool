@@ -67,6 +67,12 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
    "cassava": {
       "GLO": 0.0
    },
+    "castor_beans": {
+        "GLO": 0.0
+    },
+    "chick_pea": {
+        "GLO": 0.0
+    },
    "chilli": {
       "GLO": 0.0
    },
@@ -94,6 +100,9 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
         "VN": 41.8053855779247,
         "GLO": 31.2474491895554
     },
+    "coriander": {
+        "GLO": 0.0
+    },
    "cotton": {
       "GLO": 0.0
    },
@@ -108,6 +117,9 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
    "flax": {
       "GLO": 0.0
    },
+    "ginger": {
+        "GLO": 0.0
+    },
    "grape": {
       "GLO": 0.0
    },
@@ -207,9 +219,15 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "CN":23.79731552,
       "GLO":30.5857629333333
    },
+    "pearl_millet": {
+        "GLO": 0.0
+    },
    "pineapple":{
       "GLO": 0.0
    },
+    "pomegranate": {
+        "GLO": 0.0
+    },
    "potato":{
       "CN":45.0398434177778,
       "IN":61.6853034444444,
@@ -233,6 +251,9 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
       "IN":51.625626505696,
       "GLO":75.571119108304
    },
+    "sesame_seed": {
+        "GLO": 0.0
+    },
    "soybean":{
       "AR":183.201686,
       "GLO":183.201686
@@ -298,6 +319,9 @@ NITROGEN_FROM_MINERAL_FERT_PER_CROP_PER_COUNTRY = {
         "ES": 129.665308292048,
         "CH": 318.710089237552,
         "GLO": 282.692468592301
+    },
+    "turmeric": {
+        "GLO": 0.0
     },
    "wheat":{
       "AU":35.2051250366667,
