@@ -284,7 +284,8 @@ EVAPO_TRANSPI_PER_CROP_PER_COUNTRY = {
     "coriander": {
         # src: ET in mm: http://akademiai.com/doi/pdf/10.1556/AAgr.56.2008.1.7#
         # Yield in in average 1 t/ha: https://www.indiaagronet.com/horticulture/CONTENTS/Coriander.htm
-        "IN": 3302.0
+        "IN": 3302.0,
+        "GLO": 3302.0
     },
    "cotton": {
       "IN": 1526.45,

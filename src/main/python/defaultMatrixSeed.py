@@ -56,10 +56,10 @@ NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY = {
    "rice":{
       "GLO":141.0
    },
-    "pearl_millet": {
+    "sesame_seed": {
         "GLO": 100.0
     },
-    "sesame_seed": {
+    "soybean": {
       "GLO":110.0
    },
    "sugarbeet":{

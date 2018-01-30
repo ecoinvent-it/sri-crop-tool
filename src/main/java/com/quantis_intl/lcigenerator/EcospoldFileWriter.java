@@ -321,7 +321,10 @@ public class EcospoldFileWriter
         SingleValue<?> val = extractedInputs.getSingleValue(key);
         if (val == null)
             return "";
-        return ((Origin.ExcelUserInput) val.getOrigin()).label;
+        String label = ((Origin.ExcelUserInput) val.getOrigin()).label;
+        if (label.contains("<select"))
+            return "";
+        return label;
     }
 
     private TIntermediateExchange generateCoProduct(Map<String, String> modelsOutput, ValueGroup extractedInputs,
