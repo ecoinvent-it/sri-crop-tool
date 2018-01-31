@@ -1,5 +1,6 @@
 import dateutil.relativedelta as relativedelta
 from datetime import date
+
 from defaultMatrixEvapoTranspiration import EVAPO_TRANSPI_PER_CROP_PER_COUNTRY
 from defaultMatrixNUptake import NITROGEN_UPTAKE_PER_CROP_PER_COUNTRY
 from defaultMatrixSeed import NB_SEEDS_PER_PARTIAL_CROP_PER_COUNTRY, \
@@ -362,6 +363,14 @@ class SafeDefaultGenerator(object):
             return self._defaultValue
 
 
+# Castor bean: Tree, estimated to be 0 (see ALCIG engine)
+# Chickpea: Not much crop residues (https://www.saskatchewan.ca/business/agriculture-natural-resources-and-industry/agribusiness-farmers-and-ranchers/crops-and-irrigation/pulse-crop-bean-chickpea-faba-bean-lentils/chickpea/adaptation-and-varieties)
+# Coriander: pdf Coriander_1 in documentation file (juste take the straw which is the main crop residue: https://books.google.ch/books?id=gR22BgAAQBAJ&pg=PA155&lpg=PA155&dq=crop+residue+coriander&source=bl&ots=NyhFs8bbXZ&sig=xUQcF__tZ61vf3pWtNgib9kKcbc&hl=en&sa=X&ved=0ahUKEwiFkIG7rrzYAhUDuRQKHbiiADIQ6AEILDAA#v=onepage&q=crop%20residue%20coriander&f=false)
+# Ginger: root, estimated to be the same as cassava, turmenic, potato ? (see ALCIG engine)
+# Millet: residue = straw/stover ; pdf Millet_2 in documentation file in google drive.
+# Sesame seed: http://www.arccjournals.com/uploads/articles/D33414.pdf
+# Turmenic: root, estimated to be the same as cassava, ginger, potato ? (see ALCIG engine)
+# Pomegranate: Tree, estimated to be 0 (see ALCIG engine)
 class NitrogenFromCropResiduesDefaultGenerator(object):
     def generateDefault(self, field, generators):
         crop = generators["crop"]

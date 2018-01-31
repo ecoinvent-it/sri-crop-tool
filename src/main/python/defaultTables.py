@@ -7,6 +7,14 @@ from models.pmodel import LandUseCategory
 
 #Generated from GD_crop GrossEnergy_C_L1 column D, kgC/kgDM
 # Mireille&Raphaël for Bell pepper, cabbage, cashew, cassava, chilli, cotton, eggplant, flax, grape, guar, hemp, lentil, mango, mulberry
+# Castor bean: http://www.modernscientificpress.com/Journals/ViewArticle.aspx?gkN1Z6Pb60HNQPymfPQlZIiDnrBBtQSfoCsKufNADqZ4TrWuS7h5KvbfIK0SLlFq
+# Chickpea:Calculated from Energy Gross Calorific data
+# Coriander:https://www.biogeosciences-discuss.net/bg-2017-322/bg-2017-322.pdf
+# Ginger: https://www.biogeosciences-discuss.net/bg-2017-322/bg-2017-322.pdf
+# Pearl Millet:https://www.biogeosciences-discuss.net/bg-2017-322/bg-2017-322.pdf
+# Sesame seed: https://www.biogeosciences-discuss.net/bg-2017-322/bg-2017-322.pdf
+# Turmenic: https://www.biogeosciences-discuss.net/bg-2017-322/bg-2017-322.pdf
+# Pomegranate: https://www.biogeosciences-discuss.net/bg-2017-322/bg-2017-322.pdf
 CARBON_CONTENT_PER_CROP = {
                 "almond":0.62655914,
                 "apple":0.431788079,
@@ -167,6 +175,14 @@ CLAY_CONTENT_PER_COUNTRY = {
 
 #from GD_crop Cfactor_L1
 # Mireille&Raphaël for Bell pepper, cabbage, cashew, cassava, chilli, cotton, eggplant, flax, grape, guar, hemp, lentil, mango, mulberry
+# Castor bean: (oil seeds) https://www.sciencedirect.com/science/article/pii/S0264837715001611
+# Chickpea: (dried pulses) https://www.sciencedirect.com/science/article/pii/S0264837715001611
+# Coriander:(other fodder crops) https://www.sciencedirect.com/science/article/pii/S0264837715001611
+# Ginger:(potatoes) https://www.sciencedirect.com/science/article/pii/S0264837715001611
+# Pearl millet:(MIllet and other cereals) https://www.sciencedirect.com/science/article/pii/S0264837715001611
+# Sesame seed: (oil seeds) https://www.sciencedirect.com/science/article/pii/S0264837715001611
+# Turmenic:(potatoes) https://www.sciencedirect.com/science/article/pii/S0264837715001611
+# Pomegranate: (grove) https://www.researchgate.net/figure/235986141_TABLE-2--CORINE-land-use-code-and-corresponding-C-factor
 CROP_FACTOR_PER_CROP = {
         "almond":0.1,
         "apple":0.1,
@@ -239,6 +255,14 @@ CROP_FACTOR_PER_CROP = {
 
 #src: ecoinvent report no. 15a
 # Mireille&Raphaël for Bell pepper, cabbage, cashew, cassava, chilli, cotton, eggplant, flax, grape, guar, hemp, lentil, mango, mulberry
+# Castor beans: Calculated from Crop Carbon Content value
+# Chickpea (only seed):  Calculated from Crop Carbon Content value https://books.google.ch/books?id=zf3VpYKr9aUC&pg=PA103&lpg=PA103&dq=energy+gross+calorific+value+chickpea&source=bl&ots=erh2xBkc-8&sig=G4DzPDl7hxErg1n1yBS3dy3235Q&hl=en&sa=X&ved=0ahUKEwi2goCvrpjYAhVRoqQKHbhzD_IQ6AEILTAB#v=onepage&q=energy%20gross%20calorific%20value%20chickpea&f=false
+# Coriander: Calculated from Crop Carbon Content value
+# Ginger: Calculated from Crop Carbon Content value
+# Millet: Calculated from Crop Carbon Content value
+# Sesame seed: Calculated from Crop Carbon Content value
+# Turmenic: Calculated from Crop Carbon Content value
+# Pomegranate: Calculated from Crop Carbon Content value
 #MJ/kgDM
 ENERGY_GROSS_CALORIFIC_VALUE_PER_CROP_PARTIAL = {
     "bellpepper": 30.92,
@@ -2583,6 +2607,14 @@ MANURE_SOLID_RATIO_PER_COUNTRY = {
 # Mireille&Raphaël for Bell pepper, cabbage, cassava, cotton, eggplant, flax, guar, hemp, lentil, mango, mulberry
 # Chloé's file for cashew, chilli, coffee, grape, peanut, potato, pineapple, strawberry, sugar beet, sugar cane,
 # tea, tomato, wheat
+# Castor bean: (Comar, Tilley et al. 2004)
+# Chickpea: ecocrop (FAO)
+# Coriander: http://veggieharvest.com/herbs/cilantro.html // http://files.hawaii.gov/dlnr/cwrm/publishedreports/PR200808.pdf
+# Ginger: http://veggieharvest.com/herbs/ginger.html
+# Millet: ask Sämi
+# Sesame seed: ask Sämi
+# Turmenic: ask Sämi
+# Pomegranate: ask Sämi
 #in m
 ROOTING_DEPTH_PER_CROP = {
                         "almond": 1.5,
@@ -2795,6 +2827,14 @@ SOIL_WITH_PH_UNDER_OR_7_PER_COUNTRY = {
 
 #From GD_crop WaterNutrient_L1 column C
 #  Mireille&Raphaël for Bell pepper, cabbage, cashew, cassava, chilli, cotton, eggplant, flax, grape, guar, hemp, lentil, mango, mulberry
+# Castor bean:pdf  Castor_Bean_Moisture in documentation file;http://www.cropj.com/gharibzahedi_5_1_2011_1_7.pdf
+# Chickpea: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.548.9690&rep=rep1&type=pdf (leaf water content, averaged from graph p.37): http://etd.aau.edu.et/bitstream/123456789/10830/1/Getahun%20Yemata.pdf
+# Coriander: http://www.academicjournals.org/article/article1390549943_Bhat%2520et%2520al.pdf
+# Ginger: http://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_Ginger.pdf
+# Millet: ask Sämi / Pauline: http://agropedia.iitk.ac.in/content/harvesting-and-storage-pearl-millet
+# Sesame seed: ask Sämi / Pauline:http://www.globalsciencebooks.info/Online/GSBOnline/images/2010/SSB_4(1)/SSB_4(1)69-72o.pdf
+# Turmenic: ask Sämi / Pauline: http://www.fao.org/3/a-ax446e.pdf
+# Pomegranate: ask Sämi / Pauline: http://www.ijat-aatsea.com/pdf/v7_n6_11_November/6_IJAT_2011_7_6___R._Riyahi_FX.pdf
 WATER_CONTENT_FM_RATIO_PER_CROP = {
         "almond": 0.0565,
         "apple": 0.849,
