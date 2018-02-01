@@ -888,7 +888,7 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
                     "trellis system, wooden poles, soft wood, tar impregnated",
                     AvailableUnit.HA, "need_trellis", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
 
-            new LucTemplateIntermediaryExchange(AvailableUnit.HA, "luc_crop_specific",
+            new LucTemplateIntermediaryExchange(AvailableUnit.HA, "luc_crop_specific", "luc_formula",
                                                 StandardUncertaintyMetadata.LAND_TRANSFORMATION,
                                                 ""),
 
@@ -1035,12 +1035,16 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
         }
     }
 
-    private static class LucTemplateIntermediaryExchange extends TemplateIntermediaryExchange
+    public static class LucTemplateIntermediaryExchange extends TemplateIntermediaryExchange
     {
-        public LucTemplateIntermediaryExchange(AvailableUnit unit, String amountVariable,
+        private final String mathematicalRelationVariable;
+
+        public LucTemplateIntermediaryExchange(AvailableUnit unit, String amountVariable, String
+                mathematicalRelationVariable,
                                                StandardUncertaintyMetadata uncertainty, String commentVariable)
         {
             super("", unit, amountVariable, uncertainty, commentVariable);
+            this.mathematicalRelationVariable = mathematicalRelationVariable;
         }
 
         @Override
@@ -1049,6 +1053,11 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
             String cropType = modelOutputs.get("luc_crop_type");
 
             return "land use change, " + cropType + " crop";
+        }
+
+        public String provideMathematicalRelation(Map<String, String> modelOutputs)
+        {
+            return modelOutputs.getOrDefault(mathematicalRelationVariable, "");
         }
     }
 

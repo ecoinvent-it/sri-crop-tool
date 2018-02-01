@@ -99,6 +99,7 @@ public class EcospoldFileWriter
     private final PossibleElementaryExchangesCache possibleSubstances;
     private final PossiblePropertyCache possibleProperties;
     private final PossibleActivityLinkCache possibleActivityLinks;
+    private final PossibleParametersCache possibleParameters;
     private final CropsEcospoldRefsCache cropsEcospoldRefsCache;
 
     @Inject
@@ -108,6 +109,7 @@ public class EcospoldFileWriter
                               PossibleElementaryExchangesCache possibleSubstances,
                               PossiblePropertyCache possibleProperties,
                               PossibleActivityLinkCache possibleActivityLinks,
+                              PossibleParametersCache possibleParameters,
                               CropsEcospoldRefsCache cropsEcospoldRefsCache)
     {
         this.geographyMappingCache = geographyMappingCache;
@@ -116,6 +118,7 @@ public class EcospoldFileWriter
         this.possibleSubstances = possibleSubstances;
         this.possibleProperties = possibleProperties;
         this.possibleActivityLinks = possibleActivityLinks;
+        this.possibleParameters = possibleParameters;
         this.cropsEcospoldRefsCache = cropsEcospoldRefsCache;
     }
 
@@ -300,6 +303,8 @@ public class EcospoldFileWriter
         squashIntermediateExchanges(flowData.getIntermediateExchange());
         squashElementaryExchanges(flowData.getElementaryExchange());
 
+        flowData.getParameter().add(buildLucParameter(modelsOutput));
+
         dataset.setModellingAndValidation(MODELLING_AND_VALIDATION);
         TAdministrativeInformation adminInfo = new TAdministrativeInformation();
         dataset.setAdministrativeInformation(adminInfo);
@@ -381,10 +386,21 @@ public class EcospoldFileWriter
         TIntermediateExchange ex = new TIntermediateExchange();
         ex.setId(UUID.randomUUID());
         ex.setUnitId(tu.unit.uuid);
-        ex.setAmount(Double.parseDouble(tu.provideValue(modelsOutput)) / dividingValue);
-        if (ex.getAmount() == 0.d)
-            return null;
-        ex.setMathematicalRelation("");
+        if (tu instanceof EcospoldTemplateIntermediaryExchanges.LucTemplateIntermediaryExchange)
+        {
+            ex.setAmount(0.d);
+            ex.setIsCalculatedAmount(true);
+            ex.setMathematicalRelation(((EcospoldTemplateIntermediaryExchanges.LucTemplateIntermediaryExchange) tu)
+                                               .provideMathematicalRelation(modelsOutput));
+        }
+        else
+        {
+            ex.setAmount(Double.parseDouble(tu.provideValue(modelsOutput)) / dividingValue);
+            if (ex.getAmount() == 0.d)
+                return null;
+            ex.setMathematicalRelation("");
+        }
+
         TValidIntermediateExchange tex = possibleExchanges.getExchange(tu.provideName(modelsOutput));
         if (tex == null)
         {
@@ -595,6 +611,22 @@ public class EcospoldFileWriter
                 it.remove();
             }
         }
+    }
+
+    private TParameter buildLucParameter(Map<String, String> modelsOutput)
+    {
+        TValidParameter validParameter = possibleParameters.getParameter("LUC_crop_specific");
+        TParameter p = new TParameter();
+        p.setParameterId(validParameter.getId());
+        p.setVariableName(validParameter.getDefaultVariableName());
+        p.setAmount(1.0);
+        p.setName(validParameter.getName());
+        p.setComment(TString32000.ofEn("This parameter allows to switch between a \"crop specific\" and a \"country " +
+                                               "specific\" approach when calculating the LUC of a crop. By default, " +
+                                               "the chosen approach is \"crop specific\", so the value of the " +
+                                               "parameter is 1. If you want to apply a \"country specific\" approach," +
+                                               " turn the parameter to 0."));
+        return p;
     }
 
 }
