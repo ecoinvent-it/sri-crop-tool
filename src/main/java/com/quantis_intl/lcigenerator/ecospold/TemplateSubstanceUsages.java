@@ -20,8 +20,6 @@ package com.quantis_intl.lcigenerator.ecospold;
 
 import java.util.UUID;
 
-import com.quantis_intl.lcigenerator.scsv.StandardUncertaintyMetadata;
-
 public interface TemplateSubstanceUsages
 {
     TemplateSubstanceUsage[] getResources();

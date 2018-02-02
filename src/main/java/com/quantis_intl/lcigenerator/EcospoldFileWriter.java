@@ -401,6 +401,9 @@ public class EcospoldFileWriter
             ex.setMathematicalRelation("");
         }
 
+        if (ex.getAmount() > 0)
+            ex.setUncertainty(buildUncertainty(ex.getAmount(), tu.uncertainty));
+
         TValidIntermediateExchange tex = possibleExchanges.getExchange(tu.provideName(modelsOutput));
         if (tex == null)
         {
@@ -444,6 +447,10 @@ public class EcospoldFileWriter
         ex.setAmount(Double.parseDouble(value) / dividingValue);
         if (ex.getAmount() == 0.d)
             return null;
+
+        if (ex.getAmount() > 0)
+            ex.setUncertainty(buildUncertainty(ex.getAmount(), StandardUncertaintyMetadata.PESTICIDES_MANUFACTURING));
+
         ex.setMathematicalRelation("");
         TValidIntermediateExchange tex = possibleExchanges.getExchange(PESTICIDE_PRODUCT_MAPPING.get(key));
         if (tex == null)
@@ -477,8 +484,14 @@ public class EcospoldFileWriter
         ex.setId(UUID.randomUUID());
         ex.setUnitId(AvailableUnit.KG.uuid);
         ex.setAmount(Double.parseDouble(value) / dividingValue);
+
         if (ex.getAmount() == 0.d)
             return null;
+
+        if (ex.getAmount() > 0)
+            ex.setUncertainty(buildUncertainty(ex.getAmount(), StandardUncertaintyMetadata
+                    .PESTICIDES_EMISSION_TO_SOIL));
+
         ex.setMathematicalRelation("");
         TValidElementaryExchange tex =
                 possibleSubstances.getExchange(UUID.fromString("e1bc9a16-5b6a-494f-98ef-49f461b1a11e"),
@@ -517,6 +530,10 @@ public class EcospoldFileWriter
         ex.setAmount(Double.parseDouble(amount) / dividingValue);
         if (ex.getAmount() == 0.d)
             return null;
+
+        if (ex.getAmount() > 0)
+            ex.setUncertainty(buildUncertainty(ex.getAmount(), su.uncertainty));
+
         ex.setMathematicalRelation("");
         TValidElementaryExchange tex = possibleSubstances.getExchange(su.subCompartment, su.name);
         if (tex == null)
@@ -577,6 +594,8 @@ public class EcospoldFileWriter
                                 TString32000.ofEn(other.getComment().getValue() + "\n" + ex.getAmount() + ". " +
                                                           "Comment: " + ex.getComment().getValue()));
                         other.setAmount(other.getAmount() + ex.getAmount());
+
+                        mergeUncertainties(other, ex);
                         it.remove();
                     }
                 }
@@ -608,9 +627,53 @@ public class EcospoldFileWriter
                 other.setComment(TString32000.ofEn(other.getComment().getValue() + "\n" + ex.getAmount() + ". " +
                                                            "Comment: " + ex.getComment().getValue()));
                 other.setAmount(other.getAmount() + ex.getAmount());
+
+                mergeUncertainties(other, ex);
+
                 it.remove();
             }
         }
+    }
+
+    private void mergeUncertainties(TCustomExchange newExchange, TCustomExchange previous)
+    {
+        if (newExchange.getAmount() > 0)
+        {
+            if (previous.getAmount() > 0)
+                newExchange.setUncertainty(adaptUncertainty(newExchange.getAmount(), previous.getUncertainty()));
+            else
+                newExchange.setUncertainty(adaptUncertainty(newExchange.getAmount(), newExchange.getUncertainty()));
+        }
+        else
+            newExchange.setUncertainty(null);
+    }
+
+    private TUncertainty adaptUncertainty(double amount, TUncertainty previousUncertainty)
+    {
+        TUncertainty.Lognormal previousLogNormal = (TUncertainty.Lognormal) previousUncertainty.getUncertainty();
+        return getUncertainty(amount, previousLogNormal.getVariance(),
+                              previousLogNormal.getVarianceWithPedigreeUncertainty(),
+                              previousUncertainty.getPedigreeMatrix());
+    }
+
+    private TUncertainty buildUncertainty(double amount, StandardUncertaintyMetadata uncertaintyMetadata)
+    {
+        return getUncertainty(amount, uncertaintyMetadata.variance,
+                              uncertaintyMetadata.varianceWithPedigreeUncertainty, uncertaintyMetadata.pedigreeMatrix);
+    }
+
+    private TUncertainty getUncertainty(double amount, double variance, double varianceWithPedigreeUncertainty,
+                                        TUncertainty.PedigreeMatrix pedigreeMatrix)
+    {
+        TUncertainty u = new TUncertainty();
+        TUncertainty.Lognormal logNormal = new TUncertainty.Lognormal();
+        logNormal.setMeanValue(amount);
+        logNormal.setMu(Math.log(amount));
+        logNormal.setVariance(variance);
+        logNormal.setVarianceWithPedigreeUncertainty(varianceWithPedigreeUncertainty);
+        u.setUncertainty(logNormal);
+        u.setPedigreeMatrix(pedigreeMatrix);
+        return u;
     }
 
     private TParameter buildLucParameter(Map<String, String> modelsOutput)

@@ -22,8 +22,6 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.quantis_intl.lcigenerator.scsv.StandardUncertaintyMetadata;
-
 public interface TemplateIntermediaryExchanges
 {
     TemplateIntermediaryExchange[] getMaterialsFuels();

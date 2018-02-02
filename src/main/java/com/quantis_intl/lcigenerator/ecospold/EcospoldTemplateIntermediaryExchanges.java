@@ -22,8 +22,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
-import com.quantis_intl.lcigenerator.scsv.StandardUncertaintyMetadata;
-
 public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermediaryExchanges
 {
     @Override

@@ -20,8 +20,6 @@ package com.quantis_intl.lcigenerator.ecospold;
 
 import java.util.UUID;
 
-import com.quantis_intl.lcigenerator.scsv.StandardUncertaintyMetadata;
-
 public class EcospoldTemplateSubstanceUsages implements TemplateSubstanceUsages
 {
     private static final UUID SOIL_UNSPECIFID = UUID.fromString("dbeb0ac7-0dec-439e-887a-9924cc8005dd");
