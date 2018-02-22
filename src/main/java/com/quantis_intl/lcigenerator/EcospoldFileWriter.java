@@ -294,7 +294,7 @@ public class EcospoldFileWriter
                                  {
                                      TElementaryExchange ee = buildPesticideSubstance(e.getKey(), e.getValue(),
                                                                                       extractedInputs, dividingValue);
-                                     if (ex != null)
+                                     if (ee != null)
                                          flowData.getElementaryExchange().add(ee);
                                  }
                              }
