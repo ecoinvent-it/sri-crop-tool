@@ -79,15 +79,6 @@ public class EcospoldTemplateSubstanceUsages implements TemplateSubstanceUsages
                                        StandardUncertaintyMetadata.CO2_ENERGY_BIOMASS, ""),
 
             new TemplateSubstanceUsage("Water, river", RESOURCE_IN_WATER,
-                                       AvailableUnit.M3, "wateruse_ground",
-                                       StandardUncertaintyMetadata.IRRIGATION_WATER,
-                                       "wateruse_ground"),
-            new TemplateSubstanceUsage("Water, river", RESOURCE_IN_WATER,
-                                       AvailableUnit.M3, "wateruse_surface",
-                                       StandardUncertaintyMetadata.IRRIGATION_WATER,
-                                       "wateruse_surface"),
-
-            new TemplateSubstanceUsage("Water, river", RESOURCE_IN_WATER,
                                        AvailableUnit.M3, "utilities_wateruse_ground",
                                        StandardUncertaintyMetadata.UTILITIES_WATER,
                                        "utilities_wateruse_ground"),
