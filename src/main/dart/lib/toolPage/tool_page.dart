@@ -18,6 +18,8 @@ class ToolPage
 {
     Router _router;
 
+    String ecoinventEmail = 'LCI_tool@ecoinvent.org';
+
     ToolPage(Router this._router);
 
     void goToFaq()

@@ -89,8 +89,8 @@ a.docLink
     color: #DD0000;
 }
 
-a.docLink:before {
+/*a.docLink:before {
     content: url('img/download.png');
     margin-right: 5px;
     vertical-align: -50%;
-}
+}*/

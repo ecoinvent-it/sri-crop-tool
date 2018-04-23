@@ -10,5 +10,5 @@ class FaqPage
 {
   FaqPage();
 
-  String quantisEmail = 'software-support@quantis-intl.com';
+  String ecoinventEmail = 'LCI_tool@ecoinvent.org';
 }

@@ -5,46 +5,70 @@
 
     <h1 class="color3">FAQ</h1>
 
-<div class="faqQuestion">Is ALCIG free of use?</div>
-<div class="faqAnswer">No, but if you register you will be able to use ALCIG for free a maximum of three times. If you are then interested to buy a license, you have to contact Quantis to get additional information.</div>
-
-<div class="faqQuestion">What is the pricing?</div>
-<div class="faqAnswer">Please contact us and we will be happy to send you additional information by e-mail or organize a phone discussion.</div>
-
-<div class="faqQuestion">How can I learn more about the methodology that is used?</div>
-
-<div class="faqAnswer">ALCIG is following the methodological guidelines of the World Food LCA Database. You can find more information on the project on the following website :
-    <br/><a href="https://quantis-intl.com/tools/databases/wfldb-food/" target="_blank">https://quantis-intl.com/tools/databases/wfldb-food/</a>
-</div>
-
-    <div class="faqAnswer">The methodological guidelines are available using the following link:
-        <br/><a href="https://quantis-intl.com/wp-content/uploads/2017/02/wfldb_methodologicalguidelines_v3.0.pdf"
-                target="_blank">https://quantis-intl.com/wp-content/uploads/2017/02/wfldb_methodologicalguidelines_v3.0.pdf</a>
+    <div class="faqQuestion">What is the aim of the <i>“Ecoinvent LCI calculation tool for crop production”</i>?</div>
+    <div class="faqAnswer">Aim of this tool is to facilitate the creation of Life Cycle Inventory data for agriculture.
+        The tool creates a spold 2 document containing an agricultural inventory compliant with the
+        <span class="faqImportantLink">ecoinvent guidelines</span>. It maps the inputs and outputs with ecoinvent
+        activities and calculates the field emissions based onthe data filled in the template.
     </div>
 
-<div class="faqQuestion">What background data are used for the calculation in ALCIG?</div>
-<div class="faqAnswer">The tool uses ecoinvent data.</div>
+    <div class="faqQuestion">Can I calculate impact results with the tool?</div>
+    <div class="faqAnswer">No, you cannot calculate impact results with the tool, but you can create a dataset in a LCA
+        software based on the spold document.
+    </div>
 
-<div class="faqQuestion">What unit of reference is used for the results?</div>
-<div class="faqAnswer">All results are given for the production of one hectare of the crop you have selected.</div>
+    <div class="faqQuestion">How can I enter my agricultural data?</div>
 
-<div class="faqQuestion">Can ALCIG be used for other crops than those that are in the predefined list?</div>
-<div class="faqAnswer">No, it is currently not possible to assess other crops than those that are listed in the data collection sheet. If you need to assess other crops, contact us and we will evaluate the feasibility to add them.</div>
+    <div class="faqAnswer">Please enter your data in the excel template you can download from the webpage and follow the
+        guidance of the corresponding tab.
+    </div>
 
-<div class="faqQuestion">Will other output format than Simapro be available?</div>
-<div class="faqAnswer">Currently, only Simapro format and ecoinvent background data are available. In case you would like to have other background data used or other output format available, feel free to contact us so that we can evaluate the feasibility and make sure to inform you when the tool will integrate them.</div>
+    <div class="faqQuestion">Is there default data in the tool?</div>
+    <div class="faqAnswer">The tool does not provide automatic default data.</div>
 
-<div class="faqQuestion">If I have comments, suggestions or questions, what should I do?</div>
-<div class="faqAnswer">If you have comments, suggestions or questions, feel free to contact Quantis and we will make sure to take them into account and send you an answer. You can either use the <a href="#contactUs">on-line questionnaires</a> or send us an e-mail : <a href="mailto:{{quantisEmail}}">{{quantisEmail}}</a></div>
+    <div class="faqQuestion">Where can I find the methodological background of the tool?</div>
+    <div class="faqAnswer">The methodological background are the
+        <a href="http://www.ecoinvent.org/files/dataqualityguideline_ecoinvent_3_20130506.pdf"
+           target="_blank">data quality guidelines</a>
+        of ecoinvent as well as
+        <!-- FIXME: Add link to methodology doc -->
+        <a class="faqImportantLink">following document</a> describing the models used in the tool.
+    </div>
 
-<div class="faqQuestion">I don't manage to import the generated CSV file into Simapro:</div>
-<div class="faqQuestionSubSection">Displayed error: "Unknown CSV format version (7.0.0},,,,,,,,,,,)."</div>
-<div class="faqAnswer">You may have opened the generated CSV file with <b>Microsoft Excel</b>. This software adds some unwanted characters that corrupt the generated file. Please redo the export from ALCIG and import it directly into Simapro, without opening it with an other software.</div>
-<div class="faqQuestionSubSection">Displayed error: "One or more format options not found (CSV Format version, [...]). For these options default values will be used. Continue?"</div>
-<div class="faqAnswer">You may have received this file by email from someone using <b>Apple Mail</b>. This software adds some unwanted characters that corrupt the generated file. Please ask the sender to send a ZIP archive of the CSV file.</div>
+    <div class="faqQuestion">What format will be delivered?</div>
+    <div class="faqAnswer">The tool only delivers an inventory in
+        <a
+                href="http://www.ecoinvent.org/data-provider/data-provider-toolkit/ecospold2/ecospold2.html"
+                target="_blank">ecospold 2 format</a>.
+    </div>
+
+    <div class="faqQuestion">What unit of reference is used for the results?</div>
+    <div class="faqAnswer">The reference unit is 1 kg of main product.</div>
+
+    <div class="faqQuestion">Can the “Ecoinvent LCI calculation tool for crop production” be used for other crops than
+        those that are in the predefined list?
+    </div>
+    <div class="faqAnswer">No, it is currently not possible to assess other crops than those that are listed in the data
+        collection sheet. If you need to assess other crops,
+        <a href="mailto:{{ecoinventEmail}}">contact us and we will evaluate the feasibility to add them</a>.
+    </div>
+
+    <div class="faqQuestion">How can I submit data to ecoinvent?</div>
+    <div class="faqAnswer">You can import the spold 2 inventory in
+        <a href="Create link to http://www.ecoinvent.org/data-provider/data-provider-toolkit/ecoeditor/ecoeditor.html"
+           target="_blank"
+           class="faqImportantLink">EcoEditor</a>
+        and submit the data from there to
+        ecoinvent. Please review <i>following checklist</i> before submitting your data.
+    </div>
+    <div class="faqQuestion">If I have comments, suggestions or questions, what should I do?</div>
+    <div class="faqAnswer">If you have comments, suggestions or questions, feel free to contact
+        <a href="mailto:{{ecoinventEmail}}">ecoinvent</a> and we will make sure to take them into account and send
+        you an answer.
+    </div>
 
     <a href="#tool">
         <button class="qts-btn qts-btn-style2">&lt;&nbsp; Back to Home</button>
     </a>
-    
+
 </div>

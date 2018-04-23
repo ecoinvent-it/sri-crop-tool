@@ -10,8 +10,21 @@
 
 #faqPage a
 {
-	color: #6d7fa1;
-	text-decoration: underline;
+	color: black;
+}
+
+#faqPage a:hover
+{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+#faqPage a .faqImportantLink,
+.faqImportantLink
+{
+   color: #DD0000 !important;
+   font-weight: bold;
+   font-style: italic;
 }
 
 .faqQuestion
@@ -35,5 +48,5 @@
 .faqAnswer
 {
   font-size: 14px;
-  color: #445272;
+  color: black;
 }
