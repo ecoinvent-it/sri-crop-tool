@@ -2638,7 +2638,7 @@ ROOTING_DEPTH_PER_CROP = {
     "coffee_arabica": 1.2,
     "coffee_robusta": 1.2,
     "coriander": 0.33,
-    "cotton": 0.3,
+    "cotton": 0.35,
     "cranberry": 0.9,
     "eggplant": 0.8,
     "flax": 0.5,
