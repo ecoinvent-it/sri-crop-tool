@@ -5,12 +5,13 @@ import 'dart:js' as js;
 
 import 'package:alcig/login/forgotPasswordBox/forgot_password_box.dart';
 import 'package:alcig/login/login_service.dart';
+import 'package:alcig/login/registrationRequestBox/registration_request_box.dart';
 import 'package:angular/angular.dart';
 import 'package:angular_forms/angular_forms.dart';
 
 @Component(
         selector: 'login-box',
-        directives: const [formDirectives, NgIf, ForgotPasswordBox],
+        directives: const [formDirectives, NgIf, ForgotPasswordBox, RegistrationRequestBox],
         styleUrls: const ['login_box.css'],
         templateUrl: 'login_box.html')
 class LoginBox
@@ -22,7 +23,9 @@ class LoginBox
     String username = "";
     String password = "";
 
+    final String idRegistrationRequestModal = "#registrationRequestModal";
     final String idForgotPasswordModal = "#forgotPasswordModal";
+    bool isRegistrationRequestModalOpened = false;
     bool isForgotPwdModalOpened = false;
 
     LoginService _loginService;
@@ -100,12 +103,19 @@ class LoginBox
     {
         isForgotPwdModalOpened = true;
         _displayModal(idForgotPasswordModal);
-        _listenModalClosing(idForgotPasswordModal, _onForgotPwdModalClosed);
+        _listenModalClosing(idForgotPasswordModal, _onModalClosed);
     }
 
-    void _onForgotPwdModalClosed(e)
+    void openRegistrationRequestPopUp() {
+        isRegistrationRequestModalOpened = true;
+        _displayModal(idRegistrationRequestModal);
+        _listenModalClosing(idRegistrationRequestModal, _onModalClosed);
+    }
+
+    void _onModalClosed(e)
     {
         isForgotPwdModalOpened = false;
+        isRegistrationRequestModalOpened = false;
     }
 
     void _hideModal(String id)

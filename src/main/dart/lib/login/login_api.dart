@@ -3,23 +3,23 @@ library login.api;
 import 'dart:async';
 
 abstract class LoginApi {
-  
-  Future<AuthRequestResult> login(String username, String password);
-      
-  Future<AuthRequestResult> logout();
-  
-  Future<StatusResult> getStatus();
-  
-  Future<ChangePasswordResult> changePassword(String oldPassword, String newPassword);
-  
-  // TODO: Put in another api as it calls PublicPrincipalApi
+
+    Future<AuthRequestResult> login(String username, String password);
+
+    Future<AuthRequestResult> logout();
+
+    Future<StatusResult> getStatus();
+
+    Future<ChangePasswordResult> changePassword(String oldPassword, String newPassword);
+
+    // TODO: Put in another api as it calls PublicPrincipalApi
   Future<ForgotPasswordResult> forgotPassword(String email);
-  
-  Future<ResetPasswordResult> resetPassword(String validationCode, String newPassword);
-  
-  Future<String> checkRegistrationCode(String registrationCode);
-  
-  Future<String> activateUser(String registrationCode, bool acceptTermsAndConditions, String newPassword);
+
+    Future<ResetPasswordResult> resetPassword(String validationCode, String newPassword);
+
+    Future<String> checkRegistrationCode(String registrationCode);
+
+    Future<String> activateUser(String registrationCode, bool acceptTermsAndConditions, String newPassword);
 }
 
 enum AuthRequestResult {

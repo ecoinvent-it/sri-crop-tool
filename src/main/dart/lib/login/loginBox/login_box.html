@@ -17,12 +17,14 @@
                 <img [class.notVisible]="!isLoading" class="loginLoaderImg" src="img/ajax-loader.gif"/>
             </div>
             <span class="color3 text-very-small loginLink" (click)="openForgotPwdPopUp()">Forgot password?</span>
+            <span class="color3 text-very-small loginLink" (click)="openRegistrationRequestPopUp()">Make a registration
+            request</span>
         </div>
         <div class="msgContainer errorMsg">{{errorMessage}}</div>
     </form>
 </div>
 
-<!-- Modal -->
+<!-- Modal Forgot Password -->
 <div class="modal topBottomAnimation loginModal" id="forgotPasswordModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -38,4 +40,24 @@
       </div>
     </div>
   </div>
+</div>
+
+<!-- Modal Registration Request -->
+<div class="modal topBottomAnimation loginModal" id="registrationRequestModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <div class="color1 loginTitle">Registration request</div>
+            </div>
+            <div class="modal-body">
+                <registration-request-box *ngIf="isRegistrationRequestModalOpened"></registration-request-box>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

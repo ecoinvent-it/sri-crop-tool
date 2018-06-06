@@ -57,6 +57,12 @@ class ApiImpl implements Api {
           );
     }
 
+  Future sendRequest(dynamic formData) {
+    return HttpRequest.request(_basePubApiUrl + "registrationRequest", method: "POST",
+                                       sendData: formData,
+                                       withCredentials: _baseApiUrl.startsWith("http")).catchError(_manageError);
+  }
+
   Future<HttpRequest> contactUs(dynamic formData)
   {
     return HttpRequest.request(_basePubApiUrl + "contactUs", method: "POST",

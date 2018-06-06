@@ -13,6 +13,8 @@ abstract class Api {
 
   Future<HttpRequest> uploadInputs(dynamic data);
 
+  Future sendRequest(FormData formData);
+
   Future<HttpRequest> contactUs(dynamic data);
 }
 
