@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS `generation`;
 DROP TABLE IF EXISTS `license`;
+DROP TABLE IF EXISTS `registrationRequest`;
 
 CREATE TABLE `generation` (
   `id` CHAR(12) NOT NULL,
@@ -39,12 +40,10 @@ CREATE TABLE `license` (
 
 CREATE TABLE `registrationRequest` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `username` VARCHAR(45) NOT NULL,
-  `company` VARCHAR(45) NOT NULL,
-  `address` VARCHAR(45) NOT NULL,
-  `mail` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(255) NOT NULL,
+  `username` VARCHAR(255) NOT NULL,
+  `company` VARCHAR(255) NOT NULL,
+  `address` VARCHAR(512) NOT NULL,
+  `mail` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
-  INDEX `fk_registrationRequest_1_idx` (`userId` ASC),
-    CONSTRAINT `fk_registrationRequest_1`
   ) ENGINE = InnoDB DEFAULT CHARSET=utf8;

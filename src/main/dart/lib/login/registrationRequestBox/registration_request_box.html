@@ -20,24 +20,25 @@
 
 <div [hidden]="requestSent">
     <form id="loginForm" (submit)="submitRequest($event)" #form>
-        <div class="color1 text-small formFieldTitle">Name</div>
+        <div class="color3 text-small formFieldTitle">Name</div>
         <input class="text-small" name="name" type="text"
                [(ngModel)]="name" required>
-        <div class="color1 text-small formFieldTitle">Username</div>
+        <div class="color3 text-small formFieldTitle">Username</div>
         <input class="text-small" name="username" type="text"
                [(ngModel)]="username" required>
-        <div class="color1 text-small formFieldTitle">Company / Institution</div>
+        <div class="color3 text-small formFieldTitle">Company / Institution</div>
         <input class="text-small" name="company" type="text"
                [(ngModel)]="company" required>
-        <div class="color1 text-small formFieldTitle">Address</div>
-        <input class="text-small" name="address" type="text"
-               [(ngModel)]="address" required>
-        <div class="color1 text-small formFieldTitle">Mail address</div>
+        <div class="color3 text-small formFieldTitle">Address</div>
+        <textarea class="text-small" name="address" type="text"
+                  [(ngModel)]="address" required
+                  style="height:120px;"></textarea>
+        <div class="color3 text-small formFieldTitle">Mail address</div>
         <input class="text-small" name="mail" type="text"
                [(ngModel)]="mail" required>
         <br>
         <div>
-            <button id="requestSubmit" type="submit" class="qts-btn qts-btn-style3">Send a request
+            <button id="requestSubmit" type="submit" class="qts-btn qts-btn-style2">Send a request
             </button>
         </div>
     </form>

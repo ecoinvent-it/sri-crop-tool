@@ -86,7 +86,7 @@ public class PublicApi
                                                                                 escapedMail);
 
         mailSender.get().sendMail(formsMailTo,
-                                  "[ALCIG] Registration request",
+                                  "[LCI tool] Registration request",
                                   formContent);
 
         LOGGER.info("Email for registration request sent");
