@@ -390,8 +390,11 @@ public class EcospoldFileWriter
         {
             ex.setAmount(0.d);
             ex.setIsCalculatedAmount(true);
-            ex.setMathematicalRelation(((EcospoldTemplateIntermediaryExchanges.LucTemplateIntermediaryExchange) tu)
-                                               .provideMathematicalRelation(modelsOutput));
+            String mathematicalRelation = ((EcospoldTemplateIntermediaryExchanges.LucTemplateIntermediaryExchange) tu)
+                    .provideMathematicalRelation(modelsOutput);
+            if (mathematicalRelation != null && !mathematicalRelation.isEmpty())
+                mathematicalRelation = "(" + mathematicalRelation + ") / " + Double.toString(dividingValue);
+            ex.setMathematicalRelation(mathematicalRelation);
         }
         else
         {

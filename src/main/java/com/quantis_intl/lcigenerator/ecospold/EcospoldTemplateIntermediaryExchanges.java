@@ -886,7 +886,7 @@ public class EcospoldTemplateIntermediaryExchanges implements TemplateIntermedia
                     "trellis system, wooden poles, soft wood, tar impregnated",
                     AvailableUnit.HA, "need_trellis", StandardUncertaintyMetadata.OTHER_MATERIALS, ""),
 
-            new LucTemplateIntermediaryExchange(AvailableUnit.HA, "luc_crop_specific", "luc_formula",
+            new LucTemplateIntermediaryExchange(AvailableUnit.KG, "luc_crop_specific", "luc_formula",
                                                 StandardUncertaintyMetadata.LAND_TRANSFORMATION,
                                                 ""),
 
