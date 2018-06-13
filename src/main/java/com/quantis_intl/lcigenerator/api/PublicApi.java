@@ -107,14 +107,15 @@ public class PublicApi
 
         // TODO: Have a default template stored somewhere and replace only some specific parts
         final String formContent = generateEmailTextFromContactForm(escapedContactName, escapedContactCompany,
-                escapedContactEmail, escapedContactMessage, form.accept);
+                                                                    escapedContactEmail, escapedContactMessage,
+                                                                    form.accept);
 
         mailSender.get().sendMail(formsMailTo, "[ALCIG] New feedback", formContent);
 
         if (isEmailComplient(escapedContactEmail))
             mailSender.get().sendMail(escapedContactEmail,
-                    "[ALCIG] Thank you for your feedback",
-                    generateTextForUser(escapedContactName, formContent));
+                                      "[ALCIG] Thank you for your feedback",
+                                      generateTextForUser(escapedContactName, formContent));
         else
             LOGGER.info("Email not sent to user as the given email was not complient: {}", escapedContactEmail);
 
@@ -143,7 +144,8 @@ public class PublicApi
     }
 
     private String generateEmailTextFromContactForm(final String contactName, final String contactCompany,
-            final String contactEmail, final String contactMessage, final boolean accept)
+                                                    final String contactEmail, final String contactMessage,
+                                                    final boolean accept)
     {
         return new StringBuilder("Name: ")
                 .append(contactName)
@@ -163,8 +165,8 @@ public class PublicApi
                                                                 String escapedAddress,
                                                                 String escapedMail)
     {
-        return new StringBuilder("Dear Sir or Madam,<br/>")
-                .append("The following user just sent you a registration request :<br/><br/>")
+        return new StringBuilder("Dear LCI tool administrator,<br/>")
+                .append("The following user has sent a registration request :<br/>")
                 .append("<br/>Name : ")
                 .append(escapedName)
                 .append("<br/>Username : ")
@@ -175,6 +177,8 @@ public class PublicApi
                 .append(escapedAddress)
                 .append("<br/>Mail : ")
                 .append(escapedMail)
+                .append("<br/>If you accept this request, please forward this email to Quantis at: " +
+                                "software-support@quantis-intl.com")
                 .toString();
     }
 
