@@ -51,7 +51,6 @@ public class License
     // Think about resetting this boolean if you add some additionalGenerations
     private boolean isDepleted;
 
-    @SuppressWarnings("unused")
     private License()
     {}
 
@@ -159,7 +158,7 @@ public class License
 
     public LocalDate getEndDate()
     {
-        return startDate.plus(rentalItem.validityPeriod);
+        return rentalItem.validityPeriod == null ? null : startDate.plus(rentalItem.validityPeriod);
     }
 
     public OptionalInt getNumberOfGenerations()
@@ -170,7 +169,8 @@ public class License
 
     public boolean isExpiredAt(LocalDate referenceDate)
     {
-        return getStartDate().plus(getRentalItem().validityPeriod).isBefore(referenceDate);
+        return getRentalItem().validityPeriod != null &&
+                getStartDate().plus(getRentalItem().validityPeriod).isBefore(referenceDate);
     }
 
     public static enum LicenseType
@@ -191,7 +191,8 @@ public class License
         BUSINESS_10_USES(Period.ofYears(3), 10),
         BUSINESS_25_USES(Period.ofYears(3), 25),
         BUSINESS_50_USES(Period.ofYears(3), 50),
-        BUSINESS_UNLIMITED(Period.ofYears(1), null);
+        BUSINESS_UNLIMITED(Period.ofYears(1), null),
+        UNLIMITED(null, null);
 
         public final Period validityPeriod;
 

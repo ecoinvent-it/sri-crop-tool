@@ -48,7 +48,8 @@
   </tr>
 </table>
 
-<table id="currentLicenseTable" class="color1" *ngIf="currentLicense != null">
+<table id="currentLicenseTable" class="color1"
+       *ngIf="currentLicense != null && currentLicense['rentalItem'] != 'UNLIMITED'">
     <colgroup>
   <col width="25%"/>
   <col width="25%"/>

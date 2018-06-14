@@ -43,7 +43,11 @@ class LicenseService {
   Future _loadLicenses() async
   {
     List tempLicenses = await _api.getUserLicenses();
-    tempLicenses.forEach((l) => l['endDateAsDate'] = DateUtils.parseDate(l['endDate']));
+    tempLicenses.forEach((l)
+                         {
+                           if (l['endDate'] != null)
+                             l['endDateAsDate'] = DateUtils.parseDate(l['endDate']);
+                         });
     licenses = tempLicenses;
     currentLicense = _findActiveLicense();
   }
@@ -113,6 +117,8 @@ class LicenseService {
         return "Business - 50 uses";
       case 'BUSINESS_UNLIMITED':
         return "Business - unlimited uses";
+      case 'UNLIMITED':
+        return "Unlimited";
       default:
         throw new Error();
     }
