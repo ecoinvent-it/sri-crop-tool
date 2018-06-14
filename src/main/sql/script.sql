@@ -47,3 +47,7 @@ CREATE TABLE `registrationRequest` (
   `mail` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`)
   ) ENGINE = InnoDB DEFAULT CHARSET=utf8;
+  
+  UPDATE `mailTemplate` SET `contentTemplate`='Dear user,<br/><br/>Thank you for your interest in our application.<br/>Please activate your access by clicking on the link below:<br/><a href=\"{{root.url}}#activateAccount/{{activationString}}\" target=\"_blank\">{{root.url}}#activateAccount/{{activationString}}</a><br/><br/>You will then be able to login using your new password and the information below:<br/>Username: {{username}}<br/>URL: <a href=\"{{root.url}}\" target=\"_blank\">{{root.url}}</a><br/><br/>Best regards,<br/><br/>The LCI tool team' WHERE `name`='login.mail.activation.en_US';
+UPDATE `mailTemplate` SET `contentTemplate`='Dear user,<br/><br/>We received a request to reset the password associated with this email address. If you are at the origin of this request, please click on the link below and follow the instructions.<br/><a href=\"{{root.url}}#resetPassword/{{validationString}}\" target=\"_blank\">{{root.url}}#resetPassword/{{validationString}}</a><br/><br/>Please note that after 15 minutes this link will expire and you will have to restart the procedure.<br/>If you did not request to reset your password, you can ignore this email. The security of your account is insured.<br/><br/>Best regards,<br/><br/>The LCI tool team' WHERE `name`='login.mail.resetpassword.en_US';
+
