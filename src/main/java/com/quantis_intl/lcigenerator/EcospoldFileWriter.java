@@ -605,7 +605,8 @@ public class EcospoldFileWriter
 
     private boolean isOrganic(ValueGroup extractedInputs)
     {
-        return "yes".equals(extractedInputs.getDeepSingleValue("organic_certified").getValue());
+        SingleValue organicInput = extractedInputs.getDeepSingleValue("organic_certified");
+        return organicInput != null && "yes".equals(organicInput.getValue());
     }
 
     private void squashElementaryExchanges(List<TElementaryExchange> exchanges)
