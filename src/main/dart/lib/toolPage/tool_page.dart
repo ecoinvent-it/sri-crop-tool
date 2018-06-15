@@ -29,6 +29,7 @@ class ToolPage
 
     void goToEcoinvent()
     {
-        window.location.href = 'http://www.ecoinvent.org/';
+        AnchorElement a = querySelector("#ecoinventLink");
+        a.click();
     }
 }
