@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
   <copyright>
-    <option name="allowReplaceKeyword" value="2016" />
-    <option name="myName" value="Quantis" />
+    <option name="allowReplaceRegexp" value="2017" />
     <option name="notice" value="Quantis Sàrl CONFIDENTIAL&#10;Unpublished Copyright (c) 2009-&amp;#36;today.year Quantis SARL, All Rights Reserved.&#10;NOTICE: All information contained herein is, and remains the property of Quantis Sàrl. The intellectual and&#10;technical concepts contained herein are proprietary to Quantis Sàrl and may be covered by U.S. and Foreign Patents,&#10;patents in process, and are protected by trade secret or copyright law.&#10;Dissemination of this information or reproduction of this material is strictly forbidden unless prior written&#10;permission is obtained from Quantis Sàrl. Access to the source code contained herein is hereby forbidden to anyone&#10;except current Quantis Sàrl employees, managers or contractors who have executed Confidentiality and Non-disclosure&#10;agreements explicitly covering such access.&#10;The copyright notice above does not evidence any actual or intended publication or disclosure of this source code,&#10;which includes information that is confidential and/or proprietary, and is a trade secret, of Quantis Sàrl.&#10;ANY REPRODUCTION, MODIFICATION, DISTRIBUTION, PUBLIC PERFORMANCE, OR PUBLIC DISPLAY OF OR THROUGH USE OF THIS SOURCE&#10;CODE WITHOUT THE EXPRESS WRITTEN CONSENT OF Quantis Sàrl IS STRICTLY PROHIBITED, AND IN VIOLATION OF APPLICABLE LAWS&#10;AND INTERNATIONAL TREATIES. THE RECEIPT OR POSSESSION OF THIS SOURCE CODE AND/OR RELATED INFORMATION DOES NOT CONVEY&#10;OR IMPLY ANY RIGHTS TO REPRODUCE, DISCLOSE OR DISTRIBUTE ITS CONTENTS, OR TO MANUFACTURE, USE, OR SELL ANYTHING THAT&#10;IT MAY DESCRIBE, IN WHOLE OR IN PART." />
+    <option name="myName" value="Quantis" />
   </copyright>
 </component>

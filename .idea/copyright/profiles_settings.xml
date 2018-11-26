@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
   <settings>
     <module2copyright>
-      <element module="All" copyright="Quantis" />
+      <element module="allExceptEcoinvent" copyright="Quantis" />
     </module2copyright>
     <LanguageOptions name="HTML">
       <option name="fileTypeOverride" value="3" />
