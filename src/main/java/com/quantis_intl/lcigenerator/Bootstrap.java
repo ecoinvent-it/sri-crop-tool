@@ -64,6 +64,7 @@ public class Bootstrap
         p.setProperty(StackProperties.SERVER_BASE_CONTEXT_PROP, "/");
         p.setProperty(StackProperties.SERVER_WEB_FOLDER_PROP, "src/main/dart/web");
         p.setProperty(StackProperties.SERVER_LOG_FOLDER_PROP, "");
+        p.setProperty(StackProperties.SERVER_DEV_MODE, Boolean.toString(true));
         p.setProperty(StackProperties.ROOT_URL_PROP, "");
 
         p.setProperty(StackProperties.MAIL_APP_PREFIX_PROP, "ALCIG");
@@ -75,6 +76,7 @@ public class Bootstrap
         p.setProperty(StackProperties.SQL_SCHEMA_PROP, "lcigenerator_test");
         p.setProperty(StackProperties.SQL_USERNAME_PROP, "root");
         p.setProperty(StackProperties.SQL_PASSWORD_PROP, "root");
+        p.setProperty(StackProperties.SQL_HOST, "localhost");
 
         p.setProperty(StackProperties.SERVER_UPLOADED_FILE_FOLDER, System.getenv("ALCIG_UPLOADED_FILES_FOLDER"));
         p.setProperty("pyBridge.url", "http://localhost:11001/computeLci");
